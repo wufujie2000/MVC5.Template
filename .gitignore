@@ -8,6 +8,7 @@ Web/Objects/bin/
 Web/Objects/obj/
 Web/Resources/bin/
 Web/Resources/obj/
+Web/App_Data/
 Web/bin/
 Web/obj/
 packages/

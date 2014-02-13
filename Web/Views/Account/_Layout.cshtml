@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @Styles.Render("~/Content/Css/Bootstrap")
+    @Styles.Render("~/Content/Css/FontAwesome")
+    @Styles.Render("~/Content/Css/JQuery")
+    @Styles.Render("~/Content/Css/Select2")
+    @Styles.Render("~/Content/Css/Login")
+    <meta charset="UTF-8" />
+    <title>@ResourceProvider.GetCurrentContentTitle()</title>
+</head>
+<body>
+    <div id="LoginContainer">
+        <div id="LoginBox">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+    @Scripts.Render("~/Scripts/JQuery")
+    @Scripts.Render("~/Scripts/Bootstrap")
+    @Scripts.Render("~/Scripts/Select2")
+    @Scripts.Render("~/Scripts/Login")
+</html>

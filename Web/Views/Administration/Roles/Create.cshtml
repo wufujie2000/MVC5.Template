@@ -1,0 +1,28 @@
+﻿@model RoleView
+
+@using (Html.FormWidgetBox())
+{
+    using(Html.BeginForm())
+    {
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.Name)
+            @Html.BootstrapTextBoxFor(model => model.Name)
+            @Html.BootstrapValidationFor(model => model.Name)
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.PrivilegesTree)
+            using (Html.FormColumn())
+            {
+                @Html.TreeViewFor(model => model.PrivilegesTree)
+            }
+            @Html.BootstrapValidationFor(model => model.PrivilegesTree)
+        }
+        
+        using (Html.FormActions())
+        {
+            @Html.FormSubmit()
+        }
+    }
+}

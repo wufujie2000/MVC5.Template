@@ -1,0 +1,11 @@
+﻿<div id="Sidebar">
+    <div id="SidebarSearch">
+        @Html.SidebarSearch()
+    </div>
+    <div id="SidebarNavigation">
+        <ul id="SidebarNavigationList">
+            @Html.SidebarMenu(new MenuService().GetAuthorizedMenus())
+        </ul>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/Sidebar")

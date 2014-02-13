@@ -1,0 +1,25 @@
+﻿<div id="Header">
+    <div id="HeadersLeftPanel">
+        <div id="HeaderLogo">
+            <a href="/">&nbsp;</a>
+        </div>
+        <a id="SidebarTrigger" href="#">
+            <i class="fa fa-bars"></i>
+        </a>
+    </div>
+    <div id="HeadersRightPanel">
+        <div id="TopNavigation">
+            <ul id="TopNavigationSections" class="btn-group">
+                <li class="btn">
+                    @Html.ProfileLink()
+                </li>
+                <li class="btn dropdown">
+                    @Html.LanguageLink()
+                </li>
+                <li class="btn">
+                    @Html.LogoutLink()
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

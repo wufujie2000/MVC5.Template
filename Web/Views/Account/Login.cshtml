@@ -1,0 +1,24 @@
+﻿@model AccountView
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_AlertMessages")
+    using (Html.InputGroup())
+    {
+        @Html.LoginUsernameFor(model => model.Username)
+    }
+    using (Html.InputGroup())
+    {
+        @Html.LoginPasswordFor(model => model.Password)
+    }
+    using (Html.InputGroup())
+    {
+        @Html.LoginLanguageSelect()
+    }
+    <div class="login-form-actions">
+        <input class="btn btn-block btn-primary btn-default" value="@Template.Resources.Shared.Resources.Login" type="submit" />
+    </div>
+    <script>
+        var currentLanguage = '@Request.RequestContext.RouteData.Values["language"].ToString()';
+    </script>
+}

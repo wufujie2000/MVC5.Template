@@ -1,0 +1,192 @@
+﻿.ui-dialog,
+.ui-dialog:after,
+.ui-dialog:before {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 100%;
+}
+
+.datalist {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.ui-button-icon-only .ui-icon {
+    margin-left: -8.3px;
+}
+
+.datalist {
+    display: none;
+}
+
+.datalist-open-span {
+    cursor: pointer;
+}
+
+.datalist.ui-dialog-content {
+    min-width: 425px;
+    display: none;
+}
+
+.datalist-search-group {
+    margin: 5px 5px 10px;
+    float: right;
+}
+
+    .datalist-search-group .datalist-search-input {
+        height: 32px;
+    }
+
+    .datalist-search-group .datalist-items-per-page {
+        text-align: center;
+        margin: 0 15px 0 0;
+        height: 30px;
+        width: 20px;
+    }
+
+    .datalist-search-group > span {
+        background: #EEEEEE;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+
+    .datalist-search-group span a:first-of-type {
+        border-right: 1px solid #D3D3D3;
+        border-left: 1px solid #D3D3D3;
+        border-top: 1px solid #D3D3D3;
+        cursor: pointer;
+    }
+
+    .datalist-search-group span a:last-of-type {
+        border-bottom: 1px solid #D3D3D3;
+        border-right: 1px solid #D3D3D3;
+        border-left: 1px solid #D3D3D3;
+        border-top: 1px solid #D3D3D3;
+        cursor: pointer;
+    }
+
+.datalist-processing {
+    border: 1px solid #DDDDDD;
+    background-color: #FFFFFF;
+    position: absolute;
+    text-align: center;
+    min-height: 50px;
+    min-width: 50px;
+    display: none;
+    left: 44%;
+    top: 37%;
+}
+
+    .datalist-processing > .datalist-processing-span {
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+
+        .datalist-processing > .datalist-processing-span > img {
+            margin-top: 17px;
+        }
+
+.datalist-error {
+    background-color: #F2DEDE;
+    border-color: #EBCCD1;
+    margin-bottom: 20px;
+    position: absolute;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: -15px;
+    font-size: 14px;
+    color: #A94442;
+    padding: 15px;
+    display: none;
+    width: 320px;
+    left: 15%;
+    top: 50%;
+}
+
+.datalist-data {
+    margin: 5px 5px 5px;
+    height: auto;
+    clear: both;
+}
+
+.datalist-table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+    .datalist-table thead > tr > th > .datalist-sort-arrow {
+        margin-left: 2px;
+        font-size: 11px;
+    }
+
+    .datalist-table thead > tr > th {
+        text-align: center;
+        line-height: 20px;
+        font-size: 0.9em;
+        cursor: pointer;
+        color: #428BCA;
+        padding: 3px;
+    }
+
+    .datalist-table thead > tr > th,
+    .datalist-table tbody > tr > td {
+        font-size: 0.9em;
+        padding: 3px;
+    }
+
+.datalist-select-cell {
+    text-align: center;
+    cursor: pointer;
+    width: 20px;
+}
+
+.datalist-select-container {
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
+    border-radius: 4px;
+    margin-left: 2px;
+    margin-top: 2px;
+    height: 16px;
+    width: 16px;
+}
+
+    .datalist-select-container:hover {
+        background-color: #47A447;
+        border-color: #398439;
+    }
+
+    .datalist-select-container > i {
+        font-size: 10px;
+        color: #FFFFFF;
+        left: -0.5px;
+        top: -2.5px;
+    }
+
+.datalist-pager {
+    display: none;
+    clear: both;
+}
+
+    .datalist-pager .pagination {
+        margin: 5px 4px 0 0;
+        float: right;
+    }
+
+        .datalist-pager .pagination > li {
+            cursor: pointer;
+        }
+
+            .datalist-pager .pagination > li > a {
+                padding: 2px 7px;
+                color: #428BCA;
+            }
+
+            .datalist-pager .pagination > li.active > a {
+                color: #FFFFFF;
+            }
+
+            .datalist-pager .pagination > li:not(.active) > a:hover {
+                color: #2A6496;
+            }

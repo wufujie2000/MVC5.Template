@@ -1,0 +1,23 @@
+﻿@model IEnumerable<UserView>
+
+@using (Html.TableWidgetBox(LinkAction.Create))
+{
+    @(
+        Html
+            .Grid(Model)
+            .Columns(columns =>
+            {
+                columns.AddActionLink(LinkAction.Details);
+                columns.AddActionLink(LinkAction.Edit);
+                columns.AddActionLink(LinkAction.Delete);
+                
+                columns.AddProperty(model => model.Username);
+                columns.AddProperty(model => model.UserRoleName);
+
+                columns.AddProperty(model => model.UserFirstName);
+                columns.AddProperty(model => model.UserLastName);
+                columns.AddDateProperty(model => model.UserDateOfBirth);
+            })
+            .ApplyAttributes()
+    )
+}

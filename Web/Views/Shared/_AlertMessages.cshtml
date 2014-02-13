@@ -1,0 +1,15 @@
+﻿@{
+    var messages = ViewBag.AlertMessagesContainer as IMessagesContainer;
+    <div class="alert-messages">
+        @if (messages != null)
+        {
+            foreach (var alertMessage in messages)
+            {
+                <div class="alert alert-@alertMessage.Type.ToString().ToLower()" data-fade-out-after="@alertMessage.FadeOutAfter" data-alert-for="@alertMessage.Key">
+                    <span>@alertMessage.Message</span>
+                    <a class="close" href="#">×</a>
+                </div>
+            }
+        }
+    </div>
+}

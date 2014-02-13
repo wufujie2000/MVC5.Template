@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D89DE56-C68C-4D17-8424-866D96F2E000}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Template.Components</RootNamespace>
+    <AssemblyName>Template.Components</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BCrypt.Net">
+      <HintPath>..\..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="GridMvc">
+      <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adapters\ModelMetadata\ModelMetadataAdapter.cs" />
+    <Compile Include="Adapters\Validation\DateValidator.cs" />
+    <Compile Include="Adapters\Validation\DataTypeValidatorProvider.cs" />
+    <Compile Include="Adapters\Validation\NumberValidator.cs" />
+    <Compile Include="Adapters\Validation\RequiredAdapter.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\FormColumn.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\FormWrapper.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\LoginExtensions.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\FormExtensions.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\FormActions.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\FormGroup.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\InputGroup.cs" />
+    <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
+    <Compile Include="Extensions\Html\Header\HeaderExtensions.cs" />
+    <Compile Include="Extensions\Html\JsTree\TreeViewExtensions.cs" />
+    <Compile Include="Extensions\Html\Sidebar\SidebarExtensions.cs" />
+    <Compile Include="Extensions\Net\CollectionsExtensions.cs" />
+    <Compile Include="Extensions\Net\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\Net\SystemExtensions.cs" />
+    <Compile Include="Extensions\Html\LinkAction.cs" />
+    <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />
+    <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Authorization\AllowUnauthorized.cs" />
+    <Compile Include="Security\Authorization\IRoleProvider.cs" />
+    <Compile Include="Security\Cryptography\BCrypter.cs" />
+    <Compile Include="Services\Account\AccountService.cs" />
+    <Compile Include="Services\Administration\Roles\RolesService.cs" />
+    <Compile Include="Services\Administration\Users\UsersService.cs" />
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\GenericService.cs" />
+    <Compile Include="Services\Home\HomeService.cs" />
+    <Compile Include="Services\Profile\ProfileService.cs" />
+    <Compile Include="Services\ServiceFactory.cs" />
+    <Compile Include="Alerts\AlertMessage.cs" />
+    <Compile Include="Alerts\AlertMessageType.cs" />
+    <Compile Include="Alerts\IMessagesContainer.cs" />
+    <Compile Include="Alerts\MessagesContainer.cs" />
+    <Compile Include="Services\Shared\Authorization\RoleProviderService.cs" />
+    <Compile Include="Datalists\Datalist.cs" />
+    <Compile Include="Datalists\RolesDatalist.cs" />
+    <Compile Include="Services\Shared\Sidebar\MenuService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MVC.Datalist\Datalist\Datalist.csproj">
+      <Project>{b6b77efd-c18a-4947-99c7-63a7af09b606}</Project>
+      <Name>Datalist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Objects\Objects.csproj">
+      <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
+      <Name>Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Resources\Resources.csproj">
+      <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

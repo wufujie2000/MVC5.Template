@@ -1,0 +1,105 @@
+.table thead {
+    background: -moz-linear-gradient(center top, #FDFDFD, #EAEAEA) repeat scroll 0 0 / 100% #EAEAEA;
+}
+
+.table th {
+    text-align: center;
+    font-size: 12px;
+}
+
+.table tr td,
+.table tr th {
+    border-left: 1px solid #DDDDDD;
+}
+
+.table > thead > tr > th {
+    border-bottom-width: 1px;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    background: linear-gradient(to bottom, #1AAEF3 0%, #0993D3 100%) !important;
+    color: #FFFFFF;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td {
+    background-color: #FCFCFC;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td {
+    background-color: #F8F8F8;
+}
+
+.table td.date-cell {
+    text-align: center;
+}
+
+.table tr th.action-link-cell,
+.table tr td.action-link-cell {
+    border-left: none;
+}
+
+.table td > div.action-link-container {
+    border-radius: 4px;
+    font-size: 12.5px;
+    height: 20px;
+    width: 20px;
+}
+
+    .table td > div.action-link-container i {
+        color: #FFFFFF;
+    }
+
+.table td > div.details-action-link {
+    background-color: #5CB85C;
+    border-color: #4CAE4C;
+}
+
+    .table td > div.details-action-link:hover {
+        background-color: #47A447;
+        border-color: #398439;
+    }
+
+    .table td > div.details-action-link > a {
+        padding: 8px;
+    }
+
+    .table td > div.details-action-link i {
+        margin-top: 4.5px;
+    }
+
+.table td > div.edit-action-link {
+    background-color: #F0AD4E;
+    border-color: #EEA236;
+}
+
+    .table td > div.edit-action-link:hover {
+        background-color: #ED9C28;
+        border-color: #D58512;
+    }
+
+    .table td > div.edit-action-link > a {
+        padding-left: 5.2px;
+    }
+
+    .table td > div.edit-action-link i {
+        margin-top: 4.5px;
+    }
+
+.table td > div.delete-action-link {
+    background-color: #D9534F;
+    border-color: #D43F3A;
+}
+
+    .table td > div.delete-action-link:hover {
+        background-color: #D2322D;
+        border-color: #AC2925;
+    }
+
+    .table td > div.delete-action-link > a {
+        padding: 5.2px;
+    }
+
+    .table td > div.delete-action-link i {
+        margin-top: 4px;
+    }

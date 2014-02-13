@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B201B326-86EB-4ABD-AEBB-0DDE4C4A5366}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Template.Web</RootNamespace>
+    <AssemblyName>Template.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="GridMvc">
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\ViewEngine.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Template.Data.Core.Context.mdf" />
+    <Content Include="App_Data\Template.Data.Core.Context_log.ldf">
+      <DependentUpon>Template.Data.Core.Context.mdf</DependentUpon>
+    </Content>
+    <Content Include="Content\Css\Bootstrap\bootstrap.css" />
+    <Content Include="Content\Css\Datalist\datalist.css" />
+    <Content Include="Content\Css\FontAwesome\font-awesome.css" />
+    <Content Include="Content\Css\GridMvc\gridmvc.css" />
+    <Content Include="Content\Css\JQuery\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Content\Css\JsTree\js-tree.css" />
+    <Content Include="Content\Css\Login\login.css" />
+    <Content Include="Content\Css\Select2\select2.css" />
+    <Content Include="Content\Css\Shared\alert-messages.css" />
+    <Content Include="Content\Css\Shared\base.css" />
+    <Content Include="Content\Css\Shared\content.css" />
+    <Content Include="Content\Css\Shared\header.css" />
+    <Content Include="Content\Css\Shared\overrides.css" />
+    <Content Include="Content\Css\Shared\sidebar.css" />
+    <Content Include="Content\Css\Shared\table.css" />
+    <Content Include="Content\Css\Shared\widget-box.css" />
+    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\Datalist\loading.gif" />
+    <Content Include="Images\Flags\en-GB.gif" />
+    <Content Include="Images\Flags\lt-LT.gif" />
+    <Content Include="Images\JQuery\animated-overlay.gif" />
+    <Content Include="Images\JQuery\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\JQuery\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\JQuery\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\JQuery\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\JQuery\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\JQuery\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\JQuery\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\JQuery\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\JQuery\ui-icons_222222_256x240.png" />
+    <Content Include="Images\JQuery\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\JQuery\ui-icons_454545_256x240.png" />
+    <Content Include="Images\JQuery\ui-icons_888888_256x240.png" />
+    <Content Include="Images\JQuery\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\JsTree\32px.png" />
+    <Content Include="Images\JsTree\40px.png" />
+    <Content Include="Images\JsTree\throbber.gif" />
+    <Content Include="Images\Select2\select2-spinner.gif" />
+    <Content Include="Images\Select2\select2.png" />
+    <Content Include="Images\Select2\select2x2.png" />
+    <Content Include="Images\Shared\breadcrumb.png" />
+    <Content Include="Images\Shared\menu-active.png" />
+    <Content Include="Scripts\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\Datalist\bind-with-delay.js" />
+    <Content Include="Scripts\Datalist\bootstrap-paginator.js" />
+    <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
+    <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
+    <Content Include="Scripts\Datalist\datalist.js" />
+    <Content Include="Scripts\Globalize\Cultures\globalize.culture.en-GB.js" />
+    <Content Include="Scripts\Globalize\Cultures\globalize.culture.lt-LT.js" />
+    <Content Include="Scripts\Globalize\globalize.js" />
+    <Content Include="Scripts\GridMvc\gridmvc.js" />
+    <Content Include="Scripts\GridMvc\gridmvc.lang.lt.js" />
+    <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
+    <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
+    <Content Include="Scripts\JQuery\jquery-2.0.3.js" />
+    <Content Include="Scripts\JQuery\jquery-2.0.3.validate.js" />
+    <Content Include="Scripts\JQuery\jquery-2.0.3.validate.unobtrusive.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Scripts\JsTree\jstree.js" />
+    <Content Include="Scripts\Login\login.js" />
+    <Content Include="Scripts\Select2\select2.js" />
+    <Content Include="Scripts\Shared\shared.js" />
+    <Content Include="Scripts\Sidebar\sidebar.js" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\FontAwesome\FontAwesome.otf" />
+    <Content Include="Content\Fonts\PTSans\PTSans-Bold.woff" />
+    <Content Include="Content\Fonts\PTSans\PTSans.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Flags\Flags page.url" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MVC.Datalist\Datalist\Datalist.csproj">
+      <Project>{b6b77efd-c18a-4947-99c7-63a7af09b606}</Project>
+      <Name>Datalist</Name>
+    </ProjectReference>
+    <ProjectReference Include="Components\Components.csproj">
+      <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
+      <Name>Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="Controllers\Controllers.csproj">
+      <Project>{8531b9ae-c8c5-4b73-a0ce-b9cdfad69074}</Project>
+      <Name>Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="Objects\Objects.csproj">
+      <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
+      <Name>Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="Resources\Resources.csproj">
+      <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
+      <Name>Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\_Layout.cshtml" />
+    <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Administration\Roles\Create.cshtml" />
+    <Content Include="Views\Administration\Roles\Delete.cshtml" />
+    <Content Include="Views\Administration\Roles\Details.cshtml" />
+    <Content Include="Views\Administration\Roles\Edit.cshtml" />
+    <Content Include="Views\Administration\Roles\Index.cshtml" />
+    <Content Include="Views\Administration\Users\Create.cshtml" />
+    <Content Include="Views\Administration\Users\Delete.cshtml" />
+    <Content Include="Views\Administration\Users\Details.cshtml" />
+    <Content Include="Views\Administration\Users\Edit.cshtml" />
+    <Content Include="Views\Administration\Users\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\NotFound.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\Profile\Delete.cshtml" />
+    <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Shared\_AlertMessages.cshtml" />
+    <Content Include="Views\Shared\_Datalist.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:19174/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,14 @@
+/* jQueryUI datepicker */
+.ui-datepicker th {
+    min-width: 35px;
+}
+
+/* JsTree */
+.tree-view {
+    margin-top: 5px;
+    display: none;
+}
+
+.jstree-themeicon {
+    display: none !important;
+}

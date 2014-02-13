@@ -1,0 +1,58 @@
+﻿@model UserView
+
+@using (Html.FormWidgetBox())
+{
+    using(Html.BeginForm())
+    {
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.Username)
+            @Html.BootstrapTextBoxFor(model => model.Username)
+            @Html.BootstrapValidationFor(model => model.Username)
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapRequiredLabelFor(model => model.Password)
+            @Html.BootstrapPasswordFor(model => model.Password)
+            @Html.BootstrapValidationFor(model => model.Password)
+        }
+        using (Html.FormGroup())
+        {
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.UserRoleId)
+            using (Html.FormColumn())
+            {
+                @Html.DatalistFor(model => model.UserRoleId, new RolesDatalist())
+            }
+            @Html.BootstrapValidationFor(model => model.UserRoleId)
+        }
+        using (Html.FormGroup())
+        {
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.UserFirstName)
+            @Html.BootstrapTextBoxFor(model => model.UserFirstName)
+            @Html.BootstrapValidationFor(model => model.UserFirstName)
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.UserLastName)
+            @Html.BootstrapTextBoxFor(model => model.UserLastName)
+            @Html.BootstrapValidationFor(model => model.UserLastName)
+        }
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.UserDateOfBirth)
+            @Html.BootstrapDatepickerFor(model => model.UserDateOfBirth)
+            @Html.BootstrapValidationFor(model => model.UserDateOfBirth)
+        }
+        
+        using (Html.FormActions())
+        {
+            @Html.FormSubmit()
+        }
+    }
+}

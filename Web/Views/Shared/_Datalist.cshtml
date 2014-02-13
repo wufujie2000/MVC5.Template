@@ -1,0 +1,37 @@
+﻿@using Datalist;
+@model AbstractDatalist
+
+<div class="datalist"
+     data-page="0"
+     data-identifier="@Model.Identifier"
+     data-dialog-title="@Model.DialogTitle"
+     data-datalist-url="@Model.DatalistUrl"
+     data-sort-order="@Model.DefaultSortOrder"
+     data-sort-column="@Model.DefaultSortColumn"
+     data-filters="@String.Join(",", Model.AdditionalFilters)">
+    <div class="datalist-div">
+        <div class="datalist-data-search">
+            <div class="datalist-search-group input-group">
+                <input class="datalist-search-input form-control"/>
+                <input class="datalist-items-per-page"/>
+            </div>
+        </div>
+        <div class="datalist-processing">
+            <span class="datalist-processing-span">
+                <img src="~/Images/Datalist/loading.gif" />
+            </span>
+        </div>
+        <div class="datalist-error">
+            <span class="datalist-error-span"></span>
+        </div>
+        <div class="datalist-data">
+            <table class="datalist-table table table-hover table-striped table-bordered">
+                <thead class="datalist-table-head"></thead>
+                <tbody class="datalist-table-body"></tbody>
+            </table>
+        </div>
+        <div class="datalist-pager">
+            <ul class="pagination" />
+        </div>
+    </div>
+</div>

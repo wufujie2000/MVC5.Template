@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('PT Sans'), local('PTSans-Regular'), url('../../Fonts/PTSans/PTSans.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('PT Sans Bold'), local('PTSans-Bold'), url('../../Fonts/PTSans/PTSans-Bold.woff') format('woff');
+}
+
+* {
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+body {
+    font-family: 'PT Sans', consolas;
+    background-color: #31353C;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.clear {
+    clear: both;
+}
+
+#Footer {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 0;
+    color: #FFFFFF;
+}

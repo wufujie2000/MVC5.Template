@@ -22,6 +22,7 @@ namespace Template.Components.Datalists
             language = language == "en-GB" ? String.Empty : language + "/";
             UnitOfWork = new UnitOfWork();
 
+            DialogTitle = ResourceProvider.GetDatalistTitle(DialogTitle);
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.Url.Authority,
@@ -35,7 +36,7 @@ namespace Template.Components.Datalists
             var column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
             if (!String.IsNullOrWhiteSpace(column.Relation))
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
-            // TODO: Fix Dialog title for lt language.
+            
             return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);
         }
         protected override string GetColumnCssClass(PropertyInfo property)

@@ -59,6 +59,10 @@ namespace Template.Resources
         {
             return GetResourceFrom("Template.Resources.Action.Titles", action);
         }
+        public static String GetDatalistTitle(String type)
+        {
+            return GetResourceFrom("Template.Resources.Datalist.Titles", type);
+        }
         public static String GetMenuTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);

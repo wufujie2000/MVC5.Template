@@ -54,6 +54,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
+    <Compile Include="Datalist\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
     <Compile Include="Form\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -192,6 +197,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Content\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Datalist\Titles.lt.resx" />
+    <EmbeddedResource Include="Datalist\Titles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Titles.lt.resx">

@@ -1,4 +1,11 @@
-﻿.ui-dialog,
+﻿/*!
+ * Datalist 3.0.0
+ * Copyright © 2014 Muchiachio
+ * Licensed under the terms of the MIT License
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+
+.ui-dialog,
 .ui-dialog:after,
 .ui-dialog:before {
     -moz-box-sizing: content-box;
@@ -6,16 +13,13 @@
     width: 100%;
 }
 
-.datalist {
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
 .ui-button-icon-only .ui-icon {
     margin-left: -8.3px;
 }
 
 .datalist {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
     display: none;
 }
 
@@ -66,6 +70,7 @@
     }
 
 .datalist-processing {
+    background: url(../../../Images/Datalist/loading.gif) no-repeat center;
     border: 1px solid #DDDDDD;
     background-color: #FFFFFF;
     position: absolute;
@@ -77,43 +82,29 @@
     top: 37%;
 }
 
-    .datalist-processing > .datalist-processing-span {
-        position: absolute;
-        display: block;
-        height: 100%;
-        width: 100%;
-    }
-
-        .datalist-processing > .datalist-processing-span > img {
-            margin-top: 17px;
-        }
-
 .datalist-error {
     background-color: #F2DEDE;
-    border-color: #EBCCD1;
-    margin-bottom: 20px;
     position: absolute;
     text-align: center;
-    border-radius: 4px;
-    margin-top: -15px;
-    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 13px;
     color: #A94442;
     padding: 15px;
     display: none;
     width: 320px;
     left: 15%;
-    top: 50%;
+    top: 45%;
 }
 
 .datalist-data {
-    margin: 5px 5px 5px;
     height: auto;
     clear: both;
+    margin: 5px;
 }
 
 .datalist-table {
     margin-bottom: 0;
-    width: 100%;
 }
 
     .datalist-table thead > tr > th > .datalist-sort-arrow {
@@ -122,24 +113,22 @@
     }
 
     .datalist-table thead > tr > th {
+        vertical-align: middle;
         text-align: center;
-        line-height: 20px;
-        font-size: 0.9em;
         cursor: pointer;
-        color: #428BCA;
-        padding: 3px;
     }
 
     .datalist-table thead > tr > th,
     .datalist-table tbody > tr > td {
         font-size: 0.9em;
-        padding: 3px;
+        padding: 4px 8px;
     }
 
+.datalist-select-header,
 .datalist-select-cell {
     text-align: center;
     cursor: pointer;
-    width: 20px;
+    width: 35px;
 }
 
 .datalist-select-container {
@@ -165,12 +154,11 @@
     }
 
 .datalist-pager {
-    display: none;
     clear: both;
 }
 
     .datalist-pager .pagination {
-        margin: 5px 4px 0 0;
+        margin: 5px 5px 0 0;
         float: right;
     }
 

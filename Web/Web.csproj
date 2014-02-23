@@ -39,6 +39,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Datalist, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Datalist.3.0.0\lib\net45\Datalist.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -48,6 +52,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.0\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -56,14 +63,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.1\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.1\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,7 +89,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewEngine.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -86,7 +100,6 @@
       <DependentUpon>Template.Data.Core.Context.mdf</DependentUpon>
     </Content>
     <Content Include="Content\Css\Bootstrap\bootstrap.css" />
-    <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Css\FontAwesome\font-awesome.css" />
     <Content Include="Content\Css\GridMvc\gridmvc.css" />
     <Content Include="Content\Css\JQuery\jquery-ui-1.10.3.custom.css" />
@@ -101,6 +114,7 @@
     <Content Include="Content\Css\Shared\sidebar.css" />
     <Content Include="Content\Css\Shared\table.css" />
     <Content Include="Content\Css\Shared\widget-box.css" />
+    <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
@@ -165,6 +179,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -187,10 +202,6 @@
     <Content Include="Images\Flags\Flags page.url" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MVC.Datalist\Datalist\Datalist.csproj">
-      <Project>{b6b77efd-c18a-4947-99c7-63a7af09b606}</Project>
-      <Name>Datalist</Name>
-    </ProjectReference>
     <ProjectReference Include="Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>Components</Name>
@@ -229,7 +240,6 @@
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Shared\_AlertMessages.cshtml" />
-    <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />

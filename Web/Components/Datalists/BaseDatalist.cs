@@ -8,7 +8,7 @@ using Template.Resources;
 
 namespace Template.Components.Datalists
 {
-    public abstract class Datalist<TView> : GenericDatalist<TView> where TView : BaseView
+    public abstract class BaseDatalist<TView> : GenericDatalist<TView> where TView : BaseView
     {
         protected IUnitOfWork UnitOfWork
         {
@@ -16,7 +16,7 @@ namespace Template.Components.Datalists
             set;
         }
 
-        protected Datalist()
+        protected BaseDatalist()
         {
             String language = (String) HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
             language = language == "en-GB" ? String.Empty : language + "/";
@@ -30,7 +30,6 @@ namespace Template.Components.Datalists
                 AbstractDatalist.Prefix,
                 GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
         }
-
         protected override String GetColumnHeader(PropertyInfo property)
         {
             var column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
@@ -38,6 +37,31 @@ namespace Template.Components.Datalists
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
             // TODO: Fix Dialog title for lt language.
             return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);
+        }
+        protected override string GetColumnCssClass(PropertyInfo property)
+        {
+            var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            if (type.IsEnum) return "text-cell";
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return "number-cell";
+                case TypeCode.DateTime:
+                    return "date-cell";
+                default:
+                    return "text-cell";
+            }
         }
     }
 }

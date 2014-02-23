@@ -16,6 +16,16 @@
     border-bottom-width: 1px;
 }
 
+.table > tbody > tr > td.text-cell {
+    text-align: left;
+}
+.table > tbody > tr > td.date-cell {
+    text-align: center;
+}
+.table > tbody > tr > td.number-cell {
+    text-align: right;
+}
+
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
     background: linear-gradient(to bottom, #1AAEF3 0%, #0993D3 100%) !important;

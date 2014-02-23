@@ -4,11 +4,12 @@ using Template.Objects;
 
 namespace Template.Components.Datalists
 {
-    public class RolesDatalist : Datalist<RoleView>
+    public class RolesDatalist : BaseDatalist<RoleView>
     {
         protected override IQueryable<RoleView> GetModels()
         {
-            return UnitOfWork.Repository<Role>().ProjectTo<RoleView>();
+            // TODO: Add BaseDatalist with model id and other performance improving overrides.
+            return UnitOfWork.Repository<Role>().ProjectTo<RoleView>(); // TODO: Remove unnecessary regions
         }
     }
 }

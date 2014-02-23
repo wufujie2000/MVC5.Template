@@ -8,8 +8,7 @@ namespace Template.Components.Datalists
     {
         protected override IQueryable<RoleView> GetModels()
         {
-            // TODO: Add BaseDatalist with model id and other performance improving overrides.
-            return UnitOfWork.Repository<Role>().ProjectTo<RoleView>(); // TODO: Remove unnecessary regions
+            return UnitOfWork.Repository<Role>().ProjectTo<RoleView>();
         }
     }
 }

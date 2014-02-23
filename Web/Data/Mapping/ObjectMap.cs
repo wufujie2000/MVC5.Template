@@ -7,26 +7,18 @@ namespace Template.Components.Services.AutoMapper
     {
         public static void MapModels()
         {
-            MapAccount();
             MapAdministration();
         }
-
-        #region Account
-
-        private static void MapAccount()
-        {
-            Mapper.CreateMap<Account, AccountView>();
-            Mapper.CreateMap<AccountView, Account>();
-
-            Mapper.CreateMap<Account, ProfileView>();
-        }
-
-        #endregion
 
         #region Administration
 
         private static void MapAdministration()
         {
+            Mapper.CreateMap<Account, ProfileView>();
+
+            Mapper.CreateMap<Account, AccountView>();
+            Mapper.CreateMap<AccountView, Account>();
+
             Mapper.CreateMap<User, UserView>();
             Mapper.CreateMap<UserView, User>()
                 .ForMember(user => user.FirstName, property => property.MapFrom(view => view.UserFirstName))

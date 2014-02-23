@@ -102,7 +102,7 @@
     <Content Include="Content\Css\Bootstrap\bootstrap.css" />
     <Content Include="Content\Css\FontAwesome\font-awesome.css" />
     <Content Include="Content\Css\GridMvc\gridmvc.css" />
-    <Content Include="Content\Css\JQuery\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Content\Css\JQuery\jquery-ui-1.10.4.custom.css" />
     <Content Include="Content\Css\JsTree\js-tree.css" />
     <Content Include="Content\Css\Login\login.css" />
     <Content Include="Content\Css\Select2\select2.css" />
@@ -156,10 +156,10 @@
     <Content Include="Scripts\GridMvc\gridmvc.lang.lt.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
-    <Content Include="Scripts\JQuery\jquery-2.0.3.js" />
-    <Content Include="Scripts\JQuery\jquery-2.0.3.validate.js" />
-    <Content Include="Scripts\JQuery\jquery-2.0.3.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.validate.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.validate.unobtrusive.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\Login\login.js" />
     <Content Include="Scripts\Select2\select2.js" />

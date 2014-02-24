@@ -161,6 +161,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validation.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProfileView\Validations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validations.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfileView\Validations.lt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validations.lt.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\RoleView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -180,6 +190,11 @@
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\UserView\Validations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +299,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProfileView\Validations.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProfileView\Validations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\RoleView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
@@ -292,6 +315,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserView\Validations.lt.resx" />
     <EmbeddedResource Include="Views\UserView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
@@ -299,6 +323,10 @@
     <EmbeddedResource Include="Views\UserView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserView\Validations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

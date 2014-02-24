@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Template.Resources.Views.AccountView {
+namespace Template.Resources.Views.UserView {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Template.Resources.Views.AccountView {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.AccountView.Validations", typeof(Validations).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.UserView.Validations", typeof(Validations).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace Template.Resources.Views.AccountView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The username or password you entered is incorrect.
+        ///   Looks up a localized string similar to Password field is required.
         /// </summary>
-        public static string IncorrectUsernameOrPassword {
+        public static string PasswordFieldIsRequired {
             get {
-                return ResourceManager.GetString("IncorrectUsernameOrPassword", resourceCulture);
+                return ResourceManager.GetString("PasswordFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is already taken.
+        /// </summary>
+        public static string UsernameIsAlreadyTaken {
+            get {
+                return ResourceManager.GetString("UsernameIsAlreadyTaken", resourceCulture);
             }
         }
     }

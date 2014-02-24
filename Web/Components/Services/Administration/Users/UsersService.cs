@@ -1,9 +1,9 @@
-﻿using Template.Components.Security;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Security;
+using Template.Objects;
+using Template.Resources.Views.UserView;
 
 namespace Template.Components.Services
 {

@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IncorrectPassword" xml:space="preserve">
-    <value>Password is incorrect</value>
-  </data>
-  <data name="IncorrectUsername" xml:space="preserve">
-    <value>Username is incorrect</value>
-  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>The username or password you entered is incorrect</value>
-  </data>
-  <data name="PasswordFieldIsRequired" xml:space="preserve">
-    <value>Password field is required</value>
-  </data>
-  <data name="UsernameIsAlreadyTaken" xml:space="preserve">
-    <value>Username is already taken</value>
   </data>
 </root>

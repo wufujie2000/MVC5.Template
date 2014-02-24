@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Objects;
-using Template.Resources.Views.AccountView;
 using Template.Resources.Views.ProfileView;
 
 namespace Template.Components.Services
@@ -50,7 +49,7 @@ namespace Template.Components.Services
                     account.Id != CurrentAccountId &&
                     account.Username == profile.Username)
                  .Any();
-            // TODO: Change validation messages to ProfileView not AccountView
+            // TODO: Remove resource usage from views
             // TODO: Change ToLower to ToUpperInvariant
             if (!isUnique)
                 ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
@@ -99,9 +98,9 @@ namespace Template.Components.Services
         private User GetUserFrom(ProfileView profile)
         {
             var user = UnitOfWork.Repository<Account>().GetById(CurrentAccountId).User;
+            user.DateOfBirth = profile.UserDateOfBirth;
             user.FirstName = profile.UserFirstName;
             user.LastName = profile.UserLastName;
-            user.DateOfBirth = profile.UserDateOfBirth;
 
             return user;
         }

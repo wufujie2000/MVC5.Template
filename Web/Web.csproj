@@ -237,7 +237,6 @@
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Profile\Delete.cshtml" />
-    <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Shared\_AlertMessages.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />

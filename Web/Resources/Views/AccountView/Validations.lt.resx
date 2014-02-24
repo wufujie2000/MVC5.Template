@@ -120,6 +120,9 @@
   <data name="IncorrectPassword" xml:space="preserve">
     <value>Neteisingas slaptažodis</value>
   </data>
+  <data name="IncorrectUsername" xml:space="preserve">
+    <value>Neteisingas vartotojo vardas</value>
+  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Įvestas netinkamas naudotojo vardas arba slaptažodis</value>
   </data>

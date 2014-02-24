@@ -1,6 +1,6 @@
 ﻿@model ProfileView
 
-@using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Edit))
+@using (Html.FormWidgetBox(LinkAction.Edit))
 {
     using (Html.FormGroup())
     {
@@ -20,14 +20,14 @@
     using (Html.FormGroup())
     {
     }
-    using (Html.FormGroup())
-    {
-        @Html.BootstrapFormLabelFor(model => model.Username)
-        @Html.BootstrapTextBoxFor(model => model.Username)
-        @Html.BootstrapValidationFor(model => model.Username)
-    }   
     using(Html.BeginForm())
     {
+        using (Html.FormGroup())
+        {
+            @Html.BootstrapFormLabelFor(model => model.Username)
+            @Html.BootstrapTextBoxFor(model => model.Username)
+            @Html.BootstrapValidationFor(model => model.Username)
+        }
         using (Html.FormGroup())
         {
             @Html.BootstrapFormLabelFor(model => model.CurrentPassword)
@@ -35,7 +35,6 @@
             @Html.BootstrapValidationFor(model => model.CurrentPassword)
         }
         
-        @Html.HiddenFor(model => model.Id)
         using (Html.FormActions())
         {
             @Html.FormSubmit()

@@ -10,15 +10,9 @@ namespace Template.Controllers.Profile
     public class ProfileController : ServicedController<ProfileService>
     {
         [HttpGet]
-        public ActionResult Details(String id)
-        {
-            return View(Service.GetView(id));
-        }
-
-        [HttpGet]
         public ActionResult Edit()
         {
-            return View(Service.GetView());
+            return View(Service.GetView(Service.CurrentAccountId));
         }
 
         [HttpPost]
@@ -33,17 +27,20 @@ namespace Template.Controllers.Profile
         [HttpGet]
         public ActionResult Delete()
         {
-            return View(Service.GetView());
+            // TODO: Add delete disclaimer
+            ProfileView profile = Service.GetView(Service.CurrentAccountId);
+            profile.Username = String.Empty;
+            return View(profile);
         }
 
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(String id)
-        {// TODO: Delete can be run by malicious party
-            if (!Service.CanDelete(id))
+        public ActionResult DeleteConfirmed(ProfileView profile)
+        {
+            if (!Service.CanDelete(profile))
                 return View();
 
-            Service.Delete(id);
+            Service.Delete(Service.CurrentAccountId);
             return RedirectToAction("Logout", "Account");
         }
     }

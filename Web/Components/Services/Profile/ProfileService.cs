@@ -9,19 +9,11 @@ using Template.Resources.Views.ProfileView;
 
 namespace Template.Components.Services
 {
-    public class ProfileService : GenericService<User, ProfileView>
+    public class ProfileService : GenericService<Account, ProfileView>
     {
         public ProfileService(ModelStateDictionary modelState)
             : base(modelState)
         {
-        }
-
-        public ProfileView GetView()
-        {
-            return UnitOfWork
-                .Repository<Account>()
-                .ProjectTo<ProfileView>(account => account.Id == CurrentAccountId)
-                .First();
         }
 
         public override Boolean CanEdit(ProfileView profile)
@@ -32,33 +24,13 @@ namespace Template.Components.Services
 
             return isValid;
         }
-        private Boolean IsUniqueUsername(ProfileView profile)
+        public Boolean CanDelete(ProfileView profile)
         {
-            Boolean isUnique = !UnitOfWork
-                .Repository<Account>()
-                .Query(account =>
-                    account.Id != CurrentAccountId &&
-                    account.Username == profile.Username)
-                 .Any();
+            Boolean isValid = CanDelete(profile.Id);
+            isValid &= IsCorrectUsername(profile);
+            isValid &= IsCorrectPassword(profile);
 
-            if (!isUnique)
-                ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
-
-            return isUnique;
-        }
-        private Boolean IsCorrectPassword(ProfileView profile)
-        {
-            String currentPasshash = UnitOfWork
-                .Repository<Account>()
-                .Query(account => account.Id == CurrentAccountId)
-                .Select(account => account.Passhash)
-                .First();
-
-            Boolean isCorrectPassword = BCrypter.Verify(profile.CurrentPassword, currentPasshash);
-            if (!isCorrectPassword)
-                ModelState.AddModelError("CurrentPassword", Validations.IncorrectPassword);
-
-            return isCorrectPassword;
+            return isValid;
         }
 
         public override void Edit(ProfileView profile)
@@ -68,6 +40,50 @@ namespace Template.Components.Services
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
+        }
+
+        private Boolean IsUniqueUsername(ProfileView profile)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(account =>
+                    account.Id != CurrentAccountId &&
+                    account.Username == profile.Username)
+                 .Any();
+            // TODO: Change validation messages to ProfileView not AccountView
+            // TODO: Change ToLower to ToUpperInvariant
+            if (!isUnique)
+                ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
+
+            return isUnique;
+        }
+        private Boolean IsCorrectUsername(ProfileView profile)
+        {
+            String profileUsername = UnitOfWork
+                .Repository<Account>()
+                .Query(account => account.Id == CurrentAccountId)
+                .Select(account => account.Username.ToLower())
+                .First();
+
+            Boolean isCorrectUsername = profileUsername == profile.Username.ToLower();
+            if (!isCorrectUsername)
+                ModelState.AddModelError("Username", Validations.IncorrectUsername);
+
+            return isCorrectUsername;
+        }
+        private Boolean IsCorrectPassword(ProfileView profile)
+        {
+            String profilePasshash = UnitOfWork
+                .Repository<Account>()
+                .Query(account => account.Id == CurrentAccountId)
+                .Select(account => account.Passhash)
+                .First();
+
+            Boolean isCorrectPassword = BCrypter.Verify(profile.CurrentPassword, profilePasshash);
+            if (!isCorrectPassword)
+                ModelState.AddModelError("CurrentPassword", Validations.IncorrectPassword);
+
+            return isCorrectPassword;
         }
 
         private Account GetAccountFrom(ProfileView profile)

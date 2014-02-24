@@ -49,7 +49,7 @@ namespace Template.Components.Services
                     account.Id != CurrentAccountId &&
                     account.Username == profile.Username)
                  .Any();
-            // TODO: Remove resource usage from views
+
             if (!isUnique)
                 ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
 
@@ -86,7 +86,6 @@ namespace Template.Components.Services
 
         private Account GetAccountFrom(ProfileView profile)
         {
-            // TODO: Create mapping from ProfileView to Account and User models?
             var account = UnitOfWork.Repository<Account>().GetById(CurrentAccountId);
             account.Username = profile.Username.ToLowerInvariant();
             if (profile.NewPassword != null)
@@ -96,7 +95,7 @@ namespace Template.Components.Services
         }
         private User GetUserFrom(ProfileView profile)
         {
-            var user = UnitOfWork.Repository<Account>().GetById(CurrentAccountId).User;
+            var user = UnitOfWork.Repository<User>().GetById(CurrentAccountId);
             user.DateOfBirth = profile.UserDateOfBirth;
             user.FirstName = profile.UserFirstName;
             user.LastName = profile.UserLastName;

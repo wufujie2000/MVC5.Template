@@ -15,9 +15,7 @@
     {
         @Html.LoginLanguageSelect()
     }
-    <div class="login-form-actions">
-        <input class="btn btn-block btn-primary btn-default" value="@Template.Resources.Shared.Resources.Login" type="submit" />
-    </div>
+    @Html.LoginSubmit()
     <script>
         var currentLanguage = '@Request.RequestContext.RouteData.Values["language"].ToString()';
     </script>

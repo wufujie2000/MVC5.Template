@@ -1,10 +1,10 @@
-﻿using Template.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
@@ -64,6 +64,19 @@ namespace Template.Components.Extensions.Html
             }
 
             return new MvcHtmlString(String.Format("{0}{1}{2}", addon, input, select));
+        }
+
+        public static MvcHtmlString LoginSubmit<TModel>(this HtmlHelper<TModel> html)
+        {
+            var formActions = new TagBuilder("div");
+            formActions.AddCssClass("login-form-actions");
+            var submit = new TagBuilder("input");
+            submit.AddCssClass("btn btn-block btn-primary btn-default");
+            submit.MergeAttribute("value", Template.Resources.Shared.Resources.Login);
+            submit.MergeAttribute("type", "submit");
+            formActions.InnerHtml = submit.ToString();
+
+            return new MvcHtmlString(formActions.ToString());
         }
     }
 }

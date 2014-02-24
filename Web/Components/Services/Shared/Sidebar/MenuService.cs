@@ -16,7 +16,6 @@ namespace Template.Components.Services
             {
                 new Menu()
                 {
-                    IsAnonymous = true,
                     IconClass = "menu-icon fa fa-home",
                     Controller = "Home",
                     Action = "Index"
@@ -65,8 +64,7 @@ namespace Template.Components.Services
 
         private Boolean UserIsAuthorizedToView(Menu menu)
         {
-            if (String.IsNullOrWhiteSpace(menu.Action)) return true;
-            if (menu.IsAnonymous) return true;
+            if (menu.Action == null) return true;
 
             return RoleProviderService.Instance.IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
         }

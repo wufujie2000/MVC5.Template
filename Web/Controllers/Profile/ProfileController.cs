@@ -39,7 +39,7 @@ namespace Template.Controllers.Profile
         [HttpPost]
         [ActionName("Delete")]
         public ActionResult DeleteConfirmed(String id)
-        {
+        {// TODO: Delete can be run by malicious party
             if (!Service.CanDelete(id))
                 return View();
 

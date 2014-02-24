@@ -58,7 +58,7 @@ namespace Template.Components.Extensions.Html
             menuIcon.AddCssClass(menu.IconClass);
             span.InnerHtml = menu.Title;
 
-            if (String.IsNullOrWhiteSpace(menu.Action))
+            if (menu.Action == null)
             {
                 TagBuilder openIcon = new TagBuilder("i");
                 TagBuilder action = new TagBuilder("a");

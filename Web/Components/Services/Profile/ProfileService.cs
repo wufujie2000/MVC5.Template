@@ -73,7 +73,6 @@ namespace Template.Components.Services
         private Account GetAccountFrom(ProfileView profile)
         {
             // TODO: Create mapping from ProfileView to Account and User models?
-            // TODO: Profile view still does not have delete and details links.
             var account = UnitOfWork.Repository<Account>().GetById(CurrentAccountId);
             account.Username = profile.Username.ToLower();
             if (profile.NewPassword != null)

@@ -79,8 +79,7 @@ namespace Template.Components.Extensions.Html
             var routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)
-                if (!String.IsNullOrWhiteSpace(queryParameters[parameter]))
-                    routeValues[parameter] = queryParameters[parameter];
+                routeValues[parameter] = queryParameters[parameter];
         }
         private static void RemoveQueryValues(HtmlHelper html)
         {
@@ -88,8 +87,7 @@ namespace Template.Components.Extensions.Html
             var routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)
-                if (!String.IsNullOrWhiteSpace(queryParameters[parameter]))
-                    routeValues.Remove(parameter);
+                 routeValues.Remove(parameter);
         }
     }
 }

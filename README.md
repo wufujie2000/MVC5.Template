@@ -1,4 +1,6 @@
 MVC.Template
 ============
 
-MVC project template with default functionality
+MVC5 project template.
+
+This template is currently in development, use it at your own risk.

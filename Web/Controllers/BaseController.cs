@@ -1,11 +1,8 @@
-﻿using Template.Components.Security;
-using Template.Components.Services;
-using System;
-using System.Globalization;
-using System.Reflection;
-using System.Threading;
+﻿using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Template.Components.Security;
+using Template.Components.Services;
 
 namespace Template.Controllers
 {
@@ -42,38 +39,22 @@ namespace Template.Controllers
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
+            String area = (String)filterContext.RouteData.Values["area"];
+            String controller = (String)filterContext.RouteData.Values["controller"];
+            String action = (String)filterContext.RouteData.Values["action"];
 
-            if (!IsAuthorizedFor(filterContext))
+            if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();
         }
         protected Boolean IsAuthorizedFor(String action)
         {
-            var controller = GetType();
-            var actionMethod = controller.GetMethod(action);
-
-            if (!NeedsAuthorization(controller, actionMethod))
-                return true;
-
+            if (RoleProvider == null) return true;
             return RoleProvider.IsAuthorizedForAction(action);
         }
-        protected Boolean IsAuthorizedFor(AuthorizationContext context)
+        protected Boolean IsAuthorizedFor(String area, String controller, String action)
         {
-            if (!NeedsAuthorization(context.ActionDescriptor.ControllerDescriptor, context.ActionDescriptor))
-                return true;
-
-            return RoleProvider.IsAuthorizedForAction();            
-        }
-
-        private Boolean NeedsAuthorization(ICustomAttributeProvider controller, ICustomAttributeProvider action)
-        {
-            if (RoleProvider == null) return false;
-            if (!HttpContext.User.Identity.IsAuthenticated) return false;
-            if (action.IsDefined(typeof(AllowAnonymousAttribute), false)) return false;
-            if (action.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return false;
-            if (controller.IsDefined(typeof(AllowAnonymousAttribute), false)) return false;
-            if (controller.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return false;
-
-            return true;
+            if (RoleProvider == null) return true;
+            return RoleProvider.IsAuthorizedForAction(area, controller, action);            
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Resources.Shared;
 
 namespace Template.Components.Adapters
 {
@@ -21,7 +22,7 @@ namespace Template.Components.Adapters
             yield return new ModelClientValidationRule
             {
                 ValidationType = "number",
-                ErrorMessage = String.Format(Resources.Shared.Validation.FieldMustBeNumeric, Metadata.GetDisplayName().ToLower())
+                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, Metadata.GetDisplayName().ToLower())
             };
         }
     }

@@ -50,7 +50,6 @@ namespace Template.Components.Services
                     account.Username == profile.Username)
                  .Any();
             // TODO: Remove resource usage from views
-            // TODO: Change ToLower to ToUpperInvariant
             if (!isUnique)
                 ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
 
@@ -58,13 +57,13 @@ namespace Template.Components.Services
         }
         private Boolean IsCorrectUsername(ProfileView profile)
         {
-            String profileUsername = UnitOfWork
+            String username = UnitOfWork
                 .Repository<Account>()
                 .Query(account => account.Id == CurrentAccountId)
-                .Select(account => account.Username.ToLower())
+                .Select(account => account.Username)
                 .First();
 
-            Boolean isCorrectUsername = profileUsername == profile.Username.ToLower();
+            Boolean isCorrectUsername = username == profile.Username.ToLowerInvariant();
             if (!isCorrectUsername)
                 ModelState.AddModelError("Username", Validations.IncorrectUsername);
 
@@ -89,7 +88,7 @@ namespace Template.Components.Services
         {
             // TODO: Create mapping from ProfileView to Account and User models?
             var account = UnitOfWork.Repository<Account>().GetById(CurrentAccountId);
-            account.Username = profile.Username.ToLower();
+            account.Username = profile.Username.ToLowerInvariant();
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
 

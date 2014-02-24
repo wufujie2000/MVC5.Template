@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Template.Resources.Shared;
 
 namespace Template.Components.Adapters
 {
@@ -8,7 +9,7 @@ namespace Template.Components.Adapters
         public RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
             : base(metadata, context, attribute)
         {
-            attribute.ErrorMessageResourceType = typeof(Resources.Shared.Validation);
+            attribute.ErrorMessageResourceType = typeof(Validations);
             attribute.ErrorMessageResourceName = "FieldIsRequired";
         }
     }

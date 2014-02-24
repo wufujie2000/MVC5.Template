@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Resources.Shared;
 
 namespace Template.Components.Adapters
 {
@@ -21,7 +22,7 @@ namespace Template.Components.Adapters
             yield return new ModelClientValidationRule
             {
                 ValidationType = "date",
-                ErrorMessage = String.Format(Resources.Shared.Validation.FieldMustBeDate, Metadata.GetDisplayName().ToLower())
+                ErrorMessage = String.Format(Validations.FieldMustBeDate, Metadata.GetDisplayName().ToLower())
             };
         }
     }

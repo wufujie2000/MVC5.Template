@@ -151,15 +151,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Shared\Validation.lt.Designer.cs">
-      <DependentUpon>Validation.lt.resx</DependentUpon>
+    <Compile Include="Shared\Validations.lt.Designer.cs">
+      <DependentUpon>Validations.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Shared\Validation.Designer.cs">
+    <Compile Include="Shared\Validations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Validation.resx</DependentUpon>
+      <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\ProfileView\Validations.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -291,13 +291,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Validation.lt.resx">
+    <EmbeddedResource Include="Shared\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validation.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Validation.resx">
+    <EmbeddedResource Include="Shared\Validations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validation.Designer.cs</LastGenOutput>
+      <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ProfileView\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -90,7 +90,7 @@ namespace Template.Components.Extensions.Html
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLower()));
+            actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLowerInvariant()));
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action(action.ToString(), new { id = model.Id }));
             icon.AddCssClass(iconClass);
 

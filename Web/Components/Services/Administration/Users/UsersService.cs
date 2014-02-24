@@ -32,7 +32,7 @@ namespace Template.Components.Services
         
         public override void Create(UserView view)
         {
-            view.Username = view.Username.ToLower();
+            view.Username = view.Username.ToLowerInvariant();
             var user = UnitOfWork.ToModel<UserView, User>(view);
             var account = UnitOfWork.ToModel<UserView, Account>(view);
 
@@ -45,7 +45,7 @@ namespace Template.Components.Services
         }
         public override void Edit(UserView view)
         {
-            view.Username = view.Username.ToLower();
+            view.Username = view.Username.ToLowerInvariant();
             var user = UnitOfWork.ToModel<UserView, User>(view);
             var account = UnitOfWork.ToModel<UserView, Account>(view);
             if (view.NewPassword == null)
@@ -65,11 +65,12 @@ namespace Template.Components.Services
 
         private Boolean IsUniqueUsername(UserView user)
         {
+            String username = user.Username.ToLowerInvariant();
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
                 .Query(account =>
                     account.Id != user.Id &&
-                    account.Username.ToLower() == user.Username.ToLower())
+                    account.Username == username)
                  .Any();
 
             if (!isUnique)

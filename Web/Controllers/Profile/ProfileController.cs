@@ -27,8 +27,8 @@ namespace Template.Controllers.Profile
         [HttpGet]
         public ActionResult Delete()
         {
-            // TODO: Add delete disclaimer
             ProfileView profile = Service.GetView(Service.CurrentAccountId);
+            Service.AddDeleteDisclaimerMessage();
             profile.Username = String.Empty;
             return View(profile);
         }

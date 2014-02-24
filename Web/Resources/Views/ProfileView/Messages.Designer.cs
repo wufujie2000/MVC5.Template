@@ -61,6 +61,15 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to delete your profile, all your personal information will be deleted.
+        /// </summary>
+        public static string ProfileDeleteDisclaimer {
+            get {
+                return ResourceManager.GetString("ProfileDeleteDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile updated successfully.
         /// </summary>
         public static string ProfileUpdated {

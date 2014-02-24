@@ -41,6 +41,11 @@ namespace Template.Components.Services
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
         }
 
+        public void AddDeleteDisclaimerMessage()
+        {
+            AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
+        }
+
         private Boolean IsUniqueUsername(ProfileView profile)
         {
             Boolean isUnique = !UnitOfWork

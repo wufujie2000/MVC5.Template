@@ -4,8 +4,8 @@ using System.IO;
 using System.Web;
 using System.Web.Routing;
 using Template.Objects;
+using Template.Objects.Resources;
 using Template.Resources;
-using Template.Tests.Resources.Objects.Models;
 
 namespace Template.Tests.Resources.Tests
 {
@@ -70,6 +70,7 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
+        [Ignore]
         public void GetCurrentTableTitle_GetsTitleWithoutArea()
         {
             throw new NotImplementedException("No table without area");
@@ -197,7 +198,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_OnTypeFromExpressionNotFoundReturnsEmpty()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle<TestModel, String>(model => model.Title));
+            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(model => model.Title));
         }
 
         #endregion
@@ -229,7 +230,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_OnTypeNotFoundReturnsEmpty()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle(typeof(TestModel), "Title"));
+            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle(typeof(NoResourcesModel), "Title"));
         }
 
         #endregion

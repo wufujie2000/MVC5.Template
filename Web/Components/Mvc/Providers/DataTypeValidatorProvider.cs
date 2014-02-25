@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Template.Components.Mvc.Validators;
 
-namespace Template.Components.Adapters
+namespace Template.Components.Mvc.Providers
 {
     public class DataTypeValidatorProvider : ClientDataTypeModelValidatorProvider
     {

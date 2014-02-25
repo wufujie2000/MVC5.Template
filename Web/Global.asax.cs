@@ -1,5 +1,4 @@
-﻿using Template.Components.Adapters;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Template.Components.Mvc.Adapters;
+using Template.Components.Mvc.Providers;
 
 namespace Template.Web
 {
@@ -54,7 +55,7 @@ namespace Template.Web
         }
         private void RegisterModelMetadataProvider()
         {
-            ModelMetadataProviders.Current = new ModelMetadataAdapter();
+            ModelMetadataProviders.Current = new DisplayNameMetadataProvider();
         }
         private void RegisterDateTypeValidator()
         {

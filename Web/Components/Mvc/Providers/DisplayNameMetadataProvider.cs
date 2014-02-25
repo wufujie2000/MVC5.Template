@@ -2,16 +2,15 @@
 using System.Web.Mvc;
 using Template.Resources;
 
-namespace Template.Components.Adapters
+namespace Template.Components.Mvc.Providers
 {
-    public class ModelMetadataAdapter : DataAnnotationsModelMetadataProvider
+    public class DisplayNameMetadataProvider : DataAnnotationsModelMetadataProvider
     {
         public override ModelMetadata GetMetadataForProperty(Func<Object> modelAccessor, Type containerType, String propertyName)
         {
             var metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
-            if (containerType == null || propertyName == null) return metadata;
-
             metadata.DisplayName = ResourceProvider.GetPropertyTitle(containerType, propertyName);
+
             return metadata;
         }
     }

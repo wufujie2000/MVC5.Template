@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web.Mvc;
 using Template.Resources.Shared;
 
-namespace Template.Components.Adapters
+namespace Template.Components.Mvc.Validators
 {
-    public class NumberValidator : ModelValidator
+    public class DateValidator : ModelValidator
     {
-        public NumberValidator(ModelMetadata metadata, ControllerContext context)
+        public DateValidator(ModelMetadata metadata, ControllerContext context)
             : base(metadata, context)
         {
         }
@@ -21,8 +21,8 @@ namespace Template.Components.Adapters
         {
             yield return new ModelClientValidationRule
             {
-                ValidationType = "number",
-                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, Metadata.GetDisplayName().ToLower())
+                ValidationType = "date",
+                ErrorMessage = String.Format(Validations.FieldMustBeDate, Metadata.GetDisplayName().ToLower())
             };
         }
     }

@@ -8,7 +8,7 @@ namespace Template.Components.Alerts
 {
     public class MessagesContainer : IMessagesContainer
     {
-        protected const Decimal DefaultFadeOut = 4;
+        public const Decimal DefaultFadeOut = 4;
         protected ModelStateDictionary modelState;
         protected List<AlertMessage> messages;
 

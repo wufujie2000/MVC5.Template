@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
+    <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />

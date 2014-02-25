@@ -39,7 +39,7 @@ namespace Template.Components.Extensions.Html
                 { "en-GB", "English" },
                 { "lt-LT", "Lietuvių" }
             };
-            // TODO: Change short vars to proper ones.
+
             var currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
             html.ViewContext.RequestContext.RouteData.Values.Remove("language");
             AddQueryValues(html);

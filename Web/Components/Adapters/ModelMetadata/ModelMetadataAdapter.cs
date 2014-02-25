@@ -1,6 +1,6 @@
-﻿using Template.Resources;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using Template.Resources;
 
 namespace Template.Components.Adapters
 {

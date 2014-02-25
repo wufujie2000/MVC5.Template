@@ -70,33 +70,6 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date of birth.
-        /// </summary>
-        public static string DateOfBirth {
-            get {
-                return ResourceManager.GetString("DateOfBirth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to First name.
-        /// </summary>
-        public static string FirstName {
-            get {
-                return ResourceManager.GetString("FirstName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last name.
-        /// </summary>
-        public static string LastName {
-            get {
-                return ResourceManager.GetString("LastName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to New password.
         /// </summary>
         public static string NewPassword {

@@ -12,21 +12,21 @@ namespace Template.Resources
     {
         private static Assembly executingAssembly;
 
-        public static String CurrentArea
+        private static String CurrentArea
         {
             get
             {
                 return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
             }
         }
-        public static String CurrentController
+        private static String CurrentController
         {
             get
             {
                 return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
             }
         }
-        public static String CurrentAction
+        private static String CurrentAction
         {
             get
             {
@@ -78,11 +78,12 @@ namespace Template.Resources
         {
             return GetPropertyTitle(viewType.Name, propertyName);
         }
+
         private static String GetPropertyTitle(String viewTypeName, String propertyName)
         {
             String resourceNamespace = String.Format("Template.Resources.Views.{0}.Titles", viewTypeName);
             String title = GetResourceFrom(resourceNamespace, propertyName);
-            if (title == null)
+            if (title == String.Empty)
             {
                 var innerModelNamespaces = SplitCamelCase(propertyName);
                 if (innerModelNamespaces.Length > 1)
@@ -100,11 +101,11 @@ namespace Template.Resources
         {
             try
             {
-                return new ResourceManager(baseName, executingAssembly).GetString(key);
+                return new ResourceManager(baseName, executingAssembly).GetString(key) ?? String.Empty;
             }
             catch(Exception)
             {
-                return null;
+                return String.Empty;
             }
         }
     }

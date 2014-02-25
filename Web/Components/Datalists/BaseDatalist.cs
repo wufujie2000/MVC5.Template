@@ -26,7 +26,7 @@ namespace Template.Components.Datalists
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.Url.Authority,
-                HttpContext.Current.Request.ApplicationPath,
+                HttpContext.Current.Request.ApplicationPath ?? "/",
                 language,
                 AbstractDatalist.Prefix,
                 GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
@@ -39,11 +39,11 @@ namespace Template.Components.Datalists
             
             return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);
         }
-        protected override string GetColumnCssClass(PropertyInfo property)
+        protected override String GetColumnCssClass(PropertyInfo property)
         {
             var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
             if (type.IsEnum) return "text-cell";
-
+            
             switch (Type.GetTypeCode(type))
             {
                 case TypeCode.SByte:

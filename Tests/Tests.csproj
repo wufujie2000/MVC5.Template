@@ -35,6 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Datalist, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Datalist.3.0.0\lib\net45\Datalist.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -43,6 +50,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.0\lib\net40\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,9 +73,15 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\HttpContextSetUp.cs" />
+    <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
+    <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
+    <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
     <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
+    <Compile Include="Tests\Components\Datalists\BaseDatalistTests.cs" />
+    <Compile Include="Tests\Components\Datalists\RolesDatalistTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />
@@ -103,7 +120,6 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

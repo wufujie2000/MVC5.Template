@@ -1,33 +1,24 @@
 ﻿using NUnit.Framework;
 using System;
-using System.IO;
 using System.Web;
 using System.Web.Routing;
 using Template.Objects;
 using Template.Objects.Resources;
 using Template.Resources;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Resources.Tests
 {
     [TestFixture]
-    public class ResourceProviderTests
+    public class ResourceProviderTests : HttpContextSetUp
     {
         private RouteValueDictionary routeValues; 
 
         [SetUp]
-        public void SetUp()
+        public override void SetUp()
         {
-            HttpContext.Current = new HttpContext(
-                new HttpRequest(null, "http://localhost:19174/", null),
-                new HttpResponse(new StringWriter()));
-
+            base.SetUp();
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            HttpContext.Current = null;
         }
 
         #region Static method: GetCurrentFormTitle()

@@ -1,11 +1,12 @@
-﻿using Template.Components.Extensions.Net;
-using Template.Resources;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
@@ -100,6 +101,14 @@ namespace Template.Components.Extensions.Html
             htmlAttributes["class"] = String.Format("{0} {1}", htmlAttributes["class"], value).Trim();
 
             return htmlAttributes;
+        }
+        private static Boolean IsRequired<T, V>(this Expression<Func<T, V>> expression)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+                throw new InvalidOperationException("Expression must be a member expression");
+
+            return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
         }
     }
 }

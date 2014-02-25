@@ -77,8 +77,6 @@
     <Compile Include="Extensions\Html\Header\HeaderExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\TreeViewExtensions.cs" />
     <Compile Include="Extensions\Html\Sidebar\SidebarExtensions.cs" />
-    <Compile Include="Extensions\Net\CollectionsExtensions.cs" />
-    <Compile Include="Extensions\Net\ExpressionExtensions.cs" />
     <Compile Include="Extensions\Net\SystemExtensions.cs" />
     <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />

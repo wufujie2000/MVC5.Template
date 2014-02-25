@@ -82,6 +82,7 @@
     <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
     <Compile Include="Tests\Components\Datalists\BaseDatalistTests.cs" />
     <Compile Include="Tests\Components\Datalists\RolesDatalistTests.cs" />
+    <Compile Include="Tests\Components\Extensions\SystemExtensionsTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />

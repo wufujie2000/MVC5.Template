@@ -48,15 +48,5 @@ namespace Template.Components.Extensions.Net
         }
 
         #endregion
-
-        #region WeakReference<T>
-
-        public static Boolean IsAlive<T>(this WeakReference<T> reference) where T : class
-        {
-            T temp;
-            return reference.TryGetTarget(out temp);
-        }
-
-        #endregion
     }
 }

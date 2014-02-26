@@ -1,11 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.IO;
 
 namespace Template.Components.Extensions.Html
 {
     public class InputGroup : FormWrapper
     {
-        public InputGroup(ViewContext viewContext)
-            : base(viewContext, "input-group")
+        public InputGroup(TextWriter writer)
+            : base(writer, "input-group")
         {
         }
     }

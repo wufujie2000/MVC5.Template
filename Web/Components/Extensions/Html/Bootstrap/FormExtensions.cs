@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -12,44 +12,44 @@ namespace Template.Components.Extensions.Html
 {
     public static class FormExtensions
     {
-        private const String LabelClass = "control-label col-sm-3 col-md-3 col-lg-2";
+        public const String LabelClass = "control-label col-sm-3 col-md-3 col-lg-2";
 
         public static FormColumn FormColumn(this HtmlHelper html)
         {
-            return new FormColumn(html.ViewContext);
+            return new FormColumn(html.ViewContext.Writer);
         }
         public static FormGroup FormGroup(this HtmlHelper html)
         {
-            return new FormGroup(html.ViewContext);
+            return new FormGroup(html.ViewContext.Writer);
         }
         public static InputGroup InputGroup(this HtmlHelper html)
         {
-            return new InputGroup(html.ViewContext);
+            return new InputGroup(html.ViewContext.Writer);
         }
         public static FormActions FormActions(this HtmlHelper html)
         {
-            return new FormActions(html.ViewContext);
+            return new FormActions(html.ViewContext.Writer);
         }
         public static MvcHtmlString FormSubmit(this HtmlHelper html)
         {
-            TagBuilder submit = new TagBuilder("input");
-            submit.MergeAttribute("value", Resources.Shared.Resources.Submit);
-            submit.MergeAttribute("type", "submit");
+            var submit = new TagBuilder("input");
             submit.AddCssClass("btn btn-primary");
+            submit.MergeAttribute("type", "submit");
+            submit.MergeAttribute("value", Resources.Shared.Resources.Submit);
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString BootstrapLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes = null)
+        public static MvcHtmlString BootstrapLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
             label.AddCssClass(LabelClass);
-
+            
             return new MvcHtmlString(label.ToString());
         }
-        public static MvcHtmlString BootstrapRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes = null)
+        public static MvcHtmlString BootstrapRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
@@ -64,12 +64,12 @@ namespace Template.Components.Extensions.Html
 
             return new MvcHtmlString(label.ToString());
         }
-        public static MvcHtmlString BootstrapFormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes = null)
+        public static MvcHtmlString BootstrapFormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             if (expression.IsRequired())
-                return html.BootstrapRequiredLabelFor(expression, htmlAttributes);
+                return html.BootstrapRequiredLabelFor(expression);
 
-            return html.BootstrapLabelFor(expression, htmlAttributes);
+            return html.BootstrapLabelFor(expression);
         }
         public static MvcHtmlString BootstrapTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
         {
@@ -77,14 +77,14 @@ namespace Template.Components.Extensions.Html
             if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
             return new MvcHtmlString(Wrap(html.TextBoxFor(expression, format, attributes)));
         }
-        public static MvcHtmlString BootstrapDatepickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString BootstrapDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            String format = String.Format("{{0:{0}}}", Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern);
+            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
             return html.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" });
         }
-        public static MvcHtmlString BootstrapPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes = null)
+        public static MvcHtmlString BootstrapPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return new MvcHtmlString(Wrap(html.PasswordFor(expression, AddClass(htmlAttributes, "form-control"))));
+            return new MvcHtmlString(Wrap(html.PasswordFor(expression, AddClass(null, "form-control"))));
         }
         public static MvcHtmlString BootstrapValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {

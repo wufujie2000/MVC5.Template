@@ -10,15 +10,21 @@ using Template.Tests.Helpers;
 namespace Template.Tests.Resources.Tests
 {
     [TestFixture]
-    public class ResourceProviderTests : HttpContextSetUp
+    public class ResourceProviderTests
     {
         private RouteValueDictionary routeValues; 
 
         [SetUp]
-        public override void SetUp()
+        public void SetUp()
         {
-            base.SetUp();
+            HttpContext.Current = HttpFactory.MockHttpContext();
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            HttpContext.Current = null;
         }
 
         #region Static method: GetCurrentFormTitle()

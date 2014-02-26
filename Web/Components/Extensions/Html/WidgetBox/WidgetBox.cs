@@ -40,8 +40,8 @@ namespace Template.Components.Extensions.Html
 
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         protected virtual void Dispose(Boolean disposing)
         {

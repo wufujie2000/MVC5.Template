@@ -11,16 +11,22 @@ using Template.Tests.Objects.Components.Datalists;
 namespace Template.Tests.Tests.Components.Datalists
 {
     [TestFixture]
-    public class BaseDatalistTests : HttpContextSetUp
+    public class BaseDatalistTests
     {
         private BaseDatalistStub<RoleView> datalist;
 
         [SetUp]
-        public override void SetUp()
+        public void SetUp()
         {
-            base.SetUp();
+            HttpContext.Current = HttpFactory.MockHttpContext();
             HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            HttpContext.Current = null;
         }
 
         #region Constructor: BaseDatalist()

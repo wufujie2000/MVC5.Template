@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using Template.Data.Core;
@@ -6,9 +7,9 @@ using Template.Objects;
 
 namespace Template.Data.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<Context>
+    internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
     {
-        private IContext context;
+        private Context context;
 
         public Configuration()
         {
@@ -168,6 +169,11 @@ namespace Template.Data.Migrations
                     context.Repository<Account>().Insert(account);
 
             context.Save();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
         }
     }
 }

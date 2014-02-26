@@ -2,7 +2,7 @@
 using System;
 using Template.Components.Extensions.Net;
 
-namespace Template.Tests.Tests.Components.Extensions
+namespace Template.Tests.Tests.Components.Extensions.Net
 {
     [TestFixture]
     public class SystemExtensionsTests

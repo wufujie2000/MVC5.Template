@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Mvc;
+using System.IO;
 
 namespace Template.Components.Extensions.Html
 {
@@ -7,10 +7,10 @@ namespace Template.Components.Extensions.Html
     {
         private FormWrapper formColumn;
 
-        public FormActions(ViewContext viewContext)
-            : base(viewContext)
+        public FormActions(TextWriter writer)
+            : base(writer)
         {
-            formColumn = new FormWrapper(viewContext, "form-actions col-sm-9 col-md-9 col-lg-7");
+            formColumn = new FormWrapper(writer, "form-actions col-sm-9 col-md-9 col-lg-7");
         }
 
         protected override void Dispose(Boolean disposing)

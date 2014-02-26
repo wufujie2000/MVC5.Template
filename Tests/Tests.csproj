@@ -73,16 +73,24 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\HttpContextSetUp.cs" />
+    <Compile Include="Helpers\HttpFactory.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
+    <Compile Include="Objects\Components\Extensions\Bootstrap\ExtensionsModel.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
     <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
     <Compile Include="Tests\Components\Datalists\BaseDatalistTests.cs" />
     <Compile Include="Tests\Components\Datalists\RolesDatalistTests.cs" />
-    <Compile Include="Tests\Components\Extensions\SystemExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormColumnTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormGroupTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\InputGroupTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormWrapperTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormActionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Bootstrap\LoginExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Net\SystemExtensionsTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />

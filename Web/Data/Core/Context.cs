@@ -1,12 +1,12 @@
-﻿using Template.Components.Services.AutoMapper;
-using Template.Objects;
-using System;
+﻿using System;
 using System.Collections;
 using System.Data.Entity;
+using Template.Components.Services.AutoMapper;
+using Template.Objects;
 
 namespace Template.Data.Core
 {
-    public class Context : DbContext, IContext
+    public class Context : AContext
     {
         private Hashtable repositories;
 
@@ -45,7 +45,7 @@ namespace Template.Data.Core
             repositories = new Hashtable();
         }
 
-        public IRepository<TModel> Repository<TModel>() where TModel : BaseModel
+        public override IRepository<TModel> Repository<TModel>()
         {
             var modelName = typeof(TModel).Name;
             if (repositories.ContainsKey(modelName))
@@ -58,7 +58,7 @@ namespace Template.Data.Core
             return modelRepository;
         }
 
-        public void Save()
+        public override void Save()
         {
             SaveChanges();
         }

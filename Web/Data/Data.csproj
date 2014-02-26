@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Mapping\ObjectMap.cs" />
     <Compile Include="Core\Context.cs" />
-    <Compile Include="Core\IContext.cs" />
+    <Compile Include="Core\AContext.cs" />
     <Compile Include="Core\IRepository.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repository.cs" />

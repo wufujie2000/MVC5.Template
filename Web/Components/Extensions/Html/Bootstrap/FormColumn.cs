@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Mvc;
+using System.IO;
 
 namespace Template.Components.Extensions.Html
 {
@@ -10,8 +10,8 @@ namespace Template.Components.Extensions.Html
         {
             wrapper.InnerHtml = innerHtml.ToString();
         }
-        public FormColumn(ViewContext viewContext)
-            : base(viewContext, "col-sm-9 col-md-9 col-lg-5")
+        public FormColumn(TextWriter writer)
+            : base(writer, "col-sm-9 col-md-9 col-lg-5")
         {
         }
     }

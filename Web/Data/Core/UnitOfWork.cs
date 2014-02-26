@@ -7,13 +7,13 @@ namespace Template.Data.Core
     public class UnitOfWork : IUnitOfWork
     {
         private Boolean disposed;
-        private IContext context;
+        private AContext context;
 
         public UnitOfWork()
         {
             context = new Context();
         }
-        public UnitOfWork(IContext context)
+        public UnitOfWork(AContext context)
         {
             this.context = context;
         }
@@ -48,8 +48,8 @@ namespace Template.Data.Core
 
         public void Dispose()
         {
-            GC.SuppressFinalize(this);
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         protected virtual void Dispose(Boolean disposing)
         {

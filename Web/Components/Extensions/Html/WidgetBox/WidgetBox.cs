@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Web.Mvc;
 
 namespace Template.Components.Extensions.Html
@@ -6,13 +7,13 @@ namespace Template.Components.Extensions.Html
     public class WidgetBox : IDisposable
     {
         private Boolean disposed;
-        private ViewContext context;
+        private TextWriter writer;
         private TagBuilder widgetBox;
         private TagBuilder widgetContent;
 
-        public WidgetBox(ViewContext viewContext, String iconClass, String title, String buttons)
+        public WidgetBox(TextWriter writer, String iconClass, String title, String buttons)
         {
-            this.context = viewContext;
+            this.writer = writer;
             widgetBox = new TagBuilder("div");
             var widgetTitle = new TagBuilder("div");
             var titleIconSpan = new TagBuilder("span");
@@ -33,9 +34,9 @@ namespace Template.Components.Extensions.Html
             titleIconSpan.InnerHtml = titleIcon.ToString();
             widgetTitle.InnerHtml = String.Format("{0}{1}{2}", titleIconSpan, titleHeader, titleButtons);
 
-            context.Writer.Write(widgetBox.ToString(TagRenderMode.StartTag));
-            context.Writer.Write(widgetTitle.ToString());
-            context.Writer.Write(widgetContent.ToString(TagRenderMode.StartTag));
+            writer.Write(widgetBox.ToString(TagRenderMode.StartTag));
+            writer.Write(widgetTitle.ToString());
+            writer.Write(widgetContent.ToString(TagRenderMode.StartTag));
         }
 
         public void Dispose()
@@ -46,8 +47,8 @@ namespace Template.Components.Extensions.Html
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
-            context.Writer.Write(widgetBox.ToString(TagRenderMode.EndTag));
-            context.Writer.Write(widgetContent.ToString(TagRenderMode.EndTag));
+            writer.Write(widgetBox.ToString(TagRenderMode.EndTag));
+            writer.Write(widgetContent.ToString(TagRenderMode.EndTag));
             disposed = true;
         }
     }

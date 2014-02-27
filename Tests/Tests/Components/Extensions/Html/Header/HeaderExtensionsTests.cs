@@ -8,7 +8,7 @@ using Template.Components.Extensions.Html;
 using Template.Resources;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.Header
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class HeaderExtensionsTests

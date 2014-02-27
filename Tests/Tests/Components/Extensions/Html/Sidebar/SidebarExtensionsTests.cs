@@ -9,7 +9,7 @@ using Template.Components.Extensions.Html;
 using Template.Objects;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.Sidebar
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class SidebarExtensionsTests

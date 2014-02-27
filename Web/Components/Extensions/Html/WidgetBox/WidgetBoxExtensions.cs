@@ -1,9 +1,9 @@
-﻿using Template.Components.Services;
-using Template.Resources;
-using System;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Template.Components.Services;
+using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
@@ -20,7 +20,7 @@ namespace Template.Components.Extensions.Html
 
         private static WidgetBox WidgetBox(this HtmlHelper html, String iconClass, String title, params LinkAction[] actions)
         {
-            return new WidgetBox(html.ViewContext, iconClass, title, FormTitleButtons(html, actions));
+            return new WidgetBox(html.ViewContext.Writer, iconClass, title, FormTitleButtons(html, actions));
         }
         private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
         {

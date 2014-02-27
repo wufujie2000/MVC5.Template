@@ -4,7 +4,7 @@ using System.Text;
 using System.Web.Mvc;
 using Template.Components.Extensions.Html;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class FormWrapperTests

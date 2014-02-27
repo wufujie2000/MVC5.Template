@@ -93,11 +93,15 @@ namespace Template.Tests.Helpers
         }
 
         public HtmlHelperMock()
+            : this(new HttpContextStub())
+        {
+        }
+        public HtmlHelperMock(HttpContextStub context)
         {
             Items = new Hashtable();
+            HttpContextStub = context;
             IViewMock = new Mock<IView>();
             TextWriter = new StringWriter();
-            HttpContextStub = new HttpContextStub();
             ViewDataDictionary = new ViewDataDictionary();
             RouteCollection = CreateDefaultRouteCollection();
 

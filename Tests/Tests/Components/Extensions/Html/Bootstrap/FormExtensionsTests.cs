@@ -10,9 +10,9 @@ using System.Web.Mvc.Html;
 using Template.Components.Extensions.Html;
 using Template.Resources;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Extensions.Bootstrap;
+using Template.Tests.Objects.Components.Extensions.Html;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class FormExtensionsTests

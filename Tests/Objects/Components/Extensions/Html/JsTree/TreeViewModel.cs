@@ -1,6 +1,6 @@
 ﻿using Template.Objects;
 
-namespace Template.Tests.Objects.Components.Extensions.JsTree
+namespace Template.Tests.Objects.Components.Extensions.Html
 {
     public class TreeViewModel
     {

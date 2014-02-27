@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Extensions.GridMvc;
+using Template.Tests.Objects.Components.Extensions.Html;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.GridMvc

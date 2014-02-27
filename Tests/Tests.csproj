@@ -82,9 +82,9 @@
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
-    <Compile Include="Objects\Components\Extensions\Bootstrap\BootstrapModel.cs" />
-    <Compile Include="Objects\Components\Extensions\GridMvc\GridMvcView.cs" />
-    <Compile Include="Objects\Components\Extensions\JsTree\TreeViewModel.cs" />
+    <Compile Include="Objects\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
+    <Compile Include="Objects\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
+    <Compile Include="Objects\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
     <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
@@ -101,6 +101,8 @@
     <Compile Include="Tests\Components\Extensions\Html\Header\HeaderExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\JsTree\TreeViewExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Sidebar\SidebarExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\WidgetBox\WidgetBoxExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\WidgetBox\WidgetBoxTests.cs" />
     <Compile Include="Tests\Components\Extensions\Net\SystemExtensionsTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />

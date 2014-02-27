@@ -1,7 +1,7 @@
 ﻿using System;
 using Template.Objects;
 
-namespace Template.Tests.Objects.Components.Extensions.GridMvc
+namespace Template.Tests.Objects.Components.Extensions.Html
 {
     public class GridMvcView : BaseView
     {

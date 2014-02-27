@@ -4,10 +4,10 @@ using System.Text;
 using System.Web.Mvc;
 using Template.Objects;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Extensions.JsTree;
+using Template.Tests.Objects.Components.Extensions.Html;
 using Template.Components.Extensions.Html;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.JsTree
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class TreeViewExtensionsTests

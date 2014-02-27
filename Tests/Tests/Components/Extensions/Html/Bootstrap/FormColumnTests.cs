@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Template.Components.Extensions.Html;
 
-namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
     public class FormColumnTests

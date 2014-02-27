@@ -22,7 +22,7 @@ namespace Template.Components.Extensions.Html
         }
         private static String FormIdSpan(String name, Tree tree)
         {
-            TagBuilder idSpan = new TagBuilder("span");
+            var idSpan = new TagBuilder("span");
             idSpan.AddCssClass("tree-view-ids");
 
             var input = new TagBuilder("input");
@@ -40,7 +40,7 @@ namespace Template.Components.Extensions.Html
         }
         private static String FormTreeView(String name, IEnumerable<TreeNode> treeNodes)
         {
-            TagBuilder treeView = new TagBuilder("div");
+            var treeView = new TagBuilder("div");
             treeView.MergeAttribute("for", name);
             treeView.AddCssClass("tree-view");
 

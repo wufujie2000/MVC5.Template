@@ -84,6 +84,7 @@
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
     <Compile Include="Objects\Components\Extensions\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Objects\Components\Extensions\GridMvc\GridMvcView.cs" />
+    <Compile Include="Objects\Components\Extensions\JsTree\TreeViewModel.cs" />
     <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormActionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\LoginExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Header\HeaderExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\JsTree\TreeViewExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Net\SystemExtensionsTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />

@@ -15,12 +15,12 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
     [TestFixture]
     public class LoginExtensionsTests
     {
-        private HtmlHelper<ExtensionsModel> html;
+        private HtmlHelper<BootstrapModel> html;
 
         [SetUp]
         public void SetUp()
         {
-            html = HttpFactory.MockHtmlHelper<ExtensionsModel>();
+            html = new HtmlHelperMock<BootstrapModel>().HtmlHelper;
         }
 
         #region Extensions method: LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
@@ -28,7 +28,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void LoginUsernameFor_FormsLoginUsernameFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
 
             var addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon");
@@ -50,7 +50,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void LoginPasswordFor_FormsLoginPasswordFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
 
             var addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon lock-span");

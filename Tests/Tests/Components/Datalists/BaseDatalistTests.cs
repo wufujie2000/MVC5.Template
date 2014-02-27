@@ -5,8 +5,8 @@ using System;
 using System.Web;
 using Template.Objects;
 using Template.Resources.Views.RoleView;
-using Template.Tests.Helpers;
 using Template.Tests.Objects.Components.Datalists;
+using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Datalists
 {
@@ -18,7 +18,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = HttpFactory.MockHttpContext();
+            HttpContext.Current = new HttpContextStub().Context;
             HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
         }

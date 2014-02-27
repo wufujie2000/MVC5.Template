@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
@@ -16,14 +17,16 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
     [TestFixture]
     public class FormExtensionsTests
     {
-        private HtmlHelper<ExtensionsModel> html;
+        private HtmlHelperMock<BootstrapModel> htmlHelperMock;
+        private HtmlHelper<BootstrapModel> htmlHelper;
         private String labelClass;
 
         [SetUp]
         public void SetUp()
         {
             labelClass = Template.Components.Extensions.Html.FormExtensions.LabelClass;
-            html = HttpFactory.MockHtmlHelper<ExtensionsModel>();
+            htmlHelperMock = new HtmlHelperMock<BootstrapModel>();
+            htmlHelper = htmlHelperMock.HtmlHelper;
         }
 
         #region Extension method: FormColumn(this HtmlHelper html)
@@ -35,9 +38,9 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
             var expectedWriter = new StringWriter(expected);
             new FormColumn(expectedWriter).Dispose();
 
-            var actualWriter = html.ViewContext.Writer as StringWriter;
+            var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
-            html.FormColumn().Dispose();
+            htmlHelper.FormColumn().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -53,9 +56,9 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
             var expectedWriter = new StringWriter(expected);
             new FormGroup(expectedWriter).Dispose();
 
-            var actualWriter = html.ViewContext.Writer as StringWriter;
+            var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
-            html.FormGroup().Dispose();
+            htmlHelper.FormGroup().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -71,9 +74,9 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
             var expectedWriter = new StringWriter(expected);
             new InputGroup(expectedWriter).Dispose();
 
-            var actualWriter = html.ViewContext.Writer as StringWriter;
+            var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
-            html.InputGroup().Dispose();
+            htmlHelper.InputGroup().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -89,9 +92,9 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
             var expectedWriter = new StringWriter(expected);
             new FormActions(expectedWriter).Dispose();
 
-            var actualWriter = html.ViewContext.Writer as StringWriter;
+            var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
-            html.FormActions().Dispose();
+            htmlHelper.FormActions().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -108,7 +111,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
             submit.MergeAttribute("type", "submit");
             submit.MergeAttribute("value", Template.Resources.Shared.Resources.Submit);
 
-            Assert.AreEqual(submit.ToString(TagRenderMode.SelfClosing), html.FormSubmit().ToString());
+            Assert.AreEqual(submit.ToString(TagRenderMode.SelfClosing), htmlHelper.FormSubmit().ToString());
         }
 
         #endregion
@@ -118,14 +121,14 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapLabelFor_FormsLabelFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
 
             var label = new TagBuilder("label");
             label.AddCssClass(labelClass);
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(label.ToString(), html.BootstrapLabelFor(expression).ToString());
+            Assert.AreEqual(label.ToString(), htmlHelper.BootstrapLabelFor(expression).ToString());
         }
 
         #endregion
@@ -135,7 +138,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapRequiredLabelFor_FormsRequiredLabelFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.NotRequired;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotRequired;
 
             var requiredLabel = new TagBuilder("label");
             requiredLabel.AddCssClass(labelClass);
@@ -148,7 +151,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
 
             requiredLabel.InnerHtml += requiredSpan.ToString();
 
-            Assert.AreEqual(requiredLabel.ToString(), html.BootstrapRequiredLabelFor(expression).ToString());
+            Assert.AreEqual(requiredLabel.ToString(), htmlHelper.BootstrapRequiredLabelFor(expression).ToString());
         }
 
         #endregion
@@ -158,27 +161,27 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapFormLabelFor_OnNonMemberExpressionThrows()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Method();
-            Assert.Throws<InvalidOperationException>(() => html.BootstrapFormLabelFor(model => model.Method()), "Expression must be a member expression");
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Method();
+            Assert.Throws<InvalidOperationException>(() => htmlHelper.BootstrapFormLabelFor(model => model.Method()), "Expression must be a member expression");
         }
 
         [Test]
         public void BootstrapFormLabelFor_FormsLabelFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.NotRequired;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotRequired;
 
             var label = new TagBuilder("label");
             label.AddCssClass(labelClass);
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(label.ToString(), html.BootstrapFormLabelFor(expression).ToString());
+            Assert.AreEqual(label.ToString(), htmlHelper.BootstrapFormLabelFor(expression).ToString());
         }
 
         [Test]
         public void BootstrapFormLabelFor_FormsRequiredLabelFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
 
             var requiredLabel = new TagBuilder("label");
             requiredLabel.AddCssClass(labelClass);
@@ -191,7 +194,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
 
             requiredLabel.InnerHtml += requiredSpan.ToString();
 
-            Assert.AreEqual(requiredLabel.ToString(), html.BootstrapFormLabelFor(expression).ToString());
+            Assert.AreEqual(requiredLabel.ToString(), htmlHelper.BootstrapFormLabelFor(expression).ToString());
         }
 
         #endregion
@@ -201,45 +204,45 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapTextBoxFor_FormsTextBoxFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.NotRequired;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotRequired;
 
             var attributes = new { @class = "form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(html.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapTextBoxFor(expression).ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapTextBoxFor(expression).ToString());
         }
 
         [Test]
         public void BootstrapTextBoxFor_UsesFormat()
         {
-            Expression<Func<ExtensionsModel, Decimal>> expression = (model) => model.Number;
+            Expression<Func<BootstrapModel, Decimal>> expression = (model) => model.Number;
 
             var attributes = new { @class = "form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(html.TextBoxFor(expression, "{0:0.00}", attributes));
+            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, "{0:0.00}", attributes));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapTextBoxFor(expression, "{0:0.00}").ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapTextBoxFor(expression, "{0:0.00}").ToString());
         }
 
         [Test]
         public void BootstrapTextBoxFor_AddsAttributes()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.NotRequired;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotRequired;
 
             var attributes = new { @class = "test form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(html.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapTextBoxFor(expression, null, new { @class = " test" }).ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapTextBoxFor(expression, null, new { @class = " test" }).ToString());
         }
 
         [Test]
         public void BootstrapTextBoxFor_DoesNotOverwriteAutocompleteAttribute()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.NotRequired;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotRequired;
 
             var attributes = new { @class = "form-control", autocomplete = "on" };
-            var formColumn = new FormColumn(html.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapTextBoxFor(expression, null, new { autocomplete = "on" }).ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapTextBoxFor(expression, null, new { autocomplete = "on" }).ToString());
         }
 
         #endregion
@@ -249,12 +252,12 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapDatePickerFor_FormsDatePicker()
         {
-            Expression<Func<ExtensionsModel, DateTime>> expression = (model) => model.Date;
+            Expression<Func<BootstrapModel, DateTime>> expression = (model) => model.Date;
             String format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
             Assert.AreEqual(
-                html.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" }).ToString(),
-                html.BootstrapDatePickerFor(expression).ToString());
+                htmlHelper.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" }).ToString(),
+                htmlHelper.BootstrapDatePickerFor(expression).ToString());
         }
 
         #endregion
@@ -264,10 +267,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapPasswordFor_FormsPasswordFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
-            var formColumn = new FormColumn(html.PasswordFor(expression, new { @class = "form-control" }));
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
+            var formColumn = new FormColumn(htmlHelper.PasswordFor(expression, new { @class = "form-control" }));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapPasswordFor(expression).ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapPasswordFor(expression).ToString());
         }
 
         #endregion
@@ -277,10 +280,11 @@ namespace Template.Tests.Tests.Components.Extensions.Html.Bootstrap
         [Test]
         public void BootstrapValidationFor_FormsValidationFor()
         {
-            Expression<Func<ExtensionsModel, String>> expression = (model) => model.Required;
-            var formColumn = new FormColumn(html.ValidationMessageFor(expression));
+            htmlHelperMock.ViewContextMock.Object.ClientValidationEnabled = true;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
+            var formColumn = new FormColumn(htmlHelper.ValidationMessageFor(expression));
 
-            Assert.AreEqual(formColumn.ToString(), html.BootstrapValidationFor(expression).ToString());
+            Assert.AreEqual(formColumn.ToString(), htmlHelper.BootstrapValidationFor(expression).ToString());
         }
 
         #endregion

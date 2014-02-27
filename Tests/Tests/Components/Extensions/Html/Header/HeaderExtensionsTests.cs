@@ -1,23 +1,51 @@
-﻿using Template.Resources;
+﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Template.Components.Extensions.Html;
+using Template.Resources;
+using Template.Tests.Helpers;
 
-namespace Template.Components.Extensions.Html
+namespace Template.Tests.Tests.Components.Extensions.Html.Header
 {
-    public static class HeaderExtensions
+    [TestFixture]
+    public class HeaderExtensionsTests
     {
-        public static MvcHtmlString ProfileLink(this HtmlHelper html)
+        private HtmlHelperMock htmlMock;
+        private HtmlHelper html;
+
+        [TestFixtureSetUp]
+        public void SetUpFixture()
+        {
+            htmlMock = new HtmlHelperMock();
+            html = htmlMock.Html;
+        }
+
+        #region Extension method: ProfileLink(this HtmlHelper html)
+
+        [Test]
+        public void ProfileLink_FormsProfileLink()
         {
             var icon = new TagBuilder("i");
             var span = new TagBuilder("span");
             icon.AddCssClass("fa fa-user");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Profile");
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", new { controller = "Profile", area = String.Empty }).ToString(), icon,  span));
+            
+            var expected = String.Format(html.ActionLink("{0}{1}", "Edit", new { controller = "Profile", area = String.Empty }).ToString(), icon,  span);
+            var actual = html.ProfileLink().ToString();
+
+            Assert.AreEqual(expected, actual);
         }
-        public static MvcHtmlString LanguageLink(this HtmlHelper html)
+
+        #endregion
+
+        #region Extension method: LanguageLink(this HtmlHelper html)
+
+        [Test]
+        public void LanguageLink_FormsLanguageLink()
         {
             var action = new TagBuilder("a");
             var icon = new TagBuilder("i");
@@ -29,7 +57,7 @@ namespace Template.Components.Extensions.Html
             span.AddCssClass("caret");
 
             action.InnerHtml = String.Format("{0} {1} {2}", icon, ResourceProvider.GetActionTitle("Language"), span);
-            
+
             var languageList = new TagBuilder("ul");
             languageList.MergeAttribute("role", "menu");
             languageList.AddCssClass("dropdown-menu");
@@ -40,8 +68,13 @@ namespace Template.Components.Extensions.Html
                 { "lt-LT", "Lietuvių" }
             };
 
+            var queryString = new NameValueCollection();
+            queryString.Add("Param1", "Value1");
+            htmlMock.HttpRequestWrapperMock.Setup(mock => mock.QueryString).Returns(queryString);
+            html.ViewContext.RequestContext.RouteData.Values["controller"] = "Test";
+            html.ViewContext.RequestContext.RouteData.Values["action"] = "Test";
+            html.ViewContext.RequestContext.RouteData.Values["Param1"] = "Value1";
             var currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
-            AddQueryValues(html);
             foreach (var language in languages)
             {
                 html.ViewContext.RequestContext.RouteData.Values["language"] = language.Key;
@@ -58,35 +91,29 @@ namespace Template.Components.Extensions.Html
                 languageList.InnerHtml += languageItem.ToString();
             }
 
+            html.ViewContext.RequestContext.RouteData.Values.Remove("Param1");
             html.ViewContext.RequestContext.RouteData.Values["language"] = currentLanguage;
-            RemoveQueryValues(html);
-            return new MvcHtmlString(String.Format("{0}{1}", action, languageList));
+            
+            Assert.AreEqual(String.Format("{0}{1}", action, languageList), html.LanguageLink().ToString());
         }
-        public static MvcHtmlString LogoutLink(this HtmlHelper html)
+
+        #endregion
+
+        #region Extension method: LogoutLink(this HtmlHelper html)
+
+        [Test]
+        public void LogoutLink_FormsLogoutLink()
         {
             var icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-share");
             var span = new TagBuilder("span");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Account", area = String.Empty }).ToString(), icon, span));
+            var expected = String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Account", area = String.Empty }).ToString(), icon, span);
+            var actual = html.LogoutLink().ToString();
+            Assert.AreEqual(expected, actual);
         }
 
-        private static void AddQueryValues(HtmlHelper html)
-        {
-            var queryParameters = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
-            var routeValues = html.ViewContext.RequestContext.RouteData.Values;
-
-            foreach (String parameter in queryParameters)
-                routeValues[parameter] = queryParameters[parameter];
-        }
-        private static void RemoveQueryValues(HtmlHelper html)
-        {
-            var queryParameters = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
-            var routeValues = html.ViewContext.RequestContext.RouteData.Values;
-
-            foreach (String parameter in queryParameters)
-                 routeValues.Remove(parameter);
-        }
+        #endregion
     }
 }

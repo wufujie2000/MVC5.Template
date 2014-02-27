@@ -25,7 +25,7 @@ namespace Template.Components.Extensions.Html
                 .Sanitized(false)
                 .Css("action-link-cell");
 
-            AddLink(gridColumn, action);
+            AddLinkHtml(gridColumn, action);
             return gridColumn;
         }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
@@ -57,7 +57,7 @@ namespace Template.Components.Extensions.Html
                 .Sortable();
         }
 
-        private static void AddLink<T>(IGridColumn<T> gridColumn, LinkAction action) where T : BaseView
+        private static void AddLinkHtml<T>(IGridColumn<T> gridColumn, LinkAction action) where T : BaseView
         {
             switch (action)
             {

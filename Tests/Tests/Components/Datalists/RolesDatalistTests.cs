@@ -3,8 +3,8 @@ using System.Linq;
 using System.Web;
 using Template.Data.Core;
 using Template.Objects;
-using Template.Tests.Helpers;
 using Template.Tests.Objects.Components.Datalists;
+using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Datalists
 {
@@ -14,7 +14,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = HttpFactory.MockHttpContext();
+            HttpContext.Current = new HttpContextStub().Context;
         }
 
         [TearDown]

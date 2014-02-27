@@ -42,6 +42,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -73,11 +77,14 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Helpers\HttpFactory.cs" />
+    <Compile Include="Helpers\HtmlHelperMock.cs" />
+    <Compile Include="Helpers\HttpContextStub.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
-    <Compile Include="Objects\Components\Extensions\Bootstrap\ExtensionsModel.cs" />
+    <Compile Include="Objects\Components\Extensions\Bootstrap\BootstrapModel.cs" />
+    <Compile Include="Objects\Components\Extensions\GridMvc\GridMvcView.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
     <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
@@ -90,6 +97,7 @@
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormWrapperTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormActionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\LoginExtensionsTests.cs" />
+    <Compile Include="Tests\Components\Extensions\Html\Header\HeaderExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Net\SystemExtensionsTests.cs" />
     <Compile Include="Tests\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Tests\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
@@ -130,6 +138,7 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

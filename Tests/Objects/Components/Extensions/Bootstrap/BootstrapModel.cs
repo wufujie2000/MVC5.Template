@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Template.Tests.Objects.Components.Extensions.Bootstrap
 {
-    public class ExtensionsModel
+    public class BootstrapModel
     {
         [Required]
         public String Required { get; set; }

@@ -5,7 +5,7 @@ using System.Web.Routing;
 using Template.Objects;
 using Template.Objects.Resources;
 using Template.Resources;
-using Template.Tests.Helpers;
+using Tests.Helpers;
 
 namespace Template.Tests.Resources.Tests
 {
@@ -17,7 +17,7 @@ namespace Template.Tests.Resources.Tests
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = HttpFactory.MockHttpContext();
+            HttpContext.Current = new HttpContextStub().Context;
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
         }
 

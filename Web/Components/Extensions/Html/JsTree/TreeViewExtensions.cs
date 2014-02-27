@@ -1,10 +1,10 @@
-﻿using Template.Objects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
+using Template.Objects;
 
 namespace Template.Components.Extensions.Html
 {
@@ -18,9 +18,9 @@ namespace Template.Components.Extensions.Html
 
         private static MvcHtmlString TreeViewFor(String name, Tree tree)
         {
-            return new MvcHtmlString(FormIdSpan(name, tree) + FormTreeView(name, tree.Nodes));
+            return new MvcHtmlString(FormIdSpan(name, tree.SelectedIds) + FormTreeView(name, tree.Nodes));
         }
-        private static String FormIdSpan(String name, Tree tree)
+        private static String FormIdSpan(String name, IList<String> selectedIds)
         {
             var idSpan = new TagBuilder("span");
             idSpan.AddCssClass("tree-view-ids");
@@ -29,7 +29,7 @@ namespace Template.Components.Extensions.Html
             input.MergeAttribute("name", name);
             input.MergeAttribute("type", "hidden");
             var hiddenInputs = new StringBuilder();
-            foreach (var id in tree.SelectedIds)
+            foreach (var id in selectedIds)
             {
                 input.MergeAttribute("value", id, true);
                 hiddenInputs.Append(input.ToString(TagRenderMode.SelfClosing));
@@ -58,7 +58,7 @@ namespace Template.Components.Extensions.Html
             {
                 TagBuilder node = new TagBuilder("li");
                 node.MergeAttribute("id", treeNode.Id);
-                node.InnerHtml = treeNode.Name ?? String.Empty;
+                node.InnerHtml = treeNode.Name;
 
                 AddNodes(node, treeNode.Nodes);
                 leafBuilder.Append(node);

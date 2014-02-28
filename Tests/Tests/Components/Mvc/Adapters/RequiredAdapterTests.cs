@@ -16,7 +16,7 @@ namespace Template.Tests.Tests.Components.Mvc.Adapters
         public void SetUp()
         {
             requiredAttribute = new RequiredAttribute();
-            var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(() => null, typeof(ProviderTestModel), "Id");
+            var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Id");
             new RequiredAdapter(metadata, new ControllerContext(), requiredAttribute);
         }
 

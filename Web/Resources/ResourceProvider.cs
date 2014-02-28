@@ -81,13 +81,13 @@ namespace Template.Resources
 
         private static String GetPropertyTitle(String viewTypeName, String propertyName)
         {
-            String resourceNamespace = String.Format("Template.Resources.Views.{0}.Titles", viewTypeName);
-            String title = GetResourceFrom(resourceNamespace, propertyName);
+            String baseName = String.Format("Template.Resources.Views.{0}.Titles", viewTypeName);
+            String title = GetResourceFrom(baseName, propertyName);
             if (title == String.Empty)
             {
-                var innerModelNamespaces = SplitCamelCase(propertyName);
-                if (innerModelNamespaces.Length > 1)
-                    return GetPropertyTitle(innerModelNamespaces[0] + "View", String.Concat(innerModelNamespaces.Skip(1)));
+                var baseNames = SplitCamelCase(propertyName);
+                if (baseNames.Length > 1)
+                    return GetPropertyTitle(baseNames[0] + "View", String.Concat(baseNames.Skip(1)));
             }
 
             return title;

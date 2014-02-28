@@ -71,10 +71,10 @@ namespace Template.Tests.Tests.Components.Alerts
         [Test]
         public void Add_AddsTypedMessageWithFadeOut()
         {
-            container.Add(AlertMessageType.Danger, "Test", MessagesContainer.DefaultFadeOut + 1);
+            container.Add(AlertMessageType.Danger, "Test", 20);
             var actual = container.First();
 
-            Assert.AreEqual(MessagesContainer.DefaultFadeOut + 1, actual.FadeOutAfter);
+            Assert.AreEqual(20, actual.FadeOutAfter);
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual(String.Empty, actual.Key);
             Assert.AreEqual("Test", actual.Message);
@@ -87,10 +87,10 @@ namespace Template.Tests.Tests.Components.Alerts
         [Test]
         public void Add_AddsTypedMessageWithKeyAndFadeOut()
         {
-            container.Add(AlertMessageType.Danger, "TestKey", "Test", MessagesContainer.DefaultFadeOut + 1);
+            container.Add(AlertMessageType.Danger, "TestKey", "Test", 30);
             var actual = container.First();
             
-            Assert.AreEqual(MessagesContainer.DefaultFadeOut + 1, actual.FadeOutAfter);
+            Assert.AreEqual(30, actual.FadeOutAfter);
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual("TestKey", actual.Key);
             Assert.AreEqual("Test", actual.Message);

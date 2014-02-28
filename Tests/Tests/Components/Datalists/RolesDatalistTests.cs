@@ -11,26 +11,18 @@ namespace Template.Tests.Tests.Components.Datalists
     [TestFixture]
     public class RolesDatalistTests
     {
-        [SetUp]
-        public void SetUp()
-        {
-            HttpContext.Current = new HttpContextStub().Context;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            HttpContext.Current = null;
-        }
-
         #region Method: GetModels()
 
         [Test]
         public void GetModels_GetsUnfilteredModels()
         {
+            HttpContext.Current = new HttpContextStub().Context;
+
             CollectionAssert.AreEqual(
                 new UnitOfWork().Repository<Role>().ProjectTo<RoleView>().Select(role => role.Id),
                 new RolesDatalistStub().BaseGetModels().Select(role => role.Id));
+
+            HttpContext.Current = null;
         }
 
         #endregion

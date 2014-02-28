@@ -1,1 +1,47 @@
-﻿!function (i) { i.fn.bindWithDelay = function (n, u, t, e, d) { return i.isFunction(u) && (d = e, e = t, t = u, u = void 0), t.guid = t.guid || i.guid && i.guid++, this.each(function () { function l() { var n = i.extend(!0, {}, arguments[0]), u = this, l = function () { o = null, t.apply(u, [n]) }; d || (clearTimeout(o), o = null), o || (o = setTimeout(l, e)) } var o = null; l.guid = t.guid, i(this).bind(n, u, l) }) } }(jQuery);
+﻿/*
+bindWithDelay jQuery plugin
+Author: Brian Grinstead
+MIT license: http://www.opensource.org/licenses/mit-license.php
+
+http://github.com/bgrins/bindWithDelay
+http://briangrinstead.com/files/bindWithDelay
+*/
+
+(function ($) {
+
+    $.fn.bindWithDelay = function (type, data, fn, timeout, throttle) {
+
+        if ($.isFunction(data)) {
+            throttle = timeout;
+            timeout = fn;
+            fn = data;
+            data = undefined;
+        }
+
+        // Allow delayed function to be removed with fn in unbind function
+        fn.guid = fn.guid || ($.guid && $.guid++);
+
+        // Bind each separately so that each element has its own delay
+        return this.each(function () {
+
+            var wait = null;
+
+            function cb() {
+                var e = $.extend(true, {}, arguments[0]);
+                var ctx = this;
+                var throttler = function () {
+                    wait = null;
+                    fn.apply(ctx, [e]);
+                };
+
+                if (!throttle) { clearTimeout(wait); wait = null; }
+                if (!wait) { wait = setTimeout(throttler, timeout); }
+            }
+
+            cb.guid = fn.guid;
+
+            $(this).bind(type, data, cb);
+        });
+    };
+
+})(jQuery);

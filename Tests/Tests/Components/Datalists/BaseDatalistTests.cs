@@ -14,12 +14,16 @@ namespace Template.Tests.Tests.Components.Datalists
     public class BaseDatalistTests
     {
         private BaseDatalistStub<RoleView> datalist;
+        private HttpRequest request;
 
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextStub().Context;
-            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt-LT";
+            var contextStub = new HttpContextStub();
+
+            request = contextStub.Request;
+            HttpContext.Current = contextStub.Context;
+            request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
         }
 
@@ -47,24 +51,24 @@ namespace Template.Tests.Tests.Components.Datalists
         public void BaseDatalist_SetsDatalistUrl()
         {
             var expected = String.Format("{0}://{1}/{2}/{3}/{4}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                HttpContext.Current.Request.RequestContext.RouteData.Values["language"],
+                request.Url.Scheme,
+                request.Url.Authority,
+                request.RequestContext.RouteData.Values["language"],
                 AbstractDatalist.Prefix,
                 datalist.GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
-
+            
             Assert.AreEqual(expected, datalist.DatalistUrl);
         }
 
         [Test]
         public void BaseDatalist_SetsDatalistUrlOnDefaultLanguage()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "en-GB";
+            request.RequestContext.RouteData.Values["language"] = "en-GB";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
 
             var expected = String.Format("{0}://{1}/{2}/{3}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
+                request.Url.Scheme,
+                request.Url.Authority,
                 AbstractDatalist.Prefix,
                 datalist.GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
 

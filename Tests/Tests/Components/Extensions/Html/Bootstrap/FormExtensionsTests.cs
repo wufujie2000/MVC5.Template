@@ -1,5 +1,4 @@
-﻿using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
@@ -17,7 +16,6 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     [TestFixture]
     public class FormExtensionsTests
     {
-        private HtmlHelperMock<BootstrapModel> htmlHelperMock;
         private HtmlHelper<BootstrapModel> htmlHelper;
         private String labelClass;
 
@@ -25,7 +23,8 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SetUp()
         {
             labelClass = Template.Components.Extensions.Html.FormExtensions.LabelClass;
-            htmlHelperMock = new HtmlHelperMock<BootstrapModel>();
+            var htmlHelperMock = new HtmlHelperMock<BootstrapModel>();
+            htmlHelperMock.ViewContextMock.Object.ClientValidationEnabled = true;
             htmlHelper = htmlHelperMock.HtmlHelper;
         }
 
@@ -35,8 +34,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void FormColumn_WritesFormColumn()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new FormColumn(expectedWriter).Dispose();
+            new FormColumn(new StringWriter(expected)).Dispose();
 
             var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
@@ -53,8 +51,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void FormGroup_WritesFormGroup()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new FormGroup(expectedWriter).Dispose();
+            new FormGroup(new StringWriter(expected)).Dispose();
 
             var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
@@ -71,8 +68,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void InputGroup_WritesInputGroup()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new InputGroup(expectedWriter).Dispose();
+            new InputGroup(new StringWriter(expected)).Dispose();
 
             var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
@@ -89,8 +85,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void FormActions_WritesFormActions()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new FormActions(expectedWriter).Dispose();
+            new FormActions(new StringWriter(expected)).Dispose();
 
             var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
@@ -280,7 +275,6 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void BootstrapValidationFor_FormsValidationFor()
         {
-            htmlHelperMock.ViewContextMock.Object.ClientValidationEnabled = true;
             Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
             var formColumn = new FormColumn(htmlHelper.ValidationMessageFor(expression));
 

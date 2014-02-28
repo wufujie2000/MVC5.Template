@@ -40,14 +40,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Datalist, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Datalist.3.0.0\lib\net45\Datalist.dll</HintPath>
+      <HintPath>..\packages\Datalist.3.0.1\lib\net45\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GridMvc">
+    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -146,10 +147,13 @@
     <Content Include="Images\Shared\menu-active.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Datalist\bind-with-delay.js" />
+    <Content Include="Scripts\Datalist\bind-with-delay.min.js" />
     <Content Include="Scripts\Datalist\bootstrap-paginator.js" />
+    <Content Include="Scripts\Datalist\bootstrap-paginator.min.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
+    <Content Include="Scripts\Datalist\datalist.min.js" />
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.en-GB.js" />
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.lt-LT.js" />
     <Content Include="Scripts\Globalize\globalize.js" />
@@ -169,7 +173,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -180,9 +183,10 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -244,6 +248,9 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_GridPager.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -262,7 +269,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5710</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:19174/</IISUrl>
+          <IISUrl>http://localhost:19174</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

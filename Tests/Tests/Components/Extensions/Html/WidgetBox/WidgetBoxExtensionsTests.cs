@@ -36,17 +36,13 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void TableWidgetBox_FormsTableWidgetBox()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
             var expectedWidgetBox = new WidgetBox(
-                expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty);
+                new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty);
             expectedWidgetBox.Dispose();
 
             var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            html.ViewContext.Writer = actualWriter;
-
-            var actualWidgetBox = html.TableWidgetBox();
-            actualWidgetBox.Dispose();
+            html.ViewContext.Writer = new StringWriter(actual);
+            html.TableWidgetBox().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -59,17 +55,13 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void FormWidgetBox_FormsFormWidgetBox()
         {
             var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
             var expectedWidgetBox = new WidgetBox(
-                expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty);
+                new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty);
             expectedWidgetBox.Dispose();
 
             var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            html.ViewContext.Writer = actualWriter;
-
-            var actualWidgetBox = html.FormWidgetBox();
-            actualWidgetBox.Dispose();
+            html.ViewContext.Writer = new StringWriter(actual);
+            html.FormWidgetBox().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }

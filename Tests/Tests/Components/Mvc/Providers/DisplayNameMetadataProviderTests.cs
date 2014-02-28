@@ -23,13 +23,13 @@ namespace Template.Tests.Components.Mvc.Providers
         {
             Assert.AreEqual(
                 Template.Resources.Views.ProfileView.Titles.Username,
-                provider.GetMetadataForProperty(() => null, typeof(ProfileView), "Username").DisplayName);
+                provider.GetMetadataForProperty(null, typeof(ProfileView), "Username").DisplayName);
         }
 
         [Test]
         public void GetMetadataForProperty_OnResourceNotFoundSetsToEmpty()
         {
-            Assert.AreEqual(String.Empty, provider.GetMetadataForProperty(() => null, typeof(ProfileView), "Id").DisplayName);
+            Assert.AreEqual(String.Empty, provider.GetMetadataForProperty(null, typeof(ProfileView), "Id").DisplayName);
         }
 
         #endregion

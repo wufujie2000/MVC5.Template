@@ -19,7 +19,7 @@ namespace Template.Tests.Tests.Components.Datalists
             HttpContext.Current = new HttpContextStub().Context;
 
             CollectionAssert.AreEqual(
-                new UnitOfWork().Repository<Role>().ProjectTo<RoleView>().Select(role => role.Id),
+                new UnitOfWork().Repository<Role>().Query<RoleView>().Select(role => role.Id),
                 new RolesDatalistStub().BaseGetModels().Select(role => role.Id));
 
             HttpContext.Current = null;

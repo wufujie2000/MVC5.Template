@@ -10,8 +10,8 @@ namespace Template.Data.Core
         TModel GetById(Object id);
         IQueryable<TModel> Query();
         IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate);
-        IQueryable<TView> ProjectTo<TView>() where TView : BaseView;
-        IQueryable<TView> ProjectTo<TView>(Expression<Func<TModel, Boolean>> predicate) where TView : BaseView;
+        IQueryable<TView> Query<TView>() where TView : BaseView;
+        IQueryable<TView> Query<TView>(Expression<Func<TModel, Boolean>> predicate) where TView : BaseView;
 
         void Insert(TModel model);
         void Update(TModel model);

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Template.Objects;
 
-namespace Template.Components.Services.AutoMapper
+namespace Template.Data.Mapping
 {
-    public static class ModelMapping
+    public static class ObjectMapper
     {
-        public static void MapModels()
+        public static void MapObjects()
         {
             MapUsers();
             MapRoles();
@@ -20,6 +20,10 @@ namespace Template.Components.Services.AutoMapper
             Mapper.CreateMap<Account, AccountView>();
             Mapper.CreateMap<AccountView, Account>();
 
+            Mapper.CreateMap<Account, UserView>();
+            Mapper.CreateMap<UserView, Account>()
+                .ForMember(account => account.UserId, property => property.MapFrom(view => view.Id));
+
             Mapper.CreateMap<User, UserView>()
                 .ForMember(view => view.UserFirstName, property => property.MapFrom(user => user.FirstName))
                 .ForMember(view => view.UserLastName, property => property.MapFrom(user => user.LastName))
@@ -30,10 +34,6 @@ namespace Template.Components.Services.AutoMapper
                 .ForMember(user => user.LastName, property => property.MapFrom(view => view.UserLastName))
                 .ForMember(user => user.DateOfBirth, property => property.MapFrom(view => view.UserDateOfBirth))
                 .ForMember(user => user.RoleId, property => property.MapFrom(view => view.UserRoleId));
-
-            Mapper.CreateMap<Account, UserView>();
-            Mapper.CreateMap<UserView, Account>()
-                .ForMember(account => account.UserId, property => property.MapFrom(view => view.Id));
         }
 
         private static void MapRoles()

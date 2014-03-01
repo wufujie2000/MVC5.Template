@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
 
 namespace Template.Data.Migrations
 {
+    [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
     {
         private Context context;
@@ -38,7 +40,7 @@ namespace Template.Data.Migrations
                 if (!context.Repository<Language>().Query().Any(lang => lang.Abbreviation == "en-GB"))
                     context.Repository<Language>().Insert(language);
 
-            context.Save();
+            context.SaveChanges();
         }
         private void SeedAllPrivileges()
         {
@@ -117,14 +119,14 @@ namespace Template.Data.Migrations
                         context.Repository<PrivilegeLanguage>().Insert(privilegeLanguage);
                 }
 
-            context.Save();
+            context.SaveChanges();
         }
         private void SeedAdministratorRole()
         {
             if (!context.Repository<Role>().Query(role => role.Name == "Administrator").Any())
                 context.Repository<Role>().Insert(new Role() { Name = "Administrator" });
 
-            context.Save();
+            context.SaveChanges();
 
             var adminRoleId = context.Repository<Role>().Query(role => role.Name == "Administrator").First().Id;
             var adminPrivileges = context.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
@@ -136,7 +138,7 @@ namespace Template.Data.Migrations
                         PrivilegeId = privilege.Id
                     });
 
-            context.Save();
+            context.SaveChanges();
         }
         private void SeedUsers()
         {
@@ -150,7 +152,7 @@ namespace Template.Data.Migrations
                 if (!context.Repository<User>().Query(u => u.FirstName == user.FirstName && u.LastName == user.LastName).Any())
                     context.Repository<User>().Insert(user);
 
-            context.Save();
+            context.SaveChanges();
         }
         private void SeedAccounts()
         {
@@ -168,7 +170,7 @@ namespace Template.Data.Migrations
                 if (!context.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
                     context.Repository<Account>().Insert(account);
 
-            context.Save();
+            context.SaveChanges();
         }
 
         public void Dispose()

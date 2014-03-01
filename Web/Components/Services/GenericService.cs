@@ -41,7 +41,7 @@ namespace Template.Components.Services
         public virtual IQueryable<TView> GetViews()
         {
             return UnitOfWork.Repository<TModel>()
-                .ProjectTo<TView>()
+                .Query<TView>()
                 .OrderByDescending(model => model.Id);
         }
         public virtual TView GetView(String id)

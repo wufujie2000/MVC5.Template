@@ -95,7 +95,7 @@ namespace Template.Tests.Tests.Components.Services
             var expected = service
                 .BaseUnitOfWork
                 .Repository<Account>()
-                .ProjectTo<AccountView>()
+                .Query<AccountView>()
                 .OrderByDescending(account => account.Id)
                 .Select(account => account.Id)
                 .GetEnumerator();

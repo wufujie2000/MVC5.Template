@@ -35,8 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Datalist">
       <HintPath>..\packages\Datalist.3.0.1\lib\net45\Datalist.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
@@ -71,6 +79,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
+    <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
+    <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
     <Compile Include="Helpers\HtmlHelperMock.cs" />
     <Compile Include="Helpers\HttpContextStub.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
@@ -110,6 +121,7 @@
     <Compile Include="Tests\Components\Services\BaseServiceTests.cs" />
     <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
     <Compile Include="Tests\Components\Services\ServiceFactoryTests.cs" />
+    <Compile Include="Tests\Data\Core\ContextTests.cs" />
     <Compile Include="Tests\Resources\ResourceProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>

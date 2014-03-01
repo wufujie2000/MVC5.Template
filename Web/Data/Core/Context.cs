@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.Entity;
-using Template.Components.Services.AutoMapper;
+using Template.Data.Mapping;
 using Template.Objects;
 
 namespace Template.Data.Core
@@ -38,7 +38,7 @@ namespace Template.Data.Core
 
         static Context()
         {
-            ModelMapping.MapModels();
+            ObjectMapper.MapObjects();
         }
         public Context()
         {
@@ -56,11 +56,6 @@ namespace Template.Data.Core
             repositories.Add(modelName, modelRepository);
 
             return modelRepository;
-        }
-
-        public override void Save()
-        {
-            SaveChanges();
         }
     }
 }

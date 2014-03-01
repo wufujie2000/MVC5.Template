@@ -37,7 +37,7 @@ namespace Template.Components.Services
             var account = UnitOfWork.ToModel<UserView, Account>(view);
 
             account.Passhash = BCrypter.HashPassword(view.Password);
-            account.UserId = user.Id;
+            account.UserId = user.Id; // TODO: Possibly already mapped
 
             UnitOfWork.Repository<User>().Insert(user);
             UnitOfWork.Repository<Account>().Insert(account);        

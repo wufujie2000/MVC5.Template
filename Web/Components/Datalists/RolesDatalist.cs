@@ -8,7 +8,7 @@ namespace Template.Components.Datalists
     {
         protected override IQueryable<RoleView> GetModels()
         {
-            return UnitOfWork.Repository<Role>().ProjectTo<RoleView>();
+            return UnitOfWork.Repository<Role>().Query<RoleView>();
         }
     }
 }

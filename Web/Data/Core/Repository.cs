@@ -1,20 +1,20 @@
 ﻿using AutoMapper.QueryableExtensions;
-using Template.Objects;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using Template.Objects;
 
 namespace Template.Data.Core
 {
     public class Repository<TModel> : IRepository<TModel> where TModel : BaseModel
     {
-        private DbContext dbContext;
+        private AContext context;
         private DbSet<TModel> dbSet;
 
-        public Repository(DbContext context)
+        public Repository(AContext context)
         {
-            dbContext = context;
+            this.context = context;
             dbSet = context.Set<TModel>();
         }
 
@@ -26,17 +26,17 @@ namespace Template.Data.Core
         {
             return dbSet;
         }
-        public IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate)
-        {
-            return dbSet.Where(predicate);
-        }
-        public IQueryable<TView> ProjectTo<TView>()
+        public IQueryable<TView> Query<TView>()
             where TView : BaseView
         {
             return Query().Project().To<TView>();
         }
 
-        public IQueryable<TView> ProjectTo<TView>(Expression<Func<TModel, Boolean>> predicate)
+        public IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate)
+        {
+            return dbSet.Where(predicate);
+        }
+        public IQueryable<TView> Query<TView>(Expression<Func<TModel, Boolean>> predicate)
             where TView : BaseView
         {
             return Query(predicate).Project().To<TView>();
@@ -52,9 +52,9 @@ namespace Template.Data.Core
             if (attachedModel == null)
                 attachedModel = dbSet.Attach(model);
             else
-                dbContext.Entry(attachedModel).CurrentValues.SetValues(model);
+                context.Entry(attachedModel).CurrentValues.SetValues(model);
 
-            dbContext.Entry(attachedModel).State = EntityState.Modified;
+            context.Entry(attachedModel).State = EntityState.Modified;
         }
         public void Delete(TModel model)
         {

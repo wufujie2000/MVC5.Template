@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Template.Objects;
 using System;
+using Template.Objects;
 
 namespace Template.Data.Core
 {
@@ -10,8 +10,8 @@ namespace Template.Data.Core
         private AContext context;
 
         public UnitOfWork()
+            : this(new Context())
         {
-            context = new Context();
         }
         public UnitOfWork(AContext context)
         {
@@ -43,7 +43,7 @@ namespace Template.Data.Core
         }
         public void Commit()
         {
-            context.Save();
+            context.SaveChanges();
         }
 
         public void Dispose()

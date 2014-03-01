@@ -20,7 +20,11 @@ namespace Template.Components.Services.AutoMapper
             Mapper.CreateMap<Account, AccountView>();
             Mapper.CreateMap<AccountView, Account>();
 
-            Mapper.CreateMap<User, UserView>();
+            Mapper.CreateMap<User, UserView>()
+                .ForMember(view => view.UserFirstName, property => property.MapFrom(user => user.FirstName))
+                .ForMember(view => view.UserLastName, property => property.MapFrom(user => user.LastName))
+                .ForMember(view => view.UserDateOfBirth, property => property.MapFrom(user => user.DateOfBirth))
+                .ForMember(view => view.UserRoleId, property => property.MapFrom(user => user.RoleId));
             Mapper.CreateMap<UserView, User>()
                 .ForMember(user => user.FirstName, property => property.MapFrom(view => view.UserFirstName))
                 .ForMember(user => user.LastName, property => property.MapFrom(view => view.UserLastName))

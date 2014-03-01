@@ -1,8 +1,8 @@
-﻿using Template.Data.Core;
-using Template.Objects;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Data.Core;
+using Template.Objects;
 
 namespace Template.Components.Services
 {
@@ -10,21 +10,24 @@ namespace Template.Components.Services
         where TModel : BaseModel
         where TView : BaseView
     {
-        public ModelStateDictionary ModelState
+        protected ModelStateDictionary ModelState
         {
             get;
-            set;
+            private set;
         }
 
         public GenericService(ModelStateDictionary modelState)
             : base(modelState)
         {
-            ModelState = modelState;
+            if (modelState == null)
+                throw new ArgumentNullException("modelState");
+
+            this.ModelState = modelState;
         }
 
         public virtual Boolean CanCreate(TView view)
         {
-            return ModelState.IsValid;
+            return ModelState.IsValid; // TODO: Make services work on each model and not on one
         }
         public virtual Boolean CanEdit(TView view)
         {

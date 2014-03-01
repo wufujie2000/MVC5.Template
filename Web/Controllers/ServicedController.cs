@@ -10,7 +10,7 @@ namespace Template.Controllers
 
         protected ServicedController()
         {
-            Service = ServiceFactory.Instance.GetService<TService>(ModelState);
+            Service = ServiceFactory.CreateService<TService>(ModelState);
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

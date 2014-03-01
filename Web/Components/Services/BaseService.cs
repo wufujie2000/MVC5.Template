@@ -15,6 +15,13 @@ namespace Template.Components.Services
             set;
         }
 
+        public String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+        }
         public String CurrentLanguage
         {
             get
@@ -43,21 +50,6 @@ namespace Template.Components.Services
                 return HttpContext.Current.Request.RequestContext.RouteData.Values["action"] as String;
             }
         }
-        public String CurrentId
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["id"] as String;
-            }
-        }
-
-        public String CurrentAccountId
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.Name;
-            }
-        }
 
         public IMessagesContainer AlertMessages
         {
@@ -83,6 +75,7 @@ namespace Template.Components.Services
         {
             if (disposed) return;
             UnitOfWork.Dispose();
+            UnitOfWork = null;
             disposed = true;
         }
     }

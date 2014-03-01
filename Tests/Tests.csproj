@@ -79,6 +79,8 @@
     <Compile Include="Objects\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Objects\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Objects\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
+    <Compile Include="Objects\Components\Services\BaseServiceStub.cs" />
+    <Compile Include="Objects\Components\Services\GenericServiceStub.cs" />
     <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
@@ -105,6 +107,9 @@
     <Compile Include="Tests\Components\Mvc\Validators\DateValidatorTests.cs" />
     <Compile Include="Tests\Components\Mvc\Validators\NumberValidatorTests.cs" />
     <Compile Include="Tests\Components\Security\BCrypterTests.cs" />
+    <Compile Include="Tests\Components\Services\BaseServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\ServiceFactoryTests.cs" />
     <Compile Include="Tests\Resources\ResourceProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>

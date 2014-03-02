@@ -79,6 +79,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
@@ -153,6 +156,9 @@
       <Project>{b201b326-86eb-4abd-aebb-0dde4c4a5366}</Project>
       <Name>Web</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\Components\Services\Account\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

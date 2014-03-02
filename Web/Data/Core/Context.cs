@@ -30,7 +30,7 @@ namespace Template.Data.Core
 
         #region System
 
-        public DbSet<Language> Languages { get; set; }
+        private DbSet<Language> Languages { get; set; }
 
         #endregion
 
@@ -42,6 +42,7 @@ namespace Template.Data.Core
         }
         public Context()
         {
+            Configuration.UseDatabaseNullSemantics = true;
             repositories = new Hashtable();
         }
 

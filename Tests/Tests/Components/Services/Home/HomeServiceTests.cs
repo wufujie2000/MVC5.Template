@@ -1,0 +1,78 @@
+﻿using NUnit.Framework;
+using System;
+using System.Linq;
+using Template.Components.Alerts;
+using Template.Components.Services;
+using Template.Resources.Shared;
+
+namespace Template.Tests.Tests.Components.Services
+{
+    [TestFixture]
+    public class HomeServiceTests
+    {
+        private HomeService service;
+
+        [SetUp]
+        public void SetUp()
+        {
+            service = new HomeService(null);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            service.Dispose();
+        }
+
+        #region Method: AddUnauthorizedMessage()
+
+        [Test]
+        public void AddUnauthorizedMessage_AddsMessageToContainer()
+        {
+            service.AddUnauthorizedMessage();
+            var message = service.AlertMessages.First();
+
+            Assert.AreEqual(Messages.Unauthorized, message.Message);
+            Assert.AreEqual(AlertMessageType.Danger, message.Type);
+            Assert.AreEqual(1, service.AlertMessages.Count());
+            Assert.AreEqual(String.Empty, message.Key);
+            Assert.AreEqual(0, message.FadeOutAfter);
+        }
+
+        #endregion
+
+        #region Method: AddSystemErrorMessage()
+
+        [Test]
+        public void AddSystemErrorMessage_AddsMessageToContainer()
+        {
+            service.AddSystemErrorMessage();
+            var message = service.AlertMessages.First();
+
+            Assert.AreEqual(Messages.SystemError, message.Message);
+            Assert.AreEqual(AlertMessageType.Danger, message.Type);
+            Assert.AreEqual(1, service.AlertMessages.Count());
+            Assert.AreEqual(String.Empty, message.Key);
+            Assert.AreEqual(0, message.FadeOutAfter);
+        }
+
+        #endregion
+
+        #region Method: AddPageNotFoundMessage()
+
+        [Test]
+        public void AddPageNotFoundMessage_AddsMessageToContainer()
+        {
+            service.AddPageNotFoundMessage();
+            var message = service.AlertMessages.First();
+
+            Assert.AreEqual(Messages.PageNotFound, message.Message);
+            Assert.AreEqual(AlertMessageType.Danger, message.Type);
+            Assert.AreEqual(1, service.AlertMessages.Count());
+            Assert.AreEqual(String.Empty, message.Key);
+            Assert.AreEqual(0, message.FadeOutAfter);
+        }
+
+        #endregion
+    }
+}

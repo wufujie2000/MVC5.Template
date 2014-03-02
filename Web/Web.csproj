@@ -146,6 +146,7 @@
     <Content Include="Images\Shared\breadcrumb.png" />
     <Content Include="Images\Shared\menu-active.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Datalist\bind-with-delay.js" />
     <Content Include="Scripts\Datalist\bind-with-delay.min.js" />
     <Content Include="Scripts\Datalist\bootstrap-paginator.js" />

@@ -1,12 +1,12 @@
-﻿using Template.Components.Alerts;
-using Template.Data.Core;
-using System;
+﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using Template.Components.Alerts;
+using Template.Data.Core;
 
 namespace Template.Components.Services
 {
-    public abstract class BaseService
+    public abstract class BaseService : IDisposable
     {
         private Boolean disposed;
         protected IUnitOfWork UnitOfWork

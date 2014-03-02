@@ -1,6 +1,6 @@
-﻿using Template.Resources.Shared;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using Template.Resources.Shared;
 
 namespace Template.Components.Services
 {

@@ -36,6 +36,7 @@ namespace Template.Components.Services
 
         private Boolean IsAuthenticated(String username, String password)
         {
+            username = username.ToLowerInvariant();
             Account account = UnitOfWork
                 .Repository<Account>()
                 .Query(acc => acc.Username == username)
@@ -61,6 +62,7 @@ namespace Template.Components.Services
 
         private void SetAccountId(AccountView account)
         {
+            account.Username = account.Username.ToLowerInvariant();
             account.Id = UnitOfWork
                 .Repository<Account>()
                 .Query(acc => acc.Username == account.Username)
@@ -72,7 +74,7 @@ namespace Template.Components.Services
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id, DateTime.Now, DateTime.Now.AddMonths(1), true, account.Id);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
             {
-                HttpOnly = true,
+                HttpOnly = false,
                 Expires = ticket.Expiration
             };
 

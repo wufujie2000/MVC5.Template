@@ -40,7 +40,7 @@ namespace Template.Tests.Tests.Components.Services
         #region Method: CanCreate(UserView view)
 
         [Test]
-        public void CanCreate_CanNotCreateOnInvalidModelState()
+        public void CanCreate_CanNotCreateWithInvalidModelState()
         {
             modelState.AddModelError("Test", "Test");
             Assert.IsFalse(service.CanCreate(ObjectFactory.CreateUserView()));
@@ -80,7 +80,7 @@ namespace Template.Tests.Tests.Components.Services
         #region Method: CanEdit(UserView view)
 
         [Test]
-        public void CanEdit_CanNotEditOnInvalidModelState()
+        public void CanEdit_CanNotEditWithInvalidModelState()
         {
             modelState.AddModelError("Test", "Test");
             Assert.IsFalse(service.CanEdit(ObjectFactory.CreateUserView()));

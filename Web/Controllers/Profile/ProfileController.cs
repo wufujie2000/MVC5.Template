@@ -30,6 +30,7 @@ namespace Template.Controllers.Profile
             ProfileView profile = Service.GetView(Service.CurrentAccountId);
             Service.AddDeleteDisclaimerMessage();
             profile.Username = String.Empty;
+
             return View(profile);
         }
 

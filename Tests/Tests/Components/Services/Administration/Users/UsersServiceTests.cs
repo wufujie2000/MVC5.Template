@@ -50,7 +50,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanCreate_CanNotCreateWithAlreadyTakenUsername()
         {
             var userView = ObjectFactory.CreateUserView();
-            userView.Username = account.Username.ToUpper();
+            userView.Username = account.Username.ToLower();
             userView.Id += "1";
 
             Assert.IsFalse(service.CanCreate(userView));
@@ -70,7 +70,7 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void CanCreate_CanCreateValidView()
+        public void CanCreate_CanCreateValidUser()
         {
             Assert.IsTrue(service.CanCreate(ObjectFactory.CreateUserView()));
         }
@@ -87,19 +87,10 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void CanEdit_CanEditUsingItsOwnUsername()
-        {
-            var user = ObjectFactory.CreateUserView();
-            user.Username = account.Username;
-
-            Assert.IsTrue(service.CanEdit(user));
-        }
-
-        [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             var userView = ObjectFactory.CreateUserView();
-            userView.Username = account.Username.ToUpper();
+            userView.Username = account.Username.ToLower();
             userView.Id += "1";
 
             Assert.IsFalse(service.CanEdit(userView));
@@ -108,7 +99,7 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void CanEdit_CanEditValidView()
+        public void CanEdit_CanEditValidUser()
         {
             Assert.IsTrue(service.CanEdit(ObjectFactory.CreateUserView()));
         }

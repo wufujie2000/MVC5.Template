@@ -14,6 +14,20 @@ namespace Template.Tests.Helpers
             }
         }
 
+        public static ProfileView CreateProfileView()
+        {
+            return new ProfileView()
+            {
+                Id = TestId,
+                Username = "Username",
+                CurrentPassword = "Password",
+                NewPassword = "NewPassword",
+                UserFirstName = "FirstName",
+                UserLastName = "LastName",
+                UserDateOfBirth = new DateTime(1990, 1, 1)
+            };
+        }
+
         public static Account CreateAccount()
         {
             return new Account()
@@ -51,7 +65,7 @@ namespace Template.Tests.Helpers
                 Id = TestId,
                 UserFirstName = "FirstName",
                 UserLastName = "LastName",
-                UserDateOfBirth = new DateTime(1988, 2, 2),
+                UserDateOfBirth = new DateTime(1990, 1, 1),
 
                 Username = "Username",
                 Password = "Password",

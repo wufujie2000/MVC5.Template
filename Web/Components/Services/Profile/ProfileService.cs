@@ -40,6 +40,11 @@ namespace Template.Components.Services
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
         }
+        public override void Delete(String id)
+        {
+            UnitOfWork.Repository<User>().Delete(id);
+            UnitOfWork.Commit();
+        }
 
         public void AddDeleteDisclaimerMessage()
         {
@@ -67,8 +72,8 @@ namespace Template.Components.Services
                 .Query(account => account.Id == CurrentAccountId)
                 .Select(account => account.Username)
                 .First();
-
-            Boolean isCorrectUsername = username == profile.Username.ToLowerInvariant();
+            
+            Boolean isCorrectUsername = username.ToUpperInvariant() == profile.Username.ToUpperInvariant();
             if (!isCorrectUsername)
                 ModelState.AddModelError("Username", Validations.IncorrectUsername);
 
@@ -92,7 +97,7 @@ namespace Template.Components.Services
         private Account GetAccountFrom(ProfileView profile)
         {
             var account = UnitOfWork.Repository<Account>().GetById(CurrentAccountId);
-            account.Username = profile.Username.ToLowerInvariant();
+            account.Username = profile.Username;
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
 

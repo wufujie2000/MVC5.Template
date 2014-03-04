@@ -36,10 +36,9 @@ namespace Template.Components.Services
 
         private Boolean IsAuthenticated(String username, String password)
         {
-            username = username.ToLowerInvariant();
             Account account = UnitOfWork
                 .Repository<Account>()
-                .Query(acc => acc.Username == username)
+                .Query(acc => acc.Username.ToUpper() == username.ToUpper())
                 .SingleOrDefault();
 
             return AccountExists(account) && IsCorrectPassword(password, account.Passhash);
@@ -62,10 +61,9 @@ namespace Template.Components.Services
 
         private void SetAccountId(AccountView account)
         {
-            account.Username = account.Username.ToLowerInvariant();
             account.Id = UnitOfWork
                 .Repository<Account>()
-                .Query(acc => acc.Username == account.Username)
+                .Query(acc => acc.Username.ToUpper() == account.Username.ToUpper())
                 .First()
                 .Id;
         }

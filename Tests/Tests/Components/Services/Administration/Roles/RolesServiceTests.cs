@@ -10,7 +10,7 @@ using Template.Objects;
 using Template.Tests.Helpers;
 using Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Services.Administration.Roles
+namespace Template.Tests.Tests.Components.Services
 {
     [TestFixture]
     public class RolesServiceTests

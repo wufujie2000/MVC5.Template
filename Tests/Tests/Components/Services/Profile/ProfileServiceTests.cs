@@ -12,7 +12,7 @@ using Template.Resources.Views.ProfileView;
 using Template.Tests.Helpers;
 using Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Services.Profile
+namespace Template.Tests.Tests.Components.Services
 {
     [TestFixture]
     public class ProfileServiceTests

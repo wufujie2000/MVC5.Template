@@ -85,6 +85,7 @@
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\Shared\Authorization\RoleProviderServiceTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />

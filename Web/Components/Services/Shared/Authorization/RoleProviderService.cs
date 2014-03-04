@@ -14,10 +14,7 @@ namespace Template.Components.Services
         {
             get
             {
-                if (instance == null)
-                    instance = new RoleProviderService();
-
-                return instance;
+                return instance ?? (instance = new RoleProviderService());
             }
         }
 
@@ -31,7 +28,7 @@ namespace Template.Components.Services
         }
         public virtual Boolean IsAuthorizedForAction(String area, String controller, String action)
         {
-            Type controllerType = GetController(controller);
+            Type controllerType = GetController(area, controller);
             MethodInfo actionInfo = GetAction(controllerType, action);
             if (!NeedsAuthorization(controllerType, actionInfo))
                 return true;
@@ -49,13 +46,12 @@ namespace Template.Components.Services
             return isAuthorized;   
         }
 
-
-        private Type GetController(String controller)
+        private Type GetController(String area, String controller)
         {
             return Assembly
                 .Load("Template.Controllers")
                 .GetTypes()
-                .First(type => type.FullName.EndsWith(controller + "Controller"));
+                .First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
         }
         private MethodInfo GetAction(Type controller, String action)
         {

@@ -11,8 +11,9 @@ namespace Template.Tests.Objects.Components.Extensions.Html
         public Decimal Number { get; set; }
         public DateTime Date { get; set; }
 
-        public void Method()
+        public String Method()
         {
+            return String.Empty;
         }
     }
 }

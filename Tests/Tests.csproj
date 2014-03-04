@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />

@@ -90,11 +90,11 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static RolePrivilege CreateRolePrivilege()
+        public static RolePrivilege CreateRolePrivilege(Int32 instanceIndex = 1)
         {
             return new RolePrivilege()
             {
-                Id = TestId
+                Id = TestId + instanceIndex.ToString()
             };
         }
         public static RolePrivilegeView CreateRolePrivilegeView()
@@ -105,11 +105,11 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static Privilege CreatePrivilege()
+        public static Privilege CreatePrivilege(Int32 instanceNumber = 1)
         {
             return new Privilege()
             {
-                Id = TestId,
+                Id = TestId + instanceNumber.ToString(),
                 Area = "Area",
                 Controller = "Controller",
                 Action = "Action"
@@ -123,6 +123,27 @@ namespace Template.Tests.Helpers
                 Area = "Area",
                 Controller = "Controller",
                 Action = "Action"
+            };
+        }
+
+        public static PrivilegeLanguage CreatePrivilegeLanguage(Int32 instanceIndex = 1)
+        {
+            return new PrivilegeLanguage()
+            {
+                Id = TestId + instanceIndex.ToString(),
+                Area = "LanguageArea" + instanceIndex.ToString(),
+                Controller = "LanguageController" + instanceIndex.ToString(),
+                Action = "LanguageAction" + instanceIndex.ToString()
+            };
+        }
+
+        public static Language CreateLanguage()
+        {
+            return new Language()
+            {
+                Id = TestId,
+                Name = "Name",
+                Abbreviation = "Abbreviation"
             };
         }
     }

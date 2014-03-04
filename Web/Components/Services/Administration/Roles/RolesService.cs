@@ -22,13 +22,13 @@ namespace Template.Components.Services
 
         public override void Create(RoleView view)
         {
-            InsertModel(view);
+            CreateRole(view);
             CreateRolePrivileges(view);
             UnitOfWork.Commit();
         }
         public override void Edit(RoleView view)
         {
-            UpdateModel(view);
+            EditRole(view);
             DeleteRolePrivileges(view);
             CreateRolePrivileges(view);
             UnitOfWork.Commit();
@@ -68,16 +68,17 @@ namespace Template.Components.Services
             }
         }
 
-        private void InsertModel(RoleView view)
+        private void CreateRole(RoleView view)
         {
             var model = UnitOfWork.ToModel<RoleView, Role>(view);
             UnitOfWork.Repository<Role>().Insert(model);
         }
-        private void UpdateModel(RoleView view)
+        private void EditRole(RoleView view)
         {
             var model = UnitOfWork.ToModel<RoleView, Role>(view);
             UnitOfWork.Repository<Role>().Update(model);
         }
+
         private void DeleteRolePrivileges(RoleView view)
         {
             var rolePrivileges = UnitOfWork

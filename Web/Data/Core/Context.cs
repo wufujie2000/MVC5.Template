@@ -42,7 +42,6 @@ namespace Template.Data.Core
         }
         public Context()
         {
-            Configuration.UseDatabaseNullSemantics = true;
             repositories = new Hashtable();
         }
 

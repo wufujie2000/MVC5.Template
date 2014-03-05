@@ -15,9 +15,9 @@ namespace Template.Data.Migrations
 
         public Configuration()
         {
-            context = new Context();
             AutomaticMigrationsEnabled = true;
             ContextKey = "Template.Data";
+            context = new Context();
         }
 
         protected override void Seed(Context context)
@@ -37,7 +37,7 @@ namespace Template.Data.Migrations
             };
 
             foreach (var language in languages)
-                if (!context.Repository<Language>().Query().Any(lang => lang.Abbreviation == "en-GB"))
+                if (!context.Repository<Language>().Query().Any(lang => lang.Abbreviation == language.Abbreviation))
                     context.Repository<Language>().Insert(language);
 
             context.SaveChanges();

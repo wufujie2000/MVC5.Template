@@ -1,5 +1,5 @@
-﻿using Template.Objects;
-using System;
+﻿using System;
+using Template.Objects;
 
 namespace Template.Data.Core
 {

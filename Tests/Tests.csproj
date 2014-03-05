@@ -80,8 +80,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Migrations\201403051939092_1.cs" />
+    <Compile Include="Migrations\201403051939092_1.Designer.cs">
+      <DependentUpon>201403051939092_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
+    <Compile Include="Data\TestContext.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
@@ -167,6 +173,11 @@
     <Folder Include="Tests\Controllers\Administration\Users\" />
     <Folder Include="Tests\Controllers\Home\" />
     <Folder Include="Tests\Controllers\Profile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201403051939092_1.resx">
+      <DependentUpon>201403051939092_1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

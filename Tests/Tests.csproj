@@ -86,6 +86,7 @@
     <Compile Include="Tests\Components\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Shared\Authorization\RoleProviderServiceTests.cs" />
+    <Compile Include="Tests\Components\Services\Shared\Sidebar\MenuServiceTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
@@ -161,7 +162,9 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tests\Controllers\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

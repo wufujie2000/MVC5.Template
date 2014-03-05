@@ -10,6 +10,7 @@ using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
+    [Ignore]
     [TestFixture]
     public class HeaderExtensionsTests
     {

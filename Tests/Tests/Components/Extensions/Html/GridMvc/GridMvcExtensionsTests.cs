@@ -9,6 +9,7 @@ using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.GridMvc
 {
+    [Ignore]
     [TestFixture]
     public class GridMvcExtensionsTests
     {

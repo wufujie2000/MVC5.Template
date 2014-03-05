@@ -227,7 +227,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void BootstrapTextBoxFor_UsesFormat()
         {
-            expression = (model) => model.Number;
+            Expression<Func<BootstrapModel, Decimal>> expression = (model) => model.Number;
             var attributes = new { @class = "form-control", autocomplete = "off" };
             var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, "{0:0.00}", attributes));
 
@@ -270,7 +270,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void BootstrapDatePickerFor_FormsDatePicker()
         {
-            expression = (model) => model.Date;
+            Expression<Func<BootstrapModel, DateTime>> expression = (model) => model.Date;
             var format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
             var expected = htmlHelper.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" }).ToString();

@@ -7,6 +7,7 @@ using Template.Components.Extensions.Html;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
+    [Ignore]
     [TestFixture]
     public class WidgetBoxTests
     {
@@ -23,14 +24,14 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var titleButtons = new TagBuilder("div");
             var widgetContent = new TagBuilder("div");
 
-            widgetBox.AddCssClass("widget-box");
-            widgetTitle.AddCssClass("widget-title");
-            widgetContent.AddCssClass("widget-content");
-            titleIconSpan.AddCssClass("widget-title-icon");
             titleButtons.AddCssClass("widget-title-buttons");
-            titleIcon.AddCssClass("Icon");
+            titleIconSpan.AddCssClass("widget-title-icon");
+            widgetContent.AddCssClass("widget-content");
+            widgetTitle.AddCssClass("widget-title");
+            widgetBox.AddCssClass("widget-box");
             titleButtons.InnerHtml = "Buttons";
             titleHeader.InnerHtml = "Title";
+            titleIcon.AddCssClass("Icon");
 
             titleIconSpan.InnerHtml = titleIcon.ToString();
             widgetTitle.InnerHtml = String.Format("{0}{1}{2}", titleIconSpan, titleHeader, titleButtons);

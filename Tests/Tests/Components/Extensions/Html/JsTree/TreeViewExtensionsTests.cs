@@ -8,6 +8,7 @@ using Template.Tests.Objects.Components.Extensions.Html;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
+    [Ignore]
     [TestFixture]
     public class TreeViewExtensionsTests
     {

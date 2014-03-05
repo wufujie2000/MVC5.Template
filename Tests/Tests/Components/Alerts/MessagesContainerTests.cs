@@ -148,6 +148,21 @@ namespace Template.Tests.Tests.Components.Alerts
         #region Method: GetEnumerator()
 
         [Test]
+        public void GetEnumerator_ContainsMessages()
+        {
+            container = new MessagesContainer(null);
+            var messages = new AlertMessage[] { new AlertMessage(), new AlertMessage() };
+            foreach (var message in messages)
+                container.Add(message);
+
+            var expected = messages.GetEnumerator();
+            var actual = container.GetEnumerator();
+
+            while (expected.MoveNext() | actual.MoveNext())
+                Assert.AreEqual(expected.Current, actual.Current);
+        }
+
+        [Test]
         public void GetEnumerator_ContainsMessagesAndModelStateErrors()
         {
             modelState.AddModelError("Key", "ErrorMessage");
@@ -185,7 +200,11 @@ namespace Template.Tests.Tests.Components.Alerts
             foreach (var message in messages)
                 container.Add(message);
 
-            CollectionAssert.AreEqual(container, container as IEnumerable);
+            var expected = container.GetEnumerator();
+            var actual = (container as IEnumerable).GetEnumerator();
+
+            while(expected.MoveNext() | actual.MoveNext())
+                Assert.AreEqual(expected.Current, actual.Current);
         }
 
         #endregion

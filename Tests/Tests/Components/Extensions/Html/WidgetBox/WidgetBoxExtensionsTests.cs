@@ -11,6 +11,7 @@ using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
+    [Ignore]
     [TestFixture]
     public class WidgetBoxExtensionsTests
     {
@@ -36,9 +37,8 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void TableWidgetBox_FormsTableWidgetBox()
         {
             var expected = new StringBuilder();
-            var expectedWidgetBox = new WidgetBox(
-                new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty);
-            expectedWidgetBox.Dispose();
+            var expectedWriter = new StringWriter(expected);
+            new WidgetBox(expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
 
             var actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
@@ -55,9 +55,8 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void FormWidgetBox_FormsFormWidgetBox()
         {
             var expected = new StringBuilder();
-            var expectedWidgetBox = new WidgetBox(
-                new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty);
-            expectedWidgetBox.Dispose();
+            var expectedWriter = new StringWriter(expected);
+            new WidgetBox(expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty).Dispose();
 
             var actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);

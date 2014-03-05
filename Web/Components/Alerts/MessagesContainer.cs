@@ -76,7 +76,7 @@ namespace Template.Components.Alerts
                         Type = AlertMessageType.Danger
                     });
 
-            return messages.Union(modelStateMessages).GetEnumerator();
+            return modelStateMessages.Union(messages).GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {

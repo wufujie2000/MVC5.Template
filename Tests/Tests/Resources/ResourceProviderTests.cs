@@ -17,7 +17,7 @@ namespace Template.Tests.Resources.Tests
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextStub().Context;
+            HttpContext.Current = new HttpContextBaseMock().Context;
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
         }
 

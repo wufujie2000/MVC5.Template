@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Objects.Components.Services;
 
@@ -17,7 +18,7 @@ namespace Template.Tests.Tests.Components.Services
         public void SetUp()
         {
             modelState = new ModelStateDictionary();
-            service = new GenericServiceStub(modelState);
+            service = new GenericServiceStub(new UnitOfWork());
         }
 
         #region Constructor: GenericService(ModelStateDictionary modelState) : base(modelState)

@@ -10,6 +10,7 @@ using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Datalists
 {
+    [Ignore]
     [TestFixture]
     public class BaseDatalistTests
     {
@@ -19,9 +20,9 @@ namespace Template.Tests.Tests.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            var contextStub = new HttpContextStub();
+            var contextStub = new HttpContextBaseMock();
 
-            request = contextStub.Request;
+            request = contextStub.Context.Request;
             HttpContext.Current = contextStub.Context;
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;

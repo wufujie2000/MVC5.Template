@@ -91,7 +91,7 @@
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
     <Compile Include="Helpers\HtmlHelperMock.cs" />
-    <Compile Include="Helpers\HttpContextStub.cs" />
+    <Compile Include="Helpers\HttpContextMock.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
@@ -128,7 +128,6 @@
     <Compile Include="Tests\Components\Security\BCrypterTests.cs" />
     <Compile Include="Tests\Components\Services\BaseServiceTests.cs" />
     <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
-    <Compile Include="Tests\Components\Services\ServiceFactoryTests.cs" />
     <Compile Include="Tests\Data\Core\ContextTests.cs" />
     <Compile Include="Tests\Resources\ResourceProviderTests.cs" />
   </ItemGroup>

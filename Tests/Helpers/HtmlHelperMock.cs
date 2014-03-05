@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Tests.Helpers;
@@ -41,21 +40,6 @@ namespace Template.Tests.Helpers
             get;
             private set;
         }
-        public Mock<HttpResponseWrapper> HttpResponseWrapperMock
-        {
-            get;
-            private set;
-        }
-        public Mock<HttpRequestWrapper> HttpRequestWrapperMock
-        {
-            get;
-            private set;
-        }
-        public Mock<HttpContextWrapper> HttpContextWrapperMock
-        {
-            get;
-            private set;
-        }
         public ViewDataDictionary ViewDataDictionary
         {
             get;
@@ -66,12 +50,12 @@ namespace Template.Tests.Helpers
             get;
             private set;
         }
-        public RouteCollection RouteCollection
+        public HttpContextBaseMock HttpContextMock
         {
             get;
             private set;
         }
-        public HttpContextStub HttpContextStub
+        public RouteCollection RouteCollection
         {
             get;
             private set;
@@ -93,26 +77,20 @@ namespace Template.Tests.Helpers
         }
 
         public HtmlHelperMock()
-            : this(new HttpContextStub())
+            : this(new HttpContextBaseMock())
         {
         }
-        public HtmlHelperMock(HttpContextStub context)
+        public HtmlHelperMock(HttpContextBaseMock context)
         {
             Items = new Hashtable();
-            HttpContextStub = context;
+            HttpContextMock = context;
             IViewMock = new Mock<IView>();
             TextWriter = new StringWriter();
             ViewDataDictionary = new ViewDataDictionary();
             RouteCollection = CreateDefaultRouteCollection();
 
-            HttpRequestWrapperMock = new Mock<HttpRequestWrapper>(HttpContextStub.Request) { CallBase = true };
-            HttpResponseWrapperMock = new Mock<HttpResponseWrapper>(HttpContextStub.Response) { CallBase = true };
-            HttpContextWrapperMock = new Mock<HttpContextWrapper>(HttpContextStub.Context) { CallBase = true };
-            HttpContextWrapperMock.Setup(mock => mock.Request).Returns(HttpRequestWrapperMock.Object);
-            HttpContextWrapperMock.Setup(mock => mock.Response).Returns(HttpResponseWrapperMock.Object);
-
             ControllerBaseMock = new Mock<ControllerBase>() { CallBase = true };
-            RequestContextMock = new Mock<RequestContext>(HttpContextWrapperMock.Object, new RouteData()) { CallBase = true };
+            RequestContextMock = new Mock<RequestContext>(HttpContextMock.ContextBase, new RouteData()) { CallBase = true };
 
             TempDataDictionary = new TempDataDictionary();
             ControllerContextMock = new Mock<ControllerContext>(RequestContextMock.Object, ControllerBaseMock.Object);
@@ -161,6 +139,7 @@ namespace Template.Tests.Helpers
         public HtmlHelperMock(T model)
         {
             ViewDataDictionary.Model = model;
+            ViewContextMock.Object.ClientValidationEnabled = true;
             HtmlHelper = new HtmlHelper<T>(ViewContextMock.Object, IViewDataContainerMock.Object, RouteCollection);
         }
     }

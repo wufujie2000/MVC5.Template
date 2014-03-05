@@ -12,14 +12,14 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
     [TestFixture]
     public class GridMvcExtensionsTests
     {
-        private HttpContextStub httpContextStub;
+        private HttpContextBaseMock httpContextStub;
         private HtmlHelper<GridMvcView> html;
         private HtmlGrid<GridMvcView> grid;
 
         [SetUp]
         public void SetUp()
         {
-            httpContextStub = new HttpContextStub();
+            httpContextStub = new HttpContextBaseMock();
             HttpContext.Current = httpContextStub.Context;
             httpContextStub.Request.RequestContext.RouteData.Values["controller"] = "Roles";
             html = new HtmlHelperMock<GridMvcView>().HtmlHelper;

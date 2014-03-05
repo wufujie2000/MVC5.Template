@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System.Linq;
-using System.Web;
 using Template.Components.Services;
 using Tests.Helpers;
 
@@ -14,14 +13,7 @@ namespace Template.Tests.Tests.Components.Services.Shared.Sidebar
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextStub().Context;
-            service = new MenuService();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            HttpContext.Current = null;
+            service = new MenuService(new HttpContextBaseMock().ContextBase);
         }
 
         #region Method: IEnumerable<Menu> GetAuthorizedMenus()
@@ -32,10 +24,10 @@ namespace Template.Tests.Tests.Components.Services.Shared.Sidebar
             var menus = service.GetAuthorizedMenus();
             var menu = menus.First();
 
-            Assert.AreEqual(1, menus.Count());
             Assert.AreEqual(null, menu.Area);
-            Assert.AreEqual("Home", menu.Controller);
+            Assert.AreEqual(1, menus.Count());
             Assert.AreEqual("Index", menu.Action);
+            Assert.AreEqual("Home", menu.Controller);
             Assert.AreEqual("menu-icon fa fa-home", menu.IconClass);
         }
 

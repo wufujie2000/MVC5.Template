@@ -19,7 +19,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            var contextStub = new HttpContextStub();
+            var contextStub = new HttpContextBaseMock();
             HttpContext.Current = contextStub.Context;
             html = new HtmlHelperMock(contextStub).Html;
         }

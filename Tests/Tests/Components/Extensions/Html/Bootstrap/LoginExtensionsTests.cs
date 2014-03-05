@@ -15,12 +15,14 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     [TestFixture]
     public class LoginExtensionsTests
     {
+        private Expression<Func<BootstrapModel, String>> expression;
         private HtmlHelper<BootstrapModel> html;
 
         [SetUp]
         public void SetUp()
         {
             html = new HtmlHelperMock<BootstrapModel>().HtmlHelper;
+            expression = null;
         }
 
         #region Extensions method: LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
@@ -28,7 +30,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void LoginUsernameFor_FormsLoginUsernameFor()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
+            expression = (model) => model.Required;
 
             var addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon");
@@ -40,7 +42,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             attributes["class"] = "form-control";
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
             
-            Assert.AreEqual(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)), html.LoginUsernameFor(expression).ToString());
+            var expected = String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes));
+            var actual = html.LoginUsernameFor(expression).ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -50,7 +55,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void LoginPasswordFor_FormsLoginPasswordFor()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Required;
+            expression = (model) => model.Required;
 
             var addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon lock-span");
@@ -62,7 +67,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             attributes["class"] = "form-control";
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
 
-            Assert.AreEqual(String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes)), html.LoginPasswordFor(expression).ToString());
+            var expected = String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes));
+            var actual = html.LoginPasswordFor(expression).ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -97,7 +105,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
                 select.InnerHtml += option.ToString();
             }
 
-            Assert.AreEqual(String.Format("{0}{1}{2}", addon, input, select), html.LoginLanguageSelect().ToString());
+            var expected = String.Format("{0}{1}{2}", addon, input, select);
+            var actual = html.LoginLanguageSelect().ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -115,7 +126,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             submit.MergeAttribute("type", "submit");
             formActions.InnerHtml = submit.ToString();
 
-            Assert.AreEqual(formActions.ToString(), html.LoginSubmit().ToString());
+            var expected = formActions.ToString();
+            var actual = html.LoginSubmit().ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

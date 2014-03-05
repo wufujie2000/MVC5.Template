@@ -22,7 +22,7 @@ namespace Template.Tests.Tests.Components.Services
         public void SetUp()
         {
             modelState = new ModelStateDictionary();
-            service = new UsersService(modelState);
+            service = new UsersService(new UnitOfWork());
             context = new Context();
 
             SetUpData();

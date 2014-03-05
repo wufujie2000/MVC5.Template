@@ -5,6 +5,7 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
+using Template.Data.Core;
 using Template.Tests.Objects.Components.Services;
 using Tests.Helpers;
 
@@ -18,8 +19,8 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextStub().Context;
-            service = new BaseServiceStub();
+            HttpContext.Current = new HttpContextBaseMock().Context;
+            service = new BaseServiceStub(new UnitOfWork());
         }
 
         [TearDown]
@@ -90,13 +91,13 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void BaseService_HasNotNullUnitOfWork()
         {
-            Assert.IsNotNull(new BaseServiceStub().BaseUnitOfWork);
+            Assert.IsNotNull(new BaseServiceStub(new UnitOfWork()).BaseUnitOfWork);
         }
 
         [Test]
         public void BaseService_AlertMessagesIsInstanceOfMessagesContainer()
         {
-            Assert.AreEqual(typeof(MessagesContainer), new BaseServiceStub().AlertMessages.GetType());
+            Assert.AreEqual(typeof(MessagesContainer), new BaseServiceStub(new UnitOfWork()).AlertMessages.GetType());
         }
 
         #endregion
@@ -108,8 +109,8 @@ namespace Template.Tests.Tests.Components.Services
         {
             var modelState = new ModelStateDictionary();
             modelState.AddModelError("TestKey", "TestError");
-            
-            var service = new BaseServiceStub(modelState);
+
+            var service = new BaseServiceStub(new UnitOfWork());
 
             Assert.AreEqual(1, service.AlertMessages.Count());
             Assert.AreEqual("TestKey", service.AlertMessages.First().Key);

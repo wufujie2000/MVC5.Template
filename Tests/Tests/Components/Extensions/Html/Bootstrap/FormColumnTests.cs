@@ -16,10 +16,12 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var expected = new StringBuilder();
             var expectedWriter = new StringWriter(expected);
             var formWrapper = new FormWrapper(expectedWriter, "col-sm-9 col-md-9 col-lg-5");
-            expectedWriter.Write("TestContent");
+            expectedWriter.Write("Content");
             formWrapper.Dispose();
 
-            Assert.AreEqual(expected.ToString(), new FormColumn("TestContent").ToString());
+            var actual = new FormColumn("Content");
+
+            Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
         #endregion
@@ -29,18 +31,18 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void FormColumn_WritesFormColumnWrapper()
         {
-            var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            var formColumn = new FormColumn(actualWriter);
-            actualWriter.Write("TestContent");
-            formColumn.Dispose();
-            formColumn.Dispose();
-
             var expected = new StringBuilder();
             var expectedWriter = new StringWriter(expected);
             var formWrapper = new FormWrapper(expectedWriter, "col-sm-9 col-md-9 col-lg-5");
-            expectedWriter.Write("TestContent");
+            expectedWriter.Write("Content");
             formWrapper.Dispose();
+
+            var actual = new StringBuilder();
+            var actualWriter = new StringWriter(actual);
+            var formColumn = new FormColumn(actualWriter);
+            actualWriter.Write("Content");
+            formColumn.Dispose();
+            formColumn.Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }

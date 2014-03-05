@@ -22,8 +22,8 @@ namespace Template.Tests.Objects.Components.Services
             }
         }
 
-        public GenericServiceStub(ModelStateDictionary modelState)
-            : base(modelState)
+        public GenericServiceStub(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
     }

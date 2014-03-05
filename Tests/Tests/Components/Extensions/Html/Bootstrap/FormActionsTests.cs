@@ -13,20 +13,20 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void FormActions_WritesFormActions()
         {
-            var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            var formActions = new FormActions(actualWriter);
-            actualWriter.Write("TestContent");
-            formActions.Dispose();
-            formActions.Dispose();
-
             var expected = new StringBuilder();
             var expectedWriter = new StringWriter(expected);
             var group = new FormGroup(expectedWriter);
             var wrapper = new FormWrapper(expectedWriter, "form-actions col-sm-9 col-md-9 col-lg-7");
-            expectedWriter.Write("TestContent");
+            expectedWriter.Write("Content");
             wrapper.Dispose();
             group.Dispose();
+
+            var actual = new StringBuilder();
+            var actualWriter = new StringWriter(actual);
+            var formActions = new FormActions(actualWriter);
+            actualWriter.Write("Content");
+            formActions.Dispose();
+            formActions.Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }

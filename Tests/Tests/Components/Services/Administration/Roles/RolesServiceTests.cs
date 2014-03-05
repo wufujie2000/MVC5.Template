@@ -23,11 +23,11 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextStub().Context;
+            HttpContext.Current = new HttpContextBaseMock().Context;
             HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "Abbreviation";
 
             modelState = new ModelStateDictionary();
-            service = new RolesService(modelState);
+            service = new RolesService(new UnitOfWork());
             context = new Context();
 
             SetUpData();

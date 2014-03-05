@@ -17,7 +17,9 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var expected = new TagBuilder("div");
             expected.AddCssClass("Test");
 
-            Assert.AreEqual(expected.ToString(), new FormWrapper(" Test ").ToString());
+            var actual = new FormWrapper(" Test ");
+
+            Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
         #endregion
@@ -27,16 +29,16 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void FormWrapper_WritesWrapper()
         {
+            var expected = new TagBuilder("div");
+            expected.InnerHtml = "TestContent";
+            expected.AddCssClass("Test");
+
             var actual = new StringBuilder();
             var writer = new StringWriter(actual);
             var formWrapper = new FormWrapper(writer, " Test ");
             writer.Write("TestContent");
             formWrapper.Dispose();
             formWrapper.Dispose();
-
-            var expected = new TagBuilder("div");
-            expected.InnerHtml = "TestContent";
-            expected.AddCssClass("Test");
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }

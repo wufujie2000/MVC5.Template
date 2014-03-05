@@ -1,5 +1,4 @@
-﻿using System.Web.Mvc;
-using Template.Components.Services;
+﻿using Template.Components.Services;
 using Template.Data.Core;
 
 namespace Template.Tests.Objects.Components.Services
@@ -14,12 +13,8 @@ namespace Template.Tests.Objects.Components.Services
             }
         }
 
-        public BaseServiceStub()
-            : base()
-        {
-        }
-        public BaseServiceStub(ModelStateDictionary modelState)
-            : base(modelState)
+        public BaseServiceStub(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
     }

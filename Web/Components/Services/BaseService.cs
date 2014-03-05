@@ -9,7 +9,6 @@ namespace Template.Components.Services
     public abstract class BaseService : IService, IDisposable
     {
         private Boolean disposed;
-        private HttpContextBase httpContext;
 
         public ModelStateDictionary ModelState
         {
@@ -18,14 +17,8 @@ namespace Template.Components.Services
         }
         public HttpContextBase HttpContext
         {
-            get
-            {
-                return httpContext ?? (httpContext = new HttpContextWrapper(System.Web.HttpContext.Current));
-            }
-            set
-            {
-                httpContext = value;
-            }
+            get;
+            set;
         }
         
         protected IUnitOfWork UnitOfWork

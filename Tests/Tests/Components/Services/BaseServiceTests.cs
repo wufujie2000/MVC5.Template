@@ -1,12 +1,8 @@
-﻿using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Mvc;
-using Template.Components.Alerts;
+﻿using Moq;
+using NUnit.Framework;
+using System.Web.Routing;
+using Template.Components.Services;
 using Template.Data.Core;
-using Template.Tests.Objects.Components.Services;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Services
@@ -14,30 +10,42 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class BaseServiceTests
     {
-        private BaseServiceStub service;
+        private RouteValueDictionary routeValues;
+        private BaseService service;
 
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().Context;
-            service = new BaseServiceStub(new UnitOfWork());
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            var mock = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true };
+
+            service = mock.Object;
+            service.HttpContext = new HttpContextBaseMock().ContextBase;
+            routeValues = service.HttpContext.Request.RequestContext.RouteData.Values;
         }
 
         [TearDown]
         public void TearDown()
         {
-            HttpContext.Current = null;
-            service.Dispose();
             service.Dispose();
         }
+
+        #region Property: CurrentAccountId
+
+        [Test]
+        public void CurrentAccountId_IsCurrent()
+        {
+            Assert.AreEqual(service.HttpContext.User.Identity.Name, service.CurrentAccountId);
+        }
+
+        #endregion
 
         #region Property: CurrentLanguage
 
         [Test]
         public void CurrentLanguage_IsCurrent()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "te-TT";
-            Assert.AreEqual("te-TT", service.CurrentLanguage);
+            Assert.AreEqual(routeValues["language"] = "L", service.CurrentLanguage);
         }
 
         #endregion
@@ -47,8 +55,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CurrentArea_IsCurrent()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = "TestArea";
-            Assert.AreEqual("TestArea", service.CurrentArea);
+            Assert.AreEqual(routeValues["area"] = "A", service.CurrentArea);
         }
 
         #endregion
@@ -58,8 +65,8 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CurrentController_IsCurrent()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "TestControlller";
-            Assert.AreEqual("TestControlller", service.CurrentController);
+            ;
+            Assert.AreEqual(routeValues["controller"] = "C", service.CurrentController);
         }
 
         #endregion
@@ -69,52 +76,18 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CurrentAction_IsCurrent()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "TestAction";
-            Assert.AreEqual("TestAction", service.CurrentAction);
+            Assert.AreEqual(routeValues["action"] = "A", service.CurrentAction);
         }
 
         #endregion
 
-        #region Property: CurrentAccountId
+        #region Method: Dispose()
 
         [Test]
-        public void CurrentAccountId_IsCurrent()
+        public void Dispose_CanDisposeMultipleTimes()
         {
-            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("TestUser"), new String[0]);
-            Assert.AreEqual("TestUser", service.CurrentAccountId);
-        }
-
-        #endregion
-
-        #region Constructor: BaseService() : this(null)
-
-        [Test]
-        public void BaseService_HasNotNullUnitOfWork()
-        {
-            Assert.IsNotNull(new BaseServiceStub(new UnitOfWork()).BaseUnitOfWork);
-        }
-
-        [Test]
-        public void BaseService_AlertMessagesIsInstanceOfMessagesContainer()
-        {
-            Assert.AreEqual(typeof(MessagesContainer), new BaseServiceStub(new UnitOfWork()).AlertMessages.GetType());
-        }
-
-        #endregion
-
-        #region Constructor: BaseService(ModelStateDictionary modelState)
-
-        [Test]
-        public void BaseService_MessagesContainerContainsError()
-        {
-            var modelState = new ModelStateDictionary();
-            modelState.AddModelError("TestKey", "TestError");
-
-            var service = new BaseServiceStub(new UnitOfWork());
-
-            Assert.AreEqual(1, service.AlertMessages.Count());
-            Assert.AreEqual("TestKey", service.AlertMessages.First().Key);
-            Assert.AreEqual("TestError", service.AlertMessages.First().Message);
+            service.Dispose();
+            service.Dispose();
         }
 
         #endregion

@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Objects.Components.Services;
@@ -12,30 +13,16 @@ namespace Template.Tests.Tests.Components.Services
     public class GenericServiceTests
     {
         private ModelStateDictionary modelState;
-        private GenericServiceStub service;
+        private Mock<IUnitOfWork> unitOfWorkMock;
+        private GenericService<TestModel, TestView> service;
 
         [SetUp]
         public void SetUp()
         {
             modelState = new ModelStateDictionary();
-            service = new GenericServiceStub(new UnitOfWork());
+            unitOfWorkMock = new Mock<IUnitOfWork>();
+            service = new Mock<GenericService<TestModel, TestView>>(unitOfWorkMock.Object).Object;
         }
-
-        #region Constructor: GenericService(ModelStateDictionary modelState) : base(modelState)
-
-        [Test]
-        public void GenericService_OnNullModelStateThrows()
-        {
-            Assert.Throws<ArgumentNullException>(() => new GenericServiceStub(null));
-        }
-
-        [Test]
-        public void GenericService_SetsModelState()
-        {
-            Assert.AreEqual(modelState, service.BaseModelState);
-        }
-
-        #endregion
 
         #region Method: CanCreate(TView view)
 
@@ -87,7 +74,7 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         #endregion
-
+        /*
         #region Method: GetViews()
 
         [Test]
@@ -171,7 +158,7 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.IsNull(service.GetView(user.Id));
         }
-
-        #endregion
+        
+        #endregion*/
     }
 }

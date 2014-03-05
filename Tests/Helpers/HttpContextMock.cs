@@ -80,6 +80,8 @@ namespace Tests.Helpers
 
             PrincipalMock = new Mock<IPrincipal>();
             PrincipalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
+
+            ContextMock.Setup(mock => mock.User).Returns(PrincipalMock.Object);
         }
     }
 }

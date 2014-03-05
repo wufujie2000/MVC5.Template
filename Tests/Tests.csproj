@@ -80,6 +80,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Objects\Components\Services\TestModel.cs" />
+    <Compile Include="Objects\Components\Services\TestView.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
@@ -98,8 +100,6 @@
     <Compile Include="Objects\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Objects\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Objects\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
-    <Compile Include="Objects\Components\Services\BaseServiceStub.cs" />
-    <Compile Include="Objects\Components\Services\GenericServiceStub.cs" />
     <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Objects\Components\Mvc\Providers\ProviderTestModel.cs" />
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />

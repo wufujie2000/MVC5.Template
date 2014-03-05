@@ -1,8 +1,10 @@
-﻿using Template.Objects;
-using Template.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using Template.Data.Core;
+using Template.Objects;
+using Template.Resources;
 
 namespace Template.Components.Services
 {
@@ -43,7 +45,12 @@ namespace Template.Components.Services
                 }
             };
         }
-        
+        public MenuService(HttpContextBase context)
+            : base(new UnitOfWork())
+        {
+            HttpContext = context;
+        }
+
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
         {
             return GetAuthorizedMenus(allMenus);
@@ -66,7 +73,7 @@ namespace Template.Components.Services
         {
             if (menu.Action == null) return true;
 
-            return RoleProviderService.Instance.IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
+            return new RoleProviderService(new UnitOfWork()).IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {

@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Template.Components.Services;
+using Template.Data.Core;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html
@@ -27,7 +28,7 @@ namespace Template.Components.Extensions.Html
             String buttons = String.Empty;
             foreach (var action in actions)
             {
-                if (!RoleProviderService.Instance.IsAuthorizedForAction(action.ToString()))
+                if (!new RoleProviderService(new UnitOfWork()).IsAuthorizedForAction(action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");

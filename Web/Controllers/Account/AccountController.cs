@@ -1,13 +1,18 @@
-﻿using Template.Components.Security;
+﻿using System;
+using System.Web.Mvc;
+using Template.Components.Security;
 using Template.Components.Services;
 using Template.Objects;
-using System;
-using System.Web.Mvc;
 
 namespace Template.Controllers.Account
 {
-    public class AccountController : ServicedController<AccountService>
+    public class AccountController : ServicedController<IAccountService>
     {
+        public AccountController(IAccountService service)
+            : base(service)
+        {
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(String returnUrl)

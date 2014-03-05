@@ -1,12 +1,17 @@
-﻿using Template.Components.Security;
+﻿using System.Web.Mvc;
+using Template.Components.Security;
 using Template.Components.Services;
-using System.Web.Mvc;
 
 namespace Template.Controllers.Home
 {
     [AllowUnauthorized]
-    public class HomeController : ServicedController<HomeService>
+    public class HomeController : ServicedController<IHomeService>
     {
+        public HomeController(IHomeService service)
+            : base(service)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {

@@ -1,14 +1,19 @@
-﻿using Template.Components.Security;
+﻿using System;
+using System.Web.Mvc;
+using Template.Components.Security;
 using Template.Components.Services;
 using Template.Objects;
-using System;
-using System.Web.Mvc;
 
 namespace Template.Controllers.Profile
 {
     [AllowUnauthorized]
-    public class ProfileController : ServicedController<ProfileService>
+    public class ProfileController : ServicedController<IProfileService>
     {
+        public ProfileController(IProfileService service)
+            : base(service)
+        {
+        }
+
         [HttpGet]
         public ActionResult Edit()
         {

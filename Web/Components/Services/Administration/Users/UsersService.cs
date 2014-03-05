@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Components.Security;
+using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.UserView;
 
 namespace Template.Components.Services
 {
-    public class UsersService : GenericService<Account, UserView>
+    public class UsersService : GenericService<Account, UserView>, IUsersService
     {
-        public UsersService(ModelStateDictionary modelState)
-            : base(modelState)
+        public UsersService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

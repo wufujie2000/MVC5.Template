@@ -6,15 +6,12 @@ using System.Web.Mvc;
 
 namespace Template.Components.Alerts
 {
-    public class MessagesContainer : IMessagesContainer
+    public class MessagesContainer : IEnumerable<AlertMessage>
     {
         public const Decimal DefaultFadeOut = 4;
-        protected ModelStateDictionary modelState;
-        protected List<AlertMessage> messages;
+        private ModelStateDictionary modelState;
+        private List<AlertMessage> messages;
 
-        public MessagesContainer() : this(null)
-        {
-        }
         public MessagesContainer(ModelStateDictionary modelState)
         {
             this.modelState = modelState;
@@ -61,7 +58,7 @@ namespace Template.Components.Alerts
             Add(AlertMessageType.Danger, key, message, fadeOutAfter);
         }
 
-        public virtual IEnumerator<AlertMessage> GetEnumerator()
+        public IEnumerator<AlertMessage> GetEnumerator()
         {
             if (modelState == null)
                 return messages.GetEnumerator();

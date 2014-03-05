@@ -3,15 +3,16 @@ using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Security;
+using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.ProfileView;
 
 namespace Template.Components.Services
 {
-    public class ProfileService : GenericService<Account, ProfileView>
+    public class ProfileService : GenericService<Account, ProfileView>, IProfileService
     {
-        public ProfileService(ModelStateDictionary modelState)
-            : base(modelState)
+        public ProfileService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

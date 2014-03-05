@@ -1,14 +1,15 @@
-﻿using Template.Objects;
-using System;
+﻿using System;
 using System.Linq;
-using System.Web.Mvc;
+using Template.Components.Alerts;
+using Template.Data.Core;
+using Template.Objects;
 
 namespace Template.Components.Services
 {
-    public class RolesService : GenericService<Role, RoleView>
+    public class RolesService : GenericService<Role, RoleView>, IRolesService
     {
-        public RolesService(ModelStateDictionary modelState)
-            : base(modelState)
+        public RolesService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

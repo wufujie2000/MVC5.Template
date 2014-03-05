@@ -11,6 +11,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
 using Template.Components.Mvc.Providers;
+using Template.Web.IoC;
 
 namespace Template.Web
 {
@@ -37,6 +38,7 @@ namespace Template.Web
             RegisterDateTypeValidator();
             RegisterViewEngines();
             RegisterConfigs();
+            RegisterIoC();
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
@@ -71,6 +73,10 @@ namespace Template.Web
         {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+        private void RegisterIoC()
+        {
+            NinjectContainer.RegisterModules(NinjectModules.Modules);
         }
     }
 }

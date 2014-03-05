@@ -1,12 +1,17 @@
-﻿using Template.Components.Services;
-using Template.Objects;
-using System;
+﻿using System;
 using System.Web.Mvc;
+using Template.Components.Services;
+using Template.Objects;
 
 namespace Template.Controllers.Administration
 {
-    public class UsersController : ServicedController<UsersService>
+    public class UsersController : ServicedController<IUsersService>
     {
+        public UsersController(IUsersService service)
+            : base(service)
+        {
+        }
+
         [HttpGet]
         public ActionResult Index()
         {

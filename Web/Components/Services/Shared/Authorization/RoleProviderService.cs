@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using Template.Components.Security;
+using Template.Data.Core;
 using Template.Objects;
 
 namespace Template.Components.Services
 {
     public class RoleProviderService : BaseService, IRoleProvider
     {
-        private static RoleProviderService instance;
-        public static RoleProviderService Instance
-        {
-            get
-            {
-                return instance ?? (instance = new RoleProviderService());
-            }
-        }
-
-        private RoleProviderService()
+        public RoleProviderService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

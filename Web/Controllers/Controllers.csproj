@@ -63,6 +63,10 @@
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>Components</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Objects\Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
       <Name>Objects</Name>

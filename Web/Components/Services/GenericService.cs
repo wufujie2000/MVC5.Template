@@ -1,28 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Data.Core;
 using Template.Objects;
 
 namespace Template.Components.Services
 {
-    public abstract class GenericService<TModel, TView> : BaseService
+    public abstract class GenericService<TModel, TView> : BaseService, IGenericService<TView>
         where TModel : BaseModel
         where TView : BaseView
     {
-        protected ModelStateDictionary ModelState
+        public GenericService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
-            get;
-            private set;
-        }
-
-        public GenericService(ModelStateDictionary modelState)
-            : base(modelState)
-        {
-            if (modelState == null)
-                throw new ArgumentNullException("modelState");
-
-            this.ModelState = modelState;
         }
 
         public virtual Boolean CanCreate(TView view)

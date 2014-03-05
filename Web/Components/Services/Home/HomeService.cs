@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Web.Mvc;
+using Template.Components.Alerts;
+using Template.Data.Core;
 using Template.Resources.Shared;
 
 namespace Template.Components.Services
 {
-    public class HomeService : BaseService
+    public class HomeService : BaseService, IHomeService
     {
-        public HomeService(ModelStateDictionary modelState)
-            : base(modelState)
+        public HomeService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

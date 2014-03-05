@@ -4,7 +4,7 @@
     </div>
     <div id="SidebarNavigation">
         <ul id="SidebarNavigationList">
-            @Html.SidebarMenu(new MenuService().GetAuthorizedMenus())
+            @Html.SidebarMenu(new MenuService(Html.ViewContext.HttpContext).GetAuthorizedMenus())
         </ul>
     </div>
 </div>

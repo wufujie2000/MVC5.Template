@@ -3,16 +3,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Template.Components.Alerts;
 using Template.Components.Security;
+using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.AccountView;
 
 namespace Template.Components.Services
 {
-    public class AccountService : GenericService<Account, AccountView>
+    public class AccountService : GenericService<Account, AccountView>, IAccountService
     {
-        public AccountService(ModelStateDictionary modelState)
-            : base(modelState)
+        public AccountService(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 
@@ -76,7 +78,7 @@ namespace Template.Components.Services
                 Expires = ticket.Expiration
             };
 
-            HttpContext.Current.Response.Cookies.Add(cookie);
+            HttpContext.Response.Cookies.Add(cookie);
         }
     }
 }

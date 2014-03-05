@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Helpers;
+using Template.Web.IoC;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Services
@@ -19,7 +21,7 @@ namespace Template.Tests.Tests.Components.Services
         public void SetUp()
         {
             HttpContext.Current = new HttpContextStub().Context;
-            service = RoleProviderService.Instance;
+            service = new RoleProviderService(new UnitOfWork(), null);
         }
 
         [TearDown]
@@ -45,7 +47,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Instance_ReturnsSameInstance()
         {
-            Assert.AreEqual(RoleProviderService.Instance, RoleProviderService.Instance);
+            Assert.AreEqual(NinjectContainer.Resolve<IRoleProvider>(), NinjectContainer.Resolve<IRoleProvider>());
         }
 
         #endregion

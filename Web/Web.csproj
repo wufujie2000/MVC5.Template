@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Datalist.3.0.1\lib\net45\Datalist.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -52,6 +56,9 @@
       <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Linq.Dynamic">
@@ -89,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\IoC\NinjectContainer.cs" />
+    <Compile Include="App_Start\IoC\NinjectModules.cs" />
+    <Compile Include="App_Start\IoC\NinjectResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewEngine.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +225,10 @@
     <ProjectReference Include="Controllers\Controllers.csproj">
       <Project>{8531b9ae-c8c5-4b73-a0ce-b9cdfad69074}</Project>
       <Name>Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="Data\Data.csproj">
+      <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
+      <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="Objects\Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>

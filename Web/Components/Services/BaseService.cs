@@ -6,9 +6,28 @@ using Template.Data.Core;
 
 namespace Template.Components.Services
 {
-    public abstract class BaseService : IDisposable
+    public abstract class BaseService : IService, IDisposable
     {
         private Boolean disposed;
+        private HttpContextBase httpContext;
+
+        public ModelStateDictionary ModelState
+        {
+            get;
+            set;
+        }
+        public HttpContextBase HttpContext
+        {
+            get
+            {
+                return httpContext ?? (httpContext = new HttpContextWrapper(System.Web.HttpContext.Current));
+            }
+            set
+            {
+                httpContext = value;
+            }
+        }
+        
         protected IUnitOfWork UnitOfWork
         {
             get;
@@ -19,51 +38,47 @@ namespace Template.Components.Services
         {
             get
             {
-                return HttpContext.Current.User.Identity.Name;
+                return HttpContext.User.Identity.Name;
             }
         }
         public String CurrentLanguage
         {
             get
             {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["language"] as String;
+                return HttpContext.Request.RequestContext.RouteData.Values["language"] as String;
             }
         }
         public String CurrentArea
         {
             get
             {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
+                return HttpContext.Request.RequestContext.RouteData.Values["area"] as String;
             }
         }
         public String CurrentController
         {
             get
             {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
+                return HttpContext.Request.RequestContext.RouteData.Values["controller"] as String;
             }
         }
         public String CurrentAction
         {
             get
             {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["action"] as String;
+                return HttpContext.Request.RequestContext.RouteData.Values["action"] as String;
             }
         }
 
-        public IMessagesContainer AlertMessages
+        public MessagesContainer AlertMessages
         {
             get;
-            protected set;
+            set;
         }
 
-        public BaseService() : this(null)
+        public BaseService(IUnitOfWork unitOfWork)
         {
-        }
-        public BaseService(ModelStateDictionary modelState)
-        {
-            UnitOfWork = new UnitOfWork();
-            AlertMessages = new MessagesContainer(modelState);
+            UnitOfWork = unitOfWork;
         }
 
         public void Dispose()

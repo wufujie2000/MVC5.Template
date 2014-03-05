@@ -163,7 +163,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\Controllers\" />
+    <Folder Include="Tests\Controllers\Account\" />
+    <Folder Include="Tests\Controllers\Administration\Roles\" />
+    <Folder Include="Tests\Controllers\Administration\Users\" />
+    <Folder Include="Tests\Controllers\Home\" />
+    <Folder Include="Tests\Controllers\Profile\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

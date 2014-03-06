@@ -17,11 +17,11 @@ namespace Template.Objects
             Nodes = new List<TreeNode>();
         }
         public TreeNode(String name)
-            : this(String.Empty, name)
+            : this(null, name)
         {
         }
         public TreeNode()
-            : this(String.Empty, String.Empty)
+            : this(null, null)
         {
         }
     }

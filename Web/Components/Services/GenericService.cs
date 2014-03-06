@@ -32,7 +32,7 @@ namespace Template.Components.Services
         {
             return UnitOfWork.Repository<TModel>()
                 .Query<TView>()
-                .OrderByDescending(model => model.Id);
+                .OrderByDescending(view => view.Id);
         }
         public virtual TView GetView(String id)
         {

@@ -132,9 +132,9 @@ namespace Template.Tests.Helpers
             return new PrivilegeLanguage()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Area = "LanguageArea" + instanceNumber.ToString(),
-                Controller = "LanguageController" + instanceNumber.ToString(),
-                Action = "LanguageAction" + instanceNumber.ToString()
+                Area = "PrivilegeArea" + instanceNumber.ToString(),
+                Controller = "PrivilegeController" + instanceNumber.ToString(),
+                Action = "PrivilegeAction" + instanceNumber.ToString()
             };
         }
         public static PrivilegeLanguageView CreatePrivilegeLanguageView(Int32 instanceNumber = 1)
@@ -142,9 +142,9 @@ namespace Template.Tests.Helpers
             return new PrivilegeLanguageView()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Area = "LanguageArea" + instanceNumber.ToString(),
-                Controller = "LanguageController" + instanceNumber.ToString(),
-                Action = "LanguageAction" + instanceNumber.ToString()
+                Area = "PrivilegeArea" + instanceNumber.ToString(),
+                Controller = "PrivilegeController" + instanceNumber.ToString(),
+                Action = "PrivilegeAction" + instanceNumber.ToString()
             };
         }
 

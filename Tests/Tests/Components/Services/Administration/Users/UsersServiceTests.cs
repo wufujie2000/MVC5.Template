@@ -6,6 +6,7 @@ using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.UserView;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Services
@@ -23,7 +24,7 @@ namespace Template.Tests.Tests.Components.Services
         {
             modelState = new ModelStateDictionary();
             service = new UsersService(new UnitOfWork());
-            context = new Context();
+            context = new TestingContext();
 
             TearDownData();
             SetUpData();
@@ -160,7 +161,7 @@ namespace Template.Tests.Tests.Components.Services
             expected.Username += "1";
             service.Edit(expected);
 
-            context = new Context();
+            context = new TestingContext();
             var actual = context.Set<Account>().Find(expected.Id);
 
             Assert.AreEqual(expected.Id, actual.UserId);
@@ -178,7 +179,7 @@ namespace Template.Tests.Tests.Components.Services
             expected.UserRoleId = null;
             service.Edit(expected);
 
-            context = new Context();
+            context = new TestingContext();
             var actual = context.Set<User>().Find(expected.Id);
 
             Assert.AreEqual(expected.UserDateOfBirth, actual.DateOfBirth);
@@ -195,7 +196,7 @@ namespace Template.Tests.Tests.Components.Services
         public void Delete_DeletesAccount()
         {
             service.Delete(account.Id);
-            context = new Context();
+            context = new TestingContext();
             Assert.IsNull(context.Set<Account>().Find(account.Id));
         }
 
@@ -203,7 +204,7 @@ namespace Template.Tests.Tests.Components.Services
         public void Delete_DeletesUser()
         {
             service.Delete(account.UserId);
-            context = new Context();
+            context = new TestingContext();
             Assert.IsNull(context.Set<User>().Find(account.UserId));
         }
 

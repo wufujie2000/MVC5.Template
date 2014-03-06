@@ -9,6 +9,7 @@ using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.ProfileView;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 using Tests.Helpers;
 
@@ -28,7 +29,7 @@ namespace Template.Tests.Tests.Components.Services
             HttpContext.Current = new HttpContextBaseMock().HttpContext;
             modelState = new ModelStateDictionary();
             service = new ProfileService(new UnitOfWork());
-            context = new Context();
+            context = new TestingContext();
 
             TearDownData();
             SetUpData();
@@ -150,7 +151,7 @@ namespace Template.Tests.Tests.Components.Services
             profileView.Username += "1";
             service.Edit(profileView);
 
-            context = new Context();
+            context = new TestingContext();
             var actual = context.Set<Account>().Find(profileView.Id);
 
             Assert.AreEqual(expected.UserId, actual.UserId);
@@ -168,7 +169,7 @@ namespace Template.Tests.Tests.Components.Services
             profileView.UserLastName += "1";
             service.Edit(profileView);
 
-            context = new Context();
+            context = new TestingContext();
             var actual = context.Set<User>().Find(profileView.Id);
 
             Assert.AreEqual(profileView.UserDateOfBirth, actual.DateOfBirth);
@@ -184,7 +185,7 @@ namespace Template.Tests.Tests.Components.Services
         public void Delete_DeletesAccount()
         {
             service.Delete(account.Id);
-            context = new Context();
+            context = new TestingContext();
             Assert.IsNull(context.Set<Account>().Find(account.Id));
         }
 
@@ -192,7 +193,7 @@ namespace Template.Tests.Tests.Components.Services
         public void Delete_DeletesUser()
         {
             service.Delete(account.UserId);
-            context = new Context();
+            context = new TestingContext();
             Assert.IsNull(context.Set<User>().Find(account.UserId));
         }
 

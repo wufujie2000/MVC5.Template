@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Tests.Data;
 
 namespace Template.Tests.Tests.Data.Core
 {
@@ -15,7 +16,7 @@ namespace Template.Tests.Tests.Data.Core
         [SetUp]
         public void SetUp()
         {
-            context = new Context();
+            context = new TestingContext();
             unitOfWork = new UnitOfWork(context);
         }
 

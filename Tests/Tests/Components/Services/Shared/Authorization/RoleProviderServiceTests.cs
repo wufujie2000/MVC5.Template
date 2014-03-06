@@ -6,6 +6,7 @@ using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 using Template.Web.IoC;
 using Tests.Helpers;
@@ -28,7 +29,7 @@ namespace Template.Tests.Tests.Components.Services
         public void TearDown()
         {
             HttpContext.Current = null;
-            var context = new Context();
+            var context = new TestingContext();
             var testId = TestContext.CurrentContext.Test.Name;
             foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
                 context.Set<User>().Remove(user);
@@ -98,7 +99,7 @@ namespace Template.Tests.Tests.Components.Services
             account.UserId = account.User.Id;
             account.User.RoleId = role.Id;
 
-            var context = new Context();
+            var context = new TestingContext();
 
             role.RolePrivileges = new List<RolePrivilege>();
             var rolePrivilege = ObjectFactory.CreateRolePrivilege();

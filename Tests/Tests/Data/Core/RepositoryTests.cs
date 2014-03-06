@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Tests.Data;
 
 namespace Template.Tests.Tests.Data.Core
 {
@@ -16,7 +17,7 @@ namespace Template.Tests.Tests.Data.Core
         [SetUp]
         public void SetUp()
         {
-            context = new Context();
+            context = new TestingContext();
             repository = new Repository<User>(context);
         }
 
@@ -166,7 +167,7 @@ namespace Template.Tests.Tests.Data.Core
             context.SaveChanges();
 
             expected.FirstName = "Test";
-            context = new Context();
+            context = new TestingContext();
             repository = new Repository<User>(context);
             repository.Update(expected);
             context.SaveChanges();

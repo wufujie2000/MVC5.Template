@@ -41,7 +41,7 @@ namespace Template.Components.Services
             UnitOfWork.Commit();
         }
 
-        public void SeedPrivilegesTree(RoleView role)
+        public virtual void SeedPrivilegesTree(RoleView role)
         {
             var rootNode = new TreeNode();
             role.PrivilegesTree = new Tree();

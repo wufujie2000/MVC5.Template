@@ -20,7 +20,7 @@ namespace Template.Tests.Tests.Components.Services
             var mock = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true };
 
             service = mock.Object;
-            service.HttpContext = new HttpContextBaseMock().ContextBase;
+            service.HttpContext = new HttpContextBaseMock().HttpContextBase;
             routeValues = service.HttpContext.Request.RequestContext.RouteData.Values;
         }
 

@@ -90,7 +90,7 @@ namespace Template.Tests.Helpers
             RouteCollection = CreateDefaultRouteCollection();
 
             ControllerBaseMock = new Mock<ControllerBase>() { CallBase = true };
-            RequestContextMock = new Mock<RequestContext>(HttpContextMock.ContextBase, new RouteData()) { CallBase = true };
+            RequestContextMock = new Mock<RequestContext>(HttpContextMock.HttpContextBase, new RouteData()) { CallBase = true };
 
             TempDataDictionary = new TempDataDictionary();
             ControllerContextMock = new Mock<ControllerContext>(RequestContextMock.Object, ControllerBaseMock.Object);

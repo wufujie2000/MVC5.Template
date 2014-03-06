@@ -17,7 +17,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [Test]
         public void GetModels_GetsUnfilteredModels()
         {
-            HttpContext.Current = new HttpContextBaseMock().Context;
+            HttpContext.Current = new HttpContextBaseMock().HttpContext;
 
             CollectionAssert.AreEqual(
                 new UnitOfWork().Repository<Role>().Query<RoleView>().Select(role => role.Id),

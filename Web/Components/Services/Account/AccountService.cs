@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
@@ -18,6 +17,10 @@ namespace Template.Components.Services
         {
         }
 
+        public Boolean IsLoggedIn()
+        {
+            return HttpContext.User.Identity.IsAuthenticated;
+        }
         public Boolean CanLogin(AccountView accountView)
         {
             Boolean isValid = ModelState.IsValid;

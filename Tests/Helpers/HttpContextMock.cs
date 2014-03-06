@@ -34,12 +34,12 @@ namespace Tests.Helpers
             get;
             private set;
         }
-        public HttpContextBase ContextBase
+        public HttpContextBase HttpContextBase
         {
             get;
             private set;
         }
-        public HttpContext Context
+        public HttpContext HttpContext
         {
             get;
             private set;
@@ -70,13 +70,12 @@ namespace Tests.Helpers
             ResponseMock = new Mock<HttpResponseWrapper>(response) { CallBase = true };
             Response = ResponseMock.Object;
 
-            Context = new HttpContext(request, response);
-            ContextMock = new Mock<HttpContextWrapper>(Context) { CallBase = true };
-            ContextBase = ContextMock.Object;
+            HttpContext = new HttpContext(request, response);
+            ContextMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
+            HttpContextBase = ContextMock.Object;
 
             IdentityMock = new Mock<IIdentity>();
             IdentityMock.Setup<String>(mock => mock.Name).Returns("Name");
-            IdentityMock.Setup<Boolean>(mock => mock.IsAuthenticated).Returns(true);
 
             PrincipalMock = new Mock<IPrincipal>();
             PrincipalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);

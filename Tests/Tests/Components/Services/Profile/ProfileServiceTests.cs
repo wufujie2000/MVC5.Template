@@ -25,7 +25,7 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().Context;
+            HttpContext.Current = new HttpContextBaseMock().HttpContext;
             modelState = new ModelStateDictionary();
             service = new ProfileService(new UnitOfWork());
             context = new Context();

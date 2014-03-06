@@ -17,10 +17,10 @@ namespace Template.Controllers.Account
         [AllowAnonymous]
         public ActionResult Login(String returnUrl)
         {
-            if (!HttpContext.User.Identity.IsAuthenticated)
-                return View();
-            
-            return RedirectToLocal(returnUrl);
+            if (Service.IsLoggedIn())
+                return RedirectToLocal(returnUrl);
+
+            return View();
         }
 
         [HttpPost]

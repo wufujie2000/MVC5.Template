@@ -8,6 +8,7 @@ using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.AccountView;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 using Tests.Helpers;
 
@@ -16,18 +17,19 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class AccountServiceTests
     {
-        private ModelStateDictionary modelState;
+        private HttpContextBaseMock httpContextMock;
         private AccountService service;
         private AContext context;
-        private Account account;
 
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().Context;
-            modelState = new ModelStateDictionary();
-            service = new AccountService(new UnitOfWork());
-            context = new Context();
+            context = new TestingContext();
+            service = new AccountService(new UnitOfWork(context));
+            httpContextMock = new HttpContextBaseMock();
+            service.HttpContext = httpContextMock.HttpContextBase;
+            service.ModelState = new ModelStateDictionary();
+            HttpContext.Current = httpContextMock.HttpContext;
 
             SetUpData();
         }
@@ -42,12 +44,32 @@ namespace Template.Tests.Tests.Components.Services
             context.Dispose();
         }
 
+        #region Method: IsLoggedIn()
+
+        [Test]
+        public void IsLoggedIn_ReturnsTrueThenUserIsAuthenticated()
+        {
+            httpContextMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+
+            Assert.IsTrue(service.IsLoggedIn());
+        }
+
+        [Test]
+        public void IsLoggedIn_ReturnsFalseThenUserIsNotAuthenticated()
+        {
+            httpContextMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
+
+            Assert.IsFalse(service.IsLoggedIn());
+        }
+
+        #endregion
+
         #region Method: CanLogin(AccountView accountView)
 
         [Test]
         public void CanLogin_CanNotLoginWithInvalidModelState()
         {
-            modelState.AddModelError("Test", "Test");
+            service.ModelState.AddModelError("Key", "ErrorMesages");
             Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAccountView()));
         }
 
@@ -58,8 +80,7 @@ namespace Template.Tests.Tests.Components.Services
             account.Username = String.Empty;
 
             Assert.IsFalse(service.CanLogin(account));
-            Assert.AreEqual(1, modelState[String.Empty].Errors.Count);
-            Assert.AreEqual(modelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
+            Assert.AreEqual(service.ModelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
         }
 
         [Test]
@@ -69,12 +90,11 @@ namespace Template.Tests.Tests.Components.Services
             accountView.Password += "1";
 
             Assert.IsFalse(service.CanLogin(accountView));
-            Assert.AreEqual(1, modelState[String.Empty].Errors.Count);
-            Assert.AreEqual(modelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
+            Assert.AreEqual(service.ModelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
         }
 
         [Test]
-        public void CanLogin_CanLoginWithCaseInsensativeUsername()
+        public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
             var accountView = ObjectFactory.CreateAccountView();
             accountView.Username = accountView.Username.ToUpper();
@@ -99,15 +119,6 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void Login_CreatesCookieForAccount()
-        {
-            var accountView = ObjectFactory.CreateAccountView();
-            service.Login(accountView);
-
-            Assert.AreEqual(1, HttpContext.Current.Response.Cookies.Count);
-        }
-
-        [Test]
         public void Login_CreatesCookieForAMonth()
         {
             var accountView = ObjectFactory.CreateAccountView();
@@ -115,7 +126,7 @@ namespace Template.Tests.Tests.Components.Services
 
             var expectedExpireDate = DateTime.Now.AddMonths(1).Date;
 
-            Assert.AreEqual(expectedExpireDate, HttpContext.Current.Response.Cookies[0].Expires.Date);
+            Assert.AreEqual(expectedExpireDate, service.HttpContext.Response.Cookies[0].Expires.Date);
         }
 
         [Test]
@@ -124,7 +135,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            var ticket = FormsAuthentication.Decrypt(service.HttpContext.Response.Cookies[0].Value);
 
             Assert.IsTrue(ticket.IsPersistent);
         }
@@ -135,7 +146,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            Assert.IsFalse(HttpContext.Current.Response.Cookies[0].HttpOnly);
+            Assert.IsFalse(service.HttpContext.Response.Cookies[0].HttpOnly);
         }
 
         [Test]
@@ -144,7 +155,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            var ticket = FormsAuthentication.Decrypt(service.HttpContext.Response.Cookies[0].Value);
 
             Assert.AreEqual(accountView.Id, ticket.Name);
         }
@@ -160,8 +171,7 @@ namespace Template.Tests.Tests.Components.Services
             service.Login(accountView);
             service.Logout();
 
-            Assert.AreEqual(1, HttpContext.Current.Response.Cookies.Count);
-            Assert.Less(HttpContext.Current.Response.Cookies[0].Expires, DateTime.Now);
+            Assert.Less(service.HttpContext.Response.Cookies[0].Expires, DateTime.Now);
         }
 
         #endregion
@@ -170,7 +180,7 @@ namespace Template.Tests.Tests.Components.Services
 
         private void SetUpData()
         {
-            account = ObjectFactory.CreateAccount();
+            var account = ObjectFactory.CreateAccount();
             account.User = ObjectFactory.CreateUser();
             account.UserId = account.User.Id;
 

@@ -20,7 +20,7 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().Context;
+            HttpContext.Current = new HttpContextBaseMock().HttpContext;
             service = new RoleProviderService(new UnitOfWork());
         }
 

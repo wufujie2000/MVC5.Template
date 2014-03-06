@@ -13,7 +13,7 @@ namespace Template.Tests.Tests.Components.Services.Shared.Sidebar
         [SetUp]
         public void SetUp()
         {
-            service = new MenuService(new HttpContextBaseMock().ContextBase);
+            service = new MenuService(new HttpContextBaseMock().HttpContextBase);
         }
 
         #region Method: IEnumerable<Menu> GetAuthorizedMenus()

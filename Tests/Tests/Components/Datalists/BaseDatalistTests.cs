@@ -22,8 +22,8 @@ namespace Template.Tests.Tests.Components.Datalists
         {
             var contextStub = new HttpContextBaseMock();
 
-            request = contextStub.Context.Request;
-            HttpContext.Current = contextStub.Context;
+            request = contextStub.HttpContext.Request;
+            HttpContext.Current = contextStub.HttpContext;
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
         }

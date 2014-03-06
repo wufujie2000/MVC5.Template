@@ -21,7 +21,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SetUp()
         {
             var contextStub = new HttpContextBaseMock();
-            HttpContext.Current = contextStub.Context;
+            HttpContext.Current = contextStub.HttpContext;
             html = new HtmlHelperMock(contextStub).Html;
         }
 

@@ -1,4 +1,5 @@
 ﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.IO;
 using System.Security.Principal;
@@ -75,7 +76,7 @@ namespace Tests.Helpers
             HttpContextBase = ContextMock.Object;
 
             IdentityMock = new Mock<IIdentity>();
-            IdentityMock.Setup<String>(mock => mock.Name).Returns("Name");
+            IdentityMock.Setup<String>(mock => mock.Name).Returns(TestContext.CurrentContext.Test.Name);
 
             PrincipalMock = new Mock<IPrincipal>();
             PrincipalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);

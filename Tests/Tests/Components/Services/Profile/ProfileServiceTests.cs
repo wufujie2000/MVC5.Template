@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Security;
@@ -18,7 +17,6 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class ProfileServiceTests
     {
-        private ModelStateDictionary modelState;
         private ProfileService service;
         private AContext context;
         private Account account;
@@ -26,10 +24,12 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
-            modelState = new ModelStateDictionary();
-            service = new ProfileService(new UnitOfWork());
             context = new TestingContext();
+            service = new ProfileService(new UnitOfWork(context));
+
+            service.ModelState = new ModelStateDictionary();
+            service.HttpContext = new HttpContextBaseMock().HttpContextBase;
+            service.AlertMessages = new MessagesContainer(service.ModelState);
 
             TearDownData();
             SetUpData();
@@ -38,8 +38,6 @@ namespace Template.Tests.Tests.Components.Services
         [TearDown]
         public void TearDown()
         {
-            HttpContext.Current = null;
-
             service.Dispose();
             context.Dispose();
         }
@@ -49,7 +47,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
-            modelState.AddModelError("Test", "Test");
+            service.ModelState.AddModelError("Key", "ErrorMessages");
             Assert.IsFalse(service.CanEdit(ObjectFactory.CreateProfileView()));
         }
 
@@ -79,8 +77,7 @@ namespace Template.Tests.Tests.Components.Services
             profile.Username = takenAccount.Username;
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(1, modelState["Username"].Errors.Count);
-            Assert.AreEqual(modelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
+            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
         }
 
         [Test]
@@ -90,8 +87,7 @@ namespace Template.Tests.Tests.Components.Services
             profile.CurrentPassword += "1";
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(1, modelState["CurrentPassword"].Errors.Count);
-            Assert.AreEqual(modelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
+            Assert.AreEqual(service.ModelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
         }
 
         [Test]
@@ -107,7 +103,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanDelete_CanNotDeleteWithInvalidModelState()
         {
-            modelState.AddModelError("Test", "Test");
+            service.ModelState.AddModelError("Test", "Test");
             Assert.IsFalse(service.CanDelete(ObjectFactory.CreateProfileView()));
         }
 
@@ -118,8 +114,7 @@ namespace Template.Tests.Tests.Components.Services
             profile.Username = String.Empty;
 
             Assert.IsFalse(service.CanDelete(profile));
-            Assert.AreEqual(1, modelState["Username"].Errors.Count);
-            Assert.AreEqual(modelState["Username"].Errors[0].ErrorMessage, Validations.IncorrectUsername);
+            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.IncorrectUsername);
         }
 
         [Test]
@@ -129,8 +124,7 @@ namespace Template.Tests.Tests.Components.Services
             profile.CurrentPassword += "1";
 
             Assert.IsFalse(service.CanDelete(profile));
-            Assert.AreEqual(1, modelState["CurrentPassword"].Errors.Count);
-            Assert.AreEqual(modelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
+            Assert.AreEqual(service.ModelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
         }
 
         [Test]
@@ -184,16 +178,24 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Delete_DeletesAccount()
         {
+            if (context.Set<Account>().Find(account.Id) == null)
+                Assert.Inconclusive();
+
             service.Delete(account.Id);
             context = new TestingContext();
+
             Assert.IsNull(context.Set<Account>().Find(account.Id));
         }
 
         [Test]
         public void Delete_DeletesUser()
         {
+            if (context.Set<User>().Find(account.UserId) == null)
+                Assert.Inconclusive();
+
             service.Delete(account.UserId);
             context = new TestingContext();
+
             Assert.IsNull(context.Set<User>().Find(account.UserId));
         }
 
@@ -205,9 +207,8 @@ namespace Template.Tests.Tests.Components.Services
         public void AddDeleteDisclaimerMessage_AddsDisclaimer()
         {
             service.AddDeleteDisclaimerMessage();
-
             var disclaimer = service.AlertMessages.First();
-            Assert.AreEqual(1, service.AlertMessages.Count());
+
             Assert.AreEqual(disclaimer.Message, Messages.ProfileDeleteDisclaimer);
             Assert.AreEqual(disclaimer.Type, AlertMessageType.Danger);
             Assert.AreEqual(disclaimer.Key, String.Empty);

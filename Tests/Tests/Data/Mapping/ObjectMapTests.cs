@@ -218,6 +218,56 @@ namespace Template.Tests.Data.Mapping
             Assert.AreEqual(privilegeView.Action, privilege.Action);
         }
 
+        [Test]
+        public void MapRoles_MapsPrivilegeLanguageToPrivilegeLanguageView()
+        {
+            var privilegeLanguage = ObjectFactory.CreatePrivilegeLanguage();
+            var privilegeLanguageView = Mapper.Map<PrivilegeLanguage, PrivilegeLanguageView>(privilegeLanguage);
+
+            Assert.AreEqual(privilegeLanguage.Id, privilegeLanguageView.Id);
+            Assert.AreEqual(privilegeLanguage.Area, privilegeLanguageView.Area);
+            Assert.AreEqual(privilegeLanguage.Controller, privilegeLanguageView.Controller);
+            Assert.AreEqual(privilegeLanguage.Action, privilegeLanguageView.Action);
+        }
+
+        [Test]
+        public void MapRoles_MapsPrivilegeLanguageViewToPrivilegeLanguage()
+        {
+            var privilegeView = ObjectFactory.CreatePrivilegeLanguageView();
+            var privilege = Mapper.Map<PrivilegeLanguageView, PrivilegeLanguage>(privilegeView);
+
+            Assert.AreEqual(privilegeView.Id, privilege.Id);
+            Assert.AreEqual(privilegeView.Area, privilege.Area);
+            Assert.AreEqual(privilegeView.Controller, privilege.Controller);
+            Assert.AreEqual(privilegeView.Action, privilege.Action);
+        }
+
+        #endregion
+
+        #region Static method: MapSystem()
+
+        [Test]
+        public void MapSystem_MapsLanguageTolanguageView()
+        {
+            var language = ObjectFactory.CreateLanguage();
+            var languageView = Mapper.Map<Language, LanguageView>(language);
+
+            Assert.AreEqual(language.Id, languageView.Id);
+            Assert.AreEqual(language.Name, languageView.Name);
+            Assert.AreEqual(language.Abbreviation, languageView.Abbreviation);
+        }
+
+        [Test]
+        public void MapRoles_MapsLanguageViewToLanguage()
+        {
+            var languageView = ObjectFactory.CreateLanguageView();
+            var language = Mapper.Map<LanguageView, Language>(languageView);
+
+            Assert.AreEqual(languageView.Id, language.Id);
+            Assert.AreEqual(languageView.Name, language.Name);
+            Assert.AreEqual(languageView.Abbreviation, language.Abbreviation);
+        }
+
         #endregion
     }
 }

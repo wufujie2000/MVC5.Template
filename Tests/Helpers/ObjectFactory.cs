@@ -137,14 +137,33 @@ namespace Template.Tests.Helpers
                 Action = "LanguageAction" + instanceNumber.ToString()
             };
         }
+        public static PrivilegeLanguageView CreatePrivilegeLanguageView(Int32 instanceNumber = 1)
+        {
+            return new PrivilegeLanguageView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Area = "LanguageArea" + instanceNumber.ToString(),
+                Controller = "LanguageController" + instanceNumber.ToString(),
+                Action = "LanguageAction" + instanceNumber.ToString()
+            };
+        }
 
-        public static Language CreateLanguage()
+        public static Language CreateLanguage(Int32 instanceNumber = 1)
         {
             return new Language()
             {
-                Id = TestId,
-                Name = "Name",
-                Abbreviation = "Abbreviation"
+                Id = TestId + instanceNumber.ToString(),
+                Name = "Name" + instanceNumber.ToString(),
+                Abbreviation = "Abbreviation" + instanceNumber.ToString()
+            };
+        }
+        public static LanguageView CreateLanguageView(Int32 instanceNumber = 1)
+        {
+            return new LanguageView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Name = "Name" + instanceNumber.ToString(),
+                Abbreviation = "Abbreviation" + instanceNumber.ToString()
             };
         }
 

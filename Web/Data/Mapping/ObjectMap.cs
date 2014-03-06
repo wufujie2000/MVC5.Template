@@ -9,6 +9,8 @@ namespace Template.Data.Mapping
         {
             MapUsers();
             MapRoles();
+
+            MapSystem();
         }
 
         #region Administration
@@ -46,6 +48,19 @@ namespace Template.Data.Mapping
 
             Mapper.CreateMap<Privilege, PrivilegeView>();
             Mapper.CreateMap<PrivilegeView, Privilege>();
+
+            Mapper.CreateMap<PrivilegeLanguage, PrivilegeLanguageView>();
+            Mapper.CreateMap<PrivilegeLanguageView, PrivilegeLanguage>();
+        }
+
+        #endregion
+
+        #region System
+
+        private static void MapSystem()
+        {
+            Mapper.CreateMap<Language, LanguageView>();
+            Mapper.CreateMap<LanguageView, Language>();
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using Template.Objects;
+using Template.Tests.Objects.Components.Services;
 
 namespace Template.Tests.Helpers
 {
@@ -90,11 +91,11 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static RolePrivilege CreateRolePrivilege(Int32 instanceIndex = 1)
+        public static RolePrivilege CreateRolePrivilege(Int32 instanceNumber = 1)
         {
             return new RolePrivilege()
             {
-                Id = TestId + instanceIndex.ToString()
+                Id = TestId + instanceNumber.ToString()
             };
         }
         public static RolePrivilegeView CreateRolePrivilegeView()
@@ -110,9 +111,9 @@ namespace Template.Tests.Helpers
             return new Privilege()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Area = "Area",
-                Controller = "Controller",
-                Action = "Action"
+                Area = "Area" + instanceNumber.ToString(),
+                Controller = "Controller" + instanceNumber.ToString(),
+                Action = "Action" + instanceNumber.ToString()
             };
         }
         public static PrivilegeView CreatePrivilegeView()
@@ -126,14 +127,14 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static PrivilegeLanguage CreatePrivilegeLanguage(Int32 instanceIndex = 1)
+        public static PrivilegeLanguage CreatePrivilegeLanguage(Int32 instanceNumber = 1)
         {
             return new PrivilegeLanguage()
             {
-                Id = TestId + instanceIndex.ToString(),
-                Area = "LanguageArea" + instanceIndex.ToString(),
-                Controller = "LanguageController" + instanceIndex.ToString(),
-                Action = "LanguageAction" + instanceIndex.ToString()
+                Id = TestId + instanceNumber.ToString(),
+                Area = "LanguageArea" + instanceNumber.ToString(),
+                Controller = "LanguageController" + instanceNumber.ToString(),
+                Action = "LanguageAction" + instanceNumber.ToString()
             };
         }
 
@@ -144,6 +145,23 @@ namespace Template.Tests.Helpers
                 Id = TestId,
                 Name = "Name",
                 Abbreviation = "Abbreviation"
+            };
+        }
+
+        public static TestModel CreateTestModel(Int32 instanceNumber = 1)
+        {
+            return new TestModel()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Text = "Text" + instanceNumber.ToString()
+            };
+        }
+        public static TestView CreateTestView(Int32 instanceNumber = 1)
+        {
+            return new TestView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Text = "Text" + instanceNumber.ToString()
             };
         }
     }

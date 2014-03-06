@@ -9,7 +9,7 @@ using Template.Tests.Objects.Components.Services;
 
 namespace Template.Tests.Data
 {
-    public class TestContext : Context
+    public class TestingContext : Context
     {
         private Hashtable repositories;
 
@@ -45,12 +45,13 @@ namespace Template.Tests.Data
 
         #endregion
 
-        static TestContext()
+        static TestingContext()
         {
             ObjectMapper.MapObjects();
             Mapper.CreateMap<TestModel, TestView>();
+            Mapper.CreateMap<TestView, TestModel>();
         }
-        public TestContext()
+        public TestingContext()
         {
             repositories = new Hashtable();
         }

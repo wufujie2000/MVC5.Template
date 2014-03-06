@@ -1,10 +1,13 @@
-﻿using Moq;
+﻿using AutoMapper.QueryableExtensions;
+using Moq;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Services;
 using Template.Data.Core;
-using Template.Objects;
+using Template.Tests.Data;
+using Template.Tests.Helpers;
 using Template.Tests.Objects.Components.Services;
 
 namespace Template.Tests.Tests.Components.Services
@@ -12,16 +15,27 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class GenericServiceTests
     {
-        private ModelStateDictionary modelState;
-        private Mock<IUnitOfWork> unitOfWorkMock;
         private GenericService<TestModel, TestView> service;
+        private AContext context;
 
         [SetUp]
         public void SetUp()
         {
-            modelState = new ModelStateDictionary();
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-            service = new Mock<GenericService<TestModel, TestView>>(unitOfWorkMock.Object).Object;
+            context = new TestingContext();
+            service = new Mock<GenericService<TestModel, TestView>>(new UnitOfWork(context)) { CallBase = true }.Object;
+            service.ModelState = new ModelStateDictionary();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var testId = TestContext.CurrentContext.Test.Name;
+            foreach (var model in context.Set<TestModel>().Where(model => model.Id.StartsWith(testId)))
+                context.Set<TestModel>().Remove(model);
+
+            context.SaveChanges();
+            service.Dispose();
+            context.Dispose();
         }
 
         #region Method: CanCreate(TView view)
@@ -35,7 +49,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanCreate_OnModelErrorsReturnsFalse()
         {
-            modelState.AddModelError(String.Empty, String.Empty);
+            service.ModelState.AddModelError(String.Empty, String.Empty);
             Assert.IsFalse(service.CanCreate(null));
         }
 
@@ -52,7 +66,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanEdit_OnModelErrorsReturnsFalse()
         {
-            modelState.AddModelError(String.Empty, String.Empty);
+            service.ModelState.AddModelError(String.Empty, String.Empty);
             Assert.IsFalse(service.CanEdit(null));
         }
 
@@ -69,44 +83,39 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanDelete_OnModelErrorsReturnsFalse()
         {
-            modelState.AddModelError(String.Empty, String.Empty);
+            service.ModelState.AddModelError(String.Empty, String.Empty);
             Assert.IsFalse(service.CanDelete(null));
         }
 
         #endregion
-        /*
+        
         #region Method: GetViews()
 
         [Test]
         public void GetViews_GetsViews()
         {
-            var expected = service
-                .BaseUnitOfWork
-                .Repository<Account>()
-                .Query<AccountView>()
-                .OrderByDescending(account => account.Id)
-                .Select(account => account.Id)
-                .GetEnumerator();
-            var actual = service.GetViews().Select(account => account.Id).GetEnumerator();
+            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.Id).GetEnumerator();
+            var actual = service.GetViews().GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
-                Assert.AreEqual(expected.Current, actual.Current);
+            {
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.AreEqual(expected.Current.Text, actual.Current.Text);
+            }
         }
 
         #endregion
-
+        
         #region Method: GetView(String id)
 
         [Test]
         public void GetView_GetsViewById()
         {
-            var user = new UserView();
-            service.Create(user);
+            var expected = context.Set<TestModel>().Find("1");
+            var actual = service.GetView("1");
 
-            var actual = service.GetView(user.Id);
-            service.Delete(user.Id);
-
-            Assert.AreEqual(user.Id, actual.Id);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.Text, actual.Text);
         }
 
         #endregion
@@ -116,49 +125,53 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Create_CreatesView()
         {
-            var user = new UserView();
-            service.Create(user);
+            var expected = ObjectFactory.CreateTestView();
+            service.Create(expected);
 
-            var actual = service.GetView(user.Id);
-            service.Delete(user.Id);
+            var actual = context.Set<TestModel>().Find(expected.Id);
 
-            Assert.IsNotNull(actual);
+            Assert.AreEqual(expected.Text, actual.Text);
         }
 
         #endregion
 
         #region Method: Edit(TView view)
-
+        
         [Test]
         public void Edit_EditsView()
         {
-            var user = new UserView();
-            service.Create(user);
+            var model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
 
-            var expected = "Test";
-            user.UserFirstName = expected;
-            service.Edit(user);
-            
-            var actual = service.GetView(user.Id).UserFirstName;
-            service.Delete(user.Id);
+            var expected = service.GetView(model.Id);
+            expected.Text = "EditedText";
+            service.Edit(expected);
 
-            Assert.AreEqual(expected, actual);
+            var actual = context.Set<TestModel>().Find(expected.Id);
+
+            Assert.AreEqual(expected.Text, actual.Text);
         }
 
         #endregion
 
         #region Method: Delete(String id)
-
+        
         [Test]
         public void Delete_DeleteView()
         {
-            var user = new UserView();
-            service.Create(user);
-            service.Delete(user.Id);
+            var expected = ObjectFactory.CreateTestView();
+            service.Create(expected);
 
-            Assert.IsNull(service.GetView(user.Id));
+            if (context.Set<TestModel>().Find(expected.Id) == null)
+                Assert.Inconclusive();
+
+            service.Delete(expected.Id);
+            context = new TestingContext();
+
+            Assert.IsNull(context.Set<TestModel>().Find(expected.Id));
         }
         
-        #endregion*/
+        #endregion
     }
 }

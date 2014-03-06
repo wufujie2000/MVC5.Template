@@ -82,8 +82,11 @@ namespace Template.Components.Services
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
-            UnitOfWork.Dispose();
-            UnitOfWork = null;
+            if (UnitOfWork != null)
+            {
+                UnitOfWork.Dispose();
+                UnitOfWork = null;
+            }
             disposed = true;
         }
     }

@@ -12,6 +12,9 @@ namespace Template.Components.Alerts
         private ModelStateDictionary modelState;
         private List<AlertMessage> messages;
 
+        public MessagesContainer() : this(null)
+        {
+        }
         public MessagesContainer(ModelStateDictionary modelState)
         {
             this.modelState = modelState;

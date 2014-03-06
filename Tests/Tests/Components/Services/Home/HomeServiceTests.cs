@@ -16,6 +16,7 @@ namespace Template.Tests.Tests.Components.Services
         public void SetUp()
         {
             service = new HomeService(null);
+            service.AlertMessages = new MessagesContainer();
         }
 
         [TearDown]
@@ -34,7 +35,6 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.AreEqual(Messages.Unauthorized, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);
-            Assert.AreEqual(1, service.AlertMessages.Count());
             Assert.AreEqual(String.Empty, message.Key);
             Assert.AreEqual(0, message.FadeOutAfter);
         }
@@ -51,7 +51,6 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.AreEqual(Messages.SystemError, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);
-            Assert.AreEqual(1, service.AlertMessages.Count());
             Assert.AreEqual(String.Empty, message.Key);
             Assert.AreEqual(0, message.FadeOutAfter);
         }
@@ -68,7 +67,6 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.AreEqual(Messages.PageNotFound, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);
-            Assert.AreEqual(1, service.AlertMessages.Count());
             Assert.AreEqual(String.Empty, message.Key);
             Assert.AreEqual(0, message.FadeOutAfter);
         }

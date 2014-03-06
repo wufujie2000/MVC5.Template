@@ -20,7 +20,7 @@ namespace Template.Tests.Helpers
             return new ProfileView()
             {
                 Id = TestId,
-                Username = "Username",
+                Username = "Username" + TestId,
                 CurrentPassword = "Password",
                 NewPassword = "NewPassword",
                 UserFirstName = "FirstName",
@@ -34,7 +34,7 @@ namespace Template.Tests.Helpers
             return new Account()
             {
                 Id = TestId,
-                Username = "Username",
+                Username = "Username" + TestId,
                 Passhash = "$2a$04$aalrk68zd5esaX9/ihL//OwwN/ORg12CToxkgXCzK0jfH0z1h/PK.", // Password
             };
         }
@@ -43,7 +43,7 @@ namespace Template.Tests.Helpers
             return new AccountView()
             {
                 Id = TestId,
-                Username = "Username",
+                Username = "Username" + TestId,
                 Password = "Password",
                 NewPassword = "NewPassword"
             };
@@ -68,7 +68,7 @@ namespace Template.Tests.Helpers
                 UserLastName = "LastName",
                 UserDateOfBirth = new DateTime(1990, 1, 1),
 
-                Username = "Username",
+                Username = "Username" + TestId,
                 Password = "Password",
                 NewPassword = "NewPassword"
             };

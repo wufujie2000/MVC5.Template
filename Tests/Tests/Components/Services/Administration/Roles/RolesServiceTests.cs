@@ -140,6 +140,9 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Delete_DeletesRole()
         {
+            if (context.Set<Role>().Find(role.Id) == null)
+                Assert.Inconclusive();
+
             service.Delete(role.Id);
             context = new TestingContext();
 

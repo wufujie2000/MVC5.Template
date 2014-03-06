@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;

@@ -14,7 +14,6 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class UserServiceTests
     {
-        private ModelStateDictionary modelState;
         private UsersService service;
         private Context context;
         private Account account;
@@ -22,9 +21,9 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
-            modelState = new ModelStateDictionary();
-            service = new UsersService(new UnitOfWork());
             context = new TestingContext();
+            service = new UsersService(new UnitOfWork(context));
+            service.ModelState = new ModelStateDictionary();
 
             TearDownData();
             SetUpData();
@@ -42,7 +41,8 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanCreate_CanNotCreateWithInvalidModelState()
         {
-            modelState.AddModelError("Test", "Test");
+            service.ModelState.AddModelError("Test", "Test");
+
             Assert.IsFalse(service.CanCreate(ObjectFactory.CreateUserView()));
         }
 
@@ -54,8 +54,7 @@ namespace Template.Tests.Tests.Components.Services
             userView.Id += "1";
 
             Assert.IsFalse(service.CanCreate(userView));
-            Assert.AreEqual(1, modelState["Username"].Errors.Count);
-            Assert.AreEqual(modelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
+            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
         }
 
         [Test]
@@ -65,8 +64,7 @@ namespace Template.Tests.Tests.Components.Services
             userView.Password = "       ";
 
             Assert.IsFalse(service.CanCreate(userView));
-            Assert.AreEqual(1, modelState["Password"].Errors.Count);
-            Assert.AreEqual(modelState["Password"].Errors[0].ErrorMessage, Validations.PasswordFieldIsRequired);
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.PasswordFieldIsRequired);
         }
 
         [Test]
@@ -82,7 +80,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
-            modelState.AddModelError("Test", "Test");
+            service.ModelState.AddModelError("Test", "Test");
             Assert.IsFalse(service.CanEdit(ObjectFactory.CreateUserView()));
         }
 
@@ -94,8 +92,7 @@ namespace Template.Tests.Tests.Components.Services
             userView.Id += "1";
 
             Assert.IsFalse(service.CanEdit(userView));
-            Assert.AreEqual(1, modelState["Username"].Errors.Count);
-            Assert.AreEqual(modelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
+            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
         }
 
         [Test]
@@ -195,16 +192,24 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Delete_DeletesAccount()
         {
+            if (context.Set<Account>().Find(account.Id) == null)
+                Assert.Inconclusive();
+
             service.Delete(account.Id);
             context = new TestingContext();
+
             Assert.IsNull(context.Set<Account>().Find(account.Id));
         }
 
         [Test]
         public void Delete_DeletesUser()
         {
+            if (context.Set<User>().Find(account.UserId) == null)
+                Assert.Inconclusive();
+
             service.Delete(account.UserId);
             context = new TestingContext();
+
             Assert.IsNull(context.Set<User>().Find(account.UserId));
         }
 

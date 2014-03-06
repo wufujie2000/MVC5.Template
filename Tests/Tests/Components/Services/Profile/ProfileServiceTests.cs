@@ -30,6 +30,7 @@ namespace Template.Tests.Tests.Components.Services
             service = new ProfileService(new UnitOfWork());
             context = new Context();
 
+            TearDownData();
             SetUpData();
         }
 
@@ -37,7 +38,6 @@ namespace Template.Tests.Tests.Components.Services
         public void TearDown()
         {
             HttpContext.Current = null;
-            TearDownData();
 
             service.Dispose();
             context.Dispose();

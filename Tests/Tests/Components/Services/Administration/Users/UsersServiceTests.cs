@@ -25,14 +25,13 @@ namespace Template.Tests.Tests.Components.Services
             service = new UsersService(new UnitOfWork());
             context = new Context();
 
+            TearDownData();
             SetUpData();
         }
 
         [TearDown]
         public void TearDown()
         {
-            TearDownData();
-
             service.Dispose();
             context.Dispose();
         }

@@ -31,6 +31,7 @@ namespace Template.Tests.Tests.Components.Services
             service.ModelState = new ModelStateDictionary();
             HttpContext.Current = httpContextMock.HttpContext;
 
+            TearDownData();
             SetUpData();
         }
 
@@ -38,7 +39,6 @@ namespace Template.Tests.Tests.Components.Services
         public void TearDown()
         {
             HttpContext.Current = null;
-            TearDownData();
 
             service.Dispose();
             context.Dispose();

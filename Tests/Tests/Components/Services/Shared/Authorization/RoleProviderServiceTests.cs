@@ -1,14 +1,12 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Template.Web.IoC;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Services
@@ -17,55 +15,38 @@ namespace Template.Tests.Tests.Components.Services
     public class RoleProviderServiceTests
     {
         private RoleProviderService service;
+        private AContext context;
 
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
-            service = new RoleProviderService(new UnitOfWork());
+            context = new TestingContext();
+            service = new RoleProviderService(new UnitOfWork(context));
+            service.HttpContext = new HttpContextBaseMock().HttpContextBase;
         }
 
         [TearDown]
         public void TearDown()
         {
-            HttpContext.Current = null;
-            var context = new TestingContext();
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
-                context.Set<User>().Remove(user);
+            TearDownData();
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(testId)))
-                context.Set<Role>().Remove(role);
-
-            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(testId)))
-                context.Set<Privilege>().Remove(privilege);
-
-            context.SaveChanges();
+            service.Dispose();
+            context.Dispose();
         }
-
-        #region Static property: Instance
-
-        [Test]
-        public void Instance_ReturnsSameInstance()
-        {
-            Assert.AreEqual(NinjectContainer.Resolve<IRoleProvider>(), NinjectContainer.Resolve<IRoleProvider>());
-        }
-
-        #endregion
 
         #region Method: IsAuthorizedForAction(String action)
 
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Account";
+            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
             Assert.IsTrue(service.IsAuthorizedForAction("Login"));
         }
 
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowUnauthorizedAttribute()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Account";
+            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
             Assert.IsTrue(service.IsAuthorizedForAction("Logout"));
         }
 
@@ -79,49 +60,80 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Home";
+            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Home";
             Assert.IsTrue(service.IsAuthorizedForAction("Index"));
         }
 
         [Test]
         public void IsAuthorizedForAction_IsNotAuthorizedForAction()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Users";
+            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
             Assert.IsFalse(service.IsAuthorizedForAction("Index"));
         }
 
         [Test]
-        public void IsAuthorizedForAction_IsAuthorizedForAction()
+        public void IsAuthorizedForAction_IsAuthorizedForGetAction()
+        {
+            service.HttpContext.Request.RequestContext.RouteData.Values["area"] = "Administration";
+            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
+            CreateUserWithPrivilegeFor("Administration", "Users", "Index");
+
+            Assert.IsTrue(service.IsAuthorizedForAction("Index"));
+        }
+
+        [Test]
+        [Ignore]
+        public void IsAuthorizedForAction_IsAuthorizedForPostAction()
+        {
+            Assert.Inconclusive();
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private Role CreateUserWithPrivilegeFor(String area, String controller, String action)
         {
             var account = ObjectFactory.CreateAccount();
             account.User = ObjectFactory.CreateUser();
-            var role = ObjectFactory.CreateRole();
             account.UserId = account.User.Id;
-            account.User.RoleId = role.Id;
 
-            var context = new TestingContext();
+            var role = ObjectFactory.CreateRole();
+            account.User.RoleId = role.Id;
+            context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
             var rolePrivilege = ObjectFactory.CreateRolePrivilege();
             var privilege = ObjectFactory.CreatePrivilege();
-            privilege.Controller = "Users";
-            privilege.Action = "Index";
-            privilege.Area = null;
-
             rolePrivilege.PrivilegeId = privilege.Id;
             rolePrivilege.Privilege = privilege;
             rolePrivilege.RoleId = role.Id;
             rolePrivilege.Role = role;
 
+            privilege.Area = area;
+            privilege.Controller = controller;
+            privilege.Action = action;
+
             role.RolePrivileges.Add(rolePrivilege);
 
             context.Set<Role>().Add(role);
-            context.Set<Account>().Add(account);
             context.SaveChanges();
 
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Users";
+            return role;
+        }
+        private void TearDownData()
+        {
+            var testId = TestContext.CurrentContext.Test.Name;
+            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
+                context.Set<User>().Remove(user);
 
-            Assert.IsTrue(service.IsAuthorizedForAction("Index"));
+            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(testId)))
+                context.Set<Role>().Remove(role);
+
+            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(testId)))
+                context.Set<Privilege>().Remove(privilege);
+
+            context.SaveChanges();
         }
 
         #endregion

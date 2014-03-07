@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Services;
+using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
@@ -16,7 +16,7 @@ namespace Template.Components.Extensions.Html
     {
         public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
         {
-            if (!new RoleProviderService(new UnitOfWork()).IsAuthorizedForAction(action.ToString()))
+            if (!new RoleProvider(null, new UnitOfWork()).IsAuthorizedForAction(action.ToString()))
                 return null;
             
             var gridColumn = column

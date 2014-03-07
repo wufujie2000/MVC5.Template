@@ -97,7 +97,7 @@
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />
-    <Compile Include="Tests\Components\Services\Shared\Authorization\RoleProviderServiceTests.cs" />
+    <Compile Include="Tests\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Tests\Components\Services\Shared\Sidebar\MenuServiceTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
@@ -135,7 +135,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Components\Mvc\Validators\DateValidatorTests.cs" />
     <Compile Include="Tests\Components\Mvc\Validators\NumberValidatorTests.cs" />
-    <Compile Include="Tests\Components\Security\BCrypterTests.cs" />
+    <Compile Include="Tests\Components\Security\Cryptography\BCrypterTests.cs" />
     <Compile Include="Tests\Components\Services\BaseServiceTests.cs" />
     <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
     <Compile Include="Tests\Data\Core\ContextTests.cs" />

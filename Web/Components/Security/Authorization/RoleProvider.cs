@@ -1,18 +1,45 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
-using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
 
-namespace Template.Components.Services
+namespace Template.Components.Security
 {
-    public class RoleProviderService : BaseService, IRoleProvider
+    public class RoleProvider : IRoleProvider, IDisposable
     {
-        public RoleProviderService(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        private HttpContextBase httpContext;
+        private IUnitOfWork unitOfWork;
+        private Boolean disposed;
+
+        private String CurrentAccountId
         {
+            get
+            {
+                return httpContext.User.Identity.Name;
+            }
+        }
+        private String CurrentArea
+        {
+            get
+            {
+                return httpContext.Request.RequestContext.RouteData.Values["area"] as String;
+            }
+        }
+        private String CurrentController
+        {
+            get
+            {
+                return httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
+            }
+        }
+
+        public RoleProvider(HttpContextBase httpContext, IUnitOfWork unitOfWork)
+        {
+            this.httpContext = httpContext;
+            this.unitOfWork = unitOfWork;
         }
 
         public virtual Boolean IsAuthorizedForAction(String action)
@@ -26,7 +53,7 @@ namespace Template.Components.Services
             if (!NeedsAuthorization(controllerType, actionInfo))
                 return true;
 
-            Boolean isAuthorized = UnitOfWork
+            Boolean isAuthorized = unitOfWork
                 .Repository<Account>()
                 .Query(account =>
                     account.Id == CurrentAccountId &&
@@ -63,6 +90,18 @@ namespace Template.Components.Services
             if (controller.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return false;
 
             return true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+            unitOfWork.Dispose();
+            disposed = true;
         }
     }
 }

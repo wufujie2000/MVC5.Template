@@ -83,10 +83,8 @@ namespace Template.Components.Services
         {
             if (disposed) return;
             if (UnitOfWork != null)
-            {
                 UnitOfWork.Dispose();
-                UnitOfWork = null;
-            }
+            
             disposed = true;
         }
     }

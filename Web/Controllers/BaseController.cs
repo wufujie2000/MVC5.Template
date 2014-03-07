@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
-using Template.Components.Services;
 using Template.Data.Core;
 
 namespace Template.Controllers
@@ -18,7 +17,7 @@ namespace Template.Controllers
 
         public BaseController()
         {
-            RoleProvider = new RoleProviderService(new UnitOfWork());
+            RoleProvider = new RoleProvider(null, new UnitOfWork());
         }
 
         protected virtual ActionResult RedirectToLocal(String url)

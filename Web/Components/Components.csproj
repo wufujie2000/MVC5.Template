@@ -85,6 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authorization\AllowUnauthorized.cs" />
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
+    <Compile Include="Security\Authorization\RoleProvider.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Services\Account\AccountService.cs" />
     <Compile Include="Services\Account\IAccountService.cs" />
@@ -103,7 +104,6 @@
     <Compile Include="Alerts\AlertMessage.cs" />
     <Compile Include="Alerts\AlertMessageType.cs" />
     <Compile Include="Alerts\MessagesContainer.cs" />
-    <Compile Include="Services\Shared\Authorization\RoleProviderService.cs" />
     <Compile Include="Datalists\BaseDatalist.cs" />
     <Compile Include="Datalists\RolesDatalist.cs" />
     <Compile Include="Services\Shared\Sidebar\MenuService.cs" />

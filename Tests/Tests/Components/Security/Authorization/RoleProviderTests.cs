@@ -2,27 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Components.Services;
+using System.Web;
+using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
 using Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Services
+namespace Template.Tests.Tests.Security
 {
     [TestFixture]
-    public class RoleProviderServiceTests
+    public class RoleProviderTests
     {
-        private RoleProviderService service;
+        private HttpContextBase httpContext;
+        private RoleProvider provider;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            service = new RoleProviderService(new UnitOfWork(context));
-            service.HttpContext = new HttpContextBaseMock().HttpContextBase;
+            httpContext = new HttpContextBaseMock().HttpContextBase;
+            provider = new RoleProvider(httpContext, new UnitOfWork(context));
         }
 
         [TearDown]
@@ -30,7 +32,7 @@ namespace Template.Tests.Tests.Components.Services
         {
             TearDownData();
 
-            service.Dispose();
+            provider.Dispose();
             context.Dispose();
         }
 
@@ -39,46 +41,46 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
-            Assert.IsTrue(service.IsAuthorizedForAction("Login"));
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
+            Assert.IsTrue(provider.IsAuthorizedForAction("Login"));
         }
 
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowUnauthorizedAttribute()
         {
-            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
-            Assert.IsTrue(service.IsAuthorizedForAction("Logout"));
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
+            Assert.IsTrue(provider.IsAuthorizedForAction("Logout"));
         }
 
         [Test]
         [Ignore]
         public void IsAuthorizedForAction_IsAuthorizedForActionOnControllerWithAllowAnonymousAttribute()
         {
-            
+            Assert.Inconclusive();
         }
 
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
         {
-            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Home";
-            Assert.IsTrue(service.IsAuthorizedForAction("Index"));
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Home";
+            Assert.IsTrue(provider.IsAuthorizedForAction("Index"));
         }
 
         [Test]
         public void IsAuthorizedForAction_IsNotAuthorizedForAction()
         {
-            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
-            Assert.IsFalse(service.IsAuthorizedForAction("Index"));
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
+            Assert.IsFalse(provider.IsAuthorizedForAction("Index"));
         }
 
         [Test]
         public void IsAuthorizedForAction_IsAuthorizedForGetAction()
         {
-            service.HttpContext.Request.RequestContext.RouteData.Values["area"] = "Administration";
-            service.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
+            httpContext.Request.RequestContext.RouteData.Values["area"] = "Administration";
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
             CreateUserWithPrivilegeFor("Administration", "Users", "Index");
 
-            Assert.IsTrue(service.IsAuthorizedForAction("Index"));
+            Assert.IsTrue(provider.IsAuthorizedForAction("Index"));
         }
 
         [Test]

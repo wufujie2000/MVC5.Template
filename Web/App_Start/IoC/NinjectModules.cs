@@ -30,7 +30,7 @@ namespace Template.Web.IoC
                 Bind<IHomeService>().To<HomeService>();
                 Bind<IProfileService>().To<ProfileService>();
 
-                Bind<IRoleProvider>().To<RoleProviderService>();
+                Bind<IRoleProvider>().To<RoleProvider>();
             }
         }
     }

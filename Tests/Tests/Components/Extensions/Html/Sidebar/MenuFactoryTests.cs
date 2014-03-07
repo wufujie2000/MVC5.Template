@@ -1,19 +1,30 @@
 ﻿using NUnit.Framework;
 using System.Linq;
-using Template.Components.Services;
+using Template.Components.Extensions.Html;
+using Template.Data.Core;
+using Template.Tests.Data;
 using Tests.Helpers;
 
-namespace Template.Tests.Tests.Components.Services.Shared.Sidebar
+namespace Template.Tests.Tests.Components.Extensions.Html
 {
     [TestFixture]
-    public class MenuServiceTests
+    public class MenuFactoryTests
     {
-        private MenuService service;
+        private MenuFactory factory;
+        private AContext context;
 
         [SetUp]
         public void SetUp()
         {
-            service = new MenuService(new HttpContextBaseMock().HttpContextBase);
+            context = new TestingContext();
+            factory = new MenuFactory(new HttpContextBaseMock().HttpContextBase, new UnitOfWork(context));
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            context.Dispose();
+            factory.Dispose();
         }
 
         #region Method: IEnumerable<Menu> GetAuthorizedMenus()
@@ -21,7 +32,7 @@ namespace Template.Tests.Tests.Components.Services.Shared.Sidebar
         [Test]
         public void GetAuthorizedMenus_GetsMenusWhichDoesNeedAuthorization()
         {
-            var menus = service.GetAuthorizedMenus();
+            var menus = factory.GetAuthorizedMenus();
             var menu = menus.First();
 
             Assert.AreEqual(null, menu.Area);

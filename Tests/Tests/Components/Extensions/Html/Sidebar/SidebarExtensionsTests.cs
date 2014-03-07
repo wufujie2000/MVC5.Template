@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -43,46 +42,11 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void SidebarMenu_FormsSidebarMenu()
         {
-            var menus = new List<Menu>()
-            {
-                new Menu()
-                {
-                    IconClass = "menu-icon fa fa-home",
-                    Controller = "Home",
-                    Action = "Index"
-                },
-                new Menu() {
-                    IconClass = "menu-icon fa fa-users",
-                    Area = "Administration",
-                    IsOpen = true,
-                    Submenus = new List<Menu>()
-                    {
-                        new Menu()
-                        {
-                            IconClass = "menu-icon fa fa-user",
-                            Area = "Administration",
-                            Controller = "Users",
-                            Action = "Index",
-                            IsActive = true,
-                            IsOpen = true
-                        },
-                        new Menu()
-                        {
-                            IconClass = "menu-icon fa fa-male",
-                            Area = "Administration",
-                            Controller = "Roles",
-                            Action = "Index"
-                        }
-                    }
-                }
-            };
-
             var menuBuilder = new StringBuilder();
-            foreach (var menu in menus)
+            foreach (var menu in MenuFactory.AllMenus)
                 menuBuilder.Append(Menu(html, menu));
 
-
-            Assert.AreEqual(menuBuilder.ToString(), html.SidebarMenu(menus).ToString());
+            Assert.AreEqual(menuBuilder.ToString(), html.SidebarMenu().ToString());
         }
 
         #endregion

@@ -32,8 +32,8 @@ namespace Template.Tests.Tests.Security
         {
             TearDownData();
 
-            provider.Dispose();
             context.Dispose();
+            provider.Dispose();
         }
 
         #region Method: IsAuthorizedForAction(String action)
@@ -92,6 +92,17 @@ namespace Template.Tests.Tests.Security
 
         #endregion
 
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanDisposeMultipleTimes()
+        {
+            provider.Dispose();
+            provider.Dispose();
+        }
+
+        #endregion
+
         #region Test helpers
 
         private Role CreateUserWithPrivilegeFor(String area, String controller, String action)
@@ -125,6 +136,8 @@ namespace Template.Tests.Tests.Security
         }
         private void TearDownData()
         {
+            context = new TestingContext();
+
             var testId = TestContext.CurrentContext.Test.Name;
             foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
                 context.Set<User>().Remove(user);

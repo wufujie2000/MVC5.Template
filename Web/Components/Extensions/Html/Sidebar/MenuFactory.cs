@@ -2,19 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
 
-namespace Template.Components.Services
+namespace Template.Components.Extensions.Html
 {
-    public class MenuService : BaseService
+    public class MenuFactory : IDisposable
     {
-        private static IEnumerable<Menu> allMenus;
+        private HttpContextBase httpContext;
+        private IUnitOfWork unitOfWork;
+        private Boolean disposed;
 
-        static MenuService()
+        public static IEnumerable<Menu> AllMenus
         {
-            allMenus = new List<Menu>()
+            get;
+            private set;
+        }
+
+        static MenuFactory()
+        {
+            AllMenus = new List<Menu>()
             {
                 new Menu()
                 {
@@ -45,16 +54,18 @@ namespace Template.Components.Services
                 }
             };
         }
-        public MenuService(HttpContextBase context)
-            : base(new UnitOfWork())
+
+        public MenuFactory(HttpContextBase httpContext, IUnitOfWork unitOfWork)
         {
-            HttpContext = context;
+            this.httpContext = httpContext;
+            this.unitOfWork = unitOfWork;
         }
 
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
         {
-            return GetAuthorizedMenus(allMenus);
+            return GetAuthorizedMenus(AllMenus);
         }
+
         private IEnumerable<Menu> GetAuthorizedMenus(IEnumerable<Menu> menus)
         {
             foreach (var menu in menus)
@@ -68,19 +79,20 @@ namespace Template.Components.Services
                         yield return authorizedMenu;
                 }
         }
-
         private Boolean UserIsAuthorizedToView(Menu menu)
         {
             if (menu.Action == null) return true;
 
-            return new RoleProviderService(new UnitOfWork()).IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
+            return new RoleProvider(httpContext, unitOfWork).IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {
+            var currentController = httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
+
             return new Menu()
             {
                 Title = ResourceProvider.GetMenuTitle(menu.Area, menu.Controller, menu.Action),
-                IsActive = menu.Controller == CurrentController,
+                IsActive = menu.Controller == currentController,
                 Controller = menu.Controller,
                 IconClass = menu.IconClass,
                 Action = menu.Action,
@@ -90,6 +102,18 @@ namespace Template.Components.Services
         private Boolean IsEmpty(Menu menu)
         {
             return menu.Action == null && menu.Submenus.Count() == 0;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+            unitOfWork.Dispose();
+            disposed = true;
         }
     }
 }

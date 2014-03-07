@@ -1,10 +1,10 @@
-﻿using Template.Objects;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Template.Data.Core;
+using Template.Objects;
 
 namespace Template.Components.Extensions.Html
 {
@@ -19,10 +19,12 @@ namespace Template.Components.Extensions.Html
 
             return MvcHtmlString.Create(input.ToString(TagRenderMode.SelfClosing));
         }
-        public static MvcHtmlString SidebarMenu(this HtmlHelper html, IEnumerable<Menu> menus)
+        public static MvcHtmlString SidebarMenu(this HtmlHelper html)
         {
+            var menuFactory = new MenuFactory(html.ViewContext.HttpContext, new UnitOfWork());
             var menuBuilder = new StringBuilder();
-            foreach (var menu in menus)
+
+            foreach (var menu in menuFactory.GetAuthorizedMenus())
                 menuBuilder.Append(Menu(html, menu));
 
             return new MvcHtmlString(menuBuilder.ToString());

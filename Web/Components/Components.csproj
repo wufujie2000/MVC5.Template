@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Html\Sidebar\MenuFactory.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="Alerts\MessagesContainer.cs" />
     <Compile Include="Datalists\BaseDatalist.cs" />
     <Compile Include="Datalists\RolesDatalist.cs" />
-    <Compile Include="Services\Shared\Sidebar\MenuService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Data.csproj">
@@ -123,10 +123,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extensions\Html\Menu\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

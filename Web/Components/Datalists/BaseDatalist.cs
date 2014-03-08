@@ -18,6 +18,10 @@ namespace Template.Components.Datalists
 
         protected BaseDatalist()
         {
+            var applicationPath = HttpContext.Current.Request.ApplicationPath ?? "/";
+            if (!applicationPath.EndsWith("/"))
+                applicationPath += "/";
+
             String language = (String) HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
             language = language == "en-GB" ? String.Empty : language + "/";
             UnitOfWork = new UnitOfWork();
@@ -26,7 +30,7 @@ namespace Template.Components.Datalists
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.Url.Authority,
-                HttpContext.Current.Request.ApplicationPath ?? "/",
+                applicationPath,
                 language,
                 AbstractDatalist.Prefix,
                 GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));

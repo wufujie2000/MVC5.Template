@@ -19,7 +19,6 @@ namespace Template.Objects
         [Required]
         public String LanguageId { get; set; }
 
-        public virtual PrivilegeView Privilege { get; set; }
-        public virtual LanguageView Language { get; set; }
+        public LanguageView Language { get; set; }
     }
 }

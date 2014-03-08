@@ -11,7 +11,6 @@ namespace Template.Objects
         [Required]
         public String PrivilegeId { get; set; }
 
-        public RoleView Role { get; set; }
         public PrivilegeView Privilege { get; set; }
     }
 }

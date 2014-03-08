@@ -74,20 +74,20 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static Role CreateRole()
+        public static Role CreateRole(Int32 instanceNumber = 1)
         {
             return new Role()
             {
-                Id = TestId,
-                Name = "Name"
+                Id = TestId + instanceNumber.ToString(),
+                Name = "Name" + instanceNumber.ToString()
             };
         }
-        public static RoleView CreateRoleView()
+        public static RoleView CreateRoleView(Int32 instanceNumber = 1)
         {
             return new RoleView()
             {
-                Id = TestId,
-                Name = "Name"
+                Id = TestId + instanceNumber.ToString(),
+                Name = "Name" + instanceNumber.ToString()
             };
         }
 

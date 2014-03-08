@@ -44,10 +44,12 @@ namespace Template.Components.Security
 
         public virtual Boolean IsAuthorizedForAction(String action)
         {
+            this.httpContext = this.httpContext ?? new HttpContextWrapper(HttpContext.Current); // TODO: Remove temp fix
             return IsAuthorizedForAction(CurrentArea, CurrentController, action);
         }
         public virtual Boolean IsAuthorizedForAction(String area, String controller, String action)
         {
+            this.httpContext = this.httpContext ?? new HttpContextWrapper(HttpContext.Current); // TODO: Remove temp fix
             Type controllerType = GetController(area, controller);
             MethodInfo actionInfo = GetAction(controllerType, action);
             if (!NeedsAuthorization(controllerType, actionInfo))

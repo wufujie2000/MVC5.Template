@@ -10,7 +10,6 @@ using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Datalists
 {
-    [Ignore]
     [TestFixture]
     public class BaseDatalistTests
     {
@@ -91,7 +90,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [Ignore]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            throw new NotImplementedException();
+            Assert.Inconclusive();
         }
 
         #endregion

@@ -22,6 +22,7 @@ namespace Template.Controllers.Home
         public ActionResult Error()
         {
             Service.AddSystemErrorMessage();
+
             return View();
         }
 
@@ -29,6 +30,7 @@ namespace Template.Controllers.Home
         public ActionResult NotFound()
         {
             Service.AddPageNotFoundMessage();
+
             return View();
         }
 
@@ -36,6 +38,7 @@ namespace Template.Controllers.Home
         public ActionResult Unauthorized()
         {
             Service.AddUnauthorizedMessage();
+
             return View();
         }
     }

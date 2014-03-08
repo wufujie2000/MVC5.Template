@@ -56,7 +56,7 @@ namespace Template.Tests.Tests.Controllers.Account
         }
 
         [Test]
-        public void Login_LogsInAccount()
+        public void Login_CallsLogin()
         {
             var account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);

@@ -88,7 +88,7 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         #endregion
-        
+
         #region Method: GetViews()
 
         [Test]
@@ -105,7 +105,7 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         #endregion
-        
+
         #region Method: GetView(String id)
 
         [Test]
@@ -136,7 +136,7 @@ namespace Template.Tests.Tests.Components.Services
         #endregion
 
         #region Method: Edit(TView view)
-        
+
         [Test]
         public void Edit_EditsView()
         {
@@ -156,7 +156,7 @@ namespace Template.Tests.Tests.Components.Services
         #endregion
 
         #region Method: Delete(String id)
-        
+
         [Test]
         public void Delete_DeleteView()
         {
@@ -171,7 +171,7 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.IsNull(context.Set<TestModel>().Find(expected.Id));
         }
-        
+
         #endregion
     }
 }

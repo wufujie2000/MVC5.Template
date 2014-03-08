@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
-using Template.Data.Core;
 
 namespace Template.Controllers
 {
@@ -45,12 +44,12 @@ namespace Template.Controllers
             if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();
         }
-        protected Boolean IsAuthorizedFor(String action)
+        protected virtual Boolean IsAuthorizedFor(String action)
         {
             if (RoleProvider == null) return true;
             return RoleProvider.IsAuthorizedForAction(action);
         }
-        protected Boolean IsAuthorizedFor(String area, String controller, String action)
+        protected virtual Boolean IsAuthorizedFor(String area, String controller, String action)
         {
             if (RoleProvider == null) return true;
             return RoleProvider.IsAuthorizedForAction(area, controller, action);            

@@ -107,6 +107,7 @@
     <Compile Include="Tests\Controllers\Administration\Users\UsersControllerTests.cs" />
     <Compile Include="Tests\Controllers\BaseControllerTests.cs" />
     <Compile Include="Tests\Controllers\Home\HomeControllerTests.cs" />
+    <Compile Include="Tests\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
@@ -180,9 +181,7 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\Controllers\Profile\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Data\Migrations\201403051939092_1.resx">
       <DependentUpon>201403051939092_1.cs</DependentUpon>

@@ -80,7 +80,6 @@ namespace Template.Controllers.Administration
                 return RedirectToDefault();
             
             return RedirectToAction("Index");
-
         }
     }
 }

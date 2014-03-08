@@ -52,6 +52,7 @@
     <Reference Include="GridMvc">
       <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
@@ -93,6 +94,7 @@
     <Compile Include="Objects\Components\Services\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
     <Compile Include="Objects\Controllers\BaseControllerStub.cs" />
+    <Compile Include="Objects\Controllers\ServicedControllerStub.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Tests\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
     <Compile Include="Tests\Controllers\BaseControllerTests.cs" />
+    <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />

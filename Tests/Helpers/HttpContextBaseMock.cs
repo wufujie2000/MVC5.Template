@@ -9,28 +9,28 @@ namespace Tests.Helpers
 {
     public class HttpContextBaseMock
     {
-        public Mock<HttpResponseWrapper> ResponseMock
+        public Mock<HttpResponseWrapper> HttpResponseMock
         {
             get;
             private set;
         }
-        public HttpResponseBase Response
+        public HttpResponseBase HttpResponseBase
         {
             get;
             private set;
         }
-        public Mock<HttpRequestWrapper> RequestMock
+        public Mock<HttpRequestWrapper> HttpRequestMock
         {
             get;
             private set;
         }
-        public HttpRequestBase Request
+        public HttpRequestBase HttpRequestBase
         {
             get;
             private set;
         }
 
-        public Mock<HttpContextWrapper> ContextMock
+        public Mock<HttpContextWrapper> HttpContextMock
         {
             get;
             private set;
@@ -64,16 +64,16 @@ namespace Tests.Helpers
             browserMock.SetupGet(mock => mock[It.IsAny<String>()]).Returns("true");
             request.Browser = browserMock.Object;
 
-            RequestMock = new Mock<HttpRequestWrapper>(request) { CallBase = true };
-            Request = RequestMock.Object;
+            HttpRequestMock = new Mock<HttpRequestWrapper>(request) { CallBase = true };
+            HttpRequestBase = HttpRequestMock.Object;
 
             var response = new HttpResponse(new StringWriter());
-            ResponseMock = new Mock<HttpResponseWrapper>(response) { CallBase = true };
-            Response = ResponseMock.Object;
+            HttpResponseMock = new Mock<HttpResponseWrapper>(response) { CallBase = true };
+            HttpResponseBase = HttpResponseMock.Object;
 
             HttpContext = new HttpContext(request, response);
-            ContextMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
-            HttpContextBase = ContextMock.Object;
+            HttpContextMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
+            HttpContextBase = HttpContextMock.Object;
 
             IdentityMock = new Mock<IIdentity>();
             IdentityMock.Setup<String>(mock => mock.Name).Returns(TestContext.CurrentContext.Test.Name);
@@ -81,7 +81,7 @@ namespace Tests.Helpers
             PrincipalMock = new Mock<IPrincipal>();
             PrincipalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
 
-            ContextMock.Setup(mock => mock.User).Returns(PrincipalMock.Object);
+            HttpContextMock.Setup(mock => mock.User).Returns(PrincipalMock.Object);
         }
     }
 }

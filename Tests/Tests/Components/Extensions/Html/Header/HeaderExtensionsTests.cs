@@ -71,7 +71,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
 
             var queryString = new NameValueCollection();
             queryString.Add("Param1", "Value1");
-            htmlMock.HttpContextMock.RequestMock.Setup(mock => mock.QueryString).Returns(queryString);
+            htmlMock.HttpContextMock.HttpRequestMock.Setup(mock => mock.QueryString).Returns(queryString);
             html.ViewContext.RequestContext.RouteData.Values["controller"] = "Test";
             html.ViewContext.RequestContext.RouteData.Values["action"] = "Test";
             html.ViewContext.RequestContext.RouteData.Values["Param1"] = "Value1";

@@ -102,6 +102,7 @@
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Tests\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
+    <Compile Include="Tests\Controllers\Account\AccountControllerTests.cs" />
     <Compile Include="Tests\Controllers\BaseControllerTests.cs" />
     <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
@@ -177,7 +178,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\Controllers\Account\" />
     <Folder Include="Tests\Controllers\Administration\Roles\" />
     <Folder Include="Tests\Controllers\Administration\Users\" />
     <Folder Include="Tests\Controllers\Home\" />

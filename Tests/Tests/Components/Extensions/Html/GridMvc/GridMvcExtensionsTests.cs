@@ -22,7 +22,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         {
             httpContextStub = new HttpContextBaseMock();
             HttpContext.Current = httpContextStub.HttpContext;
-            httpContextStub.Request.RequestContext.RouteData.Values["controller"] = "Roles";
+            httpContextStub.HttpRequestBase.RequestContext.RouteData.Values["controller"] = "Roles";
             html = new HtmlHelperMock<GridMvcView>().HtmlHelper;
             grid = html.Grid(new List<GridMvcView>());
         }

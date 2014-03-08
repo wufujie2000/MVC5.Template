@@ -92,6 +92,7 @@
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
+    <Compile Include="Objects\Controllers\BaseControllerStub.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />
@@ -99,11 +100,12 @@
     <Compile Include="Tests\Components\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Tests\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
+    <Compile Include="Tests\Controllers\BaseControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
     <Compile Include="Helpers\HtmlHelperMock.cs" />
-    <Compile Include="Helpers\HttpContextMock.cs" />
+    <Compile Include="Helpers\HttpContextBaseMock.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />

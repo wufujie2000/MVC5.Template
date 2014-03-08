@@ -17,7 +17,6 @@ namespace Template.Controllers
 
         public BaseController()
         {
-            RoleProvider = new RoleProvider(null, new UnitOfWork());
         }
 
         protected virtual ActionResult RedirectToLocal(String url)
@@ -27,21 +26,21 @@ namespace Template.Controllers
 
             return RedirectToDefault();
         }
-        protected virtual ActionResult RedirectToDefault()
+        protected virtual RedirectToRouteResult RedirectToDefault()
         {
-            return RedirectToAction(String.Empty, String.Empty, new { area = String.Empty, language = RouteData.Values["language"] });
+            return RedirectToAction(String.Empty, String.Empty, new { language = RouteData.Values["language"], area = String.Empty });
         }
-        protected virtual ActionResult RedirectToUnauthorized()
+        protected virtual RedirectToRouteResult RedirectToUnauthorized()
         {
-            return RedirectToAction("Unauthorized", new { controller = "Home", area = String.Empty });
+            return RedirectToAction("Unauthorized", new { language = RouteData.Values["language"], area = String.Empty, controller = "Home" });
         }
 
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
-            String area = (String)filterContext.RouteData.Values["area"];
-            String controller = (String)filterContext.RouteData.Values["controller"];
+            String area = (String) filterContext.RouteData.Values["area"];
             String action = (String)filterContext.RouteData.Values["action"];
+            String controller = (String)filterContext.RouteData.Values["controller"];
 
             if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();

@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using Template.Components.Alerts;
+using Template.Components.Security;
 using Template.Components.Services;
+using Template.Data.Core;
 
 namespace Template.Controllers
 {
@@ -13,6 +15,7 @@ namespace Template.Controllers
         {
             Service = service;
             Service.ModelState = Service.ModelState ?? ModelState;
+            RoleProvider = new RoleProvider(null, new UnitOfWork()); // TODO: Remove temp fix
             Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer(Service.ModelState);
         }
 

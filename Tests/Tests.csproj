@@ -103,6 +103,7 @@
     <Compile Include="Tests\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
     <Compile Include="Tests\Controllers\Account\AccountControllerTests.cs" />
+    <Compile Include="Tests\Controllers\Administration\AdministrationAreRegistrationTests.cs" />
     <Compile Include="Tests\Controllers\Administration\Roles\RolesControllerTests.cs" />
     <Compile Include="Tests\Controllers\Administration\Users\UsersControllerTests.cs" />
     <Compile Include="Tests\Controllers\BaseControllerTests.cs" />

@@ -1,10 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Template.Controllers.Administration
 {
     public class AdministrationAreaRegistration : AreaRegistration
     {
-        public override string AreaName
+        public override String AreaName
         {
             get
             {

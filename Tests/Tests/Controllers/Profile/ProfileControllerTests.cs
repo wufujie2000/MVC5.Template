@@ -106,7 +106,7 @@ namespace Template.Tests.Tests.Controllers.Profile
         [Test]
         public void DeleteConfirmed_RedirectsToAccountLogout()
         {
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
+            serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
             var result = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", result.RouteValues["action"]);

@@ -1,4 +1,4 @@
-﻿namespace Template.Components.Security.Authorization
+﻿namespace Template.Components.Security
 {
     public sealed class RoleProviderFactory
     {

@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
-using Template.Components.Security.Authorization;
 
 namespace Template.Controllers
 {

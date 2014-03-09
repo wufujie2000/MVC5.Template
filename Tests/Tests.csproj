@@ -91,6 +91,7 @@
     <Compile Include="Data\TestingContext.cs" />
     <Compile Include="Objects\Controllers\BaseControllerStub.cs" />
     <Compile Include="Objects\Controllers\ServicedControllerStub.cs" />
+    <Compile Include="Tests\Components\Security\Authorization\RoleProviderFactoryTests.cs" />
     <Compile Include="Tests\Components\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Tests\Components\Services\Administration\Users\UsersServiceTests.cs" />

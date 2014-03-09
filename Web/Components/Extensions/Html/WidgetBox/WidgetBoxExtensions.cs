@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Template.Components.Security.Authorization;
+using Template.Components.Security;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html

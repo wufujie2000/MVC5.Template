@@ -2,10 +2,11 @@
 namespace Template.Data.Migrations
 {
     using System.CodeDom.Compiler;
-    using System.Data.Entity.Migrations;
     using System.Data.Entity.Migrations.Infrastructure;
+    using System.Diagnostics.CodeAnalysis;
     using System.Resources;
     
+    [ExcludeFromCodeCoverage]
     [GeneratedCode("EntityFramework.Migrations", "6.0.2-21211")]
     public sealed partial class _1 : IMigrationMetadata
     {

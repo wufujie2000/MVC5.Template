@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Security.Authorization;
+using Template.Components.Security;
 using Template.Objects;
 using Template.Resources;
 

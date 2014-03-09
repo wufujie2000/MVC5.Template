@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Template.Components.Security.Authorization;
+using Template.Components.Security;
 using Template.Objects;
 using Template.Resources;
 

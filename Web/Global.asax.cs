@@ -12,7 +12,6 @@ using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
 using Template.Components.Mvc.Providers;
 using Template.Components.Security;
-using Template.Components.Security.Authorization;
 using Template.Web.IoC;
 
 namespace Template.Web

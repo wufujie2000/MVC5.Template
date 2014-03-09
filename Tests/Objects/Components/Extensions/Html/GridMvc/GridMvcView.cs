@@ -6,5 +6,6 @@ namespace Template.Tests.Objects.Components.Extensions.Html
     public class GridMvcView : BaseView
     {
         public String Text { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

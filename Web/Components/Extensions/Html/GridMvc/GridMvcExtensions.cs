@@ -13,18 +13,18 @@ namespace Template.Components.Extensions.Html
 {
     public static class GridMvcExtensions
     {
-        private static String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
         private static String CurrentAccountId
         {
             get
             {
                 return HttpContext.Current.User.Identity.Name;
+            }
+        }
+        private static String CurrentArea
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
             }
         }
         private static String CurrentController
@@ -112,7 +112,7 @@ namespace Template.Components.Extensions.Html
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLowerInvariant()));
+            actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLower()));
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action(action.ToString(), new { id = model.Id }));
             icon.AddCssClass(iconClass);
 

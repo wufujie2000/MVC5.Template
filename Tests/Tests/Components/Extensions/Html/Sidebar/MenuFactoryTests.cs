@@ -30,6 +30,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         #region Method: IEnumerable<Menu> GetAuthorizedMenus()
 
         [Test]
+        [Ignore]
         public void GetAuthorizedMenus_GetsMenusWhichDoesNeedAuthorization()
         {
             var menus = factory.GetAuthorizedMenus();

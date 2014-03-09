@@ -46,13 +46,16 @@ namespace Template.Controllers
         }
         protected virtual Boolean IsAuthorizedFor(String action)
         {
-            if (RoleProvider == null) return true;
-            return RoleProvider.IsAuthorizedForAction(action);
+            String area = (String)RouteData.Values["area"];
+            String controller = (String)RouteData.Values["controller"];
+
+            return IsAuthorizedFor(area, controller, action);
         }
         protected virtual Boolean IsAuthorizedFor(String area, String controller, String action)
         {
             if (RoleProvider == null) return true;
-            return RoleProvider.IsAuthorizedForAction(area, controller, action);            
+
+            return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);            
         }
     }
 }

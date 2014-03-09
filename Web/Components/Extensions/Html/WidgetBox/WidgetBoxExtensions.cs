@@ -10,6 +10,28 @@ namespace Template.Components.Extensions.Html
 {
     public static class WidgetBoxExtensions
     {
+        private static String CurrentArea
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
+            }
+        }
+        private static String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+        }
+        private static String CurrentController
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
+            }
+        }
+
         public static WidgetBox TableWidgetBox(this HtmlHelper html, params LinkAction[] actions)
         {
             return html.WidgetBox("fa fa-th", ResourceProvider.GetCurrentTableTitle(), actions);
@@ -28,7 +50,7 @@ namespace Template.Components.Extensions.Html
             String buttons = String.Empty;
             foreach (var action in actions)
             {
-                if (!new RoleProvider(null, new UnitOfWork()).IsAuthorizedForAction(action.ToString()))
+                if (!new RoleProvider(new UnitOfWork()).IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");

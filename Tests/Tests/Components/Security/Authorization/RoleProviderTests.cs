@@ -2,20 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Tests.Security
 {
     [TestFixture]
     public class RoleProviderTests
     {
-        private HttpContextBase httpContext;
         private RoleProvider provider;
         private AContext context;
 
@@ -23,8 +20,7 @@ namespace Template.Tests.Tests.Security
         public void SetUp()
         {
             context = new TestingContext();
-            httpContext = new HttpContextBaseMock().HttpContextBase;
-            provider = new RoleProvider(httpContext, new UnitOfWork(context));
+            provider = new RoleProvider(new UnitOfWork(context));
         }
 
         [TearDown]
@@ -36,56 +32,50 @@ namespace Template.Tests.Tests.Security
             provider.Dispose();
         }
 
-        #region Method: IsAuthorizedForAction(String action)
+        #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
 
         [Test]
-        public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowAnonymousAttribute()
+        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
-            Assert.IsTrue(provider.IsAuthorizedForAction("Login"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Account", "Login"));
         }
 
         [Test]
-        public void IsAuthorizedForAction_IsAuthorizedForActionWithAllowUnauthorizedAttribute()
+        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttribute()
         {
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Account";
-            Assert.IsTrue(provider.IsAuthorizedForAction("Logout"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Account", "Logout"));
         }
 
         [Test]
         [Ignore]
-        public void IsAuthorizedForAction_IsAuthorizedForActionOnControllerWithAllowAnonymousAttribute()
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttribute()
         {
             Assert.Inconclusive();
         }
 
         [Test]
-        public void IsAuthorizedForAction_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
         {
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Home";
-            Assert.IsTrue(provider.IsAuthorizedForAction("Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Home", "Index"));
         }
 
         [Test]
-        public void IsAuthorizedForAction_IsNotAuthorizedForAction()
+        public void IsAuthorizedFor_IsNotAuthorizedForAction()
         {
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
-            Assert.IsFalse(provider.IsAuthorizedForAction("Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor(null, "Administration", "Users", "Index"));
         }
 
         [Test]
-        public void IsAuthorizedForAction_IsAuthorizedForGetAction()
+        public void IsAuthorizedFor_IsAuthorizedForGetAction()
         {
-            httpContext.Request.RequestContext.RouteData.Values["area"] = "Administration";
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = "Users";
-            CreateUserWithPrivilegeFor("Administration", "Users", "Index");
+            var account = CreateUserWithPrivilegeFor("Administration", "Users", "Index");
 
-            Assert.IsTrue(provider.IsAuthorizedForAction("Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Users", "Index"));
         }
 
         [Test]
         [Ignore]
-        public void IsAuthorizedForAction_IsAuthorizedForPostAction()
+        public void IsAuthorizedFor_IsAuthorizedForPostAction()
         {
             Assert.Inconclusive();
         }
@@ -105,7 +95,7 @@ namespace Template.Tests.Tests.Security
 
         #region Test helpers
 
-        private Role CreateUserWithPrivilegeFor(String area, String controller, String action)
+        private Account CreateUserWithPrivilegeFor(String area, String controller, String action)
         {
             var account = ObjectFactory.CreateAccount();
             account.User = ObjectFactory.CreateUser();
@@ -132,7 +122,7 @@ namespace Template.Tests.Tests.Security
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            return role;
+            return account;
         }
         private void TearDownData()
         {

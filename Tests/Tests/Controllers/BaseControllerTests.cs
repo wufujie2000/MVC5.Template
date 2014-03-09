@@ -15,16 +15,23 @@ namespace Template.Tests.Tests.Controllers
         private Mock<BaseControllerStub> controllerMock;
         private Mock<IRoleProvider> roleProviderMock;
         private BaseControllerStub controller;
+        private String accountId;
 
         [SetUp]
         public void SetUp()
         {
+            var httpContextMock = new HttpContextBaseMock();
             controllerMock = new Mock<BaseControllerStub>() { CallBase = true };
-            var requestContext = new HttpContextBaseMock().HttpContext.Request.RequestContext;
-            controllerMock.Object.ControllerContext = new ControllerContext();
+            var requestContext = httpContextMock.HttpContext.Request.RequestContext;
+
             controllerMock.Object.Url = new UrlHelper(requestContext);
+            controllerMock.Object.ControllerContext = new ControllerContext();
+            controllerMock.Object.ControllerContext.HttpContext = httpContextMock.HttpContextBase;
+            httpContextMock.IdentityMock.Setup(mock => mock.Name).Returns("TestAccountId");
+
             roleProviderMock = new Mock<IRoleProvider>();
             controller = controllerMock.Object;
+            accountId = "TestAccountId";
         }
 
         #region Constructor: BaseController()
@@ -108,7 +115,7 @@ namespace Template.Tests.Tests.Controllers
             filterContext.RouteData.Values["action"] = "AC";
             filterContext.RouteData.Values["area"] = "AR";
 
-            roleProviderMock.Setup(mock => mock.IsAuthorizedForAction("AR", "CO", "AC")).Returns(false);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(false);
             controller.BaseRoleProvider = roleProviderMock.Object;
             controller.BaseOnAuthorization(filterContext);
 
@@ -130,7 +137,7 @@ namespace Template.Tests.Tests.Controllers
             filterContext.RouteData.Values["action"] = "AC";
             filterContext.RouteData.Values["area"] = "AR";
 
-            roleProviderMock.Setup(mock => mock.IsAuthorizedForAction("AR", "CO", "AC")).Returns(true);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
             controller.BaseRoleProvider = roleProviderMock.Object;
             controller.BaseOnAuthorization(filterContext);
 
@@ -153,11 +160,13 @@ namespace Template.Tests.Tests.Controllers
             var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
             var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
 
-            roleProviderMock.Setup(mock => mock.IsAuthorizedForAction("AC")).Returns(true);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
             controller.BaseRoleProvider = roleProviderMock.Object;
+            controller.RouteData.Values["controller"] = "CO";
+            controller.RouteData.Values["area"] = "AR";
 
             Assert.IsTrue(controller.BaseIsAuthorizedFor("AC"));
-            roleProviderMock.Verify(mock => mock.IsAuthorizedForAction("AC"), Times.Once());
+            roleProviderMock.Verify(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC"), Times.Once());
         }
 
         #endregion
@@ -176,11 +185,11 @@ namespace Template.Tests.Tests.Controllers
             var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
             var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
 
-            roleProviderMock.Setup(mock => mock.IsAuthorizedForAction("AR", "CO", "AC")).Returns(true);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
             controller.BaseRoleProvider = roleProviderMock.Object;
 
             Assert.IsTrue(controller.BaseIsAuthorizedFor("AR", "CO", "AC"));
-            roleProviderMock.Verify(mock => mock.IsAuthorizedForAction("AR", "CO", "AC"), Times.Once());
+            roleProviderMock.Verify(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC"), Times.Once());
         }
 
         #endregion

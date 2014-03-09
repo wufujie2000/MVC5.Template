@@ -14,42 +14,13 @@ namespace Template.Components.Security
         private IUnitOfWork unitOfWork;
         private Boolean disposed;
 
-        private String CurrentAccountId
+        public RoleProvider(IUnitOfWork unitOfWork)
         {
-            get
-            {
-                return httpContext.User.Identity.Name;
-            }
-        }
-        private String CurrentArea
-        {
-            get
-            {
-                return httpContext.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
-        private String CurrentController
-        {
-            get
-            {
-                return httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
-            }
-        }
-
-        public RoleProvider(HttpContextBase httpContext, IUnitOfWork unitOfWork)
-        {
-            this.httpContext = httpContext;
             this.unitOfWork = unitOfWork;
         }
 
-        public virtual Boolean IsAuthorizedForAction(String action)
+        public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
         {
-            this.httpContext = this.httpContext ?? new HttpContextWrapper(HttpContext.Current); // TODO: Remove temp fix
-            return IsAuthorizedForAction(CurrentArea, CurrentController, action);
-        }
-        public virtual Boolean IsAuthorizedForAction(String area, String controller, String action)
-        {
-            this.httpContext = this.httpContext ?? new HttpContextWrapper(HttpContext.Current); // TODO: Remove temp fix
             Type controllerType = GetController(area, controller);
             MethodInfo actionInfo = GetAction(controllerType, action);
             if (!NeedsAuthorization(controllerType, actionInfo))
@@ -58,7 +29,7 @@ namespace Template.Components.Security
             Boolean isAuthorized = unitOfWork
                 .Repository<Account>()
                 .Query(account =>
-                    account.Id == CurrentAccountId &&
+                    account.Id == accountId &&
                     account.User.Role.RolePrivileges.Any(rolePrivilege =>
                         rolePrivilege.Privilege.Area == area &&
                         rolePrivilege.Privilege.Controller == controller &&

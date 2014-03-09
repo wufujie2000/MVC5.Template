@@ -14,8 +14,8 @@ namespace Template.Controllers
         protected ServicedController(TService service)
         {
             Service = service;
+            RoleProvider = new RoleProvider(new UnitOfWork()); // TODO: Remove temp fix
             Service.ModelState = Service.ModelState ?? ModelState;
-            RoleProvider = new RoleProvider(null, new UnitOfWork()); // TODO: Remove temp fix
             Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer(Service.ModelState);
         }
 

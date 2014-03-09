@@ -21,6 +21,14 @@ namespace Template.Components.Extensions.Html
             private set;
         }
 
+        private static String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+        }
+
         static MenuFactory()
         {
             AllMenus = new List<Menu>()
@@ -83,7 +91,7 @@ namespace Template.Components.Extensions.Html
         {
             if (menu.Action == null) return true;
 
-            return new RoleProvider(httpContext, unitOfWork).IsAuthorizedForAction(menu.Area, menu.Controller, menu.Action);
+            return new RoleProvider(unitOfWork).IsAuthorizedFor(CurrentAccountId, menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {

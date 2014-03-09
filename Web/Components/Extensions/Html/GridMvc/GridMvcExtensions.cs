@@ -14,9 +14,31 @@ namespace Template.Components.Extensions.Html
 {
     public static class GridMvcExtensions
     {
+        private static String CurrentArea
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
+            }
+        }
+        private static String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+        }
+        private static String CurrentController
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
+            }
+        }
+
         public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
         {
-            if (!new RoleProvider(null, new UnitOfWork()).IsAuthorizedForAction(action.ToString()))
+            if (!new RoleProvider(new UnitOfWork()).IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
             
             var gridColumn = column

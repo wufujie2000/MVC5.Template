@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Template.Components.Services;
 using Template.Controllers.Profile;
 using Template.Objects;
+using Tests.Helpers;
 
 namespace Template.Tests.Tests.Controllers.Profile
 {
@@ -22,8 +23,10 @@ namespace Template.Tests.Tests.Controllers.Profile
             serviceMock = new Mock<IProfileService>();
             controller = new ProfileController(serviceMock.Object);
             serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
-            serviceMock.Setup(mock => mock.CurrentAccountId).Returns("Test");
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(profile);
+            serviceMock.Setup(mock => mock.GetView(TestContext.CurrentContext.Test.Name)).Returns(profile);
+
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = new HttpContextBaseMock().HttpContextBase;
         }
 
         #region Method: Edit()
@@ -33,7 +36,7 @@ namespace Template.Tests.Tests.Controllers.Profile
         {
             var actual = (controller.Edit() as ViewResult).Model as ProfileView;
 
-            serviceMock.Verify(mock => mock.GetView("Test"), Times.Once());
+            serviceMock.Verify(mock => mock.GetView(TestContext.CurrentContext.Test.Name), Times.Once());
             Assert.AreEqual(profile, actual);
         }
 
@@ -100,7 +103,7 @@ namespace Template.Tests.Tests.Controllers.Profile
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
             controller.DeleteConfirmed(profile);
 
-            serviceMock.Verify(mock => mock.Delete("Test"), Times.Once());
+            serviceMock.Verify(mock => mock.Delete(TestContext.CurrentContext.Test.Name), Times.Once());
         }
 
         [Test]

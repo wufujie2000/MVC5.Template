@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Security;
@@ -57,7 +58,7 @@ namespace Template.Components.Services
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
                 .Query(account =>
-                    account.Id != CurrentAccountId &&
+                    account.Id != HttpContext.Current.User.Identity.Name &&
                     account.Username == profile.Username)
                  .Any();
 
@@ -70,7 +71,7 @@ namespace Template.Components.Services
         {
             String username = UnitOfWork
                 .Repository<Account>()
-                .Query(account => account.Id == CurrentAccountId)
+                .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Username)
                 .First();
             
@@ -84,7 +85,7 @@ namespace Template.Components.Services
         {
             String profilePasshash = UnitOfWork
                 .Repository<Account>()
-                .Query(account => account.Id == CurrentAccountId)
+                .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Passhash)
                 .First();
 
@@ -97,7 +98,7 @@ namespace Template.Components.Services
 
         private Account GetAccountFrom(ProfileView profile)
         {
-            var account = UnitOfWork.Repository<Account>().GetById(CurrentAccountId);
+            var account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
             account.Username = profile.Username;
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
@@ -106,7 +107,7 @@ namespace Template.Components.Services
         }
         private User GetUserFrom(ProfileView profile)
         {
-            var user = UnitOfWork.Repository<User>().GetById(CurrentAccountId);
+            var user = UnitOfWork.Repository<User>().GetById(HttpContext.Current.User.Identity.Name);
             user.DateOfBirth = profile.UserDateOfBirth;
             user.FirstName = profile.UserFirstName;
             user.LastName = profile.UserLastName;

@@ -48,7 +48,7 @@ namespace Template.Components.Services
             role.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Shared.Resources.AllPrivileges;
             role.PrivilegesTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var allPrivileges = UnitOfWork.Repository<PrivilegeLanguage>().Query(privilege => privilege.Language.Abbreviation == CurrentLanguage);
+            var allPrivileges = UnitOfWork.Repository<PrivilegeLanguage>().Query(privilege => privilege.Language.Abbreviation == "en-GB"); // TODO: Remove temp fix
             foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);

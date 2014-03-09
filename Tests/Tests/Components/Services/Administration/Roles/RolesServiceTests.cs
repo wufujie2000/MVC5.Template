@@ -8,7 +8,6 @@ using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Services
 {
@@ -25,8 +24,6 @@ namespace Template.Tests.Tests.Components.Services
         {
             context = new TestingContext();
             serviceMock = new Mock<RolesService>(new UnitOfWork(context)) { CallBase = true };
-            serviceMock.Object.HttpContext = new HttpContextBaseMock().HttpContextBase;
-            serviceMock.Object.HttpContext.Request.RequestContext.RouteData.Values["language"] = "Abbreviation1";
             service = serviceMock.Object;
 
             TearDownData();
@@ -306,7 +303,7 @@ namespace Template.Tests.Tests.Components.Services
             expectedTree.Nodes.Add(rootNode);
             rootNode.Name = Template.Resources.Shared.Resources.AllPrivileges;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var languagePrivileges = context.Set<PrivilegeLanguage>().Where(privilege => privilege.Language.Abbreviation == service.CurrentLanguage);
+            var languagePrivileges = context.Set<PrivilegeLanguage>().Where(privilege => privilege.Language.Abbreviation == "en-GB");
             foreach (var areaPrivilege in languagePrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);

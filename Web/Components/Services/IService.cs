@@ -9,13 +9,5 @@ namespace Template.Components.Services
     {
         ModelStateDictionary ModelState { get; set; }
         MessagesContainer AlertMessages { get; set; }
-        HttpContextBase HttpContext { get; set; }
-
-        String CurrentAccountId { get; }
-
-        String CurrentLanguage { get; }
-        String CurrentArea { get; }
-        String CurrentController { get; }
-        String CurrentAction { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Security;
@@ -28,8 +29,8 @@ namespace Template.Tests.Tests.Components.Services
             service = new ProfileService(new UnitOfWork(context));
 
             service.ModelState = new ModelStateDictionary();
-            service.HttpContext = new HttpContextBaseMock().HttpContextBase;
             service.AlertMessages = new MessagesContainer(service.ModelState);
+            HttpContext.Current = new HttpContextBaseMock().HttpContext;
 
             TearDownData();
             SetUpData();
@@ -38,6 +39,8 @@ namespace Template.Tests.Tests.Components.Services
         [TearDown]
         public void TearDown()
         {
+            HttpContext.Current = null;
+
             service.Dispose();
             context.Dispose();
         }

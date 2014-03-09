@@ -82,6 +82,7 @@ namespace Tests.Helpers
             PrincipalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
 
             HttpContextMock.Setup(mock => mock.User).Returns(PrincipalMock.Object);
+            HttpContext.User = PrincipalMock.Object;
         }
     }
 }

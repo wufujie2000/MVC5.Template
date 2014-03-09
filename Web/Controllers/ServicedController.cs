@@ -19,12 +19,6 @@ namespace Template.Controllers
             Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer(Service.ModelState);
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            base.OnActionExecuting(filterContext);
-
-            Service.HttpContext = Service.HttpContext ?? HttpContext;
-        }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             base.OnActionExecuted(filterContext);

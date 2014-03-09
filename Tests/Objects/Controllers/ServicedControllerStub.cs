@@ -27,10 +27,6 @@ namespace Template.Tests.Objects.Controllers
         {
         }
 
-        public void BaseOnActionExecuting(ActionExecutingContext filterContext)
-        {
-            base.OnActionExecuting(filterContext);
-        }
         public void BaseOnActionExecuted(ActionExecutedContext filterContext)
         {
             base.OnActionExecuted(filterContext);

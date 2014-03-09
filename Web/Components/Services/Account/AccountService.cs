@@ -19,7 +19,7 @@ namespace Template.Components.Services
 
         public Boolean IsLoggedIn()
         {
-            return HttpContext.User.Identity.IsAuthenticated;
+            return HttpContext.Current.User.Identity.IsAuthenticated;
         }
         public Boolean CanLogin(AccountView accountView)
         {
@@ -81,7 +81,7 @@ namespace Template.Components.Services
                 Expires = ticket.Expiration
             };
 
-            HttpContext.Response.Cookies.Add(cookie);
+            HttpContext.Current.Response.Cookies.Add(cookie);
         }
     }
 }

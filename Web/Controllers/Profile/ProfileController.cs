@@ -17,7 +17,7 @@ namespace Template.Controllers.Profile
         [HttpGet]
         public ActionResult Edit()
         {
-            return View(Service.GetView(Service.CurrentAccountId));
+            return View(Service.GetView(HttpContext.User.Identity.Name));
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace Template.Controllers.Profile
         [HttpGet]
         public ActionResult Delete()
         {
-            ProfileView profile = Service.GetView(Service.CurrentAccountId);
+            ProfileView profile = Service.GetView(HttpContext.User.Identity.Name);
             Service.AddDeleteDisclaimerMessage();
             profile.Username = String.Empty;
 
@@ -46,7 +46,7 @@ namespace Template.Controllers.Profile
             if (!Service.CanDelete(profile))
                 return View();
 
-            Service.Delete(Service.CurrentAccountId);
+            Service.Delete(HttpContext.User.Identity.Name);
             return RedirectToAction("Logout", "Account");
         }
     }

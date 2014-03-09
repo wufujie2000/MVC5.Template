@@ -26,8 +26,8 @@ namespace Template.Tests.Tests.Components.Services
         {
             context = new TestingContext();
             service = new AccountService(new UnitOfWork(context));
+
             httpContextMock = new HttpContextBaseMock();
-            service.HttpContext = httpContextMock.HttpContextBase;
             service.ModelState = new ModelStateDictionary();
             HttpContext.Current = httpContextMock.HttpContext;
 
@@ -44,7 +44,7 @@ namespace Template.Tests.Tests.Components.Services
             context.Dispose();
         }
 
-        #region Method: IsLoggedIn()
+        #region Method: IsLoggedIn(HttpContextBase context)
 
         [Test]
         public void IsLoggedIn_ReturnsTrueThenUserIsAuthenticated()
@@ -104,7 +104,7 @@ namespace Template.Tests.Tests.Components.Services
 
         #endregion
 
-        #region Method: Login(AccountView account)
+        #region Method: Login(HttpContextBase context, AccountView account)
 
         [Test]
         public void Login_SetsAccountId()
@@ -126,7 +126,7 @@ namespace Template.Tests.Tests.Components.Services
 
             var expectedExpireDate = DateTime.Now.AddMonths(1).Date;
 
-            Assert.AreEqual(expectedExpireDate, service.HttpContext.Response.Cookies[0].Expires.Date);
+            Assert.AreEqual(expectedExpireDate, HttpContext.Current.Response.Cookies[0].Expires.Date);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(service.HttpContext.Response.Cookies[0].Value);
+            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.IsTrue(ticket.IsPersistent);
         }
@@ -146,7 +146,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            Assert.IsFalse(service.HttpContext.Response.Cookies[0].HttpOnly);
+            Assert.IsFalse(HttpContext.Current.Response.Cookies[0].HttpOnly);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(service.HttpContext.Response.Cookies[0].Value);
+            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.AreEqual(accountView.Id, ticket.Name);
         }
@@ -171,7 +171,7 @@ namespace Template.Tests.Tests.Components.Services
             service.Login(accountView);
             service.Logout();
 
-            Assert.Less(service.HttpContext.Response.Cookies[0].Expires, DateTime.Now);
+            Assert.Less(HttpContext.Current.Response.Cookies[0].Expires, DateTime.Now);
         }
 
         #endregion

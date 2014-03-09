@@ -11,6 +11,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
 using Template.Components.Mvc.Providers;
+using Template.Components.Security;
+using Template.Components.Security.Authorization;
 using Template.Web.IoC;
 
 namespace Template.Web
@@ -32,19 +34,26 @@ namespace Template.Web
 
         protected void Application_Start()
         {
+            RegisterIoC();
             RegisterAreas();
             RegisterAdapters();
+            RegisterRoleProvider();
             RegisterModelMetadataProvider();
             RegisterDateTypeValidator();
             RegisterViewEngines();
             RegisterConfigs();
-            RegisterIoC();
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
+            var culture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
         }
-
+        
+        private void RegisterIoC()
+        {
+            NinjectContainer.RegisterModules(NinjectModules.Modules);
+        }
         private void RegisterAreas()
         {
             AreaRegistration.RegisterAllAreas();
@@ -54,6 +63,10 @@ namespace Template.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(
                 typeof(RequiredAttribute),
                 typeof(RequiredAdapter));
+        }
+        private void RegisterRoleProvider()
+        {
+            RoleProviderFactory.SetInstance(NinjectContainer.Resolve<IRoleProvider>());
         }
         private void RegisterModelMetadataProvider()
         {
@@ -73,10 +86,6 @@ namespace Template.Web
         {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-        private void RegisterIoC()
-        {
-            NinjectContainer.RegisterModules(NinjectModules.Modules);
         }
     }
 }

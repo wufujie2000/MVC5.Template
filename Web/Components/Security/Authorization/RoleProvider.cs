@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using Template.Data.Core;
 using Template.Objects;
@@ -10,7 +9,6 @@ namespace Template.Components.Security
 {
     public class RoleProvider : IRoleProvider, IDisposable
     {
-        private HttpContextBase httpContext;
         private IUnitOfWork unitOfWork;
         private Boolean disposed;
 

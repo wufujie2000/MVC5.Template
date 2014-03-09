@@ -87,6 +87,7 @@
     <Compile Include="Security\Authorization\AllowUnauthorized.cs" />
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
     <Compile Include="Security\Authorization\RoleProvider.cs" />
+    <Compile Include="Security\Authorization\RoleProviderFactory.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Services\Account\AccountService.cs" />
     <Compile Include="Services\Account\IAccountService.cs" />

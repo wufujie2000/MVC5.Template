@@ -2,8 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Template.Components.Security;
-using Template.Data.Core;
+using Template.Components.Security.Authorization;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html
@@ -50,7 +49,7 @@ namespace Template.Components.Extensions.Html
             String buttons = String.Empty;
             foreach (var action in actions)
             {
-                if (!new RoleProvider(new UnitOfWork()).IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+                if (!RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");

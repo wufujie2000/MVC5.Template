@@ -52,12 +52,6 @@ namespace Template.Tests.Tests.Controllers
         }
 
         [Test]
-        public void ServicedController_SetsRoleProvider()
-        {
-            Assert.IsNotNull(controller.BaseRoleProvider);
-        }
-
-        [Test]
         public void ServicedController_OnNotNullAlertMessagesSetsExistingAlertMessages()
         {
             var modelState = new ModelStateDictionary();

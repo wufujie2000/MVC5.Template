@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Template.Components.Security;
-using Template.Data.Core;
+using Template.Components.Security.Authorization;
 using Template.Objects;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
-    public class MenuFactory : IDisposable
+    public class MenuFactory
     {
         private HttpContextBase httpContext;
-        private IUnitOfWork unitOfWork;
-        private Boolean disposed;
 
         public static IEnumerable<Menu> AllMenus
         {
@@ -63,10 +60,9 @@ namespace Template.Components.Extensions.Html
             };
         }
 
-        public MenuFactory(HttpContextBase httpContext, IUnitOfWork unitOfWork)
+        public MenuFactory(HttpContextBase httpContext)
         {
             this.httpContext = httpContext;
-            this.unitOfWork = unitOfWork;
         }
 
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
@@ -91,7 +87,7 @@ namespace Template.Components.Extensions.Html
         {
             if (menu.Action == null) return true;
 
-            return new RoleProvider(unitOfWork).IsAuthorizedFor(CurrentAccountId, menu.Area, menu.Controller, menu.Action);
+            return RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {
@@ -110,18 +106,6 @@ namespace Template.Components.Extensions.Html
         private Boolean IsEmpty(Menu menu)
         {
             return menu.Action == null && menu.Submenus.Count() == 0;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(Boolean disposing)
-        {
-            if (disposed) return;
-            unitOfWork.Dispose();
-            disposed = true;
         }
     }
 }

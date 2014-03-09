@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Linq;
 using Template.Components.Extensions.Html;
-using Template.Data.Core;
-using Template.Tests.Data;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
@@ -11,20 +9,11 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     public class MenuFactoryTests
     {
         private MenuFactory factory;
-        private AContext context;
 
         [SetUp]
         public void SetUp()
         {
-            context = new TestingContext();
-            factory = new MenuFactory(new HttpContextBaseMock().HttpContextBase, new UnitOfWork(context));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            context.Dispose();
-            factory.Dispose();
+            factory = new MenuFactory(new HttpContextBaseMock().HttpContextBase);
         }
 
         #region Method: IEnumerable<Menu> GetAuthorizedMenus()

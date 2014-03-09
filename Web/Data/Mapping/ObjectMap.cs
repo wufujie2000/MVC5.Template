@@ -48,9 +48,6 @@ namespace Template.Data.Mapping
 
             Mapper.CreateMap<Privilege, PrivilegeView>();
             Mapper.CreateMap<PrivilegeView, Privilege>();
-
-            Mapper.CreateMap<PrivilegeLanguage, PrivilegeLanguageView>();
-            Mapper.CreateMap<PrivilegeLanguageView, PrivilegeLanguage>();
         }
 
         #endregion

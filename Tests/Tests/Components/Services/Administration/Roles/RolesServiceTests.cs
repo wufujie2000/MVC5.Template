@@ -244,7 +244,6 @@ namespace Template.Tests.Tests.Components.Services
 
             for (Int32 number = 1; number <= 6; number++)
             {
-                var privilegeLanguage = ObjectFactory.CreatePrivilegeLanguage(number);
                 var rolePrivilege = ObjectFactory.CreateRolePrivilege(number);
                 var privilege = ObjectFactory.CreatePrivilege(number);
                 rolePrivilege.PrivilegeId = privilege.Id;
@@ -252,26 +251,6 @@ namespace Template.Tests.Tests.Components.Services
                 rolePrivilege.RoleId = role.Id;
                 rolePrivilege.Role = role;
 
-                privilegeLanguage.PrivilegeId = privilege.Id;
-                privilegeLanguage.LanguageId = language.Id;
-                privilegeLanguage.Privilege = privilege;
-                privilegeLanguage.Language = language;
-                if (number % 3 == 0)
-                {
-                    privilegeLanguage.Area = null;
-                    privilegeLanguage.Controller = "C2";
-                    privilegeLanguage.Action = "A" + (number / 3).ToString();
-                }
-                else
-                {
-                    privilegeLanguage.Area = "AR";
-                    if (number % 2 == 0)
-                        privilegeLanguage.Controller = "C1";
-                    else
-                        privilegeLanguage.Controller = "C2";
-                }
-
-                context.Set<PrivilegeLanguage>().Add(privilegeLanguage);
                 role.RolePrivileges.Add(rolePrivilege);
             }
 
@@ -303,15 +282,15 @@ namespace Template.Tests.Tests.Components.Services
             expectedTree.Nodes.Add(rootNode);
             rootNode.Name = Template.Resources.Shared.Resources.AllPrivileges;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var languagePrivileges = context.Set<PrivilegeLanguage>().Where(privilege => privilege.Language.Abbreviation == "en-GB");
-            foreach (var areaPrivilege in languagePrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
+            var allPrivileges = context.Set<Privilege>();
+            foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);
                 foreach (var controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
                 {
                     TreeNode controllerNode = new TreeNode(controllerPrivilege.Key);
                     foreach (var actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
-                        controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().PrivilegeId, actionPrivilege.Key));
+                        controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
 
                     if (areaNode.Name == null)
                         rootNode.Nodes.Add(controllerNode);

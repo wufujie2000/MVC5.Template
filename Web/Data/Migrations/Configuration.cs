@@ -49,75 +49,21 @@ namespace Template.Data.Migrations
 
             var privileges = new List<Privilege>();
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Index" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Users", Action = "Index", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Vartotojai", Action = "Peržiūrėti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Create" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Users", Action = "Create", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Vartotojai", Action = "Kurti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Details" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Users", Action = "Details", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Vartotojai", Action = "Peržiūrėti detaliai", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Edit" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Users", Action = "Edit", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Vartotojai", Action = "Redaguoti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Delete" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Users", Action = "Delete", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Vartotojai", Action = "Trinti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
 
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Index" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Roles", Action = "Index", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Rolės", Action = "Peržiūrėti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Create" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Roles", Action = "Create", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Rolės", Action = "Kurti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Details" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Roles", Action = "Details", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Rolės", Action = "Peržiūrėti detaliai", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Roles", Action = "Edit", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Rolės", Action = "Redaguoti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
-            privileges.Last().PrivilegeLanguages = new List<PrivilegeLanguage>()
-            {
-                new PrivilegeLanguage() { Area = "Administration", Controller = "Roles", Action = "Delete", PrivilegeId = privileges.Last().Id, LanguageId = langEN },
-                new PrivilegeLanguage() { Area = "Administravimas", Controller = "Rolės", Action = "Trinti", PrivilegeId = privileges.Last().Id, LanguageId = langLT }
-            };
 
             var existingPrivileges = context.Repository<Privilege>().Query();
             foreach (var privilege in privileges)
                 if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
-                {
                     context.Repository<Privilege>().Insert(privilege);
-                    foreach (var privilegeLanguage in privilege.PrivilegeLanguages)
-                        context.Repository<PrivilegeLanguage>().Insert(privilegeLanguage);
-                }
 
             context.SaveChanges();
         }

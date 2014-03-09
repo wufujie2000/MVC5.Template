@@ -40,7 +40,6 @@
   <ItemGroup>
     <Compile Include="Models\Account\Account.cs" />
     <Compile Include="Models\Administration\Roles\Privilege.cs" />
-    <Compile Include="Models\Administration\Roles\PrivilegeLanguage.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
     <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
     <Compile Include="Models\Administration\Users\User.cs" />
@@ -57,7 +56,6 @@
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\Profile\ProfileView.cs" />
     <Compile Include="Shared\Menu.cs" />
-    <Compile Include="Views\Administration\Roles\PrivilegeLanguageView.cs" />
     <Compile Include="Views\System\LanguageView.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Template.Objects
@@ -13,7 +12,5 @@ namespace Template.Objects
 
         [Required]
         public String Action { get; set; }
-
-        public IList<PrivilegeLanguageView> PrivilegeLanguages { get; set; }
     }
 }

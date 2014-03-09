@@ -24,7 +24,6 @@ namespace Template.Data.Core
         private DbSet<Role> Roles { get; set; }
         private DbSet<Privilege> Privileges { get; set; }
         private DbSet<RolePrivilege> RolePrivileges { get; set; }
-        private DbSet<PrivilegeLanguage> PrivilegeLanguages { get; set; }
 
         #endregion
 

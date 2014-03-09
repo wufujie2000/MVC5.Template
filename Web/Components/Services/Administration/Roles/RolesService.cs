@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Template.Components.Alerts;
 using Template.Data.Core;
 using Template.Objects;
 
@@ -48,7 +47,7 @@ namespace Template.Components.Services
             role.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Shared.Resources.AllPrivileges;
             role.PrivilegesTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var allPrivileges = UnitOfWork.Repository<PrivilegeLanguage>().Query(privilege => privilege.Language.Abbreviation == "en-GB"); // TODO: Remove temp fix
+            var allPrivileges = UnitOfWork.Repository<Privilege>().Query();
             foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);
@@ -56,7 +55,7 @@ namespace Template.Components.Services
                 {
                     TreeNode controllerNode = new TreeNode(controllerPrivilege.Key);
                     foreach (var actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
-                        controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().PrivilegeId, actionPrivilege.Key));
+                        controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
 
                     if (areaNode.Name == null)
                         rootNode.Nodes.Add(controllerNode);

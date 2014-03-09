@@ -218,30 +218,6 @@ namespace Template.Tests.Data.Mapping
             Assert.AreEqual(privilegeView.Action, privilege.Action);
         }
 
-        [Test]
-        public void MapRoles_MapsPrivilegeLanguageToPrivilegeLanguageView()
-        {
-            var privilegeLanguage = ObjectFactory.CreatePrivilegeLanguage();
-            var privilegeLanguageView = Mapper.Map<PrivilegeLanguage, PrivilegeLanguageView>(privilegeLanguage);
-
-            Assert.AreEqual(privilegeLanguage.Id, privilegeLanguageView.Id);
-            Assert.AreEqual(privilegeLanguage.Area, privilegeLanguageView.Area);
-            Assert.AreEqual(privilegeLanguage.Controller, privilegeLanguageView.Controller);
-            Assert.AreEqual(privilegeLanguage.Action, privilegeLanguageView.Action);
-        }
-
-        [Test]
-        public void MapRoles_MapsPrivilegeLanguageViewToPrivilegeLanguage()
-        {
-            var privilegeView = ObjectFactory.CreatePrivilegeLanguageView();
-            var privilege = Mapper.Map<PrivilegeLanguageView, PrivilegeLanguage>(privilegeView);
-
-            Assert.AreEqual(privilegeView.Id, privilege.Id);
-            Assert.AreEqual(privilegeView.Area, privilege.Area);
-            Assert.AreEqual(privilegeView.Controller, privilege.Controller);
-            Assert.AreEqual(privilegeView.Action, privilege.Action);
-        }
-
         #endregion
 
         #region Static method: MapSystem()

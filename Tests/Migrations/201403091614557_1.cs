@@ -1,6 +1,5 @@
 namespace Template.Tests.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class _1 : DbMigration
@@ -69,23 +68,6 @@ namespace Template.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.PrivilegeLanguages",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Area = c.String(),
-                        Controller = c.String(nullable: false),
-                        Action = c.String(nullable: false),
-                        PrivilegeId = c.String(nullable: false, maxLength: 128),
-                        LanguageId = c.String(nullable: false, maxLength: 128),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Languages", t => t.LanguageId, cascadeDelete: true)
-                .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
-                .Index(t => t.LanguageId)
-                .Index(t => t.PrivilegeId);
-            
-            CreateTable(
                 "dbo.Languages",
                 c => new
                     {
@@ -100,6 +82,7 @@ namespace Template.Tests.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Text = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -111,17 +94,12 @@ namespace Template.Tests.Data.Migrations
             DropForeignKey("dbo.Users", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropForeignKey("dbo.PrivilegeLanguages", "PrivilegeId", "dbo.Privileges");
-            DropForeignKey("dbo.PrivilegeLanguages", "LanguageId", "dbo.Languages");
             DropIndex("dbo.Accounts", new[] { "UserId" });
             DropIndex("dbo.Users", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
-            DropIndex("dbo.PrivilegeLanguages", new[] { "PrivilegeId" });
-            DropIndex("dbo.PrivilegeLanguages", new[] { "LanguageId" });
             DropTable("dbo.TestModels");
             DropTable("dbo.Languages");
-            DropTable("dbo.PrivilegeLanguages");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");

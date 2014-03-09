@@ -82,13 +82,9 @@
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
-    <Compile Include="Data\Migrations\201403051939092_1.cs" />
-    <Compile Include="Data\Migrations\201403051939092_1.Designer.cs">
-      <DependentUpon>201403051939092_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Data\Migrations\201403060649351_2.cs" />
-    <Compile Include="Data\Migrations\201403060649351_2.Designer.cs">
-      <DependentUpon>201403060649351_2.cs</DependentUpon>
+    <Compile Include="Migrations\201403091614557_1.cs" />
+    <Compile Include="Migrations\201403091614557_1.Designer.cs">
+      <DependentUpon>201403091614557_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
@@ -183,13 +179,9 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201403051939092_1.resx">
-      <DependentUpon>201403051939092_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Data\Migrations\201403060649351_2.resx">
-      <DependentUpon>201403060649351_2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403091614557_1.resx">
+      <DependentUpon>201403091614557_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

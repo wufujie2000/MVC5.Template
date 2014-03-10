@@ -1,8 +1,8 @@
-﻿using Template.Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
@@ -74,7 +74,7 @@ namespace Template.Components.Extensions.Html
 
         private static void AddQueryValues(HtmlHelper html)
         {
-            var queryParameters = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
+            var queryParameters = html.ViewContext.HttpContext.Request.QueryString;
             var routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)
@@ -82,7 +82,7 @@ namespace Template.Components.Extensions.Html
         }
         private static void RemoveQueryValues(HtmlHelper html)
         {
-            var queryParameters = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
+            var queryParameters = html.ViewContext.HttpContext.Request.QueryString;
             var routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)

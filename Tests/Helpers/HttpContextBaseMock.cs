@@ -73,6 +73,8 @@ namespace Tests.Helpers
 
             HttpContext = new HttpContext(request, response);
             HttpContextMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
+            HttpContextMock.Setup(mock => mock.Response).Returns(HttpResponseBase);
+            HttpContextMock.Setup(mock => mock.Request).Returns(HttpRequestBase);
             HttpContextBase = HttpContextMock.Object;
 
             IdentityMock = new Mock<IIdentity>();

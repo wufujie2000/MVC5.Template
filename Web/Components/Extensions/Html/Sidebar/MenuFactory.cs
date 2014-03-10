@@ -10,20 +10,13 @@ namespace Template.Components.Extensions.Html
 {
     public class MenuFactory
     {
-        private HttpContextBase httpContext;
+        private String currentController;
+        private String currentAccountId;
 
         public static IEnumerable<Menu> AllMenus
         {
             get;
             private set;
-        }
-
-        private static String CurrentAccountId
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.Name;
-            }
         }
 
         static MenuFactory()
@@ -62,7 +55,8 @@ namespace Template.Components.Extensions.Html
 
         public MenuFactory(HttpContextBase httpContext)
         {
-            this.httpContext = httpContext;
+            currentController = httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
+            currentAccountId = httpContext.User.Identity.Name;
         }
 
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
@@ -86,13 +80,13 @@ namespace Template.Components.Extensions.Html
         private Boolean UserIsAuthorizedToView(Menu menu)
         {
             if (menu.Action == null) return true;
+            if (RoleProviderFactory.Instance == null) return true;
 
-            return RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, menu.Area, menu.Controller, menu.Action);
+            return RoleProviderFactory.Instance.IsAuthorizedFor(currentAccountId, menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {
-            var currentController = httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
-
+            // TODO: Active menu should be controller and action combination or even all three area, controller and action
             return new Menu()
             {
                 Title = ResourceProvider.GetMenuTitle(menu.Area, menu.Controller, menu.Action),

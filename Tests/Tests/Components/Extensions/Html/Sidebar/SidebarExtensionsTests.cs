@@ -10,7 +10,6 @@ using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
-    [Ignore]
     [TestFixture]
     public class SidebarExtensionsTests
     {
@@ -20,6 +19,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SetUp()
         {
             html = new HtmlHelperMock().Html;
+            html.ViewContext.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Roles";
         }
 
         #region Extension method: SidebarSearch(this HtmlHelper html)
@@ -42,8 +42,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void SidebarMenu_FormsSidebarMenu()
         {
+            var menuFactory = new MenuFactory(html.ViewContext.HttpContext);
             var menuBuilder = new StringBuilder();
-            foreach (var menu in MenuFactory.AllMenus)
+
+            foreach (var menu in menuFactory.GetAuthorizedMenus())
                 menuBuilder.Append(Menu(html, menu));
 
             Assert.AreEqual(menuBuilder.ToString(), html.SidebarMenu().ToString());

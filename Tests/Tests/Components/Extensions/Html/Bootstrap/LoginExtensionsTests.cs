@@ -21,7 +21,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            html = new HtmlHelperMock<BootstrapModel>().HtmlHelper;
+            html = new HtmlMock<BootstrapModel>().Html;
             expression = null;
         }
 

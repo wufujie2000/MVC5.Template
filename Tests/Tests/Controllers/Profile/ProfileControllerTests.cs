@@ -26,7 +26,7 @@ namespace Template.Tests.Tests.Controllers.Profile
             serviceMock.Setup(mock => mock.GetView(TestContext.CurrentContext.Test.Name)).Returns(profile);
 
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = new HttpContextBaseMock().HttpContextBase;
+            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
         #region Method: Edit()

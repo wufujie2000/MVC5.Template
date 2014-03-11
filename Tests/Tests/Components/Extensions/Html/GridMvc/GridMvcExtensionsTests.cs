@@ -28,7 +28,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         private Mock<IGridColumn<GridMvcView>> gridColumnMock;
         private Mock<IRoleProvider> roleProviderMock;
         private IGridColumn<GridMvcView> gridColumn;
-        private HttpContextBaseMock httpContextStub;
+        private HttpMock httpContextStub;
         private RouteValueDictionary routeValues;
         private HtmlHelper<GridMvcView> html;
         private GridMvcView gridMvcView;
@@ -38,9 +38,9 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         public void SetUp()
         {
             gridMvcView = new GridMvcView();
-            httpContextStub = new HttpContextBaseMock();
+            httpContextStub = new HttpMock();
             HttpContext.Current = httpContextStub.HttpContext;
-            html = new HtmlHelperMock<GridMvcView>(gridMvcView).HtmlHelper;
+            html = new HtmlMock<GridMvcView>(gridMvcView).Html;
             gridColumnCollectionMock = new Mock<IGridColumnCollection<GridMvcView>>(MockBehavior.Strict);
             gridColumnCollection = gridColumnCollectionMock.Object;
             gridColumnMock = new Mock<IGridColumn<GridMvcView>>(MockBehavior.Strict);

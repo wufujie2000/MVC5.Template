@@ -24,7 +24,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SetUp()
         {
             labelClass = Template.Components.Extensions.Html.FormExtensions.LabelClass;
-            htmlHelper = new HtmlHelperMock<BootstrapModel>().HtmlHelper;
+            htmlHelper = new HtmlMock<BootstrapModel>().Html;
             expression = null;
         }
 

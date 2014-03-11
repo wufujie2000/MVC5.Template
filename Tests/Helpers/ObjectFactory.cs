@@ -49,24 +49,27 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static User CreateUser()
+        public static User CreateUser(Int32 instanceNumber = 1)
         {
             return new User()
             {
-                Id = TestId,
-                FirstName = "FirstName",
-                LastName = "LastName",
-                DateOfBirth = new DateTime(1990, 1, 1)
+                Id = TestId + instanceNumber.ToString(),
+                FirstName = "FirstName" + instanceNumber.ToString(),
+                LastName = "LastName" + instanceNumber.ToString(),
+                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
             };
         }
-        public static UserView CreateUserView()
+        public static UserView CreateUserView(Int32 instanceNumber = 1)
         {
             return new UserView()
             {
-                Id = TestId,
-                UserFirstName = "FirstName",
-                UserLastName = "LastName",
-                UserDateOfBirth = new DateTime(1990, 1, 1),
+                Id = TestId + instanceNumber.ToString(),
+                UserFirstName = "FirstName" + instanceNumber.ToString(),
+                UserLastName = "LastName" + instanceNumber.ToString(),
+                UserDateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
+
+                UserRoleId = TestId + instanceNumber.ToString(),
+                UserRoleName = "UserRoleName" + instanceNumber.ToString(),
 
                 Username = "Username" + TestId,
                 Password = "Password",

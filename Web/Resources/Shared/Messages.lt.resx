@@ -124,6 +124,6 @@
     <value>Įvyko sisteminė klaida, prašome susisiekti su sistemos administratoriumi</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
-    <value>Jums nepakanka teisių pasiekti šį turinį</value>
+    <value>Jums nepakanka teisių peržiūrėti šį turinį</value>
   </data>
 </root>

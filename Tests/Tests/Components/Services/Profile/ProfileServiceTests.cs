@@ -30,7 +30,7 @@ namespace Template.Tests.Tests.Components.Services
 
             service.ModelState = new ModelStateDictionary();
             service.AlertMessages = new MessagesContainer(service.ModelState);
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
+            HttpContext.Current = new HttpMock().HttpContext;
 
             TearDownData();
             SetUpData();

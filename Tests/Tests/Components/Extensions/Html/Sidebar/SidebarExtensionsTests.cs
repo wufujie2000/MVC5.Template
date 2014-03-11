@@ -18,7 +18,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            html = new HtmlHelperMock().Html;
+            html = new HtmlMock().Html;
             html.ViewContext.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Roles";
         }
 

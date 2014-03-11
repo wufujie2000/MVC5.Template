@@ -22,12 +22,12 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            var htmlMock = new HtmlHelperMock();
+            var htmlMock = new HtmlMock();
 
             html = htmlMock.Html;
             roleProviderMock = new Mock<IRoleProvider>();
             RoleProviderFactory.SetInstance(roleProviderMock.Object);
-            HttpContext.Current = htmlMock.HttpContextMock.HttpContext;
+            HttpContext.Current = htmlMock.HttpMock.HttpContext;
         }
 
         [TearDown]

@@ -19,7 +19,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
+            HttpContext.Current = new HttpMock().HttpContext;
             context = new TestingContext();
 
             context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(TestContext.CurrentContext.Test.Name)));

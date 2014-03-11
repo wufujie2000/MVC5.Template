@@ -13,13 +13,13 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     [TestFixture]
     public class HeaderExtensionsTests
     {
-        private HtmlHelperMock htmlMock;
+        private HtmlMock htmlMock;
         private HtmlHelper html;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            htmlMock = new HtmlHelperMock();
+            htmlMock = new HtmlMock();
             html = htmlMock.Html;
         }
 
@@ -70,7 +70,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
 
             var queryString = new NameValueCollection();
             queryString.Add("Param1", "Value1");
-            htmlMock.HttpContextMock.HttpRequestMock.Setup(mock => mock.QueryString).Returns(queryString);
+            htmlMock.HttpMock.HttpRequestMock.Setup(mock => mock.QueryString).Returns(queryString);
             html.ViewContext.RequestContext.RouteData.Values["controller"] = "Test";
             html.ViewContext.RequestContext.RouteData.Values["action"] = "Test";
             html.ViewContext.RequestContext.RouteData.Values["Param1"] = "Value1";

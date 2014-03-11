@@ -18,7 +18,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SetUp()
         {
             model = new TreeViewModel();
-            htmlHelper = new HtmlHelperMock<TreeViewModel>(model).HtmlHelper;
+            htmlHelper = new HtmlMock<TreeViewModel>(model).Html;
         }
 
         #region Extension method: TreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, Tree>> tree)

@@ -9,10 +9,6 @@ namespace Template.Data.Core
         private Boolean disposed;
         private AContext context;
 
-        public UnitOfWork()
-            : this(new Context())
-        {
-        }
         public UnitOfWork(AContext context)
         {
             this.context = context;

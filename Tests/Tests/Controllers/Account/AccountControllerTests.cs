@@ -20,7 +20,7 @@ namespace Template.Tests.Tests.Controllers.Account
             serviceMock = new Mock<IAccountService>();
             controller = new AccountController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();
-            controller.Url = new UrlHelper(new HttpContextBaseMock().HttpContext.Request.RequestContext);
+            controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
         }
 
         #region Method: Login(String returnUrl)

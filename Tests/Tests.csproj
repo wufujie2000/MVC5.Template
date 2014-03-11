@@ -82,10 +82,11 @@
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
-    <Compile Include="Migrations\201403091614557_1.cs" />
-    <Compile Include="Migrations\201403091614557_1.Designer.cs">
+    <Compile Include="Data\Migrations\201403091614557_1.cs" />
+    <Compile Include="Data\Migrations\201403091614557_1.Designer.cs">
       <DependentUpon>201403091614557_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
@@ -111,10 +112,10 @@
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
-    <Compile Include="Helpers\HtmlHelperMock.cs" />
-    <Compile Include="Helpers\HttpContextBaseMock.cs" />
+    <Compile Include="Helpers\HtmlMock.cs" />
+    <Compile Include="Helpers\HttpMock.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
-    <Compile Include="Objects\Components\Datalists\DatalistTestView.cs" />
+    <Compile Include="Objects\Components\Datalists\DatalistView.cs" />
     <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
     <Compile Include="Objects\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Objects\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
@@ -187,7 +188,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403091614557_1.resx">
+    <EmbeddedResource Include="Data\Migrations\201403091614557_1.resx">
       <DependentUpon>201403091614557_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

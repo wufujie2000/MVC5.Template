@@ -5,6 +5,7 @@ using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Data.Core
 {
@@ -32,19 +33,20 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void GetById_GetsModelById()
         {
-            var user = new User();
+            var user = ObjectFactory.CreateUser();
             context.Set<User>().Add(user);
             context.SaveChanges();
 
+            var expected = context.Set<User>().Find(user.Id);
             var actual = repository.GetById(user.Id);
             context.Set<User>().Remove(user);
             context.SaveChanges();
 
-            Assert.AreEqual(user.Id, actual.Id);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void GetById_OnNotFoundReturnsNull()
+        public void GetById_OnModelNotFoundReturnsNull()
         {
             Assert.IsNull(repository.GetById(String.Empty));
         }
@@ -54,7 +56,7 @@ namespace Template.Tests.Tests.Data.Core
         #region Method: Query()
 
         [Test]
-        public void Query_ReturnsDbSet()
+        public void Query_ReturnsContextsSet()
         {
             Assert.AreEqual(context.Set<User>(), repository.Query());
         }
@@ -64,14 +66,14 @@ namespace Template.Tests.Tests.Data.Core
         #region Method: Query<TView>()
 
         [Test]
-        public void Query_ProjectsDbSet()
+        public void Query_ProjectsContextsSet()
         {
-            var model = new User();
+            var model = ObjectFactory.CreateUser();
             context.Set<User>().Add(model);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Project().To<UserView>().Select(user => user.Id);
-            var actual = repository.Query<UserView>().Select(user => user.Id);
+            var expected = context.Set<User>().Project().To<UserView>().Select(user => user.Id).ToList();
+            var actual = repository.Query<UserView>().Select(user => user.Id).ToList();
 
             context.Set<User>().Remove(model);
             context.SaveChanges();
@@ -86,17 +88,20 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Query_FiltersByPredicate()
         {
-            var model = new User();
-            context.Set<User>().Add(model);
-            context.SaveChanges();
-            
-            var expected = context.Set<User>().Where(user => user.Id == "Test").Select(user => user.Id);
-            var actual = repository.Query().Where(user => user.Id == "Test").Select(user => user.Id);
-
-            context.Set<User>().Remove(model);
+            var model1 = ObjectFactory.CreateUser(1);
+            var model2 = ObjectFactory.CreateUser(2);
+            context.Set<User>().Add(model1);
+            context.Set<User>().Add(model2);
             context.SaveChanges();
 
-            CollectionAssert.AreEqual(expected, actual);
+            var expected = context.Set<User>().Where(user => user.Id == model1.Id).ToList();
+            var actual = repository.Query().Where(user => user.Id == model1.Id).ToList();
+
+            context.Set<User>().Remove(model1);
+            context.Set<User>().Remove(model2);
+            context.SaveChanges();
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
         
         #endregion
@@ -104,19 +109,22 @@ namespace Template.Tests.Tests.Data.Core
         #region Method: Query<TView>(Expression<Func<TModel, Boolean>> predicate)
 
         [Test]
-        public void Query_FiltersProjectedByPredicate()
+        public void Query_FiltersProjectedViewsByPredicate()
         {
-            var model = new User();
-            context.Set<User>().Add(model);
+            var model1 = ObjectFactory.CreateUser(1);
+            var model2 = ObjectFactory.CreateUser(2);
+            context.Set<User>().Add(model1);
+            context.Set<User>().Add(model2);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Project().To<UserView>().Where(user => user.Id == "Test").Select(user => user.Id);
-            var actual = repository.Query<UserView>(user => user.Id == "Test").Select(user => user.Id);
+            var expected = context.Set<User>().Project().To<UserView>().Where(user => user.Id == model1.Id).ToList();
+            var actual = repository.Query<UserView>(user => user.Id == model1.Id).ToList();
 
-            context.Set<User>().Remove(model);
+            context.Set<User>().Remove(model1);
+            context.Set<User>().Remove(model2);
             context.SaveChanges();
 
-            CollectionAssert.AreEqual(expected, actual);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -126,7 +134,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Insert_InsertsModel()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             repository.Insert(expected);
             context.SaveChanges();
 
@@ -134,7 +142,7 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<User>().Remove(expected);
             context.SaveChanges();
 
-            Assert.AreEqual(expected.Id, actual.Id);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -144,7 +152,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Update_UpdatesAttachedModel()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             context.Set<User>().Add(expected);
             context.SaveChanges();
 
@@ -156,13 +164,13 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<User>().Remove(expected);
             context.SaveChanges();
 
-            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         [Test]
         public void Update_UpdatesNotAttachedModel()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             context.Set<User>().Add(expected);
             context.SaveChanges();
 
@@ -176,7 +184,7 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<User>().Remove(expected);
             context.SaveChanges();
 
-            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -186,7 +194,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Delete_DeletesModel()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             repository.Insert(expected);
             context.SaveChanges();
 
@@ -210,7 +218,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Delete_DeletesModelById()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             repository.Insert(expected);
             context.SaveChanges();
 

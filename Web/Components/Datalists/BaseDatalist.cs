@@ -24,7 +24,7 @@ namespace Template.Components.Datalists
 
             String language = (String) HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
             language = language == "en-GB" ? String.Empty : language + "/";
-            UnitOfWork = new UnitOfWork();
+            UnitOfWork = new UnitOfWork(new Context());
 
             DialogTitle = ResourceProvider.GetDatalistTitle(DialogTitle);
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",

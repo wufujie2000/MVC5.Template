@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using NUnit.Framework;
-using System;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Data.Core
 {
@@ -41,29 +41,11 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void ToModel_ConvertsViewToModel()
         {
-            var view = new UserView()
-            {
-                Id = "UserViewId",
-                UserFirstName = "UserFirstName",
-                UserLastName = "UserLastName",
-                UserDateOfBirth = DateTime.Now,
-
-                UserRoleId = "UserRoleId",
-                UserRoleName = "UserRoleName",
-
-                Username = "Username",
-                Password = "Password",
-                NewPassword = "NewPassword"
-            };
-
+            var view = ObjectFactory.CreateUserView();
             var expected = Mapper.Map<UserView, User>(view);
             var actual = unitOfWork.ToModel<UserView, User>(view);
 
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.FirstName, actual.FirstName);
-            Assert.AreEqual(expected.LastName, actual.LastName);
-            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -73,35 +55,14 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void ToView_ConvertsModelToView()
         {
-            var model = new User()
-            {
-                Id = "UserViewId",
-                FirstName = "UserFirstName",
-                LastName = "UserLastName",
-                DateOfBirth = DateTime.Now,
-
-                RoleId = "UserRoleId",
-                Role = new Role()
-                {
-                    Id = "UserRoleId",
-                    Name = "RoleName"
-                }
-            };
+            var model = ObjectFactory.CreateUser();
+            model.Role = ObjectFactory.CreateRole();
+            model.RoleId = model.Role.Id;
 
             var expected = Mapper.Map<User, UserView>(model);
             var actual = unitOfWork.ToView<User, UserView>(model);
 
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.UserFirstName, actual.UserFirstName);
-            Assert.AreEqual(expected.UserLastName, actual.UserLastName);
-            Assert.AreEqual(expected.UserDateOfBirth, actual.UserDateOfBirth);
-
-            Assert.AreEqual(expected.UserRoleId, actual.UserRoleId);
-            Assert.AreEqual(expected.UserRoleName, actual.UserRoleName);
-
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Password, actual.Password);
-            Assert.AreEqual(expected.NewPassword, actual.NewPassword);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -111,7 +72,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            var model = new User();
+            var model = ObjectFactory.CreateUser();
             context.Set<User>().Add(model);
 
             unitOfWork.Rollback();
@@ -127,7 +88,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            var expected = new User();
+            var expected = ObjectFactory.CreateUser();
             unitOfWork.Repository<User>().Insert(expected);
             unitOfWork.Commit();
 
@@ -135,7 +96,7 @@ namespace Template.Tests.Tests.Data.Core
             unitOfWork.Repository<User>().Delete(expected);
             unitOfWork.Commit();
 
-            Assert.AreEqual(expected.Id, actual.Id);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion

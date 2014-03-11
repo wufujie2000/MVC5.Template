@@ -43,7 +43,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mapping\ObjectMap.cs" />
+    <Compile Include="Mapping\ObjectMappper.cs" />
     <Compile Include="Core\Context.cs" />
     <Compile Include="Core\AContext.cs" />
     <Compile Include="Core\IRepository.cs" />

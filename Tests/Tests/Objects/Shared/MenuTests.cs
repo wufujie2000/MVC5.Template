@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Template.Objects;
 
-namespace Template.Tests.Tests.Objects.Shared
+namespace Template.Tests.Tests.Objects
 {
     [TestFixture]
     public class MenuTests

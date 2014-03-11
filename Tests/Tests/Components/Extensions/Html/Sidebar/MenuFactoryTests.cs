@@ -20,7 +20,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            var httpContext = new HttpContextBaseMock().HttpContextBase;
+            var httpContext = new HttpMock().HttpContextBase;
             httpContext.Request.RequestContext.RouteData.Values["controller"] = String.Empty;
 
             factory = new MenuFactory(httpContext);
@@ -130,7 +130,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var controllers = GetMenusAsList(GetExpectedMenus()).Select(menu => menu.Controller).Distinct();
             foreach (var controller in controllers)
             {
-                var httpContext = new HttpContextBaseMock().HttpContextBase;
+                var httpContext = new HttpMock().HttpContextBase;
                 httpContext.Request.RequestContext.RouteData.Values["controller"] = controller;
 
                 factory = new MenuFactory(httpContext);
@@ -158,7 +158,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var menuWithSubmenus = GetExpectedMenus().First(menu => menu.Submenus.Count() > 0);
             var submenuController = menuWithSubmenus.Submenus.First().Controller;
 
-            var httpContext = new HttpContextBaseMock().HttpContextBase;
+            var httpContext = new HttpMock().HttpContextBase;
             httpContext.Request.RequestContext.RouteData.Values["controller"] = submenuController;
 
             factory = new MenuFactory(httpContext);

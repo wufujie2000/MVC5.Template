@@ -3,7 +3,7 @@ using Template.Objects;
 
 namespace Template.Tests.Objects.Components.Datalists
 {
-    public class DatalistTestView : BaseView
+    public class DatalistView : BaseView
     {
         public String Text { get; set; }
         public DateTime Date { get; set; }

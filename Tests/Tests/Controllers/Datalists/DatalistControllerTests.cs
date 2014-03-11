@@ -24,7 +24,7 @@ namespace Template.Tests.Tests.Controllers.Datalists
         public void SetUp()
         {
             controllerMock = new Mock<DatalistController>() { CallBase = true };
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
+            HttpContext.Current = new HttpMock().HttpContext;
             datalistMock = new Mock<AbstractDatalist>();
             controller = controllerMock.Object;
             datalist = datalistMock.Object;

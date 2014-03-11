@@ -19,7 +19,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            var contextStub = new HttpContextBaseMock();
+            var contextStub = new HttpMock();
 
             request = contextStub.HttpContext.Request;
             HttpContext.Current = contextStub.HttpContext;
@@ -100,56 +100,56 @@ namespace Template.Tests.Tests.Components.Datalists
         [Test]
         public void GetColumnCssClass_GetsTextCellOnEnum()
         {
-            var property = typeof(DatalistTestView).GetProperty("Enum");
+            var property = typeof(DatalistView).GetProperty("Enum");
             Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsTextCellOnNullableEnum()
         {
-            var property = typeof(DatalistTestView).GetProperty("NullableEnum");
+            var property = typeof(DatalistView).GetProperty("NullableEnum");
             Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellOnNumber()
         {
-            var property = typeof(DatalistTestView).GetProperty("Number");
+            var property = typeof(DatalistView).GetProperty("Number");
             Assert.AreEqual("number-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellOnNullableNumber()
         {
-            var property = typeof(DatalistTestView).GetProperty("NullableNumber");
+            var property = typeof(DatalistView).GetProperty("NullableNumber");
             Assert.AreEqual("number-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsDateCellOnDate()
         {
-            var property = typeof(DatalistTestView).GetProperty("Date");
+            var property = typeof(DatalistView).GetProperty("Date");
             Assert.AreEqual("date-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsDateCellOnNullableDate()
         {
-            var property = typeof(DatalistTestView).GetProperty("NullableDate");
+            var property = typeof(DatalistView).GetProperty("NullableDate");
             Assert.AreEqual("date-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsTextCellOnString()
         {
-            var property = typeof(DatalistTestView).GetProperty("Text");
+            var property = typeof(DatalistView).GetProperty("Text");
             Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
         }
 
         [Test]
         public void GetColumnCssClass_GetsTextCellOnOtherTypes()
         {
-            var property = typeof(DatalistTestView).GetProperty("Boolean");
+            var property = typeof(DatalistView).GetProperty("Boolean");
             Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
         }
 

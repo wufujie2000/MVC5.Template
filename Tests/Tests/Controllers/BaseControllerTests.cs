@@ -20,7 +20,7 @@ namespace Template.Tests.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
-            var httpContextMock = new HttpContextBaseMock();
+            var httpContextMock = new HttpMock();
             controllerMock = new Mock<BaseControllerStub>() { CallBase = true };
             var requestContext = httpContextMock.HttpContext.Request.RequestContext;
 

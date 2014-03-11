@@ -17,7 +17,7 @@ namespace Template.Tests.Resources.Tests
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpContextBaseMock().HttpContext;
+            HttpContext.Current = new HttpMock().HttpContext;
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
         }
 
@@ -70,7 +70,7 @@ namespace Template.Tests.Resources.Tests
         [Ignore]
         public void GetCurrentTableTitle_GetsTitleWithoutArea()
         {
-            throw new NotImplementedException("No table without area");
+            Assert.Inconclusive("No table without area");
         }
 
         [Test]

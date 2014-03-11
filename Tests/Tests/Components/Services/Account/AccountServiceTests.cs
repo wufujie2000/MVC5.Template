@@ -17,7 +17,7 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class AccountServiceTests
     {
-        private HttpContextBaseMock httpContextMock;
+        private HttpMock httpContextMock;
         private AccountService service;
         private AContext context;
 
@@ -27,7 +27,7 @@ namespace Template.Tests.Tests.Components.Services
             context = new TestingContext();
             service = new AccountService(new UnitOfWork(context));
 
-            httpContextMock = new HttpContextBaseMock();
+            httpContextMock = new HttpMock();
             service.ModelState = new ModelStateDictionary();
             HttpContext.Current = httpContextMock.HttpContext;
 

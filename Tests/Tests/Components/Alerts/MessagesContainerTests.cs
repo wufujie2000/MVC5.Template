@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Alerts
 {
@@ -151,15 +152,11 @@ namespace Template.Tests.Tests.Components.Alerts
         public void GetEnumerator_ContainsMessages()
         {
             container = new MessagesContainer(null);
-            var messages = new AlertMessage[] { new AlertMessage(), new AlertMessage() };
-            foreach (var message in messages)
+            var expected = new AlertMessage[] { new AlertMessage(), new AlertMessage() };
+            foreach (var message in expected)
                 container.Add(message);
 
-            var expected = messages.GetEnumerator();
-            var actual = container.GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-                Assert.AreEqual(expected.Current, actual.Current);
+            CollectionAssert.AreEqual(expected, container);
         }
 
         [Test]
@@ -170,27 +167,17 @@ namespace Template.Tests.Tests.Components.Alerts
             foreach (var message in messages)
                 container.Add(message);
 
-            var expected = new AlertMessage()
-            {
-                Type = AlertMessageType.Danger,
-                Message = "ErrorMessage",
-                FadeOutAfter = 0,
-                Key = "Key"
-            };
             var actual = container.First();
 
-            Assert.AreEqual(expected.FadeOutAfter, actual.FadeOutAfter);
-            Assert.AreEqual(expected.Message, actual.Message);
-            Assert.AreEqual(expected.Type, actual.Type);
-            Assert.AreEqual(expected.Key, actual.Key);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual("ErrorMessage", actual.Message);
+            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual("Key", actual.Key);
 
-            expected = messages.Last();
+            var expected = messages.Last();
             actual = container.Last();
 
-            Assert.AreEqual(expected.FadeOutAfter, actual.FadeOutAfter);
-            Assert.AreEqual(expected.Message, actual.Message);
-            Assert.AreEqual(expected.Type, actual.Type);
-            Assert.AreEqual(expected.Key, actual.Key);
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         [Test]

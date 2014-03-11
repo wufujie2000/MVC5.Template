@@ -101,7 +101,7 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<User>().Remove(model2);
             context.SaveChanges();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
         
         #endregion
@@ -124,7 +124,7 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<User>().Remove(model2);
             context.SaveChanges();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         #endregion

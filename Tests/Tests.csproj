@@ -148,6 +148,12 @@
     <Compile Include="Tests\Components\Services\BaseServiceTests.cs" />
     <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
     <Compile Include="Tests\Data\Core\ContextTests.cs" />
+    <Compile Include="Tests\Objects\Models\BaseModelTests.cs" />
+    <Compile Include="Tests\Objects\Shared\MenuTests.cs" />
+    <Compile Include="Tests\Objects\Shared\TreeNodeTests.cs" />
+    <Compile Include="Tests\Objects\Shared\TreeTests.cs" />
+    <Compile Include="Tests\Objects\Views\Administration\Roles\RoleViewTests.cs" />
+    <Compile Include="Tests\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Tests\Resources\ResourceProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +191,7 @@
       <DependentUpon>201403091614557_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

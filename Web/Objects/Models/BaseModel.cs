@@ -13,10 +13,7 @@ namespace Template.Objects
         {
             get
             {
-                if (id == null)
-                    id = Guid.NewGuid().ToString();
-
-                return id;
+                return id ?? (id = Guid.NewGuid().ToString());
             }
             set
             {

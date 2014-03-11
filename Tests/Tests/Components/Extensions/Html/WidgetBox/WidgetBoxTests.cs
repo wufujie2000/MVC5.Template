@@ -7,7 +7,6 @@ using Template.Components.Extensions.Html;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
 {
-    [Ignore]
     [TestFixture]
     public class WidgetBoxTests
     {

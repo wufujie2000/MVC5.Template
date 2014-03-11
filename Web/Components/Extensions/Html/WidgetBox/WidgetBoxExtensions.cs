@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Template.Components.Security;
@@ -9,28 +8,6 @@ namespace Template.Components.Extensions.Html
 {
     public static class WidgetBoxExtensions
     {
-        private static String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
-        private static String CurrentAccountId
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.Name;
-            }
-        }
-        private static String CurrentController
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
-            }
-        }
-
         public static WidgetBox TableWidgetBox(this HtmlHelper html, params LinkAction[] actions)
         {
             return html.WidgetBox("fa fa-th", ResourceProvider.GetCurrentTableTitle(), actions);
@@ -47,9 +24,14 @@ namespace Template.Components.Extensions.Html
         private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
         {
             String buttons = String.Empty;
+            IRoleProvider roleProvider = RoleProviderFactory.Instance;
+            String area = html.ViewContext.RouteData.Values["area"] as String;
+            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
+            String controller = html.ViewContext.RouteData.Values["controller"] as String;
+
             foreach (var action in actions)
             {
-                if (!RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+                if (roleProvider != null && !roleProvider.IsAuthorizedFor(accountId, area, controller, action.ToString())) // TODO: Always check for null RoleProvider
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");
@@ -76,7 +58,7 @@ namespace Template.Components.Extensions.Html
                     html.ActionLink(
                             "{0}{1}",
                             action.ToString(),
-                            new { id = HttpContext.Current.Request.RequestContext.RouteData.Values["id"] },
+                            new { id = html.ViewContext.RouteData.Values["id"] },
                             new { @class = "btn" })
                         .ToString(),
                     icon.ToString(),

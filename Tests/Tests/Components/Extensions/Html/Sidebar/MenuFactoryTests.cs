@@ -15,7 +15,6 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     public class MenuFactoryTests
     {
         private Mock<IRoleProvider> roleProviderMock;
-        private IRoleProvider roleProvider;
         private MenuFactory factory;
 
         [SetUp]
@@ -26,8 +25,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
 
             factory = new MenuFactory(httpContext);
             roleProviderMock = new Mock<IRoleProvider>();
-            roleProvider = roleProviderMock.Object;
-            RoleProviderFactory.SetInstance(roleProvider);
+            RoleProviderFactory.SetInstance(roleProviderMock.Object);
         }
 
         [TearDown]

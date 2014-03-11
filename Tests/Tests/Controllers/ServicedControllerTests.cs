@@ -10,20 +10,17 @@ namespace Template.Tests.Tests.Controllers
     [TestFixture]
     public class ServicedControllerTests
     {
-        private Mock<ServicedControllerStub> controllerMock;
         private ServicedControllerStub controller;
-        private Mock<IService> serviceMock;
         private IService service;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IService>();
+            var serviceMock = new Mock<IService>();
             serviceMock.SetupAllProperties();
             service = serviceMock.Object;
 
-            controllerMock = new Mock<ServicedControllerStub>(service) { CallBase = true };
-            controller = controllerMock.Object;
+            controller = new Mock<ServicedControllerStub>(service) { CallBase = true }.Object;
         }
 
         #region Constructor: ServicedController(TService service)
@@ -46,7 +43,7 @@ namespace Template.Tests.Tests.Controllers
         }
 
         [Test]
-        public void ServicedController_OnNullModelStateSetsNewModelState()
+        public void ServicedController_OnNullModelStateCreatesNewModelState()
         {
             Assert.IsNotNull(service.ModelState);
         }
@@ -65,7 +62,7 @@ namespace Template.Tests.Tests.Controllers
         }
 
         [Test]
-        public void ServicedController_OnNullAlertMessagesSetsNewAlertMessages()
+        public void ServicedController_OnNullAlertMessagesCreatesNewAlertMessages()
         {
             Assert.IsNotNull(service.AlertMessages);
         }

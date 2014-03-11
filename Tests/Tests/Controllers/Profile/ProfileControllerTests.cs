@@ -1,10 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using Template.Components.Services;
 using Template.Controllers.Profile;
 using Template.Objects;
+using Template.Tests.Helpers;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Controllers.Profile
@@ -14,29 +16,32 @@ namespace Template.Tests.Tests.Controllers.Profile
     {
         private Mock<IProfileService> serviceMock;
         private ProfileController controller;
+        private HttpContextBase httpContext;
         private ProfileView profile;
 
         [SetUp]
         public void SetUp()
         {
-            profile = new ProfileView();
+            profile = ObjectFactory.CreateProfileView();
             serviceMock = new Mock<IProfileService>();
             controller = new ProfileController(serviceMock.Object);
-            serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
-            serviceMock.Setup(mock => mock.GetView(TestContext.CurrentContext.Test.Name)).Returns(profile);
 
+            httpContext = new HttpMock().HttpContextBase;
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
+            controller.ControllerContext.HttpContext = httpContext;
+
+            serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
+            serviceMock.Setup(mock => mock.GetView(httpContext.User.Identity.Name)).Returns(profile);
         }
 
         #region Method: Edit()
 
         [Test]
-        public void Edit_ReturnsViewWithCurrentProfileEditModel()
+        public void Edit_ReturnsCurrentProfileView()
         {
             var actual = (controller.Edit() as ViewResult).Model as ProfileView;
 
-            serviceMock.Verify(mock => mock.GetView(TestContext.CurrentContext.Test.Name), Times.Once());
+            serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
             Assert.AreEqual(profile, actual);
         }
 
@@ -53,9 +58,9 @@ namespace Template.Tests.Tests.Controllers.Profile
         }
 
         [Test]
-        public void Edit_ReturnsView()
+        public void Edit_ReturnsEmptyView()
         {
-            Assert.IsNotNull(controller.Edit(profile) as ViewResult);
+            Assert.IsNull((controller.Edit(profile) as ViewResult).Model);
         }
 
         #endregion
@@ -80,9 +85,12 @@ namespace Template.Tests.Tests.Controllers.Profile
         }
 
         [Test]
-        public void Delete_ReturnsView()
+        public void Delete_ReturnsCurrentProfileView()
         {
-            Assert.IsNotNull(controller.Delete() as ViewResult);
+            var actual = (controller.Delete() as ViewResult).Model as ProfileView;
+
+            serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
+            Assert.AreEqual(profile, actual);
         }
 
         #endregion
@@ -103,7 +111,7 @@ namespace Template.Tests.Tests.Controllers.Profile
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
             controller.DeleteConfirmed(profile);
 
-            serviceMock.Verify(mock => mock.Delete(TestContext.CurrentContext.Test.Name), Times.Once());
+            serviceMock.Verify(mock => mock.Delete(httpContext.User.Identity.Name), Times.Once());
         }
 
         [Test]

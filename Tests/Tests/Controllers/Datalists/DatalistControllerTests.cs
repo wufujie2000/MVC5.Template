@@ -72,8 +72,8 @@ namespace Template.Tests.Tests.Controllers.Datalists
             var jsonResult = controller.GetData(datalist, filter);
             var actualData = jsonResult.Data;
 
-            Assert.AreEqual(expectedData, actualData);
             Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
+            Assert.AreEqual(expectedData, actualData);
         }
 
         #endregion
@@ -87,8 +87,8 @@ namespace Template.Tests.Tests.Controllers.Datalists
             controllerMock.Setup(mock => mock.GetData(It.IsAny<RolesDatalist>(), filter, null)).Returns(expectedResult);
             var actualResult = controller.Roles(filter);
 
-            Assert.AreEqual(expectedResult, actualResult);
             controllerMock.Verify(mock => mock.GetData(It.IsAny<RolesDatalist>(), filter, null), Times.Once());
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         #endregion

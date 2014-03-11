@@ -35,11 +35,11 @@ namespace Template.Tests.Tests.Controllers.Account
         }
 
         [Test]
-        public void Login_ReturnsViewIfNotLoggedIn()
+        public void Login_ReturnsEmptyViewIfNotLoggedIn()
         {
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
 
-            Assert.IsNotNull(controller.Login("/") as ViewResult);
+            Assert.IsNull((controller.Login("/") as ViewResult).Model);
         }
 
         #endregion
@@ -70,7 +70,6 @@ namespace Template.Tests.Tests.Controllers.Account
         {
             var account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
-
             var result = controller.Login(account, "/") as RedirectResult;
 
             Assert.IsNotNull("/", result.Url);

@@ -8,6 +8,7 @@ using System.Web.Routing;
 using Template.Components.Services;
 using Template.Controllers.Administration;
 using Template.Objects;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Tests.Controllers.Administration.Roles
 {
@@ -22,22 +23,27 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         [SetUp]
         public void SetUp()
         {
-            role = new RoleView();
+            role = ObjectFactory.CreateRoleView();
             serviceMock = new Mock<IRolesService>();
+            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
+            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(true);
+            serviceMock.Setup(mock => mock.GetView("Test")).Returns(role);
+            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
             controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
             controller = controllerMock.Object;
         }
 
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsViewWithModels()
+        public void Index_ReturnsModelsView()
         {
             var expected = new[] { role };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
-            var actual = controller.Index() as ViewResult;
+            var actual = (controller.Index() as ViewResult).Model;
 
-            Assert.AreEqual(expected, actual.Model);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -45,7 +51,7 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Create()
 
         [Test]
-        public void Create_ReturnsViewWithEmptyModel()
+        public void Create_ReturnsEmptyRoleView()
         {
             var actual = (controller.Create() as ViewResult).Model as RoleView;
 
@@ -68,17 +74,16 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Create(RoleView role)
 
         [Test]
-        public void Create_ReturnsViewIfCanNotCreate()
+        public void Create_ReturnsEmptyViewIfCanNotCreate()
         {
             serviceMock.Setup(mock => mock.CanCreate(role)).Returns(false);
 
-            Assert.IsNotNull(controller.Create(role) as ViewResult);
+            Assert.IsNull((controller.Create(role) as ViewResult).Model);
         }
 
         [Test]
         public void Create_CallsServiceCreate()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(true);
             controller.Create(role);
 
             serviceMock.Verify(mock => mock.Create(role), Times.Once());
@@ -87,7 +92,6 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         [Test]
         public void Create_RedirectsToIndexIfCreated()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(true);
             var result = controller.Create(role) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -98,9 +102,8 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Details(String id)
 
         [Test]
-        public void Details_ReturnsViewWithDetailsModel()
+        public void Details_ReturnsRoleView()
         {
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(role);
             var actual = (controller.Details("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
@@ -111,9 +114,8 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Edit(String id)
 
         [Test]
-        public void Edit_ReturnsViewWithEditModel()
+        public void Edit_ReturnsRoleView()
         {
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(role);
             var actual = (controller.Edit("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
@@ -124,18 +126,16 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Edit(RoleView role)
 
         [Test]
-        public void Edit_ReturnsViewIfCanNotEdit()
+        public void Edit_ReturnsEmptyViewIfCanNotEdit()
         {
             serviceMock.Setup(mock => mock.CanEdit(role)).Returns(false);
 
-            Assert.IsNotNull(controller.Edit(role) as ViewResult);
+            Assert.IsNull((controller.Edit(role) as ViewResult).Model);
         }
 
         [Test]
         public void Edit_CallsServiceEdit()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
             controller.Edit(role);
 
             serviceMock.Verify(mock => mock.Edit(role), Times.Once());
@@ -144,22 +144,19 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         [Test]
         public void Edit_RedirectsToDefaultIfUserIsNoLongerAuthorizedForIndex()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
-            var routeValues = new RouteValueDictionary();
-            routeValues["action"] = "DefaultRoute";
+            var expected = new RouteValueDictionary();
+            expected["action"] = "DefaultRoute";
 
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(routeValues));
-            var actual = controller.Edit(role) as RedirectToRouteResult;
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
+            var actual = (controller.Edit(role) as RedirectToRouteResult).RouteValues;
 
-            Assert.AreEqual(routeValues["action"], actual.RouteValues["action"]);
+            Assert.AreEqual(expected["action"], actual["action"]);
         }
 
         [Test]
         public void Edit_RedirectsToIndex()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
             var result = controller.Edit(role) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
@@ -170,9 +167,8 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_ReturnsViewWithDeleteModel()
+        public void Delete_ReturnsRoleView()
         {
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(role);
             var actual = (controller.Delete("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
@@ -183,18 +179,16 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         #region Method: DeleteConfirmed(String id)
 
         [Test]
-        public void DeleteConfirmed_ReturnsViewIfCanNotDelete()
+        public void DeleteConfirmed_ReturnsEmptyViewIfCanNotDelete()
         {
             serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(false);
 
-            Assert.IsNotNull(controller.DeleteConfirmed("Test") as ViewResult);
+            Assert.IsNull((controller.DeleteConfirmed("Test") as ViewResult).Model);
         }
 
         [Test]
         public void DeleteConfirmed_CallsServiceDelete()
         {
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
             controller.DeleteConfirmed("Test");
 
             serviceMock.Verify(mock => mock.Delete("Test"), Times.Once());
@@ -203,22 +197,19 @@ namespace Template.Tests.Tests.Controllers.Administration.Roles
         [Test]
         public void DeleteConfirmed_RedirectsToDefaultIfUserIsNoLongerAuthorizedForIndex()
         {
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
-            var routeValues = new RouteValueDictionary();
-            routeValues["action"] = "DefaultRoute";
+            var expected = new RouteValueDictionary();
+            expected["action"] = "DefaultRoute";
 
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(routeValues));
-            var actual = controller.DeleteConfirmed("Test") as RedirectToRouteResult;
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
+            var actual = (controller.DeleteConfirmed("Test") as RedirectToRouteResult).RouteValues;
 
-            Assert.AreEqual(routeValues["action"], actual.RouteValues["action"]);
+            Assert.AreEqual(expected["action"], actual["action"]);
         }
 
         [Test]
         public void DeleteConfirmed_RedirectsToIndex()
         {
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
             var result = controller.DeleteConfirmed("Test") as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);

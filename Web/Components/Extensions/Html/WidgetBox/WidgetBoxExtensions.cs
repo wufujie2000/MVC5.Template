@@ -31,7 +31,7 @@ namespace Template.Components.Extensions.Html
 
             foreach (var action in actions)
             {
-                if (roleProvider != null && !roleProvider.IsAuthorizedFor(accountId, area, controller, action.ToString())) // TODO: Always check for null RoleProvider
+                if (roleProvider != null && !roleProvider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");

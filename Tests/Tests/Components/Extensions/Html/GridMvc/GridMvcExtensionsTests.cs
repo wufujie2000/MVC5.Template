@@ -82,6 +82,14 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
 
         [Test]
+        public void AddActionLink_AddsActionLinkOnNullRoleProvider()
+        {
+            RoleProviderFactory.SetInstance(null);
+
+            Assert.IsNotNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
+        }
+
+        [Test]
         public void AddActionLink_CallsIsAuthorizedForWithRouteValues()
         {
             routeValues["area"] = "AR";

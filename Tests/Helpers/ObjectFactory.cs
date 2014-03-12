@@ -7,7 +7,7 @@ namespace Template.Tests.Helpers
 {
     public class ObjectFactory
     {
-        private static String TestId
+        public static String TestId
         {
             get
             {
@@ -15,35 +15,35 @@ namespace Template.Tests.Helpers
             }
         }
 
-        public static ProfileView CreateProfileView()
+        public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
         {
             return new ProfileView()
             {
-                Id = TestId,
-                Username = "Username" + TestId,
+                Id = TestId + instanceNumber.ToString(),
                 CurrentPassword = "Password",
                 NewPassword = "NewPassword",
-                UserFirstName = "FirstName",
-                UserLastName = "LastName",
-                UserDateOfBirth = new DateTime(1990, 1, 1)
+                UserLastName = "LastName" + instanceNumber.ToString(),
+                UserFirstName = "FirstName" + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                UserDateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
             };
         }
 
-        public static Account CreateAccount()
+        public static Account CreateAccount(Int32 instanceNumber = 1)
         {
             return new Account()
             {
-                Id = TestId,
-                Username = "Username" + TestId,
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
                 Passhash = "$2a$04$aalrk68zd5esaX9/ihL//OwwN/ORg12CToxkgXCzK0jfH0z1h/PK.", // Password
             };
         }
-        public static AccountView CreateAccountView()
+        public static AccountView CreateAccountView(Int32 instanceNumber = 1)
         {
             return new AccountView()
             {
-                Id = TestId,
-                Username = "Username" + TestId,
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password",
                 NewPassword = "NewPassword"
             };
@@ -71,7 +71,7 @@ namespace Template.Tests.Helpers
                 UserRoleId = TestId + instanceNumber.ToString(),
                 UserRoleName = "UserRoleName" + instanceNumber.ToString(),
 
-                Username = "Username" + TestId,
+                Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password",
                 NewPassword = "NewPassword"
             };

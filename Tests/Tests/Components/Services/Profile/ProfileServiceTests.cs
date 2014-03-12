@@ -25,12 +25,14 @@ namespace Template.Tests.Tests.Components.Services
         [SetUp]
         public void SetUp()
         {
+            var httpMock = new HttpMock();
             context = new TestingContext();
+            HttpContext.Current = httpMock.HttpContext;
             service = new ProfileService(new UnitOfWork(context));
 
             service.ModelState = new ModelStateDictionary();
             service.AlertMessages = new MessagesContainer(service.ModelState);
-            HttpContext.Current = new HttpMock().HttpContext;
+            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(() => account.Id);
 
             TearDownData();
             SetUpData();
@@ -51,6 +53,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             service.ModelState.AddModelError("Key", "ErrorMessages");
+
             Assert.IsFalse(service.CanEdit(ObjectFactory.CreateProfileView()));
         }
 
@@ -107,6 +110,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanDelete_CanNotDeleteWithInvalidModelState()
         {
             service.ModelState.AddModelError("Test", "Test");
+
             Assert.IsFalse(service.CanDelete(ObjectFactory.CreateProfileView()));
         }
 
@@ -233,8 +237,7 @@ namespace Template.Tests.Tests.Components.Services
         }
         private void TearDownData()
         {
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
+            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<User>().Remove(user);
 
             context.SaveChanges();

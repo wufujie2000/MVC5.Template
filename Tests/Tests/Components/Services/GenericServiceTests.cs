@@ -29,8 +29,7 @@ namespace Template.Tests.Tests.Components.Services
         [TearDown]
         public void TearDown()
         {
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var model in context.Set<TestModel>().Where(model => model.Id.StartsWith(testId)))
+            foreach (var model in context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<TestModel>().Remove(model);
 
             context.SaveChanges();
@@ -50,6 +49,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanCreate_OnModelErrorsReturnsFalse()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
+
             Assert.IsFalse(service.CanCreate(null));
         }
 
@@ -67,6 +67,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanEdit_OnModelErrorsReturnsFalse()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
+
             Assert.IsFalse(service.CanEdit(null));
         }
 
@@ -84,6 +85,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanDelete_OnModelErrorsReturnsFalse()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
+
             Assert.IsFalse(service.CanDelete(null));
         }
 
@@ -94,14 +96,10 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void GetViews_GetsViews()
         {
-            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.Id).GetEnumerator();
-            var actual = service.GetViews().GetEnumerator();
+            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.Id);
+            var actual = service.GetViews();
 
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
-                Assert.AreEqual(expected.Current.Text, actual.Current.Text);
-            }
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         #endregion

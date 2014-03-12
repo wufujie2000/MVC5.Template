@@ -24,22 +24,7 @@ namespace Template.Data.Mapping
 
             Mapper.CreateMap<Account, UserView>();
             Mapper.CreateMap<UserView, Account>()
-                .ForMember(account => account.UserId, property => property.MapFrom(user => user.Id))
-                .AfterMap((user, account) => {
-                    account.User = new User();
-                    account.User.Id = user.Id;
-                    account.UserId = account.User.Id;
-                    account.User.LastName = user.UserLastName;
-                    account.User.FirstName = user.UserFirstName;
-                    account.User.DateOfBirth = user.UserDateOfBirth;
-                    if (user.UserRoleId != null)
-                    {
-                        account.User.Role = new Role();
-                        account.User.Role.Id = user.UserRoleId;
-                        account.User.RoleId = account.User.Role.Id;
-                        account.User.Role.Name = user.UserRoleName;
-                    }
-                });
+                .ForMember(account => account.UserId, property => property.MapFrom(user => user.Id));
 
             Mapper.CreateMap<User, UserView>()
                 .ForMember(view => view.UserDateOfBirth, property => property.MapFrom(user => user.DateOfBirth))
@@ -51,15 +36,7 @@ namespace Template.Data.Mapping
                 .ForMember(user => user.DateOfBirth, property => property.MapFrom(view => view.UserDateOfBirth))
                 .ForMember(user => user.FirstName, property => property.MapFrom(view => view.UserFirstName))
                 .ForMember(user => user.LastName, property => property.MapFrom(view => view.UserLastName))
-                .ForMember(user => user.RoleId, property => property.MapFrom(view => view.UserRoleId))
-                .AfterMap((view, user) => {
-                    if (view.UserRoleId != null)
-                    {
-                        user.Role = new Role();
-                        user.Role.Id = view.UserRoleId;
-                        user.Role.Name = view.UserRoleName;
-                    }
-                });
+                .ForMember(user => user.RoleId, property => property.MapFrom(view => view.UserRoleId));
         }
 
         private static void MapRoles()

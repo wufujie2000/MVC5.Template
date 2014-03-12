@@ -81,6 +81,7 @@ namespace Template.Tests.Tests.Components.Services
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             service.ModelState.AddModelError("Test", "Test");
+
             Assert.IsFalse(service.CanEdit(ObjectFactory.CreateUserView()));
         }
 
@@ -115,7 +116,6 @@ namespace Template.Tests.Tests.Components.Services
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            expected.UserRoleId = role.Id;
             service.Create(expected);
 
             var actual = context.Set<Account>().Find(expected.Id);
@@ -230,11 +230,10 @@ namespace Template.Tests.Tests.Components.Services
         }
         private void TearDownData()
         {
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
+            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<User>().Remove(user);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(testId)))
+            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
             context.SaveChanges();

@@ -26,6 +26,7 @@ namespace Template.Tests.Tests.Components.Mvc.Providers
         public void GetValidators_GetsNoValidators()
         {
             var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Id");
+
             CollectionAssert.IsEmpty(provider.GetValidators(metadata, context));
         }
 
@@ -33,6 +34,7 @@ namespace Template.Tests.Tests.Components.Mvc.Providers
         public void GetValidators_GetsDateValidator()
         {
             var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Date");
+
             CollectionAssert.AreEqual(new[] { typeof(DateValidator) }, provider.GetValidators(metadata, context).Select(validator => validator.GetType()));
         }
 
@@ -40,6 +42,7 @@ namespace Template.Tests.Tests.Components.Mvc.Providers
         public void GetValidators_GetsNumericValidator()
         {
             var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Numeric");
+
             CollectionAssert.AreEqual(new[] { typeof(NumberValidator) }, provider.GetValidators(metadata, context).Select(validator => validator.GetType()));
         }
 

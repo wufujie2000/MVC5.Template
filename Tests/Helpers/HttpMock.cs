@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Security.Principal;
 using System.Web;
+using Template.Tests.Helpers;
 
 namespace Tests.Helpers
 {
@@ -50,7 +51,7 @@ namespace Tests.Helpers
             HttpContextBase = httpContextBaseMock.Object;
 
             IdentityMock = new Mock<IIdentity>();
-            IdentityMock.Setup<String>(mock => mock.Name).Returns(TestContext.CurrentContext.Test.Name);
+            IdentityMock.Setup<String>(mock => mock.Name).Returns(ObjectFactory.TestId);
 
             var principalMock = new Mock<IPrincipal>();
             principalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);

@@ -111,7 +111,7 @@
     <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
-    <Compile Include="Tests\Data\Mapping\ObjectMapTests.cs" />
+    <Compile Include="Tests\Data\Mapping\ObjectMapperTests.cs" />
     <Compile Include="Helpers\HtmlMock.cs" />
     <Compile Include="Helpers\HttpMock.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />

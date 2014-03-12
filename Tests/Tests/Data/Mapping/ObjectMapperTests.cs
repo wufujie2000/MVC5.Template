@@ -8,7 +8,7 @@ using Template.Tests.Helpers;
 namespace Template.Tests.Data.Mapping
 {
     [TestFixture]
-    public class ObjectMapTests
+    public class ObjectMapperTests
     {
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -91,40 +91,10 @@ namespace Template.Tests.Data.Mapping
             var expected = ObjectFactory.CreateUserView();
             var actual = Mapper.Map<UserView, Account>(expected);
 
-            Assert.AreEqual(expected.UserDateOfBirth, actual.User.DateOfBirth);
-            Assert.AreEqual(expected.UserFirstName, actual.User.FirstName);
-            Assert.AreEqual(expected.UserLastName, actual.User.LastName);
             Assert.AreEqual(expected.Id, actual.UserId);
             Assert.AreEqual(expected.Id, actual.Id);
-
-            Assert.AreEqual(expected.UserRoleName, actual.User.Role.Name);
-            Assert.AreEqual(expected.UserRoleId, actual.User.Role.Id);
-            Assert.AreEqual(expected.UserRoleId, actual.User.RoleId);
-
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsNull(actual.User.Role.RolePrivileges);
             Assert.IsNull(actual.Passhash);
-        }
-
-        [Test]
-        public void MapUsers_MapsUserViewWithoutRoleToAccount()
-        {
-            var expected = ObjectFactory.CreateUserView();
-            expected.UserRoleName = null;
-            expected.UserRoleId = null;
-
-            var actual = Mapper.Map<UserView, Account>(expected);
-
-            Assert.AreEqual(expected.UserDateOfBirth, actual.User.DateOfBirth);
-            Assert.AreEqual(expected.UserFirstName, actual.User.FirstName);
-            Assert.AreEqual(expected.UserLastName, actual.User.LastName);
-            Assert.AreEqual(expected.Id, actual.UserId);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.User.RoleId);
-            Assert.IsNull(actual.User.Role);
-
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsNull(actual.Passhash);
+            Assert.IsNull(actual.User);
         }
 
         [Test]
@@ -158,28 +128,8 @@ namespace Template.Tests.Data.Mapping
             Assert.AreEqual(expected.UserDateOfBirth, actual.DateOfBirth);
             Assert.AreEqual(expected.UserFirstName, actual.FirstName);
             Assert.AreEqual(expected.UserLastName, actual.LastName);
-            Assert.AreEqual(expected.Id, actual.Id);
-
-            Assert.AreEqual(expected.UserRoleName, actual.Role.Name);
-            Assert.AreEqual(expected.UserRoleId, actual.Role.Id);
             Assert.AreEqual(expected.UserRoleId, actual.RoleId);
-            Assert.IsNull(actual.Role.RolePrivileges);
-        }
-
-        [Test]
-        public void MapUsers_MapsUserViewWithoutRoleToUser()
-        {
-            var expected = ObjectFactory.CreateUserView();
-            expected.UserRoleName = null;
-            expected.UserRoleId = null;
-
-            var actual = Mapper.Map<UserView, User>(expected);
-
-            Assert.AreEqual(expected.UserDateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(expected.UserFirstName, actual.FirstName);
-            Assert.AreEqual(expected.UserLastName, actual.LastName);
             Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.RoleId);
             Assert.IsNull(actual.Role);
         }
 

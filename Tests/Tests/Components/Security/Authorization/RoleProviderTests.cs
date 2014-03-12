@@ -128,14 +128,13 @@ namespace Template.Tests.Tests.Security
         {
             context = new TestingContext();
 
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
+            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<User>().Remove(user);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(testId)))
+            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
-            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(testId)))
+            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Privilege>().Remove(privilege);
 
             context.SaveChanges();

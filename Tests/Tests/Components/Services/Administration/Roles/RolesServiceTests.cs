@@ -49,6 +49,7 @@ namespace Template.Tests.Tests.Components.Services
         public void GetView_CallsSeedPrivilegesTree()
         {
             var roleView = service.GetView(role.Id);
+
             serviceMock.Verify(mock => mock.SeedPrivilegesTree(roleView), Times.Once());
         }
 
@@ -67,6 +68,7 @@ namespace Template.Tests.Tests.Components.Services
 
             context = new TestingContext();
             var actual = context.Set<Role>().Find(expected.Id);
+
             Assert.AreEqual(expected.Name, actual.Name);
         }
 
@@ -251,6 +253,21 @@ namespace Template.Tests.Tests.Components.Services
                 rolePrivilege.RoleId = role.Id;
                 rolePrivilege.Role = role;
 
+                if (number % 3 == 0)
+                {
+                    privilege.Area = null;
+                    privilege.Controller = "C2";
+                    privilege.Action = "A" + (number / 3).ToString();
+                }
+                else
+                {
+                    privilege.Area = "AR";
+                    if (number % 2 == 0)
+                        privilege.Controller = "C1";
+                    else
+                        privilege.Controller = "C2";
+                }
+
                 role.RolePrivileges.Add(rolePrivilege);
             }
 
@@ -259,17 +276,16 @@ namespace Template.Tests.Tests.Components.Services
         }
         private void TearDownData()
         {
-            var testId = TestContext.CurrentContext.Test.Name;
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(testId)))
+            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<User>().Remove(user);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(testId)))
+            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
-            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(testId)))
+            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Privilege>().Remove(privilege);
 
-            foreach (var language in context.Set<Language>().Where(language => language.Id.StartsWith(testId)))
+            foreach (var language in context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Language>().Remove(language);
 
             context.SaveChanges();

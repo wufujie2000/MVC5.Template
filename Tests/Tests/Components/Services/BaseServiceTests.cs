@@ -8,12 +8,13 @@ namespace Template.Tests.Tests.Components.Services
     [TestFixture]
     public class BaseServiceTests
     {
+        private Mock<IUnitOfWork> unitOfWorkMock;
         private BaseService service;
 
         [SetUp]
         public void SetUp()
         {
-            var unitOfWorkMock = new Mock<IUnitOfWork>();
+            unitOfWorkMock = new Mock<IUnitOfWork>();
             var mock = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true };
 
             service = mock.Object;
@@ -26,6 +27,14 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CallsUnitOfWorkDispose()
+        {
+            service.Dispose();
+            
+            unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
+        }
 
         [Test]
         public void Dispose_CanDisposeMultipleTimes()

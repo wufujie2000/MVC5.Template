@@ -50,6 +50,7 @@ namespace Template.Components.Extensions.Html
             if (menu.IsActive) menuItem.AddCssClass("active active-hovering");
             if (menu.IsOpen) menuItem.AddCssClass("open");
             menuItem.InnerHtml = menuInnerHtml.ToString();
+
             return menuItem.ToString();
         }
         private static String FormAction(HtmlHelper html, Menu menu)

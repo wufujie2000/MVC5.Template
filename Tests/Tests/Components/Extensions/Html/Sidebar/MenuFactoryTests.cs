@@ -7,6 +7,7 @@ using Template.Components.Extensions.Html;
 using Template.Components.Security;
 using Template.Objects;
 using Template.Resources;
+using Template.Tests.Helpers;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Components.Extensions.Html
@@ -25,7 +26,8 @@ namespace Template.Tests.Tests.Components.Extensions.Html
 
             factory = new MenuFactory(httpContext);
             roleProviderMock = new Mock<IRoleProvider>();
-            RoleProviderFactory.SetInstance(roleProviderMock.Object);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), 
+                It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
         }
 
         [TearDown]
@@ -39,19 +41,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void AllMenus_ContainsAllMenus()
         {
-            var expected = GetMenusAsList(GetExpectedMenus()).GetEnumerator();
-            var actual = GetMenusAsList(MenuFactory.AllMenus).GetEnumerator();
+            var expected = GetMenusAsList(GetExpectedMenus());
+            var actual = GetMenusAsList(MenuFactory.AllMenus);
 
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsActive, actual.Current.IsActive);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.IsOpen, actual.Current.IsOpen);
-                Assert.AreEqual(expected.Current.Title, actual.Current.Title);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-            }
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -61,67 +54,46 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_ReturnsBranchMenus()
         {
-            RoleProviderFactory.SetInstance(null);
-            var expected = GetMenusAsList(MenuFactory.AllMenus)
-                .Where(menu => !IsEmpty(menu) && menu.Action == null).GetEnumerator();
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus())
-                .Where(menu => menu.Action == null).GetEnumerator();
+            var expected = GetMenusAsList(MenuFactory.AllMenus).Where(menu => !IsEmpty(menu) && menu.Action == null);
+            foreach (var expectedItem in expected)
+                expectedItem.Title = GetMenuTitle(expectedItem);
 
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(GetMenuTitle(expected.Current), actual.Current.Title);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsActive, actual.Current.IsActive);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.IsOpen, actual.Current.IsOpen);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-            }
+            var actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Action == null);
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         [Test]
         public void GetAuthorizedMenus_OnNullRoleProviderReturnsAllNotEmptyMenus()
         {
-            RoleProviderFactory.SetInstance(null);
-            var expected = GetMenusAsList(GetExpectedMenus()).GetEnumerator();
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus()).GetEnumerator();
+            var expected = GetMenusAsList(GetExpectedMenus());
+            foreach (var expectedItem in expected)
+                expectedItem.Title = GetMenuTitle(expectedItem);
 
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(GetMenuTitle(expected.Current), actual.Current.Title);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsActive, actual.Current.IsActive);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.IsOpen, actual.Current.IsOpen);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-            }
+            var actual = GetMenusAsList(factory.GetAuthorizedMenus());
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         [Test]
         public void GetAuthorizedMenus_ReturnsNoMenusThenNotAuthorized()
         {
+            RoleProviderFactory.SetInstance(new Mock<IRoleProvider>().Object);
+
             CollectionAssert.IsEmpty(factory.GetAuthorizedMenus());
         }
 
         [Test]
         public void GetAuthorizedMenus_ReturnsAllNotEmptyMenusThenAuthorized()
         {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
-                It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
-            var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => !IsEmpty(menu)).GetEnumerator();
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus()).GetEnumerator();
+            RoleProviderFactory.SetInstance(roleProviderMock.Object);
+            var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => !IsEmpty(menu));
+            foreach (var expectedItem in expected)
+                expectedItem.Title = GetMenuTitle(expectedItem);
 
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(GetMenuTitle(expected.Current), actual.Current.Title);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsActive, actual.Current.IsActive);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.IsOpen, actual.Current.IsOpen);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-            }
+            var actual = GetMenusAsList(factory.GetAuthorizedMenus());
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         [Test]
@@ -134,21 +106,17 @@ namespace Template.Tests.Tests.Components.Extensions.Html
                 httpContext.Request.RequestContext.RouteData.Values["controller"] = controller;
 
                 factory = new MenuFactory(httpContext);
-                RoleProviderFactory.SetInstance(null);
 
-                var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => menu.Controller == controller).GetEnumerator();
-                var actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Controller == controller).GetEnumerator();
-
-                while (expected.MoveNext() | actual.MoveNext())
+                var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => menu.Controller == controller);
+                foreach (var expectedItem in expected)
                 {
-                    Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                    Assert.AreEqual(GetMenuTitle(expected.Current), actual.Current.Title);
-                    Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                    Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                    Assert.AreEqual(expected.Current.IsOpen, actual.Current.IsOpen);
-                    Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-                    Assert.IsTrue(actual.Current.IsActive);
+                    expectedItem.Title = GetMenuTitle(expectedItem);
+                    expectedItem.IsActive = true;
                 }
+
+                var actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Controller == controller);
+
+                TestHelper.EnumPropertyWiseEquals(expected, actual);
             }
         }
 
@@ -162,29 +130,20 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             httpContext.Request.RequestContext.RouteData.Values["controller"] = submenuController;
 
             factory = new MenuFactory(httpContext);
-            RoleProviderFactory.SetInstance(null);
 
             var expectedMenu = menuWithSubmenus;
+            expectedMenu.Title = GetMenuTitle(expectedMenu);
+            expectedMenu.IsOpen = true;
+
             var actualMenu = factory.GetAuthorizedMenus().First(menu => menu.Submenus.Any(submenu => submenu.Controller == submenuController));
-
-            Assert.AreEqual(expectedMenu.Controller, actualMenu.Controller);
-            Assert.AreEqual(GetMenuTitle(expectedMenu), actualMenu.Title);
-            Assert.AreEqual(expectedMenu.IconClass, actualMenu.IconClass);
-            Assert.AreEqual(expectedMenu.Action, actualMenu.Action);
-            Assert.AreEqual(expectedMenu.Area, actualMenu.Area);
-            Assert.IsFalse(actualMenu.IsActive);
-            Assert.IsTrue(actualMenu.IsOpen);
-
             var expectedSubmenu = expectedMenu.Submenus.First();
+            expectedSubmenu.Title = GetMenuTitle(expectedSubmenu);
+            expectedSubmenu.IsActive = true;
+
             var actualSubmenu = actualMenu.Submenus.First();
 
-            Assert.AreEqual(expectedSubmenu.Controller, actualSubmenu.Controller);
-            Assert.AreEqual(GetMenuTitle(expectedSubmenu), actualSubmenu.Title);
-            Assert.AreEqual(expectedSubmenu.IconClass, actualSubmenu.IconClass);
-            Assert.AreEqual(expectedSubmenu.Action, actualSubmenu.Action);
-            Assert.AreEqual(expectedSubmenu.Area, actualSubmenu.Area);
-            Assert.IsTrue(actualSubmenu.IsActive);
-            Assert.IsFalse(actualSubmenu.IsOpen);
+            TestHelper.PropertyWiseEquals(expectedMenu, actualMenu);
+            TestHelper.PropertyWiseEquals(expectedSubmenu, actualSubmenu);
         }
 
         #endregion

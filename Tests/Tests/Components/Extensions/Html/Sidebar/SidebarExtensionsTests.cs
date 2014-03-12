@@ -32,7 +32,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             input.MergeAttribute("id", "SearchInput");
             input.MergeAttribute("placeholder", Template.Resources.Shared.Resources.Search + "...");
 
-            Assert.AreEqual(input.ToString(TagRenderMode.SelfClosing), html.SidebarSearch().ToString());
+            var expected = input.ToString(TagRenderMode.SelfClosing);
+            var actual = html.SidebarSearch().ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -43,12 +46,14 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void SidebarMenu_FormsSidebarMenu()
         {
             var menuFactory = new MenuFactory(html.ViewContext.HttpContext);
-            var menuBuilder = new StringBuilder();
-
+            var expected = new StringBuilder();
+            
             foreach (var menu in menuFactory.GetAuthorizedMenus())
-                menuBuilder.Append(Menu(html, menu));
+                expected.Append(Menu(html, menu));
 
-            Assert.AreEqual(menuBuilder.ToString(), html.SidebarMenu().ToString());
+            var actual = html.SidebarMenu();
+
+            Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
         #endregion

@@ -28,9 +28,9 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         private Mock<IGridColumn<GridMvcView>> gridColumnMock;
         private Mock<IRoleProvider> roleProviderMock;
         private IGridColumn<GridMvcView> gridColumn;
-        private HttpMock httpContextStub;
         private RouteValueDictionary routeValues;
         private HtmlHelper<GridMvcView> html;
+        private HttpMock httpContextStub;
         private GridMvcView gridMvcView;
         private String accountId;
 
@@ -181,9 +181,9 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
                 .Returns(gridColumn);
             gridColumnCollection.AddActionLink(LinkAction.Details);
 
-            TagBuilder actionContainer = new TagBuilder("div");
-            TagBuilder actionTag = new TagBuilder("a");
-            TagBuilder icon = new TagBuilder("i");
+            var actionContainer = new TagBuilder("div");
+            var actionTag = new TagBuilder("a");
+            var icon = new TagBuilder("i");
 
             actionContainer.AddCssClass("action-link-container details-action-link");
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Details", new { id = gridMvcView.Id }));
@@ -207,9 +207,9 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
                 .Returns(gridColumn);
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
-            TagBuilder actionContainer = new TagBuilder("div");
-            TagBuilder actionTag = new TagBuilder("a");
-            TagBuilder icon = new TagBuilder("i");
+            var actionContainer = new TagBuilder("div");
+            var actionTag = new TagBuilder("a");
+            var icon = new TagBuilder("i");
 
             actionContainer.AddCssClass("action-link-container edit-action-link");
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Edit", new { id = gridMvcView.Id }));
@@ -233,9 +233,9 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
                 .Returns(gridColumn);
             gridColumnCollection.AddActionLink(LinkAction.Delete);
 
-            TagBuilder actionContainer = new TagBuilder("div");
-            TagBuilder actionTag = new TagBuilder("a");
-            TagBuilder icon = new TagBuilder("i");
+            var actionContainer = new TagBuilder("div");
+            var actionTag = new TagBuilder("a");
+            var icon = new TagBuilder("i");
 
             actionContainer.AddCssClass("action-link-container delete-action-link");
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Delete", new { id = gridMvcView.Id }));

@@ -41,6 +41,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetCurrentFormTitle_GetsTitleWithoutArea()
         {
+            routeValues["area"] = null;
             routeValues["controller"] = "Profile";
 
             Assert.AreEqual(Template.Resources.Form.Titles.Profile, ResourceProvider.GetCurrentFormTitle());
@@ -96,6 +97,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetCurrentContentTitle_GetsTitleWithoutArea()
         {
+            routeValues["area"] = null;
             routeValues["controller"] = "Profile";
             routeValues["action"] = "Delete";
 

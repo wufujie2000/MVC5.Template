@@ -1,9 +1,10 @@
 ﻿using Moq;
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
 using Template.Tests.Helpers;
 
 namespace Tests.Helpers
@@ -32,6 +33,22 @@ namespace Tests.Helpers
             get;
             private set;
         }
+        static HttpMock()
+        {
+            RouteTable.Routes
+                .MapRoute(
+                    "Default",
+                    "{language}/{controller}/{action}/{id}",
+                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "lt-LT" });
+
+            RouteTable.Routes
+                .MapRoute(
+                    "DefaultLang",
+                    "{controller}/{action}/{id}",
+                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en-GB" });
+        }
 
         public HttpMock()
         {
@@ -58,6 +75,11 @@ namespace Tests.Helpers
 
             httpContextBaseMock.Setup(mock => mock.User).Returns(principalMock.Object);
             HttpContext.User = principalMock.Object;
+
+            request.RequestContext.RouteData.Values["controller"] = "Controller";
+            request.RequestContext.RouteData.Values["language"] = "en-GB";
+            request.RequestContext.RouteData.Values["action"] = "Action";
+            request.RequestContext.RouteData.Values["area"] = "Area";
         }
     }
 }

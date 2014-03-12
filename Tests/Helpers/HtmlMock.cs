@@ -35,27 +35,7 @@ namespace Template.Tests.Helpers
             var viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
             viewDataContainerMock.Setup(mock => mock.ViewData).Returns(viewContextMock.Object.ViewData);
 
-            Html = new HtmlHelper(viewContextMock.Object, viewDataContainerMock.Object, CreateDefaultRouteCollection());
-        }
-
-        private RouteCollection CreateDefaultRouteCollection()
-        {
-            var routeCollection = new RouteCollection();
-            routeCollection
-                .MapRoute(
-                    "Default",
-                    "{language}/{controller}/{action}/{id}",
-                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" });
-
-            routeCollection
-                .MapRoute(
-                    "DefaultLang",
-                    "{controller}/{action}/{id}",
-                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" });
-
-            return routeCollection;
+            Html = new HtmlHelper(viewContextMock.Object, viewDataContainerMock.Object, RouteTable.Routes);
         }
     }
 

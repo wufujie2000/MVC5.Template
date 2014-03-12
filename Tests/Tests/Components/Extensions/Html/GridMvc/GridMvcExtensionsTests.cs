@@ -71,7 +71,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
             accountId = HttpContext.Current.User.Identity.Name;
             RoleProviderFactory.SetInstance(roleProviderMock.Object);
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, null, null, It.IsAny<String>())).Returns(true);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "Area", "Controller", It.IsAny<String>())).Returns(true);
         }
 
         [TearDown]
@@ -105,7 +105,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         [Test]
         public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
         {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, null, null, It.IsAny<String>())).Returns(false);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "Area", "Controller", It.IsAny<String>())).Returns(false);
             Assert.IsNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
         }
 
@@ -148,7 +148,6 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
 
             gridColumnMock.Verify(mock => mock.Css("action-link-cell"), Times.Once());
         }
-
 
         [Test]
         public void AddActionLink_DoesNotCallsRenderValueAsOnGridColumn()
@@ -197,7 +196,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
 
             actionContainer.AddCssClass("action-link-container details-action-link");
             actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Details", new { id = userView.Id }));
-            icon.AddCssClass("fa fa-info"); // TODO: Make url helper form real urls and not empty ones
+            icon.AddCssClass("fa fa-info");
 
             actionTag.InnerHtml = icon.ToString();
             actionContainer.InnerHtml = actionTag.ToString();

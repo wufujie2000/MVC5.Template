@@ -14,7 +14,7 @@ namespace Template.Components.Security
 
         public RoleProvider(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork; // TODO: Check if newly added or deleted privileges can be accessed by this context;
+            this.unitOfWork = unitOfWork;
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)

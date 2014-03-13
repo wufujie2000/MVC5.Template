@@ -12,6 +12,7 @@ namespace Template.Components.Extensions.Html
     {
         private String currentController;
         private String currentAccountId;
+        private String currentArea;
 
         public static IEnumerable<Menu> AllMenus
         {
@@ -56,6 +57,7 @@ namespace Template.Components.Extensions.Html
         public MenuFactory(HttpContextBase httpContext)
         {
             currentController = httpContext.Request.RequestContext.RouteData.Values["controller"] as String;
+            currentArea = httpContext.Request.RequestContext.RouteData.Values["area"] as String;
             currentAccountId = httpContext.User.Identity.Name;
         }
 
@@ -86,11 +88,10 @@ namespace Template.Components.Extensions.Html
         }
         private Menu CreateAuthorized(Menu menu)
         {
-            // TODO: Active menu should be controller and action combination or even all three area, controller and action
             return new Menu()
             {
                 Title = ResourceProvider.GetMenuTitle(menu.Area, menu.Controller, menu.Action),
-                IsActive = menu.Controller == currentController,
+                IsActive = menu.Area == currentArea && menu.Controller == currentController,
                 Controller = menu.Controller,
                 IconClass = menu.IconClass,
                 Action = menu.Action,

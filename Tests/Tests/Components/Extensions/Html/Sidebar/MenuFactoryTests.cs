@@ -97,26 +97,26 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         }
 
         [Test]
-        public void GetAuthorizedMenus_SetsMenuToActiveIfItBelongsToCurrentController()
+        public void GetAuthorizedMenus_SetsMenuToActiveIfItBelongsToCurrentAreaAndController()
         {
-            var controllers = GetMenusAsList(GetExpectedMenus()).Select(menu => menu.Controller).Distinct();
-            foreach (var controller in controllers)
+            var epectedMenus = GetMenusAsList(GetExpectedMenus());
+            foreach (var expected in epectedMenus)
             {
                 var httpContext = new HttpMock().HttpContextBase;
-                httpContext.Request.RequestContext.RouteData.Values["controller"] = controller;
+                httpContext.Request.RequestContext.RouteData.Values["area"] = expected.Area;
+                httpContext.Request.RequestContext.RouteData.Values["controller"] = expected.Controller;
 
                 factory = new MenuFactory(httpContext);
+                expected.Title = GetMenuTitle(expected);
+                expected.IsActive = true;
 
-                var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => menu.Controller == controller);
-                foreach (var expectedItem in expected)
-                {
-                    expectedItem.Title = GetMenuTitle(expectedItem);
-                    expectedItem.IsActive = true;
-                }
+                var actual = GetMenusAsList(factory.GetAuthorizedMenus())
+                    .First(menu =>
+                        expected.Controller == menu.Controller &&
+                        expected.Action == menu.Action &&
+                        expected.Area == menu.Area);
 
-                var actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Controller == controller);
-
-                TestHelper.EnumPropertyWiseEquals(expected, actual);
+                TestHelper.PropertyWiseEquals(expected, actual);
             }
         }
 
@@ -124,10 +124,11 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void GetAuthorizedMenus_SetsMenuToOpenIfAnyOfItsSubmenusAreActiveOrOpen()
         {
             var menuWithSubmenus = GetExpectedMenus().First(menu => menu.Submenus.Count() > 0);
-            var submenuController = menuWithSubmenus.Submenus.First().Controller;
+            var expectedSubmenu = menuWithSubmenus.Submenus.First();
 
             var httpContext = new HttpMock().HttpContextBase;
-            httpContext.Request.RequestContext.RouteData.Values["controller"] = submenuController;
+            httpContext.Request.RequestContext.RouteData.Values["area"] = expectedSubmenu.Area;
+            httpContext.Request.RequestContext.RouteData.Values["controller"] = expectedSubmenu.Controller;
 
             factory = new MenuFactory(httpContext);
 
@@ -135,8 +136,10 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             expectedMenu.Title = GetMenuTitle(expectedMenu);
             expectedMenu.IsOpen = true;
 
-            var actualMenu = factory.GetAuthorizedMenus().First(menu => menu.Submenus.Any(submenu => submenu.Controller == submenuController));
-            var expectedSubmenu = expectedMenu.Submenus.First();
+            var actualMenu = factory.GetAuthorizedMenus()
+                .First(menu => menu.Submenus.Any(submenu =>
+                    submenu.Area == expectedSubmenu.Area &&
+                    submenu.Controller == expectedSubmenu.Controller));
             expectedSubmenu.Title = GetMenuTitle(expectedSubmenu);
             expectedSubmenu.IsActive = true;
 

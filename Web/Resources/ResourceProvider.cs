@@ -63,6 +63,18 @@ namespace Template.Resources
         {
             return GetResourceFrom("Template.Resources.Datalist.Titles", type);
         }
+        public static String GetPrivilegeAreaTitle(String area)
+        {
+            return GetResourceFrom("Template.Resources.Privilege.Area.Titles", area);
+        }
+        public static String GetPrivilegeActionTitle(String action)
+        {
+            return GetResourceFrom("Template.Resources.Privilege.Action.Titles", action);
+        }
+        public static String GetPrivilegeControllerTitle(String controller)
+        {
+            return GetResourceFrom("Template.Resources.Privilege.Controller.Titles", controller);
+        }
         public static String GetMenuTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);

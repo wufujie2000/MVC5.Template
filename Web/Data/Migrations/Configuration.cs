@@ -44,9 +44,6 @@ namespace Template.Data.Migrations
         }
         private void SeedAllPrivileges()
         {
-            var langEN = context.Repository<Language>().Query(language => language.Abbreviation == "en-GB").First().Id;
-            var langLT = context.Repository<Language>().Query(language => language.Abbreviation == "lt-LT").First().Id;
-
             var privileges = new List<Privilege>();
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Index" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Create" });

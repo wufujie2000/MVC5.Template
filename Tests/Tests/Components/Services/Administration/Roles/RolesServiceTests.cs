@@ -1,11 +1,11 @@
 ﻿using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Resources;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
 
@@ -242,34 +242,23 @@ namespace Template.Tests.Tests.Components.Services
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
-            var language = ObjectFactory.CreateLanguage();
 
-            for (Int32 number = 1; number <= 6; number++)
-            {
-                var rolePrivilege = ObjectFactory.CreateRolePrivilege(number);
-                var privilege = ObjectFactory.CreatePrivilege(number);
-                rolePrivilege.PrivilegeId = privilege.Id;
-                rolePrivilege.Privilege = privilege;
-                rolePrivilege.RoleId = role.Id;
-                rolePrivilege.Role = role;
+            var privNumber = 1;
+            var controllers = new[] { "Users", "Roles" };
+            var actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
-                if (number % 3 == 0)
+            foreach (var controller in controllers)
+                foreach (var action in actions)
                 {
-                    privilege.Area = null;
-                    privilege.Controller = "C2";
-                    privilege.Action = "A" + (number / 3).ToString();
-                }
-                else
-                {
-                    privilege.Area = "AR";
-                    if (number % 2 == 0)
-                        privilege.Controller = "C1";
-                    else
-                        privilege.Controller = "C2";
-                }
+                    var rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
+                    rolePrivilege.Privilege = new Privilege() { Area = "Administration", Controller = controller, Action = action };
+                    rolePrivilege.Privilege.Id = rolePrivilege.Id;
+                    rolePrivilege.PrivilegeId = rolePrivilege.Id;
+                    rolePrivilege.RoleId = role.Id;
+                    rolePrivilege.Role = role;
 
-                role.RolePrivileges.Add(rolePrivilege);
-            }
+                    role.RolePrivileges.Add(rolePrivilege);
+                }
 
             context.Set<Role>().Add(role);
             context.SaveChanges();
@@ -296,9 +285,15 @@ namespace Template.Tests.Tests.Components.Services
             var expectedTree = new Tree();
             var rootNode = new TreeNode();
             expectedTree.Nodes.Add(rootNode);
-            rootNode.Name = Template.Resources.Shared.Resources.AllPrivileges;
+            rootNode.Name = Template.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var allPrivileges = context.Set<Privilege>();
+            var allPrivileges = context.Set<Privilege>().ToList().Select(privilege => new
+            {
+                Id = privilege.Id,
+                Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+            });
             foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);

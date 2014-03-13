@@ -144,6 +144,54 @@ namespace Template.Tests.Resources.Tests
 
         #endregion
 
+        #region Static method: GetPrivilegeAreaTitle(String area)
+
+        [Test]
+        public void GetPrivilegeAreaTitle_GetsTitle()
+        {
+            Assert.AreEqual(Template.Resources.Privilege.Area.Titles.Administration, ResourceProvider.GetPrivilegeAreaTitle("Administration"));
+        }
+
+        [Test]
+        public void GetPrivilegeAreaTitle_OnActionNotFoundReturnsEmpty()
+        {
+            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeAreaTitle("Test"));
+        }
+
+        #endregion
+
+        #region Static method: GetPrivilegeControllerTitle(String controller)
+
+        [Test]
+        public void GetPrivilegeControllerTitle_GetsTitle()
+        {
+            Assert.AreEqual(Template.Resources.Privilege.Controller.Titles.Users, ResourceProvider.GetPrivilegeControllerTitle("Users"));
+        }
+
+        [Test]
+        public void GetPrivilegeControllerTitle_OnActionNotFoundReturnsEmpty()
+        {
+            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeControllerTitle("Test"));
+        }
+
+        #endregion
+
+        #region Static method: GetPrivilegeActionTitle(String controller)
+
+        [Test]
+        public void GetPrivilegeActionTitle_GetsTitle()
+        {
+            Assert.AreEqual(Template.Resources.Privilege.Action.Titles.Index, ResourceProvider.GetPrivilegeActionTitle("Index"));
+        }
+
+        [Test]
+        public void GetPrivilegeActionTitle_OnActionNotFoundReturnsEmpty()
+        {
+            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeActionTitle("Test"));
+        }
+
+        #endregion
+
         #region Static method: GetMenuTitle(String area, String controller, String action)
 
         [Test]

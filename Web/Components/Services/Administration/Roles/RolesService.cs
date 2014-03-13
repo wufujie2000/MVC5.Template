@@ -2,6 +2,7 @@
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Resources;
 
 namespace Template.Components.Services
 {
@@ -45,9 +46,15 @@ namespace Template.Components.Services
             var rootNode = new TreeNode();
             role.PrivilegesTree = new Tree();
             role.PrivilegesTree.Nodes.Add(rootNode);
-            rootNode.Name = Resources.Shared.Resources.AllPrivileges;
+            rootNode.Name = Template.Resources.Privilege.Titles.All;
             role.PrivilegesTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var allPrivileges = UnitOfWork.Repository<Privilege>().Query();
+            var allPrivileges = UnitOfWork.Repository<Privilege>().Query().ToList().Select(privilege => new
+            {
+                Id = privilege.Id,
+                Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+            });
             foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);

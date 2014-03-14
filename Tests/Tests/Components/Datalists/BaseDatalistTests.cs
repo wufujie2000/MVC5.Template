@@ -1,10 +1,14 @@
-﻿using Datalist;
+﻿using AutoMapper.QueryableExtensions;
+using Datalist;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Web;
+using Template.Data.Core;
 using Template.Objects;
+using Template.Resources;
 using Template.Resources.Views.RoleView;
+using Template.Tests.Helpers;
 using Template.Tests.Objects.Components.Datalists;
 using Tests.Helpers;
 
@@ -13,7 +17,7 @@ namespace Template.Tests.Tests.Components.Datalists
     [TestFixture]
     public class BaseDatalistTests
     {
-        private BaseDatalistStub<RoleView> datalist;
+        private BaseDatalistStub<Role, RoleView> datalist;
         private HttpRequest request;
 
         [SetUp]
@@ -24,7 +28,7 @@ namespace Template.Tests.Tests.Components.Datalists
             request = contextStub.HttpContext.Request;
             HttpContext.Current = contextStub.HttpContext;
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
-            datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
+            datalist = new Mock<BaseDatalistStub<Role, RoleView>>() { CallBase = true }.Object;
         }
 
         [TearDown]
@@ -44,7 +48,7 @@ namespace Template.Tests.Tests.Components.Datalists
         [Test]
         public void BaseDatalist_SetsDialogTitle()
         {
-            Assert.AreEqual(String.Empty, datalist.DialogTitle);
+            Assert.AreEqual(ResourceProvider.GetDatalistTitle<Role>(), datalist.DialogTitle);
         }
 
         [Test]
@@ -55,7 +59,7 @@ namespace Template.Tests.Tests.Components.Datalists
                 request.Url.Authority,
                 request.RequestContext.RouteData.Values["language"],
                 AbstractDatalist.Prefix,
-                datalist.GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
+                "Role");
             
             Assert.AreEqual(expected, datalist.DatalistUrl);
         }
@@ -64,7 +68,7 @@ namespace Template.Tests.Tests.Components.Datalists
         public void BaseDatalist_SetsDatalistUrlOnDefaultLanguage()
         {
             request.RequestContext.RouteData.Values["language"] = "en-GB";
-            datalist = new Mock<BaseDatalistStub<RoleView>>() { CallBase = true }.Object;
+            datalist = new Mock<BaseDatalistStub<Role, RoleView>>() { CallBase = true }.Object;
 
             var expected = String.Format("{0}://{1}/{2}/{3}",
                 request.Url.Scheme,
@@ -160,6 +164,19 @@ namespace Template.Tests.Tests.Components.Datalists
             var property = typeof(DatalistView).GetProperty("Boolean");
 
             Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
+        }
+
+        #endregion
+
+        #region Method: GetModels()
+
+        [Test]
+        public void GetModels_GetsModelsProjectedToViews()
+        {
+            var expected = new Context().Set<Role>().Project().To<RoleView>();
+            var actual = datalist.BaseGetModels();
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         #endregion

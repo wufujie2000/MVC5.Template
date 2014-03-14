@@ -128,18 +128,18 @@ namespace Template.Tests.Resources.Tests
 
         #endregion
 
-        #region Static method: GetDatalistTitle(String type)
+        #region Static method: GetDatalistTitle<TModel>() where TModel : class
 
         [Test]
         public void GetDatalistTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Datalist.Titles.Roles, ResourceProvider.GetDatalistTitle("Roles"));
+            Assert.AreEqual(Template.Resources.Datalist.Titles.Role, ResourceProvider.GetDatalistTitle<Role>());
         }
 
         [Test]
         public void GetDatalistTitle_OnTypeNotFoundReturnsEmpty()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetDatalistTitle("Test"));
+            Assert.AreEqual(String.Empty, ResourceProvider.GetDatalistTitle<Object>());
         }
 
         #endregion

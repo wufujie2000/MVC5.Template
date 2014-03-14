@@ -59,9 +59,9 @@ namespace Template.Resources
         {
             return GetResourceFrom("Template.Resources.Action.Titles", action);
         }
-        public static String GetDatalistTitle(String type)
+        public static String GetDatalistTitle<TModel>() where TModel : class
         {
-            return GetResourceFrom("Template.Resources.Datalist.Titles", type);
+            return GetResourceFrom("Template.Resources.Datalist.Titles", typeof(TModel).Name);
         }
         public static String GetPrivilegeAreaTitle(String area)
         {

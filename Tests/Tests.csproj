@@ -116,7 +116,6 @@
     <Compile Include="Helpers\HttpMock.cs" />
     <Compile Include="Objects\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Objects\Components\Datalists\DatalistView.cs" />
-    <Compile Include="Objects\Components\Datalists\RolesDatalistStub.cs" />
     <Compile Include="Objects\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Objects\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
     <Compile Include="Tests\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
@@ -124,7 +123,6 @@
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
     <Compile Include="Tests\Components\Alerts\MessagesContainerTests.cs" />
     <Compile Include="Tests\Components\Datalists\BaseDatalistTests.cs" />
-    <Compile Include="Tests\Components\Datalists\RolesDatalistTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormColumnTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormExtensionsTests.cs" />
     <Compile Include="Tests\Components\Extensions\Html\Bootstrap\FormGroupTests.cs" />

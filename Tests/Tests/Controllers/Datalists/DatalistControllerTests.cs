@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Template.Components.Datalists;
 using Template.Controllers.Datalist;
+using Template.Objects;
 using Tests.Helpers;
 
 namespace Template.Tests.Tests.Controllers.Datalists
@@ -84,10 +85,10 @@ namespace Template.Tests.Tests.Controllers.Datalists
         public void Roles_CallsGetDataWithParameters()
         {
             var expectedResult = new JsonResult();
-            controllerMock.Setup(mock => mock.GetData(It.IsAny<RolesDatalist>(), filter, null)).Returns(expectedResult);
-            var actualResult = controller.Roles(filter);
+            controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(expectedResult);
+            var actualResult = controller.Role(filter);
 
-            controllerMock.Verify(mock => mock.GetData(It.IsAny<RolesDatalist>(), filter, null), Times.Once());
+            controllerMock.Verify(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null), Times.Once());
             Assert.AreEqual(expectedResult, actualResult);
         }
 

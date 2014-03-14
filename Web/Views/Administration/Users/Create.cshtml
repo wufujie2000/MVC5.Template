@@ -24,7 +24,7 @@
             @Html.BootstrapFormLabelFor(model => model.UserRoleId)
             using (Html.FormColumn())
             {
-                @Html.DatalistFor(model => model.UserRoleId, new RolesDatalist())
+                @Html.DatalistFor(model => model.UserRoleId, new BaseDatalist<Role, RoleView>())
             }
             @Html.BootstrapValidationFor(model => model.UserRoleId)
         }

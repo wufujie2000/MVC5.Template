@@ -1,5 +1,6 @@
 ﻿using Datalist;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Web;
 using Template.Data.Core;
@@ -8,7 +9,9 @@ using Template.Resources;
 
 namespace Template.Components.Datalists
 {
-    public abstract class BaseDatalist<TView> : GenericDatalist<TView> where TView : BaseView
+    public class BaseDatalist<TModel, TView> : GenericDatalist<TView>
+        where TModel : BaseModel
+        where TView : BaseView
     {
         protected IUnitOfWork UnitOfWork
         {
@@ -16,7 +19,7 @@ namespace Template.Components.Datalists
             set;
         }
 
-        protected BaseDatalist()
+        public BaseDatalist()
         {
             var applicationPath = HttpContext.Current.Request.ApplicationPath ?? "/";
             if (!applicationPath.EndsWith("/"))
@@ -26,14 +29,14 @@ namespace Template.Components.Datalists
             language = language == "en-GB" ? String.Empty : language + "/";
             UnitOfWork = new UnitOfWork(new Context());
 
-            DialogTitle = ResourceProvider.GetDatalistTitle(DialogTitle);
+            DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",
                 HttpContext.Current.Request.Url.Scheme,
                 HttpContext.Current.Request.Url.Authority,
                 applicationPath,
                 language,
                 AbstractDatalist.Prefix,
-                GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
+                typeof(TModel).Name);
         }
         protected override String GetColumnHeader(PropertyInfo property)
         {
@@ -67,6 +70,11 @@ namespace Template.Components.Datalists
                 default:
                     return "text-cell";
             }
+        }
+
+        protected override IQueryable<TView> GetModels()
+        {
+            return UnitOfWork.Repository<TModel>().Query<TView>();
         }
     }
 }

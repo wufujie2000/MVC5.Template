@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Template.Components.Datalists;
 using Template.Components.Security;
+using Template.Objects;
 
 namespace Template.Controllers.Datalist
 {
@@ -17,9 +18,9 @@ namespace Template.Controllers.Datalist
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);
         }
 
-        public virtual JsonResult Roles(DatalistFilter filter)
+        public virtual JsonResult Role(DatalistFilter filter)
         {
-            return GetData(new RolesDatalist(), filter);
+            return GetData(new BaseDatalist<Role, RoleView>(), filter);
         }
     }
 }

@@ -63,9 +63,9 @@ namespace Template.Resources.Datalist {
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
-        public static string Roles {
+        public static string Role {
             get {
-                return ResourceManager.GetString("Roles", resourceCulture);
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
     }

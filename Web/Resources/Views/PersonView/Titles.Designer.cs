@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Template.Resources.Views.UserView {
+namespace Template.Resources.Views.PersonView {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Template.Resources.Views.UserView {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.UserView.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.PersonView.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,29 @@ namespace Template.Resources.Views.UserView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New password.
+        ///   Looks up a localized string similar to Date of birth.
         /// </summary>
-        public static string NewPassword {
+        public static string DateOfBirth {
             get {
-                return ResourceManager.GetString("NewPassword", resourceCulture);
+                return ResourceManager.GetString("DateOfBirth", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to First name.
         /// </summary>
-        public static string Password {
+        public static string FirstName {
             get {
-                return ResourceManager.GetString("Password", resourceCulture);
+                return ResourceManager.GetString("FirstName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to Last name.
         /// </summary>
-        public static string Username {
+        public static string LastName {
             get {
-                return ResourceManager.GetString("Username", resourceCulture);
+                return ResourceManager.GetString("LastName", resourceCulture);
             }
         }
     }

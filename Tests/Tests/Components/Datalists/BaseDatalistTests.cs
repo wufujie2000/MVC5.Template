@@ -74,7 +74,7 @@ namespace Template.Tests.Tests.Components.Datalists
                 request.Url.Scheme,
                 request.Url.Authority,
                 AbstractDatalist.Prefix,
-                datalist.GetType().Name.Replace(AbstractDatalist.Prefix, String.Empty));
+                typeof(Role).Name);
 
             Assert.AreEqual(expected, datalist.DatalistUrl);
         }

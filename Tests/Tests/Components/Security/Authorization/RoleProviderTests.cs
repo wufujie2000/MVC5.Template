@@ -98,11 +98,11 @@ namespace Template.Tests.Tests.Security
         private Account CreateUserWithPrivilegeFor(String area, String controller, String action)
         {
             var account = ObjectFactory.CreateAccount();
-            account.User = ObjectFactory.CreateUser();
-            account.UserId = account.User.Id;
+            account.Person = ObjectFactory.CreatePerson();
+            account.PersonId = account.Person.Id;
 
             var role = ObjectFactory.CreateRole();
-            account.User.RoleId = role.Id;
+            account.Person.RoleId = role.Id;
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
@@ -128,8 +128,8 @@ namespace Template.Tests.Tests.Security
         {
             context = new TestingContext();
 
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<User>().Remove(user);
+            foreach (var user in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(user);
 
             foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);

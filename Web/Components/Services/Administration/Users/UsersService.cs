@@ -33,32 +33,29 @@ namespace Template.Components.Services
         
         public override void Create(UserView view)
         {
-            var user = UnitOfWork.ToModel<UserView, User>(view);
             var account = UnitOfWork.ToModel<UserView, Account>(view);
-
             account.Passhash = BCrypter.HashPassword(view.Password);
-            account.UserId = user.Id; // TODO: Possibly already mapped
 
-            UnitOfWork.Repository<User>().Insert(user);
             UnitOfWork.Repository<Account>().Insert(account);        
             UnitOfWork.Commit();
         }
         public override void Edit(UserView view)
         {
-            var user = UnitOfWork.ToModel<UserView, User>(view);
             var account = UnitOfWork.ToModel<UserView, Account>(view);
+            var person = account.Person;
+
             if (view.NewPassword == null)
                 account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
             else
                 account.Passhash = BCrypter.HashPassword(view.NewPassword);
 
             UnitOfWork.Repository<Account>().Update(account);
-            UnitOfWork.Repository<User>().Update(user);
+            UnitOfWork.Repository<Person>().Update(person);
             UnitOfWork.Commit();
         }
         public override void Delete(String id)
         {
-            UnitOfWork.Repository<User>().Delete(id);
+            UnitOfWork.Repository<Person>().Delete(id);
             UnitOfWork.Commit();
         }
 

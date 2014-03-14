@@ -109,13 +109,13 @@ namespace Template.Components.Services
         private void RemoveRoleFromUsers(String roleId)
         {
             var usersWithRole = UnitOfWork
-                .Repository<User>()
-                .Query(user => user.RoleId == roleId);
+                .Repository<Person>()
+                .Query(person => person.RoleId == roleId);
 
             foreach (var user in usersWithRole)
             {
                 user.RoleId = null;
-                UnitOfWork.Repository<User>().Update(user);
+                UnitOfWork.Repository<Person>().Update(user);
             }
         }
     }

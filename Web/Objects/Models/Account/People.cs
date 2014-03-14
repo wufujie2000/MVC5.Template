@@ -2,7 +2,7 @@
 
 namespace Template.Objects
 {
-    public class User : BaseModel
+    public class Person : BaseModel
     {
         public String FirstName { get; set; }
         public String LastName { get; set; }

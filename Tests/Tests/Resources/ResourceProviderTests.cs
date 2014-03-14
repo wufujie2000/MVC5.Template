@@ -232,8 +232,8 @@ namespace Template.Tests.Resources.Tests
         public void GetPropertyTitle_GetsTitleFromFromExpressionRelation()
         {
             Assert.AreEqual(
-                Template.Resources.Views.UserView.Titles.FirstName,
-                ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.UserFirstName));
+                Template.Resources.Views.PersonView.Titles.FirstName,
+                ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Person.FirstName));
         }
 
         [Test]
@@ -264,8 +264,8 @@ namespace Template.Tests.Resources.Tests
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
             Assert.AreEqual(
-                Template.Resources.Views.UserView.Titles.FirstName,
-                ResourceProvider.GetPropertyTitle(typeof(ProfileView), "UserFirstName"));
+                Template.Resources.Views.PersonView.Titles.FirstName,
+                ResourceProvider.GetPropertyTitle(typeof(ProfileView), "PersonFirstName"));
         }
 
         [Test]

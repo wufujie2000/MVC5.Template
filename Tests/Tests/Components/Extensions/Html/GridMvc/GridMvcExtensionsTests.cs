@@ -67,7 +67,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
             gridHtmlOptionsMock.Setup(mock => mock.Sortable()).Returns(gridHtmlOptions);
 
             roleProviderMock = new Mock<IRoleProvider>();
-            dateTimeFunc = (model) => model.UserDateOfBirth;
+            dateTimeFunc = (model) => model.Person.DateOfBirth;
             accountId = HttpContext.Current.User.Identity.Name;
             RoleProviderFactory.SetInstance(roleProviderMock.Object);
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;

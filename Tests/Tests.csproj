@@ -82,11 +82,11 @@
   <ItemGroup>
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
-    <Compile Include="Data\Migrations\201403091614557_1.cs" />
-    <Compile Include="Data\Migrations\201403091614557_1.Designer.cs">
-      <DependentUpon>201403091614557_1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="Data\Migrations\201403141659100_1.cs" />
+    <Compile Include="Data\Migrations\201403141659100_1.Designer.cs">
+      <DependentUpon>201403141659100_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
@@ -185,11 +185,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201403091614557_1.resx">
-      <DependentUpon>201403091614557_1.cs</DependentUpon>
+    <EmbeddedResource Include="Data\Migrations\201403141659100_1.resx">
+      <DependentUpon>201403141659100_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

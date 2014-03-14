@@ -12,8 +12,6 @@ namespace Template.Objects
         public String CurrentPassword { get; set; }
         public String NewPassword { get; set; }
 
-        public String UserFirstName { get; set; }
-        public String UserLastName { get; set; }
-        public DateTime? UserDateOfBirth { get; set; }
+        public PersonView Person { get; set; }
     }
 }

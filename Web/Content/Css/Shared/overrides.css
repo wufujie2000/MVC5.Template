@@ -1,3 +1,8 @@
+/* bootstrap */
+.input-group .form-control {
+    z-index: 1;
+}
+
 /* jQueryUI datepicker */
 .ui-datepicker th {
     min-width: 35px;

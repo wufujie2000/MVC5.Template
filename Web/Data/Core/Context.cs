@@ -15,12 +15,12 @@ namespace Template.Data.Core
         #region Account
 
         private DbSet<Account> Accounts { get; set; }
+        private DbSet<Person> Persons { get; set; }
 
         #endregion
 
         #region Administration
 
-        private DbSet<User> Users { get; set; }
         private DbSet<Role> Roles { get; set; }
         private DbSet<Privilege> Privileges { get; set; }
         private DbSet<RolePrivilege> RolePrivileges { get; set; }

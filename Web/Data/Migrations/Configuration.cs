@@ -25,7 +25,7 @@ namespace Template.Data.Migrations
             SeedLanguages();
             SeedAllPrivileges();
             SeedAdministratorRole();
-            SeedUsers();
+            SeedPeople();
             SeedAccounts();
         }
         private void SeedLanguages()
@@ -83,17 +83,17 @@ namespace Template.Data.Migrations
 
             context.SaveChanges();
         }
-        private void SeedUsers()
+        private void SeedPeople()
         {
-            var users = new List<User>()
+            var people = new List<Person>()
             {
-                new User() { FirstName = "System", LastName = "Admin", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
-                new User() { FirstName = "Test", LastName = "User", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
+                new Person() { FirstName = "System", LastName = "Admin", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
+                new Person() { FirstName = "Test", LastName = "User", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
             };
 
-            foreach (var user in users)
-                if (!context.Repository<User>().Query(u => u.FirstName == user.FirstName && u.LastName == user.LastName).Any())
-                    context.Repository<User>().Insert(user);
+            foreach (var person in people)
+                if (!context.Repository<Person>().Query(u => u.FirstName == person.FirstName && u.LastName == person.LastName).Any())
+                    context.Repository<Person>().Insert(person);
 
             context.SaveChanges();
         }
@@ -102,11 +102,11 @@ namespace Template.Data.Migrations
             var accounts = new List<Account>()
             {
                 new Account() { Username = "admin", Passhash = "$2a$13$55S8dVpqNTw2xUBeFNwvIeqM0wf7fkFDHd/tsCYj.9AQooMWep/Yi",
-                    UserId = context.Repository<User>().Query(p => p.FirstName == "System").First().Id,
-                    Id = context.Repository<User>().Query(p => p.FirstName == "System").First().Id },
+                    PersonId = context.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
+                    Id = context.Repository<Person>().Query(p => p.FirstName == "System").First().Id },
                 new Account() { Username = "test", Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm",
-                    UserId = context.Repository<User>().Query(p => p.FirstName == "Test").First().Id,
-                    Id = context.Repository<User>().Query(p => p.FirstName == "Test").First().Id }
+                    PersonId = context.Repository<Person>().Query(p => p.FirstName == "Test").First().Id,
+                    Id = context.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
             };
 
             foreach (var account in accounts)

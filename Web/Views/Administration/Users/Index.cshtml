@@ -12,11 +12,11 @@
                 columns.AddActionLink(LinkAction.Delete);
                 
                 columns.AddProperty(model => model.Username);
-                columns.AddProperty(model => model.UserRoleName);
+                columns.AddProperty(model => model.Person.Role.Name);
 
-                columns.AddProperty(model => model.UserFirstName);
-                columns.AddProperty(model => model.UserLastName);
-                columns.AddDateProperty(model => model.UserDateOfBirth);
+                columns.AddProperty(model => model.Person.FirstName);
+                columns.AddProperty(model => model.Person.LastName);
+                columns.AddDateProperty(model => model.Person.DateOfBirth);
             })
             .ApplyAttributes()
     )

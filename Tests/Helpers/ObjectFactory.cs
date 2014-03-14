@@ -20,12 +20,15 @@ namespace Template.Tests.Helpers
             return new ProfileView()
             {
                 Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
                 CurrentPassword = "Password",
                 NewPassword = "NewPassword",
-                UserLastName = "LastName" + instanceNumber.ToString(),
-                UserFirstName = "FirstName" + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                UserDateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
+                Person = new PersonView()
+                {
+                    LastName = "LastName" + instanceNumber.ToString(),
+                    FirstName = "FirstName" + instanceNumber.ToString(),
+                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
+                }
             };
         }
 
@@ -49,9 +52,9 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static User CreateUser(Int32 instanceNumber = 1)
+        public static Person CreatePerson(Int32 instanceNumber = 1)
         {
-            return new User()
+            return new Person()
             {
                 Id = TestId + instanceNumber.ToString(),
                 FirstName = "FirstName" + instanceNumber.ToString(),
@@ -64,12 +67,14 @@ namespace Template.Tests.Helpers
             return new UserView()
             {
                 Id = TestId + instanceNumber.ToString(),
-                UserFirstName = "FirstName" + instanceNumber.ToString(),
-                UserLastName = "LastName" + instanceNumber.ToString(),
-                UserDateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
+                Person = new PersonView()
+                {
+                    LastName = "LastName" + instanceNumber.ToString(),
+                    FirstName = "FirstName" + instanceNumber.ToString(),
+                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
 
-                UserRoleId = TestId + instanceNumber.ToString(),
-                UserRoleName = "UserRoleName" + instanceNumber.ToString(),
+                    RoleId = TestId + instanceNumber.ToString()
+                },
 
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password",

@@ -21,33 +21,33 @@
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.UserRoleId)
+            @Html.BootstrapFormLabelFor(model => model.Person.RoleId)
             using (Html.FormColumn())
             {
-                @Html.DatalistFor(model => model.UserRoleId, new BaseDatalist<Role, RoleView>())
+                @Html.DatalistFor(model => model.Person.RoleId, new BaseDatalist<Role, RoleView>())
             }
-            @Html.BootstrapValidationFor(model => model.UserRoleId)
+            @Html.BootstrapValidationFor(model => model.Person.RoleId)
         }
         using (Html.FormGroup())
         {
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.UserFirstName)
-            @Html.BootstrapTextBoxFor(model => model.UserFirstName)
-            @Html.BootstrapValidationFor(model => model.UserFirstName)
+            @Html.BootstrapFormLabelFor(model => model.Person.FirstName)
+            @Html.BootstrapTextBoxFor(model => model.Person.FirstName)
+            @Html.BootstrapValidationFor(model => model.Person.FirstName)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.UserLastName)
-            @Html.BootstrapTextBoxFor(model => model.UserLastName)
-            @Html.BootstrapValidationFor(model => model.UserLastName)
+            @Html.BootstrapFormLabelFor(model => model.Person.LastName)
+            @Html.BootstrapTextBoxFor(model => model.Person.LastName)
+            @Html.BootstrapValidationFor(model => model.Person.LastName)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.UserDateOfBirth)
-            @Html.BootstrapDatePickerFor(model => model.UserDateOfBirth)
-            @Html.BootstrapValidationFor(model => model.UserDateOfBirth)
+            @Html.BootstrapFormLabelFor(model => model.Person.DateOfBirth)
+            @Html.BootstrapDatePickerFor(model => model.Person.DateOfBirth)
+            @Html.BootstrapValidationFor(model => model.Person.DateOfBirth)
         }
         
         @Html.HiddenFor(model => model.Id)

@@ -70,9 +70,9 @@ namespace Template.Tests.Tests.Components.Services
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             var takenAccount = ObjectFactory.CreateAccount();
-            takenAccount.User = ObjectFactory.CreateUser();
-            takenAccount.User.Id = takenAccount.User.Id + "1";
-            takenAccount.UserId = takenAccount.User.Id + "1";
+            takenAccount.Person = ObjectFactory.CreatePerson();
+            takenAccount.Person.Id = takenAccount.Person.Id + "1";
+            takenAccount.PersonId = takenAccount.Person.Id + "1";
             takenAccount.Username += "1";
             takenAccount.Id += "1";
 
@@ -155,27 +155,27 @@ namespace Template.Tests.Tests.Components.Services
             context = new TestingContext();
             var actual = context.Set<Account>().Find(profileView.Id);
 
-            Assert.AreEqual(expected.UserId, actual.UserId);
+            Assert.AreEqual(expected.PersonId, actual.PersonId);
             Assert.AreEqual(profileView.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
         }
 
         [Test]
-        public void Edit_EditsUser()
+        public void Edit_EditsPerson()
         {
             var profileView = ObjectFactory.CreateProfileView();
-            var expected = context.Set<User>().Find(profileView.Id);
-            profileView.UserDateOfBirth = null;
-            profileView.UserFirstName += "1";
-            profileView.UserLastName += "1";
+            profileView.Person.DateOfBirth = null;
+            profileView.Person.FirstName += "1";
+            profileView.Person.LastName += "1";
             service.Edit(profileView);
 
             context = new TestingContext();
-            var actual = context.Set<User>().Find(profileView.Id);
+            var expected = profileView.Person;
+            var actual = context.Set<Person>().Find(profileView.Id);
 
-            Assert.AreEqual(profileView.UserDateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(profileView.UserFirstName, actual.FirstName);
-            Assert.AreEqual(profileView.UserLastName, actual.LastName);
+            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
+            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.LastName, actual.LastName);
         }
 
         #endregion
@@ -197,13 +197,13 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Delete_DeletesUser()
         {
-            if (context.Set<User>().Find(account.UserId) == null)
+            if (context.Set<Person>().Find(account.PersonId) == null)
                 Assert.Inconclusive();
 
-            service.Delete(account.UserId);
+            service.Delete(account.PersonId);
             context = new TestingContext();
 
-            Assert.IsNull(context.Set<User>().Find(account.UserId));
+            Assert.IsNull(context.Set<Person>().Find(account.PersonId));
         }
 
         #endregion
@@ -229,16 +229,16 @@ namespace Template.Tests.Tests.Components.Services
         private void SetUpData()
         {
             account = ObjectFactory.CreateAccount();
-            account.User = ObjectFactory.CreateUser();
-            account.UserId = account.User.Id;
+            account.Person = ObjectFactory.CreatePerson();
+            account.PersonId = account.Person.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<User>().Remove(user);
+            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(person);
 
             context.SaveChanges();
         }

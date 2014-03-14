@@ -12,14 +12,14 @@ namespace Template.Tests.Tests.Data.Core
     [TestFixture]
     public class RepositoryTests
     {
-        private Repository<User> repository;
+        private Repository<Person> repository;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            repository = new Repository<User>(context);
+            repository = new Repository<Person>(context);
         }
 
         [TearDown]
@@ -33,13 +33,13 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void GetById_GetsModelById()
         {
-            var user = ObjectFactory.CreateUser();
-            context.Set<User>().Add(user);
+            var person = ObjectFactory.CreatePerson();
+            context.Set<Person>().Add(person);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Find(user.Id);
-            var actual = repository.GetById(user.Id);
-            context.Set<User>().Remove(user);
+            var expected = context.Set<Person>().Find(person.Id);
+            var actual = repository.GetById(person.Id);
+            context.Set<Person>().Remove(person);
             context.SaveChanges();
 
             Assert.AreEqual(expected, actual);
@@ -58,7 +58,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Query_ReturnsContextsSet()
         {
-            Assert.AreEqual(context.Set<User>(), repository.Query());
+            Assert.AreEqual(context.Set<Person>(), repository.Query());
         }
 
         #endregion
@@ -68,14 +68,14 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Query_ProjectsContextsSet()
         {
-            var model = ObjectFactory.CreateUser();
-            context.Set<User>().Add(model);
+            var model = ObjectFactory.CreatePerson();
+            context.Set<Person>().Add(model);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Project().To<UserView>().Select(user => user.Id).ToList();
-            var actual = repository.Query<UserView>().Select(user => user.Id).ToList();
+            var expected = context.Set<Person>().Project().To<PersonView>().Select(person => person.Id).ToList();
+            var actual = repository.Query<PersonView>().Select(person => person.Id).ToList();
 
-            context.Set<User>().Remove(model);
+            context.Set<Person>().Remove(model);
             context.SaveChanges();
 
             CollectionAssert.AreEqual(expected, actual);
@@ -88,17 +88,17 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Query_FiltersByPredicate()
         {
-            var model1 = ObjectFactory.CreateUser(1);
-            var model2 = ObjectFactory.CreateUser(2);
-            context.Set<User>().Add(model1);
-            context.Set<User>().Add(model2);
+            var model1 = ObjectFactory.CreatePerson(1);
+            var model2 = ObjectFactory.CreatePerson(2);
+            context.Set<Person>().Add(model1);
+            context.Set<Person>().Add(model2);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Where(user => user.Id == model1.Id).ToList();
-            var actual = repository.Query().Where(user => user.Id == model1.Id).ToList();
+            var expected = context.Set<Person>().Where(person => person.Id == model1.Id).ToList();
+            var actual = repository.Query().Where(person => person.Id == model1.Id).ToList();
 
-            context.Set<User>().Remove(model1);
-            context.Set<User>().Remove(model2);
+            context.Set<Person>().Remove(model1);
+            context.Set<Person>().Remove(model2);
             context.SaveChanges();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
@@ -111,17 +111,17 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Query_FiltersProjectedViewsByPredicate()
         {
-            var model1 = ObjectFactory.CreateUser(1);
-            var model2 = ObjectFactory.CreateUser(2);
-            context.Set<User>().Add(model1);
-            context.Set<User>().Add(model2);
+            var person1 = ObjectFactory.CreatePerson(1);
+            var person2 = ObjectFactory.CreatePerson(2);
+            context.Set<Person>().Add(person1);
+            context.Set<Person>().Add(person2);
             context.SaveChanges();
 
-            var expected = context.Set<User>().Project().To<UserView>().Where(user => user.Id == model1.Id).ToList();
-            var actual = repository.Query<UserView>(user => user.Id == model1.Id).ToList();
+            var expected = context.Set<Person>().Project().To<PersonView>().Where(person => person.Id == person1.Id).ToList();
+            var actual = repository.Query<PersonView>(person => person.Id == person1.Id).ToList();
 
-            context.Set<User>().Remove(model1);
-            context.Set<User>().Remove(model2);
+            context.Set<Person>().Remove(person1);
+            context.Set<Person>().Remove(person2);
             context.SaveChanges();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
@@ -134,12 +134,12 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Insert_InsertsModel()
         {
-            var expected = ObjectFactory.CreateUser();
+            var expected = ObjectFactory.CreatePerson();
             repository.Insert(expected);
             context.SaveChanges();
 
-            var actual = context.Set<User>().Find(expected.Id);
-            context.Set<User>().Remove(expected);
+            var actual = context.Set<Person>().Find(expected.Id);
+            context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -152,16 +152,16 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Update_UpdatesAttachedModel()
         {
-            var expected = ObjectFactory.CreateUser();
-            context.Set<User>().Add(expected);
+            var expected = ObjectFactory.CreatePerson();
+            context.Set<Person>().Add(expected);
             context.SaveChanges();
 
             expected.FirstName = "Test";
             repository.Update(expected);
             context.SaveChanges();
 
-            var actual = context.Set<User>().Find(expected.Id);
-            context.Set<User>().Remove(expected);
+            var actual = context.Set<Person>().Find(expected.Id);
+            context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -170,18 +170,18 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Update_UpdatesNotAttachedModel()
         {
-            var expected = ObjectFactory.CreateUser();
-            context.Set<User>().Add(expected);
+            var expected = ObjectFactory.CreatePerson();
+            context.Set<Person>().Add(expected);
             context.SaveChanges();
 
             expected.FirstName = "Test";
             context = new TestingContext();
-            repository = new Repository<User>(context);
+            repository = new Repository<Person>(context);
             repository.Update(expected);
             context.SaveChanges();
 
-            var actual = context.Set<User>().Find(expected.Id);
-            context.Set<User>().Remove(expected);
+            var actual = context.Set<Person>().Find(expected.Id);
+            context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -194,17 +194,17 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Delete_DeletesModel()
         {
-            var expected = ObjectFactory.CreateUser();
+            var expected = ObjectFactory.CreatePerson();
             repository.Insert(expected);
             context.SaveChanges();
 
             repository.Delete(expected);
             context.SaveChanges();
 
-            var actual = context.Set<User>().Find(expected.Id);
+            var actual = context.Set<Person>().Find(expected.Id);
             if (actual != null)
             {
-                context.Set<User>().Remove(expected);
+                context.Set<Person>().Remove(expected);
                 context.SaveChanges();
             }
 
@@ -218,17 +218,17 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Delete_DeletesModelById()
         {
-            var expected = ObjectFactory.CreateUser();
+            var expected = ObjectFactory.CreatePerson();
             repository.Insert(expected);
             context.SaveChanges();
 
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            var actual = context.Set<User>().Find(expected.Id);
+            var actual = context.Set<Person>().Find(expected.Id);
             if (actual != null)
             {
-                context.Set<User>().Remove(expected);
+                context.Set<Person>().Remove(expected);
                 context.SaveChanges();
             }
 

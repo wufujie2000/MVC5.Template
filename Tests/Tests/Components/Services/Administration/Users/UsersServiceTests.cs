@@ -120,7 +120,7 @@ namespace Template.Tests.Tests.Components.Services
 
             var actual = context.Set<Account>().Find(expected.Id);
 
-            Assert.AreEqual(expected.Id, actual.UserId);
+            Assert.AreEqual(expected.Id, actual.PersonId);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
         }
@@ -135,15 +135,15 @@ namespace Template.Tests.Tests.Components.Services
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            expected.UserRoleId = role.Id;
+            expected.Person.RoleId = role.Id;
             service.Create(expected);
 
-            var actual = context.Set<User>().Find(expected.Id);
+            var actual = context.Set<Person>().Find(expected.Id);
 
-            Assert.AreEqual(expected.UserDateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(expected.UserFirstName, actual.FirstName);
-            Assert.AreEqual(expected.UserLastName, actual.LastName);
-            Assert.AreEqual(expected.UserRoleId, actual.RoleId);
+            Assert.AreEqual(expected.Person.DateOfBirth, actual.DateOfBirth);
+            Assert.AreEqual(expected.Person.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.Person.LastName, actual.LastName);
+            Assert.AreEqual(expected.Person.RoleId, actual.RoleId);
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Edit_EditsAccount()
         {
-            var expected = service.GetView(account.UserId);
+            var expected = service.GetView(account.PersonId);
             expected.NewPassword += "1";
             expected.Username += "1";
             service.Edit(expected);
@@ -161,28 +161,29 @@ namespace Template.Tests.Tests.Components.Services
             context = new TestingContext();
             var actual = context.Set<Account>().Find(expected.Id);
 
-            Assert.AreEqual(expected.Id, actual.UserId);
+            Assert.AreEqual(expected.Id, actual.PersonId);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(expected.NewPassword, actual.Passhash));
         }
 
         [Test]
-        public void Edit_EditsUser()
+        public void Edit_EditsPerson()
         {
-            var expected = service.GetView(account.UserId);
-            expected.UserDateOfBirth = null;
-            expected.UserFirstName += "1";
-            expected.UserLastName += "1";
-            expected.UserRoleId = null;
-            service.Edit(expected);
+            var userView = service.GetView(account.PersonId);
+            userView.Person.DateOfBirth = null;
+            userView.Person.FirstName += "1";
+            userView.Person.LastName += "1";
+            userView.Person.RoleId = null;
+            service.Edit(userView);
 
             context = new TestingContext();
-            var actual = context.Set<User>().Find(expected.Id);
+            var expected = userView.Person;
+            var actual = context.Set<Person>().Find(userView.Id);
 
-            Assert.AreEqual(expected.UserDateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(expected.UserFirstName, actual.FirstName);
-            Assert.AreEqual(expected.UserLastName, actual.LastName);
-            Assert.AreEqual(expected.UserRoleId, actual.RoleId);
+            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
+            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
         }
 
         #endregion
@@ -204,13 +205,13 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Delete_DeletesUser()
         {
-            if (context.Set<User>().Find(account.UserId) == null)
+            if (context.Set<Person>().Find(account.PersonId) == null)
                 Assert.Inconclusive();
 
-            service.Delete(account.UserId);
+            service.Delete(account.PersonId);
             context = new TestingContext();
 
-            Assert.IsNull(context.Set<User>().Find(account.UserId));
+            Assert.IsNull(context.Set<Person>().Find(account.PersonId));
         }
 
         #endregion
@@ -220,18 +221,18 @@ namespace Template.Tests.Tests.Components.Services
         private void SetUpData()
         {
             account = ObjectFactory.CreateAccount();
-            account.User = ObjectFactory.CreateUser();
-            account.User.Role = ObjectFactory.CreateRole();
-            account.User.RoleId = account.User.Role.Id;
-            account.UserId = account.User.Id;
+            account.Person = ObjectFactory.CreatePerson();
+            account.Person.Role = ObjectFactory.CreateRole();
+            account.Person.RoleId = account.Person.Role.Id;
+            account.PersonId = account.Person.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<User>().Remove(user);
+            foreach (var user in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(user);
 
             foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);

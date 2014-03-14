@@ -28,7 +28,7 @@ namespace Template.Components.Security
                 .Repository<Account>()
                 .Query(account =>
                     account.Id == accountId &&
-                    account.User.Role.RolePrivileges.Any(rolePrivilege =>
+                    account.Person.Role.RolePrivileges.Any(rolePrivilege =>
                         rolePrivilege.Privilege.Area == area &&
                         rolePrivilege.Privilege.Controller == controller &&
                         rolePrivilege.Privilege.Action == action))

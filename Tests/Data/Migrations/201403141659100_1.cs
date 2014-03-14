@@ -1,5 +1,6 @@
 namespace Template.Tests.Data.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
     public partial class _1 : DbMigration
@@ -13,14 +14,14 @@ namespace Template.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false),
                         Passhash = c.String(nullable: false),
-                        UserId = c.String(nullable: false, maxLength: 128),
+                        PersonId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId);
+                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
+                .Index(t => t.PersonId);
             
             CreateTable(
-                "dbo.Users",
+                "dbo.People",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -90,12 +91,12 @@ namespace Template.Tests.Data.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Accounts", "UserId", "dbo.Users");
-            DropForeignKey("dbo.Users", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.Accounts", "PersonId", "dbo.People");
+            DropForeignKey("dbo.People", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropIndex("dbo.Accounts", new[] { "UserId" });
-            DropIndex("dbo.Users", new[] { "RoleId" });
+            DropIndex("dbo.Accounts", new[] { "PersonId" });
+            DropIndex("dbo.People", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropTable("dbo.TestModels");
@@ -103,7 +104,7 @@ namespace Template.Tests.Data.Migrations
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");
-            DropTable("dbo.Users");
+            DropTable("dbo.People");
             DropTable("dbo.Accounts");
         }
     }

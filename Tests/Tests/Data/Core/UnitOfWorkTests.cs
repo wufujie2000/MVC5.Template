@@ -31,7 +31,7 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Repository_UsesContextsRepository()
         {
-            Assert.AreEqual(context.Repository<User>(), unitOfWork.Repository<User>());
+            Assert.AreEqual(context.Repository<Person>(), unitOfWork.Repository<Person>());
         }
 
         #endregion
@@ -42,8 +42,8 @@ namespace Template.Tests.Tests.Data.Core
         public void ToModel_ConvertsViewToModel()
         {
             var view = ObjectFactory.CreateUserView();
-            var expected = Mapper.Map<UserView, User>(view);
-            var actual = unitOfWork.ToModel<UserView, User>(view);
+            var expected = Mapper.Map<UserView, Account>(view);
+            var actual = unitOfWork.ToModel<UserView, Account>(view);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -55,12 +55,12 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void ToView_ConvertsModelToView()
         {
-            var model = ObjectFactory.CreateUser();
+            var model = ObjectFactory.CreatePerson();
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            var expected = Mapper.Map<User, UserView>(model);
-            var actual = unitOfWork.ToView<User, UserView>(model);
+            var expected = Mapper.Map<Person, PersonView>(model);
+            var actual = unitOfWork.ToView<Person, PersonView>(model);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -72,13 +72,13 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            var model = ObjectFactory.CreateUser();
-            context.Set<User>().Add(model);
+            var model = ObjectFactory.CreatePerson();
+            context.Set<Person>().Add(model);
 
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            Assert.IsNull(unitOfWork.Repository<User>().GetById(model.Id));
+            Assert.IsNull(unitOfWork.Repository<Person>().GetById(model.Id));
         }
 
         #endregion
@@ -88,12 +88,12 @@ namespace Template.Tests.Tests.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            var expected = ObjectFactory.CreateUser();
-            unitOfWork.Repository<User>().Insert(expected);
+            var expected = ObjectFactory.CreatePerson();
+            unitOfWork.Repository<Person>().Insert(expected);
             unitOfWork.Commit();
 
-            var actual = unitOfWork.Repository<User>().GetById(expected.Id);
-            unitOfWork.Repository<User>().Delete(expected);
+            var actual = unitOfWork.Repository<Person>().GetById(expected.Id);
+            unitOfWork.Repository<Person>().Delete(expected);
             unitOfWork.Commit();
 
             TestHelper.PropertyWiseEquals(expected, actual);

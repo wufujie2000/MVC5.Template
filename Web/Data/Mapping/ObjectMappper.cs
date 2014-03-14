@@ -17,26 +17,19 @@ namespace Template.Data.Mapping
 
         private static void MapUsers()
         {
-            Mapper.CreateMap<Account, ProfileView>();
+            Mapper.CreateMap<Person, PersonView>();
+            Mapper.CreateMap<PersonView, Person>();
 
             Mapper.CreateMap<Account, AccountView>();
-            Mapper.CreateMap<AccountView, Account>();
-
+            Mapper.CreateMap<Account, ProfileView>();
             Mapper.CreateMap<Account, UserView>();
-            Mapper.CreateMap<UserView, Account>()
-                .ForMember(account => account.UserId, property => property.MapFrom(user => user.Id));
 
-            Mapper.CreateMap<User, UserView>()
-                .ForMember(view => view.UserDateOfBirth, property => property.MapFrom(user => user.DateOfBirth))
-                .ForMember(view => view.UserFirstName, property => property.MapFrom(user => user.FirstName))
-                .ForMember(view => view.UserLastName, property => property.MapFrom(user => user.LastName))
-                .ForMember(view => view.UserRoleId, property => property.MapFrom(user => user.RoleId))
-                .ForMember(view => view.UserRoleName, property => property.MapFrom(user => user.Role != null ? user.Role.Name : null));
-            Mapper.CreateMap<UserView, User>()
-                .ForMember(user => user.DateOfBirth, property => property.MapFrom(view => view.UserDateOfBirth))
-                .ForMember(user => user.FirstName, property => property.MapFrom(view => view.UserFirstName))
-                .ForMember(user => user.LastName, property => property.MapFrom(view => view.UserLastName))
-                .ForMember(user => user.RoleId, property => property.MapFrom(view => view.UserRoleId));
+            Mapper.CreateMap<AccountView, Account>();
+            Mapper.CreateMap<UserView, Account>()
+                .AfterMap((user, account) => {
+                    account.Person.Id = account.Id;
+                    account.PersonId = account.Id;
+                });
         }
 
         private static void MapRoles()

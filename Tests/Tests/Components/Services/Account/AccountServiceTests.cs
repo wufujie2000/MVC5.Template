@@ -181,16 +181,16 @@ namespace Template.Tests.Tests.Components.Services
         private void SetUpData()
         {
             var account = ObjectFactory.CreateAccount();
-            account.User = ObjectFactory.CreateUser();
-            account.UserId = account.User.Id;
+            account.Person = ObjectFactory.CreatePerson();
+            account.PersonId = account.Person.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<User>().Remove(user);
+            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(person);
 
             context.SaveChanges();
         }

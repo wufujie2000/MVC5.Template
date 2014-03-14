@@ -56,14 +56,10 @@ namespace Template.Tests.Tests.Controllers.Administration.Users
             var actual = (controller.Create() as ViewResult).Model as UserView;
 
             Assert.IsNotNull(actual.Id);
+            Assert.IsNull(actual.Person);
             Assert.IsNull(actual.Password);
             Assert.IsNull(actual.Username);
-            Assert.IsNull(actual.UserRoleId);
             Assert.IsNull(actual.NewPassword);
-            Assert.IsNull(actual.UserLastName);
-            Assert.IsNull(actual.UserRoleName);
-            Assert.IsNull(actual.UserFirstName);
-            Assert.IsNull(actual.UserDateOfBirth);
         }
 
         #endregion

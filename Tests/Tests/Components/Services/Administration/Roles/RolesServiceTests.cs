@@ -125,15 +125,15 @@ namespace Template.Tests.Tests.Components.Services
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_NullifiesDeletedRoleInUsers()
+        public void Delete_NullifiesDeletedRoleInPerson()
         {
-            if (!context.Set<User>().Any(user => user.RoleId == role.Id))
+            if (!context.Set<Person>().Any(person => person.RoleId == role.Id))
                 Assert.Inconclusive();
 
             service.Delete(role.Id);
             context = new TestingContext();
 
-            Assert.IsFalse(context.Set<User>().Any(user => user.RoleId == role.Id));
+            Assert.IsFalse(context.Set<Person>().Any(person => person.RoleId == role.Id));
         }
 
         [Test]
@@ -234,11 +234,11 @@ namespace Template.Tests.Tests.Components.Services
         private void SetUpData()
         {
             var account = ObjectFactory.CreateAccount();
-            account.User = ObjectFactory.CreateUser();
-            account.UserId = account.User.Id;
+            account.Person = ObjectFactory.CreatePerson();
+            account.PersonId = account.Person.Id;
 
             role = ObjectFactory.CreateRole();
-            account.User.RoleId = role.Id;
+            account.Person.RoleId = role.Id;
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
@@ -265,8 +265,8 @@ namespace Template.Tests.Tests.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var user in context.Set<User>().Where(user => user.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<User>().Remove(user);
+            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(person);
 
             foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);

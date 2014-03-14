@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DateOfBirth" xml:space="preserve">
-    <value>Gimimo data</value>
-  </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>Vardas</value>
-  </data>
-  <data name="LastName" xml:space="preserve">
-    <value>Pavardė</value>
-  </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Naujas slaptažodis</value>
   </data>

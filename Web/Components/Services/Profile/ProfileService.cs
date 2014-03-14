@@ -37,14 +37,14 @@ namespace Template.Components.Services
         public override void Edit(ProfileView profile)
         {
             UnitOfWork.Repository<Account>().Update(GetAccountFrom(profile));
-            UnitOfWork.Repository<User>().Update(GetUserFrom(profile));
+            UnitOfWork.Repository<Person>().Update(GetUserFrom(profile));
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
         }
         public override void Delete(String id)
         {
-            UnitOfWork.Repository<User>().Delete(id);
+            UnitOfWork.Repository<Person>().Delete(id);
             UnitOfWork.Commit();
         }
 
@@ -105,12 +105,12 @@ namespace Template.Components.Services
 
             return account;
         }
-        private User GetUserFrom(ProfileView profile)
+        private Person GetUserFrom(ProfileView profile)
         {
-            var user = UnitOfWork.Repository<User>().GetById(HttpContext.Current.User.Identity.Name);
-            user.DateOfBirth = profile.UserDateOfBirth;
-            user.FirstName = profile.UserFirstName;
-            user.LastName = profile.UserLastName;
+            var user = UnitOfWork.Repository<Person>().GetById(HttpContext.Current.User.Identity.Name);
+            user.DateOfBirth = profile.Person.DateOfBirth;
+            user.FirstName = profile.Person.FirstName;
+            user.LastName = profile.Person.LastName;
 
             return user;
         }

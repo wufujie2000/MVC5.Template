@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PasswordFieldIsRequired" xml:space="preserve">
-    <value>Slaptažodžio laukas yra privalomas</value>
+  <data name="IllegalPassword" xml:space="preserve">
+    <value>Slaptažodžio lauką turi sudaryti bent 8 simboliai iš didžiūjų, mažūjų raidžių ir skaičių</value>
   </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
     <value>Vartotojo vardas jau užimtas</value>

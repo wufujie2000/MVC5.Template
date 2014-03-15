@@ -17,7 +17,7 @@ namespace Template.Components.Services
 
         public virtual Boolean CanCreate(TView view)
         {
-            return ModelState.IsValid; // TODO: Add AntiForgeryToken for sensitive data
+            return ModelState.IsValid;
         }
         public virtual Boolean CanEdit(TView view)
         {

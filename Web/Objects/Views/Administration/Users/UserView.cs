@@ -8,7 +8,6 @@ namespace Template.Objects
         [Required]
         public String Username { get; set; }
         public String Password { get; set; }
-        public String NewPassword { get; set; }
 
         public PersonView Person { get; set; }
     }

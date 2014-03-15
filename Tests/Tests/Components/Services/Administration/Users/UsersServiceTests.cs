@@ -58,13 +58,43 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordIsNotSpecified()
+        public void CanCreate_CanNotCreateIfPasswordIsTooShort()
         {
             var userView = ObjectFactory.CreateUserView();
-            userView.Password = "       ";
+            userView.Password = "AaaAaa1";
 
             Assert.IsFalse(service.CanCreate(userView));
-            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.PasswordFieldIsRequired);
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateIfPasswordDoesNotContainUpperLetter()
+        {
+            var userView = ObjectFactory.CreateUserView();
+            userView.Password = "aaaaaaaaaaaa1";
+
+            Assert.IsFalse(service.CanCreate(userView));
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateIfPasswordDoesNotContainLowerLetter()
+        {
+            var userView = ObjectFactory.CreateUserView();
+            userView.Password = "AAAAAAAAAAA1";
+
+            Assert.IsFalse(service.CanCreate(userView));
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateIfPasswordDoesNotContainADigit()
+        {
+            var userView = ObjectFactory.CreateUserView();
+            userView.Password = "AaAaAaAaAaAa";
+
+            Assert.IsFalse(service.CanCreate(userView));
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.IllegalPassword);
         }
 
         [Test]
@@ -154,7 +184,6 @@ namespace Template.Tests.Tests.Components.Services
         public void Edit_EditsAccount()
         {
             var expected = service.GetView(account.PersonId);
-            expected.NewPassword += "1";
             expected.Username += "1";
             service.Edit(expected);
 
@@ -163,7 +192,6 @@ namespace Template.Tests.Tests.Components.Services
 
             Assert.AreEqual(expected.Id, actual.PersonId);
             Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsTrue(BCrypter.Verify(expected.NewPassword, actual.Passhash));
         }
 
         [Test]

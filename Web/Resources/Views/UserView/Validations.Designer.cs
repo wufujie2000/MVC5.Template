@@ -61,11 +61,11 @@ namespace Template.Resources.Views.UserView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password field is required.
+        ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit).
         /// </summary>
-        public static string PasswordFieldIsRequired {
+        public static string IllegalPassword {
             get {
-                return ResourceManager.GetString("PasswordFieldIsRequired", resourceCulture);
+                return ResourceManager.GetString("IllegalPassword", resourceCulture);
             }
         }
         

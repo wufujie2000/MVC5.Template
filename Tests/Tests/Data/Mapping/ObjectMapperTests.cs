@@ -55,7 +55,6 @@ namespace Template.Tests.Data.Mapping
 
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.NewPassword);
             Assert.IsNull(actual.Password);
         }
 
@@ -123,7 +122,6 @@ namespace Template.Tests.Data.Mapping
             Assert.AreEqual(expected.Person.RoleId, actual.Person.RoleId);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.NewPassword);
             Assert.IsNull(actual.Password);
         }
 

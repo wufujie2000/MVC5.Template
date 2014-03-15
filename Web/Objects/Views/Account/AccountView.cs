@@ -10,6 +10,5 @@ namespace Template.Objects
 
         [Required]
         public String Password { get; set; }
-        public String NewPassword { get; set; }
     }
 }

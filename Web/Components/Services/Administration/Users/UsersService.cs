@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
@@ -19,7 +20,7 @@ namespace Template.Components.Services
         {
             Boolean isValid = base.CanCreate(view);
             isValid &= IsUniqueUsername(view);
-            isValid &= IsPasswordSpecified(view);
+            isValid &= IsPasswordLegal(view);
 
             return isValid;
         }
@@ -42,12 +43,8 @@ namespace Template.Components.Services
         public override void Edit(UserView view)
         {
             var account = UnitOfWork.ToModel<UserView, Account>(view);
+            account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
             var person = account.Person;
-
-            if (view.NewPassword == null)
-                account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
-            else
-                account.Passhash = BCrypter.HashPassword(view.NewPassword);
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Repository<Person>().Update(person);
@@ -73,13 +70,13 @@ namespace Template.Components.Services
             
             return isUnique;
         }
-        private Boolean IsPasswordSpecified(UserView user)
+        private Boolean IsPasswordLegal(UserView user)
         {
-            Boolean isSpecified = !String.IsNullOrWhiteSpace(user.Password);
-            if (!isSpecified)
-                ModelState.AddModelError("Password", Validations.PasswordFieldIsRequired);
+            Boolean isLegal = Regex.IsMatch(user.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            if (!isLegal)
+                ModelState.AddModelError("Password", Validations.IllegalPassword);
 
-            return isSpecified;
+            return isLegal;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
@@ -20,8 +21,9 @@ namespace Template.Components.Services
         public override Boolean CanEdit(ProfileView profile)
         {
             Boolean isValid = base.CanEdit(profile);
-            isValid &= IsUniqueUsername(profile);
             isValid &= IsCorrectPassword(profile);
+            isValid &= IsUniqueUsername(profile);
+            isValid &= IsPasswordLegal(profile);
 
             return isValid;
         }
@@ -105,6 +107,16 @@ namespace Template.Components.Services
                 ModelState.AddModelError("CurrentPassword", Validations.IncorrectPassword);
 
             return isCorrectPassword;
+        }
+        private Boolean IsPasswordLegal(ProfileView profile)
+        {
+            if (profile.NewPassword == null) return true;
+
+            Boolean isLegal = Regex.IsMatch(profile.NewPassword, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            if (!isLegal)
+                ModelState.AddModelError("NewPassword", Validations.IllegalPassword);
+
+            return isLegal;
         }
     }
 }

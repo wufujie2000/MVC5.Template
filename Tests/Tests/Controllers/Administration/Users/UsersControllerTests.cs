@@ -59,7 +59,6 @@ namespace Template.Tests.Tests.Controllers.Administration.Users
             Assert.IsNull(actual.Person);
             Assert.IsNull(actual.Password);
             Assert.IsNull(actual.Username);
-            Assert.IsNull(actual.NewPassword);
         }
 
         #endregion

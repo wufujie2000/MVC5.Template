@@ -97,6 +97,46 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
+        public void CanEdit_CanNotEditIfNewPasswordIsTooShort()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "AaaAaa1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainUpperLetter()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "aaaaaaaaaaaa1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainLowerLetter()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "AAAAAAAAAAA1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainADigit()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "AaAaAaAaAaAa";
+
+            Assert.IsFalse(service.CanEdit(profile));
+            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
         public void CanEdit_CanEditValidProfile()
         {
             Assert.IsTrue(service.CanEdit(ObjectFactory.CreateProfileView()));

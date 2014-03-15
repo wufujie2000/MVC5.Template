@@ -21,7 +21,7 @@ namespace Template.Tests.Helpers
             {
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                Passhash = "$2a$04$aalrk68zd5esaX9/ihL//OwwN/ORg12CToxkgXCzK0jfH0z1h/PK.", // Password
+                Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
             };
         }
         public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
@@ -29,8 +29,8 @@ namespace Template.Tests.Helpers
             return new ProfileView()
             {
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                CurrentPassword = "Password",
-                NewPassword = "NewPassword",
+                CurrentPassword = "Password1",
+                NewPassword = "NewPassword1",
                 Person = new PersonView()
                 {
                     LastName = "LastName" + instanceNumber.ToString(),
@@ -45,8 +45,7 @@ namespace Template.Tests.Helpers
             {
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                Password = "Password",
-                NewPassword = "NewPassword"
+                Password = "Password1"
             };
         }
         public static UserView CreateUserView(Int32 instanceNumber = 1)
@@ -62,8 +61,7 @@ namespace Template.Tests.Helpers
                 },
 
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                Password = "Password",
-                NewPassword = "NewPassword"
+                Password = "Password1"
             };
         }
 

@@ -38,23 +38,14 @@ namespace Template.Components.Services
 
         public override void Edit(ProfileView profile)
         {
-            profile.Id = HttpContext.Current.User.Identity.Name;
-            var account = UnitOfWork.ToModel<ProfileView, Account>(profile);
-            if (profile.NewPassword == null)
-                account.Passhash = BCrypter.HashPassword(profile.CurrentPassword);
-            else
-                account.Passhash = BCrypter.HashPassword(profile.NewPassword);
-
-            account.PersonId = profile.Id;
-            var person = account.Person;
-            person.Id = profile.Id;
-
+            var account = GetAccountFrom(profile);
             UnitOfWork.Repository<Account>().Update(account);
-            UnitOfWork.Repository<Person>().Update(person);
+            UnitOfWork.Repository<Person>().Update(account.Person);
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
         }
+
         public override void Delete(String id)
         {
             UnitOfWork.Repository<Person>().Delete(id);
@@ -117,6 +108,23 @@ namespace Template.Components.Services
                 ModelState.AddModelError("NewPassword", Validations.IllegalPassword);
 
             return isLegal;
+        }
+
+        private Account GetAccountFrom(ProfileView profile)
+        {
+            var account = UnitOfWork.ToModel<ProfileView, Account>(profile);
+            account.Id = HttpContext.Current.User.Identity.Name;
+
+            if (profile.NewPassword == null)
+                account.Passhash = BCrypter.HashPassword(profile.CurrentPassword);
+            else
+                account.Passhash = BCrypter.HashPassword(profile.NewPassword);
+
+            account.PersonId = account.Id;
+            account.Person.Id = account.Id;
+            account.Person.RoleId = UnitOfWork.Repository<Person>().GetById(account.Person.Id).RoleId;
+
+            return account;
         }
     }
 }

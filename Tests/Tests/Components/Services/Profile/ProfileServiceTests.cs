@@ -58,15 +58,6 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
-        public void CanEdit_CanEditUsingItsOwnUsername()
-        {
-            var profile = ObjectFactory.CreateProfileView();
-            profile.Username = account.Username.ToUpper();
-
-            Assert.IsTrue(service.CanEdit(profile));
-        }
-
-        [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             var takenAccount = ObjectFactory.CreateAccount();
@@ -137,6 +128,24 @@ namespace Template.Tests.Tests.Components.Services
         }
 
         [Test]
+        public void CanEdit_CanEditUsingItsOwnUsername()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.Username = account.Username.ToUpper();
+
+            Assert.IsTrue(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_CanEditWithoutSpecifyingNewPassword()
+        {
+            var profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = null;
+
+            Assert.IsTrue(service.CanEdit(profile));
+        }
+
+        [Test]
         public void CanEdit_CanEditValidProfile()
         {
             Assert.IsTrue(service.CanEdit(ObjectFactory.CreateProfileView()));
@@ -193,7 +202,7 @@ namespace Template.Tests.Tests.Components.Services
             service.Edit(profileView);
 
             context = new TestingContext();
-            var actual = context.Set<Account>().Find(profileView.Id);
+            var actual = context.Set<Account>().Find(account.Id);
 
             Assert.AreEqual(expected.PersonId, actual.PersonId);
             Assert.AreEqual(profileView.Username, actual.Username);
@@ -208,7 +217,7 @@ namespace Template.Tests.Tests.Components.Services
             service.Edit(profileView);
 
             context = new TestingContext();
-            var actual = context.Set<Account>().Find(profileView.Id);
+            var actual = context.Set<Account>().Find(account.Id);
 
             Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
         }
@@ -216,6 +225,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void Edit_EditsPerson()
         {
+            var expectedRoleId = account.Person.RoleId;
             var profileView = ObjectFactory.CreateProfileView();
             profileView.Person.DateOfBirth = null;
             profileView.Person.FirstName += "1";
@@ -224,11 +234,12 @@ namespace Template.Tests.Tests.Components.Services
 
             context = new TestingContext();
             var expected = profileView.Person;
-            var actual = context.Set<Person>().Find(profileView.Id);
+            var actual = context.Set<Person>().Find(account.PersonId);
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
             Assert.AreEqual(expected.FirstName, actual.FirstName);
             Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expectedRoleId, actual.RoleId);
         }
 
         #endregion
@@ -283,6 +294,8 @@ namespace Template.Tests.Tests.Components.Services
         {
             account = ObjectFactory.CreateAccount();
             account.Person = ObjectFactory.CreatePerson();
+            account.Person.Role = ObjectFactory.CreateRole();
+            account.Person.RoleId = account.Person.Role.Id;
             account.PersonId = account.Person.Id;
 
             context.Set<Account>().Add(account);
@@ -292,6 +305,8 @@ namespace Template.Tests.Tests.Components.Services
         {
             foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
+            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Role>().Remove(role);
 
             context.SaveChanges();
         }

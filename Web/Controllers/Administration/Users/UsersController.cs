@@ -28,7 +28,7 @@ namespace Template.Controllers.Administration
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserView user)
         {
-            if (!Service.CanCreate(user)) //TODO: Add minimal req for strong typed password
+            if (!Service.CanCreate(user))
                 return View();
 
             Service.Create(user);

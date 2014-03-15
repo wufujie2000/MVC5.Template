@@ -231,8 +231,8 @@ namespace Template.Tests.Tests.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var user in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Person>().Remove(user);
+            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Person>().Remove(person);
 
             foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);

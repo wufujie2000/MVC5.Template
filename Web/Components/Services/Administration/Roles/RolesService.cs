@@ -36,7 +36,7 @@ namespace Template.Components.Services
         }
         public override void Delete(String id)
         {
-            RemoveRoleFromUsers(id);
+            RemoveRoleFromPeople(id);
             UnitOfWork.Repository<Role>().Delete(id);
             UnitOfWork.Commit();
         }
@@ -106,16 +106,16 @@ namespace Template.Components.Services
                 });
         }
 
-        private void RemoveRoleFromUsers(String roleId)
+        private void RemoveRoleFromPeople(String roleId)
         {
-            var usersWithRole = UnitOfWork
+            var peopleWithRole = UnitOfWork
                 .Repository<Person>()
                 .Query(person => person.RoleId == roleId);
 
-            foreach (var user in usersWithRole)
+            foreach (var person in peopleWithRole)
             {
-                user.RoleId = null;
-                UnitOfWork.Repository<Person>().Update(user);
+                person.RoleId = null;
+                UnitOfWork.Repository<Person>().Update(person);
             }
         }
     }

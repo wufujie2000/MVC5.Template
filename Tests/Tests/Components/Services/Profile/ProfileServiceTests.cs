@@ -148,7 +148,7 @@ namespace Template.Tests.Tests.Components.Services
         public void Edit_EditsAccount()
         {
             var profileView = ObjectFactory.CreateProfileView();
-            var expected = context.Set<Account>().Find(profileView.Id);
+            var expected = context.Set<Account>().Find(account.Id);
             profileView.Username += "1";
             service.Edit(profileView);
 
@@ -158,6 +158,19 @@ namespace Template.Tests.Tests.Components.Services
             Assert.AreEqual(expected.PersonId, actual.PersonId);
             Assert.AreEqual(profileView.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
+        }
+
+        [Test]
+        public void Edit_LeavesCurrentPassword()
+        {
+            var profileView = ObjectFactory.CreateProfileView();
+            profileView.NewPassword = null;
+            service.Edit(profileView);
+
+            context = new TestingContext();
+            var actual = context.Set<Account>().Find(profileView.Id);
+
+            Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
         }
 
         [Test]

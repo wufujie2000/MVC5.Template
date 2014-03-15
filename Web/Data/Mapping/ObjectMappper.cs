@@ -21,10 +21,12 @@ namespace Template.Data.Mapping
             Mapper.CreateMap<PersonView, Person>();
 
             Mapper.CreateMap<Account, AccountView>();
-            Mapper.CreateMap<Account, ProfileView>();
-            Mapper.CreateMap<Account, UserView>();
-
             Mapper.CreateMap<AccountView, Account>();
+
+            Mapper.CreateMap<Account, ProfileView>();
+            Mapper.CreateMap<ProfileView, Account>();
+
+            Mapper.CreateMap<Account, UserView>();
             Mapper.CreateMap<UserView, Account>()
                 .AfterMap((user, account) => {
                     account.Person.Id = account.Id;

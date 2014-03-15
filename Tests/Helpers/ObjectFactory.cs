@@ -15,11 +15,19 @@ namespace Template.Tests.Helpers
             }
         }
 
+        public static Account CreateAccount(Int32 instanceNumber = 1)
+        {
+            return new Account()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                Passhash = "$2a$04$aalrk68zd5esaX9/ihL//OwwN/ORg12CToxkgXCzK0jfH0z1h/PK.", // Password
+            };
+        }
         public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
         {
             return new ProfileView()
             {
-                Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 CurrentPassword = "Password",
                 NewPassword = "NewPassword",
@@ -29,16 +37,6 @@ namespace Template.Tests.Helpers
                     FirstName = "FirstName" + instanceNumber.ToString(),
                     DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
                 }
-            };
-        }
-
-        public static Account CreateAccount(Int32 instanceNumber = 1)
-        {
-            return new Account()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Passhash = "$2a$04$aalrk68zd5esaX9/ihL//OwwN/ORg12CToxkgXCzK0jfH0z1h/PK.", // Password
             };
         }
         public static AccountView CreateAccountView(Int32 instanceNumber = 1)
@@ -51,17 +49,6 @@ namespace Template.Tests.Helpers
                 NewPassword = "NewPassword"
             };
         }
-
-        public static Person CreatePerson(Int32 instanceNumber = 1)
-        {
-            return new Person()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                FirstName = "FirstName" + instanceNumber.ToString(),
-                LastName = "LastName" + instanceNumber.ToString(),
-                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
-            };
-        }
         public static UserView CreateUserView(Int32 instanceNumber = 1)
         {
             return new UserView()
@@ -71,14 +58,35 @@ namespace Template.Tests.Helpers
                 {
                     LastName = "LastName" + instanceNumber.ToString(),
                     FirstName = "FirstName" + instanceNumber.ToString(),
-                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
-
-                    RoleId = TestId + instanceNumber.ToString()
+                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
                 },
 
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password",
                 NewPassword = "NewPassword"
+            };
+        }
+
+        public static Person CreatePerson(Int32 instanceNumber = 1)
+        {
+            return new Person()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                LastName = "LastName" + instanceNumber.ToString(),
+                FirstName = "FirstName" + instanceNumber.ToString(),
+                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
+            };
+        }
+        public static PersonView CreatePersonView(Int32 instanceNumber = 1)
+        {
+            return new PersonView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                LastName = "LastName" + instanceNumber.ToString(),
+                FirstName = "FirstName" + instanceNumber.ToString(),
+                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
+
+                RoleId = TestId + instanceNumber.ToString()
             };
         }
 

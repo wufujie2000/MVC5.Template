@@ -36,8 +36,19 @@ namespace Template.Components.Services
 
         public override void Edit(ProfileView profile)
         {
-            UnitOfWork.Repository<Account>().Update(GetAccountFrom(profile));
-            UnitOfWork.Repository<Person>().Update(GetUserFrom(profile));
+            profile.Id = HttpContext.Current.User.Identity.Name;
+            var account = UnitOfWork.ToModel<ProfileView, Account>(profile);
+            if (profile.NewPassword == null)
+                account.Passhash = BCrypter.HashPassword(profile.CurrentPassword);
+            else
+                account.Passhash = BCrypter.HashPassword(profile.NewPassword);
+
+            account.PersonId = profile.Id;
+            var person = account.Person;
+            person.Id = profile.Id;
+
+            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Repository<Person>().Update(person);
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
@@ -94,25 +105,6 @@ namespace Template.Components.Services
                 ModelState.AddModelError("CurrentPassword", Validations.IncorrectPassword);
 
             return isCorrectPassword;
-        }
-
-        private Account GetAccountFrom(ProfileView profile)
-        {
-            var account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
-            account.Username = profile.Username;
-            if (profile.NewPassword != null)
-                account.Passhash = BCrypter.HashPassword(profile.NewPassword);
-
-            return account;
-        }
-        private Person GetUserFrom(ProfileView profile)
-        {
-            var user = UnitOfWork.Repository<Person>().GetById(HttpContext.Current.User.Identity.Name);
-            user.DateOfBirth = profile.Person.DateOfBirth;
-            user.FirstName = profile.Person.FirstName;
-            user.LastName = profile.Person.LastName;
-
-            return user;
         }
     }
 }

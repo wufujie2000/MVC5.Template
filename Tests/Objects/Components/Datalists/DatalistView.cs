@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Datalist;
+using System;
 using Template.Objects;
 
 namespace Template.Tests.Objects.Components.Datalists
@@ -14,6 +15,9 @@ namespace Template.Tests.Objects.Components.Datalists
         public DateTime? NullableDate { get; set; }
         public Decimal? NullableNumber { get; set; }
         public TestEnum? NullableEnum { get; set; }
+
+        [DatalistColumn(Relation = "Text")]
+        public DatalistView Child { get; set; }
     }
 
     public enum TestEnum

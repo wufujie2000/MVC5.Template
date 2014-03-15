@@ -20,6 +20,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         {
             html = new HtmlMock().Html;
             html.ViewContext.HttpContext.Request.RequestContext.RouteData.Values["controller"] = "Roles";
+            html.ViewContext.HttpContext.Request.RequestContext.RouteData.Values["area"] = "Administration";
         }
 
         #region Extension method: SidebarSearch(this HtmlHelper html)

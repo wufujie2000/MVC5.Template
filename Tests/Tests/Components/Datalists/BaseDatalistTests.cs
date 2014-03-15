@@ -24,11 +24,11 @@ namespace Template.Tests.Tests.Components.Datalists
         public void SetUp()
         {
             var contextStub = new HttpMock();
-
             request = contextStub.HttpContext.Request;
             HttpContext.Current = contextStub.HttpContext;
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
-            datalist = new Mock<BaseDatalistStub<Role, RoleView>>() { CallBase = true }.Object;
+
+            datalist = new BaseDatalistStub<Role, RoleView>();
         }
 
         [TearDown]
@@ -68,7 +68,7 @@ namespace Template.Tests.Tests.Components.Datalists
         public void BaseDatalist_SetsDatalistUrlOnDefaultLanguage()
         {
             request.RequestContext.RouteData.Values["language"] = "en-GB";
-            datalist = new Mock<BaseDatalistStub<Role, RoleView>>() { CallBase = true }.Object;
+            datalist = new BaseDatalistStub<Role, RoleView>();
 
             var expected = String.Format("{0}://{1}/{2}/{3}",
                 request.Url.Scheme,
@@ -92,10 +92,11 @@ namespace Template.Tests.Tests.Components.Datalists
         }
 
         [Test]
-        [Ignore]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            Assert.Inconclusive();
+            var property = typeof(DatalistView).GetProperty("Child");
+
+            Assert.AreEqual(String.Empty, datalist.BaseGetColumnHeader(property));
         }
 
         #endregion

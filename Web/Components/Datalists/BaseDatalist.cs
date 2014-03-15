@@ -41,7 +41,7 @@ namespace Template.Components.Datalists
         protected override String GetColumnHeader(PropertyInfo property)
         {
             var column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
-            if (column.Relation != null)
+            if (column != null && column.Relation != null)
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
             
             return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);

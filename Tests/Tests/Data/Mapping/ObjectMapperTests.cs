@@ -19,6 +19,60 @@ namespace Template.Tests.Data.Mapping
         #region Static method: MapUsers()
 
         [Test]
+        public void MapUsers_MapsPersonToPersonView()
+        {
+            var expected = ObjectFactory.CreatePerson();
+            expected.Role = ObjectFactory.CreateRole();
+            var actual = Mapper.Map<Person, PersonView>(expected);
+
+            Assert.IsNotNull(actual.Role);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
+        }
+
+        [Test]
+        public void MapUsers_MapsPersonViewToPerson()
+        {
+            var expected = ObjectFactory.CreatePersonView();
+            var actual = Mapper.Map<PersonView, Person>(expected);
+
+            Assert.IsNull(actual.Role);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expected.FirstName, actual.FirstName);
+            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
+        }
+
+        [Test]
+        public void MapUsers_MapsAccountToAccountView()
+        {
+            var expected = ObjectFactory.CreateAccount();
+            var actual = Mapper.Map<Account, AccountView>(expected);
+
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.NewPassword);
+            Assert.IsNull(actual.Password);
+        }
+
+        [Test]
+        public void MapUsers_MapsAccountViewToAccount()
+        {
+            var expected = ObjectFactory.CreateAccountView();
+            var actual = Mapper.Map<AccountView, Account>(expected);
+
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.Passhash);
+            Assert.IsNull(actual.PersonId);
+            Assert.IsNull(actual.Person);
+        }
+
+        [Test]
         public void MapUsers_MapsAccountToProfileView()
         {
             var expected = ObjectFactory.CreateAccount();
@@ -36,19 +90,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsAccountToAccountView()
-        {
-            var expected = ObjectFactory.CreateAccount();
-            var actual = Mapper.Map<Account, AccountView>(expected);
-
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.NewPassword);
-            Assert.IsNull(actual.Password);
-        }
-
-        [Test]
-        public void MapUsers_MapsAccountViewToAccount()
+        public void MapUsers_MapsProfileViewToAccount()
         {
             var expected = ObjectFactory.CreateAccountView();
             var actual = Mapper.Map<AccountView, Account>(expected);

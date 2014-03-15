@@ -77,8 +77,8 @@ namespace Template.Components.Services
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id, DateTime.Now, DateTime.Now.AddMonths(1), true, account.Id);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
             {
-                HttpOnly = false,
-                Expires = ticket.Expiration
+                Expires = ticket.Expiration,
+                HttpOnly = true
             };
 
             HttpContext.Current.Response.Cookies.Add(cookie);

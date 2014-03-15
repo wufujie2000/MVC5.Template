@@ -146,7 +146,7 @@ namespace Template.Tests.Tests.Components.Services
             var accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            Assert.IsFalse(HttpContext.Current.Response.Cookies[0].HttpOnly);
+            Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
         }
 
         [Test]

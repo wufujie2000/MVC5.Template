@@ -165,19 +165,28 @@
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
     <Content Include="Scripts\Datalist\datalist.min.js" />
+    <Content Include="Scripts\Globalize\globalize.js" />
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.en-GB.js" />
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.lt-LT.js" />
-    <Content Include="Scripts\Globalize\globalize.js" />
+    <Content Include="Scripts\Globalize\globalize.min.js" />
+    <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.en-GB.js" />
+    <Content Include="Scripts\GridMvc\gridmvc.min.js" />
     <Content Include="Scripts\GridMvc\gridmvc.js" />
-    <Content Include="Scripts\GridMvc\gridmvc.lang.lt.js" />
+    <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.lt-LT.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.validate.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.0.min.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\JsTree\jstree.min.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\Login\login.js" />
+    <Content Include="Scripts\Select2\select2.min.js" />
     <Content Include="Scripts\Select2\select2.js" />
     <Content Include="Scripts\Shared\shared.js" />
     <Content Include="Scripts\Sidebar\sidebar.js" />
@@ -266,6 +275,7 @@
   <ItemGroup>
     <Content Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

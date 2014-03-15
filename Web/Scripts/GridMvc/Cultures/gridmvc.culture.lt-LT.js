@@ -1,11 +1,11 @@
 ﻿window.GridMvc = window.GridMvc || {};
 window.GridMvc.lang = window.GridMvc.lang || {};
-GridMvc.lang.lt = {
+GridMvc.lang["lt-LT"] = {
     filterTypeLabel: "Filtro tipas: ",
     filterValueLabel: "Reikšmė:",
     applyFilterButtonText: "Taikyti filtrą",
     filterSelectTypes: {
-        Equals: "Lygu",
+        Equals: "Lygus",
         StartsWith: "Prasideda",
         Contains: "Reikšmėje yra",
         EndsWith: "Pasibaigia",

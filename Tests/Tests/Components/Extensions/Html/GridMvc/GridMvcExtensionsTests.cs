@@ -60,6 +60,7 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
             gridHtmlOptionsMock = new Mock<IGridHtmlOptions<UserView>>(MockBehavior.Strict);
             gridHtmlOptions = gridHtmlOptionsMock.Object;
 
+            gridHtmlOptionsMock.Setup(mock => mock.SetLanguage(It.IsAny<String>())).Returns(gridHtmlOptions);
             gridHtmlOptionsMock.Setup(mock => mock.WithPaging(It.IsAny<Int32>())).Returns(gridHtmlOptions);
             gridHtmlOptionsMock.Setup(mock => mock.Named(It.IsAny<String>())).Returns(gridHtmlOptions);
             gridHtmlOptionsMock.Setup(mock => mock.WithMultipleFilters()).Returns(gridHtmlOptions);
@@ -351,6 +352,14 @@ namespace Template.Tests.Tests.Components.Extensions.GridMvc
         #endregion
 
         #region Extension method: ApplyAttributes<T>(this IGridHtmlOptions<T> options) where T : class
+
+        [Test]
+        public void ApplyAttributes_CallsSetLanguage()
+        {
+            gridHtmlOptions.ApplyAttributes();
+
+            gridHtmlOptionsMock.Verify(mock => mock.SetLanguage(CultureInfo.CurrentCulture.Name), Times.Once());
+        }
 
         [Test]
         public void ApplyAttributes_CallsNamed()

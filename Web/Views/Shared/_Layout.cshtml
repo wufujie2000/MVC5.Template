@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="@{@Request.RequestContext.RouteData.Values["language"]}">
 <head>
     <meta charset="UTF-8" />
     <title>@ResourceProvider.GetCurrentContentTitle()</title>
@@ -37,15 +37,17 @@
     </div>
     @Html.Partial("_Footer")
 </body>
+    @Scripts.Render("~/Scripts/Globalize")
     @Scripts.Render("~/Scripts/Bootstrap")
     @Scripts.Render("~/Scripts/JQueryUI")
     @Scripts.Render("~/Scripts/GridMvc")
     @Scripts.Render("~/Scripts/JsTree")
     @Scripts.Render("~/Scripts/Datalist")
-    @Scripts.Render("~/Scripts/Globalize")
-
+    
+    <script src="~/Scripts/GridMvc/Cultures/gridmvc.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
+    <script src="~/Scripts/JQuery/Cultures/datepicker.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
     <script src="~/Scripts/Datalist/Cultures/datalist.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
     <script src="~/Scripts/Globalize/Cultures/globalize.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
-    <script src="~/Scripts/JQuery/Cultures/datepicker.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
+
     @Scripts.Render("~/Scripts/Shared")
 </html>

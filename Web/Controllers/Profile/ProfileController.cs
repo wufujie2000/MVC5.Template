@@ -21,6 +21,7 @@ namespace Template.Controllers.Profile
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileView profile)
         {
             if (Service.CanEdit(profile))
@@ -41,6 +42,7 @@ namespace Template.Controllers.Profile
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(ProfileView profile)
         {
             if (!Service.CanDelete(profile))

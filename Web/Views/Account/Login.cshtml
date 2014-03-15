@@ -3,6 +3,8 @@
 @using (Html.BeginForm())
 {
     @Html.Partial("_AlertMessages")
+    @Html.AntiForgeryToken()
+
     using (Html.InputGroup())
     {
         @Html.LoginUsernameFor(model => model.Username)

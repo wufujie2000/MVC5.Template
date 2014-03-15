@@ -25,9 +25,10 @@ namespace Template.Controllers.Administration
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(UserView user)
         {
-            if (!Service.CanCreate(user))
+            if (!Service.CanCreate(user)) //TODO: Add minimal req for strong typed password
                 return View();
 
             Service.Create(user);
@@ -47,6 +48,7 @@ namespace Template.Controllers.Administration
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(UserView user)
         {
             if (!Service.CanEdit(user))
@@ -67,6 +69,7 @@ namespace Template.Controllers.Administration
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(String id)
         {
             if (!Service.CanDelete(id))

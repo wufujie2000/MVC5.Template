@@ -108,6 +108,7 @@
     <Compile Include="Tests\Controllers\Datalists\DatalistControllerTests.cs" />
     <Compile Include="Tests\Controllers\Home\HomeControllerTests.cs" />
     <Compile Include="Tests\Controllers\Profile\ProfileControllerTests.cs" />
+    <Compile Include="Tests\Controllers\SecurityTests.cs" />
     <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />

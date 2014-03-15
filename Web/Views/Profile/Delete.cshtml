@@ -22,6 +22,7 @@
     }
     using(Html.BeginForm())
     {
+        @Html.AntiForgeryToken()
         using (Html.FormGroup())
         {
             @Html.BootstrapFormLabelFor(model => model.Username)

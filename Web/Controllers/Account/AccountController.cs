@@ -25,6 +25,7 @@ namespace Template.Controllers.Account
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(AccountView account, String returnUrl)
         {
             if (!Service.CanLogin(account))

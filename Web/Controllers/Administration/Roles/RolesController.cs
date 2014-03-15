@@ -28,6 +28,7 @@ namespace Template.Controllers.Administration
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RoleView role)
         {
             if (!Service.CanCreate(role))
@@ -50,6 +51,7 @@ namespace Template.Controllers.Administration
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(RoleView role)
         {
             if (!Service.CanEdit(role))
@@ -70,6 +72,7 @@ namespace Template.Controllers.Administration
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(String id)
         {
             if (!Service.CanDelete(id))

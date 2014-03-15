@@ -112,17 +112,14 @@ namespace Template.Components.Services
 
         private Account GetAccountFrom(ProfileView profile)
         {
-            var account = UnitOfWork.ToModel<ProfileView, Account>(profile);
-            account.Id = HttpContext.Current.User.Identity.Name;
-
-            if (profile.NewPassword == null)
-                account.Passhash = BCrypter.HashPassword(profile.CurrentPassword);
-            else
+            var account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
+            account.Username = profile.Username;
+            if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
 
-            account.PersonId = account.Id;
-            account.Person.Id = account.Id;
-            account.Person.RoleId = UnitOfWork.Repository<Person>().GetById(account.Person.Id).RoleId;
+            account.Person.DateOfBirth = profile.Person.DateOfBirth;
+            account.Person.FirstName = profile.Person.FirstName;
+            account.Person.LastName = profile.Person.LastName;
 
             return account;
         }

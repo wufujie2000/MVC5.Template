@@ -1,5 +1,8 @@
 // Header
 (function () {
+    $(document).on('mouseleave', '.dropdown', function () {
+        $(this).removeClass('open');
+    });
     $(document).on('mouseleave', '.dropdown-menu', function () {
         $(this).parent().removeClass('open');
     });

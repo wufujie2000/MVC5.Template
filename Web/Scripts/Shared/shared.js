@@ -155,6 +155,10 @@
     $.validator.methods.date = function (value, element) {
         return this.optional(element) || Globalize.parseDate(value);
     };
+    $.validator.methods.number = function (value, element) {
+        var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
+        return this.optional(element) || pattern.test(value);
+    };
 }());
 
 (function () {

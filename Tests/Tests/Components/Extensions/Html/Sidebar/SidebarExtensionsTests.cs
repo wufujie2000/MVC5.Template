@@ -79,8 +79,8 @@ namespace Template.Tests.Tests.Components.Extensions.Html
                 menuInnerHtml.Append(submenus);
             }
 
+            if (menu.HasActiveChild) menuItem.AddCssClass("has-active-child open");
             if (menu.IsActive) menuItem.AddCssClass("active active-hovering");
-            if (menu.IsOpen) menuItem.AddCssClass("open");
             menuItem.InnerHtml = menuInnerHtml.ToString();
             return menuItem.ToString();
         }

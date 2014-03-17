@@ -1,4 +1,4 @@
-// Header
+// Dropdown closure
 (function () {
     $(document).on('mouseleave', '.dropdown', function () {
         $(this).removeClass('open');
@@ -43,124 +43,19 @@
     });
 }());
 
-// Sidebar navigation resize
-(function () {
-    /*$(window).on('resize', function () {
-        wwidth = $(window).width();
-        if (wwidth >= 768 && wwidth <= 991) {
-            $('#SidebarNavigation > ul > li.open ul').attr('style', '').parent().removeClass('open');
-            $('#SidebarNavigation > ul').css({ 'display': 'block' });
-        }
-
-        if (wwidth <= 767){
-            $('#Sidebar').niceScroll();
-            $('#Sidebar').getNiceScroll().resize();
-
-            if ($(window).scrollTop() > 35) {
-                $('body').addClass('fixed');
-            }
-            $(window).scroll(function () {
-                if ($(window).scrollTop() > 35) {
-                    $('body').addClass('fixed');
-                } else {
-                    $('body').removeClass('fixed');
-                }
-            });
-        }
-
-        if (wwidth > 767) {
-            $('#SidebarNavigation > ul').css({ 'display': 'block' });
-
-            $('body').removeClass('menu-open');
-            $('#Sidebar').attr('style', '');
-            $('#TopNavigation > ul').css({ width: 'auto', margin: '0' });
-        }
-
-    });
-
-    if ($(window).width() <= 767) {
-        if ($(window).scrollTop() > 35) {
-            $('body').addClass('fixed');
-        }
-        $(window).scroll(function () {
-            if ($(window).scrollTop() > 35) {
-                $('body').addClass('fixed');
-            } else {
-                $('body').removeClass('fixed');
-            }
-        });
-
-        $('#Sidebar').niceScroll({
-            zindex: '9999'
-        });
-        $('#Sidebar').getNiceScroll().resize();
-    }
-
-    if ($(window).width() > 767) {
-        $('#SidebarNavigation > ul').css({ 'display': 'block' });
-    }
-    if ($(window).width() > 767 && $(window).width() < 992) {
-        $('#SidebarNavigation > ul > li.open ul').css({ 'display': 'none' });
-    }
-
-    $(document).on('click', '#SidebarTrigger', function () {
-        if ($(window).width() <= 767) {
-            if ($('body').hasClass('menu-open')) {
-                $('body').removeClass('menu-open');
-            } else {
-                $('body').addClass('menu-open');
-            }
-        }
-        return false;
-    });
-
-    $(document).on('click', '.submenu > a', function (e) {
-        e.preventDefault();
-        var submenu = $(this).siblings('ul');
-        var li = $(this).parents('li');
-
-        var submenus = $('#Sidebar li.submenu ul');
-        var submenus_parents = $('#Sidebar li.submenu');
-
-        if (li.hasClass('open')) {
-            if (($(window).width() > 976) || ($(window).width() < 768)) {
-                submenu.slideUp();
-            } else {
-                submenu.fadeOut(150);
-            }
-            li.removeClass('open');
-        } else {
-            if (($(window).width() > 976) || ($(window).width() < 768)) {
-                submenus.slideUp();
-                submenu.slideDown();
-            } else {
-                submenus.fadeOut(150);
-                submenu.fadeIn(150);
-            }
-            submenus_parents.removeClass('open');
-            li.addClass('open');
-        }
-        $('#Sidebar').getNiceScroll().resize();
-    });
-
-    $(document).on('mouseleave', '#Sidebar li.submenu ul', function () {
-        if ($(window).width() >= 768 && $(window).width() < 977) {
-            $(this).fadeOut(150).parent().removeClass('open');
-        }
-    });*/
-}());
-
-// Globalization
+// Globalization binding
 (function () {
     $.validator.methods.date = function (value, element) {
         return this.optional(element) || Globalize.parseDate(value);
     };
+
     $.validator.methods.number = function (value, element) {
         var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
         return this.optional(element) || pattern.test(value);
     };
 }());
 
+// Datepicker binding
 (function () {
     $(".datepicker").datepicker();
 }());
@@ -200,7 +95,7 @@
     });
 }());
 
-// Datalist
+// Datalist binding
 (function () {
     $('.datalist-input').datalist();
 }());

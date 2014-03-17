@@ -6,7 +6,7 @@ namespace Template.Objects
     public class Menu
     {
         public Boolean IsActive { get; set; }
-        public Boolean IsOpen { get; set; }
+        public Boolean HasActiveChild { get; set; }
         public String IconClass { get; set; }
         public String Title { get; set; }
 

@@ -1,24 +1,10 @@
-﻿#SidebarTrigger {
-    position: absolute;
-    margin-left: 6px;
-    font-size: 20px;
-    color: #CCCCCC;
-    top: 0;
-}
-
-    #SidebarTrigger:hover {
-        color: #FFFFFF;
-    }
-
-#Sidebar {
+﻿#Sidebar {
     width: 200px;
     float: left;
 }
 
 #SidebarSearch {
-    border-bottom-color: rgba(255, 255, 255, 0.15);
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     margin: 10px;
 }
 
@@ -38,15 +24,16 @@
 }
 
 #SidebarNavigationList {
-    border-bottom: 1px solid #383c45;
-    border-top: 1px solid #2a2d34;
+    border-bottom: 1px solid #383C45;
+    border-top: 1px solid #2A2D34;
     padding: 0;
     margin: 0;
 }
 
     #SidebarNavigationList > li {
-        border-bottom: 1px solid #2a2d34;
-        border-top: 1px solid #383c45;
+        border-bottom: 1px solid #2A2D34;
+        border-top: 1px solid #383C45;
+        position: relative;
     }
 
         #SidebarNavigationList > li > a {
@@ -63,14 +50,16 @@
     }
 
         #SidebarNavigationList .active a {
-            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0) !important;
+            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
             color: #FFFFFF;
         }
 
     #SidebarNavigationList > li.active-hovering,
-    #SidebarNavigationList > li.active-hovering a {
+    #SidebarNavigationList > li.has-active-child.active-hovering,
+    #SidebarNavigationList > li.active-hovering a,
+    #SidebarNavigationList > li.has-active-child.active-hovering a {
+        background-color: inherit;
         font-weight: inherit;
-        background: inherit;
         color: #AAAAAA;
     }
 
@@ -97,6 +86,7 @@
     }
 
     #SidebarNavigationList ul {
+        list-style: none;
         padding: 0;
         margin: 0;
     }
@@ -118,8 +108,8 @@
 
         #SidebarNavigationList > li > ul > li.active-hovering,
         #SidebarNavigationList > li > ul > li.active-hovering a {
+            background-color: #3C414A;
             font-weight: normal;
-            background: #3C414A;
             color: #AAAAAA;
         }
 
@@ -140,3 +130,98 @@
                 background: #474D58;
                 color: #AAAAAA;
             }
+
+@media (max-width: 767px) {
+    #Sidebar {
+        width: 45px;
+    }
+
+    #SidebarSearch {
+        display: none;
+    }
+    
+    #SidebarNavigationList > li .active {
+        font-weight: normal;
+        background: #3C414A;
+    }
+    
+    #SidebarNavigationList > li .active a {
+        background-image: none;
+        color: #AAAAAA;
+    }
+
+    #SidebarNavigationList > li.has-active-child {
+        background: #1AAEF3;
+        color: #FFFFFF;
+    }
+
+        #SidebarNavigationList > li.has-active-child > a {
+            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+            color: #FFFFFF;
+        }
+
+    #SidebarNavigationList > li.active-child-hovering,
+    #SidebarNavigationList > li.active-child-hovering > a {
+        background-color: inherit;
+        font-weight: inherit;
+        color: #AAAAAA;
+    }
+
+    #SidebarNavigationList > li.open a,
+    #SidebarNavigationList > li.opening a {
+        background-image: none;
+    }
+
+    #SidebarNavigationList > li.active-child-hovering > ul > li a:hover {
+        background: #1AAEF3;
+        font-weight: bold;
+        color: #FFFFFF;
+    }
+
+    #SidebarNavigationList > li > ul > li > a,
+    #SidebarNavigationList > li > ul > li > ul > li > a {
+        padding: 6px 0 6px 8px;
+        font-size: 10px;
+    }
+
+    #SidebarNavigationList > li > a {
+        text-align: center;
+        padding-left: 0;
+    }
+
+    #SidebarNavigationList > li > a > span {
+        display: none;
+    }
+
+    #SidebarNavigationList > li > ul {
+        position: absolute;
+        width: 100px;
+        z-index: 2;
+        left: 45px;
+        top: 0;
+    }
+
+    #SidebarNavigationList > li > ul .menu-icon {
+        width: 10px;
+    }
+
+    #SidebarNavigationList > li > ul > li:first-child,
+    #SidebarNavigationList > li > ul > li > ul > li:first-child {
+        border-top: none;
+    }
+
+    #SidebarNavigationList > li > ul > li > ul > li.active,
+    #SidebarNavigationList > li > ul > li > ul > li.active a {
+        font-weight: normal;
+        background: #474D58;
+        color: #AAAAAA;
+    }
+
+    #SidebarNavigationList > li > ul > li > ul {
+        position: absolute;
+        width: 100px;
+        left: 100px;
+        z-index: 2;
+        top: 0;
+    }
+}

@@ -121,7 +121,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         }
 
         [Test]
-        public void GetAuthorizedMenus_SetsMenuToOpenIfAnyOfItsSubmenusAreActiveOrOpen()
+        public void GetAuthorizedMenus_SetsChildActiveIfAnyOfItsSubmenusAreActiveOrHasActiveChild()
         {
             var menuWithSubmenus = GetExpectedMenus().First(menu => menu.Submenus.Count() > 0);
             var expectedSubmenu = menuWithSubmenus.Submenus.First();
@@ -134,7 +134,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
 
             var expectedMenu = menuWithSubmenus;
             expectedMenu.Title = GetMenuTitle(expectedMenu);
-            expectedMenu.IsOpen = true;
+            expectedMenu.HasActiveChild = true;
 
             var actualMenu = factory.GetAuthorizedMenus()
                 .First(menu => menu.Submenus.Any(submenu =>

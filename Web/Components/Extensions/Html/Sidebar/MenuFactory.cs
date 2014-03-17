@@ -73,7 +73,7 @@ namespace Template.Components.Extensions.Html
                 {
                     var authorizedMenu = CreateAuthorized(menu);
                     authorizedMenu.Submenus = GetAuthorizedMenus(menu.Submenus);
-                    authorizedMenu.IsOpen = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.IsOpen);
+                    authorizedMenu.HasActiveChild = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveChild);
 
                     if (!IsEmpty(authorizedMenu))
                         yield return authorizedMenu;

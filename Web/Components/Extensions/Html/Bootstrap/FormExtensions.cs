@@ -12,11 +12,13 @@ namespace Template.Components.Extensions.Html
 {
     public static class FormExtensions
     {
-        public const String LabelClass = "control-label col-sm-3 col-md-3 col-lg-2";
+        public const String LabelClass = "control-label col-sm-12 col-md-3 col-lg-2";
+        public const String ContentClass = "control-content col-sm-12 col-md-9 col-lg-5";
+        public const String ValidationClass = "control-validation col-sm-12 col-md-12 col-lg-5";
 
-        public static FormColumn FormColumn(this HtmlHelper html)
+        public static FormWrapper ContentGroup(this HtmlHelper html)
         {
-            return new FormColumn(html.ViewContext.Writer);
+            return new FormWrapper(html.ViewContext.Writer, ContentClass);
         }
         public static FormGroup FormGroup(this HtmlHelper html)
         {
@@ -75,7 +77,7 @@ namespace Template.Components.Extensions.Html
         {
             var attributes = AddClass(htmlAttributes, "form-control");
             if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
-            return new MvcHtmlString(Wrap(html.TextBoxFor(expression, format, attributes)));
+            return new MvcHtmlString(WrapContent(html.TextBoxFor(expression, format, attributes)));
         }
         public static MvcHtmlString BootstrapDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
@@ -84,16 +86,20 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString BootstrapPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return new MvcHtmlString(Wrap(html.PasswordFor(expression, AddClass(null, "form-control"))));
+            return new MvcHtmlString(WrapContent(html.PasswordFor(expression, AddClass(null, "form-control"))));
         }
         public static MvcHtmlString BootstrapValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
-            return new MvcHtmlString(Wrap(html.ValidationMessageFor(expression)));
+            return new MvcHtmlString(WrapValidation(html.ValidationMessageFor(expression)));
         }
 
-        private static String Wrap(Object innerHtml)
+        private static String WrapContent(Object innerHtml)
         {
-            return new FormColumn(innerHtml).ToString();
+            return new FormWrapper(innerHtml, ContentClass).ToString();
+        }
+        private static String WrapValidation(Object innerHtml)
+        {
+            return new FormWrapper(innerHtml, ValidationClass).ToString();
         }
         private static RouteValueDictionary AddClass(Object attributes, String value)
         {

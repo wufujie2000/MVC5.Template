@@ -107,17 +107,14 @@
         }
 
     .widget-content .field-validation-error {
-        position: relative;
+        vertical-align: middle;
+        display: table-cell;
         color: #B94A48;
-        top: 8px;
+        height: 34px;
     }
 
-    .widget-content .form-actions input {
-        float: right;
-    }
-
-    .widget-content .pagination {
-        float: right;
+    .widget-content .form-actions {
+        text-align: center;
     }
 
     .widget-content table:last-of-type tr:last-child td:first-child {
@@ -127,3 +124,25 @@
     .widget-content table:last-of-type tr:last-child td:last-child {
         border-bottom-right-radius: 6px;
     }
+
+@media (min-width: 768px) {
+    .widget-content .control-label {
+        text-align: left;
+    }
+
+    .widget-content .form-actions input {
+        float: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .widget-content .control-label {
+        text-align: right;
+    }
+}
+
+@media (min-width: 1200px) {
+    .widget-content .form-actions {
+        text-align: right;
+    }
+}

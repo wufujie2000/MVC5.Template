@@ -5,18 +5,18 @@ namespace Template.Components.Extensions.Html
 {
     public class FormActions : FormGroup
     {
-        private FormWrapper formColumn;
+        private FormWrapper formWrapper;
 
         public FormActions(TextWriter writer)
             : base(writer)
         {
-            formColumn = new FormWrapper(writer, "form-actions col-sm-9 col-md-9 col-lg-7");
+            formWrapper = new FormWrapper(writer, "form-actions col-sm-12 col-md-12 col-lg-7");
         }
 
         protected override void Dispose(Boolean disposing)
         {
             if (disposed) return;
-            formColumn.Dispose();
+            formWrapper.Dispose();
             base.Dispose(disposing);
         }
     }

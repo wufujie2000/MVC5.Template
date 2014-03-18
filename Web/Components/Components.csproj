@@ -72,7 +72,6 @@
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />
     <Compile Include="Mvc\Validators\NumberValidator.cs" />
     <Compile Include="Mvc\Adapters\RequiredAdapter.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\FormColumn.cs" />
     <Compile Include="Extensions\Html\Bootstrap\FormWrapper.cs" />
     <Compile Include="Extensions\Html\Bootstrap\LoginExtensions.cs" />
     <Compile Include="Extensions\Html\Bootstrap\FormExtensions.cs" />
@@ -127,6 +126,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

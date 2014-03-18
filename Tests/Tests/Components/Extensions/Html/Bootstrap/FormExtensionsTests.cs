@@ -18,27 +18,31 @@ namespace Template.Tests.Tests.Components.Extensions.Html
     {
         private Expression<Func<BootstrapModel, Object>> expression;
         private HtmlHelper<BootstrapModel> htmlHelper;
+        private String validationClass;
+        private String contentClass;
         private String labelClass;
 
         [SetUp]
         public void SetUp()
         {
+            validationClass = Template.Components.Extensions.Html.FormExtensions.ValidationClass;
+            contentClass = Template.Components.Extensions.Html.FormExtensions.ContentClass;
             labelClass = Template.Components.Extensions.Html.FormExtensions.LabelClass;
             htmlHelper = new HtmlMock<BootstrapModel>().Html;
             expression = null;
         }
 
-        #region Extension method: FormColumn(this HtmlHelper html)
+        #region Extension method: ContentGroup(this HtmlHelper html)
 
         [Test]
-        public void FormColumn_WritesFormColumn()
+        public void ContentGroup_WritesFormColumn()
         {
             var expected = new StringBuilder();
-            new FormColumn(new StringWriter(expected)).Dispose();
+            new FormWrapper(new StringWriter(expected), contentClass).Dispose();
 
             var actualWriter = htmlHelper.ViewContext.Writer as StringWriter;
             var actual = actualWriter.GetStringBuilder();
-            htmlHelper.FormColumn().Dispose();
+            htmlHelper.ContentGroup().Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -216,7 +220,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapTextBoxFor(expression).ToString();
@@ -229,7 +233,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (model) => model.Number;
             var attributes = new { @class = "form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, "{0:0.00}", attributes));
+            var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, "{0:0.00}", attributes), contentClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapTextBoxFor(expression, "{0:0.00}").ToString();
@@ -242,7 +246,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "test form-control", autocomplete = "off" };
-            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapTextBoxFor(expression, null, new { @class = " test" }).ToString();
@@ -255,7 +259,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "form-control", autocomplete = "on" };
-            var formColumn = new FormColumn(htmlHelper.TextBoxFor(expression, null, attributes));
+            var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapTextBoxFor(expression, null, new { autocomplete = "on" }).ToString();
@@ -287,7 +291,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void BootstrapPasswordFor_FormsPasswordFor()
         {
             expression = (model) => model.Required;
-            var formColumn = new FormColumn(htmlHelper.PasswordFor(expression, new { @class = "form-control" }));
+            var formColumn = new FormWrapper(htmlHelper.PasswordFor(expression, new { @class = "form-control" }), contentClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapPasswordFor(expression).ToString();
@@ -303,7 +307,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
         public void BootstrapValidationFor_FormsValidationFor()
         {
             expression = (model) => model.Required;
-            var formColumn = new FormColumn(htmlHelper.ValidationMessageFor(expression));
+            var formColumn = new FormWrapper(htmlHelper.ValidationMessageFor(expression), validationClass);
 
             var expected = formColumn.ToString();
             var actual = htmlHelper.BootstrapValidationFor(expression).ToString();

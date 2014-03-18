@@ -16,7 +16,7 @@ namespace Template.Tests.Tests.Components.Extensions.Html
             var expected = new StringBuilder();
             var expectedWriter = new StringWriter(expected);
             var group = new FormGroup(expectedWriter);
-            var wrapper = new FormWrapper(expectedWriter, "form-actions col-sm-9 col-md-9 col-lg-7");
+            var wrapper = new FormWrapper(expectedWriter, "form-actions col-sm-12 col-md-12 col-lg-7");
             expectedWriter.Write("Content");
             wrapper.Dispose();
             group.Dispose();

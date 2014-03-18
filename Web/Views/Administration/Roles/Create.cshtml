@@ -14,7 +14,7 @@
         using (Html.FormGroup())
         {
             @Html.BootstrapFormLabelFor(model => model.PrivilegesTree)
-            using (Html.FormColumn())
+            using (Html.ContentGroup())
             {
                 @Html.TreeViewFor(model => model.PrivilegesTree)
             }

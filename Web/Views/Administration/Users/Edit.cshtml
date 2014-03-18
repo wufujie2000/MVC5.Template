@@ -17,7 +17,7 @@
         using (Html.FormGroup())
         {
             @Html.BootstrapFormLabelFor(model => model.Person.RoleId)
-            using (Html.FormColumn())
+            using (Html.ContentGroup())
             {
                 @Html.DatalistFor(model => model.Person.RoleId, new BaseDatalist<Role, RoleView>())
             }

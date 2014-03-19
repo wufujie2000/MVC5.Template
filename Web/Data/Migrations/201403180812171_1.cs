@@ -16,7 +16,7 @@ namespace Template.Data.Migrations
                         Passhash = c.String(nullable: false),
                         PersonId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
             
@@ -30,7 +30,7 @@ namespace Template.Data.Migrations
                         DateOfBirth = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.RoleId);
             
@@ -41,7 +41,7 @@ namespace Template.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.RolePrivileges",
@@ -51,11 +51,11 @@ namespace Template.Data.Migrations
                         RoleId = c.String(nullable: false, maxLength: 128),
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
-                .Index(t => t.PrivilegeId)
-                .Index(t => t.RoleId);
+                .Index(t => t.RoleId)
+                .Index(t => t.PrivilegeId);
             
             CreateTable(
                 "dbo.Privileges",
@@ -66,7 +66,7 @@ namespace Template.Data.Migrations
                         Controller = c.String(nullable: false),
                         Action = c.String(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.Languages",
@@ -76,7 +76,7 @@ namespace Template.Data.Migrations
                         Abbreviation = c.String(nullable: false),
                         Name = c.String(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
         }
         
@@ -86,10 +86,10 @@ namespace Template.Data.Migrations
             DropForeignKey("dbo.People", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropIndex("dbo.Accounts", new[] { "PersonId" });
-            DropIndex("dbo.People", new[] { "RoleId" });
-            DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
+            DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
+            DropIndex("dbo.People", new[] { "RoleId" });
+            DropIndex("dbo.Accounts", new[] { "PersonId" });
             DropTable("dbo.Languages");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");

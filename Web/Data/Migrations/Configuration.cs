@@ -17,11 +17,12 @@ namespace Template.Data.Migrations
         {
             AutomaticMigrationsEnabled = true;
             ContextKey = "Template.Data";
-            context = new Context();
         }
 
         protected override void Seed(Context context)
         {
+            this.context = context;
+
             SeedLanguages();
             SeedAllPrivileges();
             SeedAdministratorRole();

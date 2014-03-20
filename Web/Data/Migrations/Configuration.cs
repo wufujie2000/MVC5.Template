@@ -11,7 +11,7 @@ namespace Template.Data.Migrations
     [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
     {
-        private Context context;
+        private UnitOfWork unitOfWork;
 
         public Configuration()
         {
@@ -21,7 +21,7 @@ namespace Template.Data.Migrations
 
         protected override void Seed(Context context)
         {
-            this.context = context;
+            unitOfWork = new UnitOfWork(context);
 
             SeedLanguages();
             SeedAllPrivileges();
@@ -38,10 +38,10 @@ namespace Template.Data.Migrations
             };
 
             foreach (var language in languages)
-                if (!context.Repository<Language>().Query().Any(lang => lang.Abbreviation == language.Abbreviation))
-                    context.Repository<Language>().Insert(language);
+                if (!unitOfWork.Repository<Language>().Query().Any(lang => lang.Abbreviation == language.Abbreviation))
+                    unitOfWork.Repository<Language>().Insert(language);
 
-            context.SaveChanges();
+            unitOfWork.Commit();
         }
         private void SeedAllPrivileges()
         {
@@ -58,68 +58,68 @@ namespace Template.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
 
-            var existingPrivileges = context.Repository<Privilege>().Query();
+            var existingPrivileges = unitOfWork.Repository<Privilege>().Query();
             foreach (var privilege in privileges)
                 if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
-                    context.Repository<Privilege>().Insert(privilege);
+                    unitOfWork.Repository<Privilege>().Insert(privilege);
 
-            context.SaveChanges();
+            unitOfWork.Commit();
         }
         private void SeedAdministratorRole()
         {
-            if (!context.Repository<Role>().Query(role => role.Name == "Administrator").Any())
-                context.Repository<Role>().Insert(new Role() { Name = "Administrator" });
+            if (!unitOfWork.Repository<Role>().Query(role => role.Name == "Administrator").Any())
+                unitOfWork.Repository<Role>().Insert(new Role() { Name = "Administrator" });
 
-            context.SaveChanges();
+            unitOfWork.Commit();
 
-            var adminRoleId = context.Repository<Role>().Query(role => role.Name == "Administrator").First().Id;
-            var adminPrivileges = context.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
-            foreach (var privilege in context.Repository<Privilege>().Query())
+            var adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Administrator").First().Id;
+            var adminPrivileges = unitOfWork.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
+            foreach (var privilege in unitOfWork.Repository<Privilege>().Query())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
-                    context.Repository<RolePrivilege>().Insert(new RolePrivilege()
+                    unitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
                     {
                         RoleId = adminRoleId,
                         PrivilegeId = privilege.Id
                     });
 
-            context.SaveChanges();
+            unitOfWork.Commit();
         }
         private void SeedPeople()
         {
             var people = new List<Person>()
             {
-                new Person() { FirstName = "System", LastName = "Admin", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
-                new Person() { FirstName = "Test", LastName = "User", RoleId = context.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
+                new Person() { FirstName = "System", LastName = "Admin", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
+                new Person() { FirstName = "Test", LastName = "User", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
             };
 
             foreach (var person in people)
-                if (!context.Repository<Person>().Query(u => u.FirstName == person.FirstName && u.LastName == person.LastName).Any())
-                    context.Repository<Person>().Insert(person);
+                if (!unitOfWork.Repository<Person>().Query(u => u.FirstName == person.FirstName && u.LastName == person.LastName).Any())
+                    unitOfWork.Repository<Person>().Insert(person);
 
-            context.SaveChanges();
+            unitOfWork.Commit();
         }
         private void SeedAccounts()
         {
             var accounts = new List<Account>()
             {
-                new Account() { Username = "admin", Passhash = "$2a$13$55S8dVpqNTw2xUBeFNwvIeqM0wf7fkFDHd/tsCYj.9AQooMWep/Yi",
-                    PersonId = context.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
-                    Id = context.Repository<Person>().Query(p => p.FirstName == "System").First().Id },
+                new Account() { Username = "admin", Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq",
+                    PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
+                    Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id },
                 new Account() { Username = "test", Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm",
-                    PersonId = context.Repository<Person>().Query(p => p.FirstName == "Test").First().Id,
-                    Id = context.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
+                    PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id,
+                    Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
             };
 
             foreach (var account in accounts)
-                if (!context.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
-                    context.Repository<Account>().Insert(account);
+                if (!unitOfWork.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
+                    unitOfWork.Repository<Account>().Insert(account);
 
-            context.SaveChanges();
+            unitOfWork.Commit();
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            unitOfWork.Dispose();
         }
     }
 }

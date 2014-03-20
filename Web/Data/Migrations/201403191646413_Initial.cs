@@ -3,7 +3,7 @@ namespace Template.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _1 : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -15,6 +15,7 @@ namespace Template.Data.Migrations
                         Username = c.String(nullable: false),
                         Passhash = c.String(nullable: false),
                         PersonId = c.String(nullable: false, maxLength: 128),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
@@ -29,6 +30,7 @@ namespace Template.Data.Migrations
                         LastName = c.String(),
                         DateOfBirth = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
@@ -40,6 +42,7 @@ namespace Template.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -50,6 +53,7 @@ namespace Template.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         RoleId = c.String(nullable: false, maxLength: 128),
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
@@ -65,6 +69,7 @@ namespace Template.Data.Migrations
                         Area = c.String(),
                         Controller = c.String(nullable: false),
                         Action = c.String(nullable: false),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -75,6 +80,7 @@ namespace Template.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Abbreviation = c.String(nullable: false),
                         Name = c.String(nullable: false),
+                        EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             

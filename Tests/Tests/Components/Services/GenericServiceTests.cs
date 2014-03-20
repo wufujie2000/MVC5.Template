@@ -96,7 +96,7 @@ namespace Template.Tests.Tests.Components.Services
         [Test]
         public void GetViews_GetsViews()
         {
-            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.Id);
+            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.EntityDate);
             var actual = service.GetViews();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);

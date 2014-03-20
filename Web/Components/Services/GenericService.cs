@@ -30,9 +30,10 @@ namespace Template.Components.Services
 
         public virtual IQueryable<TView> GetViews()
         {
-            return UnitOfWork.Repository<TModel>()
+            return UnitOfWork
+                .Repository<TModel>()
                 .Query<TView>()
-                .OrderByDescending(view => view.Id);
+                .OrderByDescending(view => view.EntityDate);
         }
         public virtual TView GetView(String id)
         {

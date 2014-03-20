@@ -42,7 +42,7 @@
     <Compile Include="Models\Administration\Roles\Privilege.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
     <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
-    <Compile Include="Models\Account\People.cs" />
+    <Compile Include="Models\Account\Person.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\System\Language.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

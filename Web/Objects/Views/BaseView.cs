@@ -19,5 +19,16 @@ namespace Template.Objects
                 id = value;
             }
         }
+
+        public DateTime? EntityDate
+        {
+            get;
+            private set;
+        }
+
+        public BaseView()
+        {
+            EntityDate = DateTime.Now;
+        }
     }
 }

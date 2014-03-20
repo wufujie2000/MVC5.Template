@@ -20,6 +20,8 @@ namespace Template.Tests.Tests.Data.Core
         {
             context = new TestingContext();
             repository = new Repository<Person>(context);
+            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.SaveChanges();
         }
 
         [TearDown]
@@ -116,10 +118,10 @@ namespace Template.Tests.Tests.Data.Core
             context.Set<Person>().Add(person1);
             context.Set<Person>().Add(person2);
             context.SaveChanges();
-
-            var expected = context.Set<Person>().Project().To<PersonView>().Where(person => person.Id == person1.Id).ToList();
+            
+            var expected = context.Set<Person>().Where(person => person.Id == person1.Id).Project().To<PersonView>().ToList();
             var actual = repository.Query<PersonView>(person => person.Id == person1.Id).ToList();
-
+            
             context.Set<Person>().Remove(person1);
             context.Set<Person>().Remove(person2);
             context.SaveChanges();

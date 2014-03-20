@@ -20,5 +20,17 @@ namespace Template.Objects
                 id = value;
             }
         }
+
+        [Required]
+        public DateTime EntityDate
+        {
+            get;
+            private set;
+        }
+
+        public BaseModel()
+        {
+            EntityDate = DateTime.Now;
+        }
     }
 }

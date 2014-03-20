@@ -10,6 +10,6 @@ namespace Template.Objects
 
         public String RoleId { get; set; }
 
-        public virtual RoleView Role { get; set; }
+        public RoleView Role { get; set; }
     }
 }

@@ -191,30 +191,6 @@ namespace Template.Tests.Tests.Data.Core
 
         #endregion
 
-        #region Method: Delete(TModel model)
-
-        [Test]
-        public void Delete_DeletesModel()
-        {
-            var expected = ObjectFactory.CreatePerson();
-            repository.Insert(expected);
-            context.SaveChanges();
-
-            repository.Delete(expected);
-            context.SaveChanges();
-
-            var actual = context.Set<Person>().Find(expected.Id);
-            if (actual != null)
-            {
-                context.Set<Person>().Remove(expected);
-                context.SaveChanges();
-            }
-
-            Assert.IsNull(actual);
-        }
-
-        #endregion
-
         #region Method: Delete(String id)
 
         [Test]

@@ -56,13 +56,9 @@ namespace Template.Data.Core
 
             context.Entry(attachedModel).State = EntityState.Modified;
         }
-        public void Delete(TModel model)
-        {
-            dbSet.Remove(model);
-        }
         public void Delete(String id)
         {
-            Delete(dbSet.Find(id));
+            dbSet.Remove(dbSet.Find(id));
         }
     }
 }

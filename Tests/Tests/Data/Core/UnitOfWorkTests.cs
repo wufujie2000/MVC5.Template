@@ -93,7 +93,7 @@ namespace Template.Tests.Tests.Data.Core
             unitOfWork.Commit();
 
             var actual = unitOfWork.Repository<Person>().GetById(expected.Id);
-            unitOfWork.Repository<Person>().Delete(expected);
+            unitOfWork.Repository<Person>().Delete(expected.Id);
             unitOfWork.Commit();
 
             TestHelper.PropertyWiseEquals(expected, actual);

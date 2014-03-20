@@ -15,7 +15,6 @@ namespace Template.Data.Core
 
         void Insert(TModel model);
         void Update(TModel model);
-        void Delete(TModel model);
         void Delete(String id);
     }
 }

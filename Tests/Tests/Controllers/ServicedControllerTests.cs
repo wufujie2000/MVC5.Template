@@ -1,9 +1,11 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Services;
 using Template.Tests.Objects.Controllers;
+using Tests.Helpers;
 
 namespace Template.Tests.Tests.Controllers
 {
@@ -21,6 +23,8 @@ namespace Template.Tests.Tests.Controllers
             service = serviceMock.Object;
 
             controller = new Mock<ServicedControllerStub>(service) { CallBase = true }.Object;
+            controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
+            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
         #region Constructor: ServicedController(TService service)
@@ -72,12 +76,42 @@ namespace Template.Tests.Tests.Controllers
         #region Method: OnActionExecuted(ActionExecutedContext filterContext)
 
         [Test]
-        public void OnActionExecuted_SetsAlertMessagesToViewBag()
+        public void OnActionExecuted_MergesMessagesToSession()
+        {
+            service.AlertMessages.AddError("First");
+            var expected = service.AlertMessages.ToList();
+            var newContainer = new MessagesContainer();
+            newContainer.AddError("Second");
+            expected.AddRange(newContainer);
+
+            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            service.AlertMessages = newContainer;
+            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            var actual = controller.Session["Messages"];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void OnActionExecuted_DoesNotMergeSameContainers()
+        {
+            service.AlertMessages.AddError("First");
+            var expected = service.AlertMessages.ToList();
+
+            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            var actual = controller.Session["Messages"];
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void OnActionExecuted_SetsMessagesToSession()
         {
             var alertMessages = service.AlertMessages;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
-            Assert.AreEqual(alertMessages, controller.ViewBag.AlertMessagesContainer);
+            Assert.AreEqual(alertMessages, controller.Session["Messages"]);
         }
 
         #endregion

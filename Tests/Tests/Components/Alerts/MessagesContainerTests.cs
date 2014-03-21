@@ -146,6 +146,31 @@ namespace Template.Tests.Tests.Components.Alerts
 
         #endregion
 
+        #region Method: Merge(MessagesContainer container)
+
+        [Test]
+        public void Merge_MergesContainerMessages()
+        {
+            var containerPart = new MessagesContainer();
+            containerPart.AddError("Second");
+            container.AddError("First");
+
+            var expected = container.ToList();
+            expected.AddRange(containerPart);
+            container.Merge(containerPart);
+            var actual = container;
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Merge_OnSelfMergeThrows()
+        {
+            Assert.Throws<Exception>(() => container.Merge(container), "Can not merge itself to itself");
+        }
+
+        #endregion
+
         #region Method: GetEnumerator()
 
         [Test]

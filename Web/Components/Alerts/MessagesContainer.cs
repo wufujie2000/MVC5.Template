@@ -61,6 +61,15 @@ namespace Template.Components.Alerts
             Add(AlertMessageType.Danger, key, message, fadeOutAfter);
         }
 
+        public void Merge(MessagesContainer container)
+        {
+            if (container == this)
+                throw new Exception("Can not merge itself to itself");
+
+            foreach (var message in container)
+                Add(message);
+        }
+
         public IEnumerator<AlertMessage> GetEnumerator()
         {
             if (modelState == null)

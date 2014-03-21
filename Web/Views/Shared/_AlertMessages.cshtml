@@ -1,5 +1,6 @@
 ﻿@{
-    var messages = ViewBag.AlertMessagesContainer as MessagesContainer;
+    var messages = Session["Messages"] as MessagesContainer;
+    Session["Messages"] = null;
     <div class="alert-messages">
         @if (messages != null)
         {

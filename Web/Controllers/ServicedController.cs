@@ -20,7 +20,14 @@ namespace Template.Controllers
         {
             base.OnActionExecuted(filterContext);
 
-            ViewBag.AlertMessagesContainer = Service.AlertMessages;
+            if (Session["Messages"] == null) {
+                Session["Messages"] = Service.AlertMessages;
+                return;
+            }
+
+            var current = Session["Messages"] as MessagesContainer;
+            if (current != Service.AlertMessages)
+                current.Merge(Service.AlertMessages);
         }
     }
 }

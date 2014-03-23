@@ -2,9 +2,11 @@ namespace Template.Tests.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
+    using System.Diagnostics.CodeAnalysis;
     using Template.Tests.Data;
     using Template.Tests.Objects.Components.Services;
 
+    [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<TestingContext>
     {
         public Configuration()

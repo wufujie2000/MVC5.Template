@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System;
+using Template.Data.Logging;
 using Template.Objects;
 
 namespace Template.Data.Core
@@ -8,10 +9,12 @@ namespace Template.Data.Core
     {
         private Boolean disposed;
         private AContext context;
+        private IEntityLogger logger;
 
-        public UnitOfWork(AContext context)
+        public UnitOfWork(AContext context, IEntityLogger logger = null)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         public IRepository<TModel> Repository<TModel>()
@@ -39,6 +42,9 @@ namespace Template.Data.Core
         }
         public void Commit()
         {
+            if (logger != null)
+                logger.Log(context.ChangeTracker.Entries());
+
             context.SaveChanges();
         }
 
@@ -51,6 +57,8 @@ namespace Template.Data.Core
         {
             if (disposed) return;
             context.Dispose();
+            context = null;
+
             disposed = true;
         }
     }

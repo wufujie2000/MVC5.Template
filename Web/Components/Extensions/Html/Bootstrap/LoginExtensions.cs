@@ -72,7 +72,7 @@ namespace Template.Components.Extensions.Html
             formActions.AddCssClass("login-form-actions");
             var submit = new TagBuilder("input");
             submit.AddCssClass("btn btn-block btn-primary btn-default");
-            submit.MergeAttribute("value", Template.Resources.Shared.Resources.Login);
+            submit.MergeAttribute("value", Resources.Shared.Resources.Login);
             submit.MergeAttribute("type", "submit");
             formActions.InnerHtml = submit.ToString();
 

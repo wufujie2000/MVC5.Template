@@ -1,4 +1,4 @@
-namespace Template.Data.Migrations
+namespace Template.Tests.Data.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Diagnostics.CodeAnalysis;
@@ -18,7 +18,7 @@ namespace Template.Data.Migrations
                         PersonId = c.String(nullable: false, maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
             
@@ -33,7 +33,7 @@ namespace Template.Data.Migrations
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.RoleId);
             
@@ -45,7 +45,7 @@ namespace Template.Data.Migrations
                         Name = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.RolePrivileges",
@@ -56,7 +56,7 @@ namespace Template.Data.Migrations
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId)
@@ -72,7 +72,7 @@ namespace Template.Data.Migrations
                         Action = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.Languages",
@@ -83,7 +83,27 @@ namespace Template.Data.Migrations
                         Name = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Logs",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Message = c.String(nullable: false),
+                        EntityDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.TestModels",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Text = c.String(),
+                        EntityDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
             
         }
         
@@ -97,6 +117,8 @@ namespace Template.Data.Migrations
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.People", new[] { "RoleId" });
             DropIndex("dbo.Accounts", new[] { "PersonId" });
+            DropTable("dbo.TestModels");
+            DropTable("dbo.Logs");
             DropTable("dbo.Languages");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");

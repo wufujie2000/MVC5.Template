@@ -46,7 +46,7 @@ namespace Template.Components.Services
             var rootNode = new TreeNode();
             role.PrivilegesTree = new Tree();
             role.PrivilegesTree.Nodes.Add(rootNode);
-            rootNode.Name = Template.Resources.Privilege.Titles.All;
+            rootNode.Name = Resources.Privilege.Titles.All;
             role.PrivilegesTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
             var allPrivileges = UnitOfWork.Repository<Privilege>().Query().ToList().Select(privilege => new
             {

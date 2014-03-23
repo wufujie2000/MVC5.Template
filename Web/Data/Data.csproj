@@ -45,6 +45,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\EntityLogger.cs" />
+    <Compile Include="Logging\IEntityLogger.cs" />
+    <Compile Include="Logging\LoggableEntry.cs" />
+    <Compile Include="Logging\LoggableEntryProperty.cs" />
     <Compile Include="Mapping\ObjectMappper.cs" />
     <Compile Include="Core\Context.cs" />
     <Compile Include="Core\AContext.cs" />
@@ -52,9 +56,9 @@
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repository.cs" />
     <Compile Include="Core\UnitOfWork.cs" />
-    <Compile Include="Migrations\201403191646413_Initial.cs" />
-    <Compile Include="Migrations\201403191646413_Initial.Designer.cs">
-      <DependentUpon>201403191646413_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201403230736439_Initial.cs" />
+    <Compile Include="Migrations\201403230736439_Initial.Designer.cs">
+      <DependentUpon>201403230736439_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +74,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403191646413_Initial.resx">
-      <DependentUpon>201403191646413_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201403230736439_Initial.resx">
+      <DependentUpon>201403230736439_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

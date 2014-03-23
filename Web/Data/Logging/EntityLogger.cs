@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Text;
+using Template.Data.Core;
+using Template.Objects;
+
+namespace Template.Data.Logging
+{
+    public class EntityLogger : IEntityLogger
+    {
+        private AContext context;
+
+        public EntityLogger(AContext context)
+        {
+            this.context = context;
+        }
+
+        public virtual void Log(IEnumerable<DbEntityEntry> entries)
+        {
+            foreach (var entry in entries)
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                    case EntityState.Deleted:
+                        context.Set<Log>().Add(new Log(Format(new LoggableEntry(entry))));
+                        break;
+                    case EntityState.Modified:
+                        var loggableEntry = new LoggableEntry(entry);
+                        if (loggableEntry.HasChanges)
+                            context.Set<Log>().Add(new Log(Format(loggableEntry)));
+                        break;
+                }
+            }
+
+            context.SaveChanges();
+        }
+
+        private String Format(LoggableEntry entry)
+        {
+            var messageBuilder = new StringBuilder();
+            messageBuilder.AppendFormat("{0} {1}:{2}",
+                entry.EntityType.Name,
+                entry.State.ToString().ToLower(),
+                Environment.NewLine);
+
+            foreach (var property in entry.Properties)
+                messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
+
+            return messageBuilder.ToString();
+        }
+    }
+}

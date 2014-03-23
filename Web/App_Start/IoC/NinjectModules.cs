@@ -2,6 +2,7 @@
 using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
+using Template.Data.Logging;
 
 namespace Template.Web.IoC
 {
@@ -24,10 +25,12 @@ namespace Template.Web.IoC
             {
                 Bind<AContext>().To<Context>();
                 Bind<IUnitOfWork>().To<UnitOfWork>();
-                Bind<IAccountService>().To<AccountService>();
+                Bind<IEntityLogger>().To<EntityLogger>();
+
+                Bind<IHomeService>().To<HomeService>();
                 Bind<IRolesService>().To<RolesService>();
                 Bind<IUsersService>().To<UsersService>();
-                Bind<IHomeService>().To<HomeService>();
+                Bind<IAccountService>().To<AccountService>();
                 Bind<IProfileService>().To<ProfileService>();
 
                 Bind<IRoleProvider>().To<RoleProvider>();

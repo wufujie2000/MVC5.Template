@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
+using Moq;
 using NUnit.Framework;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using Template.Data.Core;
+using Template.Data.Logging;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
@@ -97,6 +101,18 @@ namespace Template.Tests.Tests.Data.Core
             unitOfWork.Commit();
 
             TestHelper.PropertyWiseEquals(expected, actual);
+        }
+
+        [Test]
+        public void Commit_OnNotNullLoggerLogsEntities()
+        {
+            var loggerMock = new Mock<IEntityLogger>();
+            var logger = loggerMock.Object;
+
+            unitOfWork = new UnitOfWork(context, logger);
+            unitOfWork.Commit();
+
+            loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
         }
 
         #endregion

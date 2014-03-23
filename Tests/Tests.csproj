@@ -84,9 +84,9 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="Migrations\201403191647226_Initial.cs" />
-    <Compile Include="Migrations\201403191647226_Initial.Designer.cs">
-      <DependentUpon>201403191647226_Initial.cs</DependentUpon>
+    <Compile Include="Data\Migrations\201403230733409_Initial.cs" />
+    <Compile Include="Data\Migrations\201403230733409_Initial.Designer.cs">
+      <DependentUpon>201403230733409_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Components\Services\TestModel.cs" />
     <Compile Include="Objects\Components\Services\TestView.cs" />
@@ -111,6 +111,9 @@
     <Compile Include="Tests\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="Tests\Controllers\SecurityTests.cs" />
     <Compile Include="Tests\Controllers\ServicedControllerTests.cs" />
+    <Compile Include="Tests\Data\Logging\EntityLoggerTests.cs" />
+    <Compile Include="Tests\Data\Logging\LoggableEntryPropertyTests.cs" />
+    <Compile Include="Tests\Data\Logging\LoggableEntryTests.cs" />
     <Compile Include="Tests\Data\Core\RepositoryTests.cs" />
     <Compile Include="Tests\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Tests\Data\Mapping\ObjectMapperTests.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="Tests\Components\Services\GenericServiceTests.cs" />
     <Compile Include="Tests\Data\Core\ContextTests.cs" />
     <Compile Include="Tests\Objects\Models\BaseModelTests.cs" />
+    <Compile Include="Tests\Objects\Models\LogTests.cs" />
     <Compile Include="Tests\Objects\Shared\MenuTests.cs" />
     <Compile Include="Tests\Objects\Shared\TreeNodeTests.cs" />
     <Compile Include="Tests\Objects\Shared\TreeTests.cs" />
@@ -186,8 +190,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201403191647226_Initial.resx">
-      <DependentUpon>201403191647226_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Data\Migrations\201403230733409_Initial.resx">
+      <DependentUpon>201403230733409_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

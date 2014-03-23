@@ -45,6 +45,7 @@
     <Compile Include="Models\Account\Person.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\System\Language.cs" />
+    <Compile Include="Models\System\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Tree.cs" />
     <Compile Include="Shared\TreeNode.cs" />

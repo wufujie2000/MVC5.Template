@@ -14,8 +14,8 @@ namespace Template.Data.Core
 
         #region Account
 
+        private DbSet<Person> People { get; set; }
         private DbSet<Account> Accounts { get; set; }
-        private DbSet<Person> Persons { get; set; }
 
         #endregion
 
@@ -29,6 +29,7 @@ namespace Template.Data.Core
 
         #region System
 
+        private DbSet<Log> Logs { get; set; }
         private DbSet<Language> Languages { get; set; }
 
         #endregion

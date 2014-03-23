@@ -54,7 +54,9 @@ namespace Template.Data.Core
             else
                 context.Entry(attachedModel).CurrentValues.SetValues(model);
 
-            context.Entry(attachedModel).State = EntityState.Modified;
+            var entry = context.Entry(attachedModel);
+            entry.State = EntityState.Modified;
+            entry.Property(property => property.EntityDate).IsModified = false;
         }
         public void Delete(String id)
         {

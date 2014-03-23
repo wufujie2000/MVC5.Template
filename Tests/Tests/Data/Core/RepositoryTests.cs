@@ -189,6 +189,15 @@ namespace Template.Tests.Tests.Data.Core
             TestHelper.PropertyWiseEquals(expected, actual);
         }
 
+        [Test]
+        public void Update_DoesNotModifyEntityDate()
+        {
+            var person = ObjectFactory.CreatePerson();
+            repository.Update(person);
+
+            Assert.IsFalse(context.Entry(person).Property(prop => prop.EntityDate).IsModified);
+        }
+
         #endregion
 
         #region Method: Delete(String id)

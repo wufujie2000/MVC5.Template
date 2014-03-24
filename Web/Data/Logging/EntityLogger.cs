@@ -34,7 +34,10 @@ namespace Template.Data.Logging
                         break;
                 }
             }
+        }
 
+        public virtual void SaveLogs()
+        {
             context.SaveChanges();
         }
 

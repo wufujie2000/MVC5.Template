@@ -119,6 +119,7 @@ namespace Template.Tests.Tests.Data.Logging
             DbEntityEntry entry = dataContext.Entry(model);
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
+            logger.SaveLogs();
 
             var expected = FormExpectedMessage(entry);
             var actual = context.Set<Log>().First().Message;
@@ -136,6 +137,7 @@ namespace Template.Tests.Tests.Data.Logging
                 Assert.Inconclusive();
 
             logger.Log(new[] { entry });
+            logger.SaveLogs();
 
             Assert.AreEqual(1, context.Set<Log>().Count());
         }

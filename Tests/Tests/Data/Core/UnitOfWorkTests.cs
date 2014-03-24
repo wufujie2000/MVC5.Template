@@ -104,7 +104,7 @@ namespace Template.Tests.Tests.Data.Core
         }
 
         [Test]
-        public void Commit_OnNotNullLoggerLogsEntities()
+        public void Commit_LogsEntities()
         {
             var loggerMock = new Mock<IEntityLogger>();
             var logger = loggerMock.Object;
@@ -113,6 +113,27 @@ namespace Template.Tests.Tests.Data.Core
             unitOfWork.Commit();
 
             loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
+            loggerMock.Verify(mock => mock.SaveLogs(), Times.Once());
+        }
+
+
+        [Test]
+        public void Commit_DoesNotSaveLogsOnFailedCommit()
+        {
+            var loggerMock = new Mock<IEntityLogger>();
+            var logger = loggerMock.Object;
+
+            unitOfWork = new UnitOfWork(context, logger);
+            unitOfWork.Repository<Account>().Insert(new Account());
+            try
+            {
+                unitOfWork.Commit();
+            }
+            catch
+            {
+            }
+            loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
+            loggerMock.Verify(mock => mock.SaveLogs(), Times.Never());
         }
 
         #endregion

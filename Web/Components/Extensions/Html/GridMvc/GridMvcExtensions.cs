@@ -72,6 +72,7 @@ namespace Template.Components.Extensions.Html
         public static IGridHtmlOptions<T> ApplyAttributes<T>(this IGridHtmlOptions<T> options) where T : class
         {
             return options
+                .EmptyText(Resources.Table.Resources.NoDataFound)
                 .SetLanguage(CultureInfo.CurrentCulture.Name)
                 .Named(typeof(T).Name)
                 .WithMultipleFilters()

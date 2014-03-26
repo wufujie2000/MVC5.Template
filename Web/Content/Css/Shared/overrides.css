@@ -91,6 +91,10 @@
             background-color: #1AAEF3;
             color: #FFFFFF;
         }
+/* GridMvc */
+.grid-empty-text {
+    text-align: center;
+}
 
 /* JsTree */
 .tree-view {

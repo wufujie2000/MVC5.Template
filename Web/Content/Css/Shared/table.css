@@ -7,8 +7,8 @@
     font-size: 12px;
 }
 
-.table tr td,
-.table tr th {
+.table td,
+.table th {
     border-left: 1px solid #DDDDDD;
 }
 
@@ -19,9 +19,11 @@
 .table > tbody > tr > td.text-cell {
     text-align: left;
 }
+
 .table > tbody > tr > td.date-cell {
     text-align: center;
 }
+
 .table > tbody > tr > td.number-cell {
     text-align: right;
 }

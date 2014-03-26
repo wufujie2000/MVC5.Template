@@ -149,6 +149,7 @@
     <Content Include="Images\JQuery\ui-icons_454545_256x240.png" />
     <Content Include="Images\JQuery\ui-icons_888888_256x240.png" />
     <Content Include="Images\JQuery\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\JQuery\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\JsTree\32px.png" />
     <Content Include="Images\JsTree\40px.png" />
     <Content Include="Images\JsTree\throbber.gif" />

@@ -20,13 +20,10 @@ namespace Template.Web
             var bootstrapScripts = new ScriptBundle("~/Scripts/Bootstrap");
             bootstrapScripts.Include("~/Scripts/Bootstrap/*.js");
 
-            var jQueryUIScripts = new ScriptBundle("~/Scripts/JQueryUI");
-            jQueryUIScripts.Include("~/Scripts/JQuery/*.js");
-
             var globalizeScripts = new ScriptBundle("~/Scripts/Globalize");
             globalizeScripts.Include("~/Scripts/Globalize/*.js");
 
-            var gridMvcScripts = new StyleBundle("~/Scripts/GridMvc");
+            var gridMvcScripts = new ScriptBundle("~/Scripts/GridMvc");
             gridMvcScripts.Include("~/Scripts/GridMvc/*.js");
 
             var select2Scripts = new ScriptBundle("~/Scripts/Select2");
@@ -43,11 +40,10 @@ namespace Template.Web
 
             var sharedScripts = new ScriptBundle("~/Scripts/Shared");
             sharedScripts.Include("~/Scripts/Shared/*.js");
-
+            
             bundles.Add(jQueryScripts);
             bundles.Add(sidebarScripts);
             bundles.Add(bootstrapScripts);
-            bundles.Add(jQueryUIScripts);
             bundles.Add(globalizeScripts);
             bundles.Add(gridMvcScripts);
             bundles.Add(select2Scripts);

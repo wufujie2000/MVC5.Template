@@ -12,17 +12,17 @@ namespace Template.Web
             routes
                 .MapRoute(
                     "Default",
-                    "{language}/{controller}/{action}/{id}",
-                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
+                    "{controller}/{action}/{id}",
+                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en-GB" },
                     new[] { "Template.Controllers.Home" });
 
             routes
                 .MapRoute(
-                    "DefaultLang",
-                    "{controller}/{action}/{id}",
-                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" },
+                    "DefaultMultilingual",
+                    "{language}/{controller}/{action}/{id}",
+                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "lt-LT" },
                     new[] { "Template.Controllers.Home" });
         }
     }

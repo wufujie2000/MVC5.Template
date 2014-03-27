@@ -1,5 +1,4 @@
-﻿using Ninject;
-using Ninject.Modules;
+﻿using Ninject.Modules;
 using System.Web.Mvc;
 
 namespace Template.Web.IoC
@@ -8,7 +7,7 @@ namespace Template.Web.IoC
     {
         private static NinjectResolver resolver;
 
-        public static void RegisterModules(NinjectModule[] modules)
+        public static void RegisterModules(params NinjectModule[] modules)
         {
             resolver = new NinjectResolver(modules);
             DependencyResolver.SetResolver(resolver);
@@ -16,7 +15,7 @@ namespace Template.Web.IoC
 
         public static T Resolve<T>()
         {
-            return resolver.Kernel.Get<T>();
+            return resolver.Resolve<T>();
         }
     }
 }

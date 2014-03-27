@@ -37,29 +37,29 @@ namespace Template.Tests.Tests.Controllers.Administration
         public void RegisterArea_RegistersAdministrationRoute()
         {
             areaRegistration.RegisterArea(registrationContext);
-            var actualRoute = registrationContext.Routes["Administration"] as Route;
+            var actual = registrationContext.Routes["Administration"] as Route;
 
-            Assert.AreEqual("Template.Controllers.Administration", (actualRoute.DataTokens["Namespaces"] as String[])[0]);
-            Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actualRoute.Url);
-            Assert.AreEqual(UrlParameter.Optional, actualRoute.Defaults["id"]);
-            Assert.AreEqual("Administration", actualRoute.Defaults["area"]);
-            Assert.AreEqual("lt-LT", actualRoute.Constraints["language"]);
-            Assert.AreEqual("Index", actualRoute.Defaults["action"]);
+            CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
+            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.AreEqual("Administration", actual.Defaults["area"]);
+            Assert.AreEqual("en-GB", actual.Constraints["language"]);
+            Assert.AreEqual("en-GB", actual.Defaults["language"]);
+            Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 
         [Test]
-        public void RegisterArea_RegistersAdministrationDefaultLangRoute()
+        public void RegisterArea_RegistersAdministrationMultilingualRoute()
         {
             areaRegistration.RegisterArea(registrationContext);
-            var actualRoute = registrationContext.Routes["AdministrationDefaultLang"] as Route;
+            var actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
 
-            Assert.AreEqual("Template.Controllers.Administration", (actualRoute.DataTokens["Namespaces"] as String[])[0]);
-            Assert.AreEqual("Administration/{controller}/{action}/{id}", actualRoute.Url);
-            Assert.AreEqual(UrlParameter.Optional, actualRoute.Defaults["id"]);
-            Assert.AreEqual("Administration", actualRoute.Defaults["area"]);
-            Assert.AreEqual("en-GB", actualRoute.Constraints["language"]);
-            Assert.AreEqual("en-GB", actualRoute.Defaults["language"]);
-            Assert.AreEqual("Index", actualRoute.Defaults["action"]);
+            CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actual.Url);
+            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.AreEqual("Administration", actual.Defaults["area"]);
+            Assert.AreEqual("lt-LT", actual.Constraints["language"]);
+            Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 
         #endregion

@@ -51,7 +51,7 @@ namespace Template.Web
         
         private void RegisterIoC()
         {
-            NinjectContainer.RegisterModules(NinjectModules.Modules);
+            NinjectContainer.RegisterModules(new MainModule());
         }
         private void RegisterAreas()
         {

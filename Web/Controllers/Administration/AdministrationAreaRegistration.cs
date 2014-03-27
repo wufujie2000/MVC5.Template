@@ -18,17 +18,17 @@ namespace Template.Controllers.Administration
             context
                 .MapRoute(
                     "Administration",
-                    "{language}/Administration/{controller}/{action}/{id}",
-                    new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
+                    "Administration/{controller}/{action}/{id}",
+                    new { language = "en-GB", area = "Administration", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en-GB" },
                     new[] { "Template.Controllers.Administration" });
 
             context
                 .MapRoute(
-                    "AdministrationDefaultLang",
-                    "Administration/{controller}/{action}/{id}",
-                    new { language = "en-GB", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" },
+                    "AdministrationMultilingual",
+                    "{language}/Administration/{controller}/{action}/{id}",
+                    new { area = "Administration", action = "Index", id = UrlParameter.Optional },
+                    new { language = "lt-LT" },
                     new[] { "Template.Controllers.Administration" });
         }
     }

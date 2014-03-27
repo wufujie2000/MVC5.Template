@@ -8,24 +8,25 @@ namespace Template.Web.IoC
 {
     public class NinjectResolver : IDependencyResolver
     {
-        public IKernel Kernel
-        {
-            get;
-            private set;
-        }
+        private IKernel kernel;
 
         public NinjectResolver(params NinjectModule[] modules)
         {
-            Kernel = new StandardKernel(modules);
+            kernel = new StandardKernel(modules);
         }
 
         public Object GetService(Type serviceType)
         {
-            return Kernel.TryGet(serviceType);
+            return kernel.TryGet(serviceType);
         }
         public IEnumerable<Object> GetServices(Type serviceType)
         {
-            return Kernel.GetAll(serviceType);
+            return kernel.GetAll(serviceType);
+        }
+
+        public T Resolve<T>()
+        {
+            return kernel.TryGet<T>();
         }
     }
 }

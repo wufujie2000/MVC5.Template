@@ -182,6 +182,7 @@
     <Compile Include="Tests\Web\App_Start\IoC\NinjectResolverTests.cs" />
     <Compile Include="Tests\Web\App_Start\RouteConfigTests.cs" />
     <Compile Include="Tests\Web\App_Start\ViewEngineTests.cs" />
+    <Compile Include="Tests\Web\MvcApplicationTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -31,16 +31,17 @@ namespace Template.Web
             Version = versionInfo.FileVersion;
         }
 
-        protected void Application_Start()
+        public void Application_Start()
         {
             RegisterIoC();
             RegisterAreas();
             RegisterAdapters();
             RegisterRoleProvider();
             RegisterModelMetadataProvider();
-            RegisterDateTypeValidator();
-            RegisterViewEngines();
-            RegisterConfigs();
+            RegisterDataTypeValidator();
+            RegisterViewEngine();
+            RegisterBundles();
+            RegisterRoutes();
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
@@ -71,19 +72,22 @@ namespace Template.Web
         {
             ModelMetadataProviders.Current = new DisplayNameMetadataProvider();
         }
-        private void RegisterDateTypeValidator()
+        private void RegisterDataTypeValidator()
         {
             ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
         }
-        private void RegisterViewEngines()
+        private void RegisterViewEngine()
         {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new ViewEngine());
         }
-        private void RegisterConfigs()
+        private void RegisterBundles()
         {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+        private void RegisterRoutes()
+        {
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }

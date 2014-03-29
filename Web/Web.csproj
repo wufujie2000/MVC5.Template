@@ -131,6 +131,7 @@
     <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
+    <Content Include="Content\Css\GridMvc\gridmvc.datepicker.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\Flags\en-GB.gif" />
@@ -158,6 +159,7 @@
     <Content Include="Images\Select2\select2x2.png" />
     <Content Include="Images\Shared\breadcrumb.png" />
     <Content Include="Images\Shared\menu-active.png" />
+    <Content Include="Scripts\GridMvc\gridmvc.datepicker.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Datalist\bind-with-delay.js" />

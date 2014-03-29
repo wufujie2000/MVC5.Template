@@ -91,7 +91,13 @@
             background-color: #1AAEF3;
             color: #FFFFFF;
         }
+
 /* GridMvc */
+.grid-table > thead > tr > th,
+.grid-table > tbody > tr > td {
+    border-left: 1px solid #DDDDDD;
+}
+
 .grid-empty-text {
     text-align: center;
 }

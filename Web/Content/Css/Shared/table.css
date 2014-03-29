@@ -7,11 +7,6 @@
     font-size: 12px;
 }
 
-.table td,
-.table th {
-    border-left: 1px solid #DDDDDD;
-}
-
 .table > thead > tr > th {
     border-bottom-width: 1px;
 }

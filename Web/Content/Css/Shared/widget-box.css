@@ -60,28 +60,28 @@
     clear: both;
 }
 
-    .widget-content .form-group {
+    .widget-content form .form-group {
         border-bottom: 1px solid #EEEEEE;
         border-top: 1px solid #FFFFFF;
         padding: 10px 0;
         margin: 0;
     }
 
-        .widget-content .form-group:before,
-        .widget-content .form-group:after {
+        .widget-content form .form-group:before,
+        .widget-content form .form-group:after {
             display: table;
             content: " ";
         }
 
-        .widget-content .form-group:after {
+        .widget-content form .form-group:after {
             clear: both;
         }
 
-        .widget-content .form-group .input-group {
+        .widget-content form .form-group .input-group {
             width: 100%;
         }
 
-        .widget-content .form-group:last-child {
+        .widget-content form .form-group:last-child {
             border-bottom: 0;
         }
 

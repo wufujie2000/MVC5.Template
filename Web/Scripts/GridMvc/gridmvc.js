@@ -637,18 +637,19 @@ DateTimeFilterWidget = (function ($) {
         //if window.jQueryUi included:
         if (this.datePickerIncluded) {
             var datePickerOptions = this.data || {};
-            datePickerOptions.format = datePickerOptions.format || "yyyy-mm-dd";
+            datePickerOptions.dateFormat = datePickerOptions.dateFormat || "yy-mm-dd";
             datePickerOptions.language = datePickerOptions.language || this.lang.code;
 
             var $context = this;
             var dateContainer = this.container.find(".grid-filter-datepicker");
-            dateContainer.datepicker(datePickerOptions).on('changeDate', function (ev) {
+            dateContainer.datepicker(datePickerOptions).on('change', function (ev) {
                 var type = $context.container.find(".grid-filter-type").val();
-                var filterValues = [{ filterType: type, filterValue: ev.format() }];
+                var filterValues = [{ filterType: type, filterValue: ev.target.value }];
                 $context.cb(filterValues);
             });
+
             if (this.value.filterValue)
-                dateContainer.datepicker('update', this.value.filterValue);
+                dateContainer.datepicker('setDate', this.value.filterValue);
         }
     };
 

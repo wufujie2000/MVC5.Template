@@ -11,19 +11,20 @@ namespace Template.Web
 
             routes
                 .MapRoute(
+                    "DefaultMultilingual",
+                    "{language}/{controller}/{action}/{id}",
+                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "lt-LT" },
+                    new[] { "Template.Controllers.Home" });
+
+            routes
+                .MapRoute(
                     "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "en-GB" },
                     new[] { "Template.Controllers.Home" });
 
-            routes
-                .MapRoute(
-                    "DefaultMultilingual",
-                    "{language}/{controller}/{action}/{id}",
-                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
-                    new[] { "Template.Controllers.Home" });
         }
     }
 }

@@ -48,7 +48,7 @@ body {
     }
 
         #LoginBox .input-group > span:first-child {
-            width: 40px;
+            width: 39px;
         }
 
     #LoginBox .select2-container .select2-choice {
@@ -65,6 +65,14 @@ body {
 
     #LoginBox .select2-container.select2-dropdown-open .select2-choice {
         border-radius: 0 4px 0 0;
+    }
+
+    #LoginBox .select2-dropdown-open .select2-choice .select2-arrow b {
+        background-position: -18px 4px;
+    }
+
+    #LoginBox .select2-container .select2-choice .select2-arrow b {
+        background-position: 0 4px;
     }
 
     #LoginBox .select2-container-active .select2-choice {

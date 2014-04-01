@@ -100,6 +100,15 @@
             color: #FFFFFF;
         }
 
+/* Select2 */
+.select2-dropdown-open .select2-choice .select2-arrow b {
+    background-position: -18px 4px;
+}
+
+.select2-container .select2-choice .select2-arrow b {
+    background-position: 0 4px;
+}
+
 /* GridMvc */
 .grid-table > thead > tr > th,
 .grid-table > tbody > tr > td {

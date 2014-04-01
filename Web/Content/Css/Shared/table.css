@@ -48,7 +48,7 @@
 
 .table td > div.action-link-container {
     border-radius: 4px;
-    font-size: 12.5px;
+    font-size: 11px;
     height: 20px;
     width: 20px;
 }
@@ -68,7 +68,7 @@
     }
 
     .table td > div.details-action-link > a {
-        padding: 8px;
+        padding-left: 8px;
     }
 
     .table td > div.details-action-link i {
@@ -86,11 +86,11 @@
     }
 
     .table td > div.edit-action-link > a {
-        padding-left: 5.2px;
+        padding-left: 5.5px;
     }
 
     .table td > div.edit-action-link i {
-        margin-top: 4.5px;
+        margin-top: 4.8px;
     }
 
 .table td > div.delete-action-link {
@@ -104,9 +104,9 @@
     }
 
     .table td > div.delete-action-link > a {
-        padding: 5.2px;
+        padding-left: 6px;
     }
 
     .table td > div.delete-action-link i {
-        margin-top: 4px;
+        margin-top: 4.5px;
     }

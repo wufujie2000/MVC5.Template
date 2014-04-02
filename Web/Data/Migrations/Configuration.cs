@@ -67,12 +67,12 @@ namespace Template.Data.Migrations
         }
         private void SeedAdministratorRole()
         {
-            if (!unitOfWork.Repository<Role>().Query(role => role.Name == "Administrator").Any())
-                unitOfWork.Repository<Role>().Insert(new Role() { Name = "Administrator" });
+            if (!unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").Any())
+                unitOfWork.Repository<Role>().Insert(new Role() { Name = "Sys_Admin" });
 
             unitOfWork.Commit();
 
-            var adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Administrator").First().Id;
+            var adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").First().Id;
             var adminPrivileges = unitOfWork.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
             foreach (var privilege in unitOfWork.Repository<Privilege>().Query())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
@@ -88,8 +88,8 @@ namespace Template.Data.Migrations
         {
             var people = new List<Person>()
             {
-                new Person() { FirstName = "System", LastName = "Admin", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
-                new Person() { FirstName = "Test", LastName = "User", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Administrator").First().Id },
+                new Person() { FirstName = "System", LastName = "Admin", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id },
+                new Person() { FirstName = "Test", LastName = "User" },
             };
 
             foreach (var person in people)

@@ -4,9 +4,9 @@ using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
 using Template.Data.Logging;
-using Template.Web.IoC;
+using Template.Web.DependencyInjection.Ninject;
 
-namespace Template.Tests.Unit.Web.App_Start.IoC
+namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
 {
     [TestFixture]
     public class MainModuleTests

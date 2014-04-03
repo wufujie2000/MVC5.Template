@@ -4,7 +4,7 @@ using Template.Components.Services;
 using Template.Data.Core;
 using Template.Data.Logging;
 
-namespace Template.Web.IoC
+namespace Template.Web.DependencyInjection.Ninject
 {
     public class MainModule : NinjectModule
     {

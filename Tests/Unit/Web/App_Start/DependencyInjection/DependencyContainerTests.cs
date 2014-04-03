@@ -2,19 +2,20 @@
 using System;
 using System.Web.Mvc;
 using Template.Data.Core;
-using Template.Web.IoC;
+using Template.Web.DependencyInjection;
+using Template.Web.DependencyInjection.Ninject;
 
-namespace Template.Tests.Unit.Web.App_Start.IoC
+namespace Template.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
-    public class NinjectContainerTests
+    public class DependencyContainerTests
     {
         #region Static method: RegisterModules(params NinjectModule[] modules)
 
         [Test]
         public void RegisterModules_SetsDependencyResolver()
         {
-            NinjectContainer.RegisterModules(new MainModule());
+            DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
 
             var expectedType = typeof(NinjectResolver);
             var actualInstace = DependencyResolver.Current;
@@ -30,7 +31,7 @@ namespace Template.Tests.Unit.Web.App_Start.IoC
         public void Resolve_ResolvesType()
         {
             var expectedType = typeof(AContext);
-            var actualInstace = NinjectContainer.Resolve<AContext>();
+            var actualInstace = DependencyContainer.Resolve<AContext>();
 
             Assert.IsInstanceOf(expectedType, actualInstace);
         }
@@ -38,7 +39,7 @@ namespace Template.Tests.Unit.Web.App_Start.IoC
         [Test]
         public void Resolve_OnNotBindedReturnsNull()
         {
-            Assert.IsNull(NinjectContainer.Resolve<IDisposable>());
+            Assert.IsNull(DependencyContainer.Resolve<IDisposable>());
         }
 
         #endregion

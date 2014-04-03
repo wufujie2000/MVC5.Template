@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Template.Web.IoC
+namespace Template.Web.DependencyInjection.Ninject
 {
     public class NinjectResolver : IDependencyResolver
     {
@@ -22,11 +22,6 @@ namespace Template.Web.IoC
         public IEnumerable<Object> GetServices(Type serviceType)
         {
             return kernel.GetAll(serviceType);
-        }
-
-        public T Resolve<T>()
-        {
-            return kernel.TryGet<T>();
         }
     }
 }

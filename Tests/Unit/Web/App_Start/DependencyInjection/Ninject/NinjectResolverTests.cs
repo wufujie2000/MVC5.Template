@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using Template.Data.Core;
-using Template.Web.IoC;
+using Template.Web.DependencyInjection.Ninject;
 
-namespace Template.Tests.Unit.Web.App_Start.IoC
+namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
 {
     [TestFixture]
     public class NinjectResolverTests
@@ -51,25 +51,6 @@ namespace Template.Tests.Unit.Web.App_Start.IoC
         public void GetServices_OnNotBindedReturnsNull()
         {
             CollectionAssert.IsEmpty(resolver.GetServices(typeof(IDisposable)));
-        }
-
-        #endregion
-
-        #region Method: Resolve<T>()
-
-        [Test]
-        public void Resolve_ResolvesType()
-        {
-            var expectedType = typeof(AContext);
-            var actualInstace = resolver.Resolve<AContext>();
-
-            Assert.IsInstanceOf(expectedType, actualInstace);
-        }
-
-        [Test]
-        public void Resolve_OnNotBindedReturnsNull()
-        {
-            Assert.IsNull(resolver.Resolve<IDisposable>());
         }
 
         #endregion

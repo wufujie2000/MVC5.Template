@@ -98,9 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\IoC\MainModule.cs" />
-    <Compile Include="App_Start\IoC\NinjectContainer.cs" />
-    <Compile Include="App_Start\IoC\NinjectResolver.cs" />
+    <Compile Include="App_Start\DependencyInjection\Ninject\MainModule.cs" />
+    <Compile Include="App_Start\DependencyInjection\DependencyContainer.cs" />
+    <Compile Include="App_Start\DependencyInjection\Ninject\NinjectResolver.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\ViewEngine.cs" />
     <Compile Include="Global.asax.cs">

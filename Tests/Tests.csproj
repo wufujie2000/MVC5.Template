@@ -178,9 +178,9 @@
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Unit\Resources\ResourceProviderTests.cs" />
     <Compile Include="Unit\Web\App_Start\BundleConfigTests.cs" />
-    <Compile Include="Unit\Web\App_Start\IoC\MainModuleTests.cs" />
-    <Compile Include="Unit\Web\App_Start\IoC\NinjectContainerTests.cs" />
-    <Compile Include="Unit\Web\App_Start\IoC\NinjectResolverTests.cs" />
+    <Compile Include="Unit\Web\App_Start\DependencyInjection\Ninject\MainModuleTests.cs" />
+    <Compile Include="Unit\Web\App_Start\DependencyInjection\DependencyContainerTests.cs" />
+    <Compile Include="Unit\Web\App_Start\DependencyInjection\Ninject\NinjectResolverTests.cs" />
     <Compile Include="Unit\Web\App_Start\RouteConfigTests.cs" />
     <Compile Include="Unit\Web\App_Start\ViewEngineTests.cs" />
     <Compile Include="Unit\Web\MvcApplicationTests.cs" />

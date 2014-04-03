@@ -12,7 +12,8 @@ using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
 using Template.Components.Mvc.Providers;
 using Template.Components.Security;
-using Template.Web.IoC;
+using Template.Web.DependencyInjection;
+using Template.Web.DependencyInjection.Ninject;
 
 namespace Template.Web
 {
@@ -33,15 +34,14 @@ namespace Template.Web
 
         public void Application_Start()
         {
-            RegisterIoC();
-            RegisterAreas();
-            RegisterAdapters();
-            RegisterRoleProvider();
-            RegisterModelMetadataProvider();
+            RegisterDependencyResolver();
             RegisterDataTypeValidator();
+            RegisterRoleProvider();
             RegisterViewEngine();
+            RegisterAdapters();
             RegisterBundles();
             RegisterRoutes();
+            RegisterAreas();
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
@@ -50,9 +50,9 @@ namespace Template.Web
             Thread.CurrentThread.CurrentCulture = culture;
         }
         
-        private void RegisterIoC()
+        private void RegisterDependencyResolver()
         {
-            NinjectContainer.RegisterModules(new MainModule());
+            DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
         }
         private void RegisterAreas()
         {
@@ -66,7 +66,7 @@ namespace Template.Web
         }
         private void RegisterRoleProvider()
         {
-            RoleProviderFactory.SetInstance(NinjectContainer.Resolve<IRoleProvider>());
+            RoleProviderFactory.SetInstance(DependencyContainer.Resolve<IRoleProvider>());
         }
         private void RegisterModelMetadataProvider()
         {

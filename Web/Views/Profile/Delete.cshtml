@@ -4,18 +4,18 @@
 {
     using (Html.FormGroup())
     {
-        @Html.BootstrapFormLabelFor(model => model.Person.FirstName)
-        @Html.BootstrapTextBoxFor(model => model.Person.FirstName)
+        @Html.FormLabelFor(model => model.Person.FirstName)
+        @Html.FormTextBoxFor(model => model.Person.FirstName)
     }
     using (Html.FormGroup())
     {
-        @Html.BootstrapFormLabelFor(model => model.Person.LastName)
-        @Html.BootstrapTextBoxFor(model => model.Person.LastName)
+        @Html.FormLabelFor(model => model.Person.LastName)
+        @Html.FormTextBoxFor(model => model.Person.LastName)
     }
     using (Html.FormGroup())
     {
-        @Html.BootstrapFormLabelFor(model => model.Person.DateOfBirth)
-        @Html.BootstrapDatePickerFor(model => model.Person.DateOfBirth)
+        @Html.FormLabelFor(model => model.Person.DateOfBirth)
+        @Html.FormDatePickerFor(model => model.Person.DateOfBirth)
     }
     using (Html.FormGroup())
     {
@@ -25,15 +25,15 @@
         @Html.AntiForgeryToken()
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Username)
-            @Html.BootstrapTextBoxFor(model => model.Username)
-            @Html.BootstrapValidationFor(model => model.Username)
+            @Html.FormLabelFor(model => model.Username)
+            @Html.FormTextBoxFor(model => model.Username)
+            @Html.FormValidationFor(model => model.Username)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.CurrentPassword)
-            @Html.BootstrapPasswordFor(model => model.CurrentPassword)
-            @Html.BootstrapValidationFor(model => model.CurrentPassword)
+            @Html.FormLabelFor(model => model.CurrentPassword)
+            @Html.FormPasswordFor(model => model.CurrentPassword)
+            @Html.FormValidationFor(model => model.CurrentPassword)
         }
         
         using (Html.FormActions())

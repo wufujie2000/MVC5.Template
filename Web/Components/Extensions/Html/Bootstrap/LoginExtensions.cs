@@ -12,28 +12,30 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            var addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon");
             var icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-user");
-
+            var addon = new TagBuilder("span");
+            addon.AddCssClass("input-group-addon");
             addon.InnerHtml = icon.ToString();
+
             var attributes = new RouteValueDictionary();
             attributes["class"] = "form-control";
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
+
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
         public static MvcHtmlString LoginPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            var addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon lock-span");
             var icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-lock");
-
+            var addon = new TagBuilder("span");
+            addon.AddCssClass("input-group-addon lock-span");
             addon.InnerHtml = icon.ToString();
+
             var attributes = new RouteValueDictionary();
             attributes["class"] = "form-control";
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
+
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes)));
         }
         public static MvcHtmlString LoginLanguageSelect<TModel>(this HtmlHelper<TModel> html)

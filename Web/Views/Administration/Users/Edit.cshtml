@@ -7,42 +7,42 @@
         @Html.AntiForgeryToken()
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Username)
-            @Html.BootstrapTextBoxFor(model => model.Username)
-            @Html.BootstrapValidationFor(model => model.Username)
+            @Html.FormLabelFor(model => model.Username)
+            @Html.FormTextBoxFor(model => model.Username)
+            @Html.FormValidationFor(model => model.Username)
         }
         using (Html.FormGroup())
         {
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Person.RoleId)
+            @Html.FormLabelFor(model => model.Person.RoleId)
             using (Html.ContentGroup())
             {
                 @Html.DatalistFor(model => model.Person.RoleId, new BaseDatalist<Role, RoleView>())
             }
-            @Html.BootstrapValidationFor(model => model.Person.RoleId)
+            @Html.FormValidationFor(model => model.Person.RoleId)
         }
         using (Html.FormGroup())
         {
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Person.FirstName)
-            @Html.BootstrapTextBoxFor(model => model.Person.FirstName)
-            @Html.BootstrapValidationFor(model => model.Person.FirstName)
+            @Html.FormLabelFor(model => model.Person.FirstName)
+            @Html.FormTextBoxFor(model => model.Person.FirstName)
+            @Html.FormValidationFor(model => model.Person.FirstName)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Person.LastName)
-            @Html.BootstrapTextBoxFor(model => model.Person.LastName)
-            @Html.BootstrapValidationFor(model => model.Person.LastName)
+            @Html.FormLabelFor(model => model.Person.LastName)
+            @Html.FormTextBoxFor(model => model.Person.LastName)
+            @Html.FormValidationFor(model => model.Person.LastName)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Person.DateOfBirth)
-            @Html.BootstrapDatePickerFor(model => model.Person.DateOfBirth)
-            @Html.BootstrapValidationFor(model => model.Person.DateOfBirth)
+            @Html.FormLabelFor(model => model.Person.DateOfBirth)
+            @Html.FormDatePickerFor(model => model.Person.DateOfBirth)
+            @Html.FormValidationFor(model => model.Person.DateOfBirth)
         }
         
         @Html.HiddenFor(model => model.Id)

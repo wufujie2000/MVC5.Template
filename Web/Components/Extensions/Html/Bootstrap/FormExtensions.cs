@@ -42,7 +42,7 @@ namespace Template.Components.Extensions.Html
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString BootstrapLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString NotRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
@@ -51,7 +51,7 @@ namespace Template.Components.Extensions.Html
             
             return new MvcHtmlString(label.ToString());
         }
-        public static MvcHtmlString BootstrapRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString RequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
@@ -66,29 +66,29 @@ namespace Template.Components.Extensions.Html
 
             return new MvcHtmlString(label.ToString());
         }
-        public static MvcHtmlString BootstrapFormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             if (expression.IsRequired())
-                return html.BootstrapRequiredLabelFor(expression);
+                return html.RequiredLabelFor(expression);
 
-            return html.BootstrapLabelFor(expression);
+            return html.NotRequiredLabelFor(expression);
         }
-        public static MvcHtmlString BootstrapTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
+        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
         {
             var attributes = AddClass(htmlAttributes, "form-control");
             if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
             return new MvcHtmlString(WrapContent(html.TextBoxFor(expression, format, attributes)));
         }
-        public static MvcHtmlString BootstrapDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             String format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
-            return html.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" });
+            return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
         }
-        public static MvcHtmlString BootstrapPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             return new MvcHtmlString(WrapContent(html.PasswordFor(expression, AddClass(null, "form-control"))));
         }
-        public static MvcHtmlString BootstrapValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
+        public static MvcHtmlString FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
             return new MvcHtmlString(WrapValidation(html.ValidationMessageFor(expression)));
         }

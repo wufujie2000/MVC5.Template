@@ -7,18 +7,18 @@
         @Html.AntiForgeryToken()
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.Name)
-            @Html.BootstrapTextBoxFor(model => model.Name)
-            @Html.BootstrapValidationFor(model => model.Name)
+            @Html.FormLabelFor(model => model.Name)
+            @Html.FormTextBoxFor(model => model.Name)
+            @Html.FormValidationFor(model => model.Name)
         }
         using (Html.FormGroup())
         {
-            @Html.BootstrapFormLabelFor(model => model.PrivilegesTree)
+            @Html.FormLabelFor(model => model.PrivilegesTree)
             using (Html.ContentGroup())
             {
                 @Html.TreeViewFor(model => model.PrivilegesTree)
             }
-            @Html.BootstrapValidationFor(model => model.PrivilegesTree)
+            @Html.FormValidationFor(model => model.PrivilegesTree)
         }
         
         using (Html.FormActions())

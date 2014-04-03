@@ -118,10 +118,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: BootstrapLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        #region Extension method: NotRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]
-        public void BootstrapLabelFor_FormsLabelFor()
+        public void NotRequiredLabelFor_FormsLabelFor()
         {
             expression = (model) => model.Required;
 
@@ -131,7 +131,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             expectedInput.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
             var expected = expectedInput.ToString();
-            var actual = htmlHelper.BootstrapLabelFor(expression).ToString();
+            var actual = htmlHelper.NotRequiredLabelFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -157,24 +157,24 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             expectedLabel.InnerHtml += requiredSpan.ToString();
 
             var expected = expectedLabel.ToString();
-            var actual = htmlHelper.BootstrapRequiredLabelFor(expression).ToString();
+            var actual = htmlHelper.RequiredLabelFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Extension method: BootstrapFormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]
-        public void BootstrapFormLabelFor_OnNonMemberExpressionThrows()
+        public void FormLabelFor_OnNonMemberExpressionThrows()
         {
             expression = (model) => model.Method();
-            Assert.Throws<InvalidOperationException>(() => htmlHelper.BootstrapFormLabelFor(model => model.Method()), "Expression must be a member expression");
+            Assert.Throws<InvalidOperationException>(() => htmlHelper.FormLabelFor(model => model.Method()), "Expression must be a member expression");
         }
 
         [Test]
-        public void BootstrapFormLabelFor_FormsLabelFor()
+        public void FormLabelFor_FormsLabelFor()
         {
             expression = (model) => model.NotRequired;
 
@@ -184,13 +184,13 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             expectedLabel.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
             var expected = expectedLabel.ToString();
-            var actual = htmlHelper.BootstrapFormLabelFor(expression).ToString();
+            var actual = htmlHelper.FormLabelFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BootstrapFormLabelFor_FormsRequiredLabelFor()
+        public void FormLabelFor_FormsRequiredLabelFor()
         {
             expression = (model) => model.Required;
 
@@ -206,79 +206,79 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             expectedLabel.InnerHtml += requiredSpan.ToString();
 
             var expected = expectedLabel.ToString();
-            var actual = htmlHelper.BootstrapFormLabelFor(expression).ToString();
+            var actual = htmlHelper.FormLabelFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Extension method: BootstrapTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
+        #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
 
         [Test]
-        public void BootstrapTextBoxFor_FormsTextBoxFor()
+        public void FormTextBoxFor_FormsTextBoxFor()
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "form-control", autocomplete = "off" };
             var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapTextBoxFor(expression).ToString();
+            var actual = htmlHelper.FormTextBoxFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BootstrapTextBoxFor_UsesFormat()
+        public void FormTextBoxFor_UsesFormat()
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (model) => model.Number;
             var attributes = new { @class = "form-control", autocomplete = "off" };
             var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, "{0:0.00}", attributes), contentClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapTextBoxFor(expression, "{0:0.00}").ToString();
+            var actual = htmlHelper.FormTextBoxFor(expression, "{0:0.00}").ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BootstrapTextBoxFor_AddsAttributes()
+        public void FormTextBoxFor_AddsAttributes()
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "test form-control", autocomplete = "off" };
             var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapTextBoxFor(expression, null, new { @class = " test" }).ToString();
+            var actual = htmlHelper.FormTextBoxFor(expression, null, new { @class = " test" }).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BootstrapTextBoxFor_DoesNotOverwriteAutocompleteAttribute()
+        public void FormTextBoxFor_DoesNotOverwriteAutocompleteAttribute()
         {
             expression = (model) => model.NotRequired;
             var attributes = new { @class = "form-control", autocomplete = "on" };
             var formColumn = new FormWrapper(htmlHelper.TextBoxFor(expression, null, attributes), contentClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapTextBoxFor(expression, null, new { autocomplete = "on" }).ToString();
+            var actual = htmlHelper.FormTextBoxFor(expression, null, new { autocomplete = "on" }).ToString();
 
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Extension method: BootstrapDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]
-        public void BootstrapDatePickerFor_FormsDatePicker()
+        public void FormDatePickerFor_FormsDatePicker()
         {
             Expression<Func<BootstrapModel, DateTime>> expression = (model) => model.Date;
             var format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
-            var expected = htmlHelper.BootstrapTextBoxFor(expression, format, new { @class = "datepicker" }).ToString();
-            var actual = htmlHelper.BootstrapDatePickerFor(expression).ToString();
+            var expected = htmlHelper.FormTextBoxFor(expression, format, new { @class = "datepicker" }).ToString();
+            var actual = htmlHelper.FormDatePickerFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -294,23 +294,23 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             var formColumn = new FormWrapper(htmlHelper.PasswordFor(expression, new { @class = "form-control" }), contentClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapPasswordFor(expression).ToString();
+            var actual = htmlHelper.FormPasswordFor(expression).ToString();
             
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Extension method: BootstrapValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
+        #region Extension method: FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
         [Test]
-        public void BootstrapValidationFor_FormsValidationFor()
+        public void FormValidationFor_FormsValidationFor()
         {
             expression = (model) => model.Required;
             var formColumn = new FormWrapper(htmlHelper.ValidationMessageFor(expression), validationClass);
 
             var expected = formColumn.ToString();
-            var actual = htmlHelper.BootstrapValidationFor(expression).ToString();
+            var actual = htmlHelper.FormValidationFor(expression).ToString();
 
             Assert.AreEqual(expected, actual);
         }

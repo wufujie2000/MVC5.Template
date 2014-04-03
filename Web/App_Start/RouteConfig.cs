@@ -24,7 +24,6 @@ namespace Template.Web
                     new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "en-GB" },
                     new[] { "Template.Controllers.Home" });
-
         }
     }
 }

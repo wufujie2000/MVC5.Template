@@ -41,7 +41,6 @@ namespace Template.Web
             RegisterAdapters();
             RegisterBundles();
             RegisterRoutes();
-            RegisterAreas();
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
@@ -53,10 +52,6 @@ namespace Template.Web
         private void RegisterDependencyResolver()
         {
             DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
-        }
-        private void RegisterAreas()
-        {
-            AreaRegistration.RegisterAllAreas();
         }
         private void RegisterAdapters()
         {
@@ -88,6 +83,7 @@ namespace Template.Web
         }
         private void RegisterRoutes()
         {
+            AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
     }

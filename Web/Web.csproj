@@ -40,9 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Datalist, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Datalist.3.0.1\lib\net45\Datalist.dll</HintPath>
+      <HintPath>..\packages\Datalist.3.0.2\lib\net45\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -57,9 +57,12 @@
       <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -68,7 +71,7 @@
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -79,17 +82,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.1\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -116,8 +123,8 @@
     <Content Include="Content\Css\Bootstrap\bootstrap.css" />
     <Content Include="Content\Css\FontAwesome\font-awesome.css" />
     <Content Include="Content\Css\GridMvc\gridmvc.css" />
-    <Content Include="Content\Css\JQuery\jquery-ui-1.10.4.custom.css" />
-    <Content Include="Content\Css\JsTree\js-tree.css" />
+    <Content Include="Content\Css\JQueryUI\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Content\Css\JsTree\jstree.css" />
     <Content Include="Content\Css\Login\login.css" />
     <Content Include="Content\Css\Select2\select2.css" />
     <Content Include="Content\Css\Shared\alert-messages.css" />
@@ -135,21 +142,21 @@
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\Flags\en-GB.gif" />
     <Content Include="Images\Flags\lt-LT.gif" />
-    <Content Include="Images\JQuery\animated-overlay.gif" />
-    <Content Include="Images\JQuery\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Images\JQuery\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Images\JQuery\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Images\JQuery\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Images\JQuery\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Images\JQuery\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Images\JQuery\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Images\JQuery\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Images\JQuery\ui-icons_222222_256x240.png" />
-    <Content Include="Images\JQuery\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Images\JQuery\ui-icons_454545_256x240.png" />
-    <Content Include="Images\JQuery\ui-icons_888888_256x240.png" />
-    <Content Include="Images\JQuery\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Images\JQuery\ui-icons_ffffff_256x240.png" />
+    <Content Include="Images\JQueryUI\animated-overlay.gif" />
+    <Content Include="Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\JQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\JQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\JQueryUI\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\JQueryUI\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\JQueryUI\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\JQueryUI\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\JQueryUI\ui-icons_222222_256x240.png" />
+    <Content Include="Images\JQueryUI\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\JQueryUI\ui-icons_454545_256x240.png" />
+    <Content Include="Images\JQueryUI\ui-icons_888888_256x240.png" />
+    <Content Include="Images\JQueryUI\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\JsTree\32px.png" />
     <Content Include="Images\JsTree\40px.png" />
     <Content Include="Images\JsTree\throbber.gif" />
@@ -176,7 +183,7 @@
     <Content Include="Scripts\GridMvc\gridmvc.min.js" />
     <Content Include="Scripts\GridMvc\gridmvc.js" />
     <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.lt-LT.js" />
-    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.unobtrusive.min.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.min.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.min.js" />
@@ -185,7 +192,7 @@
     <Content Include="Scripts\JQuery\jquery-2.1.0.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.0.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\JsTree\jstree.min.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\Login\login.js" />
@@ -206,9 +213,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -277,6 +281,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_GridPager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

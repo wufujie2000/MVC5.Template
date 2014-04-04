@@ -18,6 +18,7 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Scripts/JQuery",
                 "~/Scripts/Sidebar",
                 "~/Scripts/Bootstrap",
+                "~/Scripts/JQueryUI",
                 "~/Scripts/Globalize",
                 "~/Scripts/GridMvc",
                 "~/Scripts/Select2",
@@ -39,8 +40,8 @@ namespace Template.Tests.Unit.Web.App_Start
         {
             var expectedBundles = new[]
             {
-                "~/Content/Css/JQuery",
                 "~/Content/Css/Bootstrap",
+                "~/Content/Css/JQueryUI",
                 "~/Content/Css/FontAwesome",
                 "~/Content/Css/GridMvc",
                 "~/Content/Css/Select2",

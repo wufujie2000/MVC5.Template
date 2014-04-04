@@ -20,6 +20,9 @@ namespace Template.Web
             var bootstrapScripts = new ScriptBundle("~/Scripts/Bootstrap");
             bootstrapScripts.Include("~/Scripts/Bootstrap/*.js");
 
+            var jQueryUIScripts = new ScriptBundle("~/Scripts/JQueryUI");
+            jQueryUIScripts.Include("~/Scripts/JQueryUI/*.js");
+
             var globalizeScripts = new ScriptBundle("~/Scripts/Globalize");
             globalizeScripts.Include("~/Scripts/Globalize/*.js");
 
@@ -44,6 +47,7 @@ namespace Template.Web
             bundles.Add(jQueryScripts);
             bundles.Add(sidebarScripts);
             bundles.Add(bootstrapScripts);
+            bundles.Add(jQueryUIScripts);
             bundles.Add(globalizeScripts);
             bundles.Add(gridMvcScripts);
             bundles.Add(select2Scripts);
@@ -54,42 +58,42 @@ namespace Template.Web
         }
         private static void RegisterCss(BundleCollection bundles)
         {
-            var jQueryCss = new StyleBundle("~/Content/Css/JQuery");
-            jQueryCss.Include("~/Content/Css/JQuery/*.css");
+            var jQueryUIStyles = new StyleBundle("~/Content/Css/JQueryUI");
+            jQueryUIStyles.Include("~/Content/Css/JQueryUI/*.css");
 
-            var bootstrapCss = new StyleBundle("~/Content/Css/Bootstrap");
-            bootstrapCss.Include("~/Content/Css/Bootstrap/*.css");
+            var bootstrapStyles = new StyleBundle("~/Content/Css/Bootstrap");
+            bootstrapStyles.Include("~/Content/Css/Bootstrap/*.css");
 
-            var fontAwesomeCss = new StyleBundle("~/Content/Css/FontAwesome");
-            fontAwesomeCss.Include("~/Content/Css/FontAwesome/*.css");
+            var fontAwesomeStyles = new StyleBundle("~/Content/Css/FontAwesome");
+            fontAwesomeStyles.Include("~/Content/Css/FontAwesome/*.css");
 
-            var gridmvcCss = new StyleBundle("~/Content/Css/GridMvc");
-            gridmvcCss.Include("~/Content/Css/GridMvc/*.css");
+            var gridmvcStyles = new StyleBundle("~/Content/Css/GridMvc");
+            gridmvcStyles.Include("~/Content/Css/GridMvc/*.css");
 
-            var select2Css = new StyleBundle("~/Content/Css/Select2");
-            select2Css.Include("~/Content/Css/Select2/*.css");
+            var select2Styles = new StyleBundle("~/Content/Css/Select2");
+            select2Styles.Include("~/Content/Css/Select2/*.css");
 
-            var jsTreeCss = new StyleBundle("~/Content/Css/JsTree");
-            jsTreeCss.Include("~/Content/Css/JsTree/*.css");
+            var jsTreeStyles = new StyleBundle("~/Content/Css/JsTree");
+            jsTreeStyles.Include("~/Content/Css/JsTree/*.css");
 
-            var datalistCss = new StyleBundle("~/Content/Css/Datalist");
-            datalistCss.Include("~/Content/Css/Datalist/*.css");
+            var datalistStyles = new StyleBundle("~/Content/Css/Datalist");
+            datalistStyles.Include("~/Content/Css/Datalist/*.css");
 
-            var loginCss = new StyleBundle("~/Content/Css/Login");
-            loginCss.Include("~/Content/Css/Login/*.css");
+            var loginStyles = new StyleBundle("~/Content/Css/Login");
+            loginStyles.Include("~/Content/Css/Login/*.css");
 
-            var sharedCss = new StyleBundle("~/Content/Css/Shared");
-            sharedCss.Include("~/Content/Css/Shared/*.css");
+            var sharedStyles = new StyleBundle("~/Content/Css/Shared");
+            sharedStyles.Include("~/Content/Css/Shared/*.css");
 
-            bundles.Add(jQueryCss);
-            bundles.Add(bootstrapCss);
-            bundles.Add(fontAwesomeCss);
-            bundles.Add(gridmvcCss);
-            bundles.Add(select2Css);
-            bundles.Add(jsTreeCss);
-            bundles.Add(datalistCss);
-            bundles.Add(loginCss);
-            bundles.Add(sharedCss);
+            bundles.Add(jQueryUIStyles);
+            bundles.Add(bootstrapStyles);
+            bundles.Add(fontAwesomeStyles);
+            bundles.Add(gridmvcStyles);
+            bundles.Add(select2Styles);
+            bundles.Add(jsTreeStyles);
+            bundles.Add(datalistStyles);
+            bundles.Add(loginStyles);
+            bundles.Add(sharedStyles);
         }
     }
 }

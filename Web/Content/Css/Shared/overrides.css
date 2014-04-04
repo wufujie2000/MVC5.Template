@@ -26,12 +26,12 @@
     }
 
         .ui-datepicker .ui-datepicker-header .ui-datepicker-prev span {
-            background-image: url(../../../Images/JQuery/ui-icons_ffffff_256x240.png);
+            background-image: url(../../../Images/JQueryUI/ui-icons_ffffff_256x240.png);
             background-position: -96px -16px;
         }
 
         .ui-datepicker .ui-datepicker-header .ui-datepicker-next span {
-            background-image: url(../../../Images/JQuery/ui-icons_ffffff_256x240.png);
+            background-image: url(../../../Images/JQueryUI/ui-icons_ffffff_256x240.png);
             background-position: -32px -16px;
         }
 

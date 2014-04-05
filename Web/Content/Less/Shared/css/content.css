@@ -1,0 +1,53 @@
+#Content {
+  border-radius: 8px 0 0 8px;
+  background: #f2f2f2;
+  margin-left: 200px;
+  min-height: 800px;
+  margin-top: -40px;
+}
+#ContentHeader {
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  background-color: #f2f2f2;
+  background-repeat: repeat-x;
+  border-top-left-radius: 8px;
+  min-height: 60px;
+}
+#ContentHeader h1 {
+  color: #777777;
+  padding: 15px 20px;
+  font-size: 28px;
+  margin: 0;
+}
+#ContentBreadcrumb {
+  background-color: #eaeaea;
+  border-bottom: 1px solid #d6d6d6;
+  border-top: 1px solid #d6d6d6;
+  padding-left: 10px;
+}
+#ContentBreadcrumb > a {
+  background-image: url('../../../Images/Shared/breadcrumb.png');
+  background-position: center right;
+  color: #777777;
+  background-repeat: no-repeat;
+  padding: 8px 20px 8px 10px;
+  display: inline-block;
+  font-size: 11px;
+}
+#ContentBreadcrumb > a:hover {
+  color: #555555;
+}
+#ContentBreadcrumb > a > i {
+  margin-right: 5px;
+}
+#ContentBreadcrumb > a:last-child {
+  background-image: none;
+}
+#ContentBreadcrumb > a.current {
+  color: #555555;
+  font-weight: bold;
+}
+@media (max-width: 767px) {
+  #Content {
+    margin-left: 45px;
+  }
+}

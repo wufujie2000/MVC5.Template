@@ -1,0 +1,56 @@
+﻿@import "../defaults";
+
+#Header {
+    background-image: linear-gradient(to bottom, #0056BA -100%, #31353C 75%);
+    box-shadow: 1px 1px 2px 1px #131518 inset;
+    min-height: 80px;
+}
+
+#HeadersLeftPanel {
+    float: left;
+}
+
+#HeadersRightPanel {
+    float: right;
+}
+
+#TopNavigation {
+    margin-right: 20px;
+    float: right;
+}
+
+#TopNavigationSections {
+    padding: 0;
+    margin: 0;
+}
+
+    #TopNavigationSections > .btn {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        #TopNavigationSections > .btn > a {
+            text-shadow: 0 0 #FFFFFF;
+            color: #CCCCCC;
+            display: block;
+            padding: 10px;
+        }
+
+            #TopNavigationSections > .btn.open > a,
+            #TopNavigationSections > .btn > a:hover {
+                background: @hover-color;
+                color: #FFFFFF;
+            }
+
+        #TopNavigationSections > .btn .fa {
+            margin-right: 5px;
+        }
+
+        #TopNavigationSections > .btn .dropdown-menu {
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            text-shadow: 0 0 #FFFFFF;
+            text-align: left;
+            margin-top: 0;
+        }

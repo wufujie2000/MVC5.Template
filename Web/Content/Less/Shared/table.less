@@ -1,5 +1,7 @@
-﻿.table thead {
-    background: -moz-linear-gradient(center top, #FDFDFD, #EAEAEA) repeat scroll 0 0 / 100% #EAEAEA;
+﻿@import "../defaults";
+
+.table thead {
+    background: linear-gradient(center top, #FDFDFD, #EAEAEA) repeat scroll 0 0 / 100% #EAEAEA;
 }
 
 .table th {
@@ -25,7 +27,7 @@
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-    background: linear-gradient(to bottom, #1AAEF3 0%, #0993D3 100%) !important;
+    background: linear-gradient(to bottom, @active-color 0%, @active-darker-color 100%) !important;
     color: #FFFFFF;
 }
 
@@ -58,13 +60,13 @@
     }
 
 .table td > div.details-action-link {
-    background-color: #5CB85C;
-    border-color: #4CAE4C;
+    border-color: @details-action-border-color;
+    background-color: @details-action-color;
 }
 
     .table td > div.details-action-link:hover {
-        background-color: #47A447;
-        border-color: #398439;
+        border-color: @details-action-active-border-color;
+        background-color: @details-action-active-color;
     }
 
     .table td > div.details-action-link > a {
@@ -76,13 +78,13 @@
     }
 
 .table td > div.edit-action-link {
-    background-color: #F0AD4E;
-    border-color: #EEA236;
+    border-color: @edit-action-border-color;
+    background-color: @edit-action-color;
 }
 
     .table td > div.edit-action-link:hover {
-        background-color: #ED9C28;
-        border-color: #D58512;
+        border-color: @edit-action-active-border-color;
+        background-color: @edit-action-active-color;
     }
 
     .table td > div.edit-action-link > a {
@@ -94,13 +96,13 @@
     }
 
 .table td > div.delete-action-link {
-    background-color: #D9534F;
-    border-color: #D43F3A;
+    border-color: @delete-action-border-color;
+    background-color: @delete-action-color;
 }
 
     .table td > div.delete-action-link:hover {
-        background-color: #D2322D;
-        border-color: #AC2925;
+        border-color: @delete-action-active-border-color;
+        background-color: @delete-action-active-color;
     }
 
     .table td > div.delete-action-link > a {

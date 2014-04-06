@@ -4,7 +4,7 @@
 }
 html,
 body {
-  background: #333333;
+  background: #31353c;
   height: 100%;
   width: 100%;
 }
@@ -14,7 +14,7 @@ body {
   max-width: 420px;
 }
 #LoginBox {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 7px;
   min-height: 175px;
   min-width: 420px;

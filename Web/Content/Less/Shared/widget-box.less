@@ -1,7 +1,9 @@
-﻿.widget-box {
+﻿@import "../defaults";
+
+.widget-box {
     background: none repeat scroll 0 0 #FAFAFA;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #CDCDCD;
+    border: @content-border;
     margin-bottom: 15px;
     border-radius: 6px;
     margin-top: 15px;
@@ -9,14 +11,14 @@
 }
 
 .widget-title {
-    border-bottom: 1px solid #CDCDCD;
+    border-bottom: @content-border;
     border-radius: 6px 6px 0 0;
     color: #666666;
     height: 35px;
 }
 
     .widget-title span.widget-title-icon {
-        border-right: 1px solid #CDCDCD;
+        border-right: @content-border;
         padding: 9px 10px 5px;
         float: left;
     }
@@ -35,7 +37,7 @@
     }
 
         .widget-title .widget-title-buttons .btn {
-            border-left: 1px solid #CDCDCD;
+            border-left: @content-border;
             padding: 9px 10px 7px;
             border-radius: 0;
             font-size: 12px;
@@ -44,7 +46,7 @@
         }
 
             .widget-title .widget-title-buttons .btn:hover {
-                background: #1AAEF3;
+                background: @active-color;
                 color: #FFFFFF;
             }
 
@@ -98,12 +100,12 @@
         }
 
     .widget-content .input-validation-error {
-        border-color: #A94442;
+        border-color: @validation-color;
     }
 
         .widget-content .input-validation-error:focus {
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(99, 00, 00, 0.3);
-            border-color: #A94442;
+            border-color: @validation-color;
         }
 
     .widget-content .field-validation-error {

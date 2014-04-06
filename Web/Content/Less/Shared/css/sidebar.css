@@ -37,7 +37,7 @@
 }
 #SidebarNavigationList .active,
 #SidebarNavigationList a:hover {
-  background: #1AAEF3;
+  background: #1aaef3;
   font-weight: bold;
   color: #FFFFFF;
 }
@@ -60,6 +60,9 @@
   margin-left: 5px;
 }
 #SidebarNavigationList .arrow {
+  -webkit-transition: transform 0.4s ease-out 0.1s;
+  -moz-transition: transform 0.4s ease-out 0.1s;
+  -o-transition: transform 0.4s ease-out 0.1s;
   transition: transform 0.4s ease-out 0.1s;
   margin: 5px 20px 5px 5px;
   font-size: 10px;
@@ -68,7 +71,9 @@
 #SidebarNavigationList .opening > a > .arrow,
 #SidebarNavigationList .open > a > .arrow {
   -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 #SidebarNavigationList ul {
@@ -125,7 +130,7 @@
     color: #AAAAAA;
   }
   #SidebarNavigationList > li.has-active-child {
-    background: #1AAEF3;
+    background: #1aaef3;
     color: #FFFFFF;
   }
   #SidebarNavigationList > li.has-active-child > a {
@@ -143,7 +148,7 @@
     background-image: none;
   }
   #SidebarNavigationList > li.active-child-hovering > ul > li a:hover {
-    background: #1AAEF3;
+    background: #1aaef3;
     font-weight: bold;
     color: #FFFFFF;
   }

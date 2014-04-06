@@ -1,11 +1,13 @@
-﻿* {
+﻿@import "../defaults";
+
+* {
     text-decoration: none !important;
     outline: none !important;
 }
 
 html,
 body {
-    background: #333333;
+    background: @background-color;
     height: 100%;
     width: 100%;
 }
@@ -17,7 +19,7 @@ body {
 }
 
 #LoginBox {
-    background: #FFFFFF;
+    background: @content-light-color;
     border-radius: 7px;
     min-height: 175px;
     min-width: 420px;

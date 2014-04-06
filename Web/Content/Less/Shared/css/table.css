@@ -1,5 +1,5 @@
 .table thead {
-  background: -moz-linear-gradient(center top, #fdfdfd, #eaeaea) repeat scroll 0 0% #eaeaea;
+  background: linear-gradient(center top, #fdfdfd, #eaeaea) repeat scroll 0 0% #eaeaea;
 }
 .table th {
   text-align: center;
@@ -45,12 +45,12 @@
   color: #FFFFFF;
 }
 .table td > div.details-action-link {
-  background-color: #5CB85C;
-  border-color: #4CAE4C;
+  border-color: #4cae4c;
+  background-color: #5cb85c;
 }
 .table td > div.details-action-link:hover {
-  background-color: #47A447;
   border-color: #398439;
+  background-color: #47a447;
 }
 .table td > div.details-action-link > a {
   padding-left: 8px;
@@ -59,12 +59,12 @@
   margin-top: 4.5px;
 }
 .table td > div.edit-action-link {
-  background-color: #F0AD4E;
-  border-color: #EEA236;
+  border-color: #eea236;
+  background-color: #f0ad4e;
 }
 .table td > div.edit-action-link:hover {
-  background-color: #ED9C28;
-  border-color: #D58512;
+  border-color: #d58512;
+  background-color: #ed9c28;
 }
 .table td > div.edit-action-link > a {
   padding-left: 5.5px;
@@ -73,12 +73,12 @@
   margin-top: 4.8px;
 }
 .table td > div.delete-action-link {
-  background-color: #D9534F;
-  border-color: #D43F3A;
+  border-color: #d43f3a;
+  background-color: #d9534f;
 }
 .table td > div.delete-action-link:hover {
-  background-color: #D2322D;
-  border-color: #AC2925;
+  border-color: #ac2925;
+  background-color: #d2322d;
 }
 .table td > div.delete-action-link > a {
   padding-left: 6px;

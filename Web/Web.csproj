@@ -138,88 +138,10 @@
     <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
-    <Content Include="Content\Less\colors.css">
-      <DependentUpon>defaults.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\colors.min.css">
-      <DependentUpon>defaults.less</DependentUpon>
-    </Content>
     <Content Include="Content\Less\css\defaults.css" />
     <Content Include="Content\Less\css\defaults.min.css" />
-    <Content Include="Content\Less\defaults.css">
-      <DependentUpon>defaults.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\defaults.min.css">
-      <DependentUpon>defaults.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Login\Copy of Copy %284%29 of alerts.css">
-      <DependentUpon>login.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Login\Copy of Copy %284%29 of alerts.min.css">
-      <DependentUpon>login.less</DependentUpon>
-    </Content>
     <Content Include="Content\Less\Login\css\login.css" />
     <Content Include="Content\Less\Login\css\login.min.css" />
-    <Content Include="Content\Less\Shared\alerts.css">
-      <DependentUpon>alert.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\alerts.min.css">
-      <DependentUpon>alert.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\base.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\base.min.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %282%29 of alerts.css">
-      <DependentUpon>header.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %282%29 of alerts.min.css">
-      <DependentUpon>header.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %283%29 of alerts.css">
-      <DependentUpon>overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %283%29 of alerts.min.css">
-      <DependentUpon>overrides.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %284%29 of alerts.css">
-      <DependentUpon>sidebar.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy %284%29 of alerts.min.css">
-      <DependentUpon>sidebar.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of alerts.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of alerts.min.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of base.css">
-      <DependentUpon>content.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of base.min.css">
-      <DependentUpon>content.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy %284%29 of alerts.css">
-      <DependentUpon>table.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy %284%29 of alerts.min.css">
-      <DependentUpon>table.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy of alerts.css">
-      <DependentUpon>content.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy of alerts.min.css">
-      <DependentUpon>content.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy of Copy %284%29 of alerts.css">
-      <DependentUpon>widget-box.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Less\Shared\Copy of Copy of Copy %284%29 of alerts.min.css">
-      <DependentUpon>widget-box.less</DependentUpon>
-    </Content>
     <Content Include="Content\Less\Shared\css\alert.css" />
     <Content Include="Content\Less\Shared\css\alert.min.css" />
     <Content Include="Content\Less\Shared\css\base.css" />

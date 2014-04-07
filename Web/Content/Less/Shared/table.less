@@ -1,7 +1,7 @@
-﻿@import "../defaults";
+﻿@import "../theme";
 
 .table thead {
-    background: linear-gradient(center top, #FDFDFD, #EAEAEA) repeat scroll 0 0 / 100% #EAEAEA;
+    background: linear-gradient(center top, @table-thead-upper-color, @table-thead-lower-color) repeat scroll 0 0 / 100% @table-thead-lower-color;
 }
 
 .table th {
@@ -28,15 +28,15 @@
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
     background: linear-gradient(to bottom, @active-color 0%, @active-darker-color 100%) !important;
-    color: #FFFFFF;
+    color: @active-text-color;
 }
 
 .table-striped > tbody > tr:nth-child(even) > td {
-    background-color: #FCFCFC;
+    background-color: @table-row-even-color;
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td {
-    background-color: #F8F8F8;
+    background-color: @table-row-odd-color;
 }
 
 .table td.date-cell {

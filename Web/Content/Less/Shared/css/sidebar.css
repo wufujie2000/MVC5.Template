@@ -1,3 +1,4 @@
+/* Temp colors */
 #Sidebar {
   width: 200px;
   float: left;
@@ -20,38 +21,38 @@
   cursor: pointer;
 }
 #SidebarNavigationList {
-  border-bottom: 1px solid #383C45;
-  border-top: 1px solid #2A2D34;
+  border-bottom: 1px solid #383c45;
+  border-top: 1px solid #2a2d34;
   padding: 0;
   margin: 0;
 }
 #SidebarNavigationList > li {
-  border-bottom: 1px solid #2A2D34;
-  border-top: 1px solid #383C45;
+  border-bottom: 1px solid #2a2d34;
+  border-top: 1px solid #383c45;
   position: relative;
 }
 #SidebarNavigationList > li > a {
+  color: #cccccc;
   padding: 10px 0 10px 15px;
   display: block;
-  color: #AAAAAA;
 }
 #SidebarNavigationList .active,
 #SidebarNavigationList a:hover {
   background: #1aaef3;
+  color: #ffffff;
   font-weight: bold;
-  color: #FFFFFF;
 }
 #SidebarNavigationList .active a {
   background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 #SidebarNavigationList > li.active-hovering,
 #SidebarNavigationList > li.has-active-child.active-hovering,
 #SidebarNavigationList > li.active-hovering a,
 #SidebarNavigationList > li.has-active-child.active-hovering a {
+  color: #cccccc;
   background-color: inherit;
   font-weight: inherit;
-  color: #AAAAAA;
 }
 #SidebarNavigationList .menu-icon {
   width: 20px;
@@ -85,34 +86,34 @@
   display: none;
 }
 #SidebarNavigationList > li > ul > li {
-  border-top: 1px solid #383C45;
-  background: #3C414A;
+  border-top: 1px solid #383c45;
+  background: #3c414a;
 }
 #SidebarNavigationList > li > ul > li > a {
+  color: #cccccc;
   padding: 10px 0 10px 25px;
   display: block;
-  color: #AAAAAA;
 }
 #SidebarNavigationList > li > ul > li.active-hovering,
 #SidebarNavigationList > li > ul > li.active-hovering a {
-  background-color: #3C414A;
+  color: #cccccc;
+  background-color: #3c414a;
   font-weight: normal;
-  color: #AAAAAA;
 }
 #SidebarNavigationList > li > ul > li > ul > li {
-  border-top: 1px solid #393D44;
-  background: #474D58;
+  border-top: 1px solid #393d44;
+  background: #474d58;
 }
 #SidebarNavigationList > li > ul > li > ul > li > a {
+  color: #cccccc;
   padding: 10px 0 10px 35px;
   display: block;
-  color: #AAAAAA;
 }
 #SidebarNavigationList > li > ul > li > ul > li.active-hovering,
 #SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
+  background: #474d58;
+  color: #cccccc;
   font-weight: normal;
-  background: #474D58;
-  color: #AAAAAA;
 }
 @media (max-width: 767px) {
   #Sidebar {
@@ -122,26 +123,26 @@
     display: none;
   }
   #SidebarNavigationList > li .active {
+    background: #3c414a;
     font-weight: normal;
-    background: #3C414A;
   }
   #SidebarNavigationList > li .active a {
+    color: #cccccc;
     background-image: none;
-    color: #AAAAAA;
   }
   #SidebarNavigationList > li.has-active-child {
     background: #1aaef3;
-    color: #FFFFFF;
+    color: #ffffff;
   }
   #SidebarNavigationList > li.has-active-child > a {
     background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-    color: #FFFFFF;
+    color: #ffffff;
   }
   #SidebarNavigationList > li.active-child-hovering,
   #SidebarNavigationList > li.active-child-hovering > a {
+    color: #cccccc;
     background-color: inherit;
     font-weight: inherit;
-    color: #AAAAAA;
   }
   #SidebarNavigationList > li.open a,
   #SidebarNavigationList > li.opening a {
@@ -149,8 +150,8 @@
   }
   #SidebarNavigationList > li.active-child-hovering > ul > li a:hover {
     background: #1aaef3;
+    color: #ffffff;
     font-weight: bold;
-    color: #FFFFFF;
   }
   #SidebarNavigationList > li > ul > li > a,
   #SidebarNavigationList > li > ul > li > ul > li > a {
@@ -180,9 +181,9 @@
   }
   #SidebarNavigationList > li > ul > li > ul > li.active,
   #SidebarNavigationList > li > ul > li > ul > li.active a {
+    background: #474d58;
+    color: #cccccc;
     font-weight: normal;
-    background: #474D58;
-    color: #AAAAAA;
   }
   #SidebarNavigationList > li > ul > li > ul {
     position: absolute;

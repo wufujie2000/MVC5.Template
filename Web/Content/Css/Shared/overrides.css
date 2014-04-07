@@ -4,12 +4,6 @@
 }
 
 /* jQueryUI datepicker */
-.ui-widget .ui-datepicker {
-    font-family: "Helvetica Neue";
-    background: #F0F4F7;
-    border-radius: 5px;
-}
-
 .ui-datepicker {
     border-radius: 5px;
     font-size: 90%;

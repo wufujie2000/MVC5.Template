@@ -1,3 +1,4 @@
+/* Temp colors */
 .table thead {
   background: linear-gradient(center top, #fdfdfd, #eaeaea) repeat scroll 0 0% #eaeaea;
 }
@@ -20,13 +21,13 @@
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
   background: linear-gradient(to bottom, #1aaef3 0%, #0993d3 100%) !important;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .table-striped > tbody > tr:nth-child(even) > td {
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
 }
 .table-striped > tbody > tr:nth-child(odd) > td {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 .table td.date-cell {
   text-align: center;

@@ -138,8 +138,8 @@
     <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
-    <Content Include="Content\Less\css\defaults.css" />
-    <Content Include="Content\Less\css\defaults.min.css" />
+    <Content Include="Content\Less\css\theme.css" />
+    <Content Include="Content\Less\css\theme.min.css" />
     <Content Include="Content\Less\Login\css\login.css" />
     <Content Include="Content\Less\Login\css\login.min.css" />
     <Content Include="Content\Less\Shared\css\alert.css" />
@@ -306,7 +306,7 @@
     <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\defaults.less" />
+    <Content Include="Content\Less\theme.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Less\Shared\alert.less" />

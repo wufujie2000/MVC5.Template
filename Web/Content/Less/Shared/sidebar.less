@@ -1,4 +1,4 @@
-﻿@import "../defaults";
+﻿@import "../theme";
 
 #Sidebar {
     width: 200px;
@@ -26,43 +26,43 @@
 }
 
 #SidebarNavigationList {
-    border-bottom: 1px solid #383C45;
-    border-top: 1px solid #2A2D34;
+    border-bottom: 1px solid @sidebar-border-lighter-color;
+    border-top: 1px solid @sidebar-border-darker-color;
     padding: 0;
     margin: 0;
 }
 
     #SidebarNavigationList > li {
-        border-bottom: 1px solid #2A2D34;
-        border-top: 1px solid #383C45;
+        border-bottom: 1px solid @sidebar-border-darker-color;
+        border-top: 1px solid @sidebar-border-lighter-color;
         position: relative;
     }
 
         #SidebarNavigationList > li > a {
+            color: @background-text-color;
             padding: 10px 0 10px 15px;
             display: block;
-            color: #AAAAAA;
         }
 
     #SidebarNavigationList .active,
     #SidebarNavigationList a:hover {
         background: @active-color;
+        color: @active-text-color;
         font-weight: bold;
-        color: #FFFFFF;
     }
 
         #SidebarNavigationList .active a {
             background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-            color: #FFFFFF;
+            color: @active-text-color;
         }
 
     #SidebarNavigationList > li.active-hovering,
     #SidebarNavigationList > li.has-active-child.active-hovering,
     #SidebarNavigationList > li.active-hovering a,
     #SidebarNavigationList > li.has-active-child.active-hovering a {
+        color: @background-text-color;
         background-color: inherit;
         font-weight: inherit;
-        color: #AAAAAA;
     }
 
     #SidebarNavigationList .menu-icon {
@@ -103,39 +103,39 @@
     }
 
     #SidebarNavigationList > li > ul > li {
-        border-top: 1px solid #383C45;
-        background: #3C414A;
+        border-top: 1px solid @sidebar-border-lighter-color;
+        background: @sidebar-2-background-color;
     }
 
         #SidebarNavigationList > li > ul > li > a {
+            color: @background-text-color;
             padding: 10px 0 10px 25px;
             display: block;
-            color: #AAAAAA;
         }
 
         #SidebarNavigationList > li > ul > li.active-hovering,
         #SidebarNavigationList > li > ul > li.active-hovering a {
-            background-color: #3C414A;
+            color: @background-text-color;
+            background-color: @sidebar-2-background-color;
             font-weight: normal;
-            color: #AAAAAA;
         }
 
         #SidebarNavigationList > li > ul > li > ul > li {
-            border-top: 1px solid #393D44;
-            background: #474D58;
+            border-top: 1px solid @sidebar-3-border-color;
+            background: @sidebar-3-background-color;
         }
 
             #SidebarNavigationList > li > ul > li > ul > li > a {
+                color: @background-text-color;
                 padding: 10px 0 10px 35px;
                 display: block;
-                color: #AAAAAA;
             }
 
             #SidebarNavigationList > li > ul > li > ul > li.active-hovering,
             #SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
+                background: @sidebar-3-background-color;
+                color: @background-text-color;
                 font-weight: normal;
-                background: #474D58;
-                color: #AAAAAA;
             }
 
 @media (max-width: 767px) {
@@ -148,30 +148,30 @@
     }
     
     #SidebarNavigationList > li .active {
+        background: @sidebar-2-background-color;
         font-weight: normal;
-        background: #3C414A;
     }
     
     #SidebarNavigationList > li .active a {
+        color: @background-text-color;
         background-image: none;
-        color: #AAAAAA;
     }
 
     #SidebarNavigationList > li.has-active-child {
         background: @active-color;
-        color: #FFFFFF;
+        color: @active-text-color;
     }
 
         #SidebarNavigationList > li.has-active-child > a {
             background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
-            color: #FFFFFF;
+            color: @active-text-color;
         }
 
     #SidebarNavigationList > li.active-child-hovering,
     #SidebarNavigationList > li.active-child-hovering > a {
+        color: @background-text-color;
         background-color: inherit;
         font-weight: inherit;
-        color: #AAAAAA;
     }
 
     #SidebarNavigationList > li.open a,
@@ -181,8 +181,8 @@
 
     #SidebarNavigationList > li.active-child-hovering > ul > li a:hover {
         background: @active-color;
+        color: @active-text-color;
         font-weight: bold;
-        color: #FFFFFF;
     }
 
     #SidebarNavigationList > li > ul > li > a,
@@ -219,9 +219,9 @@
 
     #SidebarNavigationList > li > ul > li > ul > li.active,
     #SidebarNavigationList > li > ul > li > ul > li.active a {
+        background: @sidebar-3-background-color;
+        color: @background-text-color;
         font-weight: normal;
-        background: #474D58;
-        color: #AAAAAA;
     }
 
     #SidebarNavigationList > li > ul > li > ul {

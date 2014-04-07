@@ -1,4 +1,4 @@
-﻿@import "../defaults";
+﻿@import "../theme";
 
 /* bootstrap */
 .input-group .form-control {
@@ -6,12 +6,6 @@
 }
 
 /* jQueryUI datepicker */
-.ui-widget .ui-datepicker {
-    font-family: "Helvetica Neue";
-    background: #F0F4F7;
-    border-radius: 5px;
-}
-
 .ui-datepicker {
     border-radius: 5px;
     font-size: 90%;
@@ -19,10 +13,11 @@
 }
 
     .ui-datepicker .ui-datepicker-header {
+        background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
         background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+        color: @datepicker-header-text-color;
         background-color: @active-color;
         border-radius: 4px 4px 0 0;
-        color: #EEEEEE;
         border: none;
     }
 
@@ -52,15 +47,15 @@
         padding: 1px 2px;
     }
 
-    .ui-datepicker .ui-datepicker-calendar th {
+.ui-datepicker .ui-datepicker-calendar th {
         background-image: linear-gradient(bottom, rgba(201,198,198,.33) 0%, rgba(201,198,198,.33) 0.76%, rgba(255,255,255,.33) 100%);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.38);
-        border-bottom: 1px solid rgba(186,194,200,.6);
-        text-shadow: 0 1px 0 rgba(255,255,255,.55);
-        border-top: 1px solid rgba(186,194,200,.6);
-        background-color: #E6EBF0;
+        background-color: @datepicker-th-background-color;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+        border-bottom: @datepicker-border;
+        color: @datepicker-th-text-color;
+        border-top: @datepicker-border;
         font-weight: normal;
-        color: #6C7173;
         font-size: 9px;
         border: none;
     }
@@ -81,7 +76,7 @@
         }
 
         .ui-datepicker .ui-datepicker-calendar td .ui-state-highlight {
-            background: #C1EBFF;
+            background: lighten(@active-color, 30%);
         }
 
         .ui-datepicker .ui-datepicker-calendar td .ui-state-active,
@@ -89,10 +84,10 @@
             background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
             background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
             border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            text-shadow: @datepicker-active-text-shadow;
             background-color: @active-color;
-            text-shadow: 0 -1px 0 #30332A;
             background-repeat: repeat-x;
-            color: #FFFFFF;
+            color: @active-text-color;
         }
 
 /* Select2 */
@@ -107,7 +102,7 @@
 /* GridMvc */
 .grid-table > thead > tr > th,
 .grid-table > tbody > tr > td {
-    border-left: 1px solid #DDDDDD;
+    border-left: @grid-mvc-table-border;
 }
 
 .grid-empty-text {

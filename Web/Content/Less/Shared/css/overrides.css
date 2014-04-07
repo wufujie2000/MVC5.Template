@@ -1,23 +1,20 @@
+/* Temp colors */
 /* bootstrap */
 .input-group .form-control {
   z-index: 1;
 }
 /* jQueryUI datepicker */
-.ui-widget .ui-datepicker {
-  font-family: "Helvetica Neue";
-  background: #F0F4F7;
-  border-radius: 5px;
-}
 .ui-datepicker {
   border-radius: 5px;
   font-size: 90%;
   padding: 0;
 }
 .ui-datepicker .ui-datepicker-header {
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+  color: #eeeeee;
   background-color: #1aaef3;
   border-radius: 4px 4px 0 0;
-  color: #EEEEEE;
   border: none;
 }
 .ui-datepicker .ui-datepicker-header .ui-datepicker-prev span {
@@ -43,13 +40,13 @@
 }
 .ui-datepicker .ui-datepicker-calendar th {
   background-image: linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0%, rgba(201, 198, 198, 0.33) 0.76%, rgba(255, 255, 255, 0.33) 100%);
+  background-color: #e6ebf0;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
-  border-bottom: 1px solid rgba(186, 194, 200, 0.6);
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
-  border-top: 1px solid rgba(186, 194, 200, 0.6);
-  background-color: #E6EBF0;
+  border-bottom: 1px solid #bac2c8;
+  color: #6c7173;
+  border-top: 1px solid #bac2c8;
   font-weight: normal;
-  color: #6C7173;
   font-size: 9px;
   border: none;
 }
@@ -66,17 +63,17 @@
   border: none;
 }
 .ui-datepicker .ui-datepicker-calendar td .ui-state-highlight {
-  background: #C1EBFF;
+  background: #abe1fb;
 }
 .ui-datepicker .ui-datepicker-calendar td .ui-state-active,
 .ui-datepicker .ui-datepicker-calendar td .ui-state-hover {
   background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  background-color: #1aaef3;
   text-shadow: 0 -1px 0 #30332a;
+  background-color: #1aaef3;
   background-repeat: repeat-x;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 /* Select2 */
 .select2-dropdown-open .select2-choice .select2-arrow b {
@@ -88,7 +85,7 @@
 /* GridMvc */
 .grid-table > thead > tr > th,
 .grid-table > tbody > tr > td {
-  border-left: 1px solid #DDDDDD;
+  border-left: 1px solid #dddddd;
 }
 .grid-empty-text {
   text-align: center;

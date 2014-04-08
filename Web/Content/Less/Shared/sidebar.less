@@ -26,15 +26,14 @@
 }
 
 #SidebarNavigationList {
-    border-bottom: 1px solid @sidebar-border-lighter-color;
-    border-top: 1px solid @sidebar-border-darker-color;
+    border-bottom: @sidebar-border-top;
     padding: 0;
     margin: 0;
 }
 
     #SidebarNavigationList > li {
-        border-bottom: 1px solid @sidebar-border-darker-color;
-        border-top: 1px solid @sidebar-border-lighter-color;
+        border-bottom: @sidebar-border-bottom;
+        border-top: @sidebar-border-top;
         position: relative;
     }
 
@@ -103,8 +102,8 @@
     }
 
     #SidebarNavigationList > li > ul > li {
-        border-top: 1px solid @sidebar-border-lighter-color;
-        background: @sidebar-2-background-color;
+        background: @sidebar-2nd-submenu-background-color;
+        border-top: @sidebar-border-top;
     }
 
         #SidebarNavigationList > li > ul > li > a {
@@ -115,14 +114,14 @@
 
         #SidebarNavigationList > li > ul > li.active-hovering,
         #SidebarNavigationList > li > ul > li.active-hovering a {
+            background-color: @sidebar-2nd-submenu-background-color;
             color: @background-text-color;
-            background-color: @sidebar-2-background-color;
             font-weight: normal;
         }
 
         #SidebarNavigationList > li > ul > li > ul > li {
-            border-top: 1px solid @sidebar-3-border-color;
-            background: @sidebar-3-background-color;
+            background: @sidebar-3rd-submenu-background-color;
+            border-top: @sidebar-border-top;
         }
 
             #SidebarNavigationList > li > ul > li > ul > li > a {
@@ -133,7 +132,7 @@
 
             #SidebarNavigationList > li > ul > li > ul > li.active-hovering,
             #SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
-                background: @sidebar-3-background-color;
+                background: @sidebar-3rd-submenu-background-color;
                 color: @background-text-color;
                 font-weight: normal;
             }
@@ -148,7 +147,7 @@
     }
     
     #SidebarNavigationList > li .active {
-        background: @sidebar-2-background-color;
+        background: @sidebar-2nd-submenu-background-color;
         font-weight: normal;
     }
     
@@ -219,7 +218,7 @@
 
     #SidebarNavigationList > li > ul > li > ul > li.active,
     #SidebarNavigationList > li > ul > li > ul > li.active a {
-        background: @sidebar-3-background-color;
+        background: @sidebar-3rd-submenu-background-color;
         color: @background-text-color;
         font-weight: normal;
     }

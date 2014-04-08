@@ -22,7 +22,6 @@
 }
 #SidebarNavigationList {
   border-bottom: 1px solid #383c45;
-  border-top: 1px solid #2a2d34;
   padding: 0;
   margin: 0;
 }
@@ -86,8 +85,8 @@
   display: none;
 }
 #SidebarNavigationList > li > ul > li {
-  border-top: 1px solid #383c45;
   background: #3c414a;
+  border-top: 1px solid #383c45;
 }
 #SidebarNavigationList > li > ul > li > a {
   color: #cccccc;
@@ -96,13 +95,13 @@
 }
 #SidebarNavigationList > li > ul > li.active-hovering,
 #SidebarNavigationList > li > ul > li.active-hovering a {
-  color: #cccccc;
   background-color: #3c414a;
+  color: #cccccc;
   font-weight: normal;
 }
 #SidebarNavigationList > li > ul > li > ul > li {
-  border-top: 1px solid #393d44;
   background: #474d58;
+  border-top: 1px solid #383c45;
 }
 #SidebarNavigationList > li > ul > li > ul > li > a {
   color: #cccccc;

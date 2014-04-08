@@ -1,42 +1,42 @@
 ﻿@import "../theme";
 
 #Content {
-    border-radius: 8px 0 0 8px;
-    background: @content-color;
+    margin-top: -40px;
     margin-left: 200px;
     min-height: 800px;
-    margin-top: -40px;
+    border-radius: 8px 0 0 8px;
+    background: @content-background-color;
 }
 
 #ContentHeader {
-    background-image: linear-gradient(to bottom, @content-light-color 0%, @content-color 100%);
-    background-color: @content-color;
-    background-repeat: repeat-x;
-    border-top-left-radius: 8px;
     min-height: 60px;
+    border-top-left-radius: 8px;
+    background-color: @content-background-color;
+    background-image: -moz-linear-gradient(to bottom, @content-header-top-background-color 0%, @content-background-color 100%);
+    background-repeat: repeat-x;
 }
 
     #ContentHeader h1 {
-        color: @breadcrumb-text-color;
-        padding: 15px 20px;
-        font-size: 28px;
         margin: 0;
+        padding: 15px 20px;
+        color: @content-text-color;
+        font-size: 28px;
     }
 
 #ContentBreadcrumb {
-    background-color: @breadcrumb-color;
-    border-bottom: @breadcrumb-border;
-    border-top: @breadcrumb-border;
     padding-left: 10px;
+    border-top: @content-border;
+    border-bottom: @content-border;
+    background-color: @breadcrumb-color;
 }
 
     #ContentBreadcrumb > a {
+        display: inline-block;
+        padding: 8px 20px 8px 10px;
         background-image: url('../../../Images/Shared/breadcrumb.png');
         background-position: center right;
-        color: @breadcrumb-text-color;
         background-repeat: no-repeat;
-        padding: 8px 20px 8px 10px;
-        display: inline-block;
+        color: @content-text-color;
         font-size: 11px;
     }
 

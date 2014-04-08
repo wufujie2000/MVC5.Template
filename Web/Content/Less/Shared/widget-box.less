@@ -13,7 +13,7 @@
 .widget-title {
     border-bottom: @content-border;
     border-radius: 6px 6px 0 0;
-    color: @widget-text-color;
+    color: @content-text-color;
     height: 35px;
 }
 
@@ -38,7 +38,7 @@
 
         .widget-title .widget-title-buttons .btn {
             border-left: @content-border;
-            color: @widget-text-color;
+            color: @content-text-color;
             padding: 9px 10px 7px;
             border-radius: 0;
             font-size: 12px;
@@ -47,7 +47,7 @@
 
             .widget-title .widget-title-buttons .btn:hover {
                 background: @active-color;
-                color: #FFFFFF;
+                color: @active-text-color;
             }
 
             .widget-title .widget-title-buttons .btn > i {
@@ -63,8 +63,8 @@
 }
 
     .widget-content .form-group {
-        border-bottom: 1px solid @form-group-bottom-border-color;
-        border-top: 1px solid @form-group-top-border-color;
+        border-bottom: @form-group-border-bottom;
+        border-top: @form-group-border-top;
         padding: 10px 0;
         margin: 0;
     }
@@ -88,14 +88,14 @@
         }
 
     .widget-content .control-label {
-        color: @control-label-color;
+        color: @content-text-color;
         padding: 7px 0 7px 15px;
         text-align: right;
         margin: 0;
     }
 
         .widget-content .control-label span.required {
-            color: @required-span-color;
+            color: @validation-color;
             font-weight: normal;
         }
 
@@ -109,7 +109,7 @@
         }
 
     .widget-content .field-validation-error {
-        color: @validation-error-color;
+        color: @validation-color;
         vertical-align: middle;
         display: table-cell;
         height: 34px;
@@ -120,11 +120,11 @@
     }
 
     .widget-content table:last-of-type tr:last-child td:first-child {
-        border-bottom-left-radius: 6px;
+        border-bottom-left-radius: 5px;
     }
 
     .widget-content table:last-of-type tr:last-child td:last-child {
-        border-bottom-right-radius: 6px;
+        border-bottom-right-radius: 5px;
     }
 
 @media (min-width: 768px) {

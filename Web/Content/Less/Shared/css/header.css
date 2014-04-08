@@ -1,7 +1,7 @@
 /* Temp colors */
 #Header {
-  background-image: linear-gradient(to bottom, #0056ba -100%, #31353c 75%);
-  box-shadow: 1px 1px 2px 1px #131518 inset;
+  background-image: -moz-linear-gradient(to bottom, #0056ba -10%, #31353c 75%);
+  box-shadow: 0 0 1px 0 inset;
   min-height: 80px;
 }
 #HeadersLeftPanel {

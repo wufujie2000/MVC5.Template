@@ -127,7 +127,7 @@
     <Content Include="Content\Css\JsTree\jstree.css" />
     <Content Include="Content\Css\Login\login.css" />
     <Content Include="Content\Css\Select2\select2.css" />
-    <Content Include="Content\Css\Shared\alert-messages.css" />
+    <Content Include="Content\Css\Shared\alert.css" />
     <Content Include="Content\Css\Shared\base.css" />
     <Content Include="Content\Css\Shared\content.css" />
     <Content Include="Content\Css\Shared\header.css" />
@@ -138,6 +138,8 @@
     <Content Include="Content\Css\Datalist\datalist.css" />
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
+    <Content Include="Content\Less\css\mixins.css" />
+    <Content Include="Content\Less\css\mixins.min.css" />
     <Content Include="Content\Less\css\theme.css" />
     <Content Include="Content\Less\css\theme.min.css" />
     <Content Include="Content\Less\Login\css\login.css" />
@@ -334,6 +336,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Less\Login\login.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Less\mixins.less" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

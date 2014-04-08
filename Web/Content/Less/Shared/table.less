@@ -1,7 +1,7 @@
 ﻿@import "../theme";
 
 .table thead {
-    background: linear-gradient(center top, @table-thead-upper-color, @table-thead-lower-color) repeat scroll 0 0 / 100% @table-thead-lower-color;
+    background: -moz-linear-gradient(center top, @table-thead-upper-color, @table-thead-lower-color);
 }
 
 .table th {
@@ -27,7 +27,7 @@
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-    background: linear-gradient(to bottom, @active-color 0%, @active-darker-color 100%) !important;
+    background: @active-color !important;// -moz-linear-gradient(to bottom, @active-color 0%, @active-darker-color 100%) !important;
     color: @active-text-color;
 }
 
@@ -60,12 +60,10 @@
     }
 
 .table td > div.details-action-link {
-    border-color: @details-action-border-color;
     background-color: @details-action-color;
 }
 
     .table td > div.details-action-link:hover {
-        border-color: @details-action-active-border-color;
         background-color: @details-action-active-color;
     }
 
@@ -78,12 +76,10 @@
     }
 
 .table td > div.edit-action-link {
-    border-color: @edit-action-border-color;
     background-color: @edit-action-color;
 }
 
     .table td > div.edit-action-link:hover {
-        border-color: @edit-action-active-border-color;
         background-color: @edit-action-active-color;
     }
 
@@ -96,12 +92,10 @@
     }
 
 .table td > div.delete-action-link {
-    border-color: @delete-action-border-color;
     background-color: @delete-action-color;
 }
 
     .table td > div.delete-action-link:hover {
-        border-color: @delete-action-active-border-color;
         background-color: @delete-action-active-color;
     }
 

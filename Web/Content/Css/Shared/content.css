@@ -1,62 +1,54 @@
+/* Temp colors */
 #Content {
-    border-radius: 8px 0 0 8px;
-    background: #F2F2F2;
-    margin-left: 200px;
-    min-height: 800px;
-    margin-top: -40px;
+  margin-top: -40px;
+  margin-left: 200px;
+  min-height: 800px;
+  border-radius: 8px 0 0 8px;
+  background: #f2f2f2;
 }
-
 #ContentHeader {
-    background-image: linear-gradient(to bottom, #FFFFFF 0%, #F2F2F2 100%);
-    background-repeat: repeat-x;
-    border-top-left-radius: 8px;
-    background-color: #F2F2F2;
-    min-height: 60px;
+  min-height: 60px;
+  border-top-left-radius: 8px;
+  background-color: #f2f2f2;
+  background-image: -moz-linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  background-repeat: repeat-x;
 }
-
-    #ContentHeader h1 {
-        padding: 15px 20px;
-        font-size: 28px;
-        color: #555555;
-        margin: 0;
-    }
-
+#ContentHeader h1 {
+  margin: 0;
+  padding: 15px 20px;
+  color: #555555;
+  font-size: 28px;
+}
 #ContentBreadcrumb {
-    border-bottom: 1px solid #D6D6D6;
-    border-top: 1px solid #D6D6D6;
-    background-color: #EAEAEA;
-    padding-left: 10px;
+  padding-left: 10px;
+  border-top: 1px solid #cdcdcd;
+  border-bottom: 1px solid #cdcdcd;
+  background-color: #eaeaea;
 }
-
-    #ContentBreadcrumb > a {
-        background-image: url('../../../Images/Shared/breadcrumb.png');
-        background-position: center right;
-        background-repeat: no-repeat;
-        padding: 8px 20px 8px 10px;
-        display: inline-block;
-        font-size: 11px;
-        color: #777777;
-    }
-
-        #ContentBreadcrumb > a:hover {
-            color: #555555;
-        }
-
-        #ContentBreadcrumb > a > i {
-            margin-right: 5px;
-        }
-
-        #ContentBreadcrumb > a:last-child {
-            background-image: none;
-        }
-
-        #ContentBreadcrumb > a.current {
-            font-weight: bold;
-            color: #555555;
-        }
-
+#ContentBreadcrumb > a {
+  display: inline-block;
+  padding: 8px 20px 8px 10px;
+  background-image: url('../../../Images/Shared/breadcrumb.png');
+  background-position: center right;
+  background-repeat: no-repeat;
+  color: #555555;
+  font-size: 11px;
+}
+#ContentBreadcrumb > a:hover {
+  color: #555555;
+}
+#ContentBreadcrumb > a > i {
+  margin-right: 5px;
+}
+#ContentBreadcrumb > a:last-child {
+  background-image: none;
+}
+#ContentBreadcrumb > a.current {
+  color: #555555;
+  font-weight: bold;
+}
 @media (max-width: 767px) {
-    #Content {
-        margin-left: 45px;
-    }
+  #Content {
+    margin-left: 45px;
+  }
 }

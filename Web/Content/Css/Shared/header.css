@@ -1,6 +1,10 @@
-/* Temp colors */
 #Header {
-  background-image: -moz-linear-gradient(to bottom, #0056ba -10%, #31353c 75%);
+  background-color: #31353c;
+  background-image: -webkit-linear-gradient(to bottom, #0056ba -40%, #31353c 75%);
+  background-image: -moz-linear-gradient(to bottom, #0056ba -40%, #31353c 75%);
+  background-image: -ms-linear-gradient(to bottom, #0056ba -40%, #31353c 75%);
+  background-image: -o-linear-gradient(to bottom, #0056ba -40%, #31353c 75%);
+  background-image: linear-gradient(to bottom, #0056ba -40%, #31353c 75%);
   box-shadow: 0 0 1px 0 inset;
   min-height: 80px;
 }

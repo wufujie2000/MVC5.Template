@@ -1,7 +1,8 @@
-﻿@import "../theme";
+﻿@import "../mixins";
+@import "../theme";
 
 .table thead {
-    background: -moz-linear-gradient(center top, @table-thead-upper-color, @table-thead-lower-color);
+    .linear-gradient-background(center top, @table-thead-top-color, @table-thead-bottom-color, transparent);
 }
 
 .table th {
@@ -25,18 +26,18 @@
     text-align: right;
 }
 
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr:hover > th {
-    background: @active-color !important;// -moz-linear-gradient(to bottom, @active-color 0%, @active-darker-color 100%) !important;
-    color: @active-text-color;
-}
-
 .table-striped > tbody > tr:nth-child(even) > td {
     background-color: @table-row-even-color;
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td {
     background-color: @table-row-odd-color;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    .linear-gradient-background(center bottom, @gradient-from-color 0%, @gradient-to-color 100%, @active-color);
+    color: @active-text-color;
 }
 
 .table td.date-cell {

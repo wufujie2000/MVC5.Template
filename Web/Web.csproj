@@ -145,21 +145,13 @@
     <Content Include="Content\Less\Login\css\login.css" />
     <Content Include="Content\Less\Login\css\login.min.css" />
     <Content Include="Content\Less\Shared\css\alert.css" />
-    <Content Include="Content\Less\Shared\css\alert.min.css" />
     <Content Include="Content\Less\Shared\css\base.css" />
-    <Content Include="Content\Less\Shared\css\base.min.css" />
     <Content Include="Content\Less\Shared\css\content.css" />
-    <Content Include="Content\Less\Shared\css\content.min.css" />
     <Content Include="Content\Less\Shared\css\header.css" />
-    <Content Include="Content\Less\Shared\css\header.min.css" />
     <Content Include="Content\Less\Shared\css\overrides.css" />
-    <Content Include="Content\Less\Shared\css\overrides.min.css" />
     <Content Include="Content\Less\Shared\css\sidebar.css" />
-    <Content Include="Content\Less\Shared\css\sidebar.min.css" />
     <Content Include="Content\Less\Shared\css\table.css" />
-    <Content Include="Content\Less\Shared\css\table.min.css" />
     <Content Include="Content\Less\Shared\css\widget-box.css" />
-    <Content Include="Content\Less\Shared\css\widget-box.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\Flags\en-GB.gif" />
@@ -335,7 +327,11 @@
     <Content Include="Content\Less\Shared\widget-box.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Login\login.less" />
+    <Content Include="Content\Less\Login\login.less">
+      <Compile>True</Compile>
+      <Minify>True</Minify>
+      <OutputFolder>..\..\Css\Login</OutputFolder>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Less\mixins.less" />

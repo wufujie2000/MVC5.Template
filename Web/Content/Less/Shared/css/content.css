@@ -1,37 +1,39 @@
-/* Temp colors */
 #Content {
-  margin-top: -40px;
-  margin-left: 200px;
-  min-height: 800px;
+  background-color: #f2f2f2;
   border-radius: 8px 0 0 8px;
-  background: #f2f2f2;
+  margin-left: 200px;
+  margin-top: -40px;
+  min-height: 800px;
 }
 #ContentHeader {
-  min-height: 60px;
-  border-top-left-radius: 8px;
   background-color: #f2f2f2;
+  background-image: -webkit-linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
   background-image: -moz-linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
-  background-repeat: repeat-x;
+  background-image: -ms-linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  background-image: -o-linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  border-top-left-radius: 8px;
+  min-height: 60px;
 }
 #ContentHeader h1 {
-  margin: 0;
-  padding: 15px 20px;
   color: #555555;
+  padding: 15px 20px;
   font-size: 28px;
+  margin: 0;
 }
 #ContentBreadcrumb {
-  padding-left: 10px;
-  border-top: 1px solid #cdcdcd;
-  border-bottom: 1px solid #cdcdcd;
   background-color: #eaeaea;
+  border-bottom: 1px solid #cdcdcd;
+  border-top: 1px solid #cdcdcd;
+  padding-left: 10px;
 }
 #ContentBreadcrumb > a {
-  display: inline-block;
-  padding: 8px 20px 8px 10px;
   background-image: url('../../../Images/Shared/breadcrumb.png');
   background-position: center right;
   background-repeat: no-repeat;
+  padding: 8px 20px 8px 10px;
   color: #555555;
+  display: inline-block;
   font-size: 11px;
 }
 #ContentBreadcrumb > a:hover {

@@ -1,3 +1,8 @@
-﻿.linear-gradient(@definition, @colors) {
-    background: -moz-linear-gradient(@definition, @colors);
+﻿.linear-gradient-background(@gradient-definition, @from-color, @to-color, @default-color) {
+    background-color: @default-color;
+    background-image: -webkit-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: -moz-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: -ms-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: -o-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: linear-gradient(@gradient-definition, @from-color, @to-color);
 }

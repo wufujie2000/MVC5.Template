@@ -6,13 +6,13 @@
 }
 
 #SidebarSearch {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: @sidebar-search-border-bottom;
     margin: 10px;
 }
 
 #SearchInput {
-    background-color: rgba(0, 0, 0, 0.33);
-    color: rgba(255, 255, 255, 0.75);
+    background-color: darken(@background-color, 10%);
+    color: @background-text-color;
     border-radius: 4px;
     text-align: center;
     padding: 3px 0px;
@@ -51,7 +51,7 @@
     }
 
         #SidebarNavigationList .active a {
-            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center;
             color: @active-text-color;
         }
 
@@ -162,7 +162,7 @@
     }
 
         #SidebarNavigationList > li.has-active-child > a {
-            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+            background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center;
             color: @active-text-color;
         }
 

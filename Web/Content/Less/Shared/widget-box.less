@@ -1,8 +1,8 @@
 ﻿@import "../theme";
 
 .widget-box {
-    background: none repeat scroll 0 0 @widget-background-color;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: @widget-background-color;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
     border: @content-border;
     margin-bottom: 15px;
     border-radius: 6px;
@@ -104,7 +104,7 @@
     }
 
         .widget-content .input-validation-error:focus {
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(99, 00, 00, 0.3);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px lighten(@validation-color, 30%);
             border-color: @validation-color;
         }
 

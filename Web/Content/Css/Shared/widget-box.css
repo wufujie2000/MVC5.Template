@@ -1,7 +1,6 @@
-/* Temp colors */
 .widget-box {
-  background: none repeat scroll 0 0 #fafafa;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
   border: 1px solid #cdcdcd;
   margin-bottom: 15px;
   border-radius: 6px;
@@ -85,7 +84,7 @@
   border-color: #d11919;
 }
 .widget-content .input-validation-error:focus {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(99, 0, 0, 0.3);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #f29191;
   border-color: #d11919;
 }
 .widget-content .field-validation-error {

@@ -33,8 +33,11 @@
   display: block;
   padding: 10px;
 }
-#TopNavigationSections > .btn.open > a,
 #TopNavigationSections > .btn > a:hover {
+  background: #1aaef3;
+  color: #ffffff;
+}
+#TopNavigationSections > .btn.open > a {
   background: #1aaef3;
   color: #ffffff;
 }

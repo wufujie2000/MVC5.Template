@@ -13,23 +13,22 @@
     .linear-gradient-background(to bottom, @content-background-from-color 0%, @content-background-to-color 100%, @content-background-color);
     border-top-left-radius: 8px;
     min-height: 60px;
-}
 
-    #ContentHeader h1 {
+    h1 {
         color: @content-text-color;
         padding: 15px 20px;
         font-size: 28px;
         margin: 0;
     }
+}
 
 #ContentBreadcrumb {
     background-color: @breadcrumb-color;
     border-bottom: @content-border;
     border-top: @content-border;
     padding-left: 10px;
-}
 
-    #ContentBreadcrumb > a {
+    > a {
         background-image: url('../../../Images/Shared/breadcrumb.png');
         background-position: center right;
         background-repeat: no-repeat;
@@ -37,24 +36,25 @@
         color: @content-text-color;
         display: inline-block;
         font-size: 11px;
-    }
 
-        #ContentBreadcrumb > a:hover {
+        &:hover {
             color: @breadcrumb-active-text-color;
         }
 
-        #ContentBreadcrumb > a > i {
+        > i {
             margin-right: 5px;
         }
 
-        #ContentBreadcrumb > a:last-child {
+        &:last-child {
             background-image: none;
         }
 
-        #ContentBreadcrumb > a.current {
+        &.current {
             color: @breadcrumb-active-text-color;
             font-weight: bold;
         }
+    }
+}
 
 @media (max-width: 767px) {
     #Content {

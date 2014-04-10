@@ -1,4 +1,5 @@
-﻿@import "../theme";
+﻿@import "../mixins";
+@import "../theme";
 
 * {
     text-decoration: none !important;
@@ -25,35 +26,34 @@ body {
     min-width: 420px;
     position: fixed;
     top: 25%;
-}
 
-    #LoginBox .alert-messages {
+    .alert-messages {
         margin: 10px 0;
-    }
 
-        #LoginBox .alert-messages .alert {
+        .alert {
             margin: 3px 20px 0;
             padding: 10px 15px;
-        }
 
-            #LoginBox .alert-messages .alert > a {
+            > a {
                 margin-left: 10px;
             }
+        }
+    }
 
-    #LoginBox > form {
+    > form {
         padding-top: 7px;
     }
 
-    #LoginBox .input-group {
+    .input-group {
         padding: 0 20px 5px;
         width: 100%;
-    }
 
-        #LoginBox .input-group > span:first-child {
+        > span:first-child {
             width: 39px;
         }
+    }
 
-    #LoginBox .select2-container .select2-choice {
+    .select2-container .select2-choice {
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
         border-radius: 0 4px 4px 0;
         border: 1px solid #CCCCCC;
@@ -64,26 +64,27 @@ body {
         width: 344px;
     }
 
-    #LoginBox .select2-container.select2-dropdown-open .select2-choice {
+    .select2-container.select2-dropdown-open .select2-choice {
         border-radius: 0 4px 0 0;
     }
 
-    #LoginBox .select2-dropdown-open .select2-choice .select2-arrow b {
+    .select2-dropdown-open .select2-choice .select2-arrow b {
         background-position: -18px 4px;
     }
 
-    #LoginBox .select2-container .select2-choice .select2-arrow b {
+    .select2-container .select2-choice .select2-arrow b {
         background-position: 0 4px;
     }
 
-    #LoginBox .select2-container-active .select2-choice {
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
-        border-color: #66AFE9;
+    .select2-container-active .select2-choice {
+        .box-shadow(@active-box-shadow-color);
+        border-color: @active-border-color;
     }
 
-    #LoginBox .login-form-actions {
+    .login-form-actions {
         padding: 5px 20px 15px;
     }
+}
 
 #TempLanguage {
     border-top-right-radius: 4px;
@@ -96,6 +97,6 @@ body {
 
 .select2-drop,
 .select2-drop-active {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
-    border-color: #66AFE9;
+    .box-shadow(@active-box-shadow-color);
+    border-color: @active-border-color;
 }

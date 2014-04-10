@@ -41,7 +41,7 @@
   font-weight: bold;
 }
 #SidebarNavigationList .active a {
-  background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center rgba(0, 0, 0, 0);
+  background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center;
   color: #ffffff;
 }
 #SidebarNavigationList > li.active-hovering,

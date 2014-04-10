@@ -139,11 +139,8 @@
     <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
     <Content Include="Content\Less\css\mixins.css" />
-    <Content Include="Content\Less\css\mixins.min.css" />
     <Content Include="Content\Less\css\theme.css" />
-    <Content Include="Content\Less\css\theme.min.css" />
     <Content Include="Content\Less\Login\css\login.css" />
-    <Content Include="Content\Less\Login\css\login.min.css" />
     <Content Include="Content\Less\Shared\css\alert.css" />
     <Content Include="Content\Less\Shared\css\base.css" />
     <Content Include="Content\Less\Shared\css\content.css" />

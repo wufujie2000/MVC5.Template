@@ -23,35 +23,39 @@
 #TopNavigationSections {
     padding: 0;
     margin: 0;
-}
 
-    #TopNavigationSections > .btn {
+    > .btn {
         border: none;
         padding: 0;
         margin: 0;
-    }
 
-        #TopNavigationSections > .btn > a {
+        > a {
             color: @background-text-color;
             text-shadow: @text-shadow;
             display: block;
             padding: 10px;
-        }
 
-            #TopNavigationSections > .btn.open > a,
-            #TopNavigationSections > .btn > a:hover {
+            &:hover {
                 background: @active-color;
                 color: @active-text-color;
             }
+        }
 
-        #TopNavigationSections > .btn .fa {
+        &.open > a {
+            background: @active-color;
+            color: @active-text-color;
+        }
+
+        .fa {
             margin-right: 5px;
         }
 
-        #TopNavigationSections > .btn .dropdown-menu {
+        .dropdown-menu {
             border-top-right-radius: 0;
             text-shadow: @text-shadow;
             border-top-left-radius: 0;
             text-align: left;
             margin-top: 0;
         }
+    }
+}

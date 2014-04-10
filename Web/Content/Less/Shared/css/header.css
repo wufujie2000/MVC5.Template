@@ -33,21 +33,18 @@
   display: block;
   padding: 10px;
 }
-#TopNavigationSections > .btn > a:hover {
-  background: #1aaef3;
-  color: #ffffff;
-}
-#TopNavigationSections > .btn.open > a {
-  background: #1aaef3;
-  color: #ffffff;
-}
-#TopNavigationSections > .btn .fa {
+#TopNavigationSections > .btn > a .fa {
   margin-right: 5px;
+}
+#TopNavigationSections > .btn.open > a,
+#TopNavigationSections > .btn:hover > a {
+  background: #1aaef3;
+  color: #ffffff;
 }
 #TopNavigationSections > .btn .dropdown-menu {
   border-top-right-radius: 0;
-  text-shadow: 0 0 #ffffff;
   border-top-left-radius: 0;
   text-align: left;
+  box-shadow: none;
   margin-top: 0;
 }

@@ -39,13 +39,13 @@
 #ContentBreadcrumb > a:hover {
   color: #555555;
 }
-#ContentBreadcrumb > a > i {
-  margin-right: 5px;
-}
 #ContentBreadcrumb > a:last-child {
   background-image: none;
 }
-#ContentBreadcrumb > a.current {
+#ContentBreadcrumb > a > i {
+  margin-right: 5px;
+}
+#ContentBreadcrumb .current {
   color: #555555;
   font-weight: bold;
 }

@@ -35,26 +35,22 @@
             display: block;
             padding: 10px;
 
-            &:hover {
-                background: @active-color;
-                color: @active-text-color;
+            .fa {
+                margin-right: 5px;
             }
         }
 
-        &.open > a {
+        &.open > a,
+        &:hover > a {
             background: @active-color;
             color: @active-text-color;
         }
 
-        .fa {
-            margin-right: 5px;
-        }
-
         .dropdown-menu {
             border-top-right-radius: 0;
-            text-shadow: @text-shadow;
             border-top-left-radius: 0;
             text-align: left;
+            box-shadow: none;
             margin-top: 0;
         }
     }

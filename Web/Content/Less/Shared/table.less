@@ -1,109 +1,110 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-.table thead {
-    .linear-gradient-background(center top, @table-thead-top-color, @table-thead-bottom-color, transparent);
-}
+.table {
+    thead {
+        .linear-gradient-background(center top, @table-thead-top-color, @table-thead-bottom-color, transparent);
 
-.table th {
-    text-align: center;
-    font-size: 12px;
-}
+        > tr > th {
+            border-bottom-width: 1px;
+        }
+    }
 
-.table > thead > tr > th {
-    border-bottom-width: 1px;
-}
+    th {
+        text-align: center;
+        font-size: 12px;
+    }
 
-.table > tbody > tr > .text-cell {
-    text-align: left;
-}
+    .action-link-cell {
+        border-left: none;
+    }
 
-.table > tbody > tr > .date-cell {
-    text-align: center;
-}
+    .action-link-container {
+        border-radius: 4px;
+        font-size: 11px;
+        height: 20px;
+        width: 20px;
 
-.table > tbody > tr > .number-cell {
-    text-align: right;
-}
+        i {
+            color: @active-text-color;
+        }
+    }
 
-.table-striped > tbody > tr:nth-child(even) > td {
-    background-color: @table-row-even-color;
-}
+    .details-action-link {
+        background-color: @details-action-color;
 
-.table-striped > tbody > tr:nth-child(odd) > td {
-    background-color: @table-row-odd-color;
-}
+        &:hover {
+            background-color: @details-action-active-color;
+        }
 
-.table-hover > tbody > tr:hover > td,
-.table-hover > tbody > tr:hover > th {
-    .linear-gradient-background(center bottom, @gradient-from-color 0%, @gradient-to-color 100%, @active-color);
-    color: @active-text-color;
-}
+        a {
+            padding-left: 8px;
+        }
 
-.table td.date-cell {
-    text-align: center;
-}
+        i {
+            margin-top: 4.5px;
+        }
+    }
 
-.table tr th.action-link-cell,
-.table tr td.action-link-cell {
-    border-left: none;
-}
+    .edit-action-link {
+        background-color: @edit-action-color;
 
-.table td > div.action-link-container {
-    border-radius: 4px;
-    font-size: 11px;
-    height: 20px;
-    width: 20px;
+        &:hover {
+            background-color: @edit-action-active-color;
+        }
 
-    i {
-        color: #FFFFFF;
+        a {
+            padding-left: 5.5px;
+        }
+
+        i {
+            margin-top: 4.8px;
+        }
+    }
+
+    .delete-action-link {
+        background-color: @delete-action-color;
+
+        &:hover {
+            background-color: @delete-action-active-color;
+        }
+
+        a {
+            padding-left: 6px;
+        }
+
+        i {
+            margin-top: 4.5px;
+        }
+    }
+
+    .text-cell {
+        text-align: left;
+    }
+
+    .date-cell {
+        text-align: center;
+    }
+
+    .number-cell {
+        text-align: right;
     }
 }
 
-.table td > div.details-action-link {
-    background-color: @details-action-color;
-
-    &:hover {
-        background-color: @details-action-active-color;
+.table-striped {
+    > tbody > tr:nth-child(even) > td {
+        background-color: @table-row-even-color;
     }
 
-    > a {
-        padding-left: 8px;
-    }
-
-    i {
-        margin-top: 4.5px;
+    > tbody > tr:nth-child(odd) > td {
+        background-color: @table-row-odd-color;
     }
 }
 
-.table td > div.edit-action-link {
-    background-color: @edit-action-color;
-
-    &:hover {
-        background-color: @edit-action-active-color;
-    }
-
-    > a {
-        padding-left: 5.5px;
-    }
-
-    i {
-        margin-top: 4.8px;
-    }
-}
-
-.table td > div.delete-action-link {
-    background-color: @delete-action-color;
-
-    &:hover {
-        background-color: @delete-action-active-color;
-    }
-
-    > a {
-        padding-left: 6px;
-    }
-
-    i {
-        margin-top: 4.5px;
+.table-hover {
+    > tbody > tr:hover > td,
+    > tbody > tr:hover > th {
+        .linear-gradient-background(center bottom, @gradient-from-color 0%, @gradient-to-color 100%, @active-color);
+        color: @active-text-color;
     }
 }

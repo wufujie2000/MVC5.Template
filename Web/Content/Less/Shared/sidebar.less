@@ -35,10 +35,55 @@
         border-top: @sidebar-border-top;
         position: relative;
 
+        &.active-hovering,
+        &.has-active-child.active-hovering,
+        &.active-hovering a,
+        &.has-active-child.active-hovering a {
+            color: @background-text-color;
+            background-color: inherit;
+            font-weight: inherit;
+        }
+
         > a {
             color: @background-text-color;
             padding: 10px 0 10px 15px;
             display: block;
+        }
+
+        > ul > li {
+            background: @sidebar-2nd-submenu-background-color;
+            border-top: @sidebar-border-top;
+
+            &.active-hovering,
+            &.active-hovering a {
+                background-color: @sidebar-2nd-submenu-background-color;
+                color: @background-text-color;
+                font-weight: normal;
+            }
+
+            > a {
+                color: @background-text-color;
+                padding: 10px 0 10px 25px;
+                display: block;
+            }
+
+            > ul > li {
+                background: @sidebar-3rd-submenu-background-color;
+                border-top: @sidebar-border-top;
+
+                &.active-hovering,
+                &.active-hovering a {
+                    background: @sidebar-3rd-submenu-background-color;
+                    color: @background-text-color;
+                    font-weight: normal;
+                }
+
+                > a {
+                    color: @background-text-color;
+                    padding: 10px 0 10px 35px;
+                    display: block;
+                }
+            }
         }
     }
 
@@ -53,17 +98,6 @@
             background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center;
             color: @active-text-color;
         }
-
-    > li {
-        &.active-hovering,
-        &.has-active-child.active-hovering,
-        &.active-hovering a,
-        &.has-active-child.active-hovering a {
-            color: @background-text-color;
-            background-color: inherit;
-            font-weight: inherit;
-        }
-    }
 
     .menu-icon {
         width: 20px;
@@ -101,42 +135,6 @@
     li:not(.open):not(.closing) > ul {
         display: none;
     }
-
-    > li > ul > li {
-        background: @sidebar-2nd-submenu-background-color;
-        border-top: @sidebar-border-top;
-
-        > a {
-            color: @background-text-color;
-            padding: 10px 0 10px 25px;
-            display: block;
-        }
-
-        &.active-hovering,
-        &.active-hovering a {
-            background-color: @sidebar-2nd-submenu-background-color;
-            color: @background-text-color;
-            font-weight: normal;
-        }
-
-        > ul > li {
-            background: @sidebar-3rd-submenu-background-color;
-            border-top: @sidebar-border-top;
-
-            > a {
-                color: @background-text-color;
-                padding: 10px 0 10px 35px;
-                display: block;
-            }
-
-            &.active-hovering,
-            &.active-hovering a {
-                background: @sidebar-3rd-submenu-background-color;
-                color: @background-text-color;
-                font-weight: normal;
-            }
-        }
-    }
 }
 
 @media (max-width: 767px) {
@@ -149,16 +147,6 @@
     }
 
     #SidebarNavigationList > li {
-        .active {
-            background: @sidebar-2nd-submenu-background-color;
-            font-weight: normal;
-
-            a {
-                color: @background-text-color;
-                background-image: none;
-            }
-        }
-
         &.has-active-child {
             background: @active-color;
             color: @active-text-color;
@@ -187,10 +175,14 @@
             font-weight: bold;
         }
 
-        > ul > li > a,
-        > ul > li > ul > li > a {
-            padding: 6px 0 6px 8px;
-            font-size: 10px;
+        .active {
+            background: @sidebar-2nd-submenu-background-color;
+            font-weight: normal;
+
+            a {
+                color: @background-text-color;
+                background-image: none;
+            }
         }
 
         > a {
@@ -213,16 +205,15 @@
                 width: 10px;
             }
 
+            > li > a,
+            > li > ul > li > a {
+                padding: 6px 0 6px 8px;
+                font-size: 10px;
+            }
+
             > li:first-child,
             > li > ul > li:first-child {
                 border-top: none;
-            }
-
-            > li > ul > li.active,
-            > li > ul > li.active a {
-                background: @sidebar-3rd-submenu-background-color;
-                color: @background-text-color;
-                font-weight: normal;
             }
 
             > li > ul {
@@ -231,6 +222,13 @@
                 left: 100px;
                 z-index: 2;
                 top: 0;
+
+                > li.active,
+                > li.active a {
+                    background: @sidebar-3rd-submenu-background-color;
+                    color: @background-text-color;
+                    font-weight: normal;
+                }
             }
         }
     }

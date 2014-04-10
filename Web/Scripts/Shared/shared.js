@@ -55,6 +55,12 @@
     };
 }());
 
+// GridMvc configuration
+(function () {
+    // Removing row selecting feature
+    GridMvc.prototype.markRowSelected = function () {};
+}());
+
 // Datepicker binding
 (function () {
     $(".datepicker").datepicker();

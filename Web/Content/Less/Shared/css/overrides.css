@@ -28,23 +28,20 @@
   background-position: -32px -16px;
 }
 .ui-datepicker .ui-datepicker-header .ui-state-hover {
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 100%, rgba(255, 255, 255, 0.27) 0%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 100%, rgba(255, 255, 255, 0.27) 0%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 100%, rgba(255, 255, 255, 0.27) 0%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 100%, rgba(255, 255, 255, 0.27) 0%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 100%, rgba(255, 255, 255, 0.27) 0%);
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   background-color: #1aaef3;
   border-radius: 50%;
   cursor: pointer;
   border: none;
 }
 .ui-datepicker table {
-  margin: 0 0 2px;
+  margin-bottom: 2px;
 }
-.ui-datepicker td {
-  padding: 1px 2px;
-}
-.ui-datepicker .ui-datepicker-calendar th {
+.ui-datepicker table th {
   background-color: #e6ebf0;
   background-image: -webkit-linear-gradient(center bottom, rgba(201, 198, 198, 0.33) 0%, rgba(255, 255, 255, 0.27) 100%);
   background-image: -moz-linear-gradient(center bottom, rgba(201, 198, 198, 0.33) 0%, rgba(255, 255, 255, 0.27) 100%);
@@ -54,26 +51,19 @@
   text-shadow: 1px 0 rgba(255, 255, 255, 0.5);
   color: #6c7173;
   font-weight: normal;
-  font-size: 9px;
+  font-size: 8px;
   border: none;
 }
-.ui-datepicker .ui-datepicker-calendar td {
-  border: none;
-}
-.ui-datepicker .ui-datepicker-calendar td span,
-.ui-datepicker .ui-datepicker-calendar td a {
-  text-align: center;
-}
-.ui-datepicker .ui-datepicker-calendar td .ui-state-default {
+.ui-datepicker table td .ui-state-default {
   border-radius: 5px;
   background: none;
   border: none;
 }
-.ui-datepicker .ui-datepicker-calendar td .ui-state-highlight {
+.ui-datepicker table td .ui-state-highlight {
   background: #dcf3fd;
 }
-.ui-datepicker .ui-datepicker-calendar td .ui-state-active,
-.ui-datepicker .ui-datepicker-calendar td .ui-state-hover {
+.ui-datepicker table td .ui-state-active,
+.ui-datepicker table td .ui-state-hover {
   background-color: #1aaef3;
   background-image: -webkit-linear-gradient(center bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   background-image: -moz-linear-gradient(center bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
@@ -82,6 +72,9 @@
   background-image: linear-gradient(center bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   text-shadow: 1px 0 0 #30332a;
   color: #ffffff;
+}
+.ui-datepicker table td a {
+  text-align: center;
 }
 /* Select2 */
 .select2-dropdown-open .select2-choice .select2-arrow b {

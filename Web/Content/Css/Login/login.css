@@ -31,9 +31,6 @@ body {
 #LoginBox .alert-messages .alert > a {
   margin-left: 10px;
 }
-#LoginBox > form {
-  padding-top: 7px;
-}
 #LoginBox .input-group {
   padding: 0 20px 5px;
   width: 100%;
@@ -41,7 +38,10 @@ body {
 #LoginBox .input-group > span:first-child {
   width: 39px;
 }
-#LoginBox .select2-container .select2-choice {
+#LoginBox > form {
+  padding-top: 7px;
+}
+#LoginBox > form .select2-container .select2-choice {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
   border-radius: 0 4px 4px 0;
   border: 1px solid #CCCCCC;
@@ -51,20 +51,20 @@ body {
   height: 34px;
   width: 344px;
 }
-#LoginBox .select2-container.select2-dropdown-open .select2-choice {
+#LoginBox > form .select2-container.select2-dropdown-open .select2-choice {
   border-radius: 0 4px 0 0;
 }
-#LoginBox .select2-dropdown-open .select2-choice .select2-arrow b {
-  background-position: -18px 4px;
-}
-#LoginBox .select2-container .select2-choice .select2-arrow b {
+#LoginBox > form .select2-container .select2-choice .select2-arrow b {
   background-position: 0 4px;
 }
-#LoginBox .select2-container-active .select2-choice {
+#LoginBox > form .select2-dropdown-open .select2-choice .select2-arrow b {
+  background-position: -18px 4px;
+}
+#LoginBox > form .select2-container-active .select2-choice {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
   border-color: #66afe9;
 }
-#LoginBox .login-form-actions {
+#LoginBox > form .login-form-actions {
   padding: 5px 20px 15px;
 }
 #TempLanguage {

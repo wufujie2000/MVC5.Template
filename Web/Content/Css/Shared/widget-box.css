@@ -41,11 +41,11 @@
   background: #1aaef3;
   color: #ffffff;
 }
-.widget-title .widget-title-buttons .btn > i {
-  margin-right: 5px;
-}
 .widget-title .widget-title-buttons .btn:last-child {
   border-radius: 0 5px 0 0;
+}
+.widget-title .widget-title-buttons .btn > i {
+  margin-right: 5px;
 }
 .widget-content {
   clear: both;
@@ -64,11 +64,11 @@
 .widget-content .form-group:after {
   clear: both;
 }
-.widget-content .form-group .input-group {
-  width: 100%;
-}
 .widget-content .form-group:last-child {
   border-bottom: 0;
+}
+.widget-content .form-group .input-group {
+  width: 100%;
 }
 .widget-content .control-label {
   color: #555555;
@@ -76,7 +76,7 @@
   text-align: right;
   margin: 0;
 }
-.widget-content .control-label span.required {
+.widget-content .control-label .required {
   color: #d11919;
   font-weight: normal;
 }

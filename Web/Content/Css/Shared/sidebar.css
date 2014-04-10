@@ -29,9 +29,47 @@
   border-top: 1px solid #383c45;
   position: relative;
 }
+#SidebarNavigationList > li.active-hovering,
+#SidebarNavigationList > li.has-active-child.active-hovering,
+#SidebarNavigationList > li.active-hovering a,
+#SidebarNavigationList > li.has-active-child.active-hovering a {
+  color: #cccccc;
+  background-color: inherit;
+  font-weight: inherit;
+}
 #SidebarNavigationList > li > a {
   color: #cccccc;
   padding: 10px 0 10px 15px;
+  display: block;
+}
+#SidebarNavigationList > li > ul > li {
+  background: #3c414a;
+  border-top: 1px solid #383c45;
+}
+#SidebarNavigationList > li > ul > li.active-hovering,
+#SidebarNavigationList > li > ul > li.active-hovering a {
+  background-color: #3c414a;
+  color: #cccccc;
+  font-weight: normal;
+}
+#SidebarNavigationList > li > ul > li > a {
+  color: #cccccc;
+  padding: 10px 0 10px 25px;
+  display: block;
+}
+#SidebarNavigationList > li > ul > li > ul > li {
+  background: #474d58;
+  border-top: 1px solid #383c45;
+}
+#SidebarNavigationList > li > ul > li > ul > li.active-hovering,
+#SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
+  background: #474d58;
+  color: #cccccc;
+  font-weight: normal;
+}
+#SidebarNavigationList > li > ul > li > ul > li > a {
+  color: #cccccc;
+  padding: 10px 0 10px 35px;
   display: block;
 }
 #SidebarNavigationList .active,
@@ -43,14 +81,6 @@
 #SidebarNavigationList .active a {
   background: url("../../../Images/Shared/menu-active.png") no-repeat scroll right center;
   color: #ffffff;
-}
-#SidebarNavigationList > li.active-hovering,
-#SidebarNavigationList > li.has-active-child.active-hovering,
-#SidebarNavigationList > li.active-hovering a,
-#SidebarNavigationList > li.has-active-child.active-hovering a {
-  color: #cccccc;
-  background-color: inherit;
-  font-weight: inherit;
 }
 #SidebarNavigationList .menu-icon {
   width: 20px;
@@ -83,50 +113,12 @@
 #SidebarNavigationList li:not(.open):not(.closing) > ul {
   display: none;
 }
-#SidebarNavigationList > li > ul > li {
-  background: #3c414a;
-  border-top: 1px solid #383c45;
-}
-#SidebarNavigationList > li > ul > li > a {
-  color: #cccccc;
-  padding: 10px 0 10px 25px;
-  display: block;
-}
-#SidebarNavigationList > li > ul > li.active-hovering,
-#SidebarNavigationList > li > ul > li.active-hovering a {
-  background-color: #3c414a;
-  color: #cccccc;
-  font-weight: normal;
-}
-#SidebarNavigationList > li > ul > li > ul > li {
-  background: #474d58;
-  border-top: 1px solid #383c45;
-}
-#SidebarNavigationList > li > ul > li > ul > li > a {
-  color: #cccccc;
-  padding: 10px 0 10px 35px;
-  display: block;
-}
-#SidebarNavigationList > li > ul > li > ul > li.active-hovering,
-#SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
-  background: #474d58;
-  color: #cccccc;
-  font-weight: normal;
-}
 @media (max-width: 767px) {
   #Sidebar {
     width: 45px;
   }
   #SidebarSearch {
     display: none;
-  }
-  #SidebarNavigationList > li .active {
-    background: #3c414a;
-    font-weight: normal;
-  }
-  #SidebarNavigationList > li .active a {
-    color: #cccccc;
-    background-image: none;
   }
   #SidebarNavigationList > li.has-active-child {
     background: #1aaef3;
@@ -151,10 +143,13 @@
     color: #ffffff;
     font-weight: bold;
   }
-  #SidebarNavigationList > li > ul > li > a,
-  #SidebarNavigationList > li > ul > li > ul > li > a {
-    padding: 6px 0 6px 8px;
-    font-size: 10px;
+  #SidebarNavigationList > li .active {
+    background: #3c414a;
+    font-weight: normal;
+  }
+  #SidebarNavigationList > li .active a {
+    color: #cccccc;
+    background-image: none;
   }
   #SidebarNavigationList > li > a {
     text-align: center;
@@ -173,15 +168,14 @@
   #SidebarNavigationList > li > ul .menu-icon {
     width: 10px;
   }
+  #SidebarNavigationList > li > ul > li > a,
+  #SidebarNavigationList > li > ul > li > ul > li > a {
+    padding: 6px 0 6px 8px;
+    font-size: 10px;
+  }
   #SidebarNavigationList > li > ul > li:first-child,
   #SidebarNavigationList > li > ul > li > ul > li:first-child {
     border-top: none;
-  }
-  #SidebarNavigationList > li > ul > li > ul > li.active,
-  #SidebarNavigationList > li > ul > li > ul > li.active a {
-    background: #474d58;
-    color: #cccccc;
-    font-weight: normal;
   }
   #SidebarNavigationList > li > ul > li > ul {
     position: absolute;
@@ -189,5 +183,11 @@
     left: 100px;
     z-index: 2;
     top: 0;
+  }
+  #SidebarNavigationList > li > ul > li > ul > li.active,
+  #SidebarNavigationList > li > ul > li > ul > li.active a {
+    background: #474d58;
+    color: #cccccc;
+    font-weight: normal;
   }
 }

@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.0.2
+ * Datalist 3.0.3
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -243,7 +243,7 @@
             $.each(columns, function (index, column) {
                 header += '<th class="' + (column.CssClass != null ? column.CssClass : '') + '" data-column="' + column.Key + '">' + (column.Header != null ? column.Header : '');
                 if (that.options.sortColumn == column.Key || (that.options.sortColumn == '' && columnCount == 0)) {
-                    header += '<span class="datalist-sort-arrow glyphicon glyphicon-arrow-' + (that.options.sortOrder == 'Asc' ? 'down' : 'up') + '"></span>';
+                    header += '<span class="datalist-sort-arrow glyphicon glyphicon-arrow-' + (that.options.sortOrder == 'Asc' ? 'up' : 'down') + '"></span>';
                     that.options.sortColumn = column.Key;
                 }
 

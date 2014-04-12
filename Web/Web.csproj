@@ -333,7 +333,15 @@
   <ItemGroup>
     <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Module.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Model.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\View.cs.t4" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

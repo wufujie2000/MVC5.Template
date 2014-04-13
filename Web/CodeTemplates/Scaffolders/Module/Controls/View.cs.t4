@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace <#= Model.Namespace #>
 { 
-    public class <#= Model.Name #> : BaseModel
+    public class <#= Model.Name #> : BaseView
     {
-		// TODO: Add properties
-	}
+        // TODO: Add properties
+    }
 }

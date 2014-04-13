@@ -1,12 +1,12 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
 using System;
-using System.ComponentModel.DataAnnotations;
+using Template.Objects;
 
 namespace <#= Model.Namespace #>
 { 
-    public class <#= Model.Name #> : BaseView
+    public interface <#= Model.Name #> : IGenericService<<#= Model.View #>>
     {
-		// TODO: Add properties
-	}
+        // TODO: Add service methods
+    }
 }

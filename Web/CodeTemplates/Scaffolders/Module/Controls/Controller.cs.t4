@@ -1,0 +1,88 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using System;
+using System.Web.Mvc;
+using Template.Components.Services;
+using Template.Objects;
+
+namespace <#= Model.Namespace #>
+{
+    public class <#= Model.Name #> : ServicedController<<#= Model.Service #>>
+    {
+        public <#= Model.Name #>(<#= Model.Service #> service)
+            : base(service)
+        {
+            // TODO: Change controller implementation
+        }
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View(Service.GetViews());
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View(new <#= Model.View #>());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(<#= Model.View #> model)
+        {
+            if (!Service.CanCreate(model))
+                return View();
+
+            Service.Create(model);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Details(String id)
+        {
+            return View(Service.GetView(id));
+        }
+
+        [HttpGet]
+        public ActionResult Edit(String id)
+        {
+            return View(Service.GetView(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(<#= Model.View #> model)
+        {
+            if (!Service.CanEdit(model))
+                return View();
+
+            Service.Edit(model);
+            if (!IsAuthorizedFor("Index"))
+                return RedirectToDefault();
+            
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(String id)
+        {
+            return View(Service.GetView(id));
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(String id)
+        {
+            if (!Service.CanDelete(id))
+                return View();
+
+            Service.Delete(id);
+            if (!IsAuthorizedFor("Index"))
+                return RedirectToDefault();
+
+            return RedirectToAction("Index");
+        }
+    }
+}

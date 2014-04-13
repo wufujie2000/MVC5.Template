@@ -1,0 +1,18 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cshtml" #>
+@model <#= Model.View #>
+
+@using (Html.FormWidgetBox())
+{
+    using(Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        // TODO: Add model creation properties
+
+        using (Html.FormActions())
+        {
+            @Html.FormSubmit()
+        }
+    }
+}

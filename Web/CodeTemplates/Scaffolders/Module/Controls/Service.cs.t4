@@ -1,0 +1,18 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using System;
+using Template.Objects;
+using Template.Data.Core;
+
+namespace <#= Model.Namespace #>
+{
+    public class <#= Model.Name #> : GenericService<<#= Model.Model #>, <#= Model.View #>>, <#= Model.Interface #>
+    {
+        public <#= Model.Name #>(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
+        // TODO: Add service implementation
+    }
+}

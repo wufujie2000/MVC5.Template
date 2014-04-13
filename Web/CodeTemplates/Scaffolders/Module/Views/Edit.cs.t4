@@ -1,0 +1,19 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cshtml" #>
+@model <#= Model.View #>
+
+@using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Delete))
+{
+    using(Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        // TODO: Add editable model properties
+
+        @Html.HiddenFor(model => model.Id)
+        using (Html.FormActions())
+        {
+            @Html.FormSubmit()
+        }
+    }
+}

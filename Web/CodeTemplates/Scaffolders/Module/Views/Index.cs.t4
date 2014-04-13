@@ -1,0 +1,20 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cshtml" #>
+@model IEnumerable<<#= Model.View #>>
+
+@using (Html.TableWidgetBox(LinkAction.Create))
+{
+    @(
+        Html
+            .Grid(Model)
+            .Columns(columns =>
+            {
+                columns.AddActionLink(LinkAction.Details);
+                columns.AddActionLink(LinkAction.Edit);
+                columns.AddActionLink(LinkAction.Delete);
+                
+                //TODO: Add table columns
+            })
+            .ApplyAttributes()
+    )
+}

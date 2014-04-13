@@ -40,7 +40,7 @@ namespace Template.Tests.Unit.Components.Services
         #region Method: GetView(String id)
 
         [Test]
-        public void GetView_GetsViewbyId()
+        public void GetView_GetsViewById()
         {
             Assert.AreEqual(role.Id, service.GetView(role.Id).Id);
         }

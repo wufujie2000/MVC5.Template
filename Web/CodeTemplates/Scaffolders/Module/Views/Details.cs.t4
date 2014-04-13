@@ -1,0 +1,8 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cshtml" #>
+@model <#= Model.View #>
+
+@using (Html.FormWidgetBox(LinkAction.Edit, LinkAction.Delete))
+{
+    // TODO: Add model detalization properties
+}

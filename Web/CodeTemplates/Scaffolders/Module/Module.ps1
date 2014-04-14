@@ -53,30 +53,49 @@ Add-ProjectItemViaTemplate $ControllerPath -Template "Controls\Controller" `
     -SuccessMessage "Added controller at {0}" `
     -TemplateFolders $TemplateFolders -Project $ControllerProject -CodeLanguage $CodeLanguage -Force:$Force
     
-$ViewProject = "Web"
-$ViewPath = "Views\" + $AreaName + "\" + $ControllerName + "\"
+$ViewsProject = "Web"
+$ViewsPath = "Views\" + $AreaName + "\" + $ControllerName + "\"
 
-Add-ProjectItemViaTemplate ($ViewPath + "Index") -Template "Views\Index" `
+Add-ProjectItemViaTemplate ($ViewsPath + "Index") -Template "Views\Index" `
     -Model @{ View = $View } `
     -SuccessMessage "Added index view at {0}" `
-    -TemplateFolders $TemplateFolders -Project $ViewProject -CodeLanguage $CodeLanguage -Force:$Force
+    -TemplateFolders $TemplateFolders -Project $ViewsProject -CodeLanguage $CodeLanguage -Force:$Force
 
-Add-ProjectItemViaTemplate ($ViewPath + "Create") -Template "Views\Create" `
+Add-ProjectItemViaTemplate ($ViewsPath + "Create") -Template "Views\Create" `
     -Model @{ View = $View } `
     -SuccessMessage "Added create view at {0}" `
-    -TemplateFolders $TemplateFolders -Project $ViewProject -CodeLanguage $CodeLanguage -Force:$Force
+    -TemplateFolders $TemplateFolders -Project $ViewsProject -CodeLanguage $CodeLanguage -Force:$Force
 
-Add-ProjectItemViaTemplate ($ViewPath + "Details") -Template "Views\Details" `
+Add-ProjectItemViaTemplate ($ViewsPath + "Details") -Template "Views\Details" `
     -Model @{ View = $View } `
     -SuccessMessage "Added details view at {0}" `
-    -TemplateFolders $TemplateFolders -Project $ViewProject -CodeLanguage $CodeLanguage -Force:$Force
+    -TemplateFolders $TemplateFolders -Project $ViewsProject -CodeLanguage $CodeLanguage -Force:$Force
 
-Add-ProjectItemViaTemplate ($ViewPath + "Edit") -Template "Views\Edit" `
+Add-ProjectItemViaTemplate ($ViewsPath + "Edit") -Template "Views\Edit" `
     -Model @{ View = $View } `
     -SuccessMessage "Added edit view at {0}" `
-    -TemplateFolders $TemplateFolders -Project $ViewProject -CodeLanguage $CodeLanguage -Force:$Force
+    -TemplateFolders $TemplateFolders -Project $ViewsProject -CodeLanguage $CodeLanguage -Force:$Force
 
-Add-ProjectItemViaTemplate ($ViewPath + "Delete") -Template "Views\Delete" `
+Add-ProjectItemViaTemplate ($ViewsPath + "Delete") -Template "Views\Delete" `
     -Model @{ View = $View } `
     -SuccessMessage "Added delete view at {0}" `
-    -TemplateFolders $TemplateFolders -Project $ViewProject -CodeLanguage $CodeLanguage -Force:$Force
+    -TemplateFolders $TemplateFolders -Project $ViewsProject -CodeLanguage $CodeLanguage -Force:$Force
+
+$TestsProject = "Tests"
+$ServiceTests = $Service + "Tests"
+$ServiceTestsNamespace = "Template.Tests.Unit.Components.Services"
+$ServiceTestsPath = "Unit\Components\Services\" + $AreaName + "\" + $ControllerName + "\" + $ServiceTests
+
+Add-ProjectItemViaTemplate $ServiceTestsPath -Template "Tests\ServiceTests" `
+    -Model @{ Namespace = $ServiceTestsNamespace; Name = $ServiceTests; Service = $Service; View = $View } `
+    -SuccessMessage "Added tests for service at {0}" `
+    -TemplateFolders $TemplateFolders -Project $TestsProject -CodeLanguage $CodeLanguage -Force:$Force
+
+$ControllerTests = $Controller + "Tests"
+$ControllerTestsNamespace = "Template.Tests.Unit.Controllers." + $AreaName
+$ControllerTestsPath = "Unit\Controllers\" + $AreaName + "\" + $ControllerName + "\" + $ControllerTests
+
+Add-ProjectItemViaTemplate $ControllerTestsPath -Template "Tests\ControllerTests" `
+    -Model @{ Namespace = $ControllerTestsNamespace; ControllerNamespace = $ControllerNamespace; Name = $ControllerTests; Controller = $Controller; ServiceInterface = $ServiceInterface; View = $View } `
+    -SuccessMessage "Added tests for controller at {0}" `
+    -TemplateFolders $TemplateFolders -Project $TestsProject -CodeLanguage $CodeLanguage -Force:$Force

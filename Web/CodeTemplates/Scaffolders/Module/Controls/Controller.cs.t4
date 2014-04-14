@@ -29,12 +29,12 @@ namespace <#= Model.Namespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(<#= Model.View #> model)
+        public ActionResult Create(<#= Model.View #> view)
         {
-            if (!Service.CanCreate(model))
+            if (!Service.CanCreate(view))
                 return View();
 
-            Service.Create(model);
+            Service.Create(view);
             return RedirectToAction("Index");
         }
 
@@ -52,12 +52,12 @@ namespace <#= Model.Namespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(<#= Model.View #> model)
+        public ActionResult Edit(<#= Model.View #> view)
         {
-            if (!Service.CanEdit(model))
+            if (!Service.CanEdit(view))
                 return View();
 
-            Service.Edit(model);
+            Service.Edit(view);
             if (!IsAuthorizedFor("Index"))
                 return RedirectToDefault();
             

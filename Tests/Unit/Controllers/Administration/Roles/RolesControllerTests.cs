@@ -10,7 +10,7 @@ using Template.Controllers.Administration;
 using Template.Objects;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Administration.Roles
+namespace Template.Tests.Unit.Controllers.Administration
 {
     [TestFixture]
     public class RolesControllerTests

@@ -1,0 +1,57 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using NUnit.Framework;
+using System.Linq;
+using System.Web.Mvc;
+using Template.Components.Services;
+using Template.Data.Core;
+using Template.Objects;
+using Template.Tests.Data;
+
+namespace <#= Model.Namespace #>
+{
+    [TestFixture]
+    public class <#= Model.Name #>
+    {
+        private <#= Model.Service #> service;
+        private Context context;
+        private <#= Model.View #> view;
+
+        [SetUp]
+        public void SetUp()
+        {
+            context = new TestingContext();
+            service = new <#= Model.Service #>(new UnitOfWork(context));
+            service.ModelState = new ModelStateDictionary();
+
+            TearDownData();
+            SetUpData();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            service.Dispose();
+            context.Dispose();
+        }
+
+		// TODO: Add service tests
+
+        #region Test helpers
+
+        private void SetUpData()
+        {
+            // TODO: Add service tests data set up
+
+            context.SaveChanges();
+        }
+        private void TearDownData()
+        {
+            // TODO: Add service tests data tear down
+
+            context.SaveChanges();
+        }
+
+        #endregion
+    }
+}

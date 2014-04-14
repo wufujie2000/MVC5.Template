@@ -7,6 +7,6 @@ namespace <#= Model.Namespace #>
 { 
     public class <#= Model.Name #> : BaseView
     {
-        // TODO: Add properties
+        // TODO: Add view properties
     }
 }

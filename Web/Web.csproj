@@ -367,7 +367,10 @@
     <Content Include="CodeTemplates\Scaffolders\Module\Views\Delete.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeTemplates\Scaffolders\Module\Tests\" />
+    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ServiceTests.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ControllerTests.cs.t4" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

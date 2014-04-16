@@ -4,6 +4,7 @@ param(
     [parameter(Mandatory = $true)][string]$ControllerName,
     [parameter(Mandatory = $false)][string]$AreaName,
     [string[]]$TemplateFolders,
+	[switch]$Delete = $false,
     [switch]$Force = $false
 )
 
@@ -34,7 +35,11 @@ If ($AreaName) { $ElementPath = "$AreaName\$ControllerName"; }
 Else { $ElementPath = $ControllerName; }
 
 $ViewPath = "Views\$ElementPath\$View"
-$RazorViewPath = "Views\$ElementPath\"
+$EditViewPath = "Views\$ElementPath\Edit"
+$IndexViewPath = "Views\$ElementPath\Index"
+$CreateViewPath = "Views\$ElementPath\Create"
+$DeleteViewPath = "Views\$ElementPath\Delete"
+$DetailsViewPath = "Views\$ElementPath\Details"
 $ControllerPath = "$ElementPath\$Controller"
 $ModelPath = "Models\$ElementPath\$ModelName"
 $ServicePath = "Services\$ElementPath\$Service"
@@ -42,6 +47,37 @@ $ServiceInterfacePath = "Services\$ElementPath\$ServiceInterface"
 $ControllerTestsPath = "Unit\Controllers\$ElementPath\$ControllerTests"
 $ServiceTestsPath = "Unit\Components\Services\$ElementPath\$ServiceTests"
 
+If ($Delete)
+{
+    $ProjectItem = Get-ProjectItem -Project $TestsProject -Path "$ControllerTestsPath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $TestsProject -Path "$ServiceTestsPath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+
+	$ProjectItem = Get-ProjectItem -Project $RazorViewProject -Path "$DeleteViewPath.cshtml"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $RazorViewProject -Path "$EditViewPath.cshtml"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $RazorViewProject -Path "$DetailsViewPath.cshtml"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $RazorViewProject -Path "$CreateViewPath.cshtml"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $RazorViewProject -Path "$IndexViewPath.cshtml"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	
+	$ProjectItem = Get-ProjectItem -Project $ControllerProject -Path "$ControllerPath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $ServiceProject -Path "$ServicePath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $ServiceProject -Path "$ServiceInterfacePath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $ObjectsProject -Path "$ViewPath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+	$ProjectItem = Get-ProjectItem -Project $ObjectsProject -Path "$ModelPath.cs"
+	If ($ProjectItem) { $ProjectItem.Remove() }
+}
+Else
+{
 # Controls
 
 Add-ProjectItemViaTemplate $ModelPath `
@@ -198,3 +234,4 @@ Add-ProjectItemViaTemplate $ControllerTestsPath `
 	-CodeLanguage $CodeLanguage `
 	-Project $TestsProject `
 	-Force:$Force
+}

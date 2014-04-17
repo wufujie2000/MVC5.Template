@@ -8,14 +8,13 @@ using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 
-namespace <#= Model.Namespace #>
+namespace Template.Tests.Unit.Components.Services
 {
     [TestFixture]
     public class <#= Model.Name #>
     {
         private <#= Model.Service #> service;
         private Context context;
-        private <#= Model.View #> view;
 
         [SetUp]
         public void SetUp()

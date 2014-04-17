@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace <#= Model.Namespace #>
+namespace Template.Objects
 { 
     public class <#= Model.Name #> : BaseModel
     {

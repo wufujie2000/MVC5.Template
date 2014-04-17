@@ -18,16 +18,16 @@ namespace <#= Model.Namespace #>
         private Mock<<#= Model.Controller #>> controllerMock;
         private Mock<<#= Model.ServiceInterface #>> serviceMock;
         private <#= Model.Controller #> controller;
-        private <#= Model.View #> view;
+        private <#= Model.View #> <#= Model.ModelName #>;
 
         [SetUp]
         public void SetUp()
         {
 		    // TODO: Add view creation from ObjectFactory
             serviceMock = new Mock<<#= Model.ServiceInterface #>>();
-            serviceMock.Setup(mock => mock.CanEdit(view)).Returns(true);
-            serviceMock.Setup(mock => mock.CanCreate(view)).Returns(true);
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(view);
+            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.GetView("Test")).Returns(<#= Model.ModelName #>);
             serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
             controllerMock = new Mock<<#= Model.Controller #>>(serviceMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
@@ -39,7 +39,7 @@ namespace <#= Model.Namespace #>
         [Test]
         public void Index_ReturnsModelsView()
         {
-            var expected = new[] { view };
+            var expected = new[] { <#= Model.ModelName #> };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
             var actual = (controller.Index() as ViewResult).Model;
 
@@ -61,28 +61,28 @@ namespace <#= Model.Namespace #>
 
         #endregion
 
-        #region Method: Create(<#= Model.View #> view)
+        #region Method: Create(<#= Model.View #> <#= Model.ModelName #>)
 
         [Test]
         public void Create_ReturnsEmptyViewIfCanNotCreate()
         {
-            serviceMock.Setup(mock => mock.CanCreate(view)).Returns(false);
+            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ModelName #>)).Returns(false);
 
-            Assert.IsNull((controller.Create(view) as ViewResult).Model);
+            Assert.IsNull((controller.Create(<#= Model.ModelName #>) as ViewResult).Model);
         }
 
         [Test]
         public void Create_CallsServiceCreate()
         {
-            controller.Create(view);
+            controller.Create(<#= Model.ModelName #>);
 
-            serviceMock.Verify(mock => mock.Create(view), Times.Once());
+            serviceMock.Verify(mock => mock.Create(<#= Model.ModelName #>), Times.Once());
         }
 
         [Test]
         public void Create_AfterCreateRedirectsToIndex()
         {
-            var result = controller.Create(view) as RedirectToRouteResult;
+            var result = controller.Create(<#= Model.ModelName #>) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
@@ -96,7 +96,7 @@ namespace <#= Model.Namespace #>
         {
             var actual = (controller.Details("Test") as ViewResult).Model as <#= Model.View #>;
 
-            Assert.AreEqual(view, actual);
+            Assert.AreEqual(<#= Model.ModelName #>, actual);
         }
 
         #endregion
@@ -108,33 +108,33 @@ namespace <#= Model.Namespace #>
         {
             var actual = (controller.Edit("Test") as ViewResult).Model as <#= Model.View #>;
 
-            Assert.AreEqual(view, actual);
+            Assert.AreEqual(<#= Model.ModelName #>, actual);
         }
 
         #endregion
 
-        #region Method: Edit(<#= Model.View #> view)
+        #region Method: Edit(<#= Model.View #> <#= Model.ModelName #>)
 
         [Test]
         public void Edit_ReturnsEmptyViewIfCanNotEdit()
         {
-            serviceMock.Setup(mock => mock.CanEdit(view)).Returns(false);
+            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ModelName #>)).Returns(false);
 
-            Assert.IsNull((controller.Edit(view) as ViewResult).Model);
+            Assert.IsNull((controller.Edit(<#= Model.ModelName #>) as ViewResult).Model);
         }
 
         [Test]
         public void Edit_CallsServiceEdit()
         {
-            controller.Edit(view);
+            controller.Edit(<#= Model.ModelName #>);
 
-            serviceMock.Verify(mock => mock.Edit(view), Times.Once());
+            serviceMock.Verify(mock => mock.Edit(<#= Model.ModelName #>), Times.Once());
         }
 
         [Test]
         public void Edit_RedirectsToIndex()
         {
-            var result = controller.Edit(view) as RedirectToRouteResult;
+            var result = controller.Edit(<#= Model.ModelName #>) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
@@ -148,7 +148,7 @@ namespace <#= Model.Namespace #>
         {
             var actual = (controller.Delete("Test") as ViewResult).Model as <#= Model.View #>;
 
-            Assert.AreEqual(view, actual);
+            Assert.AreEqual(<#= Model.ModelName #>, actual);
         }
 
         #endregion

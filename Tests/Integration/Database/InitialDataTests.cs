@@ -175,14 +175,6 @@ namespace Template.Tests.Integration.Database
             Assert.AreEqual(expectedRole, actualRole);
         }
 
-        [Test]
-        public void AccountsTable_HasTestAccountWithoutRole()
-        {
-            var actualRole = context.Set<Account>().FirstOrDefault(account => account.Username == "test").Person.RoleId;
-
-            Assert.IsNull(actualRole);
-        }
-
         #endregion
     }
 }

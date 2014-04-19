@@ -1,6 +1,5 @@
 ﻿using Datalist;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Template.Objects
@@ -12,12 +11,10 @@ namespace Template.Objects
         public String Name { get; set; }
 
         public Tree PrivilegesTree { get; set; }
-        public IList<RolePrivilegeView> RolePrivileges { get; set; }
 
         public RoleView()
         {
             PrivilegesTree = new Tree();
-            RolePrivileges = new List<RolePrivilegeView>();
         }
     }
 }

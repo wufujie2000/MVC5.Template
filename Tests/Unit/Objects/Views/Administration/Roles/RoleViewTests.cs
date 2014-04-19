@@ -14,12 +14,6 @@ namespace Template.Tests.Unit.Objects
             Assert.IsNotNull(new RoleView().PrivilegesTree);
         }
 
-        [Test]
-        public void RoleView_RolePrivilegesAreEmpty()
-        {
-            CollectionAssert.IsEmpty(new RoleView().RolePrivileges);
-        }
-
         #endregion
     }
 }

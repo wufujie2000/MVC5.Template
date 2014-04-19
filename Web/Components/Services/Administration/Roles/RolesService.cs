@@ -47,15 +47,26 @@ namespace Template.Components.Services
             role.PrivilegesTree = new Tree();
             role.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
-            role.PrivilegesTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            var allPrivileges = UnitOfWork.Repository<Privilege>().Query().ToList().Select(privilege => new
-            {
-                Id = privilege.Id,
-                Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
-            });
-            foreach (var areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
+            role.PrivilegesTree.SelectedIds = UnitOfWork
+                .Repository<RolePrivilege>()
+                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
+
+            var allPrivileges = UnitOfWork
+                .Repository<Privilege>()
+                .Query()
+                .ToList()
+                .Select(privilege => new
+                {
+                    Id = privilege.Id,
+                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                })
+                .GroupBy(privilege => privilege.Area)
+                .OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller);
+
+            foreach (var areaPrivilege in allPrivileges)
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);
                 foreach (var controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))

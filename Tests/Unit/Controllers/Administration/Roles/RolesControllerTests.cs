@@ -58,7 +58,6 @@ namespace Template.Tests.Unit.Controllers.Administration
             Assert.IsNull(actual.Name);
             Assert.IsNotNull(actual.Id);
             Assert.IsNotNull(actual.PrivilegesTree);
-            CollectionAssert.IsEmpty(actual.RolePrivileges);
         }
 
         [Test]

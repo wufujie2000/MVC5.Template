@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using NUnit.Framework;
-using System.Collections.Generic;
 using Template.Data.Mapping;
 using Template.Objects;
 using Template.Tests.Helpers;
@@ -25,10 +24,10 @@ namespace Template.Tests.Data.Mapping
             expected.Role = ObjectFactory.CreateRole();
             var actual = Mapper.Map<Person, PersonView>(expected);
 
-            Assert.IsNotNull(actual.Role);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.LastName, actual.LastName);
+            Assert.AreEqual(expected.Role.Name, actual.RoleName);
             Assert.AreEqual(expected.FirstName, actual.FirstName);
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
         }
@@ -117,8 +116,7 @@ namespace Template.Tests.Data.Mapping
             Assert.AreEqual(expected.Person.FirstName, actual.Person.FirstName);
             Assert.AreEqual(expected.Person.LastName, actual.Person.LastName);
 
-            Assert.AreEqual(expected.Person.Role.Name, actual.Person.Role.Name);
-            Assert.AreEqual(expected.Person.Role.Id, actual.Person.Role.Id);
+            Assert.AreEqual(expected.Person.Role.Name, actual.Person.RoleName);
             Assert.AreEqual(expected.Person.RoleId, actual.Person.RoleId);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -146,33 +144,22 @@ namespace Template.Tests.Data.Mapping
         public void MapRoles_MapsRoleToRoleView()
         {
             var expected = ObjectFactory.CreateRole();
-            expected.RolePrivileges = new List<RolePrivilege>() { ObjectFactory.CreateRolePrivilege() };
-
             var actual = Mapper.Map<Role, RoleView>(expected);
 
-            Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNotNull(actual.PrivilegesTree);
+            Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.RolePrivileges[0].Id, actual.RolePrivileges[0].Id);
-            Assert.AreEqual(expected.RolePrivileges[0].RoleId, actual.RolePrivileges[0].RoleId);
-            Assert.AreEqual(expected.RolePrivileges[0].PrivilegeId, actual.RolePrivileges[0].PrivilegeId);
         }
 
         [Test]
         public void MapRoles_MapsRoleViewToRole()
         {
             var expected = ObjectFactory.CreateRoleView();
-            expected.RolePrivileges.Add(ObjectFactory.CreateRolePrivilegeView());
-
             var actual = Mapper.Map<RoleView, Role>(expected);
 
+            Assert.IsNull(actual.RolePrivileges);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);
-            Assert.IsNull(actual.RolePrivileges[0].Role);
-            Assert.IsNull(actual.RolePrivileges[0].Privilege);
-            Assert.AreEqual(expected.RolePrivileges[0].Id, actual.RolePrivileges[0].Id);
-            Assert.AreEqual(expected.RolePrivileges[0].RoleId, actual.RolePrivileges[0].RoleId);
-            Assert.AreEqual(expected.RolePrivileges[0].PrivilegeId, actual.RolePrivileges[0].PrivilegeId);
         }
 
         [Test]

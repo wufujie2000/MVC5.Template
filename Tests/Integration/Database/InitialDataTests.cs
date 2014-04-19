@@ -153,13 +153,12 @@ namespace Template.Tests.Integration.Database
         [Test]
         public void RolesPrivilegesTable_HasAllPrivilegesForAdminRole()
         {
-            var adminRole = context.Set<Role>().Single(role => role.Name == "Sys_Admin");
-            var allPrivileges = context.Set<Privilege>();
+            var expected = context.Set<Privilege>().Select(privilege => privilege.Id);
+            var actual = context.Set<Role>()
+                .Single(role => role.Name == "Sys_Admin").RolePrivileges
+                .Select(rolePrivilege => rolePrivilege.PrivilegeId);
 
-            foreach (var privilege in allPrivileges)
-                Assert.IsNotNull(context.Set<RolePrivilege>().SingleOrDefault(rolePrivilege =>
-                    rolePrivilege.RoleId == adminRole.Id &&
-                    rolePrivilege.PrivilegeId == privilege.Id));
+            CollectionAssert.AreEquivalent(expected, actual);
         }
 
         #endregion

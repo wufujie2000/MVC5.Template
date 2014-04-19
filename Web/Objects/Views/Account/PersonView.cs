@@ -9,7 +9,6 @@ namespace Template.Objects
         public DateTime? DateOfBirth { get; set; }
 
         public String RoleId { get; set; }
-
-        public RoleView Role { get; set; }
+        public String RoleName { get; set; }
     }
 }

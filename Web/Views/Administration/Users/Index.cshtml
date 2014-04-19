@@ -12,7 +12,7 @@
                 columns.AddActionLink(LinkAction.Delete);
                 
                 columns.AddProperty(model => model.Username);
-                columns.AddProperty(model => model.Person.Role.Name);
+                columns.AddProperty(model => model.Person.RoleName);
 
                 columns.AddProperty(model => model.Person.FirstName);
                 columns.AddProperty(model => model.Person.LastName);

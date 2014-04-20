@@ -4,12 +4,12 @@
 {
     using (Html.FormGroup())
     {
-        @Html.FormLabelFor(model => model.Name)
+        @Html.NotRequiredLabelFor(model => model.Name)
         @Html.FormTextBoxFor(model => model.Name)
     }
     using (Html.FormGroup())
     {
-        @Html.FormLabelFor(model => model.PrivilegesTree)
+        @Html.NotRequiredLabelFor(model => model.PrivilegesTree)
         using (Html.ContentGroup())
         {
             @Html.TreeViewFor(model => model.PrivilegesTree)

@@ -20,17 +20,17 @@
     }
     using (Html.FormGroup())
     {
-        @Html.FormLabelFor(model => model.Person.FirstName)
+        @Html.NotRequiredLabelFor(model => model.Person.FirstName)
         @Html.FormTextBoxFor(model => model.Person.FirstName)
     }
     using (Html.FormGroup())
     {
-        @Html.FormLabelFor(model => model.Person.LastName)
+        @Html.NotRequiredLabelFor(model => model.Person.LastName)
         @Html.FormTextBoxFor(model => model.Person.LastName)
     }
     using (Html.FormGroup())
     {
-        @Html.FormLabelFor(model => model.Person.DateOfBirth)
+        @Html.NotRequiredLabelFor(model => model.Person.DateOfBirth)
         @Html.FormDatePickerFor(model => model.Person.DateOfBirth)
     }
     

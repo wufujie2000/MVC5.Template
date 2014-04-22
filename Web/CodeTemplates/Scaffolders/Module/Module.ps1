@@ -29,6 +29,43 @@ $ControllerTests = $ControllerName + "Controller" + "Tests"
 If ($AreaName) { $ElementPath = "$AreaName\$ControllerName" }
 Else { $ElementPath = $ControllerName }
 
+If ($AreaName)
+{
+    $ViewAreaDir = "Views\$AreaName"
+    $ControllerAreaDir = "$AreaName"
+    $ModelAreaDir = "Models\$AreaName"
+    $RazorViewAreaDir = "Views\$AreaName"
+    $ServicesAreaDir = "Services\$AreaName"
+    $ControllerTestsAreaDir = "Unit\Controllers\$AreaName"
+    $ServiceTestsAreaDir = "Unit\Components\Services\$AreaName"
+    
+    $ViewControllerDir = "Views\$AreaName\$ControllerName"
+    $ControllerControllerDir = "$AreaName\$ControllerName"
+    $ModelControllerDir = "Models\$AreaName\$ControllerName"
+    $RazorViewControllerDir = "Views\$AreaName\$ControllerName"
+    $ServicesControllerDir = "Services\$AreaName\$ControllerName"
+    $ControllerTestsControllerDir = "Unit\Controllers\$AreaName\$ControllerName"
+    $ServiceTestsControllerDir = "Unit\Components\Services\$AreaName\$ControllerName"
+}
+Else
+{
+    $ViewAreaDir = "Views\$ControllerName"
+    $ControllerAreaDir = "$ControllerName"
+    $ModelAreaDir = "Models\$ControllerName"
+    $RazorViewAreaDir = "Views\$ControllerName"
+    $ServicesAreaDir = "Services\$ControllerName"
+    $ControllerTestsAreaDir = "Unit\Controllers\$ControllerName"
+    $ServiceTestsAreaDir = "Unit\Components\Services\$ControllerName"
+
+    $ViewControllerDir = "Views\$ControllerName"
+    $ControllerControllerDir = "$ControllerName"
+    $ModelControllerDir = "Models\$ControllerName"
+    $RazorViewControllerDir = "Views\$ControllerName"
+    $ServicesControllerDir = "Services\$ControllerName"
+    $ControllerTestsControllerDir = "Unit\Controllers\$ControllerName"
+    $ServiceTestsControllerDir = "Unit\Components\Services\$ControllerName"
+}
+
 $ViewPath = "Views\$ElementPath\$View"
 $EditViewPath = "Views\$ElementPath\Edit"
 $IndexViewPath = "Views\$ElementPath\Index"
@@ -59,6 +96,27 @@ If ($Delete)
 	Delete-ProjectItem $ServiceProject "$IServicePath.cs"
 	Delete-ProjectItem $ObjectsProject "$ViewPath.cs"
 	Delete-ProjectItem $ObjectsProject "$ModelPath.cs"
+
+    Delete-IfEmpty $TestsProject $ControllerTestsControllerDir
+    Delete-IfEmpty $TestsProject $ControllerTestsAreaDir
+
+    Delete-IfEmpty $TestsProject $ServiceTestsControllerDir
+    Delete-IfEmpty $TestsProject $ServiceTestsAreaDir
+
+    Delete-IfEmpty $RazorViewProject $RazorViewControllerDir
+    Delete-IfEmpty $RazorViewProject $RazorViewAreaDir
+
+    Delete-IfEmpty $ControllerProject $ControllerControllerDir
+    Delete-IfEmpty $ControllerProject $ControllerAreaDir
+
+    Delete-IfEmpty $ServiceProject $ServicesControllerDir
+    Delete-IfEmpty $ServiceProject $ServicesAreaDir
+
+    Delete-IfEmpty $ObjectsProject $ViewControllerDir
+    Delete-IfEmpty $ObjectsProject $ViewAreaDir
+
+    Delete-IfEmpty $ObjectsProject $ModelControllerDir
+    Delete-IfEmpty $ObjectsProject $ModelAreaDir
 }
 Else
 {

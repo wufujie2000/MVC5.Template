@@ -19,6 +19,13 @@ namespace Template.Controllers
             RoleProvider = RoleProviderFactory.Instance;
         }
 
+        protected virtual RedirectToRouteResult RedirectIfAuthorized(String action)
+        {
+            if (!IsAuthorizedFor(action))
+                return RedirectToDefault();
+
+            return RedirectToAction(action);
+        }
         protected virtual ActionResult RedirectToLocal(String url)
         {
             if (Url.IsLocalUrl(url))

@@ -40,6 +40,7 @@ namespace Template.Controllers.Account
         public ActionResult Logout()
         {
             Service.Logout();
+
             return RedirectToAction("Login");
         }
     }

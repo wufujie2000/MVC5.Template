@@ -19,6 +19,14 @@ namespace Template.Tests.Objects.Controllers
             }
         }
 
+        public RedirectToRouteResult BaseRedirectToAction(String action)
+        {
+            return base.RedirectToAction(action);
+        }
+        public RedirectToRouteResult BaseRedirectIfAuthorized(String action)
+        {
+            return base.RedirectIfAuthorized(action);
+        }
         public ActionResult BaseRedirectToLocal(String url)
         {
             return base.RedirectToLocal(url);

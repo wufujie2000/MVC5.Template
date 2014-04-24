@@ -82,7 +82,20 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Create_AfterCreateRedirectsToIndex()
+        public void Create_AfterSuccessfulCreateRedirectsToDefaultIfNotAuthorized()
+        {
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
+            var expected = new RouteValueDictionary();
+            expected["action"] = "DefaultRoute";
+
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
+            var actual = (controller.Create(user) as RedirectToRouteResult).RouteValues;
+
+            Assert.AreEqual(expected["action"], actual["action"]);
+        }
+
+        [Test]
+        public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
         {
             var result = controller.Create(user) as RedirectToRouteResult;
 
@@ -134,7 +147,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_RedirectsToDefaultIfUserIsNoLongerAuthorizedForIndex()
+        public void Edit_RedirectsToDefaultIfNotAuthorizedForIndex()
         {
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
             var expected = new RouteValueDictionary();
@@ -147,7 +160,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_RedirectsToIndex()
+        public void Edit_RedirectsToIndexIfAuthorized()
         {
             var result = controller.Edit(user) as RedirectToRouteResult;
 

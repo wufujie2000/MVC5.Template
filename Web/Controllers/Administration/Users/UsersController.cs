@@ -32,7 +32,8 @@ namespace Template.Controllers.Administration
                 return View();
 
             Service.Create(user);
-            return RedirectToAction("Index");
+
+            return RedirectIfAuthorized("Index");
         }
 
         [HttpGet]
@@ -55,10 +56,8 @@ namespace Template.Controllers.Administration
                 return View();
 
             Service.Edit(user);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
             
-            return RedirectToAction("Index");
+            return RedirectIfAuthorized("Index");
         }
 
         [HttpGet]
@@ -76,10 +75,8 @@ namespace Template.Controllers.Administration
                 return View();
 
             Service.Delete(id);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
 
-            return RedirectToAction("Index");
+            return RedirectIfAuthorized("Index");
         }
     }
 }

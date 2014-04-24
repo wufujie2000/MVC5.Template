@@ -3,6 +3,7 @@ using Moq.Protected;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Template.Components.Security;
 using Template.Tests.Objects.Controllers;
 using Tests.Helpers;
@@ -40,6 +41,38 @@ namespace Template.Tests.Unit.Controllers
         public void BaseController_RoleProviderIsNull()
         {
             Assert.IsNull(controller.BaseRoleProvider);
+        }
+
+        #endregion
+
+        #region Method: RedirectIfAuthorized(String action)
+
+        [Test]
+        public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
+        {
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(false);
+
+            RouteValueDictionary actual = controller.BaseRedirectIfAuthorized("Action").RouteValues;
+            RouteValueDictionary expected = controller.BaseRedirectToDefault().RouteValues;
+
+            Assert.AreEqual(expected["language"], actual["language"]);
+            Assert.AreEqual(expected["controller"], actual["controller"]);
+            Assert.AreEqual(expected["action"], actual["action"]);
+            Assert.AreEqual(expected["area"], actual["area"]);
+        }
+
+        [Test]
+        public void RedirectIfAuthorized_RedirectsToActionIfAuthorized()
+        {
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(true);
+
+            RouteValueDictionary actual = controller.BaseRedirectIfAuthorized("Action").RouteValues;
+            RouteValueDictionary expected = controller.BaseRedirectToAction("Action").RouteValues;
+
+            Assert.AreEqual(expected["language"], actual["language"]);
+            Assert.AreEqual(expected["controller"], actual["controller"]);
+            Assert.AreEqual(expected["action"], actual["action"]);
+            Assert.AreEqual(expected["area"], actual["area"]);
         }
 
         #endregion

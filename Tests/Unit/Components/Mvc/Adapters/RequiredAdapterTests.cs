@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Template.Components.Mvc.Adapters;
 using Template.Resources.Shared;
-using Template.Tests.Objects.Components.Mvc.Providers;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Mvc.Adapters
 {

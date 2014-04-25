@@ -1,28 +1,38 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using System.Web.Mvc.Html;
-using System.Web.Routing;
 using Template.Components.Extensions.Html;
-using Template.Resources;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Extensions.Html;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class LoginExtensionsTests
     {
-        private Expression<Func<BootstrapModel, String>> expression;
         private HtmlHelper<BootstrapModel> html;
+        private BootstrapModel bootstrapModel;
 
         [SetUp]
         public void SetUp()
         {
-            html = new HtmlMock<BootstrapModel>().Html;
-            expression = null;
+            bootstrapModel = new BootstrapModel()
+            {
+                NotRequired = "NotRequired",
+                Required = "Required",
+                Date = DateTime.Now,
+                Number = 10.7854M,
+                Relation = new BootstrapModel()
+                {
+                    NotRequired = "NotRequiredRelation",
+                    Date = new DateTime(2011, 01, 01),
+                    Required = "RequiredRelation",
+                    Number = 1.6666M,
+                }
+            };
+
+            html = new HtmlMock<BootstrapModel>(bootstrapModel).Html;
         }
 
         #region Extensions method: LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
@@ -30,20 +40,13 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LoginUsernameFor_FormsLoginUsernameFor()
         {
-            expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
 
-            var addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon");
-            var icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-user");
-
-            addon.InnerHtml = icon.ToString();
-            var attributes = new RouteValueDictionary();
-            attributes["class"] = "form-control";
-            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
-            
-            var expected = String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes));
-            var actual = html.LoginUsernameFor(expression).ToString();
+            String actual = html.LoginUsernameFor(expression).ToString();
+            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-user\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.Relation.Required);
 
             Assert.AreEqual(expected, actual);
         }
@@ -55,20 +58,12 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LoginPasswordFor_FormsLoginPasswordFor()
         {
-            expression = (model) => model.Required;
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
 
-            var addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon lock-span");
-            var icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-lock");
-
-            addon.InnerHtml = icon.ToString();
-            var attributes = new RouteValueDictionary();
-            attributes["class"] = "form-control";
-            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
-
-            var expected = String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes));
-            var actual = html.LoginPasswordFor(expression).ToString();
+            String actual = html.LoginPasswordFor(expression).ToString();
+            String expected = String.Format("<span class=\"input-group-addon lock-span\"><i class=\"fa fa-lock\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression));
 
             Assert.AreEqual(expected, actual);
         }
@@ -80,33 +75,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LoginLanguageSelect_FormsLoginLanguageSelect()
         {
-            var addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon flag-span");
-            var icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-flag");
-            var input = new TagBuilder("input");
-            input.MergeAttribute("id", "TempLanguage");
-            input.MergeAttribute("type", "text");
-            input.AddCssClass("form-control");
-            var select = new TagBuilder("select");
-            select.MergeAttribute("id", "Language");
-
-            addon.InnerHtml = icon.ToString();
-            var languages = new Dictionary<String, String>()
-            {
-                { "en-GB", "English" },
-                { "lt-LT", "Lietuvių" }
-            };
-            foreach (var language in languages)
-            {
-                var option = new TagBuilder("option");
-                option.MergeAttribute("value", language.Key);
-                option.InnerHtml = language.Value;
-                select.InnerHtml += option.ToString();
-            }
-
-            var expected = String.Format("{0}{1}{2}", addon, input, select);
-            var actual = html.LoginLanguageSelect().ToString();
+            String actual = html.LoginLanguageSelect().ToString();
+            String expected = String.Format("<span class=\"input-group-addon flag-span\"><i class=\"fa fa-flag\"></i></span><input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input><select id=\"Language\"><option value=\"{0}\">{1}</option><option value=\"{2}\">{3}</option></select>",
+                "en-GB", "English",
+                "lt-LT", "Lietuvių");
 
             Assert.AreEqual(expected, actual);
         }
@@ -118,16 +90,9 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LoginSubmit_FormsLoginSubmit()
         {
-            var formActions = new TagBuilder("div");
-            formActions.AddCssClass("login-form-actions");
-            var submit = new TagBuilder("input");
-            submit.AddCssClass("btn btn-block btn-primary btn-default");
-            submit.MergeAttribute("value", Template.Resources.Shared.Resources.Login);
-            submit.MergeAttribute("type", "submit");
-            formActions.InnerHtml = submit.ToString();
-
-            var expected = formActions.ToString();
-            var actual = html.LoginSubmit().ToString();
+            String actual = html.LoginSubmit().ToString();
+            String expected = String.Format("<div class=\"login-form-actions\"><input class=\"btn btn-block btn-primary btn-default\" type=\"submit\" value=\"{0}\"></input></div>",
+                Template.Resources.Shared.Resources.Login);
 
             Assert.AreEqual(expected, actual);
         }

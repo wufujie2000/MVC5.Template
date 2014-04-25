@@ -69,7 +69,7 @@
     <Compile Include="Mvc\Adapters\RequiredAdapter.cs" />
     <Compile Include="Extensions\Html\Bootstrap\FormWrapper.cs" />
     <Compile Include="Extensions\Html\Bootstrap\LoginExtensions.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\FormExtensions.cs" />
+    <Compile Include="Extensions\Html\Bootstrap\BootstrapExtensions.cs" />
     <Compile Include="Extensions\Html\Bootstrap\FormActions.cs" />
     <Compile Include="Extensions\Html\Bootstrap\FormGroup.cs" />
     <Compile Include="Extensions\Html\Bootstrap\InputGroup.cs" />

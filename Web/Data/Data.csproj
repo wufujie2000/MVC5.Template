@@ -50,7 +50,7 @@
     <Compile Include="Logging\IEntityLogger.cs" />
     <Compile Include="Logging\LoggableEntry.cs" />
     <Compile Include="Logging\LoggableEntryProperty.cs" />
-    <Compile Include="Mapping\ObjectMappper.cs" />
+    <Compile Include="Mapping\ObjectMapper.cs" />
     <Compile Include="Core\Context.cs" />
     <Compile Include="Core\AContext.cs" />
     <Compile Include="Core\IRepository.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

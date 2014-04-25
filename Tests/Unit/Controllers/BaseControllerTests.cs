@@ -5,7 +5,7 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
-using Template.Tests.Objects.Controllers;
+using Template.Tests.Objects;
 using Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers

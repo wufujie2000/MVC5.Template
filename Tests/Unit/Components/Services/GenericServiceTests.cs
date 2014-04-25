@@ -8,7 +8,7 @@ using Template.Components.Services;
 using Template.Data.Core;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Services;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Services
 {

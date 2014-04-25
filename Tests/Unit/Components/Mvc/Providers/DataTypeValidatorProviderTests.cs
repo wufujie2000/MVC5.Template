@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Mvc.Providers;
 using Template.Components.Mvc.Validators;
-using Template.Tests.Objects.Components.Mvc.Providers;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Mvc.Providers
 {

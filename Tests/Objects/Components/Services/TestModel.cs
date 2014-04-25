@@ -1,7 +1,7 @@
 ﻿using System;
 using Template.Objects;
 
-namespace Template.Tests.Objects.Components.Services
+namespace Template.Tests.Objects
 {
     public class TestModel : BaseModel
     {

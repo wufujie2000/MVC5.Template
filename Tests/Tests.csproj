@@ -145,7 +145,7 @@
     <Compile Include="Objects\Resources\NoResourcesModel.cs" />
     <Compile Include="Unit\Components\Alerts\MessagesContainerTests.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormGroupTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\InputGroupTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormWrapperTests.cs" />

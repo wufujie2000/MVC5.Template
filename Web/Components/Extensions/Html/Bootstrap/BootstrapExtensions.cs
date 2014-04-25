@@ -10,10 +10,11 @@ using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
-    public static class FormExtensions
+    public static class BootstrapExtensions
     {
         public const String LabelClass = "control-label col-sm-12 col-md-3 col-lg-2";
         public const String ContentClass = "control-content col-sm-12 col-md-9 col-lg-5";
+        public const String FormActionsClass = "form-actions col-sm-12 col-md-12 col-lg-7";
         public const String ValidationClass = "control-validation col-sm-12 col-md-12 col-lg-5";
 
         public static FormWrapper ContentGroup(this HtmlHelper html)
@@ -30,7 +31,7 @@ namespace Template.Components.Extensions.Html
         }
         public static FormActions FormActions(this HtmlHelper html)
         {
-            return new FormActions(html.ViewContext.Writer);
+            return new FormActions(html.ViewContext.Writer, FormActionsClass);
         }
         public static MvcHtmlString FormSubmit(this HtmlHelper html)
         {

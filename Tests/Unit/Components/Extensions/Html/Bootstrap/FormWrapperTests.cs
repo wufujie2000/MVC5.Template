@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
-using System.Web.Mvc;
 using Template.Components.Extensions.Html;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
@@ -14,12 +14,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWrapper_FormsWrapper()
         {
-            var expected = new TagBuilder("div");
-            expected.AddCssClass("Test");
+            String actual = new FormWrapper("test-class").ToString();
+            String expected = "<div class=\"test-class\"></div>";
 
-            var actual = new FormWrapper(" Test ");
-
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -29,18 +27,32 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWrapper_WritesWrapper()
         {
-            var expected = new TagBuilder("div");
-            expected.InnerHtml = "TestContent";
-            expected.AddCssClass("Test");
+            StringWriter textWriter = new StringWriter(new StringBuilder());
+            using (new FormWrapper(textWriter, "test-class")) textWriter.Write("Content");
 
-            var actual = new StringBuilder();
-            var writer = new StringWriter(actual);
-            var formWrapper = new FormWrapper(writer, " Test ");
-            writer.Write("TestContent");
-            formWrapper.Dispose();
-            formWrapper.Dispose();
+            String actual = textWriter.GetStringBuilder().ToString();
+            String expected = "<div class=\"test-class\">Content</div>";
 
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanBeDisposedMultipleTimes()
+        {
+            StringWriter textWriter = new StringWriter(new StringBuilder());
+            FormWrapper formActions = new FormWrapper(textWriter, "test-class");
+            textWriter.Write("Content");
+            formActions.Dispose();
+            formActions.Dispose();
+
+            String actual = textWriter.GetStringBuilder().ToString();
+            String expected = "<div class=\"test-class\">Content</div>";
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

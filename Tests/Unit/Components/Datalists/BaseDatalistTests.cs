@@ -1,15 +1,15 @@
 ﻿using AutoMapper.QueryableExtensions;
 using Datalist;
-using Moq;
 using NUnit.Framework;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Web;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
-using Template.Resources.Views.RoleView;
 using Template.Tests.Helpers;
-using Template.Tests.Objects.Components.Datalists;
+using Template.Tests.Objects;
 using Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Datalists
@@ -23,9 +23,9 @@ namespace Template.Tests.Unit.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            var contextStub = new HttpMock();
-            request = contextStub.HttpContext.Request;
-            HttpContext.Current = contextStub.HttpContext;
+            HttpMock httpMock = new HttpMock();
+            request = httpMock.HttpContext.Request;
+            HttpContext.Current = httpMock.HttpContext;
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
 
             datalist = new BaseDatalistStub<Role, RoleView>();
@@ -48,20 +48,24 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsDialogTitle()
         {
-            Assert.AreEqual(ResourceProvider.GetDatalistTitle<Role>(), datalist.DialogTitle);
+            String expected = ResourceProvider.GetDatalistTitle<Role>();
+            String actual = datalist.DialogTitle;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void BaseDatalist_SetsDatalistUrl()
         {
-            var expected = String.Format("{0}://{1}/{2}/{3}/{4}",
+            String actual = datalist.DatalistUrl;
+            String expected = String.Format("{0}://{1}/{2}/{3}/{4}",
                 request.Url.Scheme,
                 request.Url.Authority,
                 request.RequestContext.RouteData.Values["language"],
                 AbstractDatalist.Prefix,
-                "Role");
+                typeof(Role).Name);
             
-            Assert.AreEqual(expected, datalist.DatalistUrl);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -70,13 +74,14 @@ namespace Template.Tests.Unit.Components.Datalists
             request.RequestContext.RouteData.Values["language"] = "en-GB";
             datalist = new BaseDatalistStub<Role, RoleView>();
 
-            var expected = String.Format("{0}://{1}/{2}/{3}",
+            String actual = datalist.DatalistUrl;
+            String expected = String.Format("{0}://{1}/{2}/{3}",
                 request.Url.Scheme,
                 request.Url.Authority,
                 AbstractDatalist.Prefix,
                 typeof(Role).Name);
 
-            Assert.AreEqual(expected, datalist.DatalistUrl);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -86,17 +91,15 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void GetColumnHeader_GetsPropertyTitle()
         {
-            var property = typeof(RoleView).GetProperty("Name");
+            String expectedTitle = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
 
-            Assert.AreEqual(Titles.Name, datalist.BaseGetColumnHeader(property));
+            AssertPropertyTitleFor<RoleView>("Name", expectedTitle);
         }
 
         [Test]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            var property = typeof(DatalistView).GetProperty("Child");
-
-            Assert.AreEqual(String.Empty, datalist.BaseGetColumnHeader(property));
+            AssertPropertyTitleFor<DatalistView>("Child", String.Empty);
         }
 
         #endregion
@@ -104,67 +107,165 @@ namespace Template.Tests.Unit.Components.Datalists
         #region Method: GetColumnCssClass(PropertyInfo property)
 
         [Test]
-        public void GetColumnCssClass_GetsTextCellOnEnum()
+        public void GetColumnCssClass_GetsTextCellForEnum()
         {
-            var property = typeof(DatalistView).GetProperty("Enum");
-
-            Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("EnumField", "text-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsTextCellOnNullableEnum()
+        public void GetColumnCssClass_GetsNumberCellForSByte()
         {
-            var property = typeof(DatalistView).GetProperty("NullableEnum");
-
-            Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("SByteField", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsNumberCellOnNumber()
+        public void GetColumnCssClass_GetsNumberCellForByte()
         {
-            var property = typeof(DatalistView).GetProperty("Number");
-
-            Assert.AreEqual("number-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("ByteField", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsNumberCellOnNullableNumber()
+        public void GetColumnCssClass_GetsNumberCellForInt16()
         {
-            var property = typeof(DatalistView).GetProperty("NullableNumber");
-
-            Assert.AreEqual("number-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("Int16Field", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsDateCellOnDate()
+        public void GetColumnCssClass_GetsNumberCellForUInt16()
         {
-            var property = typeof(DatalistView).GetProperty("Date");
-
-            Assert.AreEqual("date-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("UInt16Field", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsDateCellOnNullableDate()
+        public void GetColumnCssClass_GetsNumberCellForInt32()
         {
-            var property = typeof(DatalistView).GetProperty("NullableDate");
-
-            Assert.AreEqual("date-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("Int32Field", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsTextCellOnString()
+        public void GetColumnCssClass_GetsNumberCellForUInt32()
         {
-            var property = typeof(DatalistView).GetProperty("Text");
-
-            Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
+            AssertCssClassFor<DatalistView>("UInt32Field", "number-cell");
         }
 
         [Test]
-        public void GetColumnCssClass_GetsTextCellOnOtherTypes()
+        public void GetColumnCssClass_GetsNumberCellForInt64()
         {
-            var property = typeof(DatalistView).GetProperty("Boolean");
+            AssertCssClassFor<DatalistView>("Int64Field", "number-cell");
+        }
 
-            Assert.AreEqual("text-cell", datalist.BaseGetColumnCssClass(property));
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForUInt64()
+        {
+            AssertCssClassFor<DatalistView>("UInt64Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForSingle()
+        {
+            AssertCssClassFor<DatalistView>("SingleField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForDouble()
+        {
+            AssertCssClassFor<DatalistView>("DoubleField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForDecimal()
+        {
+            AssertCssClassFor<DatalistView>("DecimalField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsDateCellForDateTime()
+        {
+            AssertCssClassFor<DatalistView>("DateTimeField", "date-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsTextCellForNullableEnum()
+        {
+            AssertCssClassFor<DatalistView>("NullableEnumField", "text-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableSByte()
+        {
+            AssertCssClassFor<DatalistView>("NullableSByteField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableByte()
+        {
+            AssertCssClassFor<DatalistView>("NullableByteField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableInt16()
+        {
+            AssertCssClassFor<DatalistView>("NullableInt16Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableUInt16()
+        {
+            AssertCssClassFor<DatalistView>("NullableUInt16Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableInt32()
+        {
+            AssertCssClassFor<DatalistView>("NullableInt32Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableUInt32()
+        {
+            AssertCssClassFor<DatalistView>("NullableUInt32Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableInt64()
+        {
+            AssertCssClassFor<DatalistView>("NullableInt64Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableUInt64()
+        {
+            AssertCssClassFor<DatalistView>("NullableUInt64Field", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableSingle()
+        {
+            AssertCssClassFor<DatalistView>("NullableSingleField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableDouble()
+        {
+            AssertCssClassFor<DatalistView>("NullableDoubleField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsNumberCellForNullableDecimal()
+        {
+            AssertCssClassFor<DatalistView>("NullableDecimalField", "number-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsDateCellForNullableDateTime()
+        {
+            AssertCssClassFor<DatalistView>("NullableDateTimeField", "date-cell");
+        }
+
+        [Test]
+        public void GetColumnCssClass_GetsTextCellForOtherTypes()
+        {
+            AssertCssClassFor<DatalistView>("StringField", "text-cell");
         }
 
         #endregion
@@ -174,10 +275,29 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_GetsModelsProjectedToViews()
         {
-            var expected = new Context().Set<Role>().Project().To<RoleView>();
-            var actual = datalist.BaseGetModels();
+            IQueryable<RoleView> expected = new Context().Set<Role>().Project().To<RoleView>();
+            IQueryable<RoleView> actual = datalist.BaseGetModels();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private void AssertPropertyTitleFor<T>(String propertyName, String expectedTitle)
+        {
+            PropertyInfo property = typeof(T).GetProperty(propertyName);
+            String actualTitle = datalist.BaseGetColumnHeader(property);
+
+            Assert.AreEqual(expectedTitle, actualTitle);
+        }
+        private void AssertCssClassFor<T>(String propertyName, String expectedClass)
+        {
+            PropertyInfo property = typeof(T).GetProperty(propertyName);
+            String actualClass = datalist.BaseGetColumnCssClass(property);
+
+            Assert.AreEqual(expectedClass, actualClass);
         }
 
         #endregion

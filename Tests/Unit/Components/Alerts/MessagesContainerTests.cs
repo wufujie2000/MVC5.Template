@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
@@ -21,15 +22,41 @@ namespace Template.Tests.Unit.Components.Alerts
             container = new MessagesContainer(modelState);
         }
 
+        #region Contructor: MessagesContainer()
+
+        [Test]
+        public void MessagesContainer_CreatesEmptyContainer()
+        {
+            CollectionAssert.IsEmpty(new MessagesContainer());
+        }
+
+        #endregion
+
+        #region Contructor: MessagesContainer(ModelStateDictionary modelState)
+
+        [Test]
+        public void MessagesContainer_CreatesContainerWithModelStateMessages()
+        {
+            ModelStateDictionary modelStateDictionary = new ModelStateDictionary();
+            modelStateDictionary.AddModelError("TestErrorKey", "TestErrorMessage");
+            MessagesContainer container = new MessagesContainer(modelStateDictionary);
+
+            Int32 expected = modelStateDictionary.Count;
+            Int32 actual = container.Count();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
         #region Method: Add(AlertMessage message)
 
         [Test]
         public void Add_AddsMessage()
         {
-            var message = new AlertMessage();
-            container.Add(message);
+            container.Add(new AlertMessage());
 
-            Assert.AreEqual(message, container.First());
+            CollectionAssert.IsNotEmpty(container);
         }
 
         #endregion
@@ -39,13 +66,13 @@ namespace Template.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsTypedMessage()
         {
-            container.Add(AlertMessageType.Danger, "Message");
-            var actual = container.First();
+            container.Add(AlertMessageType.Danger, "TestMessage");
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual("TestMessage", actual.Message);
             Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual("Message", actual.Message);
         }
 
         #endregion
@@ -56,7 +83,7 @@ namespace Template.Tests.Unit.Components.Alerts
         public void Add_AddsTypedMessageWithKey()
         {
             container.Add(AlertMessageType.Danger, "Key", "Message");
-            var actual = container.First();
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
@@ -71,11 +98,11 @@ namespace Template.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsTypedMessageWithFadeOut()
         {
-            container.Add(AlertMessageType.Danger, "Message", 20);
-            var actual = container.First();
+            container.Add(AlertMessageType.Danger, "TestMessage", 20);
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual("Message", actual.Message);
+            Assert.AreEqual("TestMessage", actual.Message);
             Assert.AreEqual(String.Empty, actual.Key);
             Assert.AreEqual(20, actual.FadeOutAfter);
         }
@@ -88,7 +115,7 @@ namespace Template.Tests.Unit.Components.Alerts
         public void Add_AddsTypedMessageWithKeyAndFadeOut()
         {
             container.Add(AlertMessageType.Danger, "Key", "Message", 30);
-            var actual = container.First();
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual("Message", actual.Message);
@@ -104,7 +131,7 @@ namespace Template.Tests.Unit.Components.Alerts
         public void AddError_AddsMessage()
         {
             container.AddError("ErrorMessage");
-            var actual = container.First();
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
@@ -120,7 +147,7 @@ namespace Template.Tests.Unit.Components.Alerts
         public void AddError_AddsMessageWithKey()
         {
             container.AddError("Key", "ErrorMessage");
-            var actual = container.First();
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
@@ -136,7 +163,7 @@ namespace Template.Tests.Unit.Components.Alerts
         public void AddError_AddsMessageWithKeyAndFadeOut()
         {
             container.AddError("Key", "ErrorMessage", 1);
-            var actual = container.First();
+            AlertMessage actual = container.First();
 
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
@@ -151,14 +178,14 @@ namespace Template.Tests.Unit.Components.Alerts
         [Test]
         public void Merge_MergesContainerMessages()
         {
-            var containerPart = new MessagesContainer();
-            containerPart.AddError("Second");
-            container.AddError("First");
+            MessagesContainer containerPart = new MessagesContainer();
+            containerPart.AddError("SecondError");
+            container.AddError("FirstError");
 
-            var expected = container.ToList();
+            List<AlertMessage> expected = container.ToList();
+            IEnumerable<AlertMessage> actual = container;
             expected.AddRange(containerPart);
             container.Merge(containerPart);
-            var actual = container;
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -166,7 +193,7 @@ namespace Template.Tests.Unit.Components.Alerts
         [Test]
         public void Merge_OnSelfMergeThrows()
         {
-            Assert.Throws<Exception>(() => container.Merge(container), "Can not merge itself to itself");
+            Assert.Throws<Exception>(() => container.Merge(container), "Messages container can not be merged to itself");
         }
 
         #endregion
@@ -174,49 +201,39 @@ namespace Template.Tests.Unit.Components.Alerts
         #region Method: GetEnumerator()
 
         [Test]
-        public void GetEnumerator_ContainsMessages()
-        {
-            container = new MessagesContainer(null);
-            var expected = new AlertMessage[] { new AlertMessage(), new AlertMessage() };
-            foreach (var message in expected)
-                container.Add(message);
-
-            CollectionAssert.AreEqual(expected, container);
-        }
-
-        [Test]
         public void GetEnumerator_ContainsMessagesAndModelStateErrors()
         {
-            modelState.AddModelError("Key", "ErrorMessage");
-            var messages = new AlertMessage[] { new AlertMessage() };
-            foreach (var message in messages)
-                container.Add(message);
+            modelState.AddModelError("TestKey", "ErrorMessage");
+            AlertMessage expectedMessage = new AlertMessage();
+            container.Add(expectedMessage);
 
-            var actual = container.First();
+            IEnumerable<AlertMessage> actual = container;
+            IEnumerable<AlertMessage> expected = new[]
+            {
+                new AlertMessage()
+                {
+                    Key = modelState.First().Key,
+                    Type = AlertMessageType.Danger,
+                    Message = modelState.First().Value.Errors.First().ErrorMessage
+                },
+                expectedMessage
+            };
 
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual("ErrorMessage", actual.Message);
-            Assert.AreEqual(0, actual.FadeOutAfter);
-            Assert.AreEqual("Key", actual.Key);
-
-            var expected = messages.Last();
-            actual = container.Last();
-
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         [Test]
         public void GetEnumerator_GetsSameEnumerable()
         {
-            var messages = new AlertMessage[] { new AlertMessage(), new AlertMessage() };
-            foreach (var message in messages)
-                container.Add(message);
+            modelState.AddModelError("TestKey", "ErrorMessage");
+            container.Add(new AlertMessage());
+            container.Add(new AlertMessage());
 
-            var expected = container.GetEnumerator();
-            var actual = (container as IEnumerable).GetEnumerator();
+            IEnumerator<AlertMessage> expected = container.GetEnumerator();
+            IEnumerator actual = (container as IEnumerable).GetEnumerator();
 
             while(expected.MoveNext() | actual.MoveNext())
-                Assert.AreEqual(expected.Current, actual.Current);
+                TestHelper.PropertyWiseEquals(expected.Current, actual.Current);
         }
 
         #endregion

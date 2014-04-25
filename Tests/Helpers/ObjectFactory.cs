@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using Template.Objects;
-using Template.Tests.Objects.Components.Services;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Helpers
 {

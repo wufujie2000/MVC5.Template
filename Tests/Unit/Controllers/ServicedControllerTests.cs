@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Services;
-using Template.Tests.Objects.Controllers;
+using Template.Tests.Objects;
 using Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers

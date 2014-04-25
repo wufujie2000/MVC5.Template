@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
@@ -27,19 +29,19 @@ namespace Template.Tests.Integration.Database
         [Test]
         public void LanguagesTable_HasEnglishBritishLanguage()
         {
-            var actualLanguage = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "en-GB");
-            var expectedLanguageName = "English";
+            String expected = "English";
+            String actual = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "en-GB").Name;
 
-            Assert.AreEqual(expectedLanguageName, actualLanguage.Name);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void LanguagesTable_HasLithuanianLanguage()
         {
-            var actualLanguage = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "lt-LT");
-            var expectedLanguageName = "Lietuvių";
+            String expected = "Lietuvių";
+            String actual = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "lt-LT").Name;
 
-            Assert.AreEqual(expectedLanguageName, actualLanguage.Name);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -153,8 +155,9 @@ namespace Template.Tests.Integration.Database
         [Test]
         public void RolesPrivilegesTable_HasAllPrivilegesForAdminRole()
         {
-            var expected = context.Set<Privilege>().Select(privilege => privilege.Id);
-            var actual = context.Set<Role>()
+            IEnumerable<String> expected = context.Set<Privilege>()
+                .Select(privilege => privilege.Id);
+            IEnumerable<String> actual = context.Set<Role>()
                 .Single(role => role.Name == "Sys_Admin").RolePrivileges
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId);
 
@@ -168,10 +171,10 @@ namespace Template.Tests.Integration.Database
         [Test]
         public void AccountsTable_HasSysAdminAccountWithAdminRole()
         {
-            var expectedRole = context.Set<Role>().Single(role => role.Name == "Sys_Admin").Id;
-            var actualRole = context.Set<Account>().FirstOrDefault(account => account.Username == "admin").Person.RoleId;
-
-            Assert.AreEqual(expectedRole, actualRole);
+            Assert.IsNotNull(context.Set<Account>()
+                .SingleOrDefault(account =>
+                    account.Username == "admin" &&
+                    account.Person.Role.Name == "Sys_Admin"));
         }
 
         #endregion

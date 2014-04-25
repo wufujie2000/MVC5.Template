@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.IO;
 using System.Text;
 using Template.Components.Extensions.Html;
@@ -8,27 +9,37 @@ namespace Template.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class FormActionsTests
     {
-        #region Constructor: FormActions(TextWriter writer)
+        #region Constructor: FormActions(TextWriter writer, String cssClass)
 
         [Test]
         public void FormActions_WritesFormActions()
         {
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var group = new FormGroup(expectedWriter);
-            var wrapper = new FormWrapper(expectedWriter, "form-actions col-sm-12 col-md-12 col-lg-7");
-            expectedWriter.Write("Content");
-            wrapper.Dispose();
-            group.Dispose();
+            StringWriter textWriter = new StringWriter(new StringBuilder());
+            using (new FormActions(textWriter, "css-class")) textWriter.Write("Content");
 
-            var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            var formActions = new FormActions(actualWriter);
-            actualWriter.Write("Content");
+            String expected = "<div class=\"form-group\"><div class=\"css-class\">Content</div></div>";
+            String actual = textWriter.GetStringBuilder().ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanBeDisposedMultipleTimes()
+        {
+            StringWriter textWriter = new StringWriter(new StringBuilder());
+            FormActions formActions = new FormActions(textWriter, "css-class");
+            textWriter.Write("Content");
             formActions.Dispose();
             formActions.Dispose();
 
-            Assert.AreEqual(expected.ToString(), actual.ToString());
+            String expected = "<div class=\"form-group\"><div class=\"css-class\">Content</div></div>";
+            String actual = textWriter.GetStringBuilder().ToString();
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

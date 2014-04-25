@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Template.Tests.Objects.Components.Extensions.Html
+namespace Template.Tests.Objects
 {
     public class BootstrapModel
     {
@@ -10,6 +10,8 @@ namespace Template.Tests.Objects.Components.Extensions.Html
         public String NotRequired { get; set; }
         public Decimal Number { get; set; }
         public DateTime Date { get; set; }
+
+        public BootstrapModel Relation { get; set; }
 
         public String Method()
         {

@@ -64,7 +64,7 @@ namespace Template.Components.Alerts
         public void Merge(MessagesContainer container)
         {
             if (container == this)
-                throw new Exception("Can not merge itself to itself");
+                throw new Exception("Messages container can not be merged to itself");
 
             foreach (var message in container)
                 Add(message);

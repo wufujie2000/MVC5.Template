@@ -7,10 +7,10 @@ namespace Template.Components.Extensions.Html
     {
         private FormWrapper formWrapper;
 
-        public FormActions(TextWriter writer)
+        public FormActions(TextWriter writer, String cssClass)
             : base(writer)
         {
-            formWrapper = new FormWrapper(writer, "form-actions col-sm-12 col-md-12 col-lg-7");
+            formWrapper = new FormWrapper(writer, cssClass);
         }
 
         protected override void Dispose(Boolean disposing)

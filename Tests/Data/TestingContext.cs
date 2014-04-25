@@ -5,7 +5,7 @@ using System.Data.Entity;
 using Template.Data.Core;
 using Template.Data.Mapping;
 using Template.Objects;
-using Template.Tests.Objects.Components.Services;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Data
 {

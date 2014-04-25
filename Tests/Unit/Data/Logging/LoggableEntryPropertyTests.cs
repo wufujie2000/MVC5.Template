@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using Template.Data.Logging;
 using Template.Tests.Data;
-using Template.Tests.Objects.Components.Services;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Data.Logging
 {

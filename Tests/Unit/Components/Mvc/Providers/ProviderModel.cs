@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Components.Mvc.Providers
 {
-    public class ProviderTestModel
+    public class ProviderModel
     {
         public String Id { get; set; }
         public DateTime Date { get; set; }

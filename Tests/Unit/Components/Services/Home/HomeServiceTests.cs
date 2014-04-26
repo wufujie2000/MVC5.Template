@@ -31,7 +31,7 @@ namespace Template.Tests.Unit.Components.Services
         public void AddUnauthorizedMessage_AddsMessageToContainer()
         {
             service.AddUnauthorizedMessage();
-            var message = service.AlertMessages.First();
+            AlertMessage message = service.AlertMessages.First();
 
             Assert.AreEqual(Messages.Unauthorized, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);
@@ -47,7 +47,7 @@ namespace Template.Tests.Unit.Components.Services
         public void AddSystemErrorMessage_AddsMessageToContainer()
         {
             service.AddSystemErrorMessage();
-            var message = service.AlertMessages.First();
+            AlertMessage message = service.AlertMessages.First();
 
             Assert.AreEqual(Messages.SystemError, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);
@@ -63,7 +63,7 @@ namespace Template.Tests.Unit.Components.Services
         public void AddPageNotFoundMessage_AddsMessageToContainer()
         {
             service.AddPageNotFoundMessage();
-            var message = service.AlertMessages.First();
+            AlertMessage message = service.AlertMessages.First();
 
             Assert.AreEqual(Messages.PageNotFound, message.Message);
             Assert.AreEqual(AlertMessageType.Danger, message.Type);

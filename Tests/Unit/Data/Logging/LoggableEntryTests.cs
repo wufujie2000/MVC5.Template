@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -44,8 +45,8 @@ namespace Template.Tests.Unit.Data.Logging
             if (entry.Entity.GetType().Namespace != "System.Data.Entity.DynamicProxies")
                 Assert.Inconclusive();
 
-            var expected = model.GetType();
-            var actual = new LoggableEntry(entry).EntityType;
+            Type expected = model.GetType();
+            Type actual = new LoggableEntry(entry).EntityType;
 
             Assert.AreEqual(expected, actual);
         }
@@ -57,8 +58,8 @@ namespace Template.Tests.Unit.Data.Logging
             if (entry.Entity.GetType().Namespace == "System.Data.Entity.DynamicProxies")
                 Assert.Inconclusive();
 
-            var expected = model.GetType();
-            var actual = new LoggableEntry(entry).EntityType;
+            Type expected = model.GetType();
+            Type actual = new LoggableEntry(entry).EntityType;
 
             Assert.AreEqual(expected, actual);
         }
@@ -66,8 +67,8 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void LoggableEntry_SetsEntityState()
         {
-            var expected = entry.State = EntityState.Deleted;
-            var actual = new LoggableEntry(entry).State;
+            EntityState expected = entry.State = EntityState.Deleted;
+            EntityState actual = new LoggableEntry(entry).State;
 
             Assert.AreEqual(expected, actual);
         }
@@ -89,9 +90,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void LoggableEntry_CreatesProperties()
         {
-            var actual = new LoggableEntry(entry).Properties;
-            var expected = new List<LoggableEntryProperty>();
-            foreach (var name in entry.CurrentValues.PropertyNames)
+            IEnumerable<LoggableEntryProperty> actual = new LoggableEntry(entry).Properties;
+            List<LoggableEntryProperty> expected = new List<LoggableEntryProperty>();
+            foreach (String name in entry.CurrentValues.PropertyNames)
                 expected.Add(new LoggableEntryProperty(entry.Property(name)));
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);

@@ -21,8 +21,8 @@ namespace Template.Tests.Unit.Objects
         [Test]
         public void BaseModel_SetsEntityDateToNow()
         {
-            var expected = DateTime.Now.Ticks;
-            var actual = new Mock<BaseModel>().Object.EntityDate.Ticks;
+            Int64 expected = DateTime.Now.Ticks;
+            Int64 actual = new Mock<BaseModel>().Object.EntityDate.Ticks;
 
             Assert.AreEqual(expected, actual, 10000000);
         }
@@ -42,9 +42,9 @@ namespace Template.Tests.Unit.Objects
         [Test]
         public void Id_AlwaysGetsUniqueValue()
         {
-            var expected = model.Id;
+            String expected = model.Id;
             model.Id = null;
-            var actual = model.Id;
+            String actual = model.Id;
 
             Assert.AreNotEqual(expected, actual);
         }
@@ -52,8 +52,8 @@ namespace Template.Tests.Unit.Objects
         [Test]
         public void Id_AlwaysGetsSameValue()
         {
-            var expected = model.Id;
-            var actual = model.Id;
+            String expected = model.Id;
+            String actual = model.Id;
 
             Assert.AreEqual(expected, actual);
         }

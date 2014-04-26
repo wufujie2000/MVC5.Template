@@ -22,12 +22,12 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            var htmlMock = new HtmlMock();
+            HtmlMock htmlMock = new HtmlMock();
 
             html = htmlMock.Html;
             roleProviderMock = new Mock<IRoleProvider>();
-            RoleProviderFactory.SetInstance(roleProviderMock.Object);
             HttpContext.Current = htmlMock.HttpMock.HttpContext;
+            RoleProviderFactory.SetInstance(roleProviderMock.Object);
         }
 
         [TearDown]
@@ -42,11 +42,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TableWidgetBox_FormsTableWidgetBoxWithoutButtons()
         {
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new WidgetBox(expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
+            StringBuilder expected = new StringBuilder();
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox().Dispose();
 
@@ -58,12 +57,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         {
             RoleProviderFactory.SetInstance(null);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
-            new WidgetBox(expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -76,12 +74,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
                    It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
-            new WidgetBox(expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -94,12 +91,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
                    It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsIn<String>("Details", "Delete"))).Returns(true);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
-            new WidgetBox(expectedWriter, "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -113,11 +109,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsFormWidgetBoxWithoutButtons()
         {
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            new WidgetBox(expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty).Dispose();
+            StringBuilder expected = new StringBuilder();
+            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox().Dispose();
 
@@ -129,12 +124,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         {
             RoleProviderFactory.SetInstance(null);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
-            new WidgetBox(expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -147,12 +141,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
                 It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Details);
-            new WidgetBox(expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Details);
+            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Details).Dispose();
 
@@ -165,12 +158,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
                    It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsIn<String>("Details", "Delete"))).Returns(true);
 
-            var expected = new StringBuilder();
-            var expectedWriter = new StringWriter(expected);
-            var buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
-            new WidgetBox(expectedWriter, "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
+            StringBuilder expected = new StringBuilder();
+            String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
+            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
-            var actual = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -185,7 +177,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         private String FormTitleButtons(HtmlHelper html, params LinkAction[] actions)
         {
             String buttons = String.Empty;
-            foreach (var action in actions)
+            foreach (LinkAction action in actions)
             {
                 TagBuilder icon = new TagBuilder("i");
                 switch (action)

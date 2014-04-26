@@ -3,8 +3,8 @@ using NUnit.Framework;
 using System.Web.Mvc;
 using Template.Components.Services;
 using Template.Controllers.Account;
+using Template.Objects;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Account
 {
@@ -29,7 +29,7 @@ namespace Template.Tests.Unit.Controllers.Account
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
-            var result = controller.Login("/") as RedirectResult;
+            RedirectResult result = controller.Login("/") as RedirectResult;
 
             Assert.AreEqual("/", result.Url);
         }
@@ -49,7 +49,7 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Login_IfCanNotLoginReturnsView()
         {
-            var account = ObjectFactory.CreateAccountView();
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(false);
 
             Assert.IsNotNull(controller.Login(account, null) as ViewResult);
@@ -58,7 +58,7 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Login_CallsLogin()
         {
-            var account = ObjectFactory.CreateAccountView();
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             controller.Login(account, null);
 
@@ -68,9 +68,9 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            var account = ObjectFactory.CreateAccountView();
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
-            var result = controller.Login(account, "/") as RedirectResult;
+            RedirectResult result = controller.Login(account, "/") as RedirectResult;
 
             Assert.IsNotNull("/", result.Url);
         }
@@ -90,7 +90,7 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Logout_RedirectsToLogin()
         {
-            var result = controller.Logout() as RedirectToRouteResult;
+            RedirectToRouteResult result = controller.Logout() as RedirectToRouteResult;
 
             Assert.AreEqual("Login", result.RouteValues["action"]);
         }

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using Template.Components.Datalists;
 using Template.Controllers.Datalist;
 using Template.Objects;
-using Tests.Helpers;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Datalists
 {
@@ -51,7 +51,7 @@ namespace Template.Tests.Unit.Controllers.Datalists
         [Test]
         public void GetData_SetsAdditionalFilters()
         {
-            var additionalFilters = new Dictionary<String, Object>() { { "Key", "Value" } };
+            Dictionary<String, Object> additionalFilters = new Dictionary<String, Object>() { { "Key", "Value" } };
             controller.GetData(datalist, filter, additionalFilters);
 
             Assert.AreEqual(additionalFilters, filter.AdditionalFilters);
@@ -68,10 +68,10 @@ namespace Template.Tests.Unit.Controllers.Datalists
         [Test]
         public void GetData_ReturnsPublicJsonData()
         {
-            var expectedData = new DatalistData();
+            DatalistData expectedData = new DatalistData();
             datalistMock.Setup(mock => mock.GetData()).Returns(expectedData);
-            var jsonResult = controller.GetData(datalist, filter);
-            var actualData = jsonResult.Data;
+            JsonResult jsonResult = controller.GetData(datalist, filter);
+            Object actualData = jsonResult.Data;
 
             Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
             Assert.AreEqual(expectedData, actualData);
@@ -84,9 +84,9 @@ namespace Template.Tests.Unit.Controllers.Datalists
         [Test]
         public void Roles_CallsGetDataWithParameters()
         {
-            var expectedResult = new JsonResult();
+            JsonResult expectedResult = new JsonResult();
             controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(expectedResult);
-            var actualResult = controller.Role(filter);
+            JsonResult actualResult = controller.Role(filter);
 
             controllerMock.Verify(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null), Times.Once());
             Assert.AreEqual(expectedResult, actualResult);

@@ -5,8 +5,7 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
-using Template.Tests.Objects;
-using Tests.Helpers;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers
 {
@@ -21,9 +20,9 @@ namespace Template.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            var httpContextMock = new HttpMock();
+            HttpMock httpContextMock = new HttpMock();
             controllerMock = new Mock<BaseControllerStub>() { CallBase = true };
-            var requestContext = httpContextMock.HttpContext.Request.RequestContext;
+            RequestContext requestContext = httpContextMock.HttpContext.Request.RequestContext;
 
             controllerMock.Object.Url = new UrlHelper(requestContext);
             controllerMock.Object.ControllerContext = new ControllerContext();
@@ -82,8 +81,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToLocal()
         {
-            var result = controller.BaseRedirectToLocal("/");
-            var redirectResult = result as RedirectResult;
+            ActionResult result = controller.BaseRedirectToLocal("/");
+            RedirectResult redirectResult = result as RedirectResult;
 
             Assert.AreEqual(typeof(RedirectResult), result.GetType());
             Assert.AreEqual("/", redirectResult.Url);
@@ -92,8 +91,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToDefault()
         {
-            var expected = controller.BaseRedirectToDefault().RouteValues;
-            var actual = (controller.BaseRedirectToLocal("http://www.foo.com") as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary expected = controller.BaseRedirectToDefault().RouteValues;
+            RouteValueDictionary actual = (controller.BaseRedirectToLocal("http://www.foo.com") as RedirectToRouteResult).RouteValues;
 
             controllerMock.Protected().Verify("RedirectToDefault", Times.Once());
             Assert.AreEqual(expected["controller"], actual["controller"]);
@@ -110,7 +109,7 @@ namespace Template.Tests.Unit.Controllers
         public void RedirectToDefault_RedirectsToDefault()
         {
             controller.RouteData.Values["language"] = "lt-LT";
-            var actual = controller.BaseRedirectToDefault().RouteValues;
+            RouteValueDictionary actual = controller.BaseRedirectToDefault().RouteValues;
 
             Assert.AreEqual(String.Empty, actual["controller"]);
             Assert.AreEqual(String.Empty, actual["action"]);
@@ -126,7 +125,7 @@ namespace Template.Tests.Unit.Controllers
         public void RedirectsToUnauthorized_RedirectsToUnauthorized()
         {
             controller.RouteData.Values["language"] = "lt-LT";
-            var actual = controller.BaseRedirectToUnauthorized().RouteValues;
+            RouteValueDictionary actual = controller.BaseRedirectToUnauthorized().RouteValues;
 
             Assert.AreEqual("lt-LT", actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
@@ -141,8 +140,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToRedirectToUnauthorized()
         {
-            var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
             filterContext.RouteData.Values["controller"] = "CO";
             filterContext.RouteData.Values["language"] = "LT";
             filterContext.RouteData.Values["action"] = "AC";
@@ -152,8 +151,8 @@ namespace Template.Tests.Unit.Controllers
             controller.BaseRoleProvider = roleProviderMock.Object;
             controller.BaseOnAuthorization(filterContext);
 
-            var expected = controller.BaseRedirectToUnauthorized().RouteValues;
-            var actual = (filterContext.Result as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary expected = controller.BaseRedirectToUnauthorized().RouteValues;
+            RouteValueDictionary actual = (filterContext.Result as RedirectToRouteResult).RouteValues;
 
             Assert.AreEqual(expected["controller"], actual["controller"]);
             Assert.AreEqual(expected["language"], actual["language"]);
@@ -164,8 +163,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_OnAuthorizedSetsResultToNull()
         {
-            var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
             filterContext.RouteData.Values["controller"] = "CO";
             filterContext.RouteData.Values["action"] = "AC";
             filterContext.RouteData.Values["area"] = "AR";
@@ -190,8 +189,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void IsAuthorizedFor_ReturnsRoleProviderResult()
         {
-            var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
 
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
             controller.BaseRoleProvider = roleProviderMock.Object;
@@ -215,8 +214,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void IsAuthorizedFor_Overload_ReturnsRoleProviderResult()
         {
-            var actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            var filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, actionDescriptorMock.Object);
 
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
             controller.BaseRoleProvider = roleProviderMock.Object;

@@ -49,7 +49,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanCreate_CanNotCreateWithAlreadyTakenUsername()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Username = account.Username.ToLower();
             userView.Id += "1";
 
@@ -60,7 +60,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanCreate_CanNotCreateIfPasswordIsTooShort()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Password = "AaaAaa1";
 
             Assert.IsFalse(service.CanCreate(userView));
@@ -70,7 +70,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanCreate_CanNotCreateIfPasswordDoesNotContainUpperLetter()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Password = "aaaaaaaaaaaa1";
 
             Assert.IsFalse(service.CanCreate(userView));
@@ -80,7 +80,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanCreate_CanNotCreateIfPasswordDoesNotContainLowerLetter()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Password = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanCreate(userView));
@@ -90,7 +90,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanCreate_CanNotCreateIfPasswordDoesNotContainADigit()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Password = "AaAaAaAaAaAa";
 
             Assert.IsFalse(service.CanCreate(userView));
@@ -118,7 +118,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
-            var userView = ObjectFactory.CreateUserView();
+            UserView userView = ObjectFactory.CreateUserView();
             userView.Username = account.Username.ToLower();
             userView.Id += "1";
 
@@ -141,14 +141,14 @@ namespace Template.Tests.Unit.Components.Services
         {
             TearDownData();
 
-            var expected = ObjectFactory.CreateUserView();
-            var role = ObjectFactory.CreateRole();
+            UserView expected = ObjectFactory.CreateUserView();
+            Role role = ObjectFactory.CreateRole();
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
             service.Create(expected);
 
-            var actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().Find(expected.Id);
 
             Assert.AreEqual(expected.Id, actual.PersonId);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -160,15 +160,15 @@ namespace Template.Tests.Unit.Components.Services
         {
             TearDownData();
 
-            var expected = ObjectFactory.CreateUserView();
-            var role = ObjectFactory.CreateRole();
+            UserView expected = ObjectFactory.CreateUserView();
+            Role role = ObjectFactory.CreateRole();
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
             expected.Person.RoleId = role.Id;
             service.Create(expected);
 
-            var actual = context.Set<Person>().Find(expected.Id);
+            Person actual = context.Set<Person>().Find(expected.Id);
 
             Assert.AreEqual(expected.Person.DateOfBirth, actual.DateOfBirth);
             Assert.AreEqual(expected.Person.FirstName, actual.FirstName);
@@ -183,12 +183,12 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsAccount()
         {
-            var expected = service.GetView(account.PersonId);
+            UserView expected = service.GetView(account.PersonId);
             expected.Username += "1";
             service.Edit(expected);
 
             context = new TestingContext();
-            var actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().Find(expected.Id);
 
             Assert.AreEqual(expected.Id, actual.PersonId);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -197,7 +197,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsPerson()
         {
-            var userView = service.GetView(account.PersonId);
+            UserView userView = service.GetView(account.PersonId);
             userView.Person.DateOfBirth = null;
             userView.Person.FirstName += "1";
             userView.Person.LastName += "1";
@@ -205,8 +205,8 @@ namespace Template.Tests.Unit.Components.Services
             service.Edit(userView);
 
             context = new TestingContext();
-            var expected = userView.Person;
-            var actual = context.Set<Person>().Find(userView.Id);
+            PersonView expected = userView.Person;
+            Person actual = context.Set<Person>().Find(userView.Id);
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
             Assert.AreEqual(expected.FirstName, actual.FirstName);
@@ -259,10 +259,10 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
             context.SaveChanges();

@@ -7,7 +7,6 @@ using Template.Components.Services;
 using Template.Controllers.Profile;
 using Template.Objects;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Profile
 {
@@ -39,7 +38,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_ReturnsCurrentProfileView()
         {
-            var actual = (controller.Edit() as ViewResult).Model as ProfileView;
+            ProfileView actual = (controller.Edit() as ViewResult).Model as ProfileView;
 
             serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
             Assert.AreEqual(profile, actual);
@@ -87,7 +86,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         [Test]
         public void Delete_ReturnsCurrentProfileView()
         {
-            var actual = (controller.Delete() as ViewResult).Model as ProfileView;
+            ProfileView actual = (controller.Delete() as ViewResult).Model as ProfileView;
 
             serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
             Assert.AreEqual(profile, actual);
@@ -118,7 +117,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         public void DeleteConfirmed_RedirectsToAccountLogout()
         {
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
-            var result = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
+            RedirectToRouteResult result = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", result.RouteValues["action"]);
             Assert.AreEqual("Account", result.RouteValues["controller"]);

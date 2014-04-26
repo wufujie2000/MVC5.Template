@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Template.Components.Services;
@@ -48,7 +49,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void GetView_CallsSeedPrivilegesTree()
         {
-            var roleView = service.GetView(role.Id);
+            RoleView roleView = service.GetView(role.Id);
 
             serviceMock.Verify(mock => mock.SeedPrivilegesTree(roleView), Times.Once());
         }
@@ -63,11 +64,11 @@ namespace Template.Tests.Unit.Components.Services
             context.Set<Role>().Remove(role);
             context.SaveChanges();
 
-            var expected = ObjectFactory.CreateRoleView();
+            RoleView expected = ObjectFactory.CreateRoleView();
             service.Create(expected);
 
             context = new TestingContext();
-            var actual = context.Set<Role>().Find(expected.Id);
+            Role actual = context.Set<Role>().Find(expected.Id);
 
             Assert.AreEqual(expected.Name, actual.Name);
         }
@@ -77,14 +78,14 @@ namespace Template.Tests.Unit.Components.Services
         {
             context.Set<Role>().Remove(role);
             context.SaveChanges();
-            
-            var roleView = ObjectFactory.CreateRoleView();
+
+            RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.PrivilegesTree.SelectedIds = GetExpectedTree().SelectedIds;
             service.Create(roleView);
 
             context = new TestingContext();
-            var expected = roleView.PrivilegesTree.SelectedIds;
-            var actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(r => r.PrivilegeId);
+            IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds;
+            IEnumerable<String> actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(r => r.PrivilegeId);
             
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -96,12 +97,12 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsRole()
         {
-            var expected = service.GetView(role.Id);
+            RoleView expected = service.GetView(role.Id);
             expected.Name = "EditedName"; 
             service.Edit(expected);
 
             context = new TestingContext();
-            var actual = context.Set<Role>().Find(expected.Id);
+            Role actual = context.Set<Role>().Find(expected.Id);
 
             Assert.AreEqual(expected.Name, actual.Name);
         }
@@ -109,13 +110,13 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsRolePrivileges()
         {
-            var roleView = service.GetView(role.Id);
+            RoleView roleView = service.GetView(role.Id);
             roleView.PrivilegesTree.SelectedIds = roleView.PrivilegesTree.SelectedIds.Take(1).ToList();
             service.Edit(roleView);
 
             context = new TestingContext();
-            var expected = roleView.PrivilegesTree.SelectedIds;
-            var actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(rolePriv => rolePriv.PrivilegeId).ToList();
+            IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds;
+            IEnumerable<String> actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(rolePriv => rolePriv.PrivilegeId).ToList();
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -155,8 +156,8 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsSelectedIds()
         {
-            var expected = GetExpectedTree().SelectedIds;
-            var actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
+            IEnumerable<String> expected = GetExpectedTree().SelectedIds;
+            IEnumerable<String> actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -164,10 +165,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsFirstLevelNodes()
         {
-            var roleView = service.GetView(role.Id);
+            RoleView roleView = service.GetView(role.Id);
 
-            var expected = GetExpectedTree().Nodes.GetEnumerator();
-            var actual = roleView.PrivilegesTree.Nodes.GetEnumerator();
+            IEnumerator<TreeNode> expected = GetExpectedTree().Nodes.GetEnumerator();
+            IEnumerator<TreeNode> actual = roleView.PrivilegesTree.Nodes.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {
@@ -180,10 +181,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsSecondLevelNodes()
         {
-            var roleView = service.GetView(role.Id);
+            RoleView roleView = service.GetView(role.Id);
 
-            var expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).GetEnumerator();
-            var actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<TreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<TreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {
@@ -196,10 +197,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsThirdLevelNodes()
         {
-            var roleView = service.GetView(role.Id);
+            RoleView roleView = service.GetView(role.Id);
 
-            var expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
-            var actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<TreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<TreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {
@@ -212,8 +213,8 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsBranchesWithoutId()
         {
-            var rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
-            var branches = GetAllBranchNodes(rootNode);
+            TreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            IEnumerable<TreeNode> branches = GetAllBranchNodes(rootNode);
 
             Assert.IsFalse(branches.Any(branch => branch.Id != null));
         }
@@ -221,8 +222,8 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void SeedPrivilegesTree_SeedsLeafsWithId()
         {
-            var rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
-            var leafs = GetAllLeafNodes(rootNode);
+            TreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            IEnumerable<TreeNode> leafs = GetAllLeafNodes(rootNode);
 
             Assert.IsFalse(leafs.Any(leaf => leaf.Id == null));
         }
@@ -233,7 +234,7 @@ namespace Template.Tests.Unit.Components.Services
 
         private void SetUpData()
         {
-            var account = ObjectFactory.CreateAccount();
+            Account account = ObjectFactory.CreateAccount();
             account.Person = ObjectFactory.CreatePerson();
             account.PersonId = account.Person.Id;
 
@@ -243,14 +244,14 @@ namespace Template.Tests.Unit.Components.Services
 
             role.RolePrivileges = new List<RolePrivilege>();
 
-            var privNumber = 1;
-            var controllers = new[] { "Users", "Roles" };
-            var actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
+            Int32 privNumber = 1;
+            IEnumerable<String> controllers = new[] { "Users", "Roles" };
+            IEnumerable<String> actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
-            foreach (var controller in controllers)
-                foreach (var action in actions)
+            foreach (String controller in controllers)
+                foreach (String action in actions)
                 {
-                    var rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
                     rolePrivilege.Privilege = new Privilege() { Area = "Administration", Controller = controller, Action = action };
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;
                     rolePrivilege.PrivilegeId = rolePrivilege.Id;
@@ -265,16 +266,16 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
-            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Privilege privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Privilege>().Remove(privilege);
 
-            foreach (var language in context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Language language in context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Language>().Remove(language);
 
             context.SaveChanges();
@@ -282,8 +283,8 @@ namespace Template.Tests.Unit.Components.Services
 
         private Tree GetExpectedTree()
         {
-            var expectedTree = new Tree();
-            var rootNode = new TreeNode();
+            Tree expectedTree = new Tree();
+            TreeNode rootNode = new TreeNode();
             expectedTree.Nodes.Add(rootNode);
             rootNode.Name = Template.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
@@ -317,8 +318,8 @@ namespace Template.Tests.Unit.Components.Services
         }
         private List<TreeNode> GetAllBranchNodes(TreeNode root)
         {
-            var branches = root.Nodes.Where(node => node.Nodes.Count > 0);
-            foreach (var branch in branches.ToList())
+            IEnumerable<TreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0);
+            foreach (TreeNode branch in branches.ToList())
                 branches = branches.Union(GetAllBranchNodes(branch));
 
             if (root.Nodes.Count > 0)
@@ -328,9 +329,9 @@ namespace Template.Tests.Unit.Components.Services
         }
         private List<TreeNode> GetAllLeafNodes(TreeNode root)
         {
-            var leafs = root.Nodes.Where(node => node.Nodes.Count == 0);
-            var branches = root.Nodes.Where(node => node.Nodes.Count > 0);
-            foreach (var branch in branches.ToList())
+            IEnumerable<TreeNode> leafs = root.Nodes.Where(node => node.Nodes.Count == 0);
+            IEnumerable<TreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0);
+            foreach (TreeNode branch in branches.ToList())
                 leafs = leafs.Union(GetAllLeafNodes(branch));
 
             if (root.Nodes.Count == 0)

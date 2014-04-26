@@ -45,9 +45,9 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void ToModel_ConvertsViewToModel()
         {
-            var view = ObjectFactory.CreateUserView();
-            var expected = Mapper.Map<UserView, Account>(view);
-            var actual = unitOfWork.ToModel<UserView, Account>(view);
+            UserView view = ObjectFactory.CreateUserView();
+            Account expected = Mapper.Map<UserView, Account>(view);
+            Account actual = unitOfWork.ToModel<UserView, Account>(view);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -59,12 +59,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void ToView_ConvertsModelToView()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            var expected = Mapper.Map<Person, PersonView>(model);
-            var actual = unitOfWork.ToView<Person, PersonView>(model);
+            PersonView expected = Mapper.Map<Person, PersonView>(model);
+            PersonView actual = unitOfWork.ToView<Person, PersonView>(model);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -76,7 +76,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             context.Set<Person>().Add(model);
 
             unitOfWork.Rollback();
@@ -92,11 +92,11 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             unitOfWork.Repository<Person>().Insert(expected);
             unitOfWork.Commit();
 
-            var actual = unitOfWork.Repository<Person>().GetById(expected.Id);
+            Person actual = unitOfWork.Repository<Person>().GetById(expected.Id);
             unitOfWork.Repository<Person>().Delete(expected.Id);
             unitOfWork.Commit();
 
@@ -106,8 +106,8 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Commit_LogsEntities()
         {
-            var loggerMock = new Mock<IEntityLogger>();
-            var logger = loggerMock.Object;
+            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
+            IEntityLogger logger = loggerMock.Object;
 
             unitOfWork = new UnitOfWork(context, logger);
             unitOfWork.Commit();
@@ -120,8 +120,8 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Commit_DoesNotSaveLogsOnFailedCommit()
         {
-            var loggerMock = new Mock<IEntityLogger>();
-            var logger = loggerMock.Object;
+            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
+            IEntityLogger logger = loggerMock.Object;
 
             unitOfWork = new UnitOfWork(context, logger);
             unitOfWork.Repository<Account>().Insert(new Account());

@@ -16,9 +16,9 @@ namespace Template.Tests.Unit.Data.Logging
         [SetUp]
         public void SetUp()
         {
-            using (var context = new TestingContext())
+            using (TestingContext context = new TestingContext())
             {
-                var model = new TestModel();
+                TestModel model = new TestModel();
                 context.Set<TestModel>().Add(model);
                 context.Entry(model).State = EntityState.Modified;
                 entry = context.Entry(model).Property(prop => prop.Text);
@@ -75,8 +75,8 @@ namespace Template.Tests.Unit.Data.Logging
             entry.OriginalValue = "Original";
             entry.IsModified = true;
 
-            var expected = String.Format("{0}: {1} => {2}", entry.Name, entry.OriginalValue, "{null}");
-            var actual = new LoggableEntryProperty(entry).ToString();
+            String expected = String.Format("{0}: {1} => {2}", entry.Name, entry.OriginalValue, "{null}");
+            String actual = new LoggableEntryProperty(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -87,8 +87,8 @@ namespace Template.Tests.Unit.Data.Logging
             entry.CurrentValue = "Current";
             entry.IsModified = true;
 
-            var expected = String.Format("{0}: {1} => {2}", entry.Name, "{null}", entry.CurrentValue);
-            var actual = new LoggableEntryProperty(entry).ToString();
+            String expected = String.Format("{0}: {1} => {2}", entry.Name, "{null}", entry.CurrentValue);
+            String actual = new LoggableEntryProperty(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -99,8 +99,8 @@ namespace Template.Tests.Unit.Data.Logging
             entry.OriginalValue = "Original";
             entry.IsModified = false;
 
-            var expected = String.Format("{0}: {1}", entry.Name, entry.OriginalValue);
-            var actual = new LoggableEntryProperty(entry).ToString();
+            String expected = String.Format("{0}: {1}", entry.Name, entry.OriginalValue);
+            String actual = new LoggableEntryProperty(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -111,8 +111,8 @@ namespace Template.Tests.Unit.Data.Logging
             entry.CurrentValue = "Current";
             entry.IsModified = false;
 
-            var expected = String.Format("{0}: {1}", entry.Name, "{null}");
-            var actual = new LoggableEntryProperty(entry).ToString();
+            String expected = String.Format("{0}: {1}", entry.Name, "{null}");
+            String actual = new LoggableEntryProperty(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }

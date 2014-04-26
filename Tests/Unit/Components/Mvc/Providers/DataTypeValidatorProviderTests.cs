@@ -3,21 +3,18 @@ using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Mvc.Providers;
 using Template.Components.Mvc.Validators;
-using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Mvc.Providers
 {
     [TestFixture]
     public class DataTypeValidatorProviderTests
     {
-        private ControllerContext context;
         private DataTypeValidatorProvider provider;
 
         [SetUp]
         public void SetUp()
         {
             provider = new DataTypeValidatorProvider();
-            context = new ControllerContext();
         }
 
         #region Method: GetValidators(ModelMetadata metadata, ControllerContext context)
@@ -25,25 +22,25 @@ namespace Template.Tests.Unit.Components.Mvc.Providers
         [Test]
         public void GetValidators_GetsNoValidators()
         {
-            var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Id");
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Id");
 
-            CollectionAssert.IsEmpty(provider.GetValidators(metadata, context));
+            CollectionAssert.IsEmpty(provider.GetValidators(metadata, new ControllerContext()));
         }
 
         [Test]
         public void GetValidators_GetsDateValidator()
         {
-            var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Date");
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Date");
 
-            CollectionAssert.AreEqual(new[] { typeof(DateValidator) }, provider.GetValidators(metadata, context).Select(validator => validator.GetType()));
+            CollectionAssert.AreEqual(new[] { typeof(DateValidator) }, provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType()));
         }
 
         [Test]
         public void GetValidators_GetsNumericValidator()
         {
-            var metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderTestModel), "Numeric");
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Numeric");
 
-            CollectionAssert.AreEqual(new[] { typeof(NumberValidator) }, provider.GetValidators(metadata, context).Select(validator => validator.GetType()));
+            CollectionAssert.AreEqual(new[] { typeof(NumberValidator) }, provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType()));
         }
 
         #endregion

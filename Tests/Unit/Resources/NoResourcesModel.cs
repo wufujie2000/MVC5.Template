@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Objects.Resources
+namespace Template.Tests.Resources.Tests
 {
     public class NoResourcesModel
     {

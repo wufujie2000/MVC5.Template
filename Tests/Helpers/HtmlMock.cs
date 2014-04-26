@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Tests.Helpers;
 
 namespace Template.Tests.Helpers
 {
@@ -23,16 +22,16 @@ namespace Template.Tests.Helpers
         public HtmlMock()
         {
             HttpMock = new HttpMock();
-            var controllerContextMock = new Mock<ControllerContext>(
+            Mock<ControllerContext> controllerContextMock = new Mock<ControllerContext>(
                 new Mock<RequestContext>(HttpMock.HttpContextBase, new RouteData()) { CallBase = true }.Object,
                 new Mock<ControllerBase>() { CallBase = true }.Object);
 
-            var tempDataDictionary = new TempDataDictionary();
-            var viewContextMock = new Mock<ViewContext>(controllerContextMock.Object, new Mock<IView>().Object,
+            TempDataDictionary tempDataDictionary = new TempDataDictionary();
+            Mock<ViewContext> viewContextMock = new Mock<ViewContext>(controllerContextMock.Object, new Mock<IView>().Object,
                 new ViewDataDictionary(), tempDataDictionary, new StringWriter()) { CallBase = true };
             viewContextMock.Object.ClientValidationEnabled = true;
 
-            var viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
+            Mock<IViewDataContainer> viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
             viewDataContainerMock.Setup(mock => mock.ViewData).Returns(viewContextMock.Object.ViewData);
 
             Html = new HtmlHelper(viewContextMock.Object, viewDataContainerMock.Object, RouteTable.Routes);
@@ -52,7 +51,7 @@ namespace Template.Tests.Helpers
         }
         public HtmlMock(T model)
         {
-            var html = new HtmlMock().Html;
+            HtmlHelper html = new HtmlMock().Html;
 
             Html = new HtmlHelper<T>(html.ViewContext, html.ViewDataContainer, html.RouteCollection);
             Html.ViewData.Model = model;

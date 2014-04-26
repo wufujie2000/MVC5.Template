@@ -1,6 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
@@ -35,12 +36,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void GetById_GetsModelById()
         {
-            var person = ObjectFactory.CreatePerson();
+            Person person = ObjectFactory.CreatePerson();
             context.Set<Person>().Add(person);
             context.SaveChanges();
 
-            var expected = context.Set<Person>().Find(person.Id);
-            var actual = repository.GetById(person.Id);
+            Person expected = context.Set<Person>().Find(person.Id);
+            Person actual = repository.GetById(person.Id);
             context.Set<Person>().Remove(person);
             context.SaveChanges();
 
@@ -70,12 +71,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_ProjectsContextsSet()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             context.Set<Person>().Add(model);
             context.SaveChanges();
 
-            var expected = context.Set<Person>().Project().To<PersonView>().Select(person => person.Id).ToList();
-            var actual = repository.Query<PersonView>().Select(person => person.Id).ToList();
+            IEnumerable<String> expected = context.Set<Person>().Project().To<PersonView>().Select(person => person.Id).ToList();
+            IEnumerable<String> actual = repository.Query<PersonView>().Select(person => person.Id).ToList();
 
             context.Set<Person>().Remove(model);
             context.SaveChanges();
@@ -90,14 +91,14 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_FiltersByPredicate()
         {
-            var model1 = ObjectFactory.CreatePerson(1);
-            var model2 = ObjectFactory.CreatePerson(2);
+            Person model1 = ObjectFactory.CreatePerson(1);
+            Person model2 = ObjectFactory.CreatePerson(2);
             context.Set<Person>().Add(model1);
             context.Set<Person>().Add(model2);
             context.SaveChanges();
 
-            var expected = context.Set<Person>().Where(person => person.Id == model1.Id).ToList();
-            var actual = repository.Query().Where(person => person.Id == model1.Id).ToList();
+            IEnumerable<Person> expected = context.Set<Person>().Where(person => person.Id == model1.Id).ToList();
+            IEnumerable<Person> actual = repository.Query().Where(person => person.Id == model1.Id).ToList();
 
             context.Set<Person>().Remove(model1);
             context.Set<Person>().Remove(model2);
@@ -113,14 +114,14 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_FiltersProjectedViewsByPredicate()
         {
-            var person1 = ObjectFactory.CreatePerson(1);
-            var person2 = ObjectFactory.CreatePerson(2);
+            Person person1 = ObjectFactory.CreatePerson(1);
+            Person person2 = ObjectFactory.CreatePerson(2);
             context.Set<Person>().Add(person1);
             context.Set<Person>().Add(person2);
             context.SaveChanges();
-            
-            var expected = context.Set<Person>().Where(person => person.Id == person1.Id).Project().To<PersonView>().ToList();
-            var actual = repository.Query<PersonView>(person => person.Id == person1.Id).ToList();
+
+            IEnumerable<PersonView> expected = context.Set<Person>().Where(person => person.Id == person1.Id).Project().To<PersonView>().ToList();
+            IEnumerable<PersonView> actual = repository.Query<PersonView>(person => person.Id == person1.Id).ToList();
             
             context.Set<Person>().Remove(person1);
             context.Set<Person>().Remove(person2);
@@ -136,11 +137,11 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Insert_InsertsModel()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             repository.Insert(expected);
             context.SaveChanges();
 
-            var actual = context.Set<Person>().Find(expected.Id);
+            Person actual = context.Set<Person>().Find(expected.Id);
             context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
@@ -154,7 +155,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_UpdatesAttachedModel()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             context.Set<Person>().Add(expected);
             context.SaveChanges();
 
@@ -162,7 +163,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            var actual = context.Set<Person>().Find(expected.Id);
+            Person actual = context.Set<Person>().Find(expected.Id);
             context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
@@ -172,7 +173,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_UpdatesNotAttachedModel()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             context.Set<Person>().Add(expected);
             context.SaveChanges();
 
@@ -182,7 +183,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            var actual = context.Set<Person>().Find(expected.Id);
+            Person actual = context.Set<Person>().Find(expected.Id);
             context.Set<Person>().Remove(expected);
             context.SaveChanges();
 
@@ -192,7 +193,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_DoesNotModifyEntityDate()
         {
-            var person = ObjectFactory.CreatePerson();
+            Person person = ObjectFactory.CreatePerson();
             repository.Update(person);
 
             Assert.IsFalse(context.Entry(person).Property(prop => prop.EntityDate).IsModified);
@@ -205,14 +206,14 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Delete_DeletesModelById()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             repository.Insert(expected);
             context.SaveChanges();
 
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            var actual = context.Set<Person>().Find(expected.Id);
+            Person actual = context.Set<Person>().Find(expected.Id);
             if (actual != null)
             {
                 context.Set<Person>().Remove(expected);

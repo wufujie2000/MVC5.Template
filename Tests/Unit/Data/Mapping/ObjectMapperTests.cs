@@ -20,9 +20,9 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsPersonToPersonView()
         {
-            var expected = ObjectFactory.CreatePerson();
+            Person expected = ObjectFactory.CreatePerson();
             expected.Role = ObjectFactory.CreateRole();
-            var actual = Mapper.Map<Person, PersonView>(expected);
+            PersonView actual = Mapper.Map<Person, PersonView>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
@@ -35,8 +35,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsPersonViewToPerson()
         {
-            var expected = ObjectFactory.CreatePersonView();
-            var actual = Mapper.Map<PersonView, Person>(expected);
+            PersonView expected = ObjectFactory.CreatePersonView();
+            Person actual = Mapper.Map<PersonView, Person>(expected);
 
             Assert.IsNull(actual.Role);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -49,8 +49,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsAccountToAccountView()
         {
-            var expected = ObjectFactory.CreateAccount();
-            var actual = Mapper.Map<Account, AccountView>(expected);
+            Account expected = ObjectFactory.CreateAccount();
+            AccountView actual = Mapper.Map<Account, AccountView>(expected);
 
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -60,8 +60,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsAccountViewToAccount()
         {
-            var expected = ObjectFactory.CreateAccountView();
-            var actual = Mapper.Map<AccountView, Account>(expected);
+            AccountView expected = ObjectFactory.CreateAccountView();
+            Account actual = Mapper.Map<AccountView, Account>(expected);
 
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -73,10 +73,10 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsAccountToProfileView()
         {
-            var expected = ObjectFactory.CreateAccount();
+            Account expected = ObjectFactory.CreateAccount();
             expected.Person = ObjectFactory.CreatePerson();
 
-            var actual = Mapper.Map<Account, ProfileView>(expected);
+            ProfileView actual = Mapper.Map<Account, ProfileView>(expected);
 
             Assert.AreEqual(expected.Person.DateOfBirth, actual.Person.DateOfBirth);
             Assert.AreEqual(expected.Person.FirstName, actual.Person.FirstName);
@@ -90,8 +90,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsProfileViewToAccount()
         {
-            var expected = ObjectFactory.CreateAccountView();
-            var actual = Mapper.Map<AccountView, Account>(expected);
+            AccountView expected = ObjectFactory.CreateAccountView();
+            Account actual = Mapper.Map<AccountView, Account>(expected);
 
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -103,14 +103,14 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsAccountToUserView()
         {
-            var expected = ObjectFactory.CreateAccount();
+            Account expected = ObjectFactory.CreateAccount();
             expected.Person = ObjectFactory.CreatePerson();
             expected.PersonId = expected.Person.Id;
 
             expected.Person.Role = ObjectFactory.CreateRole();
             expected.Person.RoleId = expected.Person.Role.Id;
 
-            var actual = Mapper.Map<Account, UserView>(expected);
+            UserView actual = Mapper.Map<Account, UserView>(expected);
 
             Assert.AreEqual(expected.Person.DateOfBirth, actual.Person.DateOfBirth);
             Assert.AreEqual(expected.Person.FirstName, actual.Person.FirstName);
@@ -126,8 +126,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapUsers_MapsUserViewToAccount()
         {
-            var expected = ObjectFactory.CreateUserView();
-            var actual = Mapper.Map<UserView, Account>(expected);
+            UserView expected = ObjectFactory.CreateUserView();
+            Account actual = Mapper.Map<UserView, Account>(expected);
 
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Id, actual.PersonId);
@@ -143,8 +143,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRoleToRoleView()
         {
-            var expected = ObjectFactory.CreateRole();
-            var actual = Mapper.Map<Role, RoleView>(expected);
+            Role expected = ObjectFactory.CreateRole();
+            RoleView actual = Mapper.Map<Role, RoleView>(expected);
 
             Assert.IsNotNull(actual.PrivilegesTree);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -154,8 +154,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRoleViewToRole()
         {
-            var expected = ObjectFactory.CreateRoleView();
-            var actual = Mapper.Map<RoleView, Role>(expected);
+            RoleView expected = ObjectFactory.CreateRoleView();
+            Role actual = Mapper.Map<RoleView, Role>(expected);
 
             Assert.IsNull(actual.RolePrivileges);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -165,12 +165,12 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRolePrivilegeToRolePrivilegeView()
         {
-            var expected = ObjectFactory.CreateRolePrivilege();
+            RolePrivilege expected = ObjectFactory.CreateRolePrivilege();
             expected.Privilege = ObjectFactory.CreatePrivilege();
             expected.PrivilegeId = expected.Privilege.Id;
             expected.RoleId = expected.Id;
 
-            var actual = Mapper.Map<RolePrivilege, RolePrivilegeView>(expected);
+            RolePrivilegeView actual = Mapper.Map<RolePrivilege, RolePrivilegeView>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
@@ -184,11 +184,11 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRolePrivilegeViewToRolePrivilege()
         {
-            var expected = ObjectFactory.CreateRolePrivilegeView();
+            RolePrivilegeView expected = ObjectFactory.CreateRolePrivilegeView();
             expected.Privilege = ObjectFactory.CreatePrivilegeView();
             expected.PrivilegeId = expected.Privilege.Id;
 
-            var actual = Mapper.Map<RolePrivilegeView, RolePrivilege>(expected);
+            RolePrivilege actual = Mapper.Map<RolePrivilegeView, RolePrivilege>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
@@ -202,8 +202,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsPrivilegeToPrivilegeView()
         {
-            var expected = ObjectFactory.CreatePrivilege();
-            var actual = Mapper.Map<Privilege, PrivilegeView>(expected);
+            Privilege expected = ObjectFactory.CreatePrivilege();
+            PrivilegeView actual = Mapper.Map<Privilege, PrivilegeView>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Area, actual.Area);
@@ -214,8 +214,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsPrivilegeViewToPrivilege()
         {
-            var expected = ObjectFactory.CreatePrivilegeView();
-            var actual = Mapper.Map<PrivilegeView, Privilege>(expected);
+            PrivilegeView expected = ObjectFactory.CreatePrivilegeView();
+            Privilege actual = Mapper.Map<PrivilegeView, Privilege>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Area, actual.Area);
@@ -230,8 +230,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapSystem_MapsLanguageTolanguageView()
         {
-            var expected = ObjectFactory.CreateLanguage();
-            var actual = Mapper.Map<Language, LanguageView>(expected);
+            Language expected = ObjectFactory.CreateLanguage();
+            LanguageView actual = Mapper.Map<Language, LanguageView>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -241,8 +241,8 @@ namespace Template.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsLanguageViewToLanguage()
         {
-            var expected = ObjectFactory.CreateLanguageView();
-            var actual = Mapper.Map<LanguageView, Language>(expected);
+            LanguageView expected = ObjectFactory.CreateLanguageView();
+            Language actual = Mapper.Map<LanguageView, Language>(expected);
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);

@@ -10,7 +10,7 @@
 
         public static void SetInstance(IRoleProvider instance)
         {
-            Instance = instance;
+            Instance = instance; // TODO: Remove all null checks on role provider
         }
     }
 }

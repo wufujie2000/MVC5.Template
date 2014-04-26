@@ -1,14 +1,14 @@
 ﻿using Moq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Tests.Helpers;
 
-namespace Tests.Helpers
+namespace Template.Tests.Helpers
 {
     public class HttpMock
     {
@@ -53,16 +53,18 @@ namespace Tests.Helpers
 
         public HttpMock()
         {
-            var request = new HttpRequest(String.Empty, "http://localhost:19174/", String.Empty);
-            var browserMock = new Mock<HttpBrowserCapabilities>() { CallBase = true };
+            HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/", String.Empty);
+            Mock<HttpBrowserCapabilities> browserMock = new Mock<HttpBrowserCapabilities>() { CallBase = true };
             browserMock.SetupGet(mock => mock[It.IsAny<String>()]).Returns("true");
             request.Browser = browserMock.Object;
 
-            var response = new HttpResponse(new StringWriter());
+            HttpResponse response = new HttpResponse(new StringWriter());
             HttpRequestMock = new Mock<HttpRequestWrapper>(request) { CallBase = true };
+            HttpRequestMock.Setup(mock => mock.QueryString).Returns(new NameValueCollection());
+            HttpRequestMock.Object.QueryString.Add("Param1", "Value1");
             HttpContext = new HttpContext(request, response);
 
-            var httpContextBaseMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
+            Mock<HttpContextWrapper> httpContextBaseMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
             httpContextBaseMock.Setup(mock => mock.Response).Returns(new HttpResponseWrapper(response));
             httpContextBaseMock.Setup(mock => mock.Request).Returns(HttpRequestMock.Object);
             httpContextBaseMock.Setup(mock => mock.Session).Returns(new HttpSessionStub());
@@ -71,7 +73,7 @@ namespace Tests.Helpers
             IdentityMock = new Mock<IIdentity>();
             IdentityMock.Setup<String>(mock => mock.Name).Returns(ObjectFactory.TestId);
 
-            var principalMock = new Mock<IPrincipal>();
+            Mock<IPrincipal> principalMock = new Mock<IPrincipal>();
             principalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
 
             httpContextBaseMock.Setup(mock => mock.User).Returns(principalMock.Object);

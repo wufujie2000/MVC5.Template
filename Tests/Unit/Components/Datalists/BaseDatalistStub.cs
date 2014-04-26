@@ -5,7 +5,7 @@ using Template.Components.Datalists;
 using Template.Data.Core;
 using Template.Objects;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Components.Datalists
 {
     public class BaseDatalistStub<TModel, TView> : BaseDatalist<TModel, TView>
         where TModel : BaseModel

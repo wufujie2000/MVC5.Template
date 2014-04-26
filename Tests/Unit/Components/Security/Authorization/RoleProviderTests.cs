@@ -68,7 +68,7 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForGetAction()
         {
-            var account = CreateUserWithPrivilegeFor("Administration", "Users", "Index");
+            Account account = CreateUserWithPrivilegeFor("Administration", "Users", "Index");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Users", "Index"));
         }
@@ -97,17 +97,17 @@ namespace Template.Tests.Unit.Security
 
         private Account CreateUserWithPrivilegeFor(String area, String controller, String action)
         {
-            var account = ObjectFactory.CreateAccount();
+            Account account = ObjectFactory.CreateAccount();
             account.Person = ObjectFactory.CreatePerson();
             account.PersonId = account.Person.Id;
 
-            var role = ObjectFactory.CreateRole();
+            Role role = ObjectFactory.CreateRole();
             account.Person.RoleId = role.Id;
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
-            var rolePrivilege = ObjectFactory.CreateRolePrivilege();
-            var privilege = ObjectFactory.CreatePrivilege();
+            RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
+            Privilege privilege = ObjectFactory.CreatePrivilege();
             rolePrivilege.PrivilegeId = privilege.Id;
             rolePrivilege.Privilege = privilege;
             rolePrivilege.RoleId = role.Id;
@@ -128,13 +128,13 @@ namespace Template.Tests.Unit.Security
         {
             context = new TestingContext();
 
-            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
 
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
-
-            foreach (var privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
+            // TODO: Change Context.Set<T>().Remove to RemoveRange
+            foreach (Privilege privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Privilege>().Remove(privilege);
 
             context.SaveChanges();

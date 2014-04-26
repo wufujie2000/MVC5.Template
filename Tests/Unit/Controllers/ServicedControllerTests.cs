@@ -1,11 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Components.Services;
-using Template.Tests.Objects;
-using Tests.Helpers;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers
 {
@@ -18,7 +19,7 @@ namespace Template.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            var serviceMock = new Mock<IService>();
+            Mock<IService> serviceMock = new Mock<IService>();
             serviceMock.SetupAllProperties();
             service = serviceMock.Object;
 
@@ -38,7 +39,7 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void ServicedController_OnNotNullModelStateSetsExistingModelState()
         {
-            var modelState = new ModelStateDictionary();
+            ModelStateDictionary modelState = new ModelStateDictionary();
             service.ModelState = modelState;
 
             controller = new ServicedControllerStub(service);
@@ -55,8 +56,8 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void ServicedController_OnNotNullAlertMessagesSetsExistingAlertMessages()
         {
-            var modelState = new ModelStateDictionary();
-            var alertMessages = new MessagesContainer(modelState);
+            ModelStateDictionary modelState = new ModelStateDictionary();
+            MessagesContainer alertMessages = new MessagesContainer(modelState);
             service.AlertMessages = alertMessages;
             service.ModelState = modelState;
 
@@ -79,15 +80,15 @@ namespace Template.Tests.Unit.Controllers
         public void OnActionExecuted_MergesMessagesToSession()
         {
             service.AlertMessages.AddError("First");
-            var expected = service.AlertMessages.ToList();
-            var newContainer = new MessagesContainer();
+            List<AlertMessage> expected = service.AlertMessages.ToList();
+            MessagesContainer newContainer = new MessagesContainer();
             newContainer.AddError("Second");
             expected.AddRange(newContainer);
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             service.AlertMessages = newContainer;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            var actual = controller.Session["Messages"];
+            Object actual = controller.Session["Messages"];
 
             Assert.AreEqual(expected, actual);
         }
@@ -96,11 +97,11 @@ namespace Template.Tests.Unit.Controllers
         public void OnActionExecuted_DoesNotMergeSameContainers()
         {
             service.AlertMessages.AddError("First");
-            var expected = service.AlertMessages.ToList();
+            IEnumerable<AlertMessage> expected = service.AlertMessages.ToList();
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            var actual = controller.Session["Messages"];
+            Object actual = controller.Session["Messages"];
 
             Assert.AreEqual(expected, actual);
         }
@@ -108,7 +109,7 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void OnActionExecuted_SetsMessagesToSession()
         {
-            var alertMessages = service.AlertMessages;
+            MessagesContainer alertMessages = service.AlertMessages;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
             Assert.AreEqual(alertMessages, controller.Session["Messages"]);

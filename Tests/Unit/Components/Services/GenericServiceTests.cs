@@ -2,6 +2,8 @@
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Services;
@@ -29,7 +31,7 @@ namespace Template.Tests.Unit.Components.Services
         [TearDown]
         public void TearDown()
         {
-            foreach (var model in context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (TestModel model in context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<TestModel>().Remove(model);
 
             context.SaveChanges();
@@ -96,8 +98,12 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void GetViews_GetsViews()
         {
-            var expected = context.Set<TestModel>().Project().To<TestView>().OrderByDescending(account => account.EntityDate);
-            var actual = service.GetViews();
+            IEnumerable<TestView> actual = service.GetViews();
+            IEnumerable<TestView> expected = context
+                .Set<TestModel>()
+                .Project()
+                .To<TestView>()
+                .OrderByDescending(account => account.EntityDate);
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -109,8 +115,8 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void GetView_GetsViewById()
         {
-            var expected = context.Set<TestModel>().Find("1");
-            var actual = service.GetView("1");
+            TestModel expected = context.Set<TestModel>().Find("1");
+            TestView actual = service.GetView("1");
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Text, actual.Text);
@@ -123,10 +129,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Create_CreatesView()
         {
-            var expected = ObjectFactory.CreateTestView();
+            TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);
 
-            var actual = context.Set<TestModel>().Find(expected.Id);
+            TestModel actual = context.Set<TestModel>().Find(expected.Id);
 
             Assert.AreEqual(expected.Text, actual.Text);
         }
@@ -138,15 +144,15 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsView()
         {
-            var model = ObjectFactory.CreateTestModel();
+            TestModel model = ObjectFactory.CreateTestModel();
             context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
-            var expected = service.GetView(model.Id);
+            TestView expected = service.GetView(model.Id);
             expected.Text = "EditedText";
             service.Edit(expected);
 
-            var actual = context.Set<TestModel>().Find(expected.Id);
+            TestModel actual = context.Set<TestModel>().Find(expected.Id);
 
             Assert.AreEqual(expected.Text, actual.Text);
         }
@@ -158,7 +164,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Delete_DeleteView()
         {
-            var expected = ObjectFactory.CreateTestView();
+            TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);
 
             if (context.Set<TestModel>().Find(expected.Id) == null)

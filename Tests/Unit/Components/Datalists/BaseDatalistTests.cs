@@ -9,8 +9,6 @@ using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
 using Template.Tests.Helpers;
-using Template.Tests.Objects;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Datalists
 {

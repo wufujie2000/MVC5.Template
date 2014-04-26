@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using Template.Components.Security;
 using Template.Controllers;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Controllers
 {
     public class BaseControllerStub : BaseController
     {

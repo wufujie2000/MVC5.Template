@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using Template.Data.Core;
 using Template.Web.DependencyInjection.Ninject;
 
@@ -21,8 +22,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void GetService_GetsService()
         {
-            var expectedType = typeof(AContext);
-            var actualInstance = resolver.GetService(expectedType);
+            Type expectedType = typeof(AContext);
+            Object actualInstance = resolver.GetService(expectedType);
             
             Assert.IsInstanceOf(expectedType, actualInstance);
         }
@@ -40,10 +41,10 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void GetServices_GetsAllServices()
         {
-            var expectedType = typeof(AContext);
-            var services = resolver.GetServices(expectedType);
+            Type expectedType = typeof(AContext);
+            IEnumerable<Object> services = resolver.GetServices(expectedType);
 
-            foreach (var actualInstace in services)
+            foreach (Object actualInstace in services)
                 Assert.IsInstanceOf(expectedType, actualInstace);
         }
 

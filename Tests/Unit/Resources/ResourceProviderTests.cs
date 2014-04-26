@@ -3,9 +3,8 @@ using System;
 using System.Web;
 using System.Web.Routing;
 using Template.Objects;
-using Template.Objects.Resources;
 using Template.Resources;
-using Tests.Helpers;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Resources.Tests
 {

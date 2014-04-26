@@ -2,7 +2,7 @@
 using System;
 using Template.Objects;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Components.Datalists
 {
     public class DatalistView : BaseView
     {

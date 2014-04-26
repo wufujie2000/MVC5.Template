@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using Template.Web;
@@ -28,12 +29,12 @@ namespace Template.Tests.Unit.Web
         [Test]
         public void Version_ReturnsCurrentVersion()
         {
-            var assembly = Assembly.GetAssembly(typeof(MvcApplication));
-            var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            Assembly assembly = Assembly.GetAssembly(typeof(MvcApplication));
+            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             
-            var expected = versionInfo.FileVersion;
-            var actual = MvcApplication.Version;
-
+            String expected = versionInfo.FileVersion;
+            String actual = MvcApplication.Version;
+            // TODO: Add git hook for increasing version
             Assert.AreEqual(expected, actual);
         }
 

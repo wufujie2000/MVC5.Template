@@ -12,9 +12,10 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void SetInstance_SetsInstance()
         {
-            var expected = new Mock<IRoleProvider>().Object;
+            IRoleProvider expected = new Mock<IRoleProvider>().Object;
             RoleProviderFactory.SetInstance(expected);
-            var actual = RoleProviderFactory.Instance;
+
+            IRoleProvider actual = RoleProviderFactory.Instance;
             RoleProviderFactory.SetInstance(null);
 
             Assert.AreEqual(expected, actual);

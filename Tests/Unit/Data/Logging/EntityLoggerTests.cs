@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -44,9 +45,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsAddedEntities()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
-            var entry = dataContext.Entry(model);
+            DbEntityEntry<Person> entry = dataContext.Entry(model);
 
             entry.State = EntityState.Added;
 
@@ -56,9 +57,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsModifiedEntities()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
-            var entry = dataContext.Entry(model);
+            DbEntityEntry<Person> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
             model.LastName += "1";
 
@@ -70,9 +71,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
-            var entry = dataContext.Entry(model);
+            DbEntityEntry<Person> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
 
             entry.State = EntityState.Modified;
@@ -83,9 +84,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsDeletedEntities()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
-            var entry = dataContext.Entry(model);
+            DbEntityEntry<Person> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
 
             entry.State = EntityState.Deleted;
@@ -96,11 +97,11 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_DoesNotLogUnsupportedStates()
         {
-            var unsupportedStates = new[] { EntityState.Detached, EntityState.Unchanged };
-            var model = ObjectFactory.CreatePerson();
+            IEnumerable<EntityState> unsupportedStates = new[] { EntityState.Detached, EntityState.Unchanged };
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
 
-            foreach (var unsupportedState in unsupportedStates)
+            foreach (EntityState unsupportedState in unsupportedStates)
             {
                 DbEntityEntry entry = dataContext.Entry(model);
                 entry.State = unsupportedState;
@@ -113,7 +114,7 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsFormattedMessage()
         {
-            var model = ObjectFactory.CreatePerson();
+            Person model = ObjectFactory.CreatePerson();
             dataContext.Set<Person>().Add(model);
 
             DbEntityEntry entry = dataContext.Entry(model);
@@ -121,8 +122,8 @@ namespace Template.Tests.Unit.Data.Logging
             logger.Log(new[] { entry });
             logger.SaveLogs();
 
-            var expected = FormExpectedMessage(entry);
-            var actual = context.Set<Log>().First().Message;
+            String expected = FormExpectedMessage(entry);
+            String actual = context.Set<Log>().First().Message;
 
             Assert.AreEqual(expected, actual);
         }
@@ -144,14 +145,14 @@ namespace Template.Tests.Unit.Data.Logging
 
         private String FormExpectedMessage(DbEntityEntry entry)
         {
-            var loggableEntry = new LoggableEntry(entry);
-            var messageBuilder = new StringBuilder();
+            LoggableEntry loggableEntry = new LoggableEntry(entry);
+            StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.AppendFormat("{0} {1}:{2}",
                 loggableEntry.EntityType.Name,
                 loggableEntry.State.ToString().ToLower(),
                 Environment.NewLine);
 
-            foreach (var property in loggableEntry.Properties)
+            foreach (LoggableEntryProperty property in loggableEntry.Properties)
                 messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
 
             return messageBuilder.ToString();

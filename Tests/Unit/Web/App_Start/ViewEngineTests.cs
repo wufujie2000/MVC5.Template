@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 using Template.Web;
 
 namespace Template.Tests.Unit.Web.App_Start
@@ -19,8 +20,8 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void ViewEngine_SetsAreaViewLocationFormats()
         {
-            var expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
-            var actual = viewEngine.AreaViewLocationFormats;
+            String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] actual = viewEngine.AreaViewLocationFormats;
 
             Assert.AreEqual(expected, actual);
         }
@@ -28,8 +29,8 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void ViewEngine_SetsAreaMasterLocationFormats()
         {
-            var expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
-            var actual = viewEngine.AreaMasterLocationFormats;
+            String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] actual = viewEngine.AreaMasterLocationFormats;
 
             Assert.AreEqual(expected, actual);
         }
@@ -37,8 +38,8 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void ViewEngine_SetsAreaPartialViewLocationFormats()
         {
-            var expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
-            var actual = viewEngine.AreaPartialViewLocationFormats;
+            String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] actual = viewEngine.AreaPartialViewLocationFormats;
 
             CollectionAssert.AreEquivalent(expected, actual);
         }

@@ -10,7 +10,6 @@ using Template.Objects;
 using Template.Resources.Views.AccountView;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Services
 {
@@ -76,7 +75,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanLogin_CanNotLoginFromNonExistingAccount()
         {
-            var account = new AccountView();
+            AccountView account = new AccountView();
             account.Username = String.Empty;
 
             Assert.IsFalse(service.CanLogin(account));
@@ -86,7 +85,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             accountView.Password += "1";
 
             Assert.IsFalse(service.CanLogin(accountView));
@@ -96,7 +95,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             accountView.Username = accountView.Username.ToUpper();
 
             Assert.IsTrue(service.CanLogin(accountView));
@@ -109,8 +108,8 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Login_SetsAccountId()
         {
-            var accountView = ObjectFactory.CreateAccountView();
-            var expectedId = accountView.Id;
+            AccountView accountView = ObjectFactory.CreateAccountView();
+            String expectedId = accountView.Id;
             accountView.Id = null;
 
             service.Login(accountView);
@@ -121,10 +120,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Login_CreatesCookieForAMonth()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var expectedExpireDate = DateTime.Now.AddMonths(1).Date;
+            DateTime expectedExpireDate = DateTime.Now.AddMonths(1).Date;
 
             Assert.AreEqual(expectedExpireDate, HttpContext.Current.Response.Cookies[0].Expires.Date);
         }
@@ -132,10 +131,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Login_CreatesPersistentCookie()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.IsTrue(ticket.IsPersistent);
         }
@@ -143,7 +142,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Login_CreatesCookieWithoutClientSideAccess()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
             Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
@@ -152,10 +151,10 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Login_SetAccountIdAsCookieValue()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
 
-            var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.AreEqual(accountView.Id, ticket.Name);
         }
@@ -167,7 +166,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Logout_MakesUserCookieExpired()
         {
-            var accountView = ObjectFactory.CreateAccountView();
+            AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
             service.Logout();
 
@@ -180,7 +179,7 @@ namespace Template.Tests.Unit.Components.Services
 
         private void SetUpData()
         {
-            var account = ObjectFactory.CreateAccount();
+            Account account = ObjectFactory.CreateAccount();
             account.Person = ObjectFactory.CreatePerson();
             account.PersonId = account.Person.Id;
 
@@ -189,7 +188,7 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
 
             context.SaveChanges();

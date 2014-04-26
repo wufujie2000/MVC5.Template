@@ -15,7 +15,7 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ActionResult Index()
         {
-            return View(Service.GetViews());
+            return View(Service.GetViews()); // TODO: Change ActionResult to ViewResult and remove ViewResult casting in tests
         }
 
         [HttpGet]

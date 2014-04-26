@@ -2,7 +2,7 @@
 using Template.Components.Services;
 using Template.Controllers;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Controllers
 {
     public class ServicedControllerStub : ServicedController<IService>
     {

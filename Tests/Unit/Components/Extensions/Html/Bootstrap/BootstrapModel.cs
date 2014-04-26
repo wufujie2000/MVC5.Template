@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Template.Tests.Objects
+namespace Template.Tests.Unit.Components.Extensions.Html
 {
     public class BootstrapModel
     {

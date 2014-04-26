@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using NUnit.Framework;
+using System;
 using Template.Components.Security;
 using Template.Components.Services;
 using Template.Data.Core;
@@ -26,8 +27,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsAContext()
         {
-            var expected = typeof(Context);
-            var actual = kernel.Get<AContext>().GetType();
+            Type expected = typeof(Context);
+            Type actual = kernel.Get<AContext>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -35,8 +36,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIUnitOfWork()
         {
-            var expected = typeof(UnitOfWork);
-            var actual = kernel.Get<IUnitOfWork>().GetType();
+            Type expected = typeof(UnitOfWork);
+            Type actual = kernel.Get<IUnitOfWork>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -44,8 +45,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIEntityLogger()
         {
-            var expected = typeof(EntityLogger);
-            var actual = kernel.Get<IEntityLogger>().GetType();
+            Type expected = typeof(EntityLogger);
+            Type actual = kernel.Get<IEntityLogger>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -53,8 +54,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIRoleProvider()
         {
-            var expected = typeof(RoleProvider);
-            var actual = kernel.Get<IRoleProvider>().GetType();
+            Type expected = typeof(RoleProvider);
+            Type actual = kernel.Get<IRoleProvider>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -62,8 +63,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIHomeService()
         {
-            var expected = typeof(HomeService);
-            var actual = kernel.Get<IHomeService>().GetType();
+            Type expected = typeof(HomeService);
+            Type actual = kernel.Get<IHomeService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -71,8 +72,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIRolesService()
         {
-            var expected = typeof(RolesService);
-            var actual = kernel.Get<IRolesService>().GetType();
+            Type expected = typeof(RolesService);
+            Type actual = kernel.Get<IRolesService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -80,8 +81,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIUsersService()
         {
-            var expected = typeof(UsersService);
-            var actual = kernel.Get<IUsersService>().GetType();
+            Type expected = typeof(UsersService);
+            Type actual = kernel.Get<IUsersService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -89,8 +90,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIAccountService()
         {
-            var expected = typeof(AccountService);
-            var actual = kernel.Get<IAccountService>().GetType();
+            Type expected = typeof(AccountService);
+            Type actual = kernel.Get<IAccountService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -98,8 +99,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIProfileService()
         {
-            var expected = typeof(ProfileService);
-            var actual = kernel.Get<IProfileService>().GetType();
+            Type expected = typeof(ProfileService);
+            Type actual = kernel.Get<IProfileService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }

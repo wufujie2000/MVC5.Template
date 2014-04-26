@@ -15,9 +15,7 @@ namespace Template.Tests.Unit.Components.Services
         public void SetUp()
         {
             unitOfWorkMock = new Mock<IUnitOfWork>();
-            var mock = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true };
-
-            service = mock.Object;
+            service = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true }.Object;
         }
 
         [TearDown]

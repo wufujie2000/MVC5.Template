@@ -2,6 +2,7 @@
 using Moq.Protected;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -39,9 +40,9 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsModelsView()
         {
-            var expected = new[] { role };
+            IEnumerable<RoleView> expected = new[] { role };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
-            var actual = (controller.Index() as ViewResult).Model;
+            Object actual = (controller.Index() as ViewResult).Model;
 
             Assert.AreEqual(expected, actual);
         }
@@ -53,7 +54,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_ReturnsEmptyRoleView()
         {
-            var actual = (controller.Create() as ViewResult).Model as RoleView;
+            RoleView actual = (controller.Create() as ViewResult).Model as RoleView;
 
             Assert.IsNull(actual.Name);
             Assert.IsNotNull(actual.Id);
@@ -63,7 +64,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_SeedsNewPrivilegesTree()
         {
-            var actual = (controller.Create() as ViewResult).Model as RoleView;
+            RoleView actual = (controller.Create() as ViewResult).Model as RoleView;
 
             serviceMock.Verify(mock => mock.SeedPrivilegesTree(actual), Times.Once());
         }
@@ -92,11 +93,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void Create_AfterSuccessfulCreateRedirectsToDefaultIfNotAuthorized()
         {
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
-            var expected = new RouteValueDictionary();
+            RouteValueDictionary expected = new RouteValueDictionary();
             expected["action"] = "DefaultRoute";
 
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
-            var actual = (controller.Create(role) as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (controller.Create(role) as RedirectToRouteResult).RouteValues;
 
             Assert.AreEqual(expected["action"], actual["action"]);
         }
@@ -104,7 +105,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
         {
-            var result = controller.Create(role) as RedirectToRouteResult;
+            RedirectToRouteResult result = controller.Create(role) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
@@ -116,7 +117,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsRoleView()
         {
-            var actual = (controller.Details("Test") as ViewResult).Model as RoleView;
+            RoleView actual = (controller.Details("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }
@@ -128,7 +129,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsRoleView()
         {
-            var actual = (controller.Edit("Test") as ViewResult).Model as RoleView;
+            RoleView actual = (controller.Edit("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }
@@ -157,11 +158,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void Edit_RedirectsToDefaultIfNotAuthorizedForIndex()
         {
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
-            var expected = new RouteValueDictionary();
+            RouteValueDictionary expected = new RouteValueDictionary();
             expected["action"] = "DefaultRoute";
 
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
-            var actual = (controller.Edit(role) as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (controller.Edit(role) as RedirectToRouteResult).RouteValues;
 
             Assert.AreEqual(expected["action"], actual["action"]);
         }
@@ -169,7 +170,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_RedirectsToIndexIfAuthorized()
         {
-            var result = controller.Edit(role) as RedirectToRouteResult;
+            RedirectToRouteResult result = controller.Edit(role) as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }
@@ -181,7 +182,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Delete_ReturnsRoleView()
         {
-            var actual = (controller.Delete("Test") as ViewResult).Model as RoleView;
+            RoleView actual = (controller.Delete("Test") as ViewResult).Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }
@@ -210,11 +211,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void DeleteConfirmed_RedirectsToDefaultIfUserIsNoLongerAuthorizedForIndex()
         {
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(false);
-            var expected = new RouteValueDictionary();
+            RouteValueDictionary expected = new RouteValueDictionary();
             expected["action"] = "DefaultRoute";
 
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(new RedirectToRouteResult(expected));
-            var actual = (controller.DeleteConfirmed("Test") as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (controller.DeleteConfirmed("Test") as RedirectToRouteResult).RouteValues;
 
             Assert.AreEqual(expected["action"], actual["action"]);
         }
@@ -222,7 +223,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void DeleteConfirmed_RedirectsToIndex()
         {
-            var result = controller.DeleteConfirmed("Test") as RedirectToRouteResult;
+            RedirectToRouteResult result = controller.DeleteConfirmed("Test") as RedirectToRouteResult;
 
             Assert.AreEqual("Index", result.RouteValues["action"]);
         }

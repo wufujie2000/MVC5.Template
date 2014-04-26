@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace Template.Tests.Unit.Controllers
@@ -14,14 +14,14 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void AllControllerPostMethods_HasValidateAntiForgeryToken()
         {
-            var postMethods = Assembly
+            IEnumerable<MethodInfo> postMethods = Assembly
                 .Load("Template.Controllers")
                 .GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods())
                 .Where(method => method.GetCustomAttribute<HttpPostAttribute>() != null);
 
-            foreach (var method in postMethods)
+            foreach (MethodInfo method in postMethods)
                 Assert.IsNotNull(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>());
         }
 

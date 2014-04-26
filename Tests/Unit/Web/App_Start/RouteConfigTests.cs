@@ -15,12 +15,12 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void RegisterRoutes_IgnoresAxdRoute()
         {
-            var routes = new RouteCollection();
+            RouteCollection routes = new RouteCollection();
             RouteConfig.RegisterRoutes(routes);
-            var actual = (Route)routes.First();
+            Route actual = (Route)routes.First();
 
-            var expectedUrl = "{resource}.axd/{*pathInfo}";
-            var expectedType = typeof(StopRoutingHandler);
+            String expectedUrl = "{resource}.axd/{*pathInfo}";
+            Type expectedType = typeof(StopRoutingHandler);
 
             Assert.AreEqual(expectedUrl, actual.Url);
             Assert.IsInstanceOf(expectedType, actual.RouteHandler);
@@ -29,9 +29,9 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void RegisterRoutes_RegistersDefaultRoute()
         {
-            var routes = new RouteCollection();
+            RouteCollection routes = new RouteCollection();
             RouteConfig.RegisterRoutes(routes);
-            var actual = routes["Default"] as Route;
+            Route actual = routes["Default"] as Route;
 
             CollectionAssert.AreEqual(new[] { "Template.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
@@ -46,9 +46,9 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void RegisterRoutes_RegistersDefaultMultilingualRoute()
         {
-            var routes = new RouteCollection();
+            RouteCollection routes = new RouteCollection();
             RouteConfig.RegisterRoutes(routes);
-            var actual = routes["DefaultMultilingual"] as Route;
+            Route actual = routes["DefaultMultilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "Template.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/{controller}/{action}/{id}", actual.Url);

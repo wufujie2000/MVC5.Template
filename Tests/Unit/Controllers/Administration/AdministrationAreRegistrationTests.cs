@@ -37,7 +37,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void RegisterArea_RegistersAdministrationRoute()
         {
             areaRegistration.RegisterArea(registrationContext);
-            var actual = registrationContext.Routes["Administration"] as Route;
+            Route actual = registrationContext.Routes["Administration"] as Route;
 
             CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
@@ -52,7 +52,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void RegisterArea_RegistersAdministrationMultilingualRoute()
         {
             areaRegistration.RegisterArea(registrationContext);
-            var actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
+            Route actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actual.Url);

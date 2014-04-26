@@ -11,7 +11,6 @@ using Template.Objects;
 using Template.Resources.Views.ProfileView;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Services
 {
@@ -25,8 +24,8 @@ namespace Template.Tests.Unit.Components.Services
         [SetUp]
         public void SetUp()
         {
-            var httpMock = new HttpMock();
             context = new TestingContext();
+            HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
             service = new ProfileService(new UnitOfWork(context));
 
@@ -60,7 +59,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
-            var takenAccount = ObjectFactory.CreateAccount();
+            Account takenAccount = ObjectFactory.CreateAccount();
             takenAccount.Person = ObjectFactory.CreatePerson();
             takenAccount.Person.Id = takenAccount.Person.Id + "1";
             takenAccount.PersonId = takenAccount.Person.Id + "1";
@@ -70,7 +69,7 @@ namespace Template.Tests.Unit.Components.Services
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.Username = takenAccount.Username;
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -80,7 +79,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditWithIncorrectPassword()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -90,7 +89,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordIsTooShort()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = "AaaAaa1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -100,7 +99,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainUpperLetter()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = "aaaaaaaaaaaa1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -110,7 +109,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainLowerLetter()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -120,7 +119,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainADigit()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = "AaAaAaAaAaAa";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -130,7 +129,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanEditUsingItsOwnUsername()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.Username = account.Username.ToUpper();
 
             Assert.IsTrue(service.CanEdit(profile));
@@ -139,7 +138,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanEdit_CanEditWithoutSpecifyingNewPassword()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = null;
 
             Assert.IsTrue(service.CanEdit(profile));
@@ -166,7 +165,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectUsername()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.Username = String.Empty;
 
             Assert.IsFalse(service.CanDelete(profile));
@@ -176,7 +175,7 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
-            var profile = ObjectFactory.CreateProfileView();
+            ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
 
             Assert.IsFalse(service.CanDelete(profile));
@@ -196,13 +195,13 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsAccount()
         {
-            var profileView = ObjectFactory.CreateProfileView();
-            var expected = context.Set<Account>().Find(account.Id);
+            ProfileView profileView = ObjectFactory.CreateProfileView();
+            Account expected = context.Set<Account>().Find(account.Id);
             profileView.Username += "1";
             service.Edit(profileView);
 
             context = new TestingContext();
-            var actual = context.Set<Account>().Find(account.Id);
+            Account actual = context.Set<Account>().Find(account.Id);
 
             Assert.AreEqual(expected.PersonId, actual.PersonId);
             Assert.AreEqual(profileView.Username, actual.Username);
@@ -212,12 +211,12 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_LeavesCurrentPassword()
         {
-            var profileView = ObjectFactory.CreateProfileView();
+            ProfileView profileView = ObjectFactory.CreateProfileView();
             profileView.NewPassword = null;
             service.Edit(profileView);
 
             context = new TestingContext();
-            var actual = context.Set<Account>().Find(account.Id);
+            Account actual = context.Set<Account>().Find(account.Id);
 
             Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
         }
@@ -225,16 +224,16 @@ namespace Template.Tests.Unit.Components.Services
         [Test]
         public void Edit_EditsPerson()
         {
-            var expectedRoleId = account.Person.RoleId;
-            var profileView = ObjectFactory.CreateProfileView();
+            String expectedRoleId = account.Person.RoleId;
+            ProfileView profileView = ObjectFactory.CreateProfileView();
             profileView.Person.DateOfBirth = null;
             profileView.Person.FirstName += "1";
             profileView.Person.LastName += "1";
             service.Edit(profileView);
 
             context = new TestingContext();
-            var expected = profileView.Person;
-            var actual = context.Set<Person>().Find(account.PersonId);
+            PersonView expected = profileView.Person;
+            Person actual = context.Set<Person>().Find(account.PersonId);
 
             Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
             Assert.AreEqual(expected.FirstName, actual.FirstName);
@@ -278,7 +277,7 @@ namespace Template.Tests.Unit.Components.Services
         public void AddDeleteDisclaimerMessage_AddsDisclaimer()
         {
             service.AddDeleteDisclaimerMessage();
-            var disclaimer = service.AlertMessages.First();
+            AlertMessage disclaimer = service.AlertMessages.First();
 
             Assert.AreEqual(disclaimer.Message, Messages.ProfileDeleteDisclaimer);
             Assert.AreEqual(disclaimer.Type, AlertMessageType.Danger);
@@ -303,9 +302,9 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (var person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Person>().Remove(person);
-            foreach (var role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
+            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 
             context.SaveChanges();

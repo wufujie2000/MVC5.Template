@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
-using System.Text;
-using System.Web.Mvc;
 using Template.Components.Extensions.Html;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
@@ -15,40 +13,53 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void WidgetBox_WritesWidgetBox()
         {
-            var widgetBox = new TagBuilder("div");
-            var widgetTitle = new TagBuilder("div");
-            var titleIconSpan = new TagBuilder("span");
-            var titleIcon = new TagBuilder("i");
-            var titleHeader = new TagBuilder("h5");
-            var titleButtons = new TagBuilder("div");
-            var widgetContent = new TagBuilder("div");
+            StringWriter textWriter = new StringWriter();
+            using (new WidgetBox(textWriter, "Icon", "Title", "Buttons"))
+                textWriter.Write("Test");
 
-            titleButtons.AddCssClass("widget-title-buttons");
-            titleIconSpan.AddCssClass("widget-title-icon");
-            widgetContent.AddCssClass("widget-content");
-            widgetTitle.AddCssClass("widget-title");
-            widgetBox.AddCssClass("widget-box");
-            titleButtons.InnerHtml = "Buttons";
-            titleHeader.InnerHtml = "Title";
-            titleIcon.AddCssClass("Icon");
+            String actual = textWriter.GetStringBuilder().ToString();
+            String expected = String.Format("<div class=\"widget-box\">"
+                + "<div class=\"widget-title\">"
+                + "<span class=\"widget-title-icon\">"
+                + "<i class=\"Icon\"></i></span>"
+                + "<h5>Title</h5>"
+                + "<div class=\"widget-title-buttons\">Buttons</div></div>"
+                + "<div class=\"widget-content\">Test</div></div>",
+                "icon-class",
+                "Header title",
+                "<button>Button html</button>",
+                "<span>Content html</span>");
 
-            titleIconSpan.InnerHtml = titleIcon.ToString();
-            widgetTitle.InnerHtml = String.Format("{0}{1}{2}", titleIconSpan, titleHeader, titleButtons);
+            Assert.AreEqual(expected, actual);
+        }
 
-            var expected = widgetBox.ToString(TagRenderMode.StartTag);
-            expected += widgetTitle.ToString() + widgetContent.ToString(TagRenderMode.StartTag);
-            expected += "Test";
-            expected += widgetBox.ToString(TagRenderMode.EndTag);
-            expected += widgetContent.ToString(TagRenderMode.EndTag);
-           
-            var actual = new StringBuilder();
-            var actualWriter = new StringWriter(actual);
-            var widget = new WidgetBox(actualWriter, "Icon", "Title", "Buttons");
-            actualWriter.Write("Test");
-            widget.Dispose();
-            widget.Dispose();
+        #endregion
 
-            Assert.AreEqual(expected, actual.ToString());
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanBeDisposedMultipleTimes()
+        {
+            StringWriter textWriter = new StringWriter();
+            WidgetBox widgetBox = new WidgetBox(textWriter, "Icon", "Title", "Buttons");
+            textWriter.Write("Test");
+            widgetBox.Dispose();
+            widgetBox.Dispose();
+
+            String actual = textWriter.GetStringBuilder().ToString();
+            String expected = String.Format("<div class=\"widget-box\">"
+                + "<div class=\"widget-title\">"
+                + "<span class=\"widget-title-icon\">"
+                + "<i class=\"Icon\"></i></span>"
+                + "<h5>Title</h5>"
+                + "<div class=\"widget-title-buttons\">Buttons</div></div>"
+                + "<div class=\"widget-content\">Test</div></div>",
+                "icon-class",
+                "Header title",
+                "<button>Button html</button>",
+                "<span>Content html</span>");
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

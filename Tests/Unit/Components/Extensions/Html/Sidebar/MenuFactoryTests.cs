@@ -3,31 +3,27 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using Template.Components.Extensions.Html;
 using Template.Components.Security;
 using Template.Objects;
 using Template.Resources;
 using Template.Tests.Helpers;
-using Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class MenuFactoryTests
     {
-        private Mock<IRoleProvider> roleProviderMock;
         private MenuFactory factory;
 
         [SetUp]
         public void SetUp()
         {
-            var httpContext = new HttpMock().HttpContextBase;
+            HttpContextBase httpContext = new HttpMock().HttpContextBase;
             httpContext.Request.RequestContext.RouteData.Values["controller"] = String.Empty;
 
             factory = new MenuFactory(httpContext);
-            roleProviderMock = new Mock<IRoleProvider>();
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), 
-                It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
         }
 
         [TearDown]
@@ -41,8 +37,8 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AllMenus_ContainsAllMenus()
         {
-            var expected = GetMenusAsList(GetExpectedMenus());
-            var actual = GetMenusAsList(MenuFactory.AllMenus);
+            IEnumerable<Menu> expected = GetMenusAsList(GetExpectedMenus());
+            IEnumerable<Menu> actual = GetMenusAsList(MenuFactory.AllMenus);
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -54,11 +50,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_ReturnsBranchMenus()
         {
-            var expected = GetMenusAsList(MenuFactory.AllMenus).Where(menu => !IsEmpty(menu) && menu.Action == null);
-            foreach (var expectedItem in expected)
-                expectedItem.Title = GetMenuTitle(expectedItem);
-
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Action == null);
+            IEnumerable<Menu> expected = GetMenusAsList(MenuFactory.AllMenus).Where(menu => !IsEmpty(menu) && menu.Action == null);
+            IEnumerable<Menu> actual = GetMenusAsList(factory.GetAuthorizedMenus()).Where(menu => menu.Action == null);
+            foreach (Menu expectedMenu in expected)
+                expectedMenu.Title = GetMenuTitle(expectedMenu);
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -66,11 +61,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_OnNullRoleProviderReturnsAllNotEmptyMenus()
         {
-            var expected = GetMenusAsList(GetExpectedMenus());
-            foreach (var expectedItem in expected)
-                expectedItem.Title = GetMenuTitle(expectedItem);
-
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus());
+            IEnumerable<Menu> actual = GetMenusAsList(factory.GetAuthorizedMenus());
+            IEnumerable<Menu> expected = GetMenusAsList(GetExpectedMenus());
+            foreach (Menu expectedMenu in expected)
+                expectedMenu.Title = GetMenuTitle(expectedMenu);
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -86,12 +80,15 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_ReturnsAllNotEmptyMenusThenAuthorized()
         {
+            Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(),
+                It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
             RoleProviderFactory.SetInstance(roleProviderMock.Object);
-            var expected = GetMenusAsList(GetExpectedMenus()).Where(menu => !IsEmpty(menu));
-            foreach (var expectedItem in expected)
-                expectedItem.Title = GetMenuTitle(expectedItem);
 
-            var actual = GetMenusAsList(factory.GetAuthorizedMenus());
+            IEnumerable<Menu> actual = GetMenusAsList(factory.GetAuthorizedMenus());
+            IEnumerable<Menu> expected = GetMenusAsList(GetExpectedMenus()).Where(menu => !IsEmpty(menu));
+            foreach (Menu expectedMenu in expected)
+                expectedMenu.Title = GetMenuTitle(expectedMenu);
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -99,10 +96,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_SetsMenuToActiveIfItBelongsToCurrentAreaAndController()
         {
-            var epectedMenus = GetMenusAsList(GetExpectedMenus());
-            foreach (var expected in epectedMenus)
+            IEnumerable<Menu> epectedMenus = GetMenusAsList(GetExpectedMenus());
+            foreach (Menu expected in epectedMenus)
             {
-                var httpContext = new HttpMock().HttpContextBase;
+                HttpContextBase httpContext = new HttpMock().HttpContextBase;
                 httpContext.Request.RequestContext.RouteData.Values["area"] = expected.Area;
                 httpContext.Request.RequestContext.RouteData.Values["controller"] = expected.Controller;
 
@@ -110,11 +107,11 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                 expected.Title = GetMenuTitle(expected);
                 expected.IsActive = true;
 
-                var actual = GetMenusAsList(factory.GetAuthorizedMenus())
+                Menu actual = GetMenusAsList(factory.GetAuthorizedMenus())
                     .First(menu =>
-                        expected.Controller == menu.Controller &&
+                        expected.Area == menu.Area &&
                         expected.Action == menu.Action &&
-                        expected.Area == menu.Area);
+                        expected.Controller == menu.Controller);
 
                 TestHelper.PropertyWiseEquals(expected, actual);
             }
@@ -123,27 +120,27 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_SetsChildActiveIfAnyOfItsSubmenusAreActiveOrHasActiveChild()
         {
-            var menuWithSubmenus = GetExpectedMenus().First(menu => menu.Submenus.Count() > 0);
-            var expectedSubmenu = menuWithSubmenus.Submenus.First();
+            Menu menuWithSubmenus = GetExpectedMenus().First(menu => menu.Submenus.Count() > 0);
+            Menu expectedSubmenu = menuWithSubmenus.Submenus.First();
 
-            var httpContext = new HttpMock().HttpContextBase;
+            HttpContextBase httpContext = new HttpMock().HttpContextBase;
             httpContext.Request.RequestContext.RouteData.Values["area"] = expectedSubmenu.Area;
             httpContext.Request.RequestContext.RouteData.Values["controller"] = expectedSubmenu.Controller;
 
             factory = new MenuFactory(httpContext);
 
-            var expectedMenu = menuWithSubmenus;
+            Menu expectedMenu = menuWithSubmenus;
             expectedMenu.Title = GetMenuTitle(expectedMenu);
             expectedMenu.HasActiveChild = true;
 
-            var actualMenu = factory.GetAuthorizedMenus()
+            Menu actualMenu = factory.GetAuthorizedMenus()
                 .First(menu => menu.Submenus.Any(submenu =>
                     submenu.Area == expectedSubmenu.Area &&
                     submenu.Controller == expectedSubmenu.Controller));
             expectedSubmenu.Title = GetMenuTitle(expectedSubmenu);
             expectedSubmenu.IsActive = true;
 
-            var actualSubmenu = actualMenu.Submenus.First();
+            Menu actualSubmenu = actualMenu.Submenus.First();
 
             TestHelper.PropertyWiseEquals(expectedMenu, actualMenu);
             TestHelper.PropertyWiseEquals(expectedSubmenu, actualSubmenu);
@@ -188,12 +185,10 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
         private List<Menu> GetMenusAsList(IEnumerable<Menu> menus)
         {
-            var list = menus.ToList();
-            var submenus = menus.SelectMany(menu => menu.Submenus);
-            if (submenus.Count() > 0)
-                list = list.Union(GetMenusAsList(submenus)).ToList();
+            IEnumerable<Menu> submenus = menus.SelectMany(menu => menu.Submenus);
+            if (submenus.Count() > 0) return menus.Union(GetMenusAsList(submenus)).ToList();
 
-            return list;
+            return menus.ToList();
         }
         private String GetMenuTitle(Menu menu)
         {

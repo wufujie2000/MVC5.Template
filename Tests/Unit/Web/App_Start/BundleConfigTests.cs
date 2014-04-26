@@ -13,7 +13,7 @@ namespace Template.Tests.Unit.Web.App_Start
         [Test]
         public void RegisterBundles_RegistersScriptBundles()
         {
-            var expectedBundles = new[]
+            String[] expectedBundles = new[]
             {
                 "~/Scripts/JQuery",
                 "~/Scripts/Sidebar",
@@ -28,17 +28,17 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Scripts/Shared"
             };
 
-            var bundles = new BundleCollection();
+            BundleCollection bundles = new BundleCollection();
             BundleConfig.RegisterBundles(bundles);
 
-            foreach (var expectedPath in expectedBundles)
+            foreach (String expectedPath in expectedBundles)
                 Assert.IsInstanceOf(typeof(ScriptBundle), bundles.GetBundleFor(expectedPath));
         }
 
         [Test]
         public void RegisterBundles_RegistersStyleBundles()
         {
-            var expectedBundles = new[]
+            String[] expectedBundles = new[]
             {
                 "~/Content/Css/Bootstrap",
                 "~/Content/Css/JQueryUI",
@@ -51,10 +51,10 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Content/Css/Shared"
             };
             // TODO: Test for actual search patterns
-            var bundles = new BundleCollection();
+            BundleCollection bundles = new BundleCollection();
             BundleConfig.RegisterBundles(bundles);
 
-            foreach (var expectedPath in expectedBundles)
+            foreach (String expectedPath in expectedBundles)
                 Assert.IsInstanceOf(typeof(StyleBundle), bundles.GetBundleFor(expectedPath));
         }
 

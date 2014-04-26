@@ -28,13 +28,9 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void SidebarSearch_FormsSidebarSearch()
         {
-            var input = new TagBuilder("input");
-            input.MergeAttribute("type", "text");
-            input.MergeAttribute("id", "SearchInput");
-            input.MergeAttribute("placeholder", Template.Resources.Shared.Resources.Search + "...");
-
-            var expected = input.ToString(TagRenderMode.SelfClosing);
-            var actual = html.SidebarSearch().ToString();
+            String actual = html.SidebarSearch().ToString();
+            String expected = String.Format("<input id=\"SearchInput\" placeholder=\"{0}...\" type=\"text\" />",
+                Template.Resources.Shared.Resources.Search);
 
             Assert.AreEqual(expected, actual);
         }
@@ -46,13 +42,13 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void SidebarMenu_FormsSidebarMenu()
         {
-            var menuFactory = new MenuFactory(html.ViewContext.HttpContext);
-            var expected = new StringBuilder();
-            
-            foreach (var menu in menuFactory.GetAuthorizedMenus())
-                expected.Append(Menu(html, menu));
+            MenuFactory menuFactory = new MenuFactory(html.ViewContext.HttpContext);
 
-            var actual = html.SidebarMenu();
+            String actual = html.SidebarMenu().ToString();
+            String expected = String.Empty;
+            
+            foreach (Menu menu in menuFactory.GetAuthorizedMenus())
+                expected += Menu(html, menu);
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -72,7 +68,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                 menuItem.AddCssClass("submenu");
                 TagBuilder submenus = new TagBuilder("ul");
                 StringBuilder innerSubmenuHtml = new StringBuilder();
-                foreach (var submenu in menu.Submenus)
+                foreach (Menu submenu in menu.Submenus)
                     innerSubmenuHtml.Append(Menu(html, submenu));
 
                 submenus.InnerHtml = innerSubmenuHtml.ToString();

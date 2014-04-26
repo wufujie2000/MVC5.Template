@@ -17,8 +17,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         {
             DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
 
-            var expectedType = typeof(NinjectResolver);
-            var actualInstace = DependencyResolver.Current;
+            Type expectedType = typeof(NinjectResolver);
+            IDependencyResolver actualInstace = DependencyResolver.Current;
 
             Assert.IsInstanceOf(expectedType, actualInstace);
         }
@@ -30,8 +30,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         [Test]
         public void Resolve_ResolvesType()
         {
-            var expectedType = typeof(AContext);
-            var actualInstace = DependencyContainer.Resolve<AContext>();
+            Type expectedType = typeof(AContext);
+            AContext actualInstace = DependencyContainer.Resolve<AContext>();
 
             Assert.IsInstanceOf(expectedType, actualInstace);
         }

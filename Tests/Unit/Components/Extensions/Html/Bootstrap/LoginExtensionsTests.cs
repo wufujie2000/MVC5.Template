@@ -4,7 +4,6 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using Template.Components.Extensions.Html;
 using Template.Tests.Helpers;
-using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
 {

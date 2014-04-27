@@ -29,7 +29,7 @@ namespace Template.Components.Extensions.Html
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
-            foreach (var action in actions)
+            foreach (LinkAction action in actions)
             {
                 if (roleProvider != null && !roleProvider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
                     continue;

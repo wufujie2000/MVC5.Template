@@ -288,6 +288,7 @@ namespace Template.Tests.Unit.Components.Services
             expectedTree.Nodes.Add(rootNode);
             rootNode.Name = Template.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
+            // TODO: Change to IEnumerable<Privilege> type
             var allPrivileges = context.Set<Privilege>().ToList().Select(privilege => new
             {
                 Id = privilege.Id,

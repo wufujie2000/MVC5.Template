@@ -8,7 +8,7 @@ namespace Template.Components.Mvc.Providers
     {
         public override ModelMetadata GetMetadataForProperty(Func<Object> modelAccessor, Type containerType, String propertyName)
         {
-            var metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+            ModelMetadata metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
             metadata.DisplayName = ResourceProvider.GetPropertyTitle(containerType, propertyName);
 
             return metadata;

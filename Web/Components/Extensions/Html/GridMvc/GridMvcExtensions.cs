@@ -40,7 +40,7 @@ namespace Template.Components.Extensions.Html
             if (RoleProviderFactory.Instance != null && !RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
             
-            var gridColumn = column
+            IGridColumn<T> gridColumn = column
                 .Add()
                 .SetWidth(25)
                 .Encoded(false)

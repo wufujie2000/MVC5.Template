@@ -11,7 +11,7 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString SidebarSearch(this HtmlHelper html)
         {
-            var input = new TagBuilder("input");
+            TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "text");
             input.MergeAttribute("id", "SearchInput");
             input.MergeAttribute("placeholder", Resources.Shared.Resources.Search + "...");
@@ -20,10 +20,10 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString SidebarMenu(this HtmlHelper html)
         {
-            var menuFactory = new MenuFactory(html.ViewContext.HttpContext);
-            var menuBuilder = new StringBuilder();
+            MenuFactory menuFactory = new MenuFactory(html.ViewContext.HttpContext);
+            StringBuilder menuBuilder = new StringBuilder();
 
-            foreach (var menu in menuFactory.GetAuthorizedMenus())
+            foreach (Menu menu in menuFactory.GetAuthorizedMenus())
                 menuBuilder.Append(Menu(html, menu));
 
             return new MvcHtmlString(menuBuilder.ToString());
@@ -40,7 +40,7 @@ namespace Template.Components.Extensions.Html
                 menuItem.AddCssClass("submenu");
                 TagBuilder submenus = new TagBuilder("ul");
                 StringBuilder innerSubmenuHtml = new StringBuilder();
-                foreach (var submenu in menu.Submenus)
+                foreach (Menu submenu in menu.Submenus)
                     innerSubmenuHtml.Append(Menu(html, submenu));
 
                 submenus.InnerHtml = innerSubmenuHtml.ToString();

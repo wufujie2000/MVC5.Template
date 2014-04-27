@@ -22,14 +22,15 @@ namespace Template.Components.Extensions.Html
         }
         private static String FormIdSpan(String name, IList<String> selectedIds)
         {
-            var idSpan = new TagBuilder("span");
+            TagBuilder idSpan = new TagBuilder("span");
             idSpan.AddCssClass("tree-view-ids");
 
-            var input = new TagBuilder("input");
-            input.MergeAttribute("name", name);
+            StringBuilder hiddenInputs = new StringBuilder();
+            TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("type", "hidden");
-            var hiddenInputs = new StringBuilder();
-            foreach (var id in selectedIds)
+            input.MergeAttribute("name", name);
+
+            foreach (String id in selectedIds)
             {
                 input.MergeAttribute("value", id, true);
                 hiddenInputs.Append(input.ToString(TagRenderMode.SelfClosing));
@@ -40,7 +41,7 @@ namespace Template.Components.Extensions.Html
         }
         private static String FormTreeView(String name, IEnumerable<TreeNode> treeNodes)
         {
-            var treeView = new TagBuilder("div");
+            TagBuilder treeView = new TagBuilder("div");
             treeView.MergeAttribute("for", name);
             treeView.AddCssClass("tree-view");
 
@@ -54,7 +55,7 @@ namespace Template.Components.Extensions.Html
             TagBuilder branch = new TagBuilder("ul");
             StringBuilder leafBuilder = new StringBuilder();
 
-            foreach (var treeNode in nodes)
+            foreach (TreeNode treeNode in nodes)
             {
                 TagBuilder node = new TagBuilder("li");
                 node.MergeAttribute("id", treeNode.Id);

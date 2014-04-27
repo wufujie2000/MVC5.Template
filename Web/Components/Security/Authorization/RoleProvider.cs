@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -46,8 +47,8 @@ namespace Template.Components.Security
         }
         private MethodInfo GetAction(Type controller, String action)
         {
-            var actionMethods = controller.GetMethods().Where(method => method.Name == action);
-            var getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
+            IEnumerable<MethodInfo> actionMethods = controller.GetMethods().Where(method => method.Name == action);
+            MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;
 

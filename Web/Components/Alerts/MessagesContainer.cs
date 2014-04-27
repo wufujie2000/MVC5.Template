@@ -66,7 +66,7 @@ namespace Template.Components.Alerts
             if (container == this)
                 throw new Exception("Messages container can not be merged to itself");
 
-            foreach (var message in container)
+            foreach (AlertMessage message in container)
                 Add(message);
         }
 
@@ -75,12 +75,12 @@ namespace Template.Components.Alerts
             if (modelState == null)
                 return messages.GetEnumerator();
 
-            var keys = modelState.Keys.GetEnumerator();
-            var values = modelState.Values.GetEnumerator();
+            IEnumerator<String> keys = modelState.Keys.GetEnumerator();
+            List<AlertMessage> modelStateMessages = new List<AlertMessage>();
+            IEnumerator<ModelState> values = modelState.Values.GetEnumerator();
 
-            var modelStateMessages = new List<AlertMessage>();
             while (keys.MoveNext() && values.MoveNext())
-                foreach (var error in values.Current.Errors)
+                foreach (ModelError error in values.Current.Errors)
                     modelStateMessages.Add(new AlertMessage()
                     {
                         Key = keys.Current,

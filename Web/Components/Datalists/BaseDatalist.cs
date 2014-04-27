@@ -21,7 +21,7 @@ namespace Template.Components.Datalists
 
         public BaseDatalist()
         {
-            var applicationPath = HttpContext.Current.Request.ApplicationPath ?? "/";
+            String applicationPath = HttpContext.Current.Request.ApplicationPath ?? "/";
             if (!applicationPath.EndsWith("/"))
                 applicationPath += "/";
 
@@ -40,7 +40,7 @@ namespace Template.Components.Datalists
         }
         protected override String GetColumnHeader(PropertyInfo property)
         {
-            var column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
+            DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
             if (column != null && column.Relation != null)
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
             
@@ -48,7 +48,7 @@ namespace Template.Components.Datalists
         }
         protected override String GetColumnCssClass(PropertyInfo property)
         {
-            var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+            Type type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
             if (type.IsEnum) return "text-cell";
             
             switch (Type.GetTypeCode(type))

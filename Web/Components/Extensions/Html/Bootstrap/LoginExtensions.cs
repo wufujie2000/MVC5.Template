@@ -12,27 +12,27 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            var icon = new TagBuilder("i");
+            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-user");
-            var addon = new TagBuilder("span");
+            TagBuilder addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon");
             addon.InnerHtml = icon.ToString();
 
-            var attributes = new RouteValueDictionary();
-            attributes["class"] = "form-control";
+            RouteValueDictionary attributes = new RouteValueDictionary();
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
+            attributes["class"] = "form-control";
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
         public static MvcHtmlString LoginPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            var icon = new TagBuilder("i");
+            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-lock");
-            var addon = new TagBuilder("span");
+            TagBuilder addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon lock-span");
             addon.InnerHtml = icon.ToString();
 
-            var attributes = new RouteValueDictionary();
+            RouteValueDictionary attributes = new RouteValueDictionary();
             attributes["class"] = "form-control";
             attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
 
@@ -40,26 +40,26 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString LoginLanguageSelect<TModel>(this HtmlHelper<TModel> html)
         {
-            var addon = new TagBuilder("span");
+            TagBuilder addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon flag-span");
-            var icon = new TagBuilder("i");
+            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-flag");
-            var input = new TagBuilder("input");
+            TagBuilder input = new TagBuilder("input");
             input.MergeAttribute("id", "TempLanguage");
             input.MergeAttribute("type", "text");
             input.AddCssClass("form-control");
-            var select = new TagBuilder("select");
+            TagBuilder select = new TagBuilder("select");
             select.MergeAttribute("id", "Language");
 
             addon.InnerHtml = icon.ToString();
-            var languages = new Dictionary<String, String>()
+            Dictionary<String, String> languages = new Dictionary<String, String>()
             {
                 { "en-GB", "English" },
                 { "lt-LT", "Lietuvių" }
             };
-            foreach (var language in languages)
+            foreach (KeyValuePair<String, String> language in languages)
             {
-                var option = new TagBuilder("option");
+                TagBuilder option = new TagBuilder("option");
                 option.MergeAttribute("value", language.Key);
                 option.InnerHtml = language.Value;
                 select.InnerHtml += option.ToString();
@@ -70,9 +70,9 @@ namespace Template.Components.Extensions.Html
 
         public static MvcHtmlString LoginSubmit<TModel>(this HtmlHelper<TModel> html)
         {
-            var formActions = new TagBuilder("div");
+            TagBuilder formActions = new TagBuilder("div");
             formActions.AddCssClass("login-form-actions");
-            var submit = new TagBuilder("input");
+            TagBuilder submit = new TagBuilder("input");
             submit.AddCssClass("btn btn-block btn-primary btn-default");
             submit.MergeAttribute("value", Resources.Shared.Resources.Login);
             submit.MergeAttribute("type", "submit");

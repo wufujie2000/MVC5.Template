@@ -34,7 +34,7 @@ namespace Template.Components.Services
         
         public override void Create(UserView view)
         {
-            var account = UnitOfWork.ToModel<UserView, Account>(view);
+            Account account = UnitOfWork.ToModel<UserView, Account>(view);
             account.Passhash = BCrypter.HashPassword(view.Password);
 
             UnitOfWork.Repository<Account>().Insert(account);        
@@ -42,9 +42,9 @@ namespace Template.Components.Services
         }
         public override void Edit(UserView view)
         {
-            var account = UnitOfWork.ToModel<UserView, Account>(view);
+            Account account = UnitOfWork.ToModel<UserView, Account>(view);
             account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
-            var person = account.Person;
+            Person person = account.Person;
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Repository<Person>().Update(person);

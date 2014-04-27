@@ -15,11 +15,11 @@ namespace Template.Components.Extensions.Html
         {
             this.writer = writer;
             widgetBox = new TagBuilder("div");
-            var widgetTitle = new TagBuilder("div");
-            var titleIconSpan = new TagBuilder("span");
-            var titleIcon = new TagBuilder("i");
-            var titleHeader = new TagBuilder("h5");
-            var titleButtons = new TagBuilder("div");
+            TagBuilder widgetTitle = new TagBuilder("div");
+            TagBuilder titleIconSpan = new TagBuilder("span");
+            TagBuilder titleIcon = new TagBuilder("i");
+            TagBuilder titleHeader = new TagBuilder("h5");
+            TagBuilder titleButtons = new TagBuilder("div");
             widgetContent = new TagBuilder("div");
 
             widgetBox.AddCssClass("widget-box");

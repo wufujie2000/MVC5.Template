@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Web.Routing;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html
@@ -10,8 +12,8 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString ProfileLink(this HtmlHelper html)
         {
-            var icon = new TagBuilder("i");
-            var span = new TagBuilder("span");
+            TagBuilder icon = new TagBuilder("i");
+            TagBuilder span = new TagBuilder("span");
             icon.AddCssClass("fa fa-user");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Profile");
@@ -19,9 +21,9 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
-            var action = new TagBuilder("a");
-            var icon = new TagBuilder("i");
-            var span = new TagBuilder("span");
+            TagBuilder action = new TagBuilder("a");
+            TagBuilder icon = new TagBuilder("i");
+            TagBuilder span = new TagBuilder("span");
 
             action.MergeAttribute("data-toggle", "dropdown");
             action.AddCssClass("dropdown-toggle");
@@ -29,20 +31,20 @@ namespace Template.Components.Extensions.Html
             span.AddCssClass("caret");
 
             action.InnerHtml = String.Format("{0} {1} {2}", icon, ResourceProvider.GetActionTitle("Language"), span);
-            
-            var languageList = new TagBuilder("ul");
+
+            TagBuilder languageList = new TagBuilder("ul");
             languageList.MergeAttribute("role", "menu");
             languageList.AddCssClass("dropdown-menu");
 
-            var languages = new Dictionary<String, String>()
+            Dictionary<String, String> languages = new Dictionary<String, String>()
             {
                 { "en-GB", "English" },
                 { "lt-LT", "Lietuvių" }
             };
 
-            var currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
+            Object currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
             AddQueryValues(html);
-            foreach (var language in languages)
+            foreach (KeyValuePair<String, String> language in languages)
             {
                 html.ViewContext.RequestContext.RouteData.Values["language"] = language.Key;
                 TagBuilder languageItem = new TagBuilder("li");
@@ -64,9 +66,9 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString LogoutLink(this HtmlHelper html)
         {
-            var icon = new TagBuilder("i");
+            TagBuilder span = new TagBuilder("span");
+            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-share");
-            var span = new TagBuilder("span");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
             return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Account", area = String.Empty }).ToString(), icon, span));
@@ -74,16 +76,16 @@ namespace Template.Components.Extensions.Html
 
         private static void AddQueryValues(HtmlHelper html)
         {
-            var queryParameters = html.ViewContext.HttpContext.Request.QueryString;
-            var routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            NameValueCollection queryParameters = html.ViewContext.HttpContext.Request.QueryString;
+            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)
                 routeValues[parameter] = queryParameters[parameter];
         }
         private static void RemoveQueryValues(HtmlHelper html)
         {
-            var queryParameters = html.ViewContext.HttpContext.Request.QueryString;
-            var routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            NameValueCollection queryParameters = html.ViewContext.HttpContext.Request.QueryString;
+            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
 
             foreach (String parameter in queryParameters)
                  routeValues.Remove(parameter);

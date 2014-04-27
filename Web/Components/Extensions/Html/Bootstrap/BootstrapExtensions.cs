@@ -35,9 +35,9 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString FormSubmit(this HtmlHelper html)
         {
-            var submit = new TagBuilder("input");
-            submit.AddCssClass("btn btn-primary");
+            TagBuilder submit = new TagBuilder("input");
             submit.MergeAttribute("type", "submit");
+            submit.AddCssClass("btn btn-primary");
             submit.MergeAttribute("value", Resources.Shared.Resources.Submit);
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
@@ -76,7 +76,7 @@ namespace Template.Components.Extensions.Html
         }
         public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
         {
-            var attributes = AddClass(htmlAttributes, "form-control");
+            RouteValueDictionary attributes = AddClass(htmlAttributes, "form-control");
             if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
             return new MvcHtmlString(WrapContent(html.TextBoxFor(expression, format, attributes)));
         }
@@ -104,14 +104,14 @@ namespace Template.Components.Extensions.Html
         }
         private static RouteValueDictionary AddClass(Object attributes, String value)
         {
-            var htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
+            RouteValueDictionary htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
             htmlAttributes["class"] = String.Format("{0} {1}", htmlAttributes["class"], value).Trim();
 
             return htmlAttributes;
         }
         private static Boolean IsRequired<T, V>(this Expression<Func<T, V>> expression)
         {
-            var memberExpression = expression.Body as MemberExpression;
+            MemberExpression memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null)
                 throw new InvalidOperationException("Expression must be a member expression");
 

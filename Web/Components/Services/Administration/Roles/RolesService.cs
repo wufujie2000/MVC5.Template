@@ -43,7 +43,7 @@ namespace Template.Components.Services
 
         public virtual void SeedPrivilegesTree(RoleView role)
         {
-            var rootNode = new TreeNode();
+            TreeNode rootNode = new TreeNode();
             role.PrivilegesTree = new Tree();
             role.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
@@ -51,7 +51,7 @@ namespace Template.Components.Services
                 .Repository<RolePrivilege>()
                 .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
-
+            // TODO: Change to IEnumerable<Privilege> type
             var allPrivileges = UnitOfWork
                 .Repository<Privilege>()
                 .Query()
@@ -88,28 +88,27 @@ namespace Template.Components.Services
 
         private void CreateRole(RoleView view)
         {
-            var model = UnitOfWork.ToModel<RoleView, Role>(view);
+            Role model = UnitOfWork.ToModel<RoleView, Role>(view);
             UnitOfWork.Repository<Role>().Insert(model);
         }
         private void EditRole(RoleView view)
         {
-            var model = UnitOfWork.ToModel<RoleView, Role>(view);
+            Role model = UnitOfWork.ToModel<RoleView, Role>(view);
             UnitOfWork.Repository<Role>().Update(model);
         }
 
         private void DeleteRolePrivileges(RoleView view)
         {
-            var rolePrivileges = UnitOfWork
-                .Repository<RolePrivilege>()
+            IQueryable<String> rolePrivileges = UnitOfWork.Repository<RolePrivilege>()
                 .Query(rolePrivilege => rolePrivilege.RoleId == view.Id)
                 .Select(rolePrivilege => rolePrivilege.Id);
 
-            foreach (var rolePrivilege in rolePrivileges)
+            foreach (String rolePrivilege in rolePrivileges)
                 UnitOfWork.Repository<RolePrivilege>().Delete(rolePrivilege);
         }
         private void CreateRolePrivileges(RoleView view)
         {
-            foreach (var privilegeId in view.PrivilegesTree.SelectedIds)
+            foreach (String privilegeId in view.PrivilegesTree.SelectedIds)
                 UnitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
                 {
                     RoleId = view.Id,
@@ -119,11 +118,10 @@ namespace Template.Components.Services
 
         private void RemoveRoleFromPeople(String roleId)
         {
-            var peopleWithRole = UnitOfWork
-                .Repository<Person>()
+            IQueryable<Person> peopleWithRole = UnitOfWork.Repository<Person>()
                 .Query(person => person.RoleId == roleId);
 
-            foreach (var person in peopleWithRole)
+            foreach (Person person in peopleWithRole)
             {
                 person.RoleId = null;
                 UnitOfWork.Repository<Person>().Update(person);

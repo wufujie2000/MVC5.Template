@@ -38,7 +38,7 @@ namespace Template.Components.Services
 
         public override void Edit(ProfileView profile)
         {
-            var account = GetAccountFrom(profile);
+            Account account = GetAccountFrom(profile);
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Repository<Person>().Update(account.Person);
             UnitOfWork.Commit();
@@ -112,7 +112,7 @@ namespace Template.Components.Services
 
         private Account GetAccountFrom(ProfileView profile)
         {
-            var account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
+            Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
             account.Username = profile.Username;
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);

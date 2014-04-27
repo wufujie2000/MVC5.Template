@@ -37,19 +37,19 @@ namespace Template.Components.Services
         }
         public virtual TView GetView(String id)
         {
-            var model = UnitOfWork.Repository<TModel>().GetById(id);
+            TModel model = UnitOfWork.Repository<TModel>().GetById(id);
             return UnitOfWork.ToView<TModel, TView>(model);
         }
 
         public virtual void Create(TView view)
         {
-            var model = UnitOfWork.ToModel<TView, TModel>(view);
+            TModel model = UnitOfWork.ToModel<TView, TModel>(view);
             UnitOfWork.Repository<TModel>().Insert(model);
             UnitOfWork.Commit();
         }
         public virtual void Edit(TView view)
         {
-            var model = UnitOfWork.ToModel<TView, TModel>(view);
+            TModel model = UnitOfWork.ToModel<TView, TModel>(view);
             UnitOfWork.Repository<TModel>().Update(model);
             UnitOfWork.Commit();
         }

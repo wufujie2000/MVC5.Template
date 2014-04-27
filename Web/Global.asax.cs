@@ -44,7 +44,7 @@ namespace Template.Web
         }
         protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
         {
-            var culture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
+            CultureInfo culture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
         }

@@ -19,7 +19,7 @@ namespace Template.Data.Logging
 
         public virtual void Log(IEnumerable<DbEntityEntry> entries)
         {
-            foreach (var entry in entries)
+            foreach (DbEntityEntry entry in entries)
             {
                 switch (entry.State)
                 {
@@ -28,7 +28,7 @@ namespace Template.Data.Logging
                         context.Set<Log>().Add(new Log(Format(new LoggableEntry(entry))));
                         break;
                     case EntityState.Modified:
-                        var loggableEntry = new LoggableEntry(entry);
+                        LoggableEntry loggableEntry = new LoggableEntry(entry);
                         if (loggableEntry.HasChanges)
                             context.Set<Log>().Add(new Log(Format(loggableEntry)));
                         break;
@@ -43,13 +43,13 @@ namespace Template.Data.Logging
 
         private String Format(LoggableEntry entry)
         {
-            var messageBuilder = new StringBuilder();
+            StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.AppendFormat("{0} {1}:{2}",
                 entry.EntityType.Name,
                 entry.State.ToString().ToLower(),
                 Environment.NewLine);
 
-            foreach (var property in entry.Properties)
+            foreach (LoggableEntryProperty property in entry.Properties)
                 messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
 
             return messageBuilder.ToString();

@@ -31,13 +31,13 @@ namespace Template.Data.Migrations
         }
         private void SeedLanguages()
         {
-            var languages = new List<Language>()
+            List<Language> languages = new List<Language>()
             {
                 new Language() { Abbreviation = "en-GB", Name = "English" },
                 new Language() { Abbreviation = "lt-LT", Name = "Lietuvių" }
             };
 
-            foreach (var language in languages)
+            foreach (Language language in languages)
                 if (!unitOfWork.Repository<Language>().Query().Any(lang => lang.Abbreviation == language.Abbreviation))
                     unitOfWork.Repository<Language>().Insert(language);
 
@@ -45,7 +45,7 @@ namespace Template.Data.Migrations
         }
         private void SeedAllPrivileges()
         {
-            var privileges = new List<Privilege>();
+            List<Privilege> privileges = new List<Privilege>();
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Index" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Create" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Details" });
@@ -58,8 +58,8 @@ namespace Template.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
 
-            var existingPrivileges = unitOfWork.Repository<Privilege>().Query();
-            foreach (var privilege in privileges)
+            IQueryable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().Query();
+            foreach (Privilege privilege in privileges)
                 if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
                     unitOfWork.Repository<Privilege>().Insert(privilege);
 
@@ -72,9 +72,9 @@ namespace Template.Data.Migrations
 
             unitOfWork.Commit();
 
-            var adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").First().Id;
-            var adminPrivileges = unitOfWork.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
-            foreach (var privilege in unitOfWork.Repository<Privilege>().Query())
+            String adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").First().Id;
+            IQueryable<RolePrivilege> adminPrivileges = unitOfWork.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
+            foreach (Privilege privilege in unitOfWork.Repository<Privilege>().Query())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
                     unitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
                     {
@@ -86,13 +86,13 @@ namespace Template.Data.Migrations
         }
         private void SeedPeople()
         {
-            var people = new List<Person>()
+            List<Person> people = new List<Person>()
             {
                 new Person() { FirstName = "System", LastName = "Admin", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id },
                 new Person() { FirstName = "Test", LastName = "User" },
             };
 
-            foreach (var person in people)
+            foreach (Person person in people)
                 if (!unitOfWork.Repository<Person>().Query(u => u.FirstName == person.FirstName && u.LastName == person.LastName).Any())
                     unitOfWork.Repository<Person>().Insert(person);
 
@@ -100,7 +100,7 @@ namespace Template.Data.Migrations
         }
         private void SeedAccounts()
         {
-            var accounts = new List<Account>()
+            List<Account> accounts = new List<Account>()
             {
                 new Account() { Username = "admin", Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq",
                     PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
@@ -110,7 +110,7 @@ namespace Template.Data.Migrations
                     Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
             };
 
-            foreach (var account in accounts)
+            foreach (Account account in accounts)
                 if (!unitOfWork.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
                     unitOfWork.Repository<Account>().Insert(account);
 

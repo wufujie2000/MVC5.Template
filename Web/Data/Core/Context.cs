@@ -47,12 +47,12 @@ namespace Template.Data.Core
 
         public override IRepository<TModel> Repository<TModel>()
         {
-            var modelName = typeof(TModel).Name;
+            String modelName = typeof(TModel).Name;
             if (repositories.ContainsKey(modelName))
                 return (IRepository<TModel>)repositories[modelName];
 
-            var repositoryType = typeof(Repository<>).MakeGenericType(typeof(TModel));
-            var modelRepository = (IRepository<TModel>)Activator.CreateInstance(repositoryType, this);
+            Type repositoryType = typeof(Repository<>).MakeGenericType(typeof(TModel));
+            IRepository<TModel> modelRepository = (IRepository<TModel>)Activator.CreateInstance(repositoryType, this);
             repositories.Add(modelName, modelRepository);
 
             return modelRepository;

@@ -244,7 +244,7 @@ Else
     Add-ProjectItemViaTemplate $ControllerTestsPath `
         -Template "Tests\ControllerTests" `
         -Model @{ `
-            ModelName = $ModelName.SubString(0, 1).ToLower() + $ModelName.SubString(1); `
+            ViewName = $ModelName.SubString(0, 1).ToLower() + $ModelName.SubString(1); `
 		    ControllerNamespace = $ControllerNamespace; `
 	        Namespace = $ControllerTestsNamespace; `
 		    ServiceInterface = $IService; `

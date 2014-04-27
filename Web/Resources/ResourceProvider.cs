@@ -83,7 +83,7 @@ namespace Template.Resources
 
         public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
         {
-            var member = (property.Body as MemberExpression).Member;
+            MemberInfo member = (property.Body as MemberExpression).Member;
             return GetPropertyTitle(member.ReflectedType, member.Name);
         }
         public static String GetPropertyTitle(Type viewType, String propertyName)
@@ -97,7 +97,7 @@ namespace Template.Resources
             String title = GetResourceFrom(baseName, propertyName);
             if (title == String.Empty)
             {
-                var baseNames = SplitCamelCase(propertyName);
+                String[] baseNames = SplitCamelCase(propertyName);
                 if (baseNames.Length > 1)
                     return GetPropertyTitle(baseNames[0] + "View", String.Concat(baseNames.Skip(1)));
             }

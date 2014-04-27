@@ -25,7 +25,7 @@ namespace Template.Controllers
                 return;
             }
 
-            var current = Session["Messages"] as MessagesContainer;
+            MessagesContainer current = Session["Messages"] as MessagesContainer;
             if (current != Service.AlertMessages)
                 current.Merge(Service.AlertMessages);
         }

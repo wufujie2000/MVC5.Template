@@ -1,6 +1,7 @@
 ﻿using AutoMapper.QueryableExtensions;
 using System;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using Template.Objects;
@@ -48,13 +49,13 @@ namespace Template.Data.Core
         }
         public void Update(TModel model)
         {
-            var attachedModel = dbSet.Local.SingleOrDefault(localModel => localModel.Id == model.Id);
+            TModel attachedModel = dbSet.Local.SingleOrDefault(localModel => localModel.Id == model.Id);
             if (attachedModel == null)
                 attachedModel = dbSet.Attach(model);
             else
                 context.Entry(attachedModel).CurrentValues.SetValues(model);
 
-            var entry = context.Entry(attachedModel);
+            DbEntityEntry<TModel> entry = context.Entry(attachedModel);
             entry.State = EntityState.Modified;
             entry.Property(property => property.EntityDate).IsModified = false;
         }

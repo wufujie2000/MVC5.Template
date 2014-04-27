@@ -32,8 +32,8 @@ namespace Template.Data.Logging
 
         public LoggableEntry(DbEntityEntry entry)
         {
-            var properties = new List<LoggableEntryProperty>();
-            var propertyNames = entry.State == EntityState.Deleted
+            List<LoggableEntryProperty> properties = new List<LoggableEntryProperty>();
+            IEnumerable<String> propertyNames = entry.State == EntityState.Deleted
                 ? entry.GetDatabaseValues().PropertyNames
                 : entry.CurrentValues.PropertyNames;
 

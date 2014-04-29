@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
@@ -51,12 +52,12 @@ namespace Template.Components.Services
                 .Repository<RolePrivilege>()
                 .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
-            // TODO: Change to IEnumerable<Privilege> type
-            var allPrivileges = UnitOfWork
+            
+            IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
                 .Repository<Privilege>()
                 .Query()
                 .ToList()
-                .Select(privilege => new
+                .Select(privilege => new Privilege
                 {
                     Id = privilege.Id,
                     Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
@@ -66,13 +67,13 @@ namespace Template.Components.Services
                 .GroupBy(privilege => privilege.Area)
                 .OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller);
 
-            foreach (var areaPrivilege in allPrivileges)
+            foreach (IGrouping<String, Privilege> areaPrivilege in allPrivileges)
             {
                 TreeNode areaNode = new TreeNode(areaPrivilege.Key);
-                foreach (var controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
+                foreach (IGrouping<String, Privilege> controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
                 {
                     TreeNode controllerNode = new TreeNode(controllerPrivilege.Key);
-                    foreach (var actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
+                    foreach (IGrouping<String, Privilege> actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
                         controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
 
                     if (areaNode.Name == null)

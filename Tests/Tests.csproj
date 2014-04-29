@@ -105,8 +105,8 @@
       <DependentUpon>201403230733409_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Integration\Database\InitialDataTests.cs" />
-    <Compile Include="Objects\Components\Services\TestModel.cs" />
-    <Compile Include="Objects\Components\Services\TestView.cs" />
+    <Compile Include="Objects\Models\TestModel.cs" />
+    <Compile Include="Objects\Views\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
     <Compile Include="Unit\Controllers\BaseControllerStub.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistStub.cs" />

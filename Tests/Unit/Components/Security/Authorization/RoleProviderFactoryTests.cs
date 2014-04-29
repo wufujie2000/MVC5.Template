@@ -16,7 +16,6 @@ namespace Template.Tests.Unit.Security
             RoleProviderFactory.SetInstance(expected);
 
             IRoleProvider actual = RoleProviderFactory.Instance;
-            RoleProviderFactory.SetInstance(null);
 
             Assert.AreEqual(expected, actual);
         }

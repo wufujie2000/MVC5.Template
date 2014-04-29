@@ -69,6 +69,7 @@ namespace Template.Tests.Unit.Components.Services
         public void CanLogin_CanNotLoginWithInvalidModelState()
         {
             service.ModelState.AddModelError("Key", "ErrorMesages");
+
             Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAccountView()));
         }
 
@@ -109,12 +110,13 @@ namespace Template.Tests.Unit.Components.Services
         public void Login_SetsAccountId()
         {
             AccountView accountView = ObjectFactory.CreateAccountView();
-            String expectedId = accountView.Id;
+            String expected = accountView.Id;
             accountView.Id = null;
 
             service.Login(accountView);
+            String actual = accountView.Id;
 
-            Assert.AreEqual(expectedId, accountView.Id);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -122,10 +124,11 @@ namespace Template.Tests.Unit.Components.Services
         {
             AccountView accountView = ObjectFactory.CreateAccountView();
             service.Login(accountView);
+            
+            DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
+            DateTime expected = DateTime.Now.AddMonths(1).Date;
 
-            DateTime expectedExpireDate = DateTime.Now.AddMonths(1).Date;
-
-            Assert.AreEqual(expectedExpireDate, HttpContext.Current.Response.Cookies[0].Expires.Date);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -155,8 +158,10 @@ namespace Template.Tests.Unit.Components.Services
             service.Login(accountView);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            String expected = accountView.Id;
+            String actual = ticket.Name;
 
-            Assert.AreEqual(accountView.Id, ticket.Name);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -170,7 +175,9 @@ namespace Template.Tests.Unit.Components.Services
             service.Login(accountView);
             service.Logout();
 
-            Assert.Less(HttpContext.Current.Response.Cookies[0].Expires, DateTime.Now);
+            DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;
+
+            Assert.That(cookieExpirationDate, Is.LessThan(DateTime.Now));
         }
 
         #endregion
@@ -188,9 +195,7 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Person>().Remove(person);
-
+            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 

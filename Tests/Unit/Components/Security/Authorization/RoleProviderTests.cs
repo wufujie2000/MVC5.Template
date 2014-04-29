@@ -21,15 +21,8 @@ namespace Template.Tests.Unit.Security
         {
             context = new TestingContext();
             provider = new RoleProvider(new UnitOfWork(context));
-        }
 
-        [TearDown]
-        public void TearDown()
-        {
             TearDownData();
-
-            context.Dispose();
-            provider.Dispose();
         }
 
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -126,16 +119,9 @@ namespace Template.Tests.Unit.Security
         }
         private void TearDownData()
         {
-            context = new TestingContext();
-
-            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Person>().Remove(person);
-
-            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Role>().Remove(role);
-            // TODO: Change Context.Set<T>().Remove to RemoveRange
-            foreach (Privilege privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Privilege>().Remove(privilege);
+            context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
 
             context.SaveChanges();
         }

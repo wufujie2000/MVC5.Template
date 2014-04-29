@@ -31,9 +31,7 @@ namespace Template.Tests.Unit.Components.Services
         [TearDown]
         public void TearDown()
         {
-            foreach (TestModel model in context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<TestModel>().Remove(model);
-
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
             service.Dispose();
             context.Dispose();

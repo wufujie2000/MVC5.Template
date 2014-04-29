@@ -266,18 +266,10 @@ namespace Template.Tests.Unit.Components.Services
         }
         private void TearDownData()
         {
-            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Person>().Remove(person);
-
-            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Role>().Remove(role);
-
-            foreach (Privilege privilege in context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Privilege>().Remove(privilege);
-
-            foreach (Language language in context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Language>().Remove(language);
-
+            context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Language>().RemoveRange(context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 

@@ -12,8 +12,8 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString ProfileLink(this HtmlHelper html)
         {
-            TagBuilder icon = new TagBuilder("i");
             TagBuilder span = new TagBuilder("span");
+            TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-user");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Profile");

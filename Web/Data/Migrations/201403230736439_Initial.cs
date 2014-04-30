@@ -18,7 +18,7 @@ namespace Template.Data.Migrations
                         PersonId = c.String(nullable: false, maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
                 .Index(t => t.PersonId);
             
@@ -33,7 +33,7 @@ namespace Template.Data.Migrations
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.RoleId);
             
@@ -45,7 +45,7 @@ namespace Template.Data.Migrations
                         Name = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.RolePrivileges",
@@ -56,7 +56,7 @@ namespace Template.Data.Migrations
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId)
@@ -72,7 +72,7 @@ namespace Template.Data.Migrations
                         Action = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.Languages",
@@ -83,7 +83,7 @@ namespace Template.Data.Migrations
                         Name = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.Logs",
@@ -93,7 +93,7 @@ namespace Template.Data.Migrations
                         Message = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id, clustered: false);
             
         }
         

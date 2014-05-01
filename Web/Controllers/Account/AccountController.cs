@@ -37,7 +37,7 @@ namespace Template.Controllers.Account
 
         [HttpGet]
         [AllowUnauthorized]
-        public ActionResult Logout()
+        public RedirectToRouteResult Logout()
         {
             Service.Logout();
 

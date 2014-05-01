@@ -13,13 +13,13 @@ namespace Template.Controllers.Administration
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View(Service.GetViews()); // TODO: Change ActionResult to ViewResult and remove ViewResult casting in tests
         }
 
         [HttpGet]
-        public ActionResult Create()
+        public ViewResult Create()
         {
             RoleView role = new RoleView();
             Service.SeedPrivilegesTree(role);
@@ -40,13 +40,13 @@ namespace Template.Controllers.Administration
         }
 
         [HttpGet]
-        public ActionResult Details(String id)
+        public ViewResult Details(String id)
         {
             return View(Service.GetView(id));
         }
 
         [HttpGet]
-        public ActionResult Edit(String id)
+        public ViewResult Edit(String id)
         {
             return View(Service.GetView(id));
         }
@@ -64,7 +64,7 @@ namespace Template.Controllers.Administration
         }
 
         [HttpGet]
-        public ActionResult Delete(String id)
+        public ViewResult Delete(String id)
         {
             return View(Service.GetView(id));
         }

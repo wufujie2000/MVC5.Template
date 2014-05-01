@@ -42,7 +42,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         {
             IEnumerable<UserView> expected = new[] { user };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
-            Object actual = (controller.Index() as ViewResult).Model;
+            Object actual = controller.Index().Model;
 
             Assert.AreEqual(expected, actual);
         }
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_ReturnsEmptyUserView()
         {
-            UserView actual = (controller.Create() as ViewResult).Model as UserView;
+            UserView actual = controller.Create().Model as UserView;
 
             Assert.IsNotNull(actual.Id);
             Assert.IsNull(actual.Person);

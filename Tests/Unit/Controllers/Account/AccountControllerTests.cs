@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
 using System.Web.Mvc;
 using Template.Components.Services;
 using Template.Controllers.Account;
@@ -90,9 +91,10 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Logout_RedirectsToLogin()
         {
-            RedirectToRouteResult result = controller.Logout() as RedirectToRouteResult;
+            Object expected = "Login";
+            Object actual = controller.Logout().RouteValues["action"];
 
-            Assert.AreEqual("Login", result.RouteValues["action"]);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -42,7 +42,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         {
             IEnumerable<RoleView> expected = new[] { role };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
-            Object actual = (controller.Index() as ViewResult).Model;
+            Object actual = controller.Index().Model;
 
             Assert.AreEqual(expected, actual);
         }
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_ReturnsEmptyRoleView()
         {
-            RoleView actual = (controller.Create() as ViewResult).Model as RoleView;
+            RoleView actual = controller.Create().Model as RoleView;
 
             Assert.IsNull(actual.Name);
             Assert.IsNotNull(actual.Id);
@@ -64,7 +64,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_SeedsNewPrivilegesTree()
         {
-            RoleView actual = (controller.Create() as ViewResult).Model as RoleView;
+            RoleView actual = controller.Create().Model as RoleView;
 
             serviceMock.Verify(mock => mock.SeedPrivilegesTree(actual), Times.Once());
         }
@@ -117,7 +117,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsRoleView()
         {
-            RoleView actual = (controller.Details("Test") as ViewResult).Model as RoleView;
+            RoleView actual = controller.Details("Test").Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }
@@ -129,7 +129,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsRoleView()
         {
-            RoleView actual = (controller.Edit("Test") as ViewResult).Model as RoleView;
+            RoleView actual = controller.Edit("Test").Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }
@@ -182,7 +182,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Delete_ReturnsRoleView()
         {
-            RoleView actual = (controller.Delete("Test") as ViewResult).Model as RoleView;
+            RoleView actual = controller.Delete("Test").Model as RoleView;
 
             Assert.AreEqual(role, actual);
         }

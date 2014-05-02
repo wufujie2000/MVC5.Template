@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Template.Components.Mvc.Adapters;
 using Template.Resources.Shared;
-using Template.Tests.Unit.Components.Mvc.Providers;
 
 namespace Template.Tests.Unit.Components.Mvc.Adapters
 {
@@ -17,7 +16,7 @@ namespace Template.Tests.Unit.Components.Mvc.Adapters
         {
             requiredAttribute = new RequiredAttribute();
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(ProviderModel), "Id"); // TODO: Remove ProviderModel usage
+                .GetMetadataForProperty(null, typeof(RequiredAdapterModel), "Id");
             new RequiredAdapter(metadata, new ControllerContext(), requiredAttribute);
         }
 

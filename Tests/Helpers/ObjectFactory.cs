@@ -24,6 +24,22 @@ namespace Template.Tests.Helpers
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
             };
         }
+        public static UserView CreateUserView(Int32 instanceNumber = 1)
+        {
+            return new UserView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Person = new PersonView()
+                {
+                    LastName = "LastName" + instanceNumber.ToString(),
+                    FirstName = "FirstName" + instanceNumber.ToString(),
+                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
+                },
+
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                Password = "Password1"
+            };
+        }
         public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
         {
             return new ProfileView()
@@ -44,22 +60,6 @@ namespace Template.Tests.Helpers
             return new AccountView()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Password = "Password1"
-            };
-        }
-        public static UserView CreateUserView(Int32 instanceNumber = 1)
-        {
-            return new UserView()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Person = new PersonView()
-                {
-                    LastName = "LastName" + instanceNumber.ToString(),
-                    FirstName = "FirstName" + instanceNumber.ToString(),
-                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
-                },
-
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password1"
             };

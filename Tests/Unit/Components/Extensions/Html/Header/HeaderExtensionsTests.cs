@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Template.Components.Extensions.Html;
 using Template.Resources;
 using Template.Tests.Helpers;
@@ -38,15 +39,20 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LanguageLink_FormsLanguageLink()
         {
+            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            String controller = routeValues["controller"].ToString();
+            String action = routeValues["action"].ToString();
+            String area = routeValues["area"].ToString();
+
             String expected = String.Format("<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
                 + "<i class=\"fa fa-flag\"></i> {0} <span class=\"caret\"></span></a>"
                 + "<ul class=\"dropdown-menu\" role=\"menu\"><li>"
                 + "<a href=\"{1}\"><img src='/Images/Flags/en-GB.gif' /> English</a></li><li>"
                 + "<a href=\"{2}\"><img src='/Images/Flags/lt-LT.gif' /> Lietuvių</a></li></ul>",
                 ResourceProvider.GetActionTitle("Language"),
-                new UrlHelper(html.ViewContext.RequestContext).Action("Test", new { controller = "Test", area = String.Empty }),
-                new UrlHelper(html.ViewContext.RequestContext).Action("Test", new { language = "lt-LT", controller = "Test", area = String.Empty }));
-            // TODO: Find a normal way to test larger htmls
+                new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area }),
+                new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area }));
+            
             Assert.AreEqual(expected, html.LanguageLink().ToString());
         }
 

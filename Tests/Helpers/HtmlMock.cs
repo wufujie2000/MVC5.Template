@@ -23,14 +23,14 @@ namespace Template.Tests.Helpers
         {
             HttpMock = new HttpMock();
             Mock<ControllerContext> controllerContextMock = new Mock<ControllerContext>(
-                new Mock<RequestContext>(HttpMock.HttpContextBase, new RouteData()) { CallBase = true }.Object,
+                HttpMock.HttpContext.Request.RequestContext,
                 new Mock<ControllerBase>() { CallBase = true }.Object);
 
             TempDataDictionary tempDataDictionary = new TempDataDictionary();
             Mock<ViewContext> viewContextMock = new Mock<ViewContext>(controllerContextMock.Object, new Mock<IView>().Object,
                 new ViewDataDictionary(), tempDataDictionary, new StringWriter()) { CallBase = true };
             viewContextMock.Object.ClientValidationEnabled = true;
-
+            
             Mock<IViewDataContainer> viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
             viewDataContainerMock.Setup(mock => mock.ViewData).Returns(viewContextMock.Object.ViewData);
 

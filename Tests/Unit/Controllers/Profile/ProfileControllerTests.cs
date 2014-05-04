@@ -3,9 +3,9 @@ using NUnit.Framework;
 using System;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Services;
 using Template.Controllers.Profile;
 using Template.Objects;
+using Template.Services;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Profile

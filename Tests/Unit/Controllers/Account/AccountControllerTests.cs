@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
-using Template.Components.Services;
 using Template.Controllers.Account;
 using Template.Objects;
+using Template.Services;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Account

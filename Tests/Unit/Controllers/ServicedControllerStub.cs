@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
-using Template.Components.Services;
 using Template.Controllers;
+using Template.Services;
 
 namespace Template.Tests.Unit.Controllers
 {

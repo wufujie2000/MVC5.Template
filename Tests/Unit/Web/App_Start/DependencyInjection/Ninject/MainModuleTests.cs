@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using System;
 using Template.Components.Security;
-using Template.Components.Services;
 using Template.Data.Core;
 using Template.Data.Logging;
+using Template.Services;
 using Template.Web.DependencyInjection.Ninject;
 
 namespace Template.Tests.Unit.Web.DependencyInjection.Ninject

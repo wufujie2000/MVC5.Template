@@ -117,11 +117,11 @@
     <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderFactoryTests.cs" />
-    <Compile Include="Unit\Components\Services\Account\AccountServiceTests.cs" />
-    <Compile Include="Unit\Components\Services\Administration\Roles\RolesServiceTests.cs" />
-    <Compile Include="Unit\Components\Services\Administration\Users\UsersServiceTests.cs" />
-    <Compile Include="Unit\Components\Services\Home\HomeServiceTests.cs" />
-    <Compile Include="Unit\Components\Services\Profile\ProfileServiceTests.cs" />
+    <Compile Include="Unit\Services\Account\AccountServiceTests.cs" />
+    <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
+    <Compile Include="Unit\Services\Administration\Users\UsersServiceTests.cs" />
+    <Compile Include="Unit\Services\Home\HomeServiceTests.cs" />
+    <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
     <Compile Include="Unit\Controllers\Account\AccountControllerTests.cs" />
@@ -165,8 +165,8 @@
     <Compile Include="Unit\Components\Mvc\Validators\DateValidatorTests.cs" />
     <Compile Include="Unit\Components\Mvc\Validators\NumberValidatorTests.cs" />
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
-    <Compile Include="Unit\Components\Services\BaseServiceTests.cs" />
-    <Compile Include="Unit\Components\Services\GenericServiceTests.cs" />
+    <Compile Include="Unit\Services\BaseServiceTests.cs" />
+    <Compile Include="Unit\Services\GenericServiceTests.cs" />
     <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Objects\Models\LogTests.cs" />
@@ -209,6 +209,10 @@
     <ProjectReference Include="..\Web\Resources\Resources.csproj">
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Services\Services.csproj">
+      <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
+      <Name>Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Web\Web.csproj">
       <Project>{b201b326-86eb-4abd-aebb-0dde4c4a5366}</Project>

@@ -265,6 +265,10 @@
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="Services\Services.csproj">
+      <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />

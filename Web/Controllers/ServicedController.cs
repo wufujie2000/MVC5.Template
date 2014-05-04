@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using Template.Components.Alerts;
-using Template.Components.Services;
+using Template.Services;
 
 namespace Template.Controllers
 {

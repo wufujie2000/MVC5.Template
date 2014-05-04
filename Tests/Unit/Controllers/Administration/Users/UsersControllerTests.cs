@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Components.Services;
 using Template.Controllers.Administration;
 using Template.Objects;
+using Template.Services;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Administration

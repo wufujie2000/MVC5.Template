@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using Template.Components.Security;
-using Template.Components.Services;
+using Template.Services;
 
 namespace Template.Controllers.Home
 {

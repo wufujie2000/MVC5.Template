@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
 using Template.Components.Security;
-using Template.Components.Services;
 using Template.Objects;
+using Template.Services;
 
 namespace Template.Controllers.Profile
 {

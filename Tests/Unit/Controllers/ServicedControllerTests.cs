@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Components.Alerts;
-using Template.Components.Services;
+using Template.Services;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers

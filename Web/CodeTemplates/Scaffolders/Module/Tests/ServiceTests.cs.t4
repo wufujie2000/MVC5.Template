@@ -3,12 +3,12 @@
 using NUnit.Framework;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Services;
 using Template.Data.Core;
 using Template.Objects;
+using Template.Services;
 using Template.Tests.Data;
 
-namespace Template.Tests.Unit.Components.Services
+namespace Template.Tests.Unit.Services
 {
     [TestFixture]
     public class <#= Model.Name #>

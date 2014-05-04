@@ -1,8 +1,8 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System.Web.Mvc;
-using Template.Components.Services;
 using Template.Controllers.Home;
+using Template.Services;
 
 namespace Template.Tests.Unit.Controllers.Home
 {

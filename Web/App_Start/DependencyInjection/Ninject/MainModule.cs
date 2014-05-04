@@ -1,8 +1,8 @@
 ﻿using Ninject.Modules;
 using Template.Components.Security;
-using Template.Components.Services;
 using Template.Data.Core;
 using Template.Data.Logging;
+using Template.Services;
 
 namespace Template.Web.DependencyInjection.Ninject
 {

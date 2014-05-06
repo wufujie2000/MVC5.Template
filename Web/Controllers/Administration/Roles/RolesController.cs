@@ -29,7 +29,7 @@ namespace Template.Controllers.Administration
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RoleView role)
+        public ActionResult Create([Bind(Exclude = "Id")] RoleView role)
         {
             if (!Service.CanCreate(role))
                 return View();

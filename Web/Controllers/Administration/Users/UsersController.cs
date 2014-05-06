@@ -26,7 +26,7 @@ namespace Template.Controllers.Administration
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserView user)
+        public ActionResult Create([Bind(Exclude = "Id")] UserView user)
         {
             if (!Service.CanCreate(user))
                 return View();

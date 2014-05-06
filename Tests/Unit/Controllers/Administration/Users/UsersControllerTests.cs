@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Controllers.Administration;
@@ -65,6 +66,23 @@ namespace Template.Tests.Unit.Controllers.Administration
         #endregion
 
         #region Method: Create(UserView user)
+
+        [Test]
+        public void Create_CanNotOverpostId()
+        {
+            MethodInfo createMethod = controller
+                .GetType()
+                .GetMethods()
+                .First(method =>
+                    method.Name == "Create" &&
+                    method.GetCustomAttribute<HttpPostAttribute>() != null);
+
+            CustomAttributeData customParameterAttribute = createMethod.GetParameters().First().CustomAttributes.First();
+
+            Assert.AreEqual(typeof(BindAttribute), customParameterAttribute.AttributeType);
+            Assert.AreEqual("Exclude", customParameterAttribute.NamedArguments.First().MemberName);
+            Assert.AreEqual("Id", customParameterAttribute.NamedArguments.First().TypedValue.Value);
+        }
 
         [Test]
         public void Create_ReturnsEmptyViewIfCanNotCreate()

@@ -19,6 +19,14 @@ namespace Template.Tests.Unit.Components.Datalists
             }
         }
 
+        public BaseDatalistStub() : base()
+        {
+        }
+        public BaseDatalistStub(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         public String BaseGetColumnHeader(PropertyInfo property)
         {
             return GetColumnHeader(property);

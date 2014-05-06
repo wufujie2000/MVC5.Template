@@ -1,5 +1,4 @@
-﻿using AutoMapper.QueryableExtensions;
-using Datalist;
+﻿using Datalist;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Web;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Datalists
@@ -16,6 +16,7 @@ namespace Template.Tests.Unit.Components.Datalists
     public class BaseDatalistTests
     {
         private BaseDatalistStub<Role, RoleView> datalist;
+        private IUnitOfWork unitOfWork;
         private HttpRequest request;
 
         [SetUp]
@@ -24,30 +25,32 @@ namespace Template.Tests.Unit.Components.Datalists
             HttpMock httpMock = new HttpMock();
             request = httpMock.HttpContext.Request;
             HttpContext.Current = httpMock.HttpContext;
+            unitOfWork = new UnitOfWork(new TestingContext());
             request.RequestContext.RouteData.Values["language"] = "lt-LT";
 
-            datalist = new BaseDatalistStub<Role, RoleView>();
+            datalist = new BaseDatalistStub<Role, RoleView>(unitOfWork);
         }
 
         [TearDown]
         public void TearDown()
         {
             HttpContext.Current = null;
+            unitOfWork.Dispose();
         }
 
         #region Constructor: BaseDatalist()
 
         [Test]
-        public void BaseDatalist_UnitOfWorkIsNotNull()
+        public void BaseDatalist_UnitOfWorkIsNull()
         {
-            Assert.IsNotNull(datalist.BaseUnitOfWork);
+            Assert.IsNull(new BaseDatalistStub<Role, RoleView>().BaseUnitOfWork);
         }
 
         [Test]
         public void BaseDatalist_SetsDialogTitle()
         {
             String expected = ResourceProvider.GetDatalistTitle<Role>();
-            String actual = datalist.DialogTitle;
+            String actual = new BaseDatalistStub<Role, RoleView>().DialogTitle;
 
             Assert.AreEqual(expected, actual);
         }
@@ -55,7 +58,7 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsDatalistUrl()
         {
-            String actual = datalist.DatalistUrl;
+            String actual = new BaseDatalistStub<Role, RoleView>().DatalistUrl;
             String expected = String.Format("{0}://{1}/{2}/{3}/{4}",
                 request.Url.Scheme,
                 request.Url.Authority,
@@ -78,6 +81,19 @@ namespace Template.Tests.Unit.Components.Datalists
                 request.Url.Authority,
                 AbstractDatalist.Prefix,
                 typeof(Role).Name);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Constructor: BaseDatalist(IUnitOfWork unitOfWork)
+
+        [Test]
+        public void BaseDatalist_SetsUnitOfWork()
+        {
+            IUnitOfWork actual = new BaseDatalistStub<Role, RoleView>(unitOfWork).BaseUnitOfWork;
+            IUnitOfWork expected = unitOfWork;
 
             Assert.AreEqual(expected, actual);
         }
@@ -273,7 +289,7 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_GetsModelsProjectedToViews()
         {
-            IQueryable<RoleView> expected = new Context().Set<Role>().Project().To<RoleView>();
+            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().Query<RoleView>();
             IQueryable<RoleView> actual = datalist.BaseGetModels();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);

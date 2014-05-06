@@ -7,7 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using Template.Components.Datalists;
 using Template.Controllers.Datalist;
+using Template.Data.Core;
 using Template.Objects;
+using Template.Tests.Data;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Datalists
@@ -24,7 +26,7 @@ namespace Template.Tests.Unit.Controllers.Datalists
         [SetUp]
         public void SetUp()
         {
-            controllerMock = new Mock<DatalistController>() { CallBase = true };
+            controllerMock = new Mock<DatalistController>(new UnitOfWork(new TestingContext())) { CallBase = true };
             HttpContext.Current = new HttpMock().HttpContext;
             datalistMock = new Mock<AbstractDatalist>();
             controller = controllerMock.Object;

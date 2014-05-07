@@ -117,10 +117,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Template.Data.Core.Context.mdf" />
-    <Content Include="App_Data\Template.Data.Core.Context_log.ldf">
-      <DependentUpon>Template.Data.Core.Context.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\Css\Bootstrap\bootstrap.css" />
     <Content Include="Content\Css\FontAwesome\font-awesome.css" />
     <Content Include="Content\Css\GridMvc\gridmvc.css" />

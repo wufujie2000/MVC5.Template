@@ -102,10 +102,10 @@ namespace Template.Data.Migrations
         {
             List<Account> accounts = new List<Account>()
             {
-                new Account() { Username = "admin", Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq",
+                new Account() { Username = "admin", Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
                     Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id },
-                new Account() { Username = "test", Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm",
+                new Account() { Username = "test", Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm", // test
                     PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id,
                     Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
             };

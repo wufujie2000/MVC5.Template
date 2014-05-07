@@ -29,7 +29,7 @@ namespace <#= Model.Namespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(<#= Model.View #> <#= Model.ModelName #>)
+        public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
         {
             if (!Service.CanCreate(<#= Model.ModelName #>))
                 return View();

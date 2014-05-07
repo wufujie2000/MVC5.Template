@@ -75,7 +75,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: Create(RoleView role)
 
         [Test]
-        public void Create_CanNotOverpostId()
+        public void Create_ProtectsFromOverpostingId()
         {
             MethodInfo createMethod = controller
                 .GetType()

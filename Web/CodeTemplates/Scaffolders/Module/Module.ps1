@@ -10,7 +10,7 @@ param(
 $TestsProject = "Tests"
 $RazorViewProject = "Web"
 $ObjectsProject = "Objects"
-$ServiceProject = "Components"
+$ServiceProject = "Services"
 $ControllerProject = "Controllers"
 
 $ControllerNamespace = "Template.Controllers"
@@ -35,17 +35,17 @@ If ($AreaName)
     $ControllerAreaDir = "$AreaName"
     $ModelAreaDir = "Models\$AreaName"
     $RazorViewAreaDir = "Views\$AreaName"
-    $ServicesAreaDir = "Services\$AreaName"
+    $ServicesAreaDir = "$AreaName"
     $ControllerTestsAreaDir = "Unit\Controllers\$AreaName"
-    $ServiceTestsAreaDir = "Unit\Components\Services\$AreaName"
+    $ServiceTestsAreaDir = "Unit\Services\$AreaName"
     
     $ViewControllerDir = "Views\$AreaName\$ControllerName"
     $ControllerControllerDir = "$AreaName\$ControllerName"
     $ModelControllerDir = "Models\$AreaName\$ControllerName"
     $RazorViewControllerDir = "Views\$AreaName\$ControllerName"
-    $ServicesControllerDir = "Services\$AreaName\$ControllerName"
+    $ServicesControllerDir = "$AreaName\$ControllerName"
     $ControllerTestsControllerDir = "Unit\Controllers\$AreaName\$ControllerName"
-    $ServiceTestsControllerDir = "Unit\Components\Services\$AreaName\$ControllerName"
+    $ServiceTestsControllerDir = "Unit\Services\$AreaName\$ControllerName"
 }
 Else
 {
@@ -53,17 +53,17 @@ Else
     $ControllerAreaDir = "$ControllerName"
     $ModelAreaDir = "Models\$ControllerName"
     $RazorViewAreaDir = "Views\$ControllerName"
-    $ServicesAreaDir = "Services\$ControllerName"
+    $ServicesAreaDir = "$ControllerName"
     $ControllerTestsAreaDir = "Unit\Controllers\$ControllerName"
-    $ServiceTestsAreaDir = "Unit\Components\Services\$ControllerName"
+    $ServiceTestsAreaDir = "Unit\Services\$ControllerName"
 
     $ViewControllerDir = "Views\$ControllerName"
     $ControllerControllerDir = "$ControllerName"
     $ModelControllerDir = "Models\$ControllerName"
     $RazorViewControllerDir = "Views\$ControllerName"
-    $ServicesControllerDir = "Services\$ControllerName"
+    $ServicesControllerDir = "$ControllerName"
     $ControllerTestsControllerDir = "Unit\Controllers\$ControllerName"
-    $ServiceTestsControllerDir = "Unit\Components\Services\$ControllerName"
+    $ServiceTestsControllerDir = "Unit\Services\$ControllerName"
 }
 
 $ViewPath = "Views\$ElementPath\$View"
@@ -74,10 +74,10 @@ $DeleteViewPath = "Views\$ElementPath\Delete"
 $DetailsViewPath = "Views\$ElementPath\Details"
 $ControllerPath = "$ElementPath\$Controller"
 $ModelPath = "Models\$ElementPath\$ModelName"
-$ServicePath = "Services\$ElementPath\$Service"
-$IServicePath = "Services\$ElementPath\$IService"
+$ServicePath = "$ElementPath\$Service"
+$IServicePath = "$ElementPath\$IService"
 $ControllerTestsPath = "Unit\Controllers\$ElementPath\$ControllerTests"
-$ServiceTestsPath = "Unit\Components\Services\$ElementPath\$ServiceTests"
+$ServiceTestsPath = "Unit\Services\$ElementPath\$ServiceTests"
 
 $ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 . $ScriptDir\ModuleFunctions.ps1
@@ -252,7 +252,7 @@ Else
 		    Name = $ControllerTests; `
 		    View = $View `
 	    } `
-        -SuccessMessage "Added $ControllerTests\{0}" `
+        -SuccessMessage "Added $TestsProject\{0}" `
         -TemplateFolders $TemplateFolders `
 	    -CodeLanguage $CodeLanguage `
 	    -Project $TestsProject

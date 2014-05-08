@@ -28,10 +28,10 @@ namespace Template.Controllers
         }
         protected virtual ActionResult RedirectToLocal(String url)
         {
-            if (Url.IsLocalUrl(url))
-                return Redirect(url);
+            if (!Url.IsLocalUrl(url))
+                return RedirectToDefault();
 
-            return RedirectToDefault();
+            return Redirect(url);
         }
         protected virtual RedirectToRouteResult RedirectToDefault()
         {

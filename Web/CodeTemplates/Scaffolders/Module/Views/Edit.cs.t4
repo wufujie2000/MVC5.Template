@@ -10,7 +10,6 @@
 
         // TODO: Add editable model properties
 
-        @Html.HiddenFor(model => model.Id)
         using (Html.FormActions())
         {
             @Html.FormSubmit()

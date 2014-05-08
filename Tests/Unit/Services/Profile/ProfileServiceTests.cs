@@ -287,6 +287,22 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
+        #region Method: AccountExists(String accountId)
+
+        [Test]
+        public void AccountExists_ReturnsTrueIfAccountExistsInDatabase()
+        {
+            Assert.IsTrue(service.AccountExists(account.Id));
+        }
+
+        [Test]
+        public void AccountExists_ReturnsFalseIfAccountDoesNotExistInDatabase()
+        {
+            Assert.IsFalse(service.AccountExists("Test"));
+        }
+
+        #endregion
+
         #region Test helpers
 
         private void SetUpData()

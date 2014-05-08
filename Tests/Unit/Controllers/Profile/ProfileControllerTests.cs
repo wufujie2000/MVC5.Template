@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
-using System.Web;
+using System.Security.Principal;
 using System.Web.Mvc;
 using Template.Controllers.Profile;
 using Template.Objects;
@@ -15,38 +15,63 @@ namespace Template.Tests.Unit.Controllers.Profile
     {
         private Mock<IProfileService> serviceMock;
         private ProfileController controller;
-        private HttpContextBase httpContext;
+        private Mock<IIdentity> identityMock;
         private ProfileView profile;
 
         [SetUp]
         public void SetUp()
         {
-            profile = ObjectFactory.CreateProfileView();
             serviceMock = new Mock<IProfileService>();
+            profile = ObjectFactory.CreateProfileView();
             controller = new ProfileController(serviceMock.Object);
 
-            httpContext = new HttpMock().HttpContextBase;
+            HttpMock httpMock = new HttpMock();
+            identityMock = httpMock.IdentityMock;
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpContext;
+            controller.ControllerContext.HttpContext = httpMock.HttpContextBase;
 
             serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
-            serviceMock.Setup(mock => mock.GetView(httpContext.User.Identity.Name)).Returns(profile);
+            serviceMock.Setup(mock => mock.GetView(identityMock.Object.Name)).Returns(profile);
+            serviceMock.Setup(mock => mock.AccountExists(identityMock.Object.Name)).Returns(true);
         }
 
         #region Method: Edit()
 
         [Test]
+        public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExistAnymore()
+        {
+            identityMock.Setup<String>(mock => mock.Name).Returns("NotExistingId");
+
+            RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+        }
+
+        [Test]
         public void Edit_ReturnsCurrentProfileView()
         {
             ProfileView actual = (controller.Edit() as ViewResult).Model as ProfileView;
-
-            serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
+            // TODO: Change test to test actual view returned from service get view method
+            // TODO: Remove other occurences of misused mock.Verify calls
+            serviceMock.Verify(mock => mock.GetView(identityMock.Object.Name), Times.Once());
             Assert.AreEqual(profile, actual);
         }
 
         #endregion
 
         #region Method: Edit(ProfileView profile)
+
+        [Test]
+        public void Edit_OnPostRedirectsToLogoutIfAccountDoesNotExistAnymore()
+        {
+            identityMock.Setup<String>(mock => mock.Name).Returns("NotExistingId");
+
+            RedirectToRouteResult actual = controller.Edit(profile) as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void Edit_CallsServiceEdit()
@@ -65,6 +90,17 @@ namespace Template.Tests.Unit.Controllers.Profile
         #endregion
 
         #region Method: Delete()
+
+        [Test]
+        public void Delete_RedirectsToLogoutIfAccountDoesNotExistAnymore()
+        {
+            identityMock.Setup<String>(mock => mock.Name).Returns("NotExistingId");
+
+            RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void Delete_CallsServiceAddDeleteDisclaimerMessage()
@@ -88,13 +124,24 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             ProfileView actual = (controller.Delete() as ViewResult).Model as ProfileView;
 
-            serviceMock.Verify(mock => mock.GetView(httpContext.User.Identity.Name), Times.Once());
+            serviceMock.Verify(mock => mock.GetView(identityMock.Object.Name), Times.Once());
             Assert.AreEqual(profile, actual);
         }
 
         #endregion
 
         #region Method: DeleteConfirmed(ProfileView profile)
+
+        [Test]
+        public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExistAnymore()
+        {
+            identityMock.Setup<String>(mock => mock.Name).Returns("NotExistingId");
+
+            RedirectToRouteResult actual = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void DeleteConfirmed_ReturnsViewIfCanNotDelete()
@@ -110,17 +157,17 @@ namespace Template.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
             controller.DeleteConfirmed(profile);
 
-            serviceMock.Verify(mock => mock.Delete(httpContext.User.Identity.Name), Times.Once());
+            serviceMock.Verify(mock => mock.Delete(identityMock.Object.Name), Times.Once());
         }
 
         [Test]
         public void DeleteConfirmed_RedirectsToAccountLogout()
         {
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(true);
-            RedirectToRouteResult result = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", result.RouteValues["action"]);
-            Assert.AreEqual("Account", result.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Account", actual.RouteValues["controller"]);
         }
 
         #endregion

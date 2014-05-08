@@ -24,6 +24,7 @@ namespace Template.Services
 
         public override void Create(RoleView view)
         {
+            // TODO: Add validation for same role names
             CreateRole(view);
             CreateRolePrivileges(view);
             UnitOfWork.Commit();

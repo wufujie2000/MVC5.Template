@@ -45,7 +45,6 @@ namespace Template.Services
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
         }
-
         public override void Delete(String id)
         {
             UnitOfWork.Repository<Person>().Delete(id);
@@ -55,6 +54,11 @@ namespace Template.Services
         public void AddDeleteDisclaimerMessage()
         {
             AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
+        }
+
+        public virtual Boolean AccountExists(String accountId)
+        {
+            return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
 
         private Boolean IsUniqueUsername(ProfileView profile)

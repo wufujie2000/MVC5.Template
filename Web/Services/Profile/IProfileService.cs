@@ -7,6 +7,8 @@ namespace Template.Services
     {
         Boolean CanDelete(ProfileView profile);
 
+        Boolean AccountExists(String accountId);
+
         void AddDeleteDisclaimerMessage();
     }
 }

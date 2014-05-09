@@ -2,7 +2,7 @@
 
 namespace Template.Components.Security
 {
-    public class AllowUnauthorizedAttribute : Attribute
+    public sealed class AllowUnauthorizedAttribute : Attribute
     {
     }
 }

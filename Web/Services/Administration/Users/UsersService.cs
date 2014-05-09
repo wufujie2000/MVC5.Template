@@ -56,23 +56,23 @@ namespace Template.Services
             UnitOfWork.Commit();
         }
 
-        private Boolean IsUniqueUsername(UserView user)
+        private Boolean IsUniqueUsername(UserView view)
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
                 .Query(account =>
-                    account.Id != user.Id &&
-                    account.Username.ToUpper() == user.Username.ToUpper())
-                 .Any();
+                    account.Id != view.Id &&
+                    account.Username.ToUpper() == view.Username.ToUpper())
+                .Any();
 
             if (!isUnique)
                 ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
             
             return isUnique;
         }
-        private Boolean IsPasswordLegal(UserView user)
+        private Boolean IsPasswordLegal(UserView view)
         {
-            Boolean isLegal = Regex.IsMatch(user.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            Boolean isLegal = Regex.IsMatch(view.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
                 ModelState.AddModelError("Password", Validations.IllegalPassword);
 

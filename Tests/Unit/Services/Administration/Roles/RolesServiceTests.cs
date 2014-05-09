@@ -3,9 +3,11 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
+using Template.Resources.Views.RoleView;
 using Template.Services;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
@@ -25,6 +27,7 @@ namespace Template.Tests.Unit.Services
         {
             context = new TestingContext();
             serviceMock = new Mock<RolesService>(new UnitOfWork(context)) { CallBase = true };
+            serviceMock.Object.ModelState = new ModelStateDictionary();
             service = serviceMock.Object;
 
             TearDownData();
@@ -37,6 +40,64 @@ namespace Template.Tests.Unit.Services
             context.Dispose();
             service.Dispose();
         }
+
+        #region Method: CanCreate(UserView view)
+
+        [Test]
+        public void CanCreate_CanNotCreateWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(service.CanCreate(ObjectFactory.CreateRoleView()));
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateWithAlreadyTakenRoleName()
+        {
+            RoleView roleView = ObjectFactory.CreateRoleView();
+            roleView.Name = role.Name.ToLower();
+            roleView.Id += "1";
+
+            Assert.IsFalse(service.CanCreate(roleView));
+            Assert.AreEqual(service.ModelState["Name"].Errors[0].ErrorMessage, Validations.RoleNameIsAlreadyTaken);
+        }
+
+        [Test]
+        public void CanCreate_CanCreateValidUser()
+        {
+            Assert.IsTrue(service.CanCreate(ObjectFactory.CreateRoleView()));
+        }
+
+        #endregion
+
+        #region Method: CanEdit(UserView view)
+
+        [Test]
+        public void CanEdit_CanNotEditWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateRoleView()));
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditToAlreadyTakenUsername()
+        {
+            RoleView roleView = ObjectFactory.CreateRoleView();
+            roleView.Name = role.Name.ToLower();
+            roleView.Id += "1";
+
+            Assert.IsFalse(service.CanEdit(roleView));
+            Assert.AreEqual(service.ModelState["Name"].Errors[0].ErrorMessage, Validations.RoleNameIsAlreadyTaken);
+        }
+
+        [Test]
+        public void CanEdit_CanEditValidUser()
+        {
+            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateRoleView()));
+        }
+
+        #endregion
 
         #region Method: GetView(String id)
 

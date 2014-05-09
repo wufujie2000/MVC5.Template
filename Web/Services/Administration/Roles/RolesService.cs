@@ -4,6 +4,7 @@ using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
+using Template.Resources.Views.RoleView;
 
 namespace Template.Services
 {
@@ -12,6 +13,21 @@ namespace Template.Services
         public RolesService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
+        }
+
+        public override Boolean CanCreate(RoleView view)
+        {
+            Boolean isValid = base.CanCreate(view);
+            isValid &= IsUniqueRole(view);
+
+            return isValid;
+        }
+        public override Boolean CanEdit(RoleView view)
+        {
+            Boolean isValid = base.CanEdit(view);
+            isValid &= IsUniqueRole(view);
+
+            return isValid;
         }
 
         public override RoleView GetView(String id)
@@ -43,15 +59,15 @@ namespace Template.Services
             UnitOfWork.Commit();
         }
 
-        public virtual void SeedPrivilegesTree(RoleView role)
+        public virtual void SeedPrivilegesTree(RoleView view)
         {
             TreeNode rootNode = new TreeNode();
-            role.PrivilegesTree = new Tree();
-            role.PrivilegesTree.Nodes.Add(rootNode);
+            view.PrivilegesTree = new Tree();
+            view.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
-            role.PrivilegesTree.SelectedIds = UnitOfWork
+            view.PrivilegesTree.SelectedIds = UnitOfWork
                 .Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                .Query(rolePrivilege => rolePrivilege.RoleId == view.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
             
             IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
@@ -86,6 +102,20 @@ namespace Template.Services
                 if (areaNode.Name != null)
                     rootNode.Nodes.Add(areaNode);
             }
+        }
+
+        private Boolean IsUniqueRole(RoleView view)
+        {
+            Boolean isUnique = !UnitOfWork.Repository<Role>()
+                .Query(role =>
+                    role.Id != view.Id &&
+                    role.Name.ToUpper() == view.Name.ToUpper())
+                .Any();
+
+            if (!isUnique)
+                ModelState.AddModelError("Name", Validations.RoleNameIsAlreadyTaken);
+
+            return isUnique;
         }
 
         private void CreateRole(RoleView view)

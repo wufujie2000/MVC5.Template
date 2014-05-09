@@ -93,7 +93,7 @@ namespace Template.Tests.Helpers
             return new Role()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + instanceNumber.ToString()
+                Name = "Name" + TestId + instanceNumber.ToString()
             };
         }
         public static RoleView CreateRoleView(Int32 instanceNumber = 1)
@@ -101,7 +101,7 @@ namespace Template.Tests.Helpers
             return new RoleView()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + instanceNumber.ToString()
+                Name = "Name" + TestId + instanceNumber.ToString()
             };
         }
 

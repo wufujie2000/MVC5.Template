@@ -61,13 +61,13 @@
 .table .delete-action-link i {
   margin-top: 4.5px;
 }
-.table .text-cell {
+.table td.text-cell {
   text-align: left;
 }
-.table .date-cell {
+.table td.date-cell {
   text-align: center;
 }
-.table .number-cell {
+.table td.number-cell {
   text-align: right;
 }
 .table-striped > tbody > tr:nth-child(even) > td {

@@ -117,35 +117,42 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Css\Bootstrap\bootstrap.css" />
-    <Content Include="Content\Css\FontAwesome\font-awesome.css" />
-    <Content Include="Content\Css\GridMvc\gridmvc.css" />
-    <Content Include="Content\Css\JQueryUI\jquery-ui-1.10.4.custom.css" />
-    <Content Include="Content\Css\JsTree\jstree.css" />
-    <Content Include="Content\Css\Login\login.css" />
-    <Content Include="Content\Css\Select2\select2.css" />
-    <Content Include="Content\Css\Shared\alert.css" />
-    <Content Include="Content\Css\Shared\base.css" />
-    <Content Include="Content\Css\Shared\content.css" />
-    <Content Include="Content\Css\Shared\header.css" />
-    <Content Include="Content\Css\Shared\overrides.css" />
-    <Content Include="Content\Css\Shared\sidebar.css" />
-    <Content Include="Content\Css\Shared\table.css" />
-    <Content Include="Content\Css\Shared\widget-box.css" />
-    <Content Include="Content\Css\Datalist\datalist.css" />
-    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.svg" />
-    <Content Include="Content\Less\css\mixins.css" />
-    <Content Include="Content\Less\css\theme.css" />
-    <Content Include="Content\Less\Login\css\login.css" />
-    <Content Include="Content\Less\Shared\css\alert.css" />
-    <Content Include="Content\Less\Shared\css\base.css" />
-    <Content Include="Content\Less\Shared\css\content.css" />
-    <Content Include="Content\Less\Shared\css\header.css" />
-    <Content Include="Content\Less\Shared\css\overrides.css" />
-    <Content Include="Content\Less\Shared\css\sidebar.css" />
-    <Content Include="Content\Less\Shared\css\table.css" />
-    <Content Include="Content\Less\Shared\css\widget-box.css" />
+    <Content Include="Content\Bootstrap\bootstrap.css" />
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\FontAwesome\font-awesome.css" />
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\GridMvc\gridmvc.css" />
+    <Content Include="Content\JQueryUI\jquery-ui-1.10.4.custom.css" />
+    <Content Include="Content\JsTree\jstree.css" />
+    <Content Include="Content\Login\login.css">
+      <DependentUpon>login.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Select2\select2.css" />
+    <Content Include="Content\Datalist\datalist.css" />
+    <Content Include="Content\Shared\alert.css">
+      <DependentUpon>alert.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\base.css">
+      <DependentUpon>base.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\content.css">
+      <DependentUpon>content.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\header.css">
+      <DependentUpon>header.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\overrides.css">
+      <DependentUpon>overrides.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\sidebar.css">
+      <DependentUpon>sidebar.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\table.css">
+      <DependentUpon>table.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Shared\widget-box.css">
+      <DependentUpon>widget-box.less</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\Flags\en-GB.gif" />
@@ -228,17 +235,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\Fonts\Bootstrap\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.eot" />
-    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.ttf" />
-    <Content Include="Content\Fonts\FontAwesome\fontawesome-webfont.woff" />
-    <Content Include="Content\Fonts\FontAwesome\FontAwesome.otf" />
-    <Content Include="Content\Fonts\PTSans\PTSans-Bold.woff" />
-    <Content Include="Content\Fonts\PTSans\PTSans.woff" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Images\Flags\Flags page.url" />
   </ItemGroup>
   <ItemGroup>
@@ -295,41 +291,37 @@
     <Content Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\theme.less" />
+    <Content Include="Content\theme.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\alert.less" />
+    <Content Include="Content\Shared\alert.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\base.less" />
+    <Content Include="Content\Shared\base.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\content.less" />
+    <Content Include="Content\Shared\content.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\header.less" />
+    <Content Include="Content\Shared\header.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\overrides.less" />
+    <Content Include="Content\Shared\overrides.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\sidebar.less" />
+    <Content Include="Content\Shared\sidebar.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\table.less" />
+    <Content Include="Content\Shared\table.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Shared\widget-box.less" />
+    <Content Include="Content\Shared\widget-box.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\Login\login.less">
-      <Compile>True</Compile>
-      <Minify>True</Minify>
-      <OutputFolder>..\..\Css\Login</OutputFolder>
-    </Content>
+    <Content Include="Content\Login\login.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Less\mixins.less" />
+    <Content Include="Content\mixins.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Datalist.cshtml" />
@@ -375,6 +367,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\FontAwesome\Fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Shared\Fonts\PTSans-Bold.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Shared\Fonts\PTSans.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,14 +5,14 @@
     <title>@ResourceProvider.GetCurrentContentTitle()</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @Styles.Render("~/Content/Css/JQueryUI")
-    @Styles.Render("~/Content/Css/Bootstrap")
-    @Styles.Render("~/Content/Css/FontAwesome")
-    @Styles.Render("~/Content/Css/GridMvc")
-    @Styles.Render("~/Content/Css/JsTree")
-    @Styles.Render("~/Content/Css/Datalist")
-    @Styles.Render("~/Content/Css/Shared")
-    @Scripts.Render("~/Scripts/JQuery")
+    @Styles.Render("~/Content/JQueryUI/Bundle")
+    @Styles.Render("~/Content/Bootstrap/Bundle")
+    @Styles.Render("~/Content/FontAwesome/Bundle")
+    @Styles.Render("~/Content/GridMvc/Bundle")
+    @Styles.Render("~/Content/JsTree/Bundle")
+    @Styles.Render("~/Content/Datalist/Bundle")
+    @Styles.Render("~/Content/Shared/Bundle")
+    @Scripts.Render("~/Scripts/JQuery/Bundle")
 </head>
 <body>
     @Html.Partial("_Header")
@@ -37,17 +37,17 @@
     </div>
     @Html.Partial("_Footer")
 </body>
-    @Scripts.Render("~/Scripts/Globalize")
-    @Scripts.Render("~/Scripts/Bootstrap")
-    @Scripts.Render("~/Scripts/JQueryUI")
-    @Scripts.Render("~/Scripts/GridMvc")
-    @Scripts.Render("~/Scripts/JsTree")
-    @Scripts.Render("~/Scripts/Datalist")
+    @Scripts.Render("~/Scripts/Globalize/Bundle")
+    @Scripts.Render("~/Scripts/Bootstrap/Bundle")
+    @Scripts.Render("~/Scripts/JQueryUI/Bundle")
+    @Scripts.Render("~/Scripts/GridMvc/Bundle")
+    @Scripts.Render("~/Scripts/JsTree/Bundle")
+    @Scripts.Render("~/Scripts/Datalist/Bundle")
     
     <script src="~/Scripts/GridMvc/Cultures/gridmvc.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
     <script src="~/Scripts/JQuery/Cultures/datepicker.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
     <script src="~/Scripts/Datalist/Cultures/datalist.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
     <script src="~/Scripts/Globalize/Cultures/globalize.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
 
-    @Scripts.Render("~/Scripts/Shared")
+    @Scripts.Render("~/Scripts/Shared/Bundle")
 </html>

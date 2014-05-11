@@ -1,0 +1,63 @@
+﻿@import "../mixins";
+@import "../theme";
+
+#Content {
+    background-color: @content-background-color;
+    border-radius: 8px 0 0 8px;
+    margin-left: 200px;
+    margin-top: -40px;
+    min-height: 800px;
+}
+
+#ContentHeader {
+    .linear-gradient-background(to bottom, @content-background-from-color 0, @content-background-to-color 100%, @content-background-color);
+    border-top-left-radius: 8px;
+    min-height: 60px;
+
+    h1 {
+        color: @content-text-color;
+        padding: 15px 20px;
+        font-size: 28px;
+        margin: 0;
+    }
+}
+
+#ContentBreadcrumb {
+    background-color: @breadcrumb-color;
+    border-bottom: @content-border;
+    border-top: @content-border;
+    padding-left: 10px;
+
+    > a {
+        background-image: url('../../Images/Shared/breadcrumb.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        padding: 8px 20px 8px 10px;
+        color: @content-text-color;
+        display: inline-block;
+        font-size: 11px;
+
+        &:hover {
+            color: @breadcrumb-active-text-color;
+        }
+
+        &:last-child {
+            background-image: none;
+        }
+
+        > i {
+            margin-right: 5px;
+        }
+    }
+
+    .current {
+        color: @breadcrumb-active-text-color;
+        font-weight: bold;
+    }
+}
+
+@media (max-width: 767px) {
+    #Content {
+        margin-left: 45px;
+    }
+}

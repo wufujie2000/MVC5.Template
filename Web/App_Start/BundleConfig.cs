@@ -11,37 +11,37 @@ namespace Template.Web
         }
         private static void RegisterScripts(BundleCollection bundles)
         {
-            ScriptBundle jQueryScripts = new ScriptBundle("~/Scripts/JQuery");
+            ScriptBundle jQueryScripts = new ScriptBundle("~/Scripts/JQuery/Bundle");
             jQueryScripts.Include("~/Scripts/JQuery/*.js");
 
-            ScriptBundle sidebarScripts = new ScriptBundle("~/Scripts/Sidebar");
+            ScriptBundle sidebarScripts = new ScriptBundle("~/Scripts/Sidebar/Bundle");
             sidebarScripts.Include("~/Scripts/Sidebar/*.js");
 
-            ScriptBundle bootstrapScripts = new ScriptBundle("~/Scripts/Bootstrap");
+            ScriptBundle bootstrapScripts = new ScriptBundle("~/Scripts/Bootstrap/Bundle");
             bootstrapScripts.Include("~/Scripts/Bootstrap/*.js");
 
-            ScriptBundle jQueryUIScripts = new ScriptBundle("~/Scripts/JQueryUI");
+            ScriptBundle jQueryUIScripts = new ScriptBundle("~/Scripts/JQueryUI/Bundle");
             jQueryUIScripts.Include("~/Scripts/JQueryUI/*.js");
 
-            ScriptBundle globalizeScripts = new ScriptBundle("~/Scripts/Globalize");
+            ScriptBundle globalizeScripts = new ScriptBundle("~/Scripts/Globalize/Bundle");
             globalizeScripts.Include("~/Scripts/Globalize/*.js");
 
-            ScriptBundle gridMvcScripts = new ScriptBundle("~/Scripts/GridMvc");
+            ScriptBundle gridMvcScripts = new ScriptBundle("~/Scripts/GridMvc/Bundle");
             gridMvcScripts.Include("~/Scripts/GridMvc/*.js");
 
-            ScriptBundle select2Scripts = new ScriptBundle("~/Scripts/Select2");
+            ScriptBundle select2Scripts = new ScriptBundle("~/Scripts/Select2/Bundle");
             select2Scripts.Include("~/Scripts/Select2/*.js");
 
-            ScriptBundle jsTreeScripts = new ScriptBundle("~/Scripts/JsTree");
+            ScriptBundle jsTreeScripts = new ScriptBundle("~/Scripts/JsTree/Bundle");
             jsTreeScripts.Include("~/Scripts/JsTree/*.js");
 
-            ScriptBundle datalistScritps = new ScriptBundle("~/Scripts/Datalist");
+            ScriptBundle datalistScritps = new ScriptBundle("~/Scripts/Datalist/Bundle");
             datalistScritps.Include("~/Scripts/Datalist/*.js");
 
-            ScriptBundle loginScripts = new ScriptBundle("~/Scripts/Login");
+            ScriptBundle loginScripts = new ScriptBundle("~/Scripts/Login/Bundle");
             loginScripts.Include("~/Scripts/Login/*.js");
 
-            ScriptBundle sharedScripts = new ScriptBundle("~/Scripts/Shared");
+            ScriptBundle sharedScripts = new ScriptBundle("~/Scripts/Shared/Bundle");
             sharedScripts.Include("~/Scripts/Shared/*.js");
             
             bundles.Add(jQueryScripts);
@@ -58,32 +58,32 @@ namespace Template.Web
         }
         private static void RegisterCss(BundleCollection bundles)
         {
-            StyleBundle jQueryUIStyles = new StyleBundle("~/Content/Css/JQueryUI");
-            jQueryUIStyles.Include("~/Content/Css/JQueryUI/*.css");
+            StyleBundle jQueryUIStyles = new StyleBundle("~/Content/JQueryUI/Bundle");
+            jQueryUIStyles.Include("~/Content/JQueryUI/*.css");
 
-            StyleBundle bootstrapStyles = new StyleBundle("~/Content/Css/Bootstrap");
-            bootstrapStyles.Include("~/Content/Css/Bootstrap/*.css");
+            StyleBundle bootstrapStyles = new StyleBundle("~/Content/Bootstrap/Bundle");
+            bootstrapStyles.Include("~/Content/Bootstrap/*.css");
 
-            StyleBundle fontAwesomeStyles = new StyleBundle("~/Content/Css/FontAwesome");
-            fontAwesomeStyles.Include("~/Content/Css/FontAwesome/*.css");
+            StyleBundle fontAwesomeStyles = new StyleBundle("~/Content/FontAwesome/Bundle");
+            fontAwesomeStyles.Include("~/Content/FontAwesome/*.css");
 
-            StyleBundle gridmvcStyles = new StyleBundle("~/Content/Css/GridMvc");
-            gridmvcStyles.Include("~/Content/Css/GridMvc/*.css");
+            StyleBundle gridmvcStyles = new StyleBundle("~/Content/GridMvc/Bundle");
+            gridmvcStyles.Include("~/Content/GridMvc/*.css");
 
-            StyleBundle select2Styles = new StyleBundle("~/Content/Css/Select2");
-            select2Styles.Include("~/Content/Css/Select2/*.css");
+            StyleBundle select2Styles = new StyleBundle("~/Content/Select2/Bundle");
+            select2Styles.Include("~/Content/Select2/*.css");
 
-            StyleBundle jsTreeStyles = new StyleBundle("~/Content/Css/JsTree");
-            jsTreeStyles.Include("~/Content/Css/JsTree/*.css");
+            StyleBundle jsTreeStyles = new StyleBundle("~/Content/JsTree/Bundle");
+            jsTreeStyles.Include("~/Content/JsTree/*.css");
 
-            StyleBundle datalistStyles = new StyleBundle("~/Content/Css/Datalist");
-            datalistStyles.Include("~/Content/Css/Datalist/*.css");
+            StyleBundle datalistStyles = new StyleBundle("~/Content/Datalist/Bundle");
+            datalistStyles.Include("~/Content/Datalist/*.css");
 
-            StyleBundle loginStyles = new StyleBundle("~/Content/Css/Login");
-            loginStyles.Include("~/Content/Css/Login/*.css");
+            StyleBundle loginStyles = new StyleBundle("~/Content/Login/Bundle");
+            loginStyles.Include("~/Content/Login/*.css");
 
-            StyleBundle sharedStyles = new StyleBundle("~/Content/Css/Shared");
-            sharedStyles.Include("~/Content/Css/Shared/*.css");
+            StyleBundle sharedStyles = new StyleBundle("~/Content/Shared/Bundle");
+            sharedStyles.Include("~/Content/Shared/*.css");
 
             bundles.Add(jQueryUIStyles);
             bundles.Add(bootstrapStyles);

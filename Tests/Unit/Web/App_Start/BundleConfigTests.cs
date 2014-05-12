@@ -15,17 +15,17 @@ namespace Template.Tests.Unit.Web.App_Start
         {
             String[] expectedBundles = new[]
             {
-                "~/Scripts/JQuery",
-                "~/Scripts/Sidebar",
-                "~/Scripts/Bootstrap",
-                "~/Scripts/JQueryUI",
-                "~/Scripts/Globalize",
-                "~/Scripts/GridMvc",
-                "~/Scripts/Select2",
-                "~/Scripts/JsTree",
-                "~/Scripts/Datalist",
-                "~/Scripts/Login",
-                "~/Scripts/Shared"
+                "~/Scripts/JQuery/Bundle",
+                "~/Scripts/Sidebar/Bundle",
+                "~/Scripts/Bootstrap/Bundle",
+                "~/Scripts/JQueryUI/Bundle",
+                "~/Scripts/Globalize/Bundle",
+                "~/Scripts/GridMvc/Bundle",
+                "~/Scripts/Select2/Bundle",
+                "~/Scripts/JsTree/Bundle",
+                "~/Scripts/Datalist/Bundle",
+                "~/Scripts/Login/Bundle",
+                "~/Scripts/Shared/Bundle"
             };
 
             BundleCollection bundles = new BundleCollection();
@@ -40,15 +40,15 @@ namespace Template.Tests.Unit.Web.App_Start
         {
             String[] expectedBundles = new[]
             {
-                "~/Content/Css/Bootstrap",
-                "~/Content/Css/JQueryUI",
-                "~/Content/Css/FontAwesome",
-                "~/Content/Css/GridMvc",
-                "~/Content/Css/Select2",
-                "~/Content/Css/JsTree",
-                "~/Content/Css/Datalist",
-                "~/Content/Css/Login",
-                "~/Content/Css/Shared"
+                "~/Content/Bootstrap/Bundle",
+                "~/Content/JQueryUI/Bundle",
+                "~/Content/FontAwesome/Bundle",
+                "~/Content/GridMvc/Bundle",
+                "~/Content/Select2/Bundle",
+                "~/Content/JsTree/Bundle",
+                "~/Content/Datalist/Bundle",
+                "~/Content/Login/Bundle",
+                "~/Content/Shared/Bundle"
             };
             // TODO: Test for actual search patterns
             BundleCollection bundles = new BundleCollection();

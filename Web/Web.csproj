@@ -40,9 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Datalist, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Datalist.3.0.3\lib\net45\Datalist.dll</HintPath>
+      <HintPath>..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -119,6 +119,7 @@
   <ItemGroup>
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\FontAwesome\font-awesome.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\GridMvc\gridmvc.css" />
@@ -128,7 +129,6 @@
       <DependentUpon>login.less</DependentUpon>
     </Content>
     <Content Include="Content\Select2\select2.css" />
-    <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\Shared\alert.css">
       <DependentUpon>alert.less</DependentUpon>
     </Content>
@@ -324,9 +324,6 @@
     <Content Include="Content\mixins.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Datalist.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\Module.ps1" />
   </ItemGroup>
   <ItemGroup>
@@ -394,6 +391,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\Fonts\PTSans.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

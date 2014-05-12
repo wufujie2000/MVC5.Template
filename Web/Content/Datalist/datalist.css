@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.0.3
+ * Datalist 3.0.4
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -39,40 +39,58 @@
 
 .datalist-search-group {
     margin: 5px 5px 10px;
-    float: right;
 }
 
+    .datalist-search-group .datalist-search-box {
+        float: left;
+        width: 87%;
+    }
+
+    .datalist-search-group .datalist-spinner-box {
+        float: right;
+        width: 13%;
+    }
+
     .datalist-search-group .datalist-search-input {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
         height: 32px;
     }
 
     .datalist-search-group .datalist-items-per-page {
+        background-color: #EEEEEE;
+        padding-right: 16px;
         text-align: center;
-        margin: 0 15px 0 0;
+        color: #555555;
+        display: block;
         height: 30px;
-        width: 20px;
+        width: 100%;
+        margin: 0;
     }
 
-    .datalist-search-group > span {
-        background: #EEEEEE;
+    .datalist-search-group span {
+        border-bottom-color: #CCCCCC;
+        border-right: medium none;
+        border-top-color: #CCCCCC;
         padding-bottom: 0;
         padding-top: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border-left: 0 none;
     }
 
-    .datalist-search-group span a:first-of-type {
-        border-right: 1px solid #D3D3D3;
-        border-left: 1px solid #D3D3D3;
-        border-top: 1px solid #D3D3D3;
-        cursor: pointer;
-    }
+        .datalist-search-group span a:first-of-type {
+            border-right: 1px solid #CCCCCC;
+            border-left: 1px solid #CCCCCC;
+            cursor: pointer;
+        }
 
-    .datalist-search-group span a:last-of-type {
-        border-bottom: 1px solid #D3D3D3;
-        border-right: 1px solid #D3D3D3;
-        border-left: 1px solid #D3D3D3;
-        border-top: 1px solid #D3D3D3;
-        cursor: pointer;
-    }
+        .datalist-search-group span a:last-of-type {
+            border-right: 1px solid #CCCCCC;
+            border-left: 1px solid #CCCCCC;
+            border-top: 1px solid #CCCCCC;
+            cursor: pointer;
+        }
 
 .datalist-processing {
     background: url(../../Images/Datalist/loading.gif) no-repeat center;

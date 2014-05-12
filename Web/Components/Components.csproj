@@ -33,8 +33,9 @@
     <Reference Include="BCrypt.Net">
       <HintPath>..\..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Datalist">
-      <HintPath>..\..\packages\Datalist.3.0.3\lib\net45\Datalist.dll</HintPath>
+    <Reference Include="Datalist, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

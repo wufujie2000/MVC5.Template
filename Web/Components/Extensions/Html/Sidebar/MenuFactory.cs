@@ -68,6 +68,8 @@ namespace Template.Components.Extensions.Html
 
         private IEnumerable<Menu> GetAuthorizedMenus(IEnumerable<Menu> menus)
         {
+            List<Menu> authorizedMenus = new List<Menu>();
+
             foreach (Menu menu in menus)
                 if (UserIsAuthorizedToView(menu))
                 {
@@ -76,8 +78,10 @@ namespace Template.Components.Extensions.Html
                     authorizedMenu.HasActiveChild = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveChild);
 
                     if (!IsEmpty(authorizedMenu))
-                        yield return authorizedMenu;
+                        authorizedMenus.Add(authorizedMenu);
                 }
+
+            return authorizedMenus;
         }
         private Boolean UserIsAuthorizedToView(Menu menu)
         {

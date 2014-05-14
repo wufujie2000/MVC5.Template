@@ -342,15 +342,14 @@ namespace Template.Tests.Unit.Services
             rootNode.Name = Template.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
             
-            IEnumerable<Privilege> allPrivileges = context.Set<Privilege>()
-                .ToList()
+            IEnumerable<Privilege> allPrivileges = context.Set<Privilege>().ToList()
                 .Select(privilege => new Privilege
-                {
-                    Id = privilege.Id,
-                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
-                });
+                    {
+                        Id = privilege.Id,
+                        Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                        Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                        Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                    });
 
             foreach (IGrouping<String, Privilege> areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))
             {

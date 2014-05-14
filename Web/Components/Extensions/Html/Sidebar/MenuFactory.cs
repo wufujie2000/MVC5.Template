@@ -63,18 +63,22 @@ namespace Template.Components.Extensions.Html
 
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
         {
-            return GetAuthorizedMenus(AllMenus);
+            IEnumerable<AccountPrivilege> accountPrivileges = Enumerable.Empty<AccountPrivilege>();
+            if (RoleProviderFactory.Instance != null)
+                accountPrivileges = RoleProviderFactory.Instance.GetAccountPrivileges(currentAccountId);
+
+            return GetAuthorizedMenus(AllMenus, accountPrivileges);
         }
 
-        private IEnumerable<Menu> GetAuthorizedMenus(IEnumerable<Menu> menus)
+        private IEnumerable<Menu> GetAuthorizedMenus(IEnumerable<Menu> menus, IEnumerable<AccountPrivilege> privileges)
         {
             List<Menu> authorizedMenus = new List<Menu>();
 
             foreach (Menu menu in menus)
-                if (UserIsAuthorizedToView(menu))
+                if (IsAuthorizedToView(menu, privileges))
                 {
                     Menu authorizedMenu = CreateAuthorized(menu);
-                    authorizedMenu.Submenus = GetAuthorizedMenus(menu.Submenus);
+                    authorizedMenu.Submenus = GetAuthorizedMenus(menu.Submenus, privileges);
                     authorizedMenu.HasActiveChild = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveChild);
 
                     if (!IsEmpty(authorizedMenu))
@@ -83,12 +87,12 @@ namespace Template.Components.Extensions.Html
 
             return authorizedMenus;
         }
-        private Boolean UserIsAuthorizedToView(Menu menu)
+        private Boolean IsAuthorizedToView(Menu menu, IEnumerable<AccountPrivilege> privileges)
         {
             if (menu.Action == null) return true;
             if (RoleProviderFactory.Instance == null) return true;
 
-            return RoleProviderFactory.Instance.IsAuthorizedFor(currentAccountId, menu.Area, menu.Controller, menu.Action);
+            return RoleProviderFactory.Instance.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {

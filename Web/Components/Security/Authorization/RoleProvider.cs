@@ -18,6 +18,23 @@ namespace Template.Components.Security
             this.unitOfWork = unitOfWork;
         }
 
+        public virtual IEnumerable<AccountPrivilege> GetAccountPrivileges(String accountId)
+        {
+            return unitOfWork.Repository<Account>()
+                .Query(account =>
+                    account.Id == accountId)
+                .SelectMany(account => account.Person.Role.RolePrivileges) // TODO: Add tests for nullable roles?
+                .Select(rolePrivilege => new AccountPrivilege()
+                {
+                    AccountId = accountId,
+
+                    Area = rolePrivilege.Privilege.Area,
+                    Controller = rolePrivilege.Privilege.Controller,
+                    Action = rolePrivilege.Privilege.Action
+                })
+                .ToList();
+        }
+
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
         {
             Type controllerType = GetController(area, controller);
@@ -37,11 +54,25 @@ namespace Template.Components.Security
 
             return isAuthorized;   
         }
+        public virtual Boolean IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
+        {
+            Type controllerType = GetController(area, controller);
+            MethodInfo actionInfo = GetAction(controllerType, action);
+            if (!NeedsAuthorization(controllerType, actionInfo))
+                return true;
+            // TODO: Delete duplicated code in IsAuthorizedFor methods.
+            Boolean isAuthorized = privileges.Any(privilege =>
+                privilege.Area == area &&
+                privilege.Controller == controller &&
+                privilege.Action == action);
 
+            return isAuthorized; 
+        }
+        
         private Type GetController(String area, String controller)
         {
             return Assembly
-                .Load("Template.Controllers")
+                .Load("Template.Controllers") // TODO: Remove magic string to controllers assembly
                 .GetTypes()
                 .First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
         }

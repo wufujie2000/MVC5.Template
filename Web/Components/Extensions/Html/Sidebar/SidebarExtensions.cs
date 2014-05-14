@@ -31,9 +31,9 @@ namespace Template.Components.Extensions.Html
 
         private static String Menu(HtmlHelper html, Menu menu)
         {
-            TagBuilder menuItem = new TagBuilder("li");
             StringBuilder menuInnerHtml = new StringBuilder();
             menuInnerHtml.Append(FormAction(html, menu));
+            TagBuilder menuItem = new TagBuilder("li");
 
             if (menu.Submenus.Count() > 0)
             {

@@ -81,7 +81,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         public void GetAuthorizedMenus_ReturnsAllNotEmptyMenusThenAuthorized()
         {
             Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(),
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<IEnumerable<AccountPrivilege>>(),
                 It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
             RoleProviderFactory.SetInstance(roleProviderMock.Object);
 

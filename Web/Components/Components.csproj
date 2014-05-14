@@ -83,6 +83,7 @@
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Authorization\AccountPrivilege.cs" />
     <Compile Include="Security\Authorization\AllowUnauthorizedAttribute.cs" />
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
     <Compile Include="Security\Authorization\RoleProvider.cs" />

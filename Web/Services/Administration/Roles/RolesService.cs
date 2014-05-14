@@ -75,12 +75,12 @@ namespace Template.Services
                 .Query()
                 .ToList()
                 .Select(privilege => new Privilege
-                {
-                    Id = privilege.Id,
-                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
-                })
+                    {
+                        Id = privilege.Id,
+                        Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                        Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                        Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                    })
                 .GroupBy(privilege => privilege.Area)
                 .OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller);
 

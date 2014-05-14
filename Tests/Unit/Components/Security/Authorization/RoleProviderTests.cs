@@ -30,13 +30,13 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Account", "Login"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Account", "Login"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Account", "Logout"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Account", "Logout"));
         }
 
         [Test]
@@ -49,13 +49,13 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Home", "Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Home", "Index"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsNotAuthorizedForAction()
         {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Administration", "Users", "Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, "Administration", "Users", "Index"));
         }
 
         [Test]

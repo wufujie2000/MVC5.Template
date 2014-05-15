@@ -25,6 +25,49 @@ namespace Template.Tests.Unit.Security
             TearDownData();
         }
 
+        #region Method: GetAccountPrivileges(String accountId)
+
+        [Test]
+        public void GetAccountPrivileges_GetAccoountsPrivileges()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
+
+            IEnumerable<AccountPrivilege> actual = provider.GetAccountPrivileges(account.Id);
+            IEnumerable<AccountPrivilege> expected = context.Set<Account>()
+                .First(acc => acc.Id == account.Id)
+                .Person
+                .Role
+                .RolePrivileges
+                .Select(role => new AccountPrivilege
+                    {
+                        AccountId = account.Id,
+
+                        Area = role.Privilege.Area,
+                        Controller = role.Privilege.Controller,
+                        Action = role.Privilege.Action
+                    });
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        [Test]
+        public void GetAccountPrivileges_GetsNoPrivilegesForAccountWithoutRole()
+        {
+            IEnumerable<AccountPrivilege> actual = provider.GetAccountPrivileges(CreateAccount().Id);
+
+            CollectionAssert.IsEmpty(actual);
+        }
+
+        [Test]
+        public void GetAccountPrivileges_GetsNoPrivilegesForNotExistingAccount()
+        {
+            IEnumerable<AccountPrivilege> actual = provider.GetAccountPrivileges("Test");
+
+            CollectionAssert.IsEmpty(actual);
+        }
+
+        #endregion
+
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
 
         [Test]
@@ -61,7 +104,7 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForGetAction()
         {
-            Account account = CreateUserWithPrivilegeFor("Administration", "Users", "Index");
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Users", "Index"));
         }
@@ -69,6 +112,65 @@ namespace Template.Tests.Unit.Security
         [Test]
         [Ignore]
         public void IsAuthorizedFor_IsAuthorizedForPostAction()
+        {
+            Assert.Inconclusive();
+        }
+
+        #endregion
+
+        #region Method: IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
+
+        [Test]
+        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttributeWithNoPrivileges()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Account", "Login"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttributeWithNoPrivileges()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Account", "Logout"));
+        }
+
+        [Test]
+        [Ignore]
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttributeWithNoPrivileges()
+        {
+            Assert.Inconclusive();
+        }
+
+        [Test]
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttributeWithNoPrivileges()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Home", "Index"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_IsNotAuthorizedForActionWithNoPrivileges()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), "Administration", "Users", "Index"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_IsAuthorizedForGetActionInPrivileges()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
+            IEnumerable<AccountPrivilege> privileges = new List<AccountPrivilege>()
+            {
+                new AccountPrivilege()
+                {
+                    Area = "Administration",
+                    Controller = "Users",
+                    Action = "Index"
+                }
+            };
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, "Administration", "Users", "Index"));
+        }
+
+        [Test]
+        [Ignore]
+        public void IsAuthorizedFor_IsAuthorizedForPostActionInPrivileges()
         {
             Assert.Inconclusive();
         }
@@ -88,7 +190,17 @@ namespace Template.Tests.Unit.Security
 
         #region Test helpers
 
-        private Account CreateUserWithPrivilegeFor(String area, String controller, String action)
+        private Account CreateAccount()
+        {
+            Account account = ObjectFactory.CreateAccount();
+            account.Person = ObjectFactory.CreatePerson();
+            account.PersonId = account.Person.Id;
+            context.Set<Account>().Add(account);
+            context.SaveChanges();
+
+            return account;
+        }
+        private Account CreateAccountWithPrivilegeFor(String area, String controller, String action)
         {
             Account account = ObjectFactory.CreateAccount();
             account.Person = ObjectFactory.CreatePerson();

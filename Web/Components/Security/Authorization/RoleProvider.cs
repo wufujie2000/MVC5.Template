@@ -66,7 +66,7 @@ namespace Template.Components.Security
                 privilege.Controller == controller &&
                 privilege.Action == action);
 
-            return isAuthorized; 
+            return isAuthorized;
         }
         
         private Type GetController(String area, String controller)

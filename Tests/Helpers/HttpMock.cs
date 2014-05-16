@@ -38,14 +38,14 @@ namespace Template.Tests.Helpers
         {
             RouteTable.Routes
                 .MapRoute(
-                    "Default",
+                    "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt-LT" });
 
             RouteTable.Routes
                 .MapRoute(
-                    "DefaultLang",
+                    "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "en-GB" });

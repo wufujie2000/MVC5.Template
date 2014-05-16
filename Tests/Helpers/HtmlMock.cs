@@ -23,7 +23,8 @@ namespace Template.Tests.Helpers
         {
             HttpMock = new HttpMock();
             Mock<ControllerContext> controllerContextMock = new Mock<ControllerContext>(
-                HttpMock.HttpContext.Request.RequestContext,
+                HttpMock.HttpContextBase,
+                HttpMock.HttpContextBase.Request.RequestContext.RouteData,
                 new Mock<ControllerBase>() { CallBase = true }.Object);
 
             TempDataDictionary tempDataDictionary = new TempDataDictionary();

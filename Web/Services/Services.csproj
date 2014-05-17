@@ -44,8 +44,6 @@
     <Compile Include="Administration\Akkounts\IAkkountsService.cs" />
     <Compile Include="Administration\Roles\IRolesService.cs" />
     <Compile Include="Administration\Roles\RolesService.cs" />
-    <Compile Include="Administration\Users\IUsersService.cs" />
-    <Compile Include="Administration\Users\UsersService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="GenericService.cs" />
     <Compile Include="Home\HomeService.cs" />

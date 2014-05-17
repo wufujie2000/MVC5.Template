@@ -41,7 +41,7 @@ namespace Template.Tests.Unit.Services
             service.Dispose();
         }
 
-        #region Method: CanCreate(UserView view)
+        #region Method: CanCreate(RoleView view)
 
         [Test]
         public void CanCreate_CanNotCreateWithInvalidModelState()
@@ -63,14 +63,14 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanCreateValidUser()
+        public void CanCreate_CanCreateValidRole()
         {
             Assert.IsTrue(service.CanCreate(ObjectFactory.CreateRoleView()));
         }
 
         #endregion
 
-        #region Method: CanEdit(UserView view)
+        #region Method: CanEdit(RoleView view)
 
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
@@ -92,7 +92,7 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanEdit_CanEditValidUser()
+        public void CanEdit_CanEditValidRole()
         {
             Assert.IsTrue(service.CanEdit(ObjectFactory.CreateRoleView()));
         }
@@ -306,7 +306,7 @@ namespace Template.Tests.Unit.Services
             role.RolePrivileges = new List<RolePrivilege>();
 
             Int32 privNumber = 1;
-            IEnumerable<String> controllers = new[] { "Users", "Roles" };
+            IEnumerable<String> controllers = new[] { "Akkounts", "Roles" };
             IEnumerable<String> actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
             foreach (String controller in controllers)

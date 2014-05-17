@@ -7,7 +7,7 @@ namespace Template.Data.Mapping
     {
         public static void MapObjects()
         {
-            MapUsers();
+            MapAccounts();
             MapRoles();
 
             MapSystem();
@@ -15,7 +15,7 @@ namespace Template.Data.Mapping
 
         #region Administration
 
-        private static void MapUsers()
+        private static void MapAccounts()
         {
             Mapper.CreateMap<Person, PersonView>();
             Mapper.CreateMap<PersonView, Person>();
@@ -28,13 +28,6 @@ namespace Template.Data.Mapping
 
             Mapper.CreateMap<Account, ProfileView>();
             Mapper.CreateMap<ProfileView, Account>();
-
-            Mapper.CreateMap<Account, UserView>();
-            Mapper.CreateMap<UserView, Account>()
-                .AfterMap((user, account) => {
-                    account.Person.Id = account.Id;
-                    account.PersonId = account.Id;
-                });
         }
 
         private static void MapRoles()

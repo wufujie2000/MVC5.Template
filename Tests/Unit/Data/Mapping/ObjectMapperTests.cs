@@ -15,10 +15,10 @@ namespace Template.Tests.Data.Mapping
             ObjectMapper.MapObjects();
         }
 
-        #region Static method: MapUsers()
+        #region Static method: MapAccounts()
 
         [Test]
-        public void MapUsers_MapsPersonToPersonView()
+        public void MapAccounts_MapsPersonToPersonView()
         {
             Person expected = ObjectFactory.CreatePerson();
             expected.Role = ObjectFactory.CreateRole();
@@ -33,7 +33,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsPersonViewToPerson()
+        public void MapAccounts_MapsPersonViewToPerson()
         {
             PersonView expected = ObjectFactory.CreatePersonView();
             Person actual = Mapper.Map<PersonView, Person>(expected);
@@ -47,7 +47,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsAccountToAccountView()
+        public void MapAccounts_MapsAccountToAccountView()
         {
             Account expected = ObjectFactory.CreateAccount();
             AccountView actual = Mapper.Map<Account, AccountView>(expected);
@@ -58,7 +58,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsAccountViewToAccount()
+        public void MapAccounts_MapsAccountViewToAccount()
         {
             AccountView expected = ObjectFactory.CreateAccountView();
             Account actual = Mapper.Map<AccountView, Account>(expected);
@@ -71,7 +71,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsAccountToProfileView()
+        public void MapAccounts_MapsAccountToProfileView()
         {
             Account expected = ObjectFactory.CreateAccount();
             expected.Person = ObjectFactory.CreatePerson();
@@ -88,7 +88,7 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapUsers_MapsProfileViewToAccount()
+        public void MapAccounts_MapsProfileViewToAccount()
         {
             AccountView expected = ObjectFactory.CreateAccountView();
             Account actual = Mapper.Map<AccountView, Account>(expected);
@@ -98,42 +98,6 @@ namespace Template.Tests.Data.Mapping
             Assert.IsNull(actual.Passhash);
             Assert.IsNull(actual.PersonId);
             Assert.IsNull(actual.Person);
-        }
-
-        [Test]
-        public void MapUsers_MapsAccountToUserView()
-        {
-            Account expected = ObjectFactory.CreateAccount();
-            expected.Person = ObjectFactory.CreatePerson();
-            expected.PersonId = expected.Person.Id;
-
-            expected.Person.Role = ObjectFactory.CreateRole();
-            expected.Person.RoleId = expected.Person.Role.Id;
-
-            UserView actual = Mapper.Map<Account, UserView>(expected);
-
-            Assert.AreEqual(expected.Person.DateOfBirth, actual.Person.DateOfBirth);
-            Assert.AreEqual(expected.Person.FirstName, actual.Person.FirstName);
-            Assert.AreEqual(expected.Person.LastName, actual.Person.LastName);
-
-            Assert.AreEqual(expected.Person.Role.Name, actual.Person.RoleName);
-            Assert.AreEqual(expected.Person.RoleId, actual.Person.RoleId);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.Password);
-        }
-
-        [Test]
-        public void MapUsers_MapsUserViewToAccount()
-        {
-            UserView expected = ObjectFactory.CreateUserView();
-            Account actual = Mapper.Map<UserView, Account>(expected);
-
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Id, actual.PersonId);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNotNull(actual.Person);
-            Assert.IsNull(actual.Passhash);
         }
 
         #endregion

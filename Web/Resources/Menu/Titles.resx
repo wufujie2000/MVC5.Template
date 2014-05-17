@@ -123,9 +123,6 @@
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Roles</value>
   </data>
-  <data name="AdministrationUsersIndex" xml:space="preserve">
-    <value>Users</value>
-  </data>
   <data name="HomeIndex" xml:space="preserve">
     <value>Home</value>
   </data>

@@ -79,15 +79,6 @@ namespace Template.Resources.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Users.
-        /// </summary>
-        public static string AdministrationUsersIndex {
-            get {
-                return ResourceManager.GetString("AdministrationUsersIndex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string HomeIndex {

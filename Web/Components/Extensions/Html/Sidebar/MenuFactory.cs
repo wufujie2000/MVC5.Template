@@ -39,7 +39,7 @@ namespace Template.Components.Extensions.Html
                         {
                             IconClass = "menu-icon fa fa-user",
                             Area = "Administration",
-                            Controller = "Users",
+                            Controller = "Akkounts",
                             Action = "Index"
                         },
                         new Menu()
@@ -47,13 +47,6 @@ namespace Template.Components.Extensions.Html
                             IconClass = "menu-icon fa fa-male",
                             Area = "Administration",
                             Controller = "Roles",
-                            Action = "Index"
-                        },
-                        new Menu()
-                        {
-                            IconClass = "menu-icon fa fa-male",
-                            Area = "Administration",
-                            Controller = "Akkounts",
                             Action = "Index"
                         }
                     }

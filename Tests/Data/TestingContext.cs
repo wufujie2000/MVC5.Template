@@ -23,7 +23,7 @@ namespace Template.Tests.Data
 
         #region Administration
 
-        private DbSet<Person> Users { get; set; }
+        private DbSet<Person> People { get; set; }
         private DbSet<Role> Roles { get; set; }
         private DbSet<Privilege> Privileges { get; set; }
         private DbSet<RolePrivilege> RolePrivileges { get; set; }

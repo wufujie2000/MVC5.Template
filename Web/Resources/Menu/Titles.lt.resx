@@ -123,9 +123,6 @@
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Rolės</value>
   </data>
-  <data name="AdministrationUsersIndex" xml:space="preserve">
-    <value>Vartotojai</value>
-  </data>
   <data name="HomeIndex" xml:space="preserve">
     <value>Pradžia</value>
   </data>

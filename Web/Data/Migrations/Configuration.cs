@@ -46,11 +46,6 @@ namespace Template.Data.Migrations
         private void SeedAllPrivileges()
         {
             List<Privilege> privileges = new List<Privilege>();
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Index" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Create" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Details" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Edit" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Delete" });
 
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Index" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Create" });

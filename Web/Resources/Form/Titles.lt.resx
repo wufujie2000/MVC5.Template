@@ -120,9 +120,6 @@
   <data name="AdministrationRoles" xml:space="preserve">
     <value>Rolės informacija</value>
   </data>
-  <data name="AdministrationUsers" xml:space="preserve">
-    <value>Vartotojo informacija</value>
-  </data>
   <data name="Profile" xml:space="preserve">
     <value>Paskyros informacija</value>
   </data>

@@ -32,9 +32,9 @@ namespace Template.Tests.Resources.Tests
         public void GetCurrentFormTitle_GetsTitle()
         {
             routeValues["area"] = "Administration";
-            routeValues["controller"] = "Users";
+            routeValues["controller"] = "Roles";
 
-            Assert.AreEqual(Template.Resources.Form.Titles.AdministrationUsers, ResourceProvider.GetCurrentFormTitle());
+            Assert.AreEqual(Template.Resources.Form.Titles.AdministrationRoles, ResourceProvider.GetCurrentFormTitle());
         }
 
         [Test]
@@ -60,10 +60,10 @@ namespace Template.Tests.Resources.Tests
         public void GetCurrentTableTitle_GetsTitle()
         {
             routeValues["area"] = "Administration";
-            routeValues["controller"] = "Users";
+            routeValues["controller"] = "Roles";
             routeValues["action"] = "Index";
 
-            Assert.AreEqual(Template.Resources.Table.Titles.AdministrationUsersIndex, ResourceProvider.GetCurrentTableTitle());
+            Assert.AreEqual(Template.Resources.Table.Titles.AdministrationRolesIndex, ResourceProvider.GetCurrentTableTitle());
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace Template.Tests.Resources.Tests
         public void GetCurrentContentTitle_GetsTitle()
         {
             routeValues["area"] = "Administration";
-            routeValues["controller"] = "Users";
+            routeValues["controller"] = "Roles";
             routeValues["action"] = "Edit";
 
-            Assert.AreEqual(Template.Resources.Content.Titles.AdministrationUsersEdit, ResourceProvider.GetCurrentContentTitle());
+            Assert.AreEqual(Template.Resources.Content.Titles.AdministrationRolesEdit, ResourceProvider.GetCurrentContentTitle());
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeControllerTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Privilege.Controller.Titles.Users, ResourceProvider.GetPrivilegeControllerTitle("Users"));
+            Assert.AreEqual(Template.Resources.Privilege.Controller.Titles.Roles, ResourceProvider.GetPrivilegeControllerTitle("Roles"));
         }
 
         [Test]

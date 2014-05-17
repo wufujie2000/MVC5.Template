@@ -68,14 +68,5 @@ namespace Template.Resources.Privilege.Controller {
                 return ResourceManager.GetString("Roles", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users.
-        /// </summary>
-        public static string Users {
-            get {
-                return ResourceManager.GetString("Users", resourceCulture);
-            }
-        }
     }
 }

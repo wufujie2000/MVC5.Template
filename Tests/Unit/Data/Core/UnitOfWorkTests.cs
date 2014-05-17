@@ -45,9 +45,9 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void ToModel_ConvertsViewToModel()
         {
-            UserView view = ObjectFactory.CreateUserView();
-            Account expected = Mapper.Map<UserView, Account>(view);
-            Account actual = unitOfWork.ToModel<UserView, Account>(view);
+            AccountView view = ObjectFactory.CreateAccountView();
+            Account expected = Mapper.Map<AccountView, Account>(view);
+            Account actual = unitOfWork.ToModel<AccountView, Account>(view);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }

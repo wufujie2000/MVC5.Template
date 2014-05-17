@@ -56,7 +56,6 @@
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RoleView.cs" />
-    <Compile Include="Views\Administration\Users\UserView.cs" />
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\Profile\ProfileView.cs" />
     <Compile Include="Shared\Menu.cs" />

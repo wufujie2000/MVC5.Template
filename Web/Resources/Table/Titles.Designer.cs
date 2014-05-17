@@ -68,14 +68,5 @@ namespace Template.Resources.Table {
                 return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users list.
-        /// </summary>
-        public static string AdministrationUsersIndex {
-            get {
-                return ResourceManager.GetString("AdministrationUsersIndex", resourceCulture);
-            }
-        }
     }
 }

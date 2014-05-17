@@ -135,21 +135,6 @@
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Roles</value>
   </data>
-  <data name="AdministrationUsersCreate" xml:space="preserve">
-    <value>User creation</value>
-  </data>
-  <data name="AdministrationUsersDelete" xml:space="preserve">
-    <value>User deletion</value>
-  </data>
-  <data name="AdministrationUsersDetails" xml:space="preserve">
-    <value>User details</value>
-  </data>
-  <data name="AdministrationUsersEdit" xml:space="preserve">
-    <value>User edit</value>
-  </data>
-  <data name="AdministrationUsersIndex" xml:space="preserve">
-    <value>Users</value>
-  </data>
   <data name="HomeError" xml:space="preserve">
     <value>System error</value>
   </data>

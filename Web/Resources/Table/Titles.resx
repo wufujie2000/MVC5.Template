@@ -120,7 +120,4 @@
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Roles list</value>
   </data>
-  <data name="AdministrationUsersIndex" xml:space="preserve">
-    <value>Users list</value>
-  </data>
 </root>

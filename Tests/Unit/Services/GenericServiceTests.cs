@@ -113,8 +113,11 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void GetView_GetsViewById()
         {
-            TestModel expected = context.Set<TestModel>().Find("1");
-            TestView actual = service.GetView("1");
+            context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
+            context.SaveChanges();
+
+            TestModel expected = context.Set<TestModel>().Find(ObjectFactory.TestId + "1");
+            TestView actual = service.GetView(ObjectFactory.TestId + "1");
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.Text, actual.Text);

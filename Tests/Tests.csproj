@@ -125,7 +125,6 @@
     <Compile Include="Unit\Services\Account\AccountServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Akkounts\AkkountsServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
-    <Compile Include="Unit\Services\Administration\Users\UsersServiceTests.cs" />
     <Compile Include="Unit\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
@@ -133,7 +132,6 @@
     <Compile Include="Unit\Controllers\Account\AccountControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreRegistrationTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Roles\RolesControllerTests.cs" />
-    <Compile Include="Unit\Controllers\Administration\Users\UsersControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerTests.cs" />
     <Compile Include="Unit\Controllers\Datalists\DatalistControllerTests.cs" />
     <Compile Include="Unit\Controllers\Home\HomeControllerTests.cs" />

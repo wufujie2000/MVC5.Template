@@ -49,51 +49,6 @@ namespace Template.Tests.Integration.Database
         #region Table: Privileges
 
         [Test]
-        public void PrivilegesTable_HasAdministrationUsersIndexPrivilege()
-        {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Users" &&
-                privilege.Action == "Index"));
-        }
-
-        [Test]
-        public void PrivilegesTable_HasAdministrationUsersCreatePrivilege()
-        {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Users" &&
-                privilege.Action == "Create"));
-        }
-
-        [Test]
-        public void PrivilegesTable_HasAdministrationUsersDetailsPrivilege()
-        {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Users" &&
-                privilege.Action == "Details"));
-        }
-
-        [Test]
-        public void PrivilegesTable_HasAdministrationUsersEditPrivilege()
-        {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Users" &&
-                privilege.Action == "Edit"));
-        }
-
-        [Test]
-        public void PrivilegesTable_HasAdministrationUsersDeletePrivilege()
-        {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Users" &&
-                privilege.Action == "Delete"));
-        }
-
-        [Test]
         public void PrivilegesTable_HasAdministrationRolesIndexPrivilege()
         {
             Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>

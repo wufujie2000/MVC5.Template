@@ -30,7 +30,7 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void GetAccountPrivileges_GetAccoountsPrivileges()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
 
             IEnumerable<AccountPrivilege> actual = provider.GetAccountPrivileges(account.Id);
             IEnumerable<AccountPrivilege> expected = context.Set<Account>()
@@ -98,15 +98,15 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsNotAuthorizedForAction()
         {
-            Assert.IsFalse(provider.IsAuthorizedFor((String)null, "Administration", "Users", "Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, "Administration", "Roles", "Index"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForGetAction()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Users", "Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Roles", "Index"));
         }
 
         [Test]
@@ -148,24 +148,24 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsNotAuthorizedForActionWithNoPrivileges()
         {
-            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), "Administration", "Users", "Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), "Administration", "Roles", "Index"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForGetActionInPrivileges()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Users", "Index");
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
             IEnumerable<AccountPrivilege> privileges = new List<AccountPrivilege>()
             {
                 new AccountPrivilege()
                 {
                     Area = "Administration",
-                    Controller = "Users",
+                    Controller = "Roles",
                     Action = "Index"
                 }
             };
 
-            Assert.IsTrue(provider.IsAuthorizedFor(privileges, "Administration", "Users", "Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, "Administration", "Roles", "Index"));
         }
 
         [Test]

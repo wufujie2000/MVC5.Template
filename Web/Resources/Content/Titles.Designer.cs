@@ -115,51 +115,6 @@ namespace Template.Resources.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User creation.
-        /// </summary>
-        public static string AdministrationUsersCreate {
-            get {
-                return ResourceManager.GetString("AdministrationUsersCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User deletion.
-        /// </summary>
-        public static string AdministrationUsersDelete {
-            get {
-                return ResourceManager.GetString("AdministrationUsersDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User details.
-        /// </summary>
-        public static string AdministrationUsersDetails {
-            get {
-                return ResourceManager.GetString("AdministrationUsersDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User edit.
-        /// </summary>
-        public static string AdministrationUsersEdit {
-            get {
-                return ResourceManager.GetString("AdministrationUsersEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users.
-        /// </summary>
-        public static string AdministrationUsersIndex {
-            get {
-                return ResourceManager.GetString("AdministrationUsersIndex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to System error.
         /// </summary>
         public static string HomeError {

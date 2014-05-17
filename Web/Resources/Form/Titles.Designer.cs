@@ -70,15 +70,6 @@ namespace Template.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User&apos;s information.
-        /// </summary>
-        public static string AdministrationUsers {
-            get {
-                return ResourceManager.GetString("AdministrationUsers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Profile information.
         /// </summary>
         public static string Profile {

@@ -79,15 +79,6 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         }
 
         [Test]
-        public void Load_BindsIUsersService()
-        {
-            Type expected = typeof(UsersService);
-            Type actual = kernel.Get<IUsersService>().GetType();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void Load_BindsIAccountService()
         {
             Type expected = typeof(AccountService);

@@ -272,11 +272,6 @@
     <Content Include="Views\Administration\Roles\Details.cshtml" />
     <Content Include="Views\Administration\Roles\Edit.cshtml" />
     <Content Include="Views\Administration\Roles\Index.cshtml" />
-    <Content Include="Views\Administration\Users\Create.cshtml" />
-    <Content Include="Views\Administration\Users\Delete.cshtml" />
-    <Content Include="Views\Administration\Users\Details.cshtml" />
-    <Content Include="Views\Administration\Users\Edit.cshtml" />
-    <Content Include="Views\Administration\Users\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\NotFound.cshtml" />
     <Content Include="Views\Home\Unauthorized.cshtml" />

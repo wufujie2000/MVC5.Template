@@ -18,7 +18,6 @@ namespace Template.Web.DependencyInjection.Ninject
 
             Bind<IHomeService>().To<HomeService>();
             Bind<IRolesService>().To<RolesService>();
-            Bind<IUsersService>().To<UsersService>();
             Bind<IAccountService>().To<AccountService>();
             Bind<IProfileService>().To<ProfileService>();
             Bind<IAkkountsService>().To<AkkountsService>();

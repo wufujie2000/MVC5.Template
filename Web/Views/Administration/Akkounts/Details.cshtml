@@ -1,0 +1,11 @@
+@model AkkountView
+
+@using (Html.FormWidgetBox(LinkAction.Edit, LinkAction.Delete))
+{
+    using (Html.FormGroup())
+    {
+        @Html.FormLabelFor(model => model.Username)
+        @Html.FormTextBoxFor(model => model.Username)
+        @Html.FormValidationFor(model => model.Username)
+    }
+}

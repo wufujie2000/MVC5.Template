@@ -52,6 +52,12 @@ namespace Template.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Edit" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Users", Action = "Delete" });
 
+            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Index" });
+            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Create" });
+            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Details" });
+            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Edit" });
+            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Delete" });
+
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Index" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Create" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Details" });

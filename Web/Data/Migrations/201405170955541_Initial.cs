@@ -1,9 +1,8 @@
 namespace Template.Data.Migrations
 {
+    using System;
     using System.Data.Entity.Migrations;
-    using System.Diagnostics.CodeAnalysis;
     
-    [ExcludeFromCodeCoverage]
     public partial class Initial : DbMigration
     {
         public override void Up()
@@ -75,6 +74,16 @@ namespace Template.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
+                "dbo.Akkounts",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        Username = c.String(),
+                        EntityDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id, clustered: false);
+            
+            CreateTable(
                 "dbo.Languages",
                 c => new
                     {
@@ -94,7 +103,6 @@ namespace Template.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
         }
         
         public override void Down()
@@ -109,6 +117,7 @@ namespace Template.Data.Migrations
             DropIndex("dbo.Accounts", new[] { "PersonId" });
             DropTable("dbo.Logs");
             DropTable("dbo.Languages");
+            DropTable("dbo.Akkounts");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");

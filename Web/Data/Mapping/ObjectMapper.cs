@@ -23,6 +23,9 @@ namespace Template.Data.Mapping
             Mapper.CreateMap<Account, AccountView>();
             Mapper.CreateMap<AccountView, Account>();
 
+            Mapper.CreateMap<Akkount, AkkountView>();
+            Mapper.CreateMap<AkkountView, Akkount>();
+
             Mapper.CreateMap<Account, ProfileView>();
             Mapper.CreateMap<ProfileView, Account>();
 

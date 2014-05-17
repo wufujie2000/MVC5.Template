@@ -40,6 +40,8 @@
   <ItemGroup>
     <Compile Include="Account\AccountService.cs" />
     <Compile Include="Account\IAccountService.cs" />
+    <Compile Include="Administration\Akkounts\AkkountsService.cs" />
+    <Compile Include="Administration\Akkounts\IAkkountsService.cs" />
     <Compile Include="Administration\Roles\IRolesService.cs" />
     <Compile Include="Administration\Roles\RolesService.cs" />
     <Compile Include="Administration\Users\IUsersService.cs" />

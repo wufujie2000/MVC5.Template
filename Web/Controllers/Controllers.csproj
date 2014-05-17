@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountController.cs" />
     <Compile Include="Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Administration\Akkounts\AkkountsController.cs" />
     <Compile Include="Administration\Roles\RolesController.cs" />
     <Compile Include="Administration\Users\UsersController.cs" />
     <Compile Include="BaseController.cs" />

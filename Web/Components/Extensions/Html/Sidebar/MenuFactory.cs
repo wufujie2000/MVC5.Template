@@ -48,6 +48,13 @@ namespace Template.Components.Extensions.Html
                             Area = "Administration",
                             Controller = "Roles",
                             Action = "Index"
+                        },
+                        new Menu()
+                        {
+                            IconClass = "menu-icon fa fa-male",
+                            Area = "Administration",
+                            Controller = "Akkounts",
+                            Action = "Index"
                         }
                     }
                 }

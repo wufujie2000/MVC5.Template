@@ -1,0 +1,21 @@
+@model AkkountView
+
+@using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Delete))
+{
+    using(Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        using (Html.FormGroup())
+        {
+            @Html.FormLabelFor(model => model.Username)
+            @Html.FormTextBoxFor(model => model.Username)
+            @Html.FormValidationFor(model => model.Username)
+        }
+
+        using (Html.FormActions())
+        {
+            @Html.FormSubmit()
+        }
+    }
+}

@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Account\Account.cs" />
+    <Compile Include="Models\Administration\Akkounts\Akkount.cs" />
     <Compile Include="Models\Administration\Roles\Privilege.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
     <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Shared\TreeNode.cs" />
     <Compile Include="Views\Account\AccountView.cs" />
     <Compile Include="Views\Account\PersonView.cs" />
+    <Compile Include="Views\Administration\Akkounts\AkkountView.cs" />
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RoleView.cs" />

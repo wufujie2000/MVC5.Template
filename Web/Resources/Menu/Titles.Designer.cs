@@ -70,6 +70,15 @@ namespace Template.Resources.Menu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string AdministrationAkkountsIndex {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string AdministrationRolesIndex {

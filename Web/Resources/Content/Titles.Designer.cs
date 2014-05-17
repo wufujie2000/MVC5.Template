@@ -70,6 +70,51 @@ namespace Template.Resources.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account creation.
+        /// </summary>
+        public static string AdministrationAkkountsCreate {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account deletion.
+        /// </summary>
+        public static string AdministrationAkkountsDelete {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account details.
+        /// </summary>
+        public static string AdministrationAkkountsDetails {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account edit.
+        /// </summary>
+        public static string AdministrationAkkountsEdit {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string AdministrationAkkountsIndex {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role creation.
         /// </summary>
         public static string AdministrationRolesCreate {

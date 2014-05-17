@@ -61,6 +61,15 @@ namespace Template.Resources.Table {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts list.
+        /// </summary>
+        public static string AdministrationAkkountsIndex {
+            get {
+                return ResourceManager.GetString("AdministrationAkkountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roles list.
         /// </summary>
         public static string AdministrationRolesIndex {

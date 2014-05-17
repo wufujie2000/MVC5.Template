@@ -120,6 +120,9 @@
   <data name="Administration" xml:space="preserve">
     <value>Administravimas</value>
   </data>
+  <data name="AdministrationAkkountsIndex" xml:space="preserve">
+    <value>Vartotojai</value>
+  </data>
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Rolės</value>
   </data>

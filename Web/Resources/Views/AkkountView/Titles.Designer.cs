@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Template.Resources.Form {
+namespace Template.Resources.Views.AkkountView {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Template.Resources.Form {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Form.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.AkkountView.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,20 @@ namespace Template.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account&apos;s information.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
-        public static string AdministrationAkkounts {
+        public static string Password {
             get {
-                return ResourceManager.GetString("AdministrationAkkounts", resourceCulture);
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role&apos;s information.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string AdministrationRoles {
+        public static string Username {
             get {
-                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile information.
-        /// </summary>
-        public static string Profile {
-            get {
-                return ResourceManager.GetString("Profile", resourceCulture);
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

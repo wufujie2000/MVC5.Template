@@ -120,6 +120,21 @@
   <data name="AccountLogin" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="AdministrationAkkountsCreate" xml:space="preserve">
+    <value>Account creation</value>
+  </data>
+  <data name="AdministrationAkkountsDelete" xml:space="preserve">
+    <value>Account deletion</value>
+  </data>
+  <data name="AdministrationAkkountsDetails" xml:space="preserve">
+    <value>Account details</value>
+  </data>
+  <data name="AdministrationAkkountsEdit" xml:space="preserve">
+    <value>Account edit</value>
+  </data>
+  <data name="AdministrationAkkountsIndex" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
   <data name="AdministrationRolesCreate" xml:space="preserve">
     <value>Role creation</value>
   </data>

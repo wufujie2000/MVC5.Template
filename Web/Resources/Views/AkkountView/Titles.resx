@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdministrationAkkountsIndex" xml:space="preserve">
-    <value>Accounts list</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="AdministrationRolesIndex" xml:space="preserve">
-    <value>Roles list</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

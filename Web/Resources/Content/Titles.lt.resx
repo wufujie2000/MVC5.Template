@@ -120,6 +120,21 @@
   <data name="AccountLogin" xml:space="preserve">
     <value>Prisijungti</value>
   </data>
+  <data name="AdministrationAkkountsCreate" xml:space="preserve">
+    <value>Vartotojo kūrimas</value>
+  </data>
+  <data name="AdministrationAkkountsDelete" xml:space="preserve">
+    <value>Vartotojo trynimas</value>
+  </data>
+  <data name="AdministrationAkkountsDetails" xml:space="preserve">
+    <value>Vartotojo detalizacija</value>
+  </data>
+  <data name="AdministrationAkkountsEdit" xml:space="preserve">
+    <value>Vartotojo redagavimas</value>
+  </data>
+  <data name="AdministrationAkkountsIndex" xml:space="preserve">
+    <value>Vartotojai</value>
+  </data>
   <data name="AdministrationRolesCreate" xml:space="preserve">
     <value>Rolės kūrimas</value>
   </data>

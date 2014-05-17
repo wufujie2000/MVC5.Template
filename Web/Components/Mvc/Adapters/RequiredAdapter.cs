@@ -10,7 +10,7 @@ namespace Template.Components.Mvc.Adapters
             : base(metadata, context, attribute)
         {
             attribute.ErrorMessageResourceType = typeof(Validations);
-            attribute.ErrorMessageResourceName = "FieldIsRequired";
+            attribute.ErrorMessageResourceName = "FieldIsRequired"; // TODO: Rename "Field 'xxx' is required" to 'xxx' field is required
         }
     }
 }

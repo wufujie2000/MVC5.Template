@@ -196,6 +196,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\AkkountView\Validations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validations.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AkkountView\Validations.lt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Validations.lt.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\PersonView\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -395,6 +405,14 @@
     <EmbeddedResource Include="Views\AkkountView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AkkountView\Validations.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AkkountView\Validations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\PersonView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

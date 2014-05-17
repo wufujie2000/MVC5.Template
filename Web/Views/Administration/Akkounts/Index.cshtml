@@ -9,9 +9,9 @@
             {
                 columns.AddActionLink(LinkAction.Details);
                 columns.AddActionLink(LinkAction.Edit);
-                columns.AddActionLink(LinkAction.Delete);
 
                 columns.AddProperty(model => model.Username);
+                columns.AddProperty(model => model.RoleName);
             })
             .ApplyAttributes()
     )

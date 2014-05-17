@@ -1,6 +1,5 @@
 namespace Template.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class Initial : DbMigration
@@ -78,10 +77,14 @@ namespace Template.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Username = c.String(),
+                        Username = c.String(nullable: false),
+                        Passhash = c.String(nullable: false),
+                        RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id, clustered: false)
+                .ForeignKey("dbo.Roles", t => t.RoleId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.Languages",
@@ -103,14 +106,17 @@ namespace Template.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Akkounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.Accounts", "PersonId", "dbo.People");
             DropForeignKey("dbo.People", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
+            DropIndex("dbo.Akkounts", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.People", new[] { "RoleId" });

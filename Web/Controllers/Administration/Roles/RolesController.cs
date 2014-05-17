@@ -15,7 +15,7 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ViewResult Index()
         {
-            return View(Service.GetViews());
+            return View(Service.GetViews()); // TODO: Make all action link clickable not just link tags
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ViewResult Details(String id)
         {
-            return View(Service.GetView(id));
+            return View(Service.GetView(id)); // Increase bottom padding in details views
         }
 
         [HttpGet]

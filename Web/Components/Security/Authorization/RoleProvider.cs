@@ -82,7 +82,7 @@ namespace Template.Components.Security
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;
-
+            // TODO: Add exception for "Controller does not have xxx action"
             return actionMethods.First();
         }
         private Boolean NeedsAuthorization(ICustomAttributeProvider controller, ICustomAttributeProvider action)

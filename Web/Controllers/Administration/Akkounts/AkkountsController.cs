@@ -10,7 +10,6 @@ namespace Template.Controllers.Administration
         public AkkountsController(IAkkountsService service)
             : base(service)
         {
-            // TODO: Change controller implementation
         }
 
         [HttpGet]
@@ -31,9 +30,10 @@ namespace Template.Controllers.Administration
         {
             if (!Service.CanCreate(akkount))
                 return View();
-
+            // TODO: Trim usernames
             Service.Create(akkount);
-            return RedirectToAction("Index");
+
+            return RedirectIfAuthorized("Index");
         }
 
         [HttpGet]
@@ -56,31 +56,8 @@ namespace Template.Controllers.Administration
                 return View();
 
             Service.Edit(akkount);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
-            
-            return RedirectToAction("Index");
-        }
 
-        [HttpGet]
-        public ActionResult Delete(String id)
-        {
-            return View(Service.GetView(id));
-        }
-
-        [HttpPost]
-        [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(String id)
-        {
-            if (!Service.CanDelete(id))
-                return View();
-
-            Service.Delete(id);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
-
-            return RedirectToAction("Index");
+            return RedirectIfAuthorized("Index");
         }
     }
 }

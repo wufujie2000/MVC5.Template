@@ -51,7 +51,6 @@ namespace Template.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Create" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Details" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Edit" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Akkounts", Action = "Delete" });
 
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Index" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Create" });
@@ -114,6 +113,27 @@ namespace Template.Data.Migrations
             foreach (Account account in accounts)
                 if (!unitOfWork.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
                     unitOfWork.Repository<Account>().Insert(account);
+
+            unitOfWork.Commit();
+
+            List<Akkount> akkounts = new List<Akkount>()
+            {
+                new Akkount()
+                {
+                    Username = "admin",
+                    Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
+                    RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id
+                },
+                new Akkount()
+                {
+                    Username = "test",
+                    Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm" // test
+                }
+            };
+
+            foreach (Akkount account in akkounts)
+                if (!unitOfWork.Repository<Akkount>().Query(acc => acc.Username == account.Username).Any())
+                    unitOfWork.Repository<Akkount>().Insert(account);
 
             unitOfWork.Commit();
         }

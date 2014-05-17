@@ -10,7 +10,7 @@ namespace Template.Data.Mapping
             MapAccounts();
             MapRoles();
 
-            MapSystem();
+            MapSystem(); // TOOD: Mapping should be done in objects assembly, by using profiles
         }
 
         #region Administration

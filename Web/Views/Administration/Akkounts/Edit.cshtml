@@ -1,18 +1,29 @@
 @model AkkountView
 
-@using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Delete))
+@using (Html.FormWidgetBox(LinkAction.Details))
 {
     using(Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
         using (Html.FormGroup())
         {
             @Html.FormLabelFor(model => model.Username)
             @Html.FormTextBoxFor(model => model.Username)
             @Html.FormValidationFor(model => model.Username)
         }
-
+        using (Html.FormGroup())
+        {
+        }
+        using (Html.FormGroup())
+        {
+            @Html.FormLabelFor(model => model.RoleId)
+            using (Html.ContentGroup())
+            {
+                @Html.DatalistFor(model => model.RoleId, new BaseDatalist<Role, RoleView>())
+            }
+            @Html.FormValidationFor(model => model.RoleId)
+        }
+        
         using (Html.FormActions())
         {
             @Html.FormSubmit()

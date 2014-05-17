@@ -157,45 +157,5 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         #endregion
-
-        #region Method: Delete(String id)
-
-        [Test]
-        public void Delete_ReturnsViewWithDeleteModel()
-        {
-            AkkountView actual = (controller.Delete("Test") as ViewResult).Model as AkkountView;
-
-            Assert.AreEqual(akkount, actual);
-        }
-
-        #endregion
-
-        #region Method: DeleteConfirmed(String id)
-
-        [Test]
-        public void DeleteConfirmed_ReturnsEmptyViewIfCanNotDelete()
-        {
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(false);
-
-            Assert.IsNull((controller.DeleteConfirmed("Test") as ViewResult).Model);
-        }
-
-        [Test]
-        public void DeleteConfirmed_CallsServiceDelete()
-        {
-            controller.DeleteConfirmed("Test");
-
-            serviceMock.Verify(mock => mock.Delete("Test"), Times.Once());
-        }
-
-        [Test]
-        public void DeleteConfirmed_RedirectsToIndex()
-        {
-            RedirectToRouteResult result = controller.DeleteConfirmed("Test") as RedirectToRouteResult;
-
-            Assert.AreEqual("Index", result.RouteValues["action"]);
-        }
-
-        #endregion
     }
 }

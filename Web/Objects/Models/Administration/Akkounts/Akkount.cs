@@ -5,7 +5,14 @@ namespace Template.Objects
 { 
     public class Akkount : BaseModel
     {
-        // TODO: Add model properties
+        [Required]
         public String Username { get; set; }
+
+        [Required]
+        public String Passhash { get; set; }
+
+        public String RoleId { get; set; }
+
+        public virtual Role Role { get; set; }
     }
 }

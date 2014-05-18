@@ -34,7 +34,8 @@ namespace <#= Model.Namespace #>
                 return View();
 
             Service.Create(<#= Model.ModelName #>);
-            return RedirectToAction("Index");
+
+            return RedirectIfAuthorized("Index");
         }
 
         [HttpGet]
@@ -57,10 +58,8 @@ namespace <#= Model.Namespace #>
                 return View();
 
             Service.Edit(<#= Model.ModelName #>);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
             
-            return RedirectToAction("Index");
+            return RedirectIfAuthorized("Index");
         }
 
         [HttpGet]
@@ -78,10 +77,8 @@ namespace <#= Model.Namespace #>
                 return View();
 
             Service.Delete(id);
-            if (!IsAuthorizedFor("Index"))
-                return RedirectToDefault();
 
-            return RedirectToAction("Index");
+            return RedirectIfAuthorized("Index");
         }
     }
 }

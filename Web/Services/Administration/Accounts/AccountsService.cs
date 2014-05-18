@@ -19,7 +19,7 @@ namespace Template.Services
         {
             Boolean isValid = base.CanCreate(view);
             isValid &= IsUniqueUsername(view);
-            isValid &= IsPasswordLegal(view);
+            isValid &= IsLegalPassword(view);
 
             return isValid;
         }
@@ -64,9 +64,9 @@ namespace Template.Services
 
             return isUnique;
         }
-        private Boolean IsPasswordLegal(AccountView view)
+        private Boolean IsLegalPassword(AccountView view)
         {
-            Boolean isLegal = Regex.IsMatch(view.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            Boolean isLegal = Regex.IsMatch(view.Password ?? String.Empty, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
                 ModelState.AddModelError("Password", Validations.IllegalPassword);
 

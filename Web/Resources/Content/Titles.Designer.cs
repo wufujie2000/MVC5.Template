@@ -212,14 +212,5 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("ProfileEdit", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile.
-        /// </summary>
-        public static string ProfileIndex {
-            get {
-                return ResourceManager.GetString("ProfileIndex", resourceCulture);
-            }
-        }
     }
 }

@@ -23,7 +23,7 @@ namespace Template.Services
             Boolean isValid = base.CanEdit(profile);
             isValid &= IsCorrectPassword(profile);
             isValid &= IsUniqueUsername(profile);
-            isValid &= IsPasswordLegal(profile);
+            isValid &= IsLegalPassword(profile);
 
             return isValid;
         }
@@ -97,9 +97,9 @@ namespace Template.Services
 
             return isCorrectPassword;
         }
-        private Boolean IsPasswordLegal(ProfileView profile)
+        private Boolean IsLegalPassword(ProfileView profile)
         {
-            if (profile.NewPassword == null) return true;
+            if (String.IsNullOrWhiteSpace(profile.NewPassword)) return true;
 
             Boolean isLegal = Regex.IsMatch(profile.NewPassword, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
@@ -113,7 +113,7 @@ namespace Template.Services
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
             account.Username = profile.Username.Trim();
 
-            if (profile.NewPassword != null)
+            if (!String.IsNullOrWhiteSpace(profile.NewPassword))
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
 
             return account;

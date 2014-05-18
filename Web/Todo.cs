@@ -12,16 +12,17 @@
         // TODO: Change Edit_ReturnsCurrentProfileView test to test actual view returned from service get view method
         // TODO: Remove other occurences of misused mock.Verify calls
         // TODO: Add tests for all content labels on all controller actions
-        // TODO: Add RoleName visibility to profile
         // TODO: GetPropertyTitle_GetsTitleFromRelation test passes even if view does not have property specified
         // TODO: Test bundles for actual search patterns
         // TODO: Add tests for application start?
         // TODO: Remove account username edit option
-        // TODO: Add null check on password for IsPasswordLegal method
         // TODO: Add git hook for increasing version
         // TODO: Set null roleId logic for accounts chould work in database?
         // TODO: Add server side validation, because not posting fields causes exceptions
         // TODO: Mapping should be done in objects assembly, by using profiles
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider
+        // TODO: Add exception handling for not found culture
+        // TODO: Find(id) with automapper causes more than 1 call to the database for each relation value
+        // TODO: Fix 'CurrentPassword' field is required errors to 'Current password' field is reuired
     }
 }

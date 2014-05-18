@@ -61,7 +61,7 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to Current password.
         /// </summary>
         public static string CurrentPassword {
             get {

@@ -168,7 +168,4 @@
   <data name="ProfileEdit" xml:space="preserve">
     <value>Profile edit</value>
   </data>
-  <data name="ProfileIndex" xml:space="preserve">
-    <value>Profile</value>
-  </data>
 </root>

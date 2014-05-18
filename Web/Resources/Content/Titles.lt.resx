@@ -171,7 +171,4 @@
   <data name="ProfileEdit" xml:space="preserve">
     <value>Paskyros redagavimas</value>
   </data>
-  <data name="ProfileIndex" xml:space="preserve">
-    <value>Paskyra</value>
-  </data>
 </root>

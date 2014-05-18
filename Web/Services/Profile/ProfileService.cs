@@ -61,7 +61,7 @@ namespace Template.Services
                 .Repository<Account>()
                 .Query(account =>
                     account.Id != HttpContext.Current.User.Identity.Name &&
-                    account.Username == profile.Username)
+                    account.Username.Trim().ToUpper() == profile.Username.Trim().ToUpper())
                  .Any();
 
             if (!isUnique)
@@ -111,7 +111,8 @@ namespace Template.Services
         private Account GetAccountFrom(ProfileView profile)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
-            account.Username = profile.Username;
+            account.Username = profile.Username.Trim();
+
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
 

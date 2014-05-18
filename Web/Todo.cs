@@ -3,7 +3,6 @@
     internal sealed class Todo
     {
         // TODO: Add tests for nullable roles?
-        // TODO: Trim newly created usernames
         // TODO: Make all action link clickable not just link tags
         // TODO: Center validation span then it is multilined by bootstrap
         // TODO: Increase bottom padding in details views

@@ -101,6 +101,15 @@ namespace Template.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_OnNotExistingActionThrows()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Test");
+            String expectedMessage = "'RolesController' does not have 'Test' action";
+
+            Assert.Throws<Exception>(() => provider.IsAuthorizedFor(account.Id, "Administration", "Roles", "Test"), expectedMessage);
+        }
+
+        [Test]
         public void IsAuthorizedFor_IsAuthorizedForGetAction()
         {
             Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");

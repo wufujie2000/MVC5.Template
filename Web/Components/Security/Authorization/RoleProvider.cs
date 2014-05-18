@@ -86,7 +86,10 @@ namespace Template.Components.Security
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;
-            
+
+            if (actionMethods.Count() == 0)
+                throw new Exception(String.Format("'{0}' does not have '{1}' action", controller.Name, action));
+
             return actionMethods.First();
         }
 

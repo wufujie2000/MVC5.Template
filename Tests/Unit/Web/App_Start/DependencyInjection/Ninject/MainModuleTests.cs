@@ -81,8 +81,8 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         [Test]
         public void Load_BindsIAccountService()
         {
-            Type expected = typeof(AccountService);
-            Type actual = kernel.Get<IAccountService>().GetType();
+            Type expected = typeof(AuthService);
+            Type actual = kernel.Get<IAuthService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }

@@ -4,11 +4,11 @@ using Template.Components.Security;
 using Template.Objects;
 using Template.Services;
 
-namespace Template.Controllers.Account
+namespace Template.Controllers.Auth
 {
-    public class AccountController : ServicedController<IAccountService>
+    public class AuthController : ServicedController<IAuthService>
     {
-        public AccountController(IAccountService service)
+        public AuthController(IAuthService service)
             : base(service)
         {
         }
@@ -26,7 +26,7 @@ namespace Template.Controllers.Account
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(AccountView account, String returnUrl)
+        public ActionResult Login(LoginView account, String returnUrl)
         {
             if (!Service.CanLogin(account))
                 return View();

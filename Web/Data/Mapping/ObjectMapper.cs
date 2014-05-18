@@ -7,11 +7,23 @@ namespace Template.Data.Mapping
     {
         public static void MapObjects()
         {
+            MapAuths();
+
             MapAccounts();
             MapRoles();
 
             MapSystem(); // TOOD: Mapping should be done in objects assembly, by using profiles
         }
+
+        #region Auth
+
+        private static void MapAuths()
+        {
+            Mapper.CreateMap<Account, LoginView>();
+            Mapper.CreateMap<LoginView, Account>();
+        }
+
+        #endregion
 
         #region Administration
 

@@ -38,7 +38,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Account\Account.cs" />
+    <Compile Include="Models\Administration\Accounts\Account.cs" />
     <Compile Include="Models\Administration\Roles\Privilege.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
     <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
@@ -48,7 +48,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Tree.cs" />
     <Compile Include="Shared\TreeNode.cs" />
-    <Compile Include="Views\Account\AccountView.cs" />
+    <Compile Include="Views\Auth\LoginView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountView.cs" />
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RoleView.cs" />

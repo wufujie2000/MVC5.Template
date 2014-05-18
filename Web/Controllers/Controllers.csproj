@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\AccountController.cs" />
+    <Compile Include="Auth\AuthController.cs" />
     <Compile Include="Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Administration\Accounts\AccountsController.cs" />
     <Compile Include="Administration\Roles\RolesController.cs" />

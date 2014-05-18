@@ -65,7 +65,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         public void LogoutLink_FormsLogoutLink()
         {
             String expected = String.Format("<a href=\"{0}\"><i class=\"fa fa-share\"></i><span>{1}</span></a>",
-                new UrlHelper(html.ViewContext.RequestContext).Action("Logout", new { controller = "Account", area = String.Empty }),
+                new UrlHelper(html.ViewContext.RequestContext).Action("Logout", new { controller = "Auth", area = String.Empty }),
                 ResourceProvider.GetActionTitle("Logout"));
             String actual = html.LogoutLink().ToString();
 

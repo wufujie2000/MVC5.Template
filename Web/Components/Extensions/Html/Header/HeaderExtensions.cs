@@ -71,7 +71,7 @@ namespace Template.Components.Extensions.Html
             icon.AddCssClass("fa fa-share");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Account", area = String.Empty }).ToString(), icon, span));
+            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Auth", area = String.Empty }).ToString(), icon, span));
         }
 
         private static void AddQueryValues(HtmlHelper html)

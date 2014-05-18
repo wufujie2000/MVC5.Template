@@ -38,8 +38,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\AccountService.cs" />
-    <Compile Include="Account\IAccountService.cs" />
+    <Compile Include="Auth\AuthService.cs" />
+    <Compile Include="Auth\IAuthService.cs" />
     <Compile Include="Administration\Accounts\AccountsService.cs" />
     <Compile Include="Administration\Accounts\IAccountsService.cs" />
     <Compile Include="Administration\Roles\IRolesService.cs" />

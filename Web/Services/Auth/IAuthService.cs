@@ -3,12 +3,12 @@ using Template.Objects;
 
 namespace Template.Services
 {
-    public interface IAccountService : IService
+    public interface IAuthService : IService
     {
         Boolean IsLoggedIn();
-        Boolean CanLogin(AccountView account);
+        Boolean CanLogin(LoginView account);
 
-        void Login(AccountView account);
+        void Login(LoginView account);
         void Logout();
     }
 }

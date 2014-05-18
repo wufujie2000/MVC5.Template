@@ -42,7 +42,7 @@ namespace Template.Tests.Resources.Tests
         {
             routeValues["area"] = null;
             routeValues["controller"] = "Profile";
-
+            // TODO: Add tests for all content labels on all controller actions
             Assert.AreEqual(Template.Resources.Form.Titles.Profile, ResourceProvider.GetCurrentFormTitle());
         }
 

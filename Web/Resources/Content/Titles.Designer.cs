@@ -61,15 +61,6 @@ namespace Template.Resources.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
-        /// </summary>
-        public static string AccountLogin {
-            get {
-                return ResourceManager.GetString("AccountLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account creation.
         /// </summary>
         public static string AdministrationAccountsCreate {
@@ -160,6 +151,15 @@ namespace Template.Resources.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string AuthLogin {
+            get {
+                return ResourceManager.GetString("AuthLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System error.
         /// </summary>
         public static string HomeError {
@@ -201,15 +201,6 @@ namespace Template.Resources.Content {
         public static string ProfileDelete {
             get {
                 return ResourceManager.GetString("ProfileDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile details.
-        /// </summary>
-        public static string ProfileDetails {
-            get {
-                return ResourceManager.GetString("ProfileDetails", resourceCulture);
             }
         }
         

@@ -1,8 +1,9 @@
 namespace Template.Data.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+    using System.Diagnostics.CodeAnalysis;
+
+    [ExcludeFromCodeCoverage]
     public partial class Initial : DbMigration
     {
         public override void Up()

@@ -14,17 +14,17 @@ using Template.Tests.Helpers;
 namespace Template.Tests.Unit.Services
 {
     [TestFixture]
-    public class AccountServiceTests
+    public class AuthServiceTests
     {
         private HttpMock httpContextMock;
-        private AccountService service;
+        private AuthService service;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            service = new AccountService(new UnitOfWork(context));
+            service = new AuthService(new UnitOfWork(context));
 
             httpContextMock = new HttpMock();
             service.ModelState = new ModelStateDictionary();
@@ -70,13 +70,13 @@ namespace Template.Tests.Unit.Services
         {
             service.ModelState.AddModelError("Key", "ErrorMesages");
 
-            Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAccountView()));
+            Assert.IsFalse(service.CanLogin(ObjectFactory.CreateLoginView()));
         }
 
         [Test]
         public void CanLogin_CanNotLoginFromNonExistingAccount()
         {
-            AccountView account = new AccountView();
+            LoginView account = new LoginView();
             account.Username = String.Empty;
 
             Assert.IsFalse(service.CanLogin(account));
@@ -86,30 +86,30 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            accountView.Password += "1";
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            loginView.Password += "1";
 
-            Assert.IsFalse(service.CanLogin(accountView));
+            Assert.IsFalse(service.CanLogin(loginView));
             Assert.AreEqual(service.ModelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
         }
 
         [Test]
         public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            accountView.Username = accountView.Username.ToUpper();
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            loginView.Username = loginView.Username.ToUpper();
 
-            Assert.IsTrue(service.CanLogin(accountView));
+            Assert.IsTrue(service.CanLogin(loginView));
         }
 
         #endregion
 
-        #region Method: Login(HttpContextBase context, AccountView account)
+        #region Method: Login(HttpContextBase context, LoginView account)
 
         [Test]
         public void Login_SetsAccountId()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
+            LoginView accountView = ObjectFactory.CreateLoginView();
             String expected = accountView.Id;
             accountView.Id = null;
 
@@ -122,7 +122,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesCookieForAMonth()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
+            LoginView accountView = ObjectFactory.CreateLoginView();
             service.Login(accountView);
             
             DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
@@ -134,8 +134,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesPersistentCookie()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            service.Login(accountView);
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            service.Login(loginView);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
@@ -145,8 +145,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesCookieWithoutClientSideAccess()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            service.Login(accountView);
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            service.Login(loginView);
 
             Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
         }
@@ -154,11 +154,11 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_SetAccountIdAsCookieValue()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            service.Login(accountView);
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            service.Login(loginView);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
-            String expected = accountView.Id;
+            String expected = loginView.Id;
             String actual = ticket.Name;
 
             Assert.AreEqual(expected, actual);
@@ -171,8 +171,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Logout_MakesUserCookieExpired()
         {
-            AccountView accountView = ObjectFactory.CreateAccountView();
-            service.Login(accountView);
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            service.Login(loginView);
             service.Logout();
 
             DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;

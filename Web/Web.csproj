@@ -264,9 +264,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\_Layout.cshtml" />
-    <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Auth\Login.cshtml" />
+    <Content Include="Views\Auth\_Layout.cshtml" />
+    <Content Include="Views\Auth\_ViewStart.cshtml" />
     <Content Include="Views\Administration\Roles\Create.cshtml" />
     <Content Include="Views\Administration\Roles\Delete.cshtml" />
     <Content Include="Views\Administration\Roles\Details.cshtml" />

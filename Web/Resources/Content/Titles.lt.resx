@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccountLogin" xml:space="preserve">
-    <value>Prisijungti</value>
-  </data>
   <data name="AdministrationAccountsCreate" xml:space="preserve">
     <value>Vartotojo kūrimas</value>
   </data>
@@ -149,6 +146,9 @@
   </data>
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Rolės</value>
+  </data>
+  <data name="AuthLogin" xml:space="preserve">
+    <value>Prisijungti</value>
   </data>
   <data name="HomeError" xml:space="preserve">
     <value>Sisteminė klaida</value>

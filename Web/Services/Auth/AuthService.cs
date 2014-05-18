@@ -10,9 +10,9 @@ using Template.Resources.Views.AccountView;
 
 namespace Template.Services
 {
-    public class AccountService : GenericService<Account, AccountView>, IAccountService
+    public class AuthService : BaseService, IAuthService
     {
-        public AccountService(IUnitOfWork unitOfWork)
+        public AuthService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
@@ -21,15 +21,15 @@ namespace Template.Services
         {
             return HttpContext.Current.User.Identity.IsAuthenticated;
         }
-        public Boolean CanLogin(AccountView accountView)
+        public Boolean CanLogin(LoginView accountView)
         {
             Boolean isValid = ModelState.IsValid;
             isValid &= IsAuthenticated(accountView.Username, accountView.Password);
 
             return isValid;
         }
-        
-        public void Login(AccountView account)
+
+        public void Login(LoginView account)
         {
             SetAccountId(account);
             CreateCookieFor(account);
@@ -64,7 +64,7 @@ namespace Template.Services
             return passwordCorrect;
         }
 
-        private void SetAccountId(AccountView account)
+        private void SetAccountId(LoginView account)
         {
             account.Id = UnitOfWork
                 .Repository<Account>()
@@ -72,7 +72,7 @@ namespace Template.Services
                 .First()
                 .Id;
         }
-        private void CreateCookieFor(AccountView account)
+        private void CreateCookieFor(LoginView account)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id, DateTime.Now, DateTime.Now.AddMonths(1), true, account.Id);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))

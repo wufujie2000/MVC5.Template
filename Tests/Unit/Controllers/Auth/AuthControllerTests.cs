@@ -2,24 +2,24 @@
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
-using Template.Controllers.Account;
+using Template.Controllers.Auth;
 using Template.Objects;
 using Template.Services;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Account
+namespace Template.Tests.Unit.Controllers.Auth
 {
     [TestFixture]
-    public class AccountControllerTests
+    public class AuthControllerTests
     {
-        private Mock<IAccountService> serviceMock;
-        private AccountController controller;
+        private Mock<IAuthService> serviceMock;
+        private AuthController controller;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IAccountService>();
-            controller = new AccountController(serviceMock.Object);
+            serviceMock = new Mock<IAuthService>();
+            controller = new AuthController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();
             controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
         }
@@ -45,12 +45,12 @@ namespace Template.Tests.Unit.Controllers.Account
 
         #endregion
 
-        #region Method: Login(AccountView account, String returnUrl)
+        #region Method: Login(LoginView account, String returnUrl)
 
         [Test]
         public void Login_IfCanNotLoginReturnsView()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
+            LoginView account = ObjectFactory.CreateLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(false);
 
             Assert.IsNotNull(controller.Login(account, null) as ViewResult);
@@ -59,7 +59,7 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Login_CallsLogin()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
+            LoginView account = ObjectFactory.CreateLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             controller.Login(account, null);
 
@@ -69,7 +69,7 @@ namespace Template.Tests.Unit.Controllers.Account
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
+            LoginView account = ObjectFactory.CreateLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             RedirectResult result = controller.Login(account, "/") as RedirectResult;
 

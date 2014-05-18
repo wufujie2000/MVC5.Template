@@ -24,6 +24,15 @@ namespace Template.Tests.Helpers
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
             };
         }
+        public static LoginView CreateLoginView(Int32 instanceNumber = 1)
+        {
+            return new LoginView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                Password = "Password1"
+            };
+        }
         public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
         {
             return new ProfileView()

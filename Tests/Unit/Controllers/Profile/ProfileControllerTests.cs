@@ -45,7 +45,7 @@ namespace Template.Tests.Unit.Controllers.Profile
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Template.Tests.Unit.Controllers.Profile
             RedirectToRouteResult actual = controller.Edit(profile) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Template.Tests.Unit.Controllers.Profile
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
         }
 
         [Test]
@@ -140,7 +140,7 @@ namespace Template.Tests.Unit.Controllers.Profile
             RedirectToRouteResult actual = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Template.Tests.Unit.Controllers.Profile
             RedirectToRouteResult actual = controller.DeleteConfirmed(profile) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual("Account", actual.RouteValues["controller"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
         }
 
         #endregion

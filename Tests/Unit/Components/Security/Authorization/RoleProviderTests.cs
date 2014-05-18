@@ -72,13 +72,13 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Account", "Login"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Login"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Account", "Logout"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Logout"));
         }
 
         [Test]
@@ -122,13 +122,13 @@ namespace Template.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttributeWithNoPrivileges()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Account", "Login"));
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Auth", "Login"));
         }
 
         [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttributeWithNoPrivileges()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Account", "Logout"));
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Auth", "Logout"));
         }
 
         [Test]

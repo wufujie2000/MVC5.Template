@@ -66,7 +66,7 @@ namespace Template.Controllers.Profile
 
         private RedirectToRouteResult LogOut()
         {
-            return RedirectToAction("Logout", "Account");
+            return RedirectToAction("Logout", "Auth");
         }
     }
 }

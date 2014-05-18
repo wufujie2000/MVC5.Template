@@ -25,9 +25,9 @@
 
     $(document).on("change", "#Language", function (e) {
         if (e.val == 'en-GB')
-            document.location = '/Account/Login';
+            document.location = '/Auth/Login';
         else
-            document.location = '/' + e.val + '/Account/Login';
+            document.location = '/' + e.val + '/Auth/Login';
     });
 
     function formatSelection(selection) {

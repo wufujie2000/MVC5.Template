@@ -37,12 +37,10 @@ namespace Template.Components.Security
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
         {
-            Type controllerType = GetController(area, controller);
-            MethodInfo actionInfo = GetAction(controllerType, action);
-            if (!NeedsAuthorization(controllerType, actionInfo))
+            if (AllowsUnauthorized(area, controller, action))
                 return true;
 
-            Boolean isAuthorized = unitOfWork
+             return unitOfWork
                 .Repository<Account>()
                 .Query(account =>
                     account.Id == accountId &&
@@ -51,24 +49,30 @@ namespace Template.Components.Security
                         rolePrivilege.Privilege.Controller == controller &&
                         rolePrivilege.Privilege.Action == action))
                 .Any();
-
-            return isAuthorized;   
         }
         public virtual Boolean IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
         {
-            Type controllerType = GetController(area, controller);
-            MethodInfo actionInfo = GetAction(controllerType, action);
-            if (!NeedsAuthorization(controllerType, actionInfo))
+            if (AllowsUnauthorized(area, controller, action))
                 return true;
             
-            Boolean isAuthorized = privileges.Any(privilege =>
+            return privileges.Any(privilege =>
                 privilege.Area == area &&
                 privilege.Controller == controller &&
                 privilege.Action == action);
-
-            return isAuthorized;
         }
-        
+
+        private Boolean AllowsUnauthorized(String area, String controller, String action)
+        {
+            Type controllerType = GetController(area, controller);
+            MethodInfo actionInfo = GetAction(controllerType, action);
+
+            if (actionInfo.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
+            if (actionInfo.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+            if (controllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
+            if (controllerType.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+
+            return false;
+        }
         private Type GetController(String area, String controller)
         {
             return Assembly
@@ -84,15 +88,6 @@ namespace Template.Components.Security
                 return getAction;
             
             return actionMethods.First();
-        }
-        private Boolean NeedsAuthorization(ICustomAttributeProvider controller, ICustomAttributeProvider action)
-        {
-            if (action.IsDefined(typeof(AllowAnonymousAttribute), false)) return false;
-            if (action.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return false;
-            if (controller.IsDefined(typeof(AllowAnonymousAttribute), false)) return false;
-            if (controller.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return false;
-
-            return true;
         }
 
         public void Dispose()

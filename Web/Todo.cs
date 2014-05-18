@@ -3,7 +3,6 @@
     internal sealed class Todo
     {
         // TODO: Add tests for nullable roles?
-        // TODO: Delete duplicated code in IsAuthorizedFor methods
         // TODO: Add exception for "Controller does not have xxx action"
         // TODO: Trim newly created usernames
         // TODO: Make all action link clickable not just link tags

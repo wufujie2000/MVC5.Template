@@ -232,7 +232,7 @@ namespace Template.Tests.Resources.Tests
         public void GetPropertyTitle_GetsTitleFromFromExpressionRelation()
         {
             /*
-            Assert.AreEqual( 
+            Assert.AreEqual(
                 Template.Resources.Views.RoleView.Titles.Name,
                 ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.role.FirstName));*/
         }

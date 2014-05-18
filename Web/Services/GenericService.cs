@@ -17,7 +17,7 @@ namespace Template.Services
 
         public virtual Boolean CanCreate(TView view)
         {
-            return ModelState.IsValid; // TODO: Add server side validation, because not posting fields causes exceptions
+            return ModelState.IsValid;
         }
         public virtual Boolean CanEdit(TView view)
         {

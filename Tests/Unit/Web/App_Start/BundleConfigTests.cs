@@ -50,7 +50,7 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Content/Login/Bundle",
                 "~/Content/Shared/Bundle"
             };
-            // TODO: Test for actual search patterns
+            
             BundleCollection bundles = new BundleCollection();
             BundleConfig.RegisterBundles(bundles);
 

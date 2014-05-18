@@ -52,8 +52,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         public void Edit_ReturnsCurrentProfileView()
         {
             ProfileView actual = (controller.Edit() as ViewResult).Model as ProfileView;
-            // TODO: Change test to test actual view returned from service get view method
-            // TODO: Remove other occurences of misused mock.Verify calls
+            
             serviceMock.Verify(mock => mock.GetView(identityMock.Object.Name), Times.Once());
             Assert.AreEqual(profile, actual);
         }

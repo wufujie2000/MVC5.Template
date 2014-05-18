@@ -4,5 +4,4 @@
 
 @using (Html.FormWidgetBox(LinkAction.Edit, LinkAction.Delete))
 {
-    // TODO: Add model detalization properties
 }

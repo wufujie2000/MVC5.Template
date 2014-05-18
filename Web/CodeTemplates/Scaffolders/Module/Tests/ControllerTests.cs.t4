@@ -25,7 +25,6 @@ namespace <#= Model.Namespace #>
         [SetUp]
         public void SetUp()
         {
-		    // TODO: Add view creation from ObjectFactory
             serviceMock = new Mock<<#= Model.ServiceInterface #>>();
             serviceMock.Setup(mock => mock.CanEdit(<#= Model.ViewName #>)).Returns(true);
             serviceMock.Setup(mock => mock.CanCreate(<#= Model.ViewName #>)).Returns(true);
@@ -58,7 +57,6 @@ namespace <#= Model.Namespace #>
             <#= Model.View #> actual = (controller.Create() as ViewResult).Model as <#= Model.View #>;
 
             Assert.IsNotNull(actual.Id);
-            // TODO: Add asserts for actual properties
         }
 
         #endregion

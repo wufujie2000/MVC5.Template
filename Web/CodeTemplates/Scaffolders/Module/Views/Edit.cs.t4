@@ -8,8 +8,6 @@
     {
         @Html.AntiForgeryToken()
 
-        // TODO: Add editable model properties
-
         using (Html.FormActions())
         {
             @Html.FormSubmit()

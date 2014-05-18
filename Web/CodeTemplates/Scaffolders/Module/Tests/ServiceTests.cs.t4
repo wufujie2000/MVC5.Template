@@ -34,20 +34,14 @@ namespace Template.Tests.Unit.Services
             context.Dispose();
         }
 
-		// TODO: Add service tests
-
         #region Test helpers
 
         private void SetUpData()
         {
-            // TODO: Add service tests data set up
-
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            // TODO: Add service tests data tear down
-
             context.SaveChanges();
         }
 

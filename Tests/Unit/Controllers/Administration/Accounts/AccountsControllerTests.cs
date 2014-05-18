@@ -57,7 +57,6 @@ namespace Template.Tests.Unit.Controllers.Administration
             AccountView actual = (controller.Create() as ViewResult).Model as AccountView;
 
             Assert.IsNotNull(actual.Id);
-            // TODO: Add asserts for actual properties
         }
 
         #endregion

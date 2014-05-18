@@ -42,7 +42,7 @@ namespace Template.Tests.Resources.Tests
         {
             routeValues["area"] = null;
             routeValues["controller"] = "Profile";
-            // TODO: Add tests for all content labels on all controller actions
+            
             Assert.AreEqual(Template.Resources.Form.Titles.Profile, ResourceProvider.GetCurrentFormTitle());
         }
 
@@ -231,7 +231,6 @@ namespace Template.Tests.Resources.Tests
         [Ignore]
         public void GetPropertyTitle_GetsTitleFromFromExpressionRelation()
         {
-            // TODO: Add RoleName visibility to profile
             /*
             Assert.AreEqual( 
                 Template.Resources.Views.RoleView.Titles.Name,
@@ -265,7 +264,6 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
-            // TODO: Test passes even if view does not have property specified
             Assert.AreEqual(
                 Template.Resources.Views.RoleView.Titles.Name,
                 ResourceProvider.GetPropertyTitle(typeof(RoleView), "RoleName"));

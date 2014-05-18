@@ -4,8 +4,6 @@
 
 @using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Edit))
 {
-    // TODO: Add visible properties for model deletion
-    
     using(Html.BeginForm())
     {
         @Html.AntiForgeryToken()

@@ -15,7 +15,6 @@ namespace Template.Tests.Unit.Web
         public void SetUp()
         {
             application = new MvcApplication();
-            // TODO: Add tests for application start?
         }
 
         [TearDown]
@@ -34,7 +33,7 @@ namespace Template.Tests.Unit.Web
             
             String expected = versionInfo.FileVersion;
             String actual = MvcApplication.Version;
-            // TODO: Add git hook for increasing version
+            
             Assert.AreEqual(expected, actual);
         }
 

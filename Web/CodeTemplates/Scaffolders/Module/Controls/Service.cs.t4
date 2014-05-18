@@ -12,7 +12,5 @@ namespace Template.Services
             : base(unitOfWork)
         {
         }
-
-        // TODO: Add service implementation
     }
 }

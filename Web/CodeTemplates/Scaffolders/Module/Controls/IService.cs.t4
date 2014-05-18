@@ -7,6 +7,5 @@ namespace Template.Services
 { 
     public interface <#= Model.Name #> : IGenericService<<#= Model.View #>>
     {
-        // TODO: Add service methods
     }
 }

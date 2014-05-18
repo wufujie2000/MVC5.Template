@@ -12,7 +12,7 @@ namespace Template.Data.Mapping
             MapAccounts();
             MapRoles();
 
-            MapSystem(); // TOOD: Mapping should be done in objects assembly, by using profiles
+            MapSystem();
         }
 
         #region Auth

@@ -7,6 +7,5 @@ namespace Template.Objects
 { 
     public class <#= Model.Name #> : BaseView
     {
-        // TODO: Add view properties
     }
 }

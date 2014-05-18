@@ -12,7 +12,6 @@ namespace <#= Model.Namespace #>
         public <#= Model.Name #>(<#= Model.Service #> service)
             : base(service)
         {
-            // TODO: Change controller implementation
         }
 
         [HttpGet]

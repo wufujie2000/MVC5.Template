@@ -53,7 +53,7 @@ namespace Template.Tests.Helpers
         }
 
         public static Role CreateRole(Int32 instanceNumber = 1)
-        { // TODO: Add pre commit hook for removing trailing whitespace
+        {
             return new Role()
             {
                 Id = TestId + instanceNumber.ToString(),

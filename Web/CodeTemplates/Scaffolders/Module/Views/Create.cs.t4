@@ -8,8 +8,6 @@
     {
         @Html.AntiForgeryToken()
         
-        // TODO: Add model creation properties
-
         using (Html.FormActions())
         {
             @Html.FormSubmit()

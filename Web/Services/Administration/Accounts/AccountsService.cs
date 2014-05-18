@@ -43,7 +43,7 @@ namespace Template.Services
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
-            // TODO: Remove account username edit option
+            
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
         }
@@ -64,7 +64,6 @@ namespace Template.Services
         }
         private Boolean IsPasswordLegal(AccountView view)
         {
-            // TODO: Add null check on password
             Boolean isLegal = Regex.IsMatch(view.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
                 ModelState.AddModelError("Password", Validations.IllegalPassword);

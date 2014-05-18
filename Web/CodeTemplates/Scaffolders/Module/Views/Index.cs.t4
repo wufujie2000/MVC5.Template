@@ -13,7 +13,7 @@
                 columns.AddActionLink(LinkAction.Edit);
                 columns.AddActionLink(LinkAction.Delete);
                 
-                //TODO: Add table columns
+
             })
             .ApplyAttributes()
     )

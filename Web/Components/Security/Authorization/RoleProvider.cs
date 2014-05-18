@@ -23,7 +23,7 @@ namespace Template.Components.Security
             return unitOfWork.Repository<Account>()
                 .Query(account =>
                     account.Id == accountId)
-                .SelectMany(account => account.Role.RolePrivileges) // TODO: Add tests for nullable roles?
+                .SelectMany(account => account.Role.RolePrivileges)
                 .Select(rolePrivilege => new AccountPrivilege()
                 {
                     AccountId = accountId,
@@ -60,7 +60,7 @@ namespace Template.Components.Security
             MethodInfo actionInfo = GetAction(controllerType, action);
             if (!NeedsAuthorization(controllerType, actionInfo))
                 return true;
-            // TODO: Delete duplicated code in IsAuthorizedFor methods.
+            
             Boolean isAuthorized = privileges.Any(privilege =>
                 privilege.Area == area &&
                 privilege.Controller == controller &&
@@ -72,7 +72,7 @@ namespace Template.Components.Security
         private Type GetController(String area, String controller)
         {
             return Assembly
-                .Load("Template.Controllers") // TODO: Remove magic string to controllers assembly
+                .Load("Template.Controllers")
                 .GetTypes()
                 .First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
         }
@@ -82,7 +82,7 @@ namespace Template.Components.Security
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;
-            // TODO: Add exception for "Controller does not have xxx action"
+            
             return actionMethods.First();
         }
         private Boolean NeedsAuthorization(ICustomAttributeProvider controller, ICustomAttributeProvider action)

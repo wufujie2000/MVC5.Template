@@ -40,7 +40,6 @@ namespace Template.Services
 
         public override void Create(RoleView view)
         {
-            // TODO: Add validation for same role names
             CreateRole(view);
             CreateRolePrivileges(view);
             UnitOfWork.Commit();
@@ -54,7 +53,7 @@ namespace Template.Services
         }
         public override void Delete(String id)
         {
-            RemoveRoleFromAccounts(id); // TODO: Set null logic chould work in database?
+            RemoveRoleFromAccounts(id);
             UnitOfWork.Repository<Role>().Delete(id);
             UnitOfWork.Commit();
         }

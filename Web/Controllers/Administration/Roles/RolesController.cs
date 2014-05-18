@@ -15,7 +15,7 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ViewResult Index()
         {
-            return View(Service.GetViews()); // TODO: Make all action link clickable not just link tags
+            return View(Service.GetViews());
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace Template.Controllers.Administration
         {
             RoleView role = new RoleView();
             Service.SeedPrivilegesTree(role);
-            // TODO: Center validation span then it is multilined by bootstrap
+            
             return View(role);
         }
 
@@ -42,7 +42,7 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ViewResult Details(String id)
         {
-            return View(Service.GetView(id)); // Increase bottom padding in details views
+            return View(Service.GetView(id));
         }
 
         [HttpGet]

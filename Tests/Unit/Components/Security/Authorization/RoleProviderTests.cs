@@ -35,7 +35,6 @@ namespace Template.Tests.Unit.Security
             IEnumerable<AccountPrivilege> actual = provider.GetAccountPrivileges(account.Id);
             IEnumerable<AccountPrivilege> expected = context.Set<Account>()
                 .First(acc => acc.Id == account.Id)
-                .Person
                 .Role
                 .RolePrivileges
                 .Select(role => new AccountPrivilege
@@ -193,8 +192,6 @@ namespace Template.Tests.Unit.Security
         private Account CreateAccount()
         {
             Account account = ObjectFactory.CreateAccount();
-            account.Person = ObjectFactory.CreatePerson();
-            account.PersonId = account.Person.Id;
             context.Set<Account>().Add(account);
             context.SaveChanges();
 
@@ -203,11 +200,9 @@ namespace Template.Tests.Unit.Security
         private Account CreateAccountWithPrivilegeFor(String area, String controller, String action)
         {
             Account account = ObjectFactory.CreateAccount();
-            account.Person = ObjectFactory.CreatePerson();
-            account.PersonId = account.Person.Id;
-
             Role role = ObjectFactory.CreateRole();
-            account.Person.RoleId = role.Id;
+            account.RoleId = role.Id;
+
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
@@ -232,7 +227,7 @@ namespace Template.Tests.Unit.Security
         private void TearDownData()
         {
             context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
 
             context.SaveChanges();

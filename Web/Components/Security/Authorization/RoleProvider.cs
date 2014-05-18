@@ -23,7 +23,7 @@ namespace Template.Components.Security
             return unitOfWork.Repository<Account>()
                 .Query(account =>
                     account.Id == accountId)
-                .SelectMany(account => account.Person.Role.RolePrivileges) // TODO: Add tests for nullable roles?
+                .SelectMany(account => account.Role.RolePrivileges) // TODO: Add tests for nullable roles?
                 .Select(rolePrivilege => new AccountPrivilege()
                 {
                     AccountId = accountId,
@@ -46,7 +46,7 @@ namespace Template.Components.Security
                 .Repository<Account>()
                 .Query(account =>
                     account.Id == accountId &&
-                    account.Person.Role.RolePrivileges.Any(rolePrivilege =>
+                    account.Role.RolePrivileges.Any(rolePrivilege =>
                         rolePrivilege.Privilege.Area == area &&
                         rolePrivilege.Privilege.Controller == controller &&
                         rolePrivilege.Privilege.Action == action))

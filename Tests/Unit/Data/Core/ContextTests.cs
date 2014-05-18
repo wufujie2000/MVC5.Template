@@ -26,7 +26,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Repository_GetsSameRepositoryInstance()
         {
-            Assert.AreEqual(context.Repository<Person>(), context.Repository<Person>());
+            Assert.AreEqual(context.Repository<Account>(), context.Repository<Account>());
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace Template.Tests.Unit.Data.Logging
     {
         private DbEntityEntry entry;
         private AContext context;
-        private Person model;
+        private Role model; // TestModel should be used in not objects tests
 
         [SetUp]
         public void SetUp()
@@ -27,7 +27,7 @@ namespace Template.Tests.Unit.Data.Logging
             SetUpData();
             context = new TestingContext();
 
-            entry = context.Entry(context.Set<Person>().Find(model.Id));
+            entry = context.Entry(context.Set<Role>().Find(model.Id));
             entry.State = EntityState.Modified;
         }
 
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void LoggableEntry_SetsEntityTypeThenEntityIsNotProxied()
         {
-            entry = context.Entry(context.Set<Person>().Add(new Person()));
+            entry = context.Entry(context.Set<Role>().Add(new Role()));
             if (entry.Entity.GetType().Namespace == "System.Data.Entity.DynamicProxies")
                 Assert.Inconclusive();
 
@@ -76,7 +76,7 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void LoggableEntry_HasChangesIfAnyPropertyIsModified()
         {
-            ((Person)entry.Entity).FirstName += "1";
+            ((Role)entry.Entity).Name += "1";
 
             Assert.IsTrue(new LoggableEntry(entry).HasChanges);
         }
@@ -104,13 +104,13 @@ namespace Template.Tests.Unit.Data.Logging
 
         private void SetUpData()
         {
-            model = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(model);
+            model = ObjectFactory.CreateRole();
+            context.Set<Role>().Add(model);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            context.Set<Person>().RemoveRange(context.Set<Person>().Where(item => item.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Role>().RemoveRange(context.Set<Role>().Where(item => item.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 

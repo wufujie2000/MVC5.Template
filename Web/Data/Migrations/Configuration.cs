@@ -26,7 +26,6 @@ namespace Template.Data.Migrations
             SeedLanguages();
             SeedAllPrivileges();
             SeedAdministratorRole();
-            SeedPeople();
             SeedAccounts();
         }
         private void SeedLanguages()
@@ -84,30 +83,21 @@ namespace Template.Data.Migrations
 
             unitOfWork.Commit();
         }
-        private void SeedPeople()
-        {
-            List<Person> people = new List<Person>()
-            {
-                new Person() { FirstName = "System", LastName = "Admin", RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id },
-                new Person() { FirstName = "Test", LastName = "User" },
-            };
-
-            foreach (Person person in people)
-                if (!unitOfWork.Repository<Person>().Query(u => u.FirstName == person.FirstName && u.LastName == person.LastName).Any())
-                    unitOfWork.Repository<Person>().Insert(person);
-
-            unitOfWork.Commit();
-        }
         private void SeedAccounts()
         {
             List<Account> accounts = new List<Account>()
             {
-                new Account() { Username = "admin", Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
-                    PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id,
-                    Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "System").First().Id },
-                new Account() { Username = "test", Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm", // test
-                    PersonId = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id,
-                    Id = unitOfWork.Repository<Person>().Query(p => p.FirstName == "Test").First().Id }
+                new Account()
+                {
+                    Username = "admin",
+                    Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
+                    RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id
+                },
+                new Account()
+                {
+                    Username = "test",
+                    Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm" // test
+                }
             };
 
             foreach (Account account in accounts)

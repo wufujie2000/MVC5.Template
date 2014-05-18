@@ -104,11 +104,11 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="Data\Migrations\201403230733409_Initial.cs" />
-    <Compile Include="Data\Migrations\201403230733409_Initial.Designer.cs">
-      <DependentUpon>201403230733409_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Integration\Database\InitialDataTests.cs" />
+    <Compile Include="Data\Migrations\201405180636338_Initial.cs" />
+    <Compile Include="Data\Migrations\201405180636338_Initial.Designer.cs">
+      <DependentUpon>201405180636338_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\Models\TestModel.cs" />
     <Compile Include="Objects\Views\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
@@ -224,9 +224,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201403230733409_Initial.resx">
-      <DependentUpon>201403230733409_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Data\Migrations\201405180636338_Initial.resx">
+      <DependentUpon>201405180636338_Initial.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

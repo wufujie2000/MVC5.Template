@@ -187,15 +187,15 @@ namespace Template.Tests.Unit.Services
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_NullifiesDeletedRoleInPerson()
+        public void Delete_NullifiesDeletedRoleInAccount()
         {
-            if (!context.Set<Person>().Any(person => person.RoleId == role.Id))
+            if (!context.Set<Account>().Any(account => account.RoleId == role.Id))
                 Assert.Inconclusive();
 
             service.Delete(role.Id);
             context = new TestingContext();
 
-            Assert.IsFalse(context.Set<Person>().Any(person => person.RoleId == role.Id));
+            Assert.IsFalse(context.Set<Account>().Any(account => account.RoleId == role.Id));
         }
 
         [Test]
@@ -296,11 +296,9 @@ namespace Template.Tests.Unit.Services
         private void SetUpData()
         {
             Account account = ObjectFactory.CreateAccount();
-            account.Person = ObjectFactory.CreatePerson();
-            account.PersonId = account.Person.Id;
-
             role = ObjectFactory.CreateRole();
-            account.Person.RoleId = role.Id;
+            account.RoleId = role.Id;
+
             context.Set<Account>().Add(account);
 
             role.RolePrivileges = new List<RolePrivilege>();
@@ -329,7 +327,7 @@ namespace Template.Tests.Unit.Services
         {
             context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Language>().RemoveRange(context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }

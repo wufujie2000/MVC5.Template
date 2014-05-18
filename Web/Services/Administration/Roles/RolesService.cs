@@ -54,7 +54,7 @@ namespace Template.Services
         }
         public override void Delete(String id)
         {
-            RemoveRoleFromPeople(id);
+            RemoveRoleFromAccounts(id); // TODO: Set null logic chould work in database?
             UnitOfWork.Repository<Role>().Delete(id);
             UnitOfWork.Commit();
         }
@@ -148,15 +148,15 @@ namespace Template.Services
                 });
         }
 
-        private void RemoveRoleFromPeople(String roleId)
+        private void RemoveRoleFromAccounts(String roleId)
         {
-            IQueryable<Person> peopleWithRole = UnitOfWork.Repository<Person>()
-                .Query(person => person.RoleId == roleId);
+            IQueryable<Account> accountsWithRole = UnitOfWork.Repository<Account>()
+                .Query(account => account.RoleId == roleId);
 
-            foreach (Person person in peopleWithRole)
+            foreach (Account account in accountsWithRole)
             {
-                person.RoleId = null;
-                UnitOfWork.Repository<Person>().Update(person);
+                account.RoleId = null;
+                UnitOfWork.Repository<Account>().Update(account);
             }
         }
     }

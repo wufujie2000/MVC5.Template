@@ -40,15 +40,9 @@ namespace Template.Services
         {
             Account account = GetAccountFrom(profile);
             UnitOfWork.Repository<Account>().Update(account);
-            UnitOfWork.Repository<Person>().Update(account.Person);
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
-        }
-        public override void Delete(String id)
-        {
-            UnitOfWork.Repository<Person>().Delete(id);
-            UnitOfWork.Commit();
         }
 
         public void AddDeleteDisclaimerMessage()
@@ -120,10 +114,6 @@ namespace Template.Services
             account.Username = profile.Username;
             if (profile.NewPassword != null)
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);
-
-            account.Person.DateOfBirth = profile.Person.DateOfBirth;
-            account.Person.FirstName = profile.Person.FirstName;
-            account.Person.LastName = profile.Person.LastName;
 
             return account;
         }

@@ -187,15 +187,13 @@ namespace Template.Tests.Unit.Services
         private void SetUpData()
         {
             Account account = ObjectFactory.CreateAccount();
-            account.Person = ObjectFactory.CreatePerson();
-            account.PersonId = account.Person.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 

@@ -11,9 +11,8 @@ namespace Template.Objects
         [Required]
         public String Passhash { get; set; }
 
-        [Required]
-        public String PersonId { get; set; }
+        public String RoleId { get; set; }
 
-        public virtual Person Person { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 namespace Template.Data.Migrations
 {
     using System.Data.Entity.Migrations;
-    
+    using System.Diagnostics.CodeAnalysis;
+
+    [ExcludeFromCodeCoverage]
     public partial class Initial : DbMigration
     {
         public override void Up()
@@ -13,21 +15,6 @@ namespace Template.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false),
                         Passhash = c.String(nullable: false),
-                        PersonId = c.String(nullable: false, maxLength: 128),
-                        EntityDate = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.People", t => t.PersonId, cascadeDelete: true)
-                .Index(t => t.PersonId);
-            
-            CreateTable(
-                "dbo.People",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        DateOfBirth = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
@@ -106,28 +93,24 @@ namespace Template.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Akkounts", "RoleId", "dbo.Roles");
-            DropForeignKey("dbo.Accounts", "PersonId", "dbo.People");
-            DropForeignKey("dbo.People", "RoleId", "dbo.Roles");
+            DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
             DropIndex("dbo.Akkounts", new[] { "RoleId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
-            DropIndex("dbo.People", new[] { "RoleId" });
-            DropIndex("dbo.Accounts", new[] { "PersonId" });
+            DropIndex("dbo.Accounts", new[] { "RoleId" });
             DropTable("dbo.Logs");
             DropTable("dbo.Languages");
             DropTable("dbo.Akkounts");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");
-            DropTable("dbo.People");
             DropTable("dbo.Accounts");
         }
     }

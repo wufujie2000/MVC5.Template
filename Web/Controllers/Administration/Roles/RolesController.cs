@@ -23,7 +23,7 @@ namespace Template.Controllers.Administration
         {
             RoleView role = new RoleView();
             Service.SeedPrivilegesTree(role);
-
+            // TODO: Center validation span then it is multilined by bootstrap
             return View(role);
         }
 

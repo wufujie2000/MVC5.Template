@@ -11,7 +11,5 @@ namespace Template.Objects
         [Required]
         public String CurrentPassword { get; set; }
         public String NewPassword { get; set; }
-
-        public PersonView Person { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Template.Tests.Unit.Data.Logging
         [TearDown]
         public void TearDown()
         {
-            dataContext.Set<Person>().RemoveRange(dataContext.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Log>().RemoveRange(context.Set<Log>());
             dataContext.SaveChanges();
             context.SaveChanges();
@@ -45,9 +45,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsAddedEntities()
         {
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
-            DbEntityEntry<Person> entry = dataContext.Entry(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
+            DbEntityEntry<Account> entry = dataContext.Entry(model);
 
             entry.State = EntityState.Added;
 
@@ -57,11 +57,11 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsModifiedEntities()
         {
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
-            DbEntityEntry<Person> entry = dataContext.Entry(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
+            DbEntityEntry<Account> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
-            model.LastName += "1";
+            model.Username += "1";
 
             entry.State = EntityState.Modified;
 
@@ -71,9 +71,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
         {
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
-            DbEntityEntry<Person> entry = dataContext.Entry(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
+            DbEntityEntry<Account> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
 
             entry.State = EntityState.Modified;
@@ -84,9 +84,9 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsDeletedEntities()
         {
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
-            DbEntityEntry<Person> entry = dataContext.Entry(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
+            DbEntityEntry<Account> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
 
             entry.State = EntityState.Deleted;
@@ -98,8 +98,8 @@ namespace Template.Tests.Unit.Data.Logging
         public void Log_DoesNotLogUnsupportedStates()
         {
             IEnumerable<EntityState> unsupportedStates = new[] { EntityState.Detached, EntityState.Unchanged };
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
 
             foreach (EntityState unsupportedState in unsupportedStates)
             {
@@ -114,8 +114,8 @@ namespace Template.Tests.Unit.Data.Logging
         [Test]
         public void Log_LogsFormattedMessage()
         {
-            Person model = ObjectFactory.CreatePerson();
-            dataContext.Set<Person>().Add(model);
+            Account model = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(model);
 
             DbEntityEntry entry = dataContext.Entry(model);
             entry.State = EntityState.Added;

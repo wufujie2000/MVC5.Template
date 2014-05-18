@@ -43,7 +43,6 @@
     <Compile Include="Models\Administration\Roles\Privilege.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
     <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
-    <Compile Include="Models\Account\Person.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\System\Language.cs" />
     <Compile Include="Models\System\Log.cs" />
@@ -51,7 +50,6 @@
     <Compile Include="Shared\Tree.cs" />
     <Compile Include="Shared\TreeNode.cs" />
     <Compile Include="Views\Account\AccountView.cs" />
-    <Compile Include="Views\Account\PersonView.cs" />
     <Compile Include="Views\Administration\Akkounts\AkkountView.cs" />
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />

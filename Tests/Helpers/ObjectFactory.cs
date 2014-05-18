@@ -30,13 +30,7 @@ namespace Template.Tests.Helpers
             {
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 CurrentPassword = "Password1",
-                NewPassword = "NewPassword1",
-                Person = new PersonView()
-                {
-                    LastName = "LastName" + instanceNumber.ToString(),
-                    FirstName = "FirstName" + instanceNumber.ToString(),
-                    DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
-                }
+                NewPassword = "NewPassword1"
             };
         }
         public static AccountView CreateAccountView(Int32 instanceNumber = 1)
@@ -49,31 +43,8 @@ namespace Template.Tests.Helpers
             };
         }
 
-        public static Person CreatePerson(Int32 instanceNumber = 1)
-        {
-            return new Person()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                LastName = "LastName" + instanceNumber.ToString(),
-                FirstName = "FirstName" + instanceNumber.ToString(),
-                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber)
-            };
-        }
-        public static PersonView CreatePersonView(Int32 instanceNumber = 1)
-        {
-            return new PersonView()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                LastName = "LastName" + instanceNumber.ToString(),
-                FirstName = "FirstName" + instanceNumber.ToString(),
-                DateOfBirth = new DateTime(1990, 1, 1).AddDays(instanceNumber),
-
-                RoleId = TestId + instanceNumber.ToString()
-            };
-        }
-
         public static Role CreateRole(Int32 instanceNumber = 1)
-        {
+        { // TODO: Add pre commit hook for removing trailing whitespace
             return new Role()
             {
                 Id = TestId + instanceNumber.ToString(),

@@ -35,7 +35,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Repository_UsesContextsRepository()
         {
-            Assert.AreEqual(context.Repository<Person>(), unitOfWork.Repository<Person>());
+            Assert.AreEqual(context.Repository<Account>(), unitOfWork.Repository<Account>());
         }
 
         #endregion
@@ -59,12 +59,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void ToView_ConvertsModelToView()
         {
-            Person model = ObjectFactory.CreatePerson();
+            Account model = ObjectFactory.CreateAccount();
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            PersonView expected = Mapper.Map<Person, PersonView>(model);
-            PersonView actual = unitOfWork.ToView<Person, PersonView>(model);
+            AccountView expected = Mapper.Map<Account, AccountView>(model);
+            AccountView actual = unitOfWork.ToView<Account, AccountView>(model);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -76,13 +76,13 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            Person model = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(model);
+            Account model = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(model);
 
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            Assert.IsNull(unitOfWork.Repository<Person>().GetById(model.Id));
+            Assert.IsNull(unitOfWork.Repository<Account>().GetById(model.Id));
         }
 
         #endregion
@@ -92,12 +92,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            Person expected = ObjectFactory.CreatePerson();
-            unitOfWork.Repository<Person>().Insert(expected);
+            Account expected = ObjectFactory.CreateAccount();
+            unitOfWork.Repository<Account>().Insert(expected);
             unitOfWork.Commit();
 
-            Person actual = unitOfWork.Repository<Person>().GetById(expected.Id);
-            unitOfWork.Repository<Person>().Delete(expected.Id);
+            Account actual = unitOfWork.Repository<Account>().GetById(expected.Id);
+            unitOfWork.Repository<Account>().Delete(expected.Id);
             unitOfWork.Commit();
 
             TestHelper.PropertyWiseEquals(expected, actual);

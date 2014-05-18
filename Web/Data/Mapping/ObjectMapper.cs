@@ -17,9 +17,6 @@ namespace Template.Data.Mapping
 
         private static void MapAccounts()
         {
-            Mapper.CreateMap<Person, PersonView>();
-            Mapper.CreateMap<PersonView, Person>();
-
             Mapper.CreateMap<Account, AccountView>();
             Mapper.CreateMap<AccountView, Account>();
 

@@ -13,15 +13,15 @@ namespace Template.Tests.Unit.Data.Core
     [TestFixture]
     public class RepositoryTests
     {
-        private Repository<Person> repository;
+        private Repository<Account> repository;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            repository = new Repository<Person>(context);
-            context.Set<Person>().RemoveRange(context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
+            repository = new Repository<Account>(context);
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 
@@ -36,13 +36,13 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void GetById_GetsModelById()
         {
-            Person person = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(person);
+            Account account = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(account);
             context.SaveChanges();
 
-            Person expected = context.Set<Person>().Find(person.Id);
-            Person actual = repository.GetById(person.Id);
-            context.Set<Person>().Remove(person);
+            Account expected = context.Set<Account>().Find(account.Id);
+            Account actual = repository.GetById(account.Id);
+            context.Set<Account>().Remove(account);
             context.SaveChanges();
 
             Assert.AreEqual(expected, actual);
@@ -61,7 +61,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_ReturnsContextsSet()
         {
-            Assert.AreEqual(context.Set<Person>(), repository.Query());
+            Assert.AreEqual(context.Set<Account>(), repository.Query());
         }
 
         #endregion
@@ -71,14 +71,14 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_ProjectsContextsSet()
         {
-            Person model = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(model);
+            Account model = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(model);
             context.SaveChanges();
 
-            IEnumerable<String> expected = context.Set<Person>().Project().To<PersonView>().Select(person => person.Id).ToList();
-            IEnumerable<String> actual = repository.Query<PersonView>().Select(person => person.Id).ToList();
+            IEnumerable<String> expected = context.Set<Account>().Project().To<AccountView>().Select(account => account.Id).ToList();
+            IEnumerable<String> actual = repository.Query<AccountView>().Select(account => account.Id).ToList();
 
-            context.Set<Person>().Remove(model);
+            context.Set<Account>().Remove(model);
             context.SaveChanges();
 
             CollectionAssert.AreEqual(expected, actual);
@@ -91,17 +91,17 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_FiltersByPredicate()
         {
-            Person model1 = ObjectFactory.CreatePerson(1);
-            Person model2 = ObjectFactory.CreatePerson(2);
-            context.Set<Person>().Add(model1);
-            context.Set<Person>().Add(model2);
+            Account model1 = ObjectFactory.CreateAccount(1);
+            Account model2 = ObjectFactory.CreateAccount(2);
+            context.Set<Account>().Add(model1);
+            context.Set<Account>().Add(model2);
             context.SaveChanges();
 
-            IEnumerable<Person> expected = context.Set<Person>().Where(person => person.Id == model1.Id).ToList();
-            IEnumerable<Person> actual = repository.Query().Where(person => person.Id == model1.Id).ToList();
+            IEnumerable<Account> expected = context.Set<Account>().Where(account => account.Id == model1.Id).ToList();
+            IEnumerable<Account> actual = repository.Query().Where(account => account.Id == model1.Id).ToList();
 
-            context.Set<Person>().Remove(model1);
-            context.Set<Person>().Remove(model2);
+            context.Set<Account>().Remove(model1);
+            context.Set<Account>().Remove(model2);
             context.SaveChanges();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
@@ -114,17 +114,17 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Query_FiltersProjectedViewsByPredicate()
         {
-            Person person1 = ObjectFactory.CreatePerson(1);
-            Person person2 = ObjectFactory.CreatePerson(2);
-            context.Set<Person>().Add(person1);
-            context.Set<Person>().Add(person2);
+            Account account1 = ObjectFactory.CreateAccount(1);
+            Account account2 = ObjectFactory.CreateAccount(2);
+            context.Set<Account>().Add(account1);
+            context.Set<Account>().Add(account2);
             context.SaveChanges();
 
-            IEnumerable<PersonView> expected = context.Set<Person>().Where(person => person.Id == person1.Id).Project().To<PersonView>().ToList();
-            IEnumerable<PersonView> actual = repository.Query<PersonView>(person => person.Id == person1.Id).ToList();
-            
-            context.Set<Person>().Remove(person1);
-            context.Set<Person>().Remove(person2);
+            IEnumerable<AccountView> expected = context.Set<Account>().Where(account => account.Id == account1.Id).Project().To<AccountView>().ToList();
+            IEnumerable<AccountView> actual = repository.Query<AccountView>(account => account.Id == account1.Id).ToList();
+
+            context.Set<Account>().Remove(account1);
+            context.Set<Account>().Remove(account2);
             context.SaveChanges();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
@@ -137,12 +137,12 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Insert_InsertsModel()
         {
-            Person expected = ObjectFactory.CreatePerson();
+            Account expected = ObjectFactory.CreateAccount();
             repository.Insert(expected);
             context.SaveChanges();
 
-            Person actual = context.Set<Person>().Find(expected.Id);
-            context.Set<Person>().Remove(expected);
+            Account actual = context.Set<Account>().Find(expected.Id);
+            context.Set<Account>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -155,16 +155,16 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_UpdatesAttachedModel()
         {
-            Person expected = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(expected);
+            Account expected = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(expected);
             context.SaveChanges();
 
-            expected.FirstName = "Test";
+            expected.Username = "Test";
             repository.Update(expected);
             context.SaveChanges();
 
-            Person actual = context.Set<Person>().Find(expected.Id);
-            context.Set<Person>().Remove(expected);
+            Account actual = context.Set<Account>().Find(expected.Id);
+            context.Set<Account>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -173,18 +173,18 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_UpdatesNotAttachedModel()
         {
-            Person expected = ObjectFactory.CreatePerson();
-            context.Set<Person>().Add(expected);
+            Account expected = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(expected);
             context.SaveChanges();
 
-            expected.FirstName = "Test";
+            expected.Username = "Test";
             context = new TestingContext();
-            repository = new Repository<Person>(context);
+            repository = new Repository<Account>(context);
             repository.Update(expected);
             context.SaveChanges();
 
-            Person actual = context.Set<Person>().Find(expected.Id);
-            context.Set<Person>().Remove(expected);
+            Account actual = context.Set<Account>().Find(expected.Id);
+            context.Set<Account>().Remove(expected);
             context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -193,10 +193,10 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Update_DoesNotModifyEntityDate()
         {
-            Person person = ObjectFactory.CreatePerson();
-            repository.Update(person);
+            Account account = ObjectFactory.CreateAccount();
+            repository.Update(account);
 
-            Assert.IsFalse(context.Entry(person).Property(prop => prop.EntityDate).IsModified);
+            Assert.IsFalse(context.Entry(account).Property(prop => prop.EntityDate).IsModified);
         }
 
         #endregion
@@ -206,17 +206,17 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Delete_DeletesModelById()
         {
-            Person expected = ObjectFactory.CreatePerson();
+            Account expected = ObjectFactory.CreateAccount();
             repository.Insert(expected);
             context.SaveChanges();
 
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            Person actual = context.Set<Person>().Find(expected.Id);
+            Account actual = context.Set<Account>().Find(expected.Id);
             if (actual != null)
             {
-                context.Set<Person>().Remove(expected);
+                context.Set<Account>().Remove(expected);
                 context.SaveChanges();
             }
 

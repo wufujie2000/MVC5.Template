@@ -60,9 +60,6 @@ namespace Template.Tests.Unit.Services
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             Account takenAccount = ObjectFactory.CreateAccount();
-            takenAccount.Person = ObjectFactory.CreatePerson();
-            takenAccount.Person.Id = takenAccount.Person.Id + "1";
-            takenAccount.PersonId = takenAccount.Person.Id + "1";
             takenAccount.Username += "1";
             takenAccount.Id += "1";
 
@@ -203,7 +200,6 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             Account actual = context.Set<Account>().Find(account.Id);
 
-            Assert.AreEqual(expected.PersonId, actual.PersonId);
             Assert.AreEqual(profileView.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
         }
@@ -221,26 +217,6 @@ namespace Template.Tests.Unit.Services
             Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
         }
 
-        [Test]
-        public void Edit_EditsPerson()
-        {
-            String expectedRoleId = account.Person.RoleId;
-            ProfileView profileView = ObjectFactory.CreateProfileView();
-            profileView.Person.DateOfBirth = null;
-            profileView.Person.FirstName += "1";
-            profileView.Person.LastName += "1";
-            service.Edit(profileView);
-
-            context = new TestingContext();
-            PersonView expected = profileView.Person;
-            Person actual = context.Set<Person>().Find(account.PersonId);
-
-            Assert.AreEqual(expected.DateOfBirth, actual.DateOfBirth);
-            Assert.AreEqual(expected.FirstName, actual.FirstName);
-            Assert.AreEqual(expected.LastName, actual.LastName);
-            Assert.AreEqual(expectedRoleId, actual.RoleId);
-        }
-
         #endregion
 
         #region Method: Delete(String id)
@@ -255,18 +231,6 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
 
             Assert.IsNull(context.Set<Account>().Find(account.Id));
-        }
-
-        [Test]
-        public void Delete_DeletesUser()
-        {
-            if (context.Set<Person>().Find(account.PersonId) == null)
-                Assert.Inconclusive();
-
-            service.Delete(account.PersonId);
-            context = new TestingContext();
-
-            Assert.IsNull(context.Set<Person>().Find(account.PersonId));
         }
 
         #endregion
@@ -308,18 +272,16 @@ namespace Template.Tests.Unit.Services
         private void SetUpData()
         {
             account = ObjectFactory.CreateAccount();
-            account.Person = ObjectFactory.CreatePerson();
-            account.Person.Role = ObjectFactory.CreateRole();
-            account.Person.RoleId = account.Person.Role.Id;
-            account.PersonId = account.Person.Id;
+            account.Role = ObjectFactory.CreateRole();
+            account.RoleId = account.Role.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();
         }
         private void TearDownData()
         {
-            foreach (Person person in context.Set<Person>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Person>().Remove(person);
+            foreach (Account account in context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)))
+                context.Set<Account>().Remove(account);
             foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
                 context.Set<Role>().Remove(role);
 

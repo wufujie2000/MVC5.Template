@@ -10,5 +10,8 @@ namespace Template.Objects
 
         [Required]
         public String Password { get; set; }
+
+        public String RoleId { get; set; }
+        public String RoleName { get; set; }
     }
 }

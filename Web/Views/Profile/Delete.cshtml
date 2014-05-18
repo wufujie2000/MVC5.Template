@@ -2,24 +2,6 @@
 
 @using (Html.FormWidgetBox(LinkAction.Edit))
 {
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.Person.FirstName)
-        @Html.FormTextBoxFor(model => model.Person.FirstName)
-    }
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.Person.LastName)
-        @Html.FormTextBoxFor(model => model.Person.LastName)
-    }
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.Person.DateOfBirth)
-        @Html.FormDatePickerFor(model => model.Person.DateOfBirth)
-    }
-    using (Html.FormGroup())
-    {
-    }
     using(Html.BeginForm())
     {
         @Html.AntiForgeryToken()

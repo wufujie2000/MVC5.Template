@@ -213,7 +213,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void DeleteConfirmed_ReturnsEmptyViewIfCanNotDelete()
         {
             serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(false);
-
+            // TODO: Add performance tests, at least for indexes
             Assert.IsNull((controller.DeleteConfirmed("Test") as ViewResult).Model);
         }
 

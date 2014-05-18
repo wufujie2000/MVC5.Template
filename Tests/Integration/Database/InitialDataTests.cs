@@ -129,7 +129,7 @@ namespace Template.Tests.Integration.Database
             Assert.IsNotNull(context.Set<Account>()
                 .SingleOrDefault(account =>
                     account.Username == "admin" &&
-                    account.Person.Role.Name == "Sys_Admin"));
+                    account.Role.Name == "Sys_Admin"));
         }
 
         #endregion

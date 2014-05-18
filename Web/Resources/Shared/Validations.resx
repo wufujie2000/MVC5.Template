@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FieldIsRequired" xml:space="preserve">
-    <value>Field '{0}' is required</value>
+    <value>'{0}' field is required</value>
   </data>
   <data name="FieldMustBeDate" xml:space="preserve">
-    <value>Field '{0}' must be a date</value>
+    <value>'{0}' field must be a date</value>
   </data>
   <data name="FieldMustBeNumeric" xml:space="preserve">
-    <value>Field '{0}' must be numeric</value>
+    <value>'{0}' field must be numeric</value>
   </data>
 </root>

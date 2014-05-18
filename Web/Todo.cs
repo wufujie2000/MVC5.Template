@@ -2,7 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Rename "Field 'xxx' is required" to 'xxx' field is required
         // TODO: Add tests for nullable roles?
         // TODO: Delete duplicated code in IsAuthorizedFor methods
         // TODO: Add exception for "Controller does not have xxx action"

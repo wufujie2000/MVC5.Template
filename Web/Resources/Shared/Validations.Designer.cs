@@ -61,7 +61,7 @@ namespace Template.Resources.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field &apos;{0}&apos; is required.
+        ///   Looks up a localized string similar to &apos;{0}&apos; field is required.
         /// </summary>
         public static string FieldIsRequired {
             get {
@@ -70,7 +70,7 @@ namespace Template.Resources.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field &apos;{0}&apos; must be a date.
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be a date.
         /// </summary>
         public static string FieldMustBeDate {
             get {
@@ -79,7 +79,7 @@ namespace Template.Resources.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Field &apos;{0}&apos; must be numeric.
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be numeric.
         /// </summary>
         public static string FieldMustBeNumeric {
             get {

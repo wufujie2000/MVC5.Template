@@ -21,7 +21,6 @@ namespace Template.Data.Core
         #region Administration
 
         private DbSet<Role> Roles { get; set; }
-        private DbSet<Akkount> Akkounts { get; set; }
         private DbSet<Privilege> Privileges { get; set; }
         private DbSet<RolePrivilege> RolePrivileges { get; set; }
 

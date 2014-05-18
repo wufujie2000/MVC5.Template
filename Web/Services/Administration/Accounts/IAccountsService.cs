@@ -2,7 +2,7 @@ using Template.Objects;
 
 namespace Template.Services
 { 
-    public interface IAkkountsService : IGenericService<AkkountView>
+    public interface IAccountsService : IGenericService<AccountView>
     {
     }
 }

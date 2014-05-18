@@ -4,18 +4,18 @@ using System.Text.RegularExpressions;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
-using Template.Resources.Views.AkkountView;
+using Template.Resources.Views.AccountView;
 
 namespace Template.Services
 {
-    public class AkkountsService : GenericService<Akkount, AkkountView>, IAkkountsService
+    public class AccountsService : GenericService<Account, AccountView>, IAccountsService
     {
-        public AkkountsService(IUnitOfWork unitOfWork)
+        public AccountsService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
 
-        public override Boolean CanCreate(AkkountView view)
+        public override Boolean CanCreate(AccountView view)
         {
             Boolean isValid = base.CanCreate(view);
             isValid &= IsUniqueUsername(view);
@@ -23,7 +23,7 @@ namespace Template.Services
 
             return isValid;
         }
-        public override Boolean CanEdit(AkkountView view)
+        public override Boolean CanEdit(AccountView view)
         {
             Boolean isValid = base.CanEdit(view);
             isValid &= IsUniqueUsername(view);
@@ -31,30 +31,30 @@ namespace Template.Services
             return isValid;
         }
 
-        public override void Create(AkkountView view)
+        public override void Create(AccountView view)
         {
-            Akkount akkount = UnitOfWork.ToModel<AkkountView, Akkount>(view);
-            akkount.Passhash = BCrypter.HashPassword(view.Password);
+            Account account = UnitOfWork.ToModel<AccountView, Account>(view);
+            account.Passhash = BCrypter.HashPassword(view.Password);
 
-            UnitOfWork.Repository<Akkount>().Insert(akkount);
+            UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
         }
-        public override void Edit(AkkountView view)
+        public override void Edit(AccountView view)
         {
-            Akkount akkount = UnitOfWork.ToModel<AkkountView, Akkount>(view);
-            akkount.Passhash = UnitOfWork.Repository<Akkount>().GetById(akkount.Id).Passhash;
-            // TODO: Remove akkount username edit option
-            UnitOfWork.Repository<Akkount>().Update(akkount);
+            Account account = UnitOfWork.ToModel<AccountView, Account>(view);
+            account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
+            // TODO: Remove account username edit option
+            UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
         }
 
-        private Boolean IsUniqueUsername(AkkountView view)
+        private Boolean IsUniqueUsername(AccountView view)
         {
             Boolean isUnique = !UnitOfWork
-                .Repository<Akkount>()
-                .Query(akkount =>
-                    akkount.Id != view.Id &&
-                    akkount.Username.ToUpper() == view.Username.ToUpper())
+                .Repository<Account>()
+                .Query(account =>
+                    account.Id != view.Id &&
+                    account.Username.ToUpper() == view.Username.ToUpper())
                 .Any();
 
             if (!isUnique)
@@ -62,7 +62,7 @@ namespace Template.Services
 
             return isUnique;
         }
-        private Boolean IsPasswordLegal(AkkountView view)
+        private Boolean IsPasswordLegal(AccountView view)
         {
             // TODO: Add null check on password
             Boolean isLegal = Regex.IsMatch(view.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");

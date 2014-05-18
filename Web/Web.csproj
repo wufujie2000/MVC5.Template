@@ -391,16 +391,16 @@
     <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Administration\Akkounts\Index.cshtml" />
+    <Content Include="Views\Administration\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Administration\Akkounts\Create.cshtml" />
+    <Content Include="Views\Administration\Accounts\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Administration\Akkounts\Details.cshtml" />
+    <Content Include="Views\Administration\Accounts\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Administration\Akkounts\Edit.cshtml" />
+    <Content Include="Views\Administration\Accounts\Edit.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

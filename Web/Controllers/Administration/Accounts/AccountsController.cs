@@ -5,9 +5,9 @@ using Template.Services;
 
 namespace Template.Controllers.Administration
 {
-    public class AkkountsController : ServicedController<IAkkountsService>
+    public class AccountsController : ServicedController<IAccountsService>
     {
-        public AkkountsController(IAkkountsService service)
+        public AccountsController(IAccountsService service)
             : base(service)
         {
         }
@@ -21,17 +21,17 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ActionResult Create()
         {
-            return View(new AkkountView());
+            return View(new AccountView());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] AkkountView akkount)
+        public ActionResult Create([Bind(Exclude = "Id")] AccountView account)
         {
-            if (!Service.CanCreate(akkount))
+            if (!Service.CanCreate(account))
                 return View();
             // TODO: Trim usernames
-            Service.Create(akkount);
+            Service.Create(account);
 
             return RedirectIfAuthorized("Index");
         }
@@ -50,12 +50,12 @@ namespace Template.Controllers.Administration
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AkkountView akkount)
+        public ActionResult Edit(AccountView account)
         {
-            if (!Service.CanEdit(akkount))
+            if (!Service.CanEdit(account))
                 return View();
 
-            Service.Edit(akkount);
+            Service.Edit(account);
 
             return RedirectIfAuthorized("Index");
         }

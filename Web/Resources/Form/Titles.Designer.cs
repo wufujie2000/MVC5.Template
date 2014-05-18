@@ -63,9 +63,9 @@ namespace Template.Resources.Form {
         /// <summary>
         ///   Looks up a localized string similar to Account&apos;s information.
         /// </summary>
-        public static string AdministrationAkkounts {
+        public static string AdministrationAccounts {
             get {
-                return ResourceManager.GetString("AdministrationAkkounts", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
             }
         }
         

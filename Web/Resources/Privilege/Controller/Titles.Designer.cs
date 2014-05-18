@@ -63,9 +63,9 @@ namespace Template.Resources.Privilege.Controller {
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string Akkounts {
+        public static string Accounts {
             get {
-                return ResourceManager.GetString("Akkounts", resourceCulture);
+                return ResourceManager.GetString("Accounts", resourceCulture);
             }
         }
         

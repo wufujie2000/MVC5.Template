@@ -113,7 +113,7 @@
     <Compile Include="Objects\Views\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RequiredAdapterModel.cs" />
-    <Compile Include="Unit\Controllers\Administration\Akkounts\AkkountsControllerTests.cs" />
+    <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerStub.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistStub.cs" />
     <Compile Include="Unit\Components\Datalists\DatalistView.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="Unit\Components\Extensions\Html\JsTree\TreeViewModel.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderFactoryTests.cs" />
     <Compile Include="Unit\Services\Account\AccountServiceTests.cs" />
-    <Compile Include="Unit\Services\Administration\Akkounts\AkkountsServiceTests.cs" />
+    <Compile Include="Unit\Services\Administration\Accounts\AccountsServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
     <Compile Include="Unit\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
@@ -228,9 +228,7 @@
       <DependentUpon>201405180636338_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

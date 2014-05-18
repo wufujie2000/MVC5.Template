@@ -72,45 +72,45 @@ namespace Template.Resources.Content {
         /// <summary>
         ///   Looks up a localized string similar to Account creation.
         /// </summary>
-        public static string AdministrationAkkountsCreate {
+        public static string AdministrationAccountsCreate {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsCreate", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Account deletion.
         /// </summary>
-        public static string AdministrationAkkountsDelete {
+        public static string AdministrationAccountsDelete {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsDelete", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsDelete", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Account details.
         /// </summary>
-        public static string AdministrationAkkountsDetails {
+        public static string AdministrationAccountsDetails {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsDetails", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Account edit.
         /// </summary>
-        public static string AdministrationAkkountsEdit {
+        public static string AdministrationAccountsEdit {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsEdit", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string AdministrationAkkountsIndex {
+        public static string AdministrationAccountsIndex {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsIndex", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
             }
         }
         

@@ -20,7 +20,7 @@ namespace Template.Web.DependencyInjection.Ninject
             Bind<IRolesService>().To<RolesService>();
             Bind<IAccountService>().To<AccountService>();
             Bind<IProfileService>().To<ProfileService>();
-            Bind<IAkkountsService>().To<AkkountsService>();
+            Bind<IAccountsService>().To<AccountsService>();
         }
     }
 }

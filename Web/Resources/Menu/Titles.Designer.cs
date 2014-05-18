@@ -72,9 +72,9 @@ namespace Template.Resources.Menu {
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string AdministrationAkkountsIndex {
+        public static string AdministrationAccountsIndex {
             get {
-                return ResourceManager.GetString("AdministrationAkkountsIndex", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
             }
         }
         

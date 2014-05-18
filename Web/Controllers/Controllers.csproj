@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountController.cs" />
     <Compile Include="Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Administration\Akkounts\AkkountsController.cs" />
+    <Compile Include="Administration\Accounts\AccountsController.cs" />
     <Compile Include="Administration\Roles\RolesController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="Datalist\DatalistController.cs" />

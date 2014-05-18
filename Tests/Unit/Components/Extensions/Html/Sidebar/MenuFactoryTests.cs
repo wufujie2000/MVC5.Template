@@ -169,7 +169,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                         {
                             IconClass = "menu-icon fa fa-user",
                             Area = "Administration",
-                            Controller = "Akkounts",
+                            Controller = "Accounts",
                             Action = "Index"
                         },
                         new Menu()

@@ -304,7 +304,7 @@ namespace Template.Tests.Unit.Services
             role.RolePrivileges = new List<RolePrivilege>();
 
             Int32 privNumber = 1;
-            IEnumerable<String> controllers = new[] { "Akkounts", "Roles" };
+            IEnumerable<String> controllers = new[] { "Accounts", "Roles" };
             IEnumerable<String> actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
             foreach (String controller in controllers)

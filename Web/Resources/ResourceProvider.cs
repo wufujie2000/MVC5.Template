@@ -117,7 +117,7 @@ namespace Template.Resources
             }
             catch(Exception)
             {
-                return String.Empty;
+                return null;
             }
         }
     }

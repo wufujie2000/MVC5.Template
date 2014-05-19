@@ -238,15 +238,15 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPropertyTitle_OnPropertyFromExpressionNotFoundReturnsEmpty()
+        public void GetPropertyTitle_OnPropertyFromExpressionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Id));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Id));
         }
 
         [Test]
-        public void GetPropertyTitle_OnTypeFromExpressionNotFoundReturnsEmpty()
+        public void GetPropertyTitle_OnTypeFromExpressionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(model => model.Title));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(model => model.Title));
         }
 
         #endregion
@@ -276,9 +276,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPropertyTitle_OnTypeNotFoundReturnsEmpty()
+        public void GetPropertyTitle_OnTypeNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle(typeof(NoResourcesModel), "Title"));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(NoResourcesModel), "Title"));
         }
 
         #endregion

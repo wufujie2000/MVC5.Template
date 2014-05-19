@@ -113,7 +113,7 @@ namespace Template.Tests.Unit.Components.Datalists
         [Test]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            AssertPropertyTitleFor<DatalistView>("Child", String.Empty);
+            AssertPropertyTitleFor<DatalistView>("Child", null);
         }
 
         #endregion

@@ -23,6 +23,7 @@
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider
         // TODO: Add exception handling for not found culture
         // TODO: Find(id) with automapper causes more than 1 call to the database for each relation value
-        // TODO: Fix 'CurrentPassword' field is required errors to 'Current password' field is reuired
+        // TODO: Remove script which turns alert messages to validation span errors
+        // TODO: Use modelstate for keeping errors, or use alert messages to fill in model state errors
     }
 }

@@ -2,7 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Make all action link clickable not just link tags
         // TODO: Center validation span then it is multilined by bootstrap
         // TODO: Increase bottom padding in details views
         // TODO: Add pre commit hook for removing trailing whitespace
@@ -10,7 +9,6 @@
         // TODO: GetPropertyTitle_GetsTitleFromRelation test passes even if view does not have property specified
         // TODO: Remove account username edit option
         // TODO: Add git hook for increasing version
-        // TODO: Set null roleId logic for accounts chould work in database?
         // TODO: Add server side validation, because not posting fields causes exceptions
         // TODO: Mapping should be done in objects assembly, by using profiles
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider

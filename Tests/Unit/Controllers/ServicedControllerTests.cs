@@ -57,7 +57,7 @@ namespace Template.Tests.Unit.Controllers
         public void ServicedController_OnNotNullAlertMessagesSetsExistingAlertMessages()
         {
             ModelStateDictionary modelState = new ModelStateDictionary();
-            MessagesContainer alertMessages = new MessagesContainer(modelState);
+            MessagesContainer alertMessages = new MessagesContainer();
             service.AlertMessages = alertMessages;
             service.ModelState = modelState;
 

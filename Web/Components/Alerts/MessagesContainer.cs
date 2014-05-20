@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace Template.Components.Alerts
 {
     public class MessagesContainer : IEnumerable<AlertMessage>
     {
         public const Decimal DefaultFadeOut = 4;
-        private ModelStateDictionary modelState;
         private List<AlertMessage> messages;
 
-        public MessagesContainer() : this(null)
+        public MessagesContainer()
         {
-        }
-        public MessagesContainer(ModelStateDictionary modelState)
-        {
-            this.modelState = modelState;
             messages = new List<AlertMessage>();
         }
 
@@ -72,23 +65,7 @@ namespace Template.Components.Alerts
 
         public IEnumerator<AlertMessage> GetEnumerator()
         {
-            if (modelState == null)
-                return messages.GetEnumerator();
-
-            IEnumerator<String> keys = modelState.Keys.GetEnumerator();
-            List<AlertMessage> modelStateMessages = new List<AlertMessage>();
-            IEnumerator<ModelState> values = modelState.Values.GetEnumerator();
-
-            while (keys.MoveNext() && values.MoveNext())
-                foreach (ModelError error in values.Current.Errors)
-                    modelStateMessages.Add(new AlertMessage()
-                    {
-                        Key = keys.Current,
-                        Message = error.ErrorMessage,
-                        Type = AlertMessageType.Danger
-                    });
-
-            return modelStateMessages.Union(messages).GetEnumerator();
+            return messages.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {

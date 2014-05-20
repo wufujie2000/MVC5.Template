@@ -3,23 +3,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using Template.Components.Alerts;
-using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Alerts
 {
     [TestFixture]
     public class MessagesContainerTests
     {
-        private ModelStateDictionary modelState;
         private MessagesContainer container;
 
         [SetUp]
         public void SetUp()
         {
-            modelState = new ModelStateDictionary();
-            container = new MessagesContainer(modelState);
+            container = new MessagesContainer();
         }
 
         #region Contructor: MessagesContainer()
@@ -28,23 +24,6 @@ namespace Template.Tests.Unit.Components.Alerts
         public void MessagesContainer_CreatesEmptyContainer()
         {
             CollectionAssert.IsEmpty(new MessagesContainer());
-        }
-
-        #endregion
-
-        #region Contructor: MessagesContainer(ModelStateDictionary modelState)
-
-        [Test]
-        public void MessagesContainer_CreatesContainerWithModelStateMessages()
-        {
-            ModelStateDictionary modelStateDictionary = new ModelStateDictionary();
-            modelStateDictionary.AddModelError("TestErrorKey", "TestErrorMessage");
-            MessagesContainer container = new MessagesContainer(modelStateDictionary);
-
-            Int32 expected = modelStateDictionary.Count;
-            Int32 actual = container.Count();
-
-            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -201,31 +180,27 @@ namespace Template.Tests.Unit.Components.Alerts
         #region Method: GetEnumerator()
 
         [Test]
-        public void GetEnumerator_ContainsMessagesAndModelStateErrors()
+        public void GetEnumerator_GetsEnumerator()
         {
-            modelState.AddModelError("TestKey", "ErrorMessage");
-            AlertMessage expectedMessage = new AlertMessage();
-            container.Add(expectedMessage);
-
-            IEnumerable<AlertMessage> actual = container;
-            IEnumerable<AlertMessage> expected = new[]
+            IEnumerable<AlertMessage> messages = new List<AlertMessage>()
             {
+                new AlertMessage(),
                 new AlertMessage()
-                {
-                    Key = modelState.First().Key,
-                    Type = AlertMessageType.Danger,
-                    Message = modelState.First().Value.Errors.First().ErrorMessage
-                },
-                expectedMessage
             };
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            foreach (AlertMessage message in messages)
+                container.Add(message);
+
+            IEnumerator<AlertMessage> expected = messages.GetEnumerator();
+            IEnumerator<AlertMessage> actual = container.GetEnumerator();
+
+            while (expected.MoveNext() | actual.MoveNext())
+                Assert.AreEqual(expected.Current, actual.Current);
         }
 
         [Test]
-        public void GetEnumerator_GetsSameEnumerable()
+        public void GetEnumerator_GetsSameEnumerator()
         {
-            modelState.AddModelError("TestKey", "ErrorMessage");
             container.Add(new AlertMessage());
             container.Add(new AlertMessage());
 
@@ -233,7 +208,7 @@ namespace Template.Tests.Unit.Components.Alerts
             IEnumerator actual = (container as IEnumerable).GetEnumerator();
 
             while(expected.MoveNext() | actual.MoveNext())
-                TestHelper.PropertyWiseEquals(expected.Current, actual.Current);
+                Assert.AreEqual(expected.Current, actual.Current);
         }
 
         #endregion

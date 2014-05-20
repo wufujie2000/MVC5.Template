@@ -12,21 +12,7 @@
 (function () {
     $('div.alert').each(function (index, element) {
         var alertDiv = $(element);
-        if (alertDiv.hasClass('alert-danger')) {
-            var alertFor = alertDiv.data('alert-for');
 
-            var alertForSpan = $('span[data-valmsg-for="' + alertFor + '"]');
-            if (alertForSpan.length > 0)
-                alertDiv.remove();
-            else
-                alertDiv.fadeTo(300, 1);
-        } else {
-            alertDiv.fadeTo(300, 1);
-        }
-    });
-
-    $('div.alert').each(function (index, element) {
-        var alertDiv = $(element);
         if (alertDiv.data('fade-out-after') != null && alertDiv.data('fade-out-after') != 0) {
             setTimeout(function () {
                 alertDiv.fadeTo(300, 0).slideUp(300, function () {

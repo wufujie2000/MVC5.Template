@@ -13,7 +13,7 @@ namespace Template.Controllers
         {
             Service = service;
             Service.ModelState = Service.ModelState ?? ModelState;
-            Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer(Service.ModelState);
+            Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer();
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

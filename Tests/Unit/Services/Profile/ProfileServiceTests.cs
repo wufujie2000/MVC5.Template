@@ -30,7 +30,7 @@ namespace Template.Tests.Unit.Services
             service = new ProfileService(new UnitOfWork(context));
 
             service.ModelState = new ModelStateDictionary();
-            service.AlertMessages = new MessagesContainer(service.ModelState);
+            service.AlertMessages = new MessagesContainer();
             httpMock.IdentityMock.Setup(mock => mock.Name).Returns(() => account.Id);
 
             TearDownData();

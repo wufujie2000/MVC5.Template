@@ -2,7 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Center validation span then it is multilined by bootstrap
         // TODO: Increase bottom padding in details views
         // TODO: Add pre commit hook for removing trailing whitespace
         // TODO: Remove account username edit option

@@ -90,7 +90,9 @@
 .widget-content .field-validation-error {
   color: #d11919;
   vertical-align: middle;
-  display: table-cell;
+  display: inline-table;
+  padding-top: 10px;
+  text-align: left;
   height: 34px;
 }
 .widget-content .form-actions {
@@ -114,8 +116,22 @@
   .widget-content .control-label {
     text-align: right;
   }
+  .widget-content .control-validation {
+    text-align: center;
+  }
+  .widget-content .field-validation-error {
+    text-align: center;
+    padding-top: 12px;
+  }
 }
 @media (min-width: 1200px) {
+  .widget-content .field-validation-error {
+    padding-top: 7px;
+    text-align: left;
+  }
+  .widget-content .control-validation {
+    text-align: left;
+  }
   .widget-content .form-actions {
     text-align: right;
   }

@@ -111,7 +111,9 @@
     .field-validation-error {
         color: @validation-color;
         vertical-align: middle;
-        display: table-cell;
+        display: inline-table;
+        padding-top: 10px;
+        text-align: left;
         height: 34px;
     }
 
@@ -141,13 +143,35 @@
 }
 
 @media (min-width: 992px) {
-    .widget-content .control-label {
-        text-align: right;
+    .widget-content {
+        .control-label {
+            text-align: right;
+        }
+
+        .control-validation {
+            text-align: center;
+        }
+
+        .field-validation-error {
+            text-align: center;
+            padding-top: 12px;
+        }
     }
 }
 
 @media (min-width: 1200px) {
-    .widget-content .form-actions {
-        text-align: right;
+    .widget-content {
+        .field-validation-error {
+            padding-top: 7px;
+            text-align: left;
+        }
+
+        .control-validation {
+            text-align: left;
+        }
+
+        .form-actions {
+            text-align: right;
+        }
     }
 }

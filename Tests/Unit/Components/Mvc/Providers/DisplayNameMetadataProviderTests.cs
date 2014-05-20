@@ -27,9 +27,9 @@ namespace Template.Tests.Components.Mvc.Providers
         }
 
         [Test]
-        public void GetMetadataForProperty_OnResourceNotFoundSetsToEmpty()
+        public void GetMetadataForProperty_OnResourceNotFoundSetsToNull()
         {
-            Assert.AreEqual(String.Empty, provider.GetMetadataForProperty(null, typeof(ProfileView), "Id").DisplayName);
+            Assert.IsNull(provider.GetMetadataForProperty(null, typeof(ProfileView), "Id").DisplayName);
         }
 
         #endregion

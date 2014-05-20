@@ -47,9 +47,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetCurrentFormTitle_OnFormNotFoundReturnsEmpty()
+        public void GetCurrentFormTitle_OnFormNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetCurrentFormTitle());
+            Assert.IsNull(ResourceProvider.GetCurrentFormTitle());
         }
 
         #endregion
@@ -74,9 +74,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetCurrentTableTitle_OnTableNotFoundReturnsEmpty()
+        public void GetCurrentTableTitle_OnTableNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetCurrentTableTitle());
+            Assert.IsNull(ResourceProvider.GetCurrentTableTitle());
         }
 
         #endregion
@@ -104,9 +104,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetCurrentContentTitle_OnContentNotFoundReturnsEmpty()
+        public void GetCurrentContentTitle_OnContentNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetCurrentContentTitle());
+            Assert.IsNull(ResourceProvider.GetCurrentContentTitle());
         }
 
         #endregion
@@ -120,9 +120,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetActionTitle_OnActionNotFoundReturnsEmpty()
+        public void GetActionTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetActionTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetActionTitle("Test"));
         }
 
         #endregion
@@ -136,9 +136,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetDatalistTitle_OnTypeNotFoundReturnsEmpty()
+        public void GetDatalistTitle_OnTypeNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetDatalistTitle<Object>());
+            Assert.IsNull(ResourceProvider.GetDatalistTitle<Object>());
         }
 
         #endregion
@@ -152,9 +152,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPrivilegeAreaTitle_OnActionNotFoundReturnsEmpty()
+        public void GetPrivilegeAreaTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeAreaTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetPrivilegeAreaTitle("Test"));
         }
 
         #endregion
@@ -168,9 +168,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPrivilegeControllerTitle_OnActionNotFoundReturnsEmpty()
+        public void GetPrivilegeControllerTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeControllerTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetPrivilegeControllerTitle("Test"));
         }
 
         #endregion
@@ -184,9 +184,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPrivilegeActionTitle_OnActionNotFoundReturnsEmpty()
+        public void GetPrivilegeActionTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPrivilegeActionTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetPrivilegeActionTitle("Test"));
         }
 
         #endregion
@@ -210,9 +210,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetMenuTitle_OnMenuNotFoundReturnsEmpty()
+        public void GetMenuTitle_OnMenuNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetMenuTitle("Test", "Test", "Test"));
+            Assert.IsNull(ResourceProvider.GetMenuTitle("Test", "Test", "Test"));
         }
 
         #endregion
@@ -270,9 +270,9 @@ namespace Template.Tests.Resources.Tests
         }
 
         [Test]
-        public void GetPropertyTitle_OnPropertyNotFoundReturnsEmpty()
+        public void GetPropertyTitle_OnPropertyNotFoundReturnsNull()
         {
-            Assert.AreEqual(String.Empty, ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Id"));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Id"));
         }
 
         [Test]

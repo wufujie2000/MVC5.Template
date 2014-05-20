@@ -95,7 +95,7 @@ namespace Template.Resources
         {
             String baseName = String.Format("Template.Resources.Views.{0}.Titles", viewTypeName);
             String title = GetResourceFrom(baseName, propertyName);
-            if (title == String.Empty)
+            if (title == null)
             {
                 String[] baseNames = SplitCamelCase(propertyName);
                 if (baseNames.Length > 1)
@@ -113,7 +113,7 @@ namespace Template.Resources
         {
             try
             {
-                return new ResourceManager(baseName, executingAssembly).GetString(key) ?? String.Empty;
+                return new ResourceManager(baseName, executingAssembly).GetString(key);
             }
             catch(Exception)
             {

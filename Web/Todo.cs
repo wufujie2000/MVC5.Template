@@ -12,7 +12,6 @@
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider
         // TODO: Add exception handling for not found culture
         // TODO: Find(id) with automapper causes more than 1 call to the database for each relation value
-        // TODO: Remove script which turns alert messages to validation span errors
         // TODO: Somehow change exception caching for ajax methods in RequiredAdapter
         // TODO: Add strongly typed error extension for ModelStateDictionry
 

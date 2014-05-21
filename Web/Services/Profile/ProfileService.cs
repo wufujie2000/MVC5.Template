@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
+using Template.Components.Extensions.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
@@ -65,7 +66,7 @@ namespace Template.Services
                  .Any();
 
             if (!isUnique)
-                ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
+                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
 
             return isUnique;
         }
@@ -79,7 +80,7 @@ namespace Template.Services
             
             Boolean isCorrectUsername = username.ToUpperInvariant() == profile.Username.ToUpperInvariant();
             if (!isCorrectUsername)
-                ModelState.AddModelError("Username", Validations.IncorrectUsername);
+                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.IncorrectUsername);
 
             return isCorrectUsername;
         }
@@ -93,7 +94,7 @@ namespace Template.Services
 
             Boolean isCorrectPassword = BCrypter.Verify(profile.CurrentPassword, profilePasshash);
             if (!isCorrectPassword)
-                ModelState.AddModelError("CurrentPassword", Validations.IncorrectPassword);
+                ModelState.AddModelError<ProfileView>(model => model.CurrentPassword, Validations.IncorrectPassword);
 
             return isCorrectPassword;
         }
@@ -103,7 +104,7 @@ namespace Template.Services
 
             Boolean isLegal = Regex.IsMatch(profile.NewPassword, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
-                ModelState.AddModelError("NewPassword", Validations.IllegalPassword);
+                ModelState.AddModelError<ProfileView>(model => model.NewPassword, Validations.IllegalPassword);
 
             return isLegal;
         }

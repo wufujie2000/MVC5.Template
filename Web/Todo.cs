@@ -2,17 +2,14 @@
 {
     internal sealed class Todo
     {
-        // TODO: Increase bottom padding in details views
         // TODO: Add pre commit hook for removing trailing whitespace
         // TODO: Remove account username edit option
         // TODO: Add git hook for increasing version
-        // TODO: Add server side validation, because not posting fields causes exceptions
-        // TODO: Mapping should be done in objects assembly, by using profiles
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider
         // TODO: Add exception handling for not found culture
         // TODO: Find(id) with automapper causes more than 1 call to the database for each relation value
-        // TODO: Somehow change exception caching for ajax methods in RequiredAdapter
-        // TODO: Add strongly typed error extension for ModelStateDictionry
+        // TODO: Try to add custom regex validation attribute for client side validation
+        // TODO: Mapping should be done in assembly which actaully knows how objects should be mapped?
 
         // TODO: Add tests for nullable roles?
         // TODO: Add performance tests, at least for indexes

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Template.Components.Extensions.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
@@ -60,7 +61,7 @@ namespace Template.Services
                 .Any();
 
             if (!isUnique)
-                ModelState.AddModelError("Username", Validations.UsernameIsAlreadyTaken);
+                ModelState.AddModelError<AccountView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
 
             return isUnique;
         }
@@ -68,7 +69,7 @@ namespace Template.Services
         {
             Boolean isLegal = Regex.IsMatch(view.Password ?? String.Empty, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
-                ModelState.AddModelError("Password", Validations.IllegalPassword);
+                ModelState.AddModelError<AccountView>(model => model.Password, Validations.IllegalPassword);
 
             return isLegal;
         }

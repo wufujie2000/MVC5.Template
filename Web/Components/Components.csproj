@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Html\Sidebar\MenuFactory.cs" />
+    <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />

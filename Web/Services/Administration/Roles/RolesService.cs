@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Template.Components.Extensions.Mvc;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources;
@@ -112,7 +113,7 @@ namespace Template.Services
                 .Any();
 
             if (!isUnique)
-                ModelState.AddModelError("Name", Validations.RoleNameIsAlreadyTaken);
+                ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyTaken);
 
             return isUnique;
         }

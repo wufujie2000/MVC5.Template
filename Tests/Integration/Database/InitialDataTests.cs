@@ -29,19 +29,20 @@ namespace Template.Tests.Integration.Database
         [Test]
         public void LanguagesTable_HasEnglishBritishLanguage()
         {
-            String expected = "English";
-            String actual = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "en-GB").Name;
-
-            Assert.AreEqual(expected, actual);
+            HasLanguage("en-GB", "English");
         }
 
         [Test]
         public void LanguagesTable_HasLithuanianLanguage()
         {
-            String expected = "Lietuvių";
-            String actual = context.Set<Language>().SingleOrDefault(language => language.Abbreviation == "lt-LT").Name;
+            HasLanguage("lt-LT", "Lietuvių");
+        }
 
-            Assert.AreEqual(expected, actual);
+        private void HasLanguage(String abbrevation, String name)
+        {
+            Assert.IsNotNull(context.Set<Language>().SingleOrDefault(language =>
+                language.Abbreviation == abbrevation &&
+                language.Name == name));
         }
 
         #endregion
@@ -49,48 +50,65 @@ namespace Template.Tests.Integration.Database
         #region Table: Privileges
 
         [Test]
-        public void PrivilegesTable_HasAdministrationRolesIndexPrivilege()
+        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsIndex()
         {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Roles" &&
-                privilege.Action == "Index"));
+            HasPrivilege("Administration", "Accounts", "Index");
         }
 
         [Test]
-        public void PrivilegesTable_HasAdministrationRolesCreatePrivilege()
+        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsCreate()
         {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Roles" &&
-                privilege.Action == "Create"));
+            HasPrivilege("Administration", "Accounts", "Create");
         }
 
         [Test]
-        public void PrivilegesTable_HasAdministrationRolesDetailsPrivilege()
+        public void PrivilegesTable_HasPrivilegeForAdministrationAccountssDetails()
         {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Roles" &&
-                privilege.Action == "Details"));
+            HasPrivilege("Administration", "Accounts", "Details");
         }
 
         [Test]
-        public void PrivilegesTable_HasAdministrationRolesEditPrivilege()
+        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsEdit()
         {
-            Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Roles" &&
-                privilege.Action == "Edit"));
+            HasPrivilege("Administration", "Accounts", "Edit");
         }
 
         [Test]
-        public void PrivilegesTable_HasAdministrationRolesDeletePrivilege()
+        public void PrivilegesTable_HasPrivilegeForAdministrationRolesIndex()
+        {
+            HasPrivilege("Administration", "Roles", "Index");
+        }
+
+        [Test]
+        public void PrivilegesTable_HasPrivilegeForAdministrationRolesCreate()
+        {
+            HasPrivilege("Administration", "Roles", "Create");
+        }
+
+        [Test]
+        public void PrivilegesTable_HasPrivilegeForAdministrationRolesDetails()
+        {
+            HasPrivilege("Administration", "Roles", "Details");
+        }
+
+        [Test]
+        public void PrivilegesTable_HasPrivilegeForAdministrationRolesEdit()
+        {
+            HasPrivilege("Administration", "Roles", "Edit");
+        }
+
+        [Test]
+        public void PrivilegesTable_HasPrivilegeForAdministrationRolesDelete()
+        {
+            HasPrivilege("Administration", "Roles", "Delete");
+        }
+
+        private void HasPrivilege(String area, String controller, String action)
         {
             Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == "Administration" &&
-                privilege.Controller == "Roles" &&
-                privilege.Action == "Delete"));
+                privilege.Area == area &&
+                privilege.Controller == controller &&
+                privilege.Action == action));
         }
 
         #endregion

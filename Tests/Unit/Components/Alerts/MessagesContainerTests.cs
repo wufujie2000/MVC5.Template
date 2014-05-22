@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Template.Components.Alerts;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Alerts
 {
@@ -17,6 +18,16 @@ namespace Template.Tests.Unit.Components.Alerts
         {
             container = new MessagesContainer();
         }
+
+        #region Constanct: DefaultFadeOut
+
+        [Test]
+        public void MessagesContainer_HasConstantFadeOut()
+        {
+            Assert.AreEqual(4, MessagesContainer.DefaultFadeOut);
+        }
+
+        #endregion
 
         #region Contructor: MessagesContainer()
 
@@ -33,9 +44,18 @@ namespace Template.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsMessage()
         {
-            container.Add(new AlertMessage());
+            AlertMessage expected = new AlertMessage()
+            {
+                Key = "TestKey",
+                Message = "TestMessage",
+                FadeOutAfter = 100000000,
+                Type = AlertMessageType.Success
+            };
 
-            CollectionAssert.IsNotEmpty(container);
+            container.Add(expected);
+            AlertMessage actual = container.First();
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion

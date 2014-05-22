@@ -57,7 +57,7 @@ namespace Template.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
 
-            IQueryable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().Query();
+            IEnumerable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().Query().ToList();
             foreach (Privilege privilege in privileges)
                 if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
                     unitOfWork.Repository<Privilege>().Insert(privilege);
@@ -67,12 +67,17 @@ namespace Template.Data.Migrations
         private void SeedAdministratorRole()
         {
             if (!unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").Any())
+            {
                 unitOfWork.Repository<Role>().Insert(new Role() { Name = "Sys_Admin" });
-
-            unitOfWork.Commit();
+                unitOfWork.Commit();
+            }
 
             String adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").First().Id;
-            IQueryable<RolePrivilege> adminPrivileges = unitOfWork.Repository<RolePrivilege>().Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId);
+            IEnumerable<RolePrivilege> adminPrivileges = unitOfWork
+                .Repository<RolePrivilege>()
+                .Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
+                .ToList();
+
             foreach (Privilege privilege in unitOfWork.Repository<Privilege>().Query())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
                     unitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()

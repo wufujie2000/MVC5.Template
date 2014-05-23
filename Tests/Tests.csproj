@@ -101,6 +101,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Data\Mapping\TestObjectMapper.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />

@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections;
 using System.Data.Entity;
 using Template.Data.Core;
 using Template.Data.Mapping;
 using Template.Objects;
+using Template.Tests.Data.Mapping;
 using Template.Tests.Objects;
 
 namespace Template.Tests.Data
@@ -47,8 +47,7 @@ namespace Template.Tests.Data
         static TestingContext()
         {
             ObjectMapper.MapObjects();
-            Mapper.CreateMap<TestModel, TestView>();
-            Mapper.CreateMap<TestView, TestModel>();
+            TestObjectMapper.MapObjects();
         }
         public TestingContext()
         {

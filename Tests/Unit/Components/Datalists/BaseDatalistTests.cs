@@ -17,16 +17,12 @@ namespace Template.Tests.Unit.Components.Datalists
     {
         private BaseDatalistStub<Role, RoleView> datalist;
         private IUnitOfWork unitOfWork;
-        private HttpRequest request;
 
         [SetUp]
         public void SetUp()
         {
-            HttpMock httpMock = new HttpMock();
-            request = httpMock.HttpContext.Request;
-            HttpContext.Current = httpMock.HttpContext;
+            HttpContext.Current = new HttpMock().HttpContext;
             unitOfWork = new UnitOfWork(new TestingContext());
-            request.RequestContext.RouteData.Values["language"] = "lt-LT";
 
             datalist = new BaseDatalistStub<Role, RoleView>(unitOfWork);
         }
@@ -41,12 +37,6 @@ namespace Template.Tests.Unit.Components.Datalists
         #region Constructor: BaseDatalist()
 
         [Test]
-        public void BaseDatalist_UnitOfWorkIsNull()
-        {
-            Assert.IsNull(new BaseDatalistStub<Role, RoleView>().BaseUnitOfWork);
-        }
-
-        [Test]
         public void BaseDatalist_SetsDialogTitle()
         {
             String expected = ResourceProvider.GetDatalistTitle<Role>();
@@ -56,22 +46,9 @@ namespace Template.Tests.Unit.Components.Datalists
         }
 
         [Test]
-        public void BaseDatalist_SetsDatalistUrl()
+        public void BaseDatalist_SetsDatalistUrlForDefaultLanguage()
         {
-            String actual = new BaseDatalistStub<Role, RoleView>().DatalistUrl;
-            String expected = String.Format("{0}://{1}/{2}/{3}/{4}",
-                request.Url.Scheme,
-                request.Url.Authority,
-                request.RequestContext.RouteData.Values["language"],
-                AbstractDatalist.Prefix,
-                typeof(Role).Name);
-            
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void BaseDatalist_SetsDatalistUrlOnDefaultLanguage()
-        {
+            HttpRequest request = HttpContext.Current.Request;
             request.RequestContext.RouteData.Values["language"] = "en-GB";
             datalist = new BaseDatalistStub<Role, RoleView>();
 
@@ -79,6 +56,24 @@ namespace Template.Tests.Unit.Components.Datalists
             String expected = String.Format("{0}://{1}/{2}/{3}",
                 request.Url.Scheme,
                 request.Url.Authority,
+                AbstractDatalist.Prefix,
+                typeof(Role).Name);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void BaseDatalist_SetsDatalistUrlForLanguage()
+        {
+            HttpRequest request = HttpContext.Current.Request;
+            request.RequestContext.RouteData.Values["language"] = "lt-LT";
+            datalist = new BaseDatalistStub<Role, RoleView>();
+
+            String actual = new BaseDatalistStub<Role, RoleView>().DatalistUrl;
+            String expected = String.Format("{0}://{1}/{2}/{3}/{4}",
+                request.Url.Scheme,
+                request.Url.Authority,
+                request.RequestContext.RouteData.Values["language"],
                 AbstractDatalist.Prefix,
                 typeof(Role).Name);
 
@@ -103,7 +98,7 @@ namespace Template.Tests.Unit.Components.Datalists
         #region Method: GetColumnHeader(PropertyInfo property)
 
         [Test]
-        public void GetColumnHeader_GetsPropertyTitle()
+        public void GetColumnHeader_GetsNamePropertyTitle()
         {
             String expectedTitle = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
 

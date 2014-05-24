@@ -13,13 +13,13 @@ namespace Template.Controllers.Home
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ViewResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        public ActionResult Error()
+        public ViewResult Error()
         {
             Service.AddSystemErrorMessage();
 
@@ -27,7 +27,7 @@ namespace Template.Controllers.Home
         }
 
         [HttpGet]
-        public ActionResult NotFound()
+        public ViewResult NotFound()
         {
             Service.AddPageNotFoundMessage();
 
@@ -35,7 +35,7 @@ namespace Template.Controllers.Home
         }
 
         [HttpGet]
-        public ActionResult Unauthorized()
+        public ViewResult Unauthorized()
         {
             Service.AddUnauthorizedMessage();
 

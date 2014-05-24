@@ -42,7 +42,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         {
             IEnumerable<AccountView> expected = new[] { account };
             serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
-            Object actual = (controller.Index() as ViewResult).Model;
+            Object actual = controller.Index().Model;
 
             Assert.AreEqual(expected, actual);
         }
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_ReturnsEmptyAccountView()
         {
-            AccountView actual = (controller.Create() as ViewResult).Model as AccountView;
+            AccountView actual = controller.Create().Model as AccountView;
 
             Assert.IsNotNull(actual.Id);
         }
@@ -111,7 +111,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsAccountView()
         {
-            AccountView actual = (controller.Details("Test") as ViewResult).Model as AccountView;
+            AccountView actual = controller.Details("Test").Model as AccountView;
 
             Assert.AreEqual(account, actual);
         }
@@ -123,7 +123,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsAccountView()
         {
-            AccountView actual = (controller.Edit("Test") as ViewResult).Model as AccountView;
+            AccountView actual = controller.Edit("Test").Model as AccountView;
 
             Assert.AreEqual(account, actual);
         }

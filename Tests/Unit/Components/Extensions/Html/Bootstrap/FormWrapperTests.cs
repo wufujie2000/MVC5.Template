@@ -22,6 +22,19 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
+        #region Constructor: FormWrapper(Object content, String cssClass)
+
+        [Test]
+        public void FormWrapper_FormsWrapperWithContent()
+        {
+            String actual = new FormWrapper("Content", "test-class").ToString();
+            String expected = "<div class=\"test-class\">Content</div>";
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
         #region Constructor: FormWrapper(ViewContext viewContext, String cssClass)
 
         [Test]

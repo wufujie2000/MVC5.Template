@@ -15,10 +15,10 @@ namespace Template.Components.Extensions.Html
             wrapper = new TagBuilder("div");
             wrapper.AddCssClass(cssClass.Trim());
         }
-        public FormWrapper(Object innerHtml, String cssClass)
+        public FormWrapper(Object content, String cssClass)
             : this(cssClass)
         {
-            wrapper.InnerHtml = innerHtml.ToString();
+            wrapper.InnerHtml = content.ToString();
         }
         public FormWrapper(TextWriter writer, String cssClass)
             : this(cssClass)

@@ -113,6 +113,8 @@
     <Compile Include="Objects\Models\TestModel.cs" />
     <Compile Include="Objects\Views\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
+    <Compile Include="Unit\Components\Extensions\Mvc\ModelStateDictionaryExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Mvc\ModelStateView.cs" />
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerStub.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistStub.cs" />

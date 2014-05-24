@@ -44,7 +44,7 @@ namespace Template.Tests.Unit.Components.Mvc.Validators
         public void GetClientValidationRules_HasValidationMessage()
         {
             Assert.AreEqual(
-                String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName().ToLower()),
+                String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName()),
                 validator.GetClientValidationRules().First().ErrorMessage);
         }
 

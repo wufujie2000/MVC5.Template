@@ -22,7 +22,7 @@ namespace Template.Components.Mvc.Validators
             yield return new ModelClientValidationRule
             {
                 ValidationType = "number",
-                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, Metadata.GetDisplayName().ToLower())
+                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, Metadata.GetDisplayName())
             };
         }
     }

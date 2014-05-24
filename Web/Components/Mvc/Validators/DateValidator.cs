@@ -22,7 +22,7 @@ namespace Template.Components.Mvc.Validators
             yield return new ModelClientValidationRule
             {
                 ValidationType = "date",
-                ErrorMessage = String.Format(Validations.FieldMustBeDate, Metadata.GetDisplayName().ToLower())
+                ErrorMessage = String.Format(Validations.FieldMustBeDate, Metadata.GetDisplayName())
             };
         }
     }

@@ -10,7 +10,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Template.Components.Extensions.Html;
 using Template.Components.Security;
 using Template.Resources;
@@ -48,41 +47,6 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
         }
 
-        private Mock<IGridColumn<GridMvcView>> CreateIGridColumnMock()
-        {
-            Mock<IGridColumn<GridMvcView>> column = new Mock<IGridColumn<GridMvcView>>(MockBehavior.Strict);
-            column.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>())).Returns(column.Object);
-            column.Setup(mock => mock.Sanitized(It.IsAny<Boolean>())).Returns(column.Object);
-            column.Setup(mock => mock.Encoded(It.IsAny<Boolean>())).Returns(column.Object);
-            column.Setup(mock => mock.SetWidth(It.IsAny<Int32>())).Returns(column.Object);
-            column.Setup(mock => mock.Format(It.IsAny<String>())).Returns(column.Object);
-            column.Setup(mock => mock.Titled(It.IsAny<String>())).Returns(column.Object);
-            column.Setup(mock => mock.Css(It.IsAny<String>())).Returns(column.Object);
-
-            return column;
-        }
-        private Mock<IGridHtmlOptions<GridMvcView>> CreateIGridHtmlOptionsMock()
-        {
-            Mock<IGridHtmlOptions<GridMvcView>> options = new Mock<IGridHtmlOptions<GridMvcView>>(MockBehavior.Strict);
-            options.Setup(mock => mock.SetLanguage(It.IsAny<String>())).Returns(options.Object);
-            options.Setup(mock => mock.WithPaging(It.IsAny<Int32>())).Returns(options.Object);
-            options.Setup(mock => mock.EmptyText(It.IsAny<String>())).Returns(options.Object);
-            options.Setup(mock => mock.Named(It.IsAny<String>())).Returns(options.Object);
-            options.Setup(mock => mock.WithMultipleFilters()).Returns(options.Object);
-            options.Setup(mock => mock.Filterable()).Returns(options.Object);
-            options.Setup(mock => mock.Sortable()).Returns(options.Object);
-
-            return options;
-        }
-        private Mock<IGridColumnCollection<GridMvcView>> CreateIGridCollumnCollectionMock(IGridColumn<GridMvcView> gridColumn)
-        {
-            Mock<IGridColumnCollection<GridMvcView>> collection = new Mock<IGridColumnCollection<GridMvcView>>(MockBehavior.Strict);
-            collection.Setup(mock => mock.Add<DateTime?>(It.IsAny<Expression<Func<GridMvcView, DateTime?>>>())).Returns(gridColumn);
-            collection.Setup(mock => mock.Add()).Returns(gridColumn);
-
-            return collection;
-        }
-
         [TearDown]
         public void TearDown()
         {
@@ -91,6 +55,14 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
+        
+        [Test]
+        public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
+        {
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+
+            Assert.IsNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
+        }
 
         [Test]
         public void AddActionLink_AddsActionLinkOnNullRoleProvider()
@@ -98,28 +70,6 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             RoleProviderFactory.SetInstance(null);
 
             Assert.IsNotNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
-        }
-
-        [Test]
-        public void AddActionLink_CallsIsAuthorizedForWithRouteValues()
-        {
-            RouteValueDictionary routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
-            String accountId = HttpContext.Current.User.Identity.Name;
-            String controller = routeValues["controller"].ToString();
-            String area = routeValues["area"].ToString();
-            String action = LinkAction.Edit.ToString();
-
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
-
-            roleProviderMock.Verify(mock => mock.IsAuthorizedFor(accountId, area, controller, action), Times.Once());
-        }
-
-        [Test]
-        public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
-        {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            
-            Assert.IsNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
@@ -397,6 +347,45 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             gridHtmlOptions.ApplyAttributes();
 
             gridHtmlOptionsMock.Verify(mock => mock.Sortable(), Times.Once());
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private Mock<IGridColumn<GridMvcView>> CreateIGridColumnMock()
+        {
+            Mock<IGridColumn<GridMvcView>> column = new Mock<IGridColumn<GridMvcView>>();
+            column.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>())).Returns(column.Object);
+            column.Setup(mock => mock.Sanitized(It.IsAny<Boolean>())).Returns(column.Object);
+            column.Setup(mock => mock.Encoded(It.IsAny<Boolean>())).Returns(column.Object);
+            column.Setup(mock => mock.SetWidth(It.IsAny<Int32>())).Returns(column.Object);
+            column.Setup(mock => mock.Format(It.IsAny<String>())).Returns(column.Object);
+            column.Setup(mock => mock.Titled(It.IsAny<String>())).Returns(column.Object);
+            column.Setup(mock => mock.Css(It.IsAny<String>())).Returns(column.Object);
+
+            return column;
+        }
+        private Mock<IGridHtmlOptions<GridMvcView>> CreateIGridHtmlOptionsMock()
+        {
+            Mock<IGridHtmlOptions<GridMvcView>> options = new Mock<IGridHtmlOptions<GridMvcView>>();
+            options.Setup(mock => mock.SetLanguage(It.IsAny<String>())).Returns(options.Object);
+            options.Setup(mock => mock.WithPaging(It.IsAny<Int32>())).Returns(options.Object);
+            options.Setup(mock => mock.EmptyText(It.IsAny<String>())).Returns(options.Object);
+            options.Setup(mock => mock.Named(It.IsAny<String>())).Returns(options.Object);
+            options.Setup(mock => mock.WithMultipleFilters()).Returns(options.Object);
+            options.Setup(mock => mock.Filterable()).Returns(options.Object);
+            options.Setup(mock => mock.Sortable()).Returns(options.Object);
+
+            return options;
+        }
+        private Mock<IGridColumnCollection<GridMvcView>> CreateIGridCollumnCollectionMock(IGridColumn<GridMvcView> gridColumn)
+        {
+            Mock<IGridColumnCollection<GridMvcView>> collection = new Mock<IGridColumnCollection<GridMvcView>>();
+            collection.Setup(mock => mock.Add<DateTime?>(It.IsAny<Expression<Func<GridMvcView, DateTime?>>>())).Returns(gridColumn);
+            collection.Setup(mock => mock.Add()).Returns(gridColumn);
+
+            return collection;
         }
 
         #endregion

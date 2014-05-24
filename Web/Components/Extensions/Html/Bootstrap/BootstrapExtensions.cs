@@ -78,29 +78,27 @@ namespace Template.Components.Extensions.Html
         {
             RouteValueDictionary attributes = AddClass(htmlAttributes, "form-control");
             if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
-            return new MvcHtmlString(WrapContent(html.TextBoxFor(expression, format, attributes)));
+
+            return new MvcHtmlString(WrapWith(html.TextBoxFor(expression, format, attributes), ContentClass));
         }
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             String format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+
             return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
         }
         public static MvcHtmlString FormPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return new MvcHtmlString(WrapContent(html.PasswordFor(expression, AddClass(null, "form-control"))));
+            return new MvcHtmlString(WrapWith(html.PasswordFor(expression, AddClass(null, "form-control")), ContentClass));
         }
         public static MvcHtmlString FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
-            return new MvcHtmlString(WrapValidation(html.ValidationMessageFor(expression)));
+            return new MvcHtmlString(WrapWith(html.ValidationMessageFor(expression), ValidationClass));
         }
 
-        private static String WrapContent(Object innerHtml)
+        private static String WrapWith(Object content, String cssClass)
         {
-            return new FormWrapper(innerHtml, ContentClass).ToString();
-        }
-        private static String WrapValidation(Object innerHtml)
-        {
-            return new FormWrapper(innerHtml, ValidationClass).ToString();
+            return new FormWrapper(content, cssClass).ToString();
         }
         private static RouteValueDictionary AddClass(Object attributes, String value)
         {

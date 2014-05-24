@@ -78,6 +78,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             if (menu.HasActiveChild) menuItem.AddCssClass("has-active-child open");
             if (menu.IsActive) menuItem.AddCssClass("active active-hovering");
             menuItem.InnerHtml = menuInnerHtml.ToString();
+
             return menuItem.ToString();
         }
         private String FormAction(HtmlHelper html, Menu menu)

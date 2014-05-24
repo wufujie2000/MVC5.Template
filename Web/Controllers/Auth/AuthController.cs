@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Web.Mvc;
-using Template.Components.Security;
 using Template.Objects;
 using Template.Services;
 
 namespace Template.Controllers.Auth
 {
+    [AllowAnonymous]
     public class AuthController : ServicedController<IAuthService>
     {
         public AuthController(IAuthService service)
@@ -14,7 +14,6 @@ namespace Template.Controllers.Auth
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Login(String returnUrl)
         {
             if (Service.IsLoggedIn())
@@ -24,7 +23,6 @@ namespace Template.Controllers.Auth
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginView account, String returnUrl)
         {
@@ -36,7 +34,6 @@ namespace Template.Controllers.Auth
         }
 
         [HttpGet]
-        [AllowUnauthorized]
         public RedirectToRouteResult Logout()
         {
             Service.Logout();

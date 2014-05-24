@@ -30,12 +30,9 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TreeViewFor_FormsTreeViewFor()
         {
-            
-
             String actual = html.TreeViewFor(treeModel => treeModel.Tree).ToString();
-            String expected = String.Format("<span class=\"tree-view-ids\"><input name=\"Tree.SelectedIds\" type=\"hidden\" value=\"1\" /></span>"
-                + "<div class=\"tree-view\" for=\"Tree.SelectedIds\"><ul><li>Test<ul><li id=\"1\">Test1</li><li id=\"2\">Test2</li></ul></li></ul></div>",
-                "");
+            String expected = "<span class=\"tree-view-ids\"><input name=\"Tree.SelectedIds\" type=\"hidden\" value=\"1\" /></span>"
+                + "<div class=\"tree-view\" for=\"Tree.SelectedIds\"><ul><li>Test<ul><li id=\"1\">Test1</li><li id=\"2\">Test2</li></ul></li></ul></div>";
 
             Assert.AreEqual(expected, actual);
         }

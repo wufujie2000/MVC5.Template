@@ -2,34 +2,26 @@
 using System;
 using Template.Components.Mvc.Providers;
 using Template.Objects;
+using Template.Resources;
 
 namespace Template.Tests.Components.Mvc.Providers
 {
     [TestFixture]
     public class DisplayNameMetadataProviderTests
     {
-        private DisplayNameMetadataProvider provider;
-
-        [SetUp]
-        public void SetUp()
-        {
-            provider = new DisplayNameMetadataProvider();
-        }
-
         #region Method: GetMetadataForProperty(Func<Object> modelAccessor, Type containerType, String propertyName)
 
         [Test]
         public void GetMetadataForProperty_SetsDisplayProperty()
         {
-            Assert.AreEqual(
-                Template.Resources.Views.ProfileView.Titles.Username,
-                provider.GetMetadataForProperty(null, typeof(ProfileView), "Username").DisplayName);
-        }
+            DisplayNameMetadataProvider provider = new DisplayNameMetadataProvider();
+            Type containerType = typeof(RoleView);
+            String propertyName = "Name";
 
-        [Test]
-        public void GetMetadataForProperty_OnResourceNotFoundSetsToNull()
-        {
-            Assert.IsNull(provider.GetMetadataForProperty(null, typeof(ProfileView), "Id").DisplayName);
+            String expected = ResourceProvider.GetPropertyTitle(containerType, propertyName);
+            String actual = provider.GetMetadataForProperty(null, containerType, propertyName).DisplayName;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

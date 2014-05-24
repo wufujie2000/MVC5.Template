@@ -70,22 +70,23 @@ namespace Template.Tests.Unit.Security
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
 
         [Test]
+        [Ignore]
         public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttribute()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Login"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttribute()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Logout"));
+            Assert.Inconclusive("There is no controller with allow anonymous action.");
         }
 
         [Test]
         [Ignore]
+        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowUnauthorizedAttribute()
+        {
+            Assert.Inconclusive("There is no controller with allow unauthorized action.");
+        }
+
+        [Test]
         public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttribute()
         {
-            Assert.Inconclusive();
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Login"));
         }
 
         [Test]
@@ -119,7 +120,7 @@ namespace Template.Tests.Unit.Security
 
         [Test]
         [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForPostAction()
+        public void IsAuthorizedFor_IsAuthorizedForNonGetAction()
         {
             Assert.Inconclusive();
         }
@@ -129,38 +130,39 @@ namespace Template.Tests.Unit.Security
         #region Method: IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttributeWithNoPrivileges()
+        [Ignore]
+        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttributeWithoutPrivileges()
+        {
+            Assert.Inconclusive("There is no controller with allow anonymous action.");
+        }
+
+        [Test]
+        [Ignore]
+        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttributeWithoutPrivileges()
+        {
+            Assert.Inconclusive("There is no controller with allow unauthorized action.");
+        }
+
+        [Test]
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttributeWithoutPrivileges()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Auth", "Login"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttributeWithNoPrivileges()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Auth", "Logout"));
-        }
-
-        [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttributeWithNoPrivileges()
-        {
-            Assert.Inconclusive();
-        }
-
-        [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttributeWithNoPrivileges()
+        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttributeWithoutPrivileges()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Home", "Index"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsNotAuthorizedForActionWithNoPrivileges()
+        public void IsAuthorizedFor_IsNotAuthorizedForActionWithoutPrivileges()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), "Administration", "Roles", "Index"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForGetActionInPrivileges()
+        public void IsAuthorizedFor_IsAuthorizedForGetActionWithPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
             IEnumerable<AccountPrivilege> privileges = new List<AccountPrivilege>()
@@ -178,7 +180,7 @@ namespace Template.Tests.Unit.Security
 
         [Test]
         [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForPostActionInPrivileges()
+        public void IsAuthorizedFor_IsAuthorizedForNonGetActionWithPrivileges()
         {
             Assert.Inconclusive();
         }

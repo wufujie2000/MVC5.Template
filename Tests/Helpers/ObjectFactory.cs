@@ -48,8 +48,8 @@ namespace Template.Tests.Helpers
             {
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                RoleName = "RoleName" + TestId + instanceNumber.ToString(),
-                RoleId = "RoleId" + TestId + instanceNumber.ToString(),
+                RoleName = "Name" + TestId + instanceNumber.ToString(),
+                RoleId = TestId + instanceNumber.ToString(),
                 Password = "Password1"
             };
         }

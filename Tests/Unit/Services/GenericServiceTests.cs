@@ -40,13 +40,13 @@ namespace Template.Tests.Unit.Services
         #region Method: CanCreate(TView view)
 
         [Test]
-        public void CanCreate_OnNoModelErrorsReturnsTrue()
+        public void CanCreate_CanCreateWithValidModelState()
         {
             Assert.IsTrue(service.CanCreate(null));
         }
 
         [Test]
-        public void CanCreate_OnModelErrorsReturnsFalse()
+        public void CanCreate_CanNotCreateWithInvalidModelState()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
 
@@ -58,13 +58,13 @@ namespace Template.Tests.Unit.Services
         #region Method: CanEdit(TView view)
 
         [Test]
-        public void CanEdit_OnNoModelErrorsReturnsTrue()
+        public void CanEdit_CanEditWithValidModelState()
         {
             Assert.IsTrue(service.CanEdit(null));
         }
 
         [Test]
-        public void CanEdit_OnModelErrorsReturnsFalse()
+        public void CanEdit_CanNotEditWithInvalidModelState()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
 
@@ -76,13 +76,13 @@ namespace Template.Tests.Unit.Services
         #region Method: CanDelete(String id)
 
         [Test]
-        public void CanDelete_OnNoModelErrorsReturnsTrue()
+        public void CanDelete_CanDeleteWithValidModelState()
         {
             Assert.IsTrue(service.CanDelete(null));
         }
 
         [Test]
-        public void CanDelete_OnModelErrorsReturnsFalse()
+        public void CanDelete_CanNotDeleteWithInvalidModelState()
         {
             service.ModelState.AddModelError(String.Empty, String.Empty);
 
@@ -135,7 +135,9 @@ namespace Template.Tests.Unit.Services
 
             TestModel actual = context.Set<TestModel>().Find(expected.Id);
 
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion
@@ -155,7 +157,9 @@ namespace Template.Tests.Unit.Services
 
             TestModel actual = context.Set<TestModel>().Find(expected.Id);
 
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion
@@ -163,7 +167,7 @@ namespace Template.Tests.Unit.Services
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_DeleteView()
+        public void Delete_DeletesView()
         {
             TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);

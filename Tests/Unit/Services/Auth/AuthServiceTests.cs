@@ -16,8 +16,8 @@ namespace Template.Tests.Unit.Services
     [TestFixture]
     public class AuthServiceTests
     {
-        private HttpMock httpContextMock;
         private AuthService service;
+        private HttpMock httpMock;
         private AContext context;
 
         [SetUp]
@@ -26,9 +26,9 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             service = new AuthService(new UnitOfWork(context));
 
-            httpContextMock = new HttpMock();
+            httpMock = new HttpMock();
             service.ModelState = new ModelStateDictionary();
-            HttpContext.Current = httpContextMock.HttpContext;
+            HttpContext.Current = httpMock.HttpContext;
 
             TearDownData();
             SetUpData();
@@ -46,17 +46,17 @@ namespace Template.Tests.Unit.Services
         #region Method: IsLoggedIn(HttpContextBase context)
 
         [Test]
-        public void IsLoggedIn_ReturnsTrueThenUserIsAuthenticated()
+        public void IsLoggedIn_ReturnsTrueThenAccountIsAuthenticated()
         {
-            httpContextMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
 
             Assert.IsTrue(service.IsLoggedIn());
         }
 
         [Test]
-        public void IsLoggedIn_ReturnsFalseThenUserIsNotAuthenticated()
+        public void IsLoggedIn_ReturnsFalseThenAccountIsNotAuthenticated()
         {
-            httpContextMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
 
             Assert.IsFalse(service.IsLoggedIn());
         }
@@ -80,17 +80,41 @@ namespace Template.Tests.Unit.Services
             account.Username = String.Empty;
 
             Assert.IsFalse(service.CanLogin(account));
-            Assert.AreEqual(service.ModelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
+        }
+
+        [Test]
+        public void CanLogin_AddsErrorMessageThenCanNotLoginFromNotExistingAccount()
+        {
+            LoginView account = new LoginView();
+            account.Username = String.Empty;
+            service.CanLogin(account);
+
+            String expected = Validations.IncorrectUsernameOrPassword;
+            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
             LoginView loginView = ObjectFactory.CreateLoginView();
-            loginView.Password += "1";
+            loginView.Password += "Incorrect";
 
             Assert.IsFalse(service.CanLogin(loginView));
-            Assert.AreEqual(service.ModelState[String.Empty].Errors[0].ErrorMessage, Validations.IncorrectUsernameOrPassword);
+        }
+
+        [Test]
+        public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
+        {
+            LoginView loginView = ObjectFactory.CreateLoginView();
+            loginView.Password += "Incorrect";
+            service.CanLogin(loginView);
+
+            String expected = Validations.IncorrectUsernameOrPassword;
+            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -169,7 +193,7 @@ namespace Template.Tests.Unit.Services
         #region Method: Logout()
 
         [Test]
-        public void Logout_MakesUserCookieExpired()
+        public void Logout_MakesAccountCookieExpired()
         {
             LoginView loginView = ObjectFactory.CreateLoginView();
             service.Login(loginView);

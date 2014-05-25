@@ -56,20 +56,6 @@ namespace Template.Services
             return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
 
-        private Boolean IsUniqueUsername(ProfileView profile)
-        {
-            Boolean isUnique = !UnitOfWork
-                .Repository<Account>()
-                .Query(account =>
-                    account.Id != HttpContext.Current.User.Identity.Name &&
-                    account.Username.Trim().ToUpper() == profile.Username.Trim().ToUpper())
-                 .Any();
-
-            if (!isUnique)
-                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
-
-            return isUnique;
-        }
         private Boolean IsCorrectUsername(ProfileView profile)
         {
             String username = UnitOfWork
@@ -77,7 +63,7 @@ namespace Template.Services
                 .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Username)
                 .First();
-            
+
             Boolean isCorrectUsername = username.ToUpperInvariant() == profile.Username.ToUpperInvariant();
             if (!isCorrectUsername)
                 ModelState.AddModelError<ProfileView>(model => model.Username, Validations.IncorrectUsername);
@@ -97,6 +83,20 @@ namespace Template.Services
                 ModelState.AddModelError<ProfileView>(model => model.CurrentPassword, Validations.IncorrectPassword);
 
             return isCorrectPassword;
+        }
+        private Boolean IsUniqueUsername(ProfileView profile)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(account =>
+                    account.Id != HttpContext.Current.User.Identity.Name &&
+                    account.Username.Trim().ToUpper() == profile.Username.Trim().ToUpper())
+                 .Any();
+
+            if (!isUnique)
+                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
+
+            return isUnique;
         }
         private Boolean IsLegalPassword(ProfileView profile)
         {

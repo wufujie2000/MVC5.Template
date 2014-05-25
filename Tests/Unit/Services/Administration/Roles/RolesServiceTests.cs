@@ -17,7 +17,6 @@ namespace Template.Tests.Unit.Services
     [TestFixture]
     public class RolesServiceTests
     {
-        private Mock<RolesService> serviceMock;
         private RolesService service;
         private Context context;
         private Role role;
@@ -26,9 +25,8 @@ namespace Template.Tests.Unit.Services
         public void SetUp()
         {
             context = new TestingContext();
-            serviceMock = new Mock<RolesService>(new UnitOfWork(context)) { CallBase = true };
-            serviceMock.Object.ModelState = new ModelStateDictionary();
-            service = serviceMock.Object;
+            service = new RolesService(new UnitOfWork(context));
+            service.ModelState = new ModelStateDictionary();
 
             TearDownData();
             SetUpData();
@@ -59,7 +57,20 @@ namespace Template.Tests.Unit.Services
             roleView.Id += "1";
 
             Assert.IsFalse(service.CanCreate(roleView));
-            Assert.AreEqual(service.ModelState["Name"].Errors[0].ErrorMessage, Validations.RoleNameIsAlreadyTaken);
+        }
+
+        [Test]
+        public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyTakenRoleName()
+        {
+            RoleView roleView = ObjectFactory.CreateRoleView();
+            roleView.Name = role.Name.ToLower();
+            roleView.Id += "OtherIdValue";
+            service.CanCreate(roleView);
+
+            String expected = Validations.RoleNameIsAlreadyTaken;
+            String actual = service.ModelState["Name"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -81,14 +92,27 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanEdit_CanNotEditToAlreadyTakenUsername()
+        public void CanEdit_CanNotEditToAlreadyTakenRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
             roleView.Id += "1";
 
             Assert.IsFalse(service.CanEdit(roleView));
-            Assert.AreEqual(service.ModelState["Name"].Errors[0].ErrorMessage, Validations.RoleNameIsAlreadyTaken);
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenRoleName()
+        {
+            RoleView roleView = ObjectFactory.CreateRoleView();
+            roleView.Name = role.Name.ToLower();
+            roleView.Id += "OtherIdValue";
+            service.CanEdit(roleView);
+
+            String expected = Validations.RoleNameIsAlreadyTaken;
+            String actual = service.ModelState["Name"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -110,6 +134,9 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void GetView_SeedsPrivilegesTree()
         {
+            Mock<RolesService> serviceMock = new Mock<RolesService>(new UnitOfWork(context)) { CallBase = true };
+            service = serviceMock.Object;
+
             RoleView roleView = service.GetView(role.Id);
 
             serviceMock.Verify(mock => mock.SeedPrivilegesTree(roleView), Times.Once());
@@ -122,8 +149,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Create_CreatesRole()
         {
-            context.Set<Role>().Remove(role);
-            context.SaveChanges();
+            TearDownData();
 
             RoleView expected = ObjectFactory.CreateRoleView();
             service.Create(expected);
@@ -137,8 +163,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Create_CreatesRolePrivileges()
         {
-            context.Set<Role>().Remove(role);
-            context.SaveChanges();
+            TearDownData();
 
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.PrivilegesTree.SelectedIds = GetExpectedTree().SelectedIds;
@@ -159,7 +184,7 @@ namespace Template.Tests.Unit.Services
         public void Edit_EditsRole()
         {
             RoleView expected = service.GetView(role.Id);
-            expected.Name = "EditedName"; 
+            expected.Name += "EditedName"; 
             service.Edit(expected);
 
             context = new TestingContext();
@@ -187,7 +212,7 @@ namespace Template.Tests.Unit.Services
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_NullifiesDeletedRoleInAccount()
+        public void Delete_NullifiesDeletedRoleInAccounts()
         {
             if (!context.Set<Account>().Any(account => account.RoleId == role.Id))
                 Assert.Inconclusive();

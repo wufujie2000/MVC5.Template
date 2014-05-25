@@ -28,10 +28,10 @@ namespace Template.Tests.Unit.Services
             HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
             service = new ProfileService(new UnitOfWork(context));
+            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(() => account.Id);
 
             service.ModelState = new ModelStateDictionary();
             service.AlertMessages = new MessagesContainer();
-            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(() => account.Id);
 
             TearDownData();
             SetUpData();
@@ -57,6 +57,28 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
+        public void CanEdit_CanNotEditWithIncorrectPassword()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.CurrentPassword += "1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.CurrentPassword += "1";
+            service.CanEdit(profile);
+
+            String expected = Validations.IncorrectPassword;
+            String actual = service.ModelState["CurrentPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             Account takenAccount = ObjectFactory.CreateAccount();
@@ -70,17 +92,35 @@ namespace Template.Tests.Unit.Services
             profile.Username = takenAccount.Username;
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.UsernameIsAlreadyTaken);
         }
 
         [Test]
-        public void CanEdit_CanNotEditWithIncorrectPassword()
+        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenUsername()
+        {
+            Account takenAccount = ObjectFactory.CreateAccount();
+            takenAccount.Username += "1";
+            takenAccount.Id += "1";
+
+            context.Set<Account>().Add(takenAccount);
+            context.SaveChanges();
+
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.Username = takenAccount.Username;
+            service.CanEdit(profile);
+
+            String expected = Validations.UsernameIsAlreadyTaken;
+            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanEdit_CanEditUsingItsOwnUsername()
         {
             ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.CurrentPassword += "1";
+            profile.Username = account.Username.ToUpper();
 
-            Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(service.ModelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
+            Assert.IsTrue(service.CanEdit(profile));
         }
 
         [Test]
@@ -94,13 +134,38 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordIsTooShort()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "AaaAaa1";
+            service.CanEdit(profile);
+
+            String expected = Validations.IllegalPassword;
+            String actual = service.ModelState["NewPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainUpperLetter()
         {
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = "aaaaaaaaaaaa1";
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainUpperLetter()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "aaaaaaaaaaaa1";
+            service.CanEdit(profile);
+
+            String expected = Validations.IllegalPassword;
+            String actual = service.ModelState["NewPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -110,7 +175,19 @@ namespace Template.Tests.Unit.Services
             profile.NewPassword = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainLowerLetter()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.NewPassword = "AAAAAAAAAAA1";
+            service.CanEdit(profile);
+
+            String expected = Validations.IllegalPassword;
+            String actual = service.ModelState["NewPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -120,16 +197,19 @@ namespace Template.Tests.Unit.Services
             profile.NewPassword = "AaAaAaAaAaAa";
 
             Assert.IsFalse(service.CanEdit(profile));
-            Assert.AreEqual(service.ModelState["NewPassword"].Errors[0].ErrorMessage, Validations.IllegalPassword);
         }
 
         [Test]
-        public void CanEdit_CanEditUsingItsOwnUsername()
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainADigit()
         {
             ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.Username = account.Username.ToUpper();
+            profile.NewPassword = "AaAaAaAaAaAa";
+            service.CanEdit(profile);
 
-            Assert.IsTrue(service.CanEdit(profile));
+            String expected = Validations.IllegalPassword;
+            String actual = service.ModelState["NewPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -166,7 +246,19 @@ namespace Template.Tests.Unit.Services
             profile.Username = String.Empty;
 
             Assert.IsFalse(service.CanDelete(profile));
-            Assert.AreEqual(service.ModelState["Username"].Errors[0].ErrorMessage, Validations.IncorrectUsername);
+        }
+
+        [Test]
+        public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectUsername()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.Username = String.Empty;
+            service.CanDelete(profile);
+
+            String expected = Validations.IncorrectUsername;
+            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -176,7 +268,19 @@ namespace Template.Tests.Unit.Services
             profile.CurrentPassword += "1";
 
             Assert.IsFalse(service.CanDelete(profile));
-            Assert.AreEqual(service.ModelState["CurrentPassword"].Errors[0].ErrorMessage, Validations.IncorrectPassword);
+        }
+
+        [Test]
+        public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.CurrentPassword += "1";
+            service.CanDelete(profile);
+
+            String expected = Validations.IncorrectPassword;
+            String actual = service.ModelState["CurrentPassword"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -280,11 +384,8 @@ namespace Template.Tests.Unit.Services
         }
         private void TearDownData()
         {
-            foreach (Account account in context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Account>().Remove(account);
-            foreach (Role role in context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)))
-                context.Set<Role>().Remove(role);
-
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();
         }
 

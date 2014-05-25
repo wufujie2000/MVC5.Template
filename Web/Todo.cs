@@ -10,6 +10,7 @@
         // TODO: Try to add custom regex validation attribute for client side validation
         // TODO: Mapping should be done in assembly which actaully knows how objects should be mapped?
         // TODO: Trying to go to http://localhost:19174/Administration/Accounts/Create without logging in, forms login action ReturnUrl to Home/Unauthorized
+        // TODO: Every input should be trimmed before entering controllers?
 
         // TODO: Add performance tests, at least for indexes
         // TODO: Recheck and clean up all tests

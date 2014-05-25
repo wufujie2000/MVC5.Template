@@ -7,6 +7,12 @@ namespace Template.Tests.Unit.Security
     [TestFixture]
     public class RoleProviderFactoryTests
     {
+        [TearDown]
+        public void TearDown()
+        {
+            RoleProviderFactory.SetInstance(null);
+        }
+
         #region Static method: SetInstance(IRoleProvider instance)
 
         [Test]

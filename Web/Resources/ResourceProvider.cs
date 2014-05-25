@@ -84,6 +84,7 @@ namespace Template.Resources
         public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
         {
             MemberInfo member = (property.Body as MemberExpression).Member;
+
             return GetPropertyTitle(member.ReflectedType, member.Name);
         }
         public static String GetPropertyTitle(Type viewType, String propertyName)

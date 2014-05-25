@@ -34,7 +34,10 @@ namespace Template.Tests.Resources.Tests
             routeValues["area"] = "Administration";
             routeValues["controller"] = "Roles";
 
-            Assert.AreEqual(Template.Resources.Form.Titles.AdministrationRoles, ResourceProvider.GetCurrentFormTitle());
+            String expected = Template.Resources.Form.Titles.AdministrationRoles;
+            String actual = ResourceProvider.GetCurrentFormTitle();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -42,8 +45,11 @@ namespace Template.Tests.Resources.Tests
         {
             routeValues["area"] = null;
             routeValues["controller"] = "Profile";
-            
-            Assert.AreEqual(Template.Resources.Form.Titles.Profile, ResourceProvider.GetCurrentFormTitle());
+
+            String expected = Template.Resources.Form.Titles.Profile;
+            String actual = ResourceProvider.GetCurrentFormTitle();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -63,7 +69,10 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Roles";
             routeValues["action"] = "Index";
 
-            Assert.AreEqual(Template.Resources.Table.Titles.AdministrationRolesIndex, ResourceProvider.GetCurrentTableTitle());
+            String expected = Template.Resources.Table.Titles.AdministrationRolesIndex;
+            String actual = ResourceProvider.GetCurrentTableTitle();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -90,7 +99,10 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Roles";
             routeValues["action"] = "Edit";
 
-            Assert.AreEqual(Template.Resources.Content.Titles.AdministrationRolesEdit, ResourceProvider.GetCurrentContentTitle());
+            String expected = Template.Resources.Content.Titles.AdministrationRolesEdit;
+            String actual = ResourceProvider.GetCurrentContentTitle();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -100,7 +112,10 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Profile";
             routeValues["action"] = "Delete";
 
-            Assert.AreEqual(Template.Resources.Content.Titles.ProfileDelete, ResourceProvider.GetCurrentContentTitle());
+            String expected = Template.Resources.Content.Titles.ProfileDelete;
+            String actual = ResourceProvider.GetCurrentContentTitle();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -116,7 +131,10 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetActionTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Action.Titles.Create, ResourceProvider.GetActionTitle("Create"));
+            String expected = Template.Resources.Action.Titles.Create;
+            String actual = ResourceProvider.GetActionTitle("Create");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -132,7 +150,10 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetDatalistTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Datalist.Titles.Role, ResourceProvider.GetDatalistTitle<Role>());
+            String expected = Template.Resources.Datalist.Titles.Role;
+            String actual = ResourceProvider.GetDatalistTitle<Role>();
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -148,7 +169,10 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeAreaTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Privilege.Area.Titles.Administration, ResourceProvider.GetPrivilegeAreaTitle("Administration"));
+            String expected = Template.Resources.Privilege.Area.Titles.Administration;
+            String actual = ResourceProvider.GetPrivilegeAreaTitle("Administration");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -164,7 +188,10 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeControllerTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Privilege.Controller.Titles.Roles, ResourceProvider.GetPrivilegeControllerTitle("Roles"));
+            String expected = Template.Resources.Privilege.Controller.Titles.Roles;
+            String actual = ResourceProvider.GetPrivilegeControllerTitle("Roles");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -180,7 +207,10 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeActionTitle_GetsTitle()
         {
-            Assert.AreEqual(Template.Resources.Privilege.Action.Titles.Index, ResourceProvider.GetPrivilegeActionTitle("Index"));
+            String expected = Template.Resources.Privilege.Action.Titles.Index;
+            String actual = ResourceProvider.GetPrivilegeActionTitle("Index");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -196,17 +226,19 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetMenuTitle_GetsTitle()
         {
-            Assert.AreEqual(
-                Template.Resources.Menu.Titles.AdministrationRolesIndex,
-                ResourceProvider.GetMenuTitle("Administration", "Roles", "Index"));
+            String expected = Template.Resources.Menu.Titles.AdministrationRolesIndex;
+            String actual = ResourceProvider.GetMenuTitle("Administration", "Roles", "Index");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
         {
-            Assert.AreEqual(
-                Template.Resources.Menu.Titles.Administration,
-                ResourceProvider.GetMenuTitle("Administration", null, null));
+            String expected = Template.Resources.Menu.Titles.Administration;
+            String actual = ResourceProvider.GetMenuTitle("Administration", null, null);
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -222,19 +254,20 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
-            Assert.AreEqual(
-                Template.Resources.Views.ProfileView.Titles.Username,
-                ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Username));
+            String expected = Template.Resources.Views.ProfileView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Username);
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         [Ignore]
         public void GetPropertyTitle_GetsTitleFromFromExpressionRelation()
         {
-            /*
-            Assert.AreEqual(
-                Template.Resources.Views.RoleView.Titles.Name,
-                ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.role.FirstName));*/
+            String expected = "Expected";
+            String actual = "Actual";
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -256,17 +289,19 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitle()
         {
-            Assert.AreEqual(
-                Template.Resources.Views.ProfileView.Titles.Username,
-                ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Username"));
+            String expected = Template.Resources.Views.ProfileView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Username");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
-            Assert.AreEqual(
-                Template.Resources.Views.RoleView.Titles.Name,
-                ResourceProvider.GetPropertyTitle(typeof(RoleView), "RoleName"));
+            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountUsername");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

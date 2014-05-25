@@ -22,9 +22,9 @@ namespace Template.Tests.Unit.Controllers.Home
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsView()
+        public void Index_ReturnsIndexView()
         {
-            Assert.IsNotNull(controller.Index() as ViewResult);
+            Assert.IsInstanceOf<ViewResult>(controller.Index());
         }
 
         #endregion
@@ -32,7 +32,7 @@ namespace Template.Tests.Unit.Controllers.Home
         #region Method: Error()
 
         [Test]
-        public void Error_CallsServiceAddSystemErrorMessage()
+        public void Error_AddsSystemErrorMessage()
         {
             controller.Error();
 
@@ -42,7 +42,7 @@ namespace Template.Tests.Unit.Controllers.Home
         [Test]
         public void Error_ReturnsView()
         {
-            Assert.IsNotNull(controller.Error() as ViewResult);
+            Assert.IsInstanceOf<ViewResult>(controller.Error());
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace Template.Tests.Unit.Controllers.Home
         #region Method: NotFound()
 
         [Test]
-        public void NotFound_CallsServiceAddPageNotFoundMessage()
+        public void NotFound_AddsPageNotFoundMessage()
         {
             controller.NotFound();
 
@@ -60,7 +60,7 @@ namespace Template.Tests.Unit.Controllers.Home
         [Test]
         public void NotFound_ReturnsView()
         {
-            Assert.IsNotNull(controller.NotFound() as ViewResult);
+            Assert.IsInstanceOf<ViewResult>(controller.NotFound());
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace Template.Tests.Unit.Controllers.Home
         #region Method: Unauthorized()
 
         [Test]
-        public void Unauthorized_CallsServiceAddUnauthorizedMessage()
+        public void Unauthorized_AddsUnauthorizedMessage()
         {
             controller.Unauthorized();
 
@@ -78,7 +78,7 @@ namespace Template.Tests.Unit.Controllers.Home
         [Test]
         public void Unauthorized_ReturnsView()
         {
-            Assert.IsNotNull(controller.Unauthorized() as ViewResult);
+            Assert.IsInstanceOf<ViewResult>(controller.Unauthorized());
         }
 
         #endregion

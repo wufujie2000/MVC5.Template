@@ -2,37 +2,31 @@ using Moq;
 using Moq.Protected;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Template.Controllers.Administration;
 using Template.Objects;
 using Template.Services;
-using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Administration
 {
     [TestFixture]
     public class AccountsControllerTests
     {
-        private Mock<AccountsController> controllerMock;
         private Mock<IAccountsService> serviceMock;
         private AccountsController controller;
-        private AccountView account;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IAccountsService>();
-            account = ObjectFactory.CreateAccountView();
-            serviceMock.Setup(mock => mock.CanEdit(account)).Returns(true);
-            serviceMock.Setup(mock => mock.CanCreate(account)).Returns(true);
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(account);
-            serviceMock.Setup(mock => mock.CanDelete("Test")).Returns(true);
-            controllerMock = new Mock<AccountsController>(serviceMock.Object) { CallBase = true };
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Index").Returns(true);
-            controller = controllerMock.Object;
+            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
+            serviceMock.SetupAllProperties();
+
+            controller = new AccountsController(serviceMock.Object);
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.RouteData = new RouteData();
         }
 
         #region Method: Index()
@@ -40,11 +34,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsModelsView()
         {
-            IEnumerable<AccountView> expected = new[] { account };
-            serviceMock.Setup(mock => mock.GetViews()).Returns(expected.AsQueryable());
+            IQueryable<AccountView> expected = new[] { new AccountView() }.AsQueryable();
+            serviceMock.Setup(mock => mock.GetViews()).Returns(expected);
             Object actual = controller.Index().Model;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -52,11 +46,13 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: Create()
 
         [Test]
-        public void Create_ReturnsEmptyAccountView()
+        public void Create_ReturnsNewAccountView()
         {
             AccountView actual = controller.Create().Model as AccountView;
 
-            Assert.IsNotNull(actual.Id);
+            Assert.IsNull(actual.RoleId);
+            Assert.IsNull(actual.RoleName);
+            Assert.IsNull(actual.Password);
         }
 
         #endregion
@@ -81,27 +77,38 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Create_ReturnsEmptyViewIfCanNotCreate()
+        public void Create_ReturnsNullModelIfCanNotCreate()
         {
+            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.CanCreate(account)).Returns(false);
 
             Assert.IsNull((controller.Create(account) as ViewResult).Model);
         }
 
         [Test]
-        public void Create_CallsServiceCreate()
+        public void Create_CreatesAccountView()
         {
+            AccountView account = new AccountView();
+            serviceMock.Setup(mock => mock.CanCreate(account)).Returns(true);
+            serviceMock.Setup(mock => mock.Create(account));
             controller.Create(account);
 
             serviceMock.Verify(mock => mock.Create(account), Times.Once());
         }
 
         [Test]
-        public void Create_AfterCreateRedirectsToIndex()
+        public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
         {
-            RedirectToRouteResult result = controller.Create(account) as RedirectToRouteResult;
+            AccountView account = new AccountView();
+            serviceMock.Setup(mock => mock.CanCreate(account)).Returns(true);
+            serviceMock.Setup(mock => mock.Create(account));
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            Mock<AccountsController> controllerMock = new Mock<AccountsController>(serviceMock.Object) { CallBase = true };
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
+            RedirectToRouteResult actual = controllerMock.Object.Create(account) as RedirectToRouteResult;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -111,9 +118,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsAccountView()
         {
+            AccountView expected = new AccountView();
+            serviceMock.Setup(mock => mock.GetView("Test")).Returns(expected);
             AccountView actual = controller.Details("Test").Model as AccountView;
 
-            Assert.AreEqual(account, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -123,9 +132,11 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsAccountView()
         {
+            AccountView expected = new AccountView();
+            serviceMock.Setup(mock => mock.GetView("Test")).Returns(expected);
             AccountView actual = controller.Edit("Test").Model as AccountView;
 
-            Assert.AreEqual(account, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -133,27 +144,38 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: Edit(AccountView account)
 
         [Test]
-        public void Edit_ReturnsEmptyViewIfCanNotEdit()
+        public void Edit_ReturnsNullModelIfCanNotEdit()
         {
+            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.CanEdit(account)).Returns(false);
 
             Assert.IsNull((controller.Edit(account) as ViewResult).Model);
         }
 
         [Test]
-        public void Edit_CallsServiceEdit()
+        public void Edit_EditsAccountView()
         {
+            AccountView account = new AccountView();
+            serviceMock.Setup(mock => mock.CanEdit(account)).Returns(true);
+            serviceMock.Setup(mock => mock.Edit(account));
             controller.Edit(account);
 
             serviceMock.Verify(mock => mock.Edit(account), Times.Once());
         }
 
         [Test]
-        public void Edit_RedirectsToIndex()
+        public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
-            RedirectToRouteResult result = controller.Edit(account) as RedirectToRouteResult;
+            AccountView account = new AccountView();
+            serviceMock.Setup(mock => mock.CanEdit(account)).Returns(true);
+            serviceMock.Setup(mock => mock.Edit(account));
 
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            Mock<AccountsController> controllerMock = new Mock<AccountsController>(serviceMock.Object) { CallBase = true };
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
+            RedirectToRouteResult actual = controllerMock.Object.Edit(account) as RedirectToRouteResult;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -23,7 +23,7 @@ namespace Template.Tests.Unit.Controllers
             serviceMock.SetupAllProperties();
             service = serviceMock.Object;
 
-            controller = new Mock<ServicedControllerStub>(service) { CallBase = true }.Object;
+            controller = new ServicedControllerStub(service);
             controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
@@ -39,36 +39,38 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void ServicedController_OnNotNullModelStateSetsExistingModelState()
         {
-            ModelStateDictionary modelState = new ModelStateDictionary();
-            service.ModelState = modelState;
-
+            ModelStateDictionary expected = service.ModelState = new ModelStateDictionary();
             controller = new ServicedControllerStub(service);
+            ModelStateDictionary actual = service.ModelState;
 
-            Assert.AreEqual(modelState, service.ModelState);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void ServicedController_OnNullModelStateCreatesNewModelState()
         {
+            service.ModelState = null;
+            controller = new ServicedControllerStub(service);
+
             Assert.IsNotNull(service.ModelState);
         }
 
         [Test]
-        public void ServicedController_OnNotNullAlertMessagesSetsExistingAlertMessages()
+        public void ServicedController_OnNotNullAlertMessagesKeepsExistingAlertMessages()
         {
-            ModelStateDictionary modelState = new ModelStateDictionary();
-            MessagesContainer alertMessages = new MessagesContainer();
-            service.AlertMessages = alertMessages;
-            service.ModelState = modelState;
-
+            MessagesContainer expected = service.AlertMessages = new MessagesContainer();
             controller = new ServicedControllerStub(service);
+            MessagesContainer actual = service.AlertMessages;
 
-            Assert.AreEqual(alertMessages, service.AlertMessages);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void ServicedController_OnNullAlertMessagesCreatesNewAlertMessages()
         {
+            service.AlertMessages = null;
+            controller = new ServicedControllerStub(service);
+
             Assert.IsNotNull(service.AlertMessages);
         }
 
@@ -77,15 +79,24 @@ namespace Template.Tests.Unit.Controllers
         #region Method: OnActionExecuted(ActionExecutedContext filterContext)
 
         [Test]
+        public void OnActionExecuted_SetsMessagesToSessionThenMessagesInSessionAreNull()
+        {
+            MessagesContainer alertMessages = service.AlertMessages;
+            controller.BaseOnActionExecuted(new ActionExecutedContext());
+
+            Assert.AreEqual(alertMessages, controller.Session["Messages"]);
+        }
+
+        [Test]
         public void OnActionExecuted_MergesMessagesToSession()
         {
+            Object expected = service.AlertMessages;
             service.AlertMessages.AddError("First");
-            List<AlertMessage> expected = service.AlertMessages.ToList();
-            MessagesContainer newContainer = new MessagesContainer();
-            newContainer.AddError("Second");
-            expected.AddRange(newContainer);
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
+            MessagesContainer newContainer = new MessagesContainer();
+            newContainer.AddError("Second");
+
             service.AlertMessages = newContainer;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             Object actual = controller.Session["Messages"];
@@ -101,18 +112,9 @@ namespace Template.Tests.Unit.Controllers
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            Object actual = controller.Session["Messages"];
+            IEnumerable<AlertMessage> actual = controller.Session["Messages"] as IEnumerable<AlertMessage>;
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void OnActionExecuted_SetsMessagesToSession()
-        {
-            MessagesContainer alertMessages = service.AlertMessages;
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-
-            Assert.AreEqual(alertMessages, controller.Session["Messages"]);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -12,7 +12,7 @@ using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Datalists
+namespace Template.Tests.Unit.Controllers.Datalist
 {
     [TestFixture]
     public class DatalistControllerTests
@@ -47,36 +47,34 @@ namespace Template.Tests.Unit.Controllers.Datalists
         {
             controller.GetData(datalist, filter);
 
-            Assert.AreEqual(filter, datalist.CurrentFilter);
+            DatalistFilter expected = filter;
+            DatalistFilter actual = datalist.CurrentFilter;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetData_SetsAdditionalFilters()
         {
-            Dictionary<String, Object> additionalFilters = new Dictionary<String, Object>() { { "Key", "Value" } };
-            controller.GetData(datalist, filter, additionalFilters);
+            Dictionary<String, Object> expected = new Dictionary<String, Object>() { { "Key", "Value" } };
+            controller.GetData(datalist, filter, expected);
 
-            Assert.AreEqual(additionalFilters, filter.AdditionalFilters);
-        }
+            Dictionary<String, Object> actual = filter.AdditionalFilters;
 
-        [Test]
-        public void GetData_CallsAbstractDatalistGetData()
-        {
-            controller.GetData(datalist, filter);
-
-            datalistMock.Verify(mock => mock.GetData(), Times.Once());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetData_ReturnsPublicJsonData()
         {
-            DatalistData expectedData = new DatalistData();
-            datalistMock.Setup(mock => mock.GetData()).Returns(expectedData);
+            datalistMock.Setup(mock => mock.GetData()).Returns(new DatalistData());
             JsonResult jsonResult = controller.GetData(datalist, filter);
-            Object actualData = jsonResult.Data;
+
+            DatalistData expected = datalistMock.Object.GetData();
+            DatalistData actual = jsonResult.Data as DatalistData;
 
             Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
-            Assert.AreEqual(expectedData, actualData);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -84,14 +82,14 @@ namespace Template.Tests.Unit.Controllers.Datalists
         #region Method: Roles(DatalistFilter filter)
 
         [Test]
-        public void Roles_CallsGetDataWithParameters()
+        public void Roles_GetsRolesData()
         {
-            JsonResult expectedResult = new JsonResult();
-            controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(expectedResult);
-            JsonResult actualResult = controller.Role(filter);
+            controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(new JsonResult());
+            
+            JsonResult expected = controllerMock.Object.GetData(null, filter, null);
+            JsonResult actual = controller.Role(filter);
 
-            controllerMock.Verify(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null), Times.Once());
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

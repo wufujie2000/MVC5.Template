@@ -135,7 +135,7 @@
     <Compile Include="Unit\Controllers\Administration\AdministrationAreRegistrationTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Roles\RolesControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerTests.cs" />
-    <Compile Include="Unit\Controllers\Datalists\DatalistControllerTests.cs" />
+    <Compile Include="Unit\Controllers\Datalist\DatalistControllerTests.cs" />
     <Compile Include="Unit\Controllers\Home\HomeControllerTests.cs" />
     <Compile Include="Unit\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="Unit\Controllers\SecurityTests.cs" />

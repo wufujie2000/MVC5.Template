@@ -5,7 +5,7 @@ using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
 
-namespace Template.Tests.Integration.Database
+namespace Template.Tests.Unit.Data.Migrations
 {
     [TestFixture]
     public class InitialDataTests

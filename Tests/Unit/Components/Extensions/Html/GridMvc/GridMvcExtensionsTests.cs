@@ -73,7 +73,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsAddOnGridColumnCollection()
+        public void AddActionLink_AddsGridColumn()
         {
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
@@ -81,7 +81,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsSetWidthWith25WidthOnGridColumn()
+        public void AddActionLink_SetsGridColumnWidthTo25()
         {
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
@@ -89,7 +89,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsEncodedWithFalseOnGridColumn()
+        public void AddActionLink_DoesNotEncodeGridColumn()
         {
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
@@ -97,7 +97,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsSanitizedWithFalseOnGridColumn()
+        public void AddActionLink_DoesNotSanitizeGridColumn()
         {
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
@@ -105,7 +105,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsCssOnGridColumn()
+        public void AddActionLink_SetsCssOnGridColumn()
         {
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
@@ -113,7 +113,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_DoesNotCallsRenderValueAsOnGridColumn()
+        public void AddActionLink_DoesNotRenderValueAsOnGridColumn()
         {
             IEnumerable<LinkAction> notSupportedActions = Enum
                 .GetValues(typeof(LinkAction))
@@ -130,7 +130,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_CallsRenderValueAsOnGridColumn()
+        public void AddActionLink_RendersValueOnGridColumn()
         {
             IEnumerable<LinkAction> supportedActions = Enum
                 .GetValues(typeof(LinkAction))
@@ -202,7 +202,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
 
         [Test]
-        public void AddDateProperty_CallsAddOnGridColumnCollection()
+        public void AddDateProperty_AddsGridColumn()
         {
             gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
@@ -210,7 +210,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateProperty_CallsTitledOnGridColumn()
+        public void AddDateProperty_SetsGridColumnTitle()
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
@@ -220,7 +220,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateProperty_CallsCssOnGridColumn()
+        public void AddDateProperty_SetsGridColumnCss()
         {
             gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
@@ -228,7 +228,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateProperty_CallsFormatOnGridColumn()
+        public void AddDateProperty_FormatsGridColumn()
         {
             String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
@@ -242,7 +242,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
 
         [Test]
-        public void AddDateTimeProperty_CallsAddOnGridColumnCollection()
+        public void AddDateTimeProperty_AddsGridColumn()
         {
             gridColumnCollection.AddDateTimeProperty(model => model.EntityDate);
 
@@ -250,7 +250,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateTimeProperty_CallsTitledOnGridColumn()
+        public void AddDateTimeProperty_SetsGridColumnTitle()
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
@@ -260,7 +260,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateTimeProperty_CallsCssOnGridColumn()
+        public void AddDateTimeProperty_SetsGridColumnCss()
         {
             gridColumnCollection.AddDateTimeProperty(model => model.EntityDate);
 
@@ -272,7 +272,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddProperty<T, TKey>(this IGridColumnCollection<T> column, Expression<Func<T, TKey>> property)
 
         [Test]
-        public void AddProperty_CallsAddOnGridColumnCollection()
+        public void AddProperty_AddsGridColumn()
         {
             gridColumnCollection.AddProperty(model => model.EntityDate);
 
@@ -280,7 +280,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddProperty_CallsTitledOnGridColumn()
+        public void AddProperty_SetsGridColumnTitle()
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
@@ -294,7 +294,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: ApplyAttributes<T>(this IGridHtmlOptions<T> options) where T : class
 
         [Test]
-        public void ApplyAttributes_CallsEmptyText()
+        public void ApplyAttributes_SetsEmptyText()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -302,7 +302,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsSetLanguage()
+        public void ApplyAttributes_SetsLanguage()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -310,7 +310,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsNamed()
+        public void ApplyAttributes_SetsName()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -318,7 +318,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsWithMultipleFilters()
+        public void ApplyAttributes_EnablesMultipleFilters()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -326,7 +326,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsWithPaging15()
+        public void ApplyAttributes_SetsPagingStepTo15()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -334,7 +334,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsFilterable()
+        public void ApplyAttributes_EnablesFiltering()
         {
             gridHtmlOptions.ApplyAttributes();
 
@@ -342,7 +342,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyAttributes_CallsSortable()
+        public void ApplyAttributes_EnablesSorting()
         {
             gridHtmlOptions.ApplyAttributes();
 

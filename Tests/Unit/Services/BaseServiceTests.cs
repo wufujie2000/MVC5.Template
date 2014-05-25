@@ -27,7 +27,7 @@ namespace Template.Tests.Unit.Services
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CallsUnitOfWorkDispose()
+        public void Dispose_DisposesUnitOfWork()
         {
             service.Dispose();
             

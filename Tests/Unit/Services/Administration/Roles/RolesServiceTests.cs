@@ -108,7 +108,7 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void GetView_CallsSeedPrivilegesTree()
+        public void GetView_SeedsPrivilegesTree()
         {
             RoleView roleView = service.GetView(role.Id);
 

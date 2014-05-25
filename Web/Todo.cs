@@ -12,8 +12,6 @@
         // TODO: Trying to go to http://localhost:19174/Administration/Accounts/Create without logging in, forms login action ReturnUrl to Home/Unauthorized
         // TODO: Every input should be trimmed before entering controllers?
 
-        // TODO: Add performance tests, at least for indexes
-        // TODO: Recheck and clean up all tests
         // TODO: Test bundles for actual search patterns
         // TODO: Add tests for application start?
         // TODO: Add tests for all content labels on all controller actions

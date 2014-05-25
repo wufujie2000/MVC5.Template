@@ -47,9 +47,6 @@ namespace Template.Tests.Helpers
             private set;
         }
 
-        public HtmlMock() : this(Activator.CreateInstance<T>())
-        {
-        }
         public HtmlMock(T model)
         {
             HtmlHelper html = new HtmlMock().Html;

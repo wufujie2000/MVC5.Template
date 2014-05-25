@@ -61,6 +61,15 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         }
 
         [Test]
+        public void Load_BindsIAuthService()
+        {
+            Type expected = typeof(AuthService);
+            Type actual = kernel.Get<IAuthService>().GetType();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Load_BindsIHomeService()
         {
             Type expected = typeof(HomeService);
@@ -79,19 +88,19 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         }
 
         [Test]
-        public void Load_BindsIAccountService()
+        public void Load_BindsIProfileService()
         {
-            Type expected = typeof(AuthService);
-            Type actual = kernel.Get<IAuthService>().GetType();
+            Type expected = typeof(ProfileService);
+            Type actual = kernel.Get<IProfileService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void Load_BindsIProfileService()
+        public void Load_BindsIAccountsService()
         {
-            Type expected = typeof(ProfileService);
-            Type actual = kernel.Get<IProfileService>().GetType();
+            Type expected = typeof(AccountsService);
+            Type actual = kernel.Get<IAccountsService>().GetType();
 
             Assert.AreEqual(expected, actual);
         }

@@ -35,7 +35,7 @@ namespace Template.Tests.Unit.Data.Core
         [Test]
         public void Repository_UsesContextsRepository()
         {
-            Assert.AreEqual(context.Repository<Account>(), unitOfWork.Repository<Account>());
+            Assert.AreSame(context.Repository<Account>(), unitOfWork.Repository<Account>());
         }
 
         #endregion
@@ -132,6 +132,7 @@ namespace Template.Tests.Unit.Data.Core
             catch
             {
             }
+
             loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
             loggerMock.Verify(mock => mock.SaveLogs(), Times.Never());
         }
@@ -141,7 +142,7 @@ namespace Template.Tests.Unit.Data.Core
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanDisposeMoreThanOnce()
+        public void Dispose_CanBeDisposedMultipleTimes()
         {
             unitOfWork.Dispose();
             unitOfWork.Dispose();

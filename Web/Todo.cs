@@ -14,7 +14,6 @@
 
         // TODO: Add performance tests, at least for indexes
         // TODO: Recheck and clean up all tests
-        // TODO: Change Edit_ReturnsCurrentProfileView test to test actual view returned from service get view method
         // TODO: Test bundles for actual search patterns
         // TODO: Add tests for application start?
         // TODO: Add tests for all content labels on all controller actions

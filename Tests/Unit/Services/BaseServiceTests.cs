@@ -35,7 +35,7 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void Dispose_CanDisposeMultipleTimes()
+        public void Dispose_CanBeDisposedMultipleTimes()
         {
             service.Dispose();
             service.Dispose();

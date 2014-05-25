@@ -19,7 +19,6 @@ namespace Template.Data.Mapping
 
         private static void MapAuths()
         {
-            Mapper.CreateMap<Account, LoginView>();
             Mapper.CreateMap<LoginView, Account>();
         }
 

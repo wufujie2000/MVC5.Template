@@ -21,8 +21,8 @@ namespace Template.Tests.Unit.Data.Core
         {
             context = new TestingContext();
             repository = new Repository<Account>(context);
-            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
-            context.SaveChanges();
+
+            TearDownData();
         }
 
         [TearDown]
@@ -42,8 +42,6 @@ namespace Template.Tests.Unit.Data.Core
 
             Account expected = context.Set<Account>().Find(account.Id);
             Account actual = repository.GetById(account.Id);
-            context.Set<Account>().Remove(account);
-            context.SaveChanges();
 
             Assert.AreEqual(expected, actual);
         }
@@ -78,9 +76,6 @@ namespace Template.Tests.Unit.Data.Core
             IEnumerable<String> expected = context.Set<Account>().Project().To<AccountView>().Select(account => account.Id).ToList();
             IEnumerable<String> actual = repository.Query<AccountView>().Select(account => account.Id).ToList();
 
-            context.Set<Account>().Remove(model);
-            context.SaveChanges();
-
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -99,10 +94,6 @@ namespace Template.Tests.Unit.Data.Core
 
             IEnumerable<Account> expected = context.Set<Account>().Where(account => account.Id == model1.Id).ToList();
             IEnumerable<Account> actual = repository.Query().Where(account => account.Id == model1.Id).ToList();
-
-            context.Set<Account>().Remove(model1);
-            context.Set<Account>().Remove(model2);
-            context.SaveChanges();
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -123,10 +114,6 @@ namespace Template.Tests.Unit.Data.Core
             IEnumerable<AccountView> expected = context.Set<Account>().Where(account => account.Id == account1.Id).Project().To<AccountView>().ToList();
             IEnumerable<AccountView> actual = repository.Query<AccountView>(account => account.Id == account1.Id).ToList();
 
-            context.Set<Account>().Remove(account1);
-            context.Set<Account>().Remove(account2);
-            context.SaveChanges();
-
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
@@ -142,8 +129,6 @@ namespace Template.Tests.Unit.Data.Core
             context.SaveChanges();
 
             Account actual = context.Set<Account>().Find(expected.Id);
-            context.Set<Account>().Remove(expected);
-            context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -164,8 +149,6 @@ namespace Template.Tests.Unit.Data.Core
             context.SaveChanges();
 
             Account actual = context.Set<Account>().Find(expected.Id);
-            context.Set<Account>().Remove(expected);
-            context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -184,8 +167,6 @@ namespace Template.Tests.Unit.Data.Core
             context.SaveChanges();
 
             Account actual = context.Set<Account>().Find(expected.Id);
-            context.Set<Account>().Remove(expected);
-            context.SaveChanges();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -214,13 +195,18 @@ namespace Template.Tests.Unit.Data.Core
             context.SaveChanges();
 
             Account actual = context.Set<Account>().Find(expected.Id);
-            if (actual != null)
-            {
-                context.Set<Account>().Remove(expected);
-                context.SaveChanges();
-            }
 
             Assert.IsNull(actual);
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private void TearDownData()
+        {
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            context.SaveChanges();
         }
 
         #endregion

@@ -26,16 +26,13 @@ namespace Template.Tests.Unit.Data.Logging
             context = new TestingContext();
             logger = new EntityLogger(context);
             dataContext = new TestingContext();
+
+            TearDownData();
         }
 
         [TearDown]
         public void TearDown()
         {
-            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Log>().RemoveRange(context.Set<Log>());
-            dataContext.SaveChanges();
-            context.SaveChanges();
-
             dataContext.Dispose();
             context.Dispose();
         }
@@ -47,8 +44,8 @@ namespace Template.Tests.Unit.Data.Logging
         {
             Account model = ObjectFactory.CreateAccount();
             dataContext.Set<Account>().Add(model);
-            DbEntityEntry<Account> entry = dataContext.Entry(model);
 
+            DbEntityEntry<Account> entry = dataContext.Entry(model);
             entry.State = EntityState.Added;
 
             Logs(entry);
@@ -59,6 +56,7 @@ namespace Template.Tests.Unit.Data.Logging
         {
             Account model = ObjectFactory.CreateAccount();
             dataContext.Set<Account>().Add(model);
+
             DbEntityEntry<Account> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
             model.Username += "1";
@@ -86,6 +84,7 @@ namespace Template.Tests.Unit.Data.Logging
         {
             Account model = ObjectFactory.CreateAccount();
             dataContext.Set<Account>().Add(model);
+
             DbEntityEntry<Account> entry = dataContext.Entry(model);
             dataContext.SaveChanges();
 
@@ -156,6 +155,14 @@ namespace Template.Tests.Unit.Data.Logging
                 messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
 
             return messageBuilder.ToString();
+        }
+
+        private void TearDownData()
+        {
+            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Log>().RemoveRange(context.Set<Log>());
+            dataContext.SaveChanges();
+            context.SaveChanges();
         }
 
         #endregion

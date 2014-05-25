@@ -190,7 +190,7 @@ namespace Template.Tests.Unit.Security
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanDisposeMultipleTimes()
+        public void Dispose_CanBeDisposedMultipleTimes()
         {
             provider.Dispose();
             provider.Dispose();

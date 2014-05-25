@@ -10,7 +10,7 @@ namespace Template.Web.DependencyInjection.Ninject
     {
         private IKernel kernel;
 
-        public NinjectResolver(params NinjectModule[] modules)
+        public NinjectResolver(params INinjectModule[] modules)
         {
             kernel = new StandardKernel(modules);
         }

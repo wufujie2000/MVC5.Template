@@ -17,7 +17,7 @@ namespace Template.Tests.Unit.Data.Logging
     {
         private DbEntityEntry entry;
         private AContext context;
-        private Role model; // TestModel should be used in not objects tests
+        private Role model;
 
         [SetUp]
         public void SetUp()
@@ -25,8 +25,8 @@ namespace Template.Tests.Unit.Data.Logging
             context = new TestingContext();
             TearDownData();
             SetUpData();
-            context = new TestingContext();
 
+            context = new TestingContext();
             entry = context.Entry(context.Set<Role>().Find(model.Id));
             entry.State = EntityState.Modified;
         }

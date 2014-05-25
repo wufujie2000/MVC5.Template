@@ -61,7 +61,7 @@ namespace Template.Web
         }
         private void RegisterRoleProvider()
         {
-            RoleProviderFactory.SetInstance(DependencyContainer.Resolve<IRoleProvider>());
+            RoleProviderFactory.Instance = DependencyContainer.Resolve<IRoleProvider>();
         }
         private void RegisterModelMetadataProvider()
         {

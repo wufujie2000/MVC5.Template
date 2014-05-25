@@ -27,13 +27,13 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             html = htmlMock.Html;
             roleProviderMock = new Mock<IRoleProvider>();
             HttpContext.Current = htmlMock.HttpMock.HttpContext;
-            RoleProviderFactory.SetInstance(roleProviderMock.Object);
+            RoleProviderFactory.Instance = roleProviderMock.Object;
         }
 
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
             HttpContext.Current = null;
         }
 
@@ -55,7 +55,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TableWidgetBox_OnNullRoleProviderFormsTableWidgetBoxWithButtons()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
 
             StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
@@ -122,7 +122,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_OnNullRoleProviderFormsFormWidgetBoxWithButtons()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
 
             StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);

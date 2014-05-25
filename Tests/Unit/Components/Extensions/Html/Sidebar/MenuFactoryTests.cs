@@ -29,7 +29,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
         }
 
         #region Static property: AllMenus
@@ -72,7 +72,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void GetAuthorizedMenus_ReturnsNoMenusThenNotAuthorized()
         {
-            RoleProviderFactory.SetInstance(new Mock<IRoleProvider>().Object);
+            RoleProviderFactory.Instance = new Mock<IRoleProvider>().Object;
 
             CollectionAssert.IsEmpty(factory.GetAuthorizedMenus());
         }
@@ -83,7 +83,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<IEnumerable<AccountPrivilege>>(),
                 It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
-            RoleProviderFactory.SetInstance(roleProviderMock.Object);
+            RoleProviderFactory.Instance = roleProviderMock.Object;
 
             IEnumerable<Menu> actual = GetMenusAsList(factory.GetAuthorizedMenus());
             IEnumerable<Menu> expected = GetMenusAsList(GetExpectedMenus()).Where(menu => !IsEmpty(menu));

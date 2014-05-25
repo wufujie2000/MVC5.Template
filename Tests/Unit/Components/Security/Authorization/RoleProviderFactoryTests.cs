@@ -10,16 +10,16 @@ namespace Template.Tests.Unit.Security
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
         }
 
-        #region Static method: SetInstance(IRoleProvider instance)
+        #region Static property: Instance
 
         [Test]
-        public void SetInstance_SetsInstance()
+        public void Instance_GetsAndSetsInstance()
         {
             IRoleProvider expected = new Mock<IRoleProvider>().Object;
-            RoleProviderFactory.SetInstance(expected);
+            RoleProviderFactory.Instance = expected;
 
             IRoleProvider actual = RoleProviderFactory.Instance;
 

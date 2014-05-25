@@ -43,14 +43,14 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             HttpContext.Current = new HttpMock().HttpContext;
             
             roleProviderMock = new Mock<IRoleProvider>();
-            RoleProviderFactory.SetInstance(roleProviderMock.Object);
+            RoleProviderFactory.Instance = roleProviderMock.Object;
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
             HttpContext.Current = null;
         }
 
@@ -67,7 +67,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_AddsActionLinkOnNullRoleProvider()
         {
-            RoleProviderFactory.SetInstance(null);
+            RoleProviderFactory.Instance = null;
 
             Assert.IsNotNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
         }

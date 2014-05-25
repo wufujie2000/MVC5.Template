@@ -5,12 +5,7 @@
         public static IRoleProvider Instance
         {
             get;
-            private set;
-        }
-
-        public static void SetInstance(IRoleProvider instance)
-        {
-            Instance = instance;
+            set;
         }
     }
 }

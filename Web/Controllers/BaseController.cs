@@ -42,16 +42,6 @@ namespace Template.Controllers
             return RedirectToAction("Unauthorized", new { language = RouteData.Values["language"], area = String.Empty, controller = "Home" });
         }
 
-        protected override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            base.OnAuthorization(filterContext);
-            String area = (String)filterContext.RouteData.Values["area"];
-            String action = (String)filterContext.RouteData.Values["action"];
-            String controller = (String)filterContext.RouteData.Values["controller"];
-
-            if (!IsAuthorizedFor(area, controller, action))
-                filterContext.Result = RedirectToUnauthorized();
-        }
         protected virtual Boolean IsAuthorizedFor(String action)
         {
             String area = (String)RouteData.Values["area"];
@@ -64,6 +54,19 @@ namespace Template.Controllers
             if (RoleProvider == null) return true;
 
             return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);            
+        }
+
+        protected override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            base.OnAuthorization(filterContext);
+            if (!HttpContext.User.Identity.IsAuthenticated) return;
+
+            String area = (String)filterContext.RouteData.Values["area"];
+            String action = (String)filterContext.RouteData.Values["action"];
+            String controller = (String)filterContext.RouteData.Values["controller"];
+
+            if (!IsAuthorizedFor(area, controller, action))
+                filterContext.Result = RedirectToUnauthorized();
         }
     }
 }

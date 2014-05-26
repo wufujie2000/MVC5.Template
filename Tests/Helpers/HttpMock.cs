@@ -71,7 +71,8 @@ namespace Template.Tests.Helpers
             HttpContextBase = httpContextBaseMock.Object;
 
             IdentityMock = new Mock<IIdentity>();
-            IdentityMock.Setup<String>(mock => mock.Name).Returns(ObjectFactory.TestId);
+            IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+            IdentityMock.Setup(mock => mock.Name).Returns(ObjectFactory.TestId);
 
             Mock<IPrincipal> principalMock = new Mock<IPrincipal>();
             principalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);

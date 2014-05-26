@@ -78,11 +78,11 @@ namespace Template.Tests.Helpers
                 Id = TestId + instanceNumber.ToString()
             };
         }
-        public static RolePrivilegeView CreateRolePrivilegeView()
+        public static RolePrivilegeView CreateRolePrivilegeView(Int32 instanceNumber = 1)
         {
             return new RolePrivilegeView()
             {
-                Id = TestId
+                Id = TestId + instanceNumber.ToString()
             };
         }
 
@@ -96,14 +96,14 @@ namespace Template.Tests.Helpers
                 Action = "Action" + instanceNumber.ToString()
             };
         }
-        public static PrivilegeView CreatePrivilegeView()
+        public static PrivilegeView CreatePrivilegeView(Int32 instanceNumber = 1)
         {
             return new PrivilegeView()
             {
-                Id = TestId,
-                Area = "Area",
+                Id = TestId + instanceNumber.ToString(),
                 Controller = "Controller",
-                Action = "Action"
+                Action = "Action",
+                Area = "Area"
             };
         }
 

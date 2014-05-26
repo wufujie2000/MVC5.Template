@@ -15,12 +15,13 @@ namespace Template.Tests.Unit.Controllers
         private Mock<BaseControllerStub> controllerMock;
         private Mock<IRoleProvider> roleProviderMock;
         private BaseControllerStub baseController;
+        private HttpMock httpMock;
         private String accountId;
 
         [SetUp]
         public void SetUp()
         {
-            HttpMock httpMock = new HttpMock();
+            httpMock = new HttpMock();
             controllerMock = new Mock<BaseControllerStub>() { CallBase = true };
             RequestContext requestContext = httpMock.HttpContext.Request.RequestContext;
 
@@ -141,47 +142,6 @@ namespace Template.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: OnAuthorization(AuthorizationContext filterContext)
-
-        [Test]
-        public void OnAuthorization_SetsResultToRedirectToUnauthorizedIfNotAuthorized()
-        {
-            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, actionDescriptorMock.Object);
-
-            String controller = baseController.RouteData.Values["controller"] as String;
-            String action = baseController.RouteData.Values["action"] as String;
-            String area = baseController.RouteData.Values["area"] as String;
-
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToUnauthorized").Returns(expected);
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, area, controller, action)).Returns(false);
-            baseController.BaseRoleProvider = roleProviderMock.Object;
-            baseController.BaseOnAuthorization(filterContext);
-
-            RedirectToRouteResult actual = filterContext.Result as RedirectToRouteResult;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void OnAuthorization_SetsResultToNullThenAuthorized()
-        {
-            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, actionDescriptorMock.Object);
-            filterContext.RouteData.Values["controller"] = "Controller";
-            filterContext.RouteData.Values["action"] = "Action";
-            filterContext.RouteData.Values["area"] = "Area";
-
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "Area", "Controller", "Action")).Returns(true);
-            baseController.BaseRoleProvider = roleProviderMock.Object;
-            baseController.BaseOnAuthorization(filterContext);
-
-            Assert.IsNull(filterContext.Result);
-        }
-
-        #endregion
-
         #region Method: IsAuthorizedFor(String action)
 
         [Test]
@@ -223,6 +183,62 @@ namespace Template.Tests.Unit.Controllers
             baseController.BaseRoleProvider = roleProviderMock.Object;
 
             Assert.IsTrue(baseController.BaseIsAuthorizedFor("AR", "CO", "AC"));
+        }
+
+        #endregion
+
+        #region Method: OnAuthorization(AuthorizationContext filterContext)
+
+        [Test]
+        public void OnAuthorization_SetsResultToNullThenNotLoggedIn()
+        {
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, actionDescriptorMock.Object);
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
+
+            baseController.BaseOnAuthorization(filterContext);
+
+            Assert.IsNull(filterContext.Result);
+        }
+
+        [Test]
+        public void OnAuthorization_SetsResultToRedirectToUnauthorizedIfNotAuthorized()
+        {
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, actionDescriptorMock.Object);
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+
+            String controller = baseController.RouteData.Values["controller"] as String;
+            String action = baseController.RouteData.Values["action"] as String;
+            String area = baseController.RouteData.Values["area"] as String;
+
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToUnauthorized").Returns(expected);
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, area, controller, action)).Returns(false);
+            baseController.BaseRoleProvider = roleProviderMock.Object;
+            baseController.BaseOnAuthorization(filterContext);
+
+            RedirectToRouteResult actual = filterContext.Result as RedirectToRouteResult;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void OnAuthorization_SetsResultToNullThenAuthorized()
+        {
+            Mock<ActionDescriptor> actionDescriptorMock = new Mock<ActionDescriptor>() { CallBase = true };
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, actionDescriptorMock.Object);
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+
+            filterContext.RouteData.Values["controller"] = "Controller";
+            filterContext.RouteData.Values["action"] = "Action";
+            filterContext.RouteData.Values["area"] = "Area";
+
+            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "Area", "Controller", "Action")).Returns(true);
+            baseController.BaseRoleProvider = roleProviderMock.Object;
+            baseController.BaseOnAuthorization(filterContext);
+
+            Assert.IsNull(filterContext.Result);
         }
 
         #endregion

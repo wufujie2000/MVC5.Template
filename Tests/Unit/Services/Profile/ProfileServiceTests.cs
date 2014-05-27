@@ -309,7 +309,7 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void Edit_LeavesCurrentPassword()
+        public void Edit_LeavesCurrentPasswordAfterEditing()
         {
             ProfileView profileView = ObjectFactory.CreateProfileView();
             profileView.NewPassword = null;

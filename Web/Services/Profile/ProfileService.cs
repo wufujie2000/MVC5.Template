@@ -90,7 +90,7 @@ namespace Template.Services
                 .Repository<Account>()
                 .Query(account =>
                     account.Id != HttpContext.Current.User.Identity.Name &&
-                    account.Username.Trim().ToUpper() == profile.Username.Trim().ToUpper())
+                    account.Username.ToUpper() == profile.Username.ToUpper())
                  .Any();
 
             if (!isUnique)
@@ -112,7 +112,7 @@ namespace Template.Services
         private Account GetAccountFrom(ProfileView profile)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
-            account.Username = profile.Username.Trim();
+            account.Username = profile.Username;
 
             if (!String.IsNullOrWhiteSpace(profile.NewPassword))
                 account.Passhash = BCrypter.HashPassword(profile.NewPassword);

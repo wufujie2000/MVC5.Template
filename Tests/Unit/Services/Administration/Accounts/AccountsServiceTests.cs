@@ -239,12 +239,11 @@ namespace Template.Tests.Unit.Services
         #region Method: Create(AccountView view)
 
         [Test]
-        public void Create_CreatesAccountWithTrimmedUsername()
+        public void Create_CreatesAccount()
         {
             TearDownData();
 
             AccountView expected = ObjectFactory.CreateAccountView();
-            expected.Username = String.Format("  {0}  ", expected.Username);
             Role role = ObjectFactory.CreateRole();
             context.Set<Role>().Add(role);
             context.SaveChanges();
@@ -254,7 +253,7 @@ namespace Template.Tests.Unit.Services
             Account actual = context.Set<Account>().Find(expected.Id);
 
             Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
-            Assert.AreEqual(expected.Username.Trim(), actual.Username);
+            Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Id, actual.Id);
         }
@@ -264,14 +263,14 @@ namespace Template.Tests.Unit.Services
         #region Method: Edit(AccountView view)
 
         [Test]
-        public void Edit_EditsAccountWithTrimmedUsername()
+        public void Edit_EditsAccount()
         {
             Role role = ObjectFactory.CreateRole(2);
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
             AccountView expected = service.GetView(account.Id);
-            expected.Username = String.Format("  1{0}1  ", expected.Username);
+            expected.Username += "Edition";
             expected.RoleId = role.Id;
             service.Edit(expected);
 
@@ -280,7 +279,7 @@ namespace Template.Tests.Unit.Services
 
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Username.Trim(), actual.Username);
+            Assert.AreEqual(expected.Username, actual.Username);
         }
 
         #endregion

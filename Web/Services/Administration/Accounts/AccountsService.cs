@@ -36,7 +36,6 @@ namespace Template.Services
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             account.Passhash = BCrypter.HashPassword(view.Password);
-            account.Username = account.Username.Trim();
 
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
@@ -45,7 +44,6 @@ namespace Template.Services
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
-            account.Username = account.Username.Trim();
             
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
@@ -57,7 +55,7 @@ namespace Template.Services
                 .Repository<Account>()
                 .Query(account =>
                     account.Id != view.Id &&
-                    account.Username.Trim().ToUpper() == view.Username.Trim().ToUpper())
+                    account.Username.ToUpper() == view.Username.ToUpper())
                 .Any();
 
             if (!isUnique)

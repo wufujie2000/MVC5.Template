@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
+using Template.Components.Mvc.Binders;
 using Template.Components.Mvc.Providers;
 using Template.Components.Security;
 using Template.Web.DependencyInjection;
@@ -38,6 +39,7 @@ namespace Template.Web
             RegisterDependencyResolver();
             RegisterDataTypeValidator();
             RegisterRoleProvider();
+            RegisterModelBinders();
             RegisterViewEngine();
             RegisterAdapters();
             RegisterBundles();
@@ -66,6 +68,10 @@ namespace Template.Web
         private void RegisterRoleProvider()
         {
             RoleProviderFactory.Instance = DependencyContainer.Resolve<IRoleProvider>();
+        }
+        private void RegisterModelBinders()
+        {
+            ModelBinders.Binders.Add(typeof(String), new TrimmingModelBinder());
         }
         private void RegisterViewEngine()
         {

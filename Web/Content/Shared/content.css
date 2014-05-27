@@ -28,7 +28,7 @@
   padding-left: 10px;
 }
 #ContentBreadcrumb > a {
-  background-image: url('../../Images/Shared/breadcrumb.png');
+  background-image: url('/Images/Shared/breadcrumb.png');
   background-position: center right;
   background-repeat: no-repeat;
   padding: 8px 20px 8px 10px;

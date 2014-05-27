@@ -1,11 +1,9 @@
 ﻿using NUnit.Framework;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Template.Components.Mvc.Adapters;
-using Template.Objects;
-using Template.Resources;
 using Template.Resources.Shared;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Mvc.Adapters
 {
@@ -20,20 +18,11 @@ namespace Template.Tests.Unit.Components.Mvc.Adapters
         {
             requiredAttribute = new RequiredAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(RoleView), "Name");
+                .GetMetadataForProperty(null, typeof(TestView), "Text");
             new RequiredAdapter(metadata, new ControllerContext(), requiredAttribute);
         }
 
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
-
-        [Test]
-        public void RequiredAdapter_SetsMetadataDisplayName()
-        {
-            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
-            String actual = metadata.DisplayName;
-
-            Assert.AreEqual(expected, actual);
-        }
 
         [Test]
         public void RequiredAdapter_SetsAttributeErrorMessageResourceType()

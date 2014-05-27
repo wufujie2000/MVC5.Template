@@ -13,6 +13,5 @@
 
         // TODO: Test bundles for actual search patterns
         // TODO: Add tests for application start?
-        // TODO: Add tests for all content labels on all controller actions
     }
 }

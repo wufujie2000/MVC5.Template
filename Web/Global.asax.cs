@@ -34,6 +34,7 @@ namespace Template.Web
 
         public void Application_Start()
         {
+            RegisterModelMetadataProvider();
             RegisterDependencyResolver();
             RegisterDataTypeValidator();
             RegisterRoleProvider();
@@ -48,34 +49,34 @@ namespace Template.Web
             Thread.CurrentThread.CurrentUICulture = culture;
             Thread.CurrentThread.CurrentCulture = culture;
         }
-        
-        private void RegisterDependencyResolver()
-        {
-            DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
-        }
-        private void RegisterAdapters()
-        {
-            DataAnnotationsModelValidatorProvider.RegisterAdapter(
-                typeof(RequiredAttribute),
-                typeof(RequiredAdapter));
-        }
-        private void RegisterRoleProvider()
-        {
-            RoleProviderFactory.Instance = DependencyContainer.Resolve<IRoleProvider>();
-        }
+
         private void RegisterModelMetadataProvider()
         {
             ModelMetadataProviders.Current = new DisplayNameMetadataProvider();
+        }
+        private void RegisterDependencyResolver()
+        {
+            DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
         }
         private void RegisterDataTypeValidator()
         {
             ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
         }
+        private void RegisterRoleProvider()
+        {
+            RoleProviderFactory.Instance = DependencyContainer.Resolve<IRoleProvider>();
+        }
         private void RegisterViewEngine()
         {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new ViewEngine());
+        }
+        private void RegisterAdapters()
+        {
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+                typeof(RequiredAttribute),
+                typeof(RequiredAdapter));
         }
         private void RegisterBundles()
         {

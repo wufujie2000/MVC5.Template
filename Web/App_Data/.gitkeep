@@ -1,0 +1,2 @@
+# This file is created to add App_Data directory to git.
+# So that newly cloned solution could create database in this directory, without throwing directory not found exceptions.

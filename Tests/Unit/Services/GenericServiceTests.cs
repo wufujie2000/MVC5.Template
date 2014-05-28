@@ -26,13 +26,14 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             service = new Mock<GenericService<TestModel, TestView>>(new UnitOfWork(context)) { CallBase = true }.Object;
             service.ModelState = new ModelStateDictionary();
+
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
+            context.SaveChanges();
         }
 
         [TearDown]
         public void TearDown()
         {
-            context.Set<TestModel>().RemoveRange(context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
-            context.SaveChanges();
             service.Dispose();
             context.Dispose();
         }
@@ -133,6 +134,7 @@ namespace Template.Tests.Unit.Services
             TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);
 
+            context = new TestingContext();
             TestModel actual = context.Set<TestModel>().Find(expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);

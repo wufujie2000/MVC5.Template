@@ -19,9 +19,13 @@ namespace Template.Data.Core
             dbSet = context.Set<TModel>();
         }
 
-        public TModel GetById(Object id)
+        public TModel GetById(String id)
         {
             return dbSet.Find(id);
+        }
+        public TView GetById<TView>(String id) where TView : BaseView
+        {
+            return Query().Project().To<TView>().SingleOrDefault(view => view.Id == id);
         }
         public IQueryable<TModel> Query()
         {

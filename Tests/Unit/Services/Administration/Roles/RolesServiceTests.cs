@@ -157,6 +157,7 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             Role actual = context.Set<Role>().Find(expected.Id);
 
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Name, actual.Name);
         }
 
@@ -190,6 +191,7 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             Role actual = context.Set<Role>().Find(expected.Id);
 
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Name, actual.Name);
         }
 

@@ -304,8 +304,9 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             Account actual = context.Set<Account>().Find(account.Id);
 
-            Assert.AreEqual(profileView.Username, actual.Username);
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.Username, actual.Username);
         }
 
         [Test]

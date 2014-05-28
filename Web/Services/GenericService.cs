@@ -37,8 +37,7 @@ namespace Template.Services
         }
         public virtual TView GetView(String id)
         {
-            TModel model = UnitOfWork.Repository<TModel>().GetById(id);
-            return UnitOfWork.ToView<TModel, TView>(model);
+            return UnitOfWork.Repository<TModel>().GetById<TView>(id);
         }
 
         public virtual void Create(TView view)

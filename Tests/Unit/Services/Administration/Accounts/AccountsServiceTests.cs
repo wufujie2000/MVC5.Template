@@ -254,9 +254,11 @@ namespace Template.Tests.Unit.Services
 
             service.Create(expected);
 
+            context = new TestingContext();
             Account actual = context.Set<Account>().Find(expected.Id);
 
             Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -277,12 +279,12 @@ namespace Template.Tests.Unit.Services
             expected.RoleId = role.Id;
             service.Edit(expected);
 
-            context = new TestingContext();
             Account actual = context.Set<Account>().Find(expected.Id);
 
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]

@@ -2,7 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Remove account username edit option
         // TODO: Add git hook for increasing version
         // TODO: Remove magic string to controllers assembly, then getting controller in role provider
         // TODO: Add exception handling for not found culture

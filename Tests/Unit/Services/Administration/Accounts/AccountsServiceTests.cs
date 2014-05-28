@@ -16,8 +16,8 @@ namespace Template.Tests.Unit.Services
     public class AccountsServiceTests
     {
         private AccountsService service;
+        private String accountId;
         private Context context;
-        private Account account;
 
         [SetUp]
         public void SetUp()
@@ -45,6 +45,52 @@ namespace Template.Tests.Unit.Services
             service.ModelState.AddModelError("Test", "Test");
 
             Assert.IsFalse(service.CanCreate(new AccountView()));
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateWithNullUsername()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Username = null;
+
+            Assert.IsFalse(service.CanCreate(account));
+        }
+
+        [Test]
+        public void CanCreate_AddsErorrMessageThenCanNotCreateWithNullUsername()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Username = null;
+
+            service.CanCreate(account);
+
+            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Username);
+            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateWithEmptyUsername()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Username = String.Empty;
+
+            Assert.IsFalse(service.CanCreate(account));
+        }
+
+        [Test]
+        public void CanCreate_AddsErorrMessageThenCanNotCreateWithEmptyUsername()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Username = String.Empty;
+
+            service.CanCreate(account);
+
+            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Username);
+            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -194,48 +240,6 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanEdit(AccountView view)
-
-        [Test]
-        public void CanEdit_CanNotEditWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateAccountView()));
-        }
-
-        [Test]
-        public void CanEdit_CanNotEditToAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "1";
-
-            Assert.IsFalse(service.CanEdit(account));
-        }
-
-        [Test]
-        public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "OtherIdValue";
-            service.CanEdit(account);
-
-            String expected = Validations.UsernameIsAlreadyTaken;
-            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanEdit_CanEditValidUser()
-        {
-            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateAccountView()));
-        }
-
-        #endregion
-
         #region Method: Create(AccountView view)
 
         [Test]
@@ -269,8 +273,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            AccountView expected = service.GetView(account.Id);
-            expected.Username += "Edition";
+            AccountView expected = service.GetView(accountId);
             expected.RoleId = role.Id;
             service.Edit(expected);
 
@@ -282,15 +285,44 @@ namespace Template.Tests.Unit.Services
             Assert.AreEqual(expected.Username, actual.Username);
         }
 
+        [Test]
+        public void Edit_DoesNotEditAccountsUsername()
+        {
+            AccountView account = service.GetView(accountId);
+            String expected = account.Username;
+            account.Username += "Edition";
+            service.Edit(account);
+
+            context = new TestingContext();
+            String actual = context.Set<Account>().Find(account.Id).Username;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Edit_DoesNotEditAccountsPassword()
+        {
+            String expected = context.Set<Account>().Find(accountId).Passhash;
+            AccountView account = service.GetView(accountId);
+            account.Password += "Edition";
+            service.Edit(account);
+
+            context = new TestingContext();
+            String actual = context.Set<Account>().Find(account.Id).Passhash;
+
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
 
         #region Test helpers
 
         private void SetUpData()
         {
-            account = ObjectFactory.CreateAccount();
+            Account account = ObjectFactory.CreateAccount();
             account.Role = ObjectFactory.CreateRole();
             account.RoleId = account.Role.Id;
+            accountId = account.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();

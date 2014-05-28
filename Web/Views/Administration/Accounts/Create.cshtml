@@ -8,7 +8,7 @@
 
         using (Html.FormGroup())
         {
-            @Html.FormLabelFor(model => model.Username)
+            @Html.RequiredLabelFor(model => model.Username)
             @Html.FormTextBoxFor(model => model.Username)
             @Html.FormValidationFor(model => model.Username)
         }

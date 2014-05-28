@@ -19,15 +19,9 @@ namespace Template.Services
         public override Boolean CanCreate(AccountView view)
         {
             Boolean isValid = base.CanCreate(view);
+            isValid &= IsUsernameSpecified(view);
             isValid &= IsUniqueUsername(view);
             isValid &= IsLegalPassword(view);
-
-            return isValid;
-        }
-        public override Boolean CanEdit(AccountView view)
-        {
-            Boolean isValid = base.CanEdit(view);
-            isValid &= IsUniqueUsername(view);
 
             return isValid;
         }
@@ -43,12 +37,27 @@ namespace Template.Services
         public override void Edit(AccountView view)
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
-            account.Passhash = UnitOfWork.Repository<Account>().GetById(account.Id).Passhash;
+            Account accountInDatabase = UnitOfWork.Repository<Account>().GetById(account.Id);
+
+            account.Username = accountInDatabase.Username;
+            account.Passhash = accountInDatabase.Passhash;
             
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
         }
 
+        private Boolean IsUsernameSpecified(AccountView view)
+        {
+            Boolean isSpecified = !String.IsNullOrEmpty(view.Username);
+
+            if (!isSpecified)
+            {
+                String errorMessage = String.Format(Resources.Shared.Validations.FieldIsRequired, Titles.Username);
+                ModelState.AddModelError<AccountView>(model => model.Username, errorMessage);
+            }
+
+            return isSpecified;
+        }
         private Boolean IsUniqueUsername(AccountView view)
         {
             Boolean isUnique = !UnitOfWork

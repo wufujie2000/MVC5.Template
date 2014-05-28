@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Template.Components.Security;
+using Template.Controllers;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
@@ -20,7 +21,7 @@ namespace Template.Tests.Unit.Security
         public void SetUp()
         {
             context = new TestingContext();
-            provider = new RoleProvider(new UnitOfWork(context));
+            provider = new RoleProvider(typeof(BaseController).Assembly, new UnitOfWork(context));
 
             TearDownData();
         }

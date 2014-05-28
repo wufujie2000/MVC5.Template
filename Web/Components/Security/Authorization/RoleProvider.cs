@@ -10,11 +10,14 @@ namespace Template.Components.Security
 {
     public class RoleProvider : IRoleProvider, IDisposable
     {
+        private IEnumerable<Type> controllerTypes;
         private IUnitOfWork unitOfWork;
         private Boolean disposed;
 
-        public RoleProvider(IUnitOfWork unitOfWork)
+        public RoleProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
         {
+            Type controllerType = typeof(Controller);
+            this.controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));
             this.unitOfWork = unitOfWork;
         }
 
@@ -75,10 +78,7 @@ namespace Template.Components.Security
         }
         private Type GetController(String area, String controller)
         {
-            return Assembly
-                .Load("Template.Controllers")
-                .GetTypes()
-                .First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
+            return controllerTypes.First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
         }
         private MethodInfo GetAction(Type controller, String action)
         {

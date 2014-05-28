@@ -1,5 +1,7 @@
 ﻿using Ninject.Modules;
+using System.Reflection;
 using Template.Components.Security;
+using Template.Controllers;
 using Template.Data.Core;
 using Template.Data.Logging;
 using Template.Services;
@@ -13,8 +15,11 @@ namespace Template.Web.DependencyInjection.Ninject
             Bind<AContext>().To<Context>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IEntityLogger>().To<EntityLogger>();
-
-            Bind<IRoleProvider>().To<RoleProvider>();
+            
+            Assembly controllersAssembly = typeof(BaseController).Assembly;
+            IUnitOfWork unitOfWork = Kernel.GetService(typeof(IUnitOfWork)) as IUnitOfWork;
+            IRoleProvider roleProvider = new RoleProvider(controllersAssembly, unitOfWork);
+            Bind<IRoleProvider>().ToConstant(roleProvider);
 
             Bind<IAuthService>().To<AuthService>();
             Bind<IHomeService>().To<HomeService>();

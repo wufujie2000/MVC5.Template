@@ -28,7 +28,8 @@ namespace Template.Objects
 
         public BaseView()
         {
-            EntityDate = DateTime.Now;
+            DateTime now = DateTime.Now;
+            EntityDate = new DateTime(now.Ticks / 10000 * 10000, now.Kind);
         }
     }
 }

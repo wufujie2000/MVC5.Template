@@ -117,7 +117,7 @@ namespace Template.Tests.Unit.Services
             context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            TestModel expected = context.Set<TestModel>().Find(ObjectFactory.TestId + "1");
+            TestModel expected = context.Set<TestModel>().SingleOrDefault(model => model.Id == ObjectFactory.TestId + "1");
             TestView actual = service.GetView(ObjectFactory.TestId + "1");
 
             Assert.AreEqual(expected.Id, actual.Id);
@@ -134,8 +134,7 @@ namespace Template.Tests.Unit.Services
             TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);
 
-            context = new TestingContext();
-            TestModel actual = context.Set<TestModel>().Find(expected.Id);
+            TestModel actual = context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Text, actual.Text);
@@ -157,7 +156,8 @@ namespace Template.Tests.Unit.Services
             expected.Text = "EditedText";
             service.Edit(expected);
 
-            TestModel actual = context.Set<TestModel>().Find(expected.Id);
+            context = new TestingContext();
+            TestModel actual = context.Set<TestModel>().SingleOrDefault(testModel => testModel.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Text, actual.Text);
@@ -174,13 +174,12 @@ namespace Template.Tests.Unit.Services
             TestView expected = ObjectFactory.CreateTestView();
             service.Create(expected);
 
-            if (context.Set<TestModel>().Find(expected.Id) == null)
+            if (context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id) == null)
                 Assert.Inconclusive();
 
             service.Delete(expected.Id);
-            context = new TestingContext();
 
-            Assert.IsNull(context.Set<TestModel>().Find(expected.Id));
+            Assert.IsNull(context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id));
         }
 
         #endregion

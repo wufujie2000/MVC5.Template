@@ -21,7 +21,7 @@ namespace Template.Data.Core
 
         public TModel GetById(String id)
         {
-            return dbSet.Find(id);
+            return dbSet.SingleOrDefault(model => model.Id == id);
         }
         public TView GetById<TView>(String id) where TView : BaseView
         {

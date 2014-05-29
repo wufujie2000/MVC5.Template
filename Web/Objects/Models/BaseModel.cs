@@ -30,7 +30,8 @@ namespace Template.Objects
 
         public BaseModel()
         {
-            EntityDate = DateTime.Now;
+            DateTime now = DateTime.Now;
+            EntityDate = new DateTime(now.Ticks / 10000 * 10000, now.Kind);
         }
     }
 }

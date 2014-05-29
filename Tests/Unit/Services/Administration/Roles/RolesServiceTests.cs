@@ -154,8 +154,7 @@ namespace Template.Tests.Unit.Services
             RoleView expected = ObjectFactory.CreateRoleView();
             service.Create(expected);
 
-            context = new TestingContext();
-            Role actual = context.Set<Role>().Find(expected.Id);
+            Role actual = context.Set<Role>().SingleOrDefault(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -164,15 +163,12 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Create_CreatesRolePrivileges()
         {
-            TearDownData();
-
-            RoleView roleView = ObjectFactory.CreateRoleView();
+            RoleView roleView = ObjectFactory.CreateRoleView(2);
             roleView.PrivilegesTree.SelectedIds = GetExpectedTree().SelectedIds;
             service.Create(roleView);
 
-            context = new TestingContext();
             IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds;
-            IEnumerable<String> actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(r => r.PrivilegeId);
+            IEnumerable<String> actual = context.Set<Role>().SingleOrDefault(model => model.Id == roleView.Id).RolePrivileges.Select(r => r.PrivilegeId);
             
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -185,11 +181,11 @@ namespace Template.Tests.Unit.Services
         public void Edit_EditsRole()
         {
             RoleView expected = service.GetView(role.Id);
-            expected.Name += "EditedName"; 
+            expected.Name += "EditedName";
             service.Edit(expected);
 
             context = new TestingContext();
-            Role actual = context.Set<Role>().Find(expected.Id);
+            Role actual = context.Set<Role>().SingleOrDefault(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -202,9 +198,8 @@ namespace Template.Tests.Unit.Services
             roleView.PrivilegesTree.SelectedIds = roleView.PrivilegesTree.SelectedIds.Take(1).ToList();
             service.Edit(roleView);
 
-            context = new TestingContext();
             IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds;
-            IEnumerable<String> actual = context.Set<Role>().Find(roleView.Id).RolePrivileges.Select(rolePriv => rolePriv.PrivilegeId).ToList();
+            IEnumerable<String> actual = context.Set<Role>().SingleOrDefault(model => model.Id == roleView.Id).RolePrivileges.Select(rolePriv => rolePriv.PrivilegeId).ToList();
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -220,7 +215,6 @@ namespace Template.Tests.Unit.Services
                 Assert.Inconclusive();
 
             service.Delete(role.Id);
-            context = new TestingContext();
 
             Assert.IsFalse(context.Set<Account>().Any(account => account.RoleId == role.Id));
         }
@@ -228,13 +222,13 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Delete_DeletesRole()
         {
-            if (context.Set<Role>().Find(role.Id) == null)
+            if (context.Set<Role>().SingleOrDefault(model => model.Id == role.Id) == null)
                 Assert.Inconclusive();
 
             service.Delete(role.Id);
             context = new TestingContext();
 
-            Assert.IsNull(context.Set<Role>().Find(role.Id));
+            Assert.IsNull(context.Set<Role>().SingleOrDefault(model => model.Id == role.Id));
         }
 
         #endregion

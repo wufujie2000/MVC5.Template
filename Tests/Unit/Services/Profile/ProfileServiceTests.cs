@@ -297,12 +297,11 @@ namespace Template.Tests.Unit.Services
         public void Edit_EditsAccount()
         {
             ProfileView profileView = ObjectFactory.CreateProfileView();
-            Account expected = context.Set<Account>().Find(account.Id);
+            Account expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
             profileView.Username += "1";
             service.Edit(profileView);
 
-            context = new TestingContext();
-            Account actual = context.Set<Account>().Find(account.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
@@ -316,8 +315,7 @@ namespace Template.Tests.Unit.Services
             profileView.NewPassword = null;
             service.Edit(profileView);
 
-            context = new TestingContext();
-            Account actual = context.Set<Account>().Find(account.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
             Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
         }
@@ -329,13 +327,12 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Delete_DeletesAccount()
         {
-            if (context.Set<Account>().Find(account.Id) == null)
+            if (context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id) == null)
                 Assert.Inconclusive();
 
             service.Delete(account.Id);
-            context = new TestingContext();
 
-            Assert.IsNull(context.Set<Account>().Find(account.Id));
+            Assert.IsNull(context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id));
         }
 
         #endregion

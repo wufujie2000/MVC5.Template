@@ -254,8 +254,7 @@ namespace Template.Tests.Unit.Services
 
             service.Create(expected);
 
-            context = new TestingContext();
-            Account actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
@@ -279,7 +278,8 @@ namespace Template.Tests.Unit.Services
             expected.RoleId = role.Id;
             service.Edit(expected);
 
-            Account actual = context.Set<Account>().Find(expected.Id);
+            context = new TestingContext();
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -295,8 +295,7 @@ namespace Template.Tests.Unit.Services
             account.Username += "Edition";
             service.Edit(account);
 
-            context = new TestingContext();
-            String actual = context.Set<Account>().Find(account.Id).Username;
+            String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id).Username;
 
             Assert.AreEqual(expected, actual);
         }
@@ -304,13 +303,12 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Edit_DoesNotEditAccountsPassword()
         {
-            String expected = context.Set<Account>().Find(accountId).Passhash;
+            String expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId).Passhash;
             AccountView account = service.GetView(accountId);
             account.Password += "Edition";
             service.Edit(account);
 
-            context = new TestingContext();
-            String actual = context.Set<Account>().Find(account.Id).Passhash;
+            String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id).Passhash;
 
             Assert.AreEqual(expected, actual);
         }

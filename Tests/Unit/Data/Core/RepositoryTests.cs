@@ -40,7 +40,7 @@ namespace Template.Tests.Unit.Data.Core
             context.Set<Account>().Add(account);
             context.SaveChanges();
 
-            Account expected = context.Set<Account>().Find(account.Id);
+            Account expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
             Account actual = repository.GetById(account.Id);
 
             Assert.AreEqual(expected, actual);
@@ -128,7 +128,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Insert(expected);
             context.SaveChanges();
 
-            Account actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -148,7 +148,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            Account actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -166,7 +166,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            Account actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -194,7 +194,7 @@ namespace Template.Tests.Unit.Data.Core
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            Account actual = context.Set<Account>().Find(expected.Id);
+            Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             Assert.IsNull(actual);
         }

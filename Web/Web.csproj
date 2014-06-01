@@ -403,6 +403,9 @@
   <ItemGroup>
     <Content Include="Views\Administration\Accounts\Edit.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mvc.sitemap" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

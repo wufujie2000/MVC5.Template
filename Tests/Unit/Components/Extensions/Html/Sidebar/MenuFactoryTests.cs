@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using Template.Components.Extensions.Html;
 using Template.Components.Security;
-using Template.Objects;
 using Template.Resources;
 using Template.Tests.Helpers;
 

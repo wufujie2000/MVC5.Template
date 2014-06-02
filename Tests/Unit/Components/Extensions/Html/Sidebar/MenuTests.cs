@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Template.Objects;
+using Template.Components.Extensions.Html;
 
-namespace Template.Tests.Unit.Objects
+namespace Template.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class MenuTests

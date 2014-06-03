@@ -38,7 +38,7 @@ namespace Template.Tests.Unit.Controllers
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.Instance = null;
+            RoleFactory.Provider = null;
         }
 
         #region Constructor: BaseController()
@@ -46,10 +46,10 @@ namespace Template.Tests.Unit.Controllers
         [Test]
         public void BaseController_SetsRoleProviderFromFactory()
         {
-            RoleProviderFactory.Instance = roleProviderMock.Object;
+            RoleFactory.Provider = roleProviderMock.Object;
             baseController = new BaseControllerStub();
 
-            IRoleProvider expected = RoleProviderFactory.Instance;
+            IRoleProvider expected = RoleFactory.Provider;
             IRoleProvider actual = baseController.BaseRoleProvider;
 
             Assert.AreEqual(expected, actual);

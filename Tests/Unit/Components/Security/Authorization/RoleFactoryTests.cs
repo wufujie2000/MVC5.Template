@@ -5,23 +5,23 @@ using Template.Components.Security;
 namespace Template.Tests.Unit.Security
 {
     [TestFixture]
-    public class RoleProviderFactoryTests
+    public class RoleFactoryTests
     {
         [TearDown]
         public void TearDown()
         {
-            RoleProviderFactory.Instance = null;
+            RoleFactory.Provider = null;
         }
 
-        #region Static property: Instance
+        #region Static property: Provider
 
         [Test]
-        public void Instance_GetsAndSetsInstance()
+        public void Provider_GetsAndSetsProviderInstance()
         {
             IRoleProvider expected = new Mock<IRoleProvider>().Object;
-            RoleProviderFactory.Instance = expected;
+            RoleFactory.Provider = expected;
 
-            IRoleProvider actual = RoleProviderFactory.Instance;
+            IRoleProvider actual = RoleFactory.Provider;
 
             Assert.AreEqual(expected, actual);
         }

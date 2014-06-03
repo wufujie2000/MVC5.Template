@@ -16,7 +16,7 @@ namespace Template.Controllers
 
         public BaseController()
         {
-            RoleProvider = RoleProviderFactory.Instance;
+            RoleProvider = RoleFactory.Provider;
         }
 
         protected virtual RedirectToRouteResult RedirectIfAuthorized(String action)

@@ -24,7 +24,7 @@ namespace Template.Components.Extensions.Html
         private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
         {
             String buttons = String.Empty;
-            IRoleProvider roleProvider = RoleProviderFactory.Instance;
+            IRoleProvider roleProvider = RoleFactory.Provider;
             String area = html.ViewContext.RouteData.Values["area"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String controller = html.ViewContext.RouteData.Values["controller"] as String;

@@ -90,7 +90,7 @@
     <Compile Include="Security\Authorization\AllowUnauthorizedAttribute.cs" />
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
     <Compile Include="Security\Authorization\RoleProvider.cs" />
-    <Compile Include="Security\Authorization\RoleProviderFactory.cs" />
+    <Compile Include="Security\Authorization\RoleFactory.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Alerts\AlertMessage.cs" />
     <Compile Include="Alerts\AlertMessageType.cs" />

@@ -1,8 +1,8 @@
 ﻿namespace Template.Components.Security
 {
-    public sealed class RoleProviderFactory
+    public sealed class RoleFactory
     {
-        public static IRoleProvider Instance
+        public static IRoleProvider Provider
         {
             get;
             set;

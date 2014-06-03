@@ -63,8 +63,8 @@ namespace Template.Components.Extensions.Html
         public virtual IEnumerable<Menu> GetAuthorizedMenus()
         {
             IEnumerable<AccountPrivilege> accountPrivileges = Enumerable.Empty<AccountPrivilege>();
-            if (RoleProviderFactory.Instance != null)
-                accountPrivileges = RoleProviderFactory.Instance.GetAccountPrivileges(currentAccountId);
+            if (RoleFactory.Provider != null)
+                accountPrivileges = RoleFactory.Provider.GetAccountPrivileges(currentAccountId);
 
             return GetAuthorizedMenus(AllMenus, accountPrivileges);
         }
@@ -89,9 +89,9 @@ namespace Template.Components.Extensions.Html
         private Boolean IsAuthorizedToView(Menu menu, IEnumerable<AccountPrivilege> privileges)
         {
             if (menu.Action == null) return true;
-            if (RoleProviderFactory.Instance == null) return true;
+            if (RoleFactory.Provider == null) return true;
 
-            return RoleProviderFactory.Instance.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
+            return RoleFactory.Provider.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
         }
         private Menu CreateAuthorized(Menu menu)
         {

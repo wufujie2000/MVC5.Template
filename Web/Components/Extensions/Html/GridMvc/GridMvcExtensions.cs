@@ -37,7 +37,7 @@ namespace Template.Components.Extensions.Html
 
         public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
         {
-            if (RoleProviderFactory.Instance != null && !RoleProviderFactory.Instance.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+            if (RoleFactory.Provider != null && !RoleFactory.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
             
             IGridColumn<T> gridColumn = column

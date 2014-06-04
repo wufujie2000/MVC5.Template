@@ -60,6 +60,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Html\Sidebar\Menu.cs" />
@@ -67,6 +69,10 @@
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
+    <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapFactory.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />
     <Compile Include="Mvc\Validators\NumberValidator.cs" />

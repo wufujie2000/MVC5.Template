@@ -12,6 +12,7 @@ using System.Web.Routing;
 using Template.Components.Mvc.Adapters;
 using Template.Components.Mvc.Binders;
 using Template.Components.Mvc.Providers;
+using Template.Components.Mvc.SiteMap;
 using Template.Components.Security;
 using Template.Web.DependencyInjection;
 using Template.Web.DependencyInjection.Ninject;
@@ -38,6 +39,7 @@ namespace Template.Web
             RegisterModelMetadataProvider();
             RegisterDependencyResolver();
             RegisterDataTypeValidator();
+            RegisterSiteMapProvider();
             RegisterRoleProvider();
             RegisterModelBinders();
             RegisterViewEngine();
@@ -64,6 +66,10 @@ namespace Template.Web
         {
             ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
+        }
+        private void RegisterSiteMapProvider()
+        {
+            MvcSiteMapFactory.Provider = DependencyContainer.Resolve<IMvcSiteMapProvider>();
         }
         private void RegisterRoleProvider()
         {

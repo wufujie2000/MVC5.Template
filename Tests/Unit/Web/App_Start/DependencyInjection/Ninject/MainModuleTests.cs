@@ -1,6 +1,8 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using System;
+using System.Xml.Linq;
+using Template.Components.Mvc.SiteMap;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Data.Logging;
@@ -56,6 +58,26 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         {
             Type expected = typeof(RoleProvider);
             Type actual = kernel.Get<IRoleProvider>().GetType();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Load_BindsIMvcSiteMapProvider()
+        {
+            Type expected = typeof(MvcSiteMapProvider);
+            new XElement("MvcSiteMap").Save("Mvc.sitemap");
+            Type actual = kernel.Get<IMvcSiteMapProvider>().GetType();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Load_BindsIMvcSiteMapProviderWithSiteMapPath()
+        {
+            String expected = "Mvc.sitemap";
+            new XElement("MvcSiteMap").Save(expected);
+            String actual = ((MvcSiteMapProvider)kernel.Get<IMvcSiteMapProvider>()).SiteMapPath;
 
             Assert.AreEqual(expected, actual);
         }

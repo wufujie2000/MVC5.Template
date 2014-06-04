@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<siteMap>
-    <siteMapNode controller="Home" action="Index">
-        <siteMapNode menu="true" area="Administration">
-            <siteMapNode menu="true" area="Administration" controller="Accounts" action="Index">
-                <siteMapNode area="Administration" controller="Accounts" action="Create" />
-                <siteMapNode area="Administration" controller="Accounts" action="Details" />
-                <siteMapNode area="Administration" controller="Accounts" action="Edit" />
-            </siteMapNode>
-            <siteMapNode menu="true" area="Administration" controller="Roles" action="Index">
-                <siteMapNode area="Administration" controller="Roles" action="Create" />
-                <siteMapNode area="Administration" controller="Roles" action="Details" />
-                <siteMapNode area="Administration" controller="Roles" action="Edit" />
-                <siteMapNode area="Administration" controller="Roles" action="Delete" />
-            </siteMapNode>
-        </siteMapNode>
-    </siteMapNode>
-</siteMap>
+<SiteMap>
+    <SiteMapNode controller="Home" action="Index">
+        <SiteMapNode menu="true" area="Administration">
+            <SiteMapNode menu="true" area="Administration" controller="Accounts" action="Index">
+                <SiteMapNode area="Administration" controller="Accounts" action="Create" />
+                <SiteMapNode area="Administration" controller="Accounts" action="Details" />
+                <SiteMapNode area="Administration" controller="Accounts" action="Edit" />
+            </SiteMapNode>
+            <SiteMapNode menu="true" area="Administration" controller="Roles" action="Index">
+                <SiteMapNode area="Administration" controller="Roles" action="Create" />
+                <SiteMapNode area="Administration" controller="Roles" action="Details" />
+                <SiteMapNode area="Administration" controller="Roles" action="Edit" />
+                <SiteMapNode area="Administration" controller="Roles" action="Delete" />
+            </SiteMapNode>
+        </SiteMapNode>
+    </SiteMapNode>
+</SiteMap>

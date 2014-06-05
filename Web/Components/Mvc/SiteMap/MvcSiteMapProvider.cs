@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Xml.Linq;
 
 namespace Template.Components.Mvc.SiteMap
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
-        private IEnumerable<MvcSiteMapNode> allMenus;
+        private IEnumerable<MvcSiteMapNode> menus;
+        private IEnumerable<MvcSiteMapNode> nodeList;
 
         public String SiteMapPath
         {
@@ -14,39 +17,100 @@ namespace Template.Components.Mvc.SiteMap
             private set;
         }
 
+        private String CurrentArea
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
+            }
+        }
+        private String CurrentController
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
+            }
+        }
+        private String CurrentAction
+        {
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["action"] as String;
+            }
+        }
+
         public MvcSiteMapProvider(String siteMapPath)
         {
+            IEnumerable<MvcSiteMapNode> nodes = GetNodes(XElement.Load(siteMapPath));
+            nodeList = TreeToList(nodes);
+            menus = ExtractMenus(nodes);
             SiteMapPath = siteMapPath;
-            allMenus = GetAllMenus(XElement.Load(siteMapPath));
         }
-        private IEnumerable<MvcSiteMapNode> GetAllMenus(XElement siteMap, MvcSiteMapNode parent = null)
+        private IEnumerable<MvcSiteMapNode> GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
         {
-            List<MvcSiteMapNode> menus = new List<MvcSiteMapNode>();
+            List<MvcSiteMapNode> nodes = new List<MvcSiteMapNode>();
             foreach (XElement siteMapNode in siteMap.Nodes())
             {
-                if ((Boolean?)siteMapNode.Attribute("menu") == true)
+                MvcSiteMapNode node = new MvcSiteMapNode();
+                node.IsMenu = (Boolean?)siteMapNode.Attribute("menu") == true;
+                node.Children = GetNodes(siteMapNode, node);
+                node.Parent = parent;
+                nodes.Add(node);
+            }
+
+            return nodes;
+        }
+        private IEnumerable<MvcSiteMapNode> ExtractMenus(IEnumerable<MvcSiteMapNode> nodes, MvcSiteMapNode parent = null)
+        {
+            List<MvcSiteMapNode> menus = new List<MvcSiteMapNode>();
+            foreach (MvcSiteMapNode node in nodes)
+            {
+                if (node.IsMenu)
                 {
                     MvcSiteMapNode menu = new MvcSiteMapNode();
-                    menu.Children = GetAllMenus(siteMapNode, menu);
+                    menu.Children = ExtractMenus(node.Children, menu);
                     menu.Parent = parent;
                     menus.Add(menu);
                 }
                 else
                 {
-                    menus.AddRange(GetAllMenus(siteMapNode, parent));
+                    menus.AddRange(ExtractMenus(node.Children, parent));
                 }
             }
 
             return menus;
         }
+        private IEnumerable<MvcSiteMapNode> TreeToList(IEnumerable<MvcSiteMapNode> nodes)
+        {
+            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
+            foreach (MvcSiteMapNode node in nodes)
+            {
+                list.Add(node);
+                list.AddRange(TreeToList(node.Children));
+            }
+
+            return list;
+        }
 
         public IEnumerable<MvcSiteMapNode> GetMenus()
         {
-            return allMenus;
+            return menus;
         }
-        public IEnumerable<MvcSiteMapNode> GetBreadcrumb()
+        public IEnumerable<MvcSiteMapNode> GenerateBreadcrumb()
         {
-            throw new NotImplementedException();
+            List<MvcSiteMapNode> breadcrumb = new List<MvcSiteMapNode>();
+            MvcSiteMapNode currentNode = nodeList.FirstOrDefault(node =>
+                node.Controller == CurrentController &&
+                node.Action == CurrentAction &&
+                node.Area == CurrentArea);
+
+            while (currentNode != null)
+            {
+                breadcrumb.Insert(0, currentNode);
+                currentNode = currentNode.Parent;
+            }
+
+            return breadcrumb;
         }
     }
 }

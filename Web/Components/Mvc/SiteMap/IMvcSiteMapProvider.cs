@@ -5,6 +5,6 @@ namespace Template.Components.Mvc.SiteMap
     public interface IMvcSiteMapProvider
     {
         IEnumerable<MvcSiteMapNode> GetMenus();
-        IEnumerable<MvcSiteMapNode> GetBreadcrumb();
+        IEnumerable<MvcSiteMapNode> GenerateBreadcrumb();
     }
 }

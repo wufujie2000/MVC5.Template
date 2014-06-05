@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -97,11 +96,19 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
 
         #endregion
 
-        #region Method: GetBreadcrumb()
+        #region Method: GenerateBreadcrumb()
 
         [Test]
-        public void GetGreadCrumb_GetsCurrentActionBreadcrumb()
+        public void GetGreadCrumb_GeneratesBreadcrumbForCurrentAction()
         {
+            XElement siteMap = CreateSiteMapForBreadcrumb();
+            provider = new MvcSiteMapProvider(siteMapPath);
+
+            List<MvcSiteMapNode> actual = provider.GenerateBreadcrumb().ToList();
+
+            Assert.AreEqual(Template.Resources.Action.Titles.Details, actual[2].Title);
+            Assert.AreSame(actual[2].Parent, actual[1]);
+            Assert.AreSame(actual[1].Parent, actual[0]);
         }
 
         #endregion

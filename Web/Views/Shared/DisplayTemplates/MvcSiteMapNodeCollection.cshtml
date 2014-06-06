@@ -1,0 +1,11 @@
+﻿@model MvcSiteMapNodeCollection
+
+@foreach (MvcSiteMapNode node in Model)
+{
+    <li>
+        <a href="/">
+            <i class="menu-icon fa fa-home"></i>
+            <span>@node.Title</span>
+        </a>
+    </li>
+}

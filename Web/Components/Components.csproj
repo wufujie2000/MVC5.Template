@@ -72,6 +72,7 @@
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapFactory.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapNodeCollection.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />

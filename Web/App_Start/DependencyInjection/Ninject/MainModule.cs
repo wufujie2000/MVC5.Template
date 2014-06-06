@@ -18,7 +18,7 @@ namespace Template.Web.DependencyInjection.Ninject
             Bind<IEntityLogger>().To<EntityLogger>();
 
             Bind<IRoleProvider>().ToConstant(CreateRoleProvider());
-            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("Mvc.sitemap");
+            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("~/Mvc.sitemap");
 
             Bind<IAuthService>().To<AuthService>();
             Bind<IHomeService>().To<HomeService>();

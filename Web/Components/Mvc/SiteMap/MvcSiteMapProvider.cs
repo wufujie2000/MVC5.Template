@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 using System.Xml.Linq;
+using Template.Resources;
 
 namespace Template.Components.Mvc.SiteMap
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
-        private IEnumerable<MvcSiteMapNode> menus;
-        private IEnumerable<MvcSiteMapNode> nodeList;
-
-        public String SiteMapPath
-        {
-            get;
-            private set;
-        }
+        private MvcSiteMapNodeCollection menus;
+        private MvcSiteMapNodeCollection nodeList;
 
         private String CurrentArea
         {
@@ -39,30 +34,37 @@ namespace Template.Components.Mvc.SiteMap
             }
         }
 
-        public MvcSiteMapProvider(String siteMapPath)
+        public MvcSiteMapProvider()
         {
-            IEnumerable<MvcSiteMapNode> nodes = GetNodes(XElement.Load(siteMapPath));
-            nodeList = TreeToList(nodes);
+            String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
+            MvcSiteMapNodeCollection nodes = GetNodes(XElement.Load(siteMapPath));
+            nodeList = TreeToCollection(nodes);
             menus = ExtractMenus(nodes);
-            SiteMapPath = siteMapPath;
         }
-        private IEnumerable<MvcSiteMapNode> GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
+        private MvcSiteMapNodeCollection GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
         {
-            List<MvcSiteMapNode> nodes = new List<MvcSiteMapNode>();
-            foreach (XElement siteMapNode in siteMap.Nodes())
+            MvcSiteMapNodeCollection nodes = new MvcSiteMapNodeCollection();
+            foreach (XElement siteMapNode in siteMap.Elements())
             {
                 MvcSiteMapNode node = new MvcSiteMapNode();
-                node.IsMenu = (Boolean?)siteMapNode.Attribute("menu") == true;
-                node.Children = GetNodes(siteMapNode, node);
+
                 node.Parent = parent;
+                node.Children = GetNodes(siteMapNode, node);
+                node.Area = (String)siteMapNode.Attribute("area");
+                node.Action = (String)siteMapNode.Attribute("action");
+                node.IconClass = (String)siteMapNode.Attribute("icon");
+                node.Controller = (String)siteMapNode.Attribute("controller");
+                node.IsMenu = (Boolean?)siteMapNode.Attribute("menu") == true;
+                node.Title = ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action);
+
                 nodes.Add(node);
             }
 
             return nodes;
         }
-        private IEnumerable<MvcSiteMapNode> ExtractMenus(IEnumerable<MvcSiteMapNode> nodes, MvcSiteMapNode parent = null)
+        private MvcSiteMapNodeCollection ExtractMenus(MvcSiteMapNodeCollection nodes, MvcSiteMapNode parent = null)
         {
-            List<MvcSiteMapNode> menus = new List<MvcSiteMapNode>();
+            MvcSiteMapNodeCollection menus = new MvcSiteMapNodeCollection();
             foreach (MvcSiteMapNode node in nodes)
             {
                 if (node.IsMenu)
@@ -80,25 +82,25 @@ namespace Template.Components.Mvc.SiteMap
 
             return menus;
         }
-        private IEnumerable<MvcSiteMapNode> TreeToList(IEnumerable<MvcSiteMapNode> nodes)
+        private MvcSiteMapNodeCollection TreeToCollection(MvcSiteMapNodeCollection nodes)
         {
-            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
+            MvcSiteMapNodeCollection list = new MvcSiteMapNodeCollection();
             foreach (MvcSiteMapNode node in nodes)
             {
                 list.Add(node);
-                list.AddRange(TreeToList(node.Children));
+                list.AddRange(TreeToCollection(node.Children));
             }
 
             return list;
         }
 
-        public IEnumerable<MvcSiteMapNode> GetMenus()
+        public MvcSiteMapNodeCollection GetMenus()
         {
             return menus;
         }
-        public IEnumerable<MvcSiteMapNode> GenerateBreadcrumb()
+        public MvcSiteMapNodeCollection GenerateBreadcrumb()
         {
-            List<MvcSiteMapNode> breadcrumb = new List<MvcSiteMapNode>();
+            MvcSiteMapNodeCollection breadcrumb = new MvcSiteMapNodeCollection();
             MvcSiteMapNode currentNode = nodeList.FirstOrDefault(node =>
                 node.Controller == CurrentController &&
                 node.Action == CurrentAction &&

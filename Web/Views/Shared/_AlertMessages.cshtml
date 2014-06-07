@@ -1,16 +1,17 @@
 ﻿@{
     MessagesContainer messages = Session["Messages"] as MessagesContainer;
     Session["Messages"] = null;
-    <div class="alert-messages">
-        @if (messages != null)
-        {
-            foreach (AlertMessage alertMessage in messages)
-            {
-                <div class="alert alert-@alertMessage.Type.ToString().ToLowerInvariant()" data-fade-out-after="@alertMessage.FadeOutAfter" data-alert-for="@alertMessage.Key">
-                    <span>@alertMessage.Message</span>
-                    <a class="close" href="#">×</a>
-                </div>
-            }
-        }
-    </div>
 }
+
+<div class="alert-messages">
+    @if (messages != null)
+    {
+        foreach (AlertMessage alertMessage in messages)
+        {
+            <div class="alert alert-@alertMessage.Type.ToString().ToLowerInvariant()" data-fade-out-after="@alertMessage.FadeOutAfter" data-alert-for="@alertMessage.Key">
+                <span>@alertMessage.Message</span>
+                <a class="close" href="#">×</a>
+            </div>
+        }
+    }
+</div>

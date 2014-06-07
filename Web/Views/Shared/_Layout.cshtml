@@ -16,15 +16,14 @@
 </head>
 <body>
     @Html.Partial("_Header")
-    @Html.Partial("_Sidebar")
+    @Html.Partial("_Sidebar", MvcSiteMapFactory.Provider.GetMenus())
     @Html.Partial("_Datalist")
     <div id="Content">
         <div id="ContentHeader">
             <h1>@ResourceProvider.GetCurrentContentTitle()</h1>
         </div>
         <div id="ContentBreadcrumb">
-            <!--<a data-original-title="Go to Home" href="#" title="" class="tip-bottom"><i class="fa fa-home"></i>Home</a>-->
-            <a href="/" class="current"><i class="fa fa-home"></i>Home</a>
+            @Html.Partial("_Breadcrumb", MvcSiteMapFactory.Provider.GetBreadcrumb())
         </div>
         <div id="ContentContainer">
             <div class="col-xs-12">

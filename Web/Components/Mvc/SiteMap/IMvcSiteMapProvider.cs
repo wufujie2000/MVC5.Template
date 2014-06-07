@@ -3,6 +3,6 @@
     public interface IMvcSiteMapProvider
     {
         MvcSiteMapMenuCollection GetMenus();
-        MvcSiteMapBreadcrumb GenerateBreadcrumb();
+        MvcSiteMapBreadcrumb GetBreadcrumb();
     }
 }

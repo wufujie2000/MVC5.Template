@@ -1,26 +1,24 @@
 ﻿@model MvcSiteMapMenuCollection
 
-@foreach (MvcSiteMapNode node in Model)
+@foreach (MvcSiteMapMenuNode node in Model)
 {
-    String href = "#";
-    if (node.Action != null)
-    {
-        href = Url.Action(node.Action, node.Controller, new { area = node.Area });
-    }
+    String menuLink = node.Action != null ? Url.Action(node.Action, node.Controller, new { area = node.Area }) : "#";
+    String menuAddOn = node.Action == null ? "<i class='arrow fa fa-chevron-right'></i>" : String.Empty;
+    String menuClass = node.HasActiveSubMenu ? "has-active-child open" : String.Empty;
+    menuClass += node.IsActive ? " active active-hovering" : String.Empty;
+    menuClass += node.Submenus.Count > 0 ? " submenu" : String.Empty;
+    menuClass = menuClass.Trim();
     
-    <li class="@(node.Children.Count > 0 ? "submenu" : String.Empty)">
-        <a href="@href">
+    <li class="@menuClass">
+        <a href="@menuLink">
             <i class="@node.IconClass"></i>
             <span>@node.Title</span>
-            @if (node.Action == null)
-            {
-                <i class="arrow fa fa-chevron-right"></i>
-            }
+            @Html.Raw(menuAddOn)
         </a>
-        @if (node.Children.Count > 0)
+        @if (node.Submenus.Count > 0)
         {
             <ul>
-                @Html.DisplayFor(model => node.Children)
+                @Html.DisplayFor(model => node.Submenus)
             </ul>
         }
     </li>

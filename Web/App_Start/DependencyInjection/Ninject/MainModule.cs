@@ -1,5 +1,7 @@
 ﻿using Ninject.Modules;
+using System;
 using System.Reflection;
+using System.Web.Hosting;
 using Template.Components.Mvc.SiteMap;
 using Template.Components.Security;
 using Template.Controllers;
@@ -17,8 +19,10 @@ namespace Template.Web.DependencyInjection.Ninject
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IEntityLogger>().To<EntityLogger>();
 
+            Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
             Bind<IRoleProvider>().ToConstant(CreateRoleProvider());
-            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("~/Mvc.sitemap");
+            String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
+            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
 
             Bind<IAuthService>().To<AuthService>();
             Bind<IHomeService>().To<HomeService>();

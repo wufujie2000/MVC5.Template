@@ -132,7 +132,6 @@
     <Compile Include="Unit\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Sidebar\MenuFactoryTests.cs" />
     <Compile Include="Unit\Controllers\Auth\AuthControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreRegistrationTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Roles\RolesControllerTests.cs" />
@@ -162,7 +161,6 @@
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\LoginExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Header\HeaderExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\TreeViewExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Sidebar\SidebarExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxTests.cs" />
     <Compile Include="Unit\Components\Extensions\Net\SystemExtensionsTests.cs" />
@@ -178,7 +176,6 @@
     <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Objects\Models\LogTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Sidebar\MenuTests.cs" />
     <Compile Include="Unit\Objects\Shared\TreeNodeTests.cs" />
     <Compile Include="Unit\Objects\Shared\TreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />

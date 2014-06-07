@@ -64,16 +64,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\Html\Sidebar\Menu.cs" />
-    <Compile Include="Extensions\Html\Sidebar\MenuFactory.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
+    <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapFactory.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumb.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapMenuNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapMenuCollection.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />
@@ -88,7 +89,6 @@
     <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
     <Compile Include="Extensions\Html\Header\HeaderExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\TreeViewExtensions.cs" />
-    <Compile Include="Extensions\Html\Sidebar\SidebarExtensions.cs" />
     <Compile Include="Extensions\Net\SystemExtensions.cs" />
     <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />

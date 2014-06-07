@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Hosting;
 using System.Xml.Linq;
-using Template.Resources;
+using Template.Components.Security;
 
 namespace Template.Components.Mvc.SiteMap
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
-        private MvcSiteMapMenuCollection menus;
-        private List<MvcSiteMapNode> nodeList;
+        private IEnumerable<MvcSiteMapNode> allNodes;
+        private MvcSiteMapMenuCollection allMenus;
 
+        private String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.Name;
+            }
+        }
         private String CurrentArea
         {
             get
@@ -35,67 +41,19 @@ namespace Template.Components.Mvc.SiteMap
             }
         }
 
-        public MvcSiteMapProvider()
+        public MvcSiteMapProvider(String siteMapPath, IMvcSiteMapParser parser)
         {
-            String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
-            MvcSiteMapMenuCollection nodes = GetNodes(XElement.Load(siteMapPath));
-            nodeList = TreeToList(nodes);
-            menus = ExtractMenus(nodes);
+            XElement siteMap = XElement.Load(siteMapPath);
+            allNodes = TreeToEnumerable(parser.GetNodes(siteMap));
+            allMenus = parser.GetMenus(siteMap);
         }
-        private MvcSiteMapMenuCollection GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
-        {
-            MvcSiteMapMenuCollection nodes = new MvcSiteMapMenuCollection();
-            foreach (XElement siteMapNode in siteMap.Elements())
-            {
-                MvcSiteMapNode node = new MvcSiteMapNode();
-
-                node.Parent = parent;
-                node.Children = GetNodes(siteMapNode, node);
-                node.Area = (String)siteMapNode.Attribute("area");
-                node.Action = (String)siteMapNode.Attribute("action");
-                node.IconClass = (String)siteMapNode.Attribute("icon");
-                node.Controller = (String)siteMapNode.Attribute("controller");
-                node.IsMenu = (Boolean?)siteMapNode.Attribute("menu") == true;
-                node.Title = ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action);
-
-                nodes.Add(node);
-            }
-
-            return nodes;
-        }
-        private MvcSiteMapMenuCollection ExtractMenus(MvcSiteMapMenuCollection nodes, MvcSiteMapNode parent = null)
-        {
-            MvcSiteMapMenuCollection menus = new MvcSiteMapMenuCollection();
-            foreach (MvcSiteMapNode node in nodes)
-            {
-                if (node.IsMenu)
-                {
-                    MvcSiteMapNode menu = new MvcSiteMapNode();
-                    menu.Children = ExtractMenus(node.Children, menu);
-                    menu.Controller = node.Controller;
-                    menu.IconClass = node.IconClass;
-                    menu.Action = node.Action;
-                    menu.IsMenu = node.IsMenu;
-                    menu.Title = node.Title;
-                    menu.Area = node.Area;
-                    menu.Parent = parent;
-                    menus.Add(menu);
-                }
-                else
-                {
-                    menus.AddRange(ExtractMenus(node.Children, parent));
-                }
-            }
-
-            return menus;
-        }
-        private List<MvcSiteMapNode> TreeToList(MvcSiteMapMenuCollection nodes)
+        private IEnumerable<MvcSiteMapNode> TreeToEnumerable(IEnumerable<MvcSiteMapNode> nodes)
         {
             List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
             {
                 list.Add(node);
-                list.AddRange(TreeToList(node.Children));
+                list.AddRange(TreeToEnumerable(node.Children));
             }
 
             return list;
@@ -103,12 +61,16 @@ namespace Template.Components.Mvc.SiteMap
 
         public MvcSiteMapMenuCollection GetMenus()
         {
-            return menus;
+            IEnumerable<AccountPrivilege> accountPrivileges = Enumerable.Empty<AccountPrivilege>();
+            if (RoleFactory.Provider != null)
+                accountPrivileges = RoleFactory.Provider.GetAccountPrivileges(CurrentAccountId);
+
+            return GetAuthorizedMenus(allMenus, accountPrivileges);
         }
-        public MvcSiteMapBreadcrumb GenerateBreadcrumb()
+        public MvcSiteMapBreadcrumb GetBreadcrumb()
         {
             MvcSiteMapBreadcrumb breadcrumb = new MvcSiteMapBreadcrumb();
-            MvcSiteMapNode currentNode = nodeList.FirstOrDefault(node =>
+            MvcSiteMapNode currentNode = allNodes.FirstOrDefault(node =>
                 node.Controller == CurrentController &&
                 node.Action == CurrentAction &&
                 node.Area == CurrentArea);
@@ -120,6 +82,47 @@ namespace Template.Components.Mvc.SiteMap
             }
 
             return breadcrumb;
+        }
+
+        private MvcSiteMapMenuCollection GetAuthorizedMenus(MvcSiteMapMenuCollection menus, IEnumerable<AccountPrivilege> privileges)
+        {
+            MvcSiteMapMenuCollection authorizedMenus = new MvcSiteMapMenuCollection();
+            foreach (MvcSiteMapMenuNode menu in menus)
+                if (IsAuthorizedToView(menu, privileges))
+                {
+                    MvcSiteMapMenuNode authorizedMenu = CreateAuthorized(menu);
+                    authorizedMenu.Submenus = GetAuthorizedMenus(menu.Submenus, privileges);
+                    authorizedMenu.IsActive = menu.Area == CurrentArea && menu.Controller == CurrentController;
+                    authorizedMenu.HasActiveSubMenu = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveSubMenu);
+
+                    if (!IsEmpty(authorizedMenu))
+                        authorizedMenus.Add(authorizedMenu);
+                }
+
+            return authorizedMenus;
+        }
+        private MvcSiteMapMenuNode CreateAuthorized(MvcSiteMapMenuNode menu)
+        {
+            return new MvcSiteMapMenuNode()
+            {
+                Title = menu.Title,
+                IconClass = menu.IconClass,
+                Controller = menu.Controller,
+                Action = menu.Action,
+                Area = menu.Area
+            };
+        }
+
+        private Boolean IsAuthorizedToView(MvcSiteMapMenuNode menu, IEnumerable<AccountPrivilege> privileges)
+        {
+            if (menu.Action == null) return true;
+            if (RoleFactory.Provider == null) return true;
+
+            return RoleFactory.Provider.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
+        }
+        private Boolean IsEmpty(MvcSiteMapMenuNode menu)
+        {
+            return menu.Action == null && menu.Submenus.Count() == 0;
         }
     }
 }

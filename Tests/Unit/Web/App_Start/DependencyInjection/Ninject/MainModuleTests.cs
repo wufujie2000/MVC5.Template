@@ -62,6 +62,15 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         }
 
         [Test]
+        public void Load_BindsIMvcSiteMapParser()
+        {
+            Type expected = typeof(MvcSiteMapParser);
+            Type actual = kernel.Get<IMvcSiteMapParser>().GetType();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         [Ignore]
         public void Load_BindsIMvcSiteMapProvider()
         {

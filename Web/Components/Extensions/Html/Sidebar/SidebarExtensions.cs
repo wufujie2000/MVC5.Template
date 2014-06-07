@@ -65,8 +65,8 @@ namespace Template.Components.Extensions.Html
                 TagBuilder openIcon = new TagBuilder("i");
                 TagBuilder action = new TagBuilder("a");
 
-                action.InnerHtml = String.Format("{0}{1}{2}", menuIcon, span, openIcon);
                 openIcon.AddCssClass("arrow fa fa-chevron-right");
+                action.InnerHtml = String.Format("{0}{1}{2}", menuIcon, span, openIcon);
 
                 return action.ToString();
             }

@@ -1,0 +1,27 @@
+﻿@model MvcSiteMapMenuCollection
+
+@foreach (MvcSiteMapNode node in Model)
+{
+    String href = "#";
+    if (node.Action != null)
+    {
+        href = Url.Action(node.Action, node.Controller, new { area = node.Area });
+    }
+    
+    <li class="@(node.Children.Count > 0 ? "submenu" : String.Empty)">
+        <a href="@href">
+            <i class="@node.IconClass"></i>
+            <span>@node.Title</span>
+            @if (node.Action == null)
+            {
+                <i class="arrow fa fa-chevron-right"></i>
+            }
+        </a>
+        @if (node.Children.Count > 0)
+        {
+            <ul>
+                @Html.DisplayFor(model => node.Children)
+            </ul>
+        }
+    </li>
+}

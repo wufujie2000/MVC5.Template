@@ -2,7 +2,7 @@
 
 namespace Template.Components.Mvc.SiteMap
 {
-    public class MvcSiteMapNodeCollection : List<MvcSiteMapNode>
+    public class MvcSiteMapBreadcrumb : List<MvcSiteMapNode>
     {
     }
 }

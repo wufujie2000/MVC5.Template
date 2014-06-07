@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -9,8 +10,8 @@ namespace Template.Components.Mvc.SiteMap
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
-        private MvcSiteMapNodeCollection menus;
-        private MvcSiteMapNodeCollection nodeList;
+        private MvcSiteMapMenuCollection menus;
+        private List<MvcSiteMapNode> nodeList;
 
         private String CurrentArea
         {
@@ -37,13 +38,13 @@ namespace Template.Components.Mvc.SiteMap
         public MvcSiteMapProvider()
         {
             String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
-            MvcSiteMapNodeCollection nodes = GetNodes(XElement.Load(siteMapPath));
-            nodeList = TreeToCollection(nodes);
+            MvcSiteMapMenuCollection nodes = GetNodes(XElement.Load(siteMapPath));
+            nodeList = TreeToList(nodes);
             menus = ExtractMenus(nodes);
         }
-        private MvcSiteMapNodeCollection GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
+        private MvcSiteMapMenuCollection GetNodes(XElement siteMap, MvcSiteMapNode parent = null)
         {
-            MvcSiteMapNodeCollection nodes = new MvcSiteMapNodeCollection();
+            MvcSiteMapMenuCollection nodes = new MvcSiteMapMenuCollection();
             foreach (XElement siteMapNode in siteMap.Elements())
             {
                 MvcSiteMapNode node = new MvcSiteMapNode();
@@ -62,15 +63,21 @@ namespace Template.Components.Mvc.SiteMap
 
             return nodes;
         }
-        private MvcSiteMapNodeCollection ExtractMenus(MvcSiteMapNodeCollection nodes, MvcSiteMapNode parent = null)
+        private MvcSiteMapMenuCollection ExtractMenus(MvcSiteMapMenuCollection nodes, MvcSiteMapNode parent = null)
         {
-            MvcSiteMapNodeCollection menus = new MvcSiteMapNodeCollection();
+            MvcSiteMapMenuCollection menus = new MvcSiteMapMenuCollection();
             foreach (MvcSiteMapNode node in nodes)
             {
                 if (node.IsMenu)
                 {
                     MvcSiteMapNode menu = new MvcSiteMapNode();
                     menu.Children = ExtractMenus(node.Children, menu);
+                    menu.Controller = node.Controller;
+                    menu.IconClass = node.IconClass;
+                    menu.Action = node.Action;
+                    menu.IsMenu = node.IsMenu;
+                    menu.Title = node.Title;
+                    menu.Area = node.Area;
                     menu.Parent = parent;
                     menus.Add(menu);
                 }
@@ -82,25 +89,25 @@ namespace Template.Components.Mvc.SiteMap
 
             return menus;
         }
-        private MvcSiteMapNodeCollection TreeToCollection(MvcSiteMapNodeCollection nodes)
+        private List<MvcSiteMapNode> TreeToList(MvcSiteMapMenuCollection nodes)
         {
-            MvcSiteMapNodeCollection list = new MvcSiteMapNodeCollection();
+            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
             {
                 list.Add(node);
-                list.AddRange(TreeToCollection(node.Children));
+                list.AddRange(TreeToList(node.Children));
             }
 
             return list;
         }
 
-        public MvcSiteMapNodeCollection GetMenus()
+        public MvcSiteMapMenuCollection GetMenus()
         {
             return menus;
         }
-        public MvcSiteMapNodeCollection GenerateBreadcrumb()
+        public MvcSiteMapBreadcrumb GenerateBreadcrumb()
         {
-            MvcSiteMapNodeCollection breadcrumb = new MvcSiteMapNodeCollection();
+            MvcSiteMapBreadcrumb breadcrumb = new MvcSiteMapBreadcrumb();
             MvcSiteMapNode currentNode = nodeList.FirstOrDefault(node =>
                 node.Controller == CurrentController &&
                 node.Action == CurrentAction &&

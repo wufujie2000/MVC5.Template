@@ -406,9 +406,14 @@
   <ItemGroup>
     <Content Include="Mvc.sitemap" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapNode.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapBreadcrumb.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapMenuCollection.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Breadcrumb.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

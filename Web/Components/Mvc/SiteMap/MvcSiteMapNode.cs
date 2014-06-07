@@ -13,6 +13,6 @@ namespace Template.Components.Mvc.SiteMap
         public String Action { get; set; }
 
         public MvcSiteMapNode Parent { get; set; }
-        public MvcSiteMapNodeCollection Children { get; set; }
+        public MvcSiteMapMenuCollection Children { get; set; }
     }
 }

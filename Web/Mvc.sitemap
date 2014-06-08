@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SiteMap>
     <SiteMapNode icon="fa fa-home" controller="Home" action="Index">
-        <SiteMapNode icon="fa fa-users" menu="true" area="Administration">
-            <SiteMapNode icon="fa fa-user" menu="true" area="Administration" controller="Accounts" action="Index">
+        <SiteMapNode menu="true" icon="fa fa-users" area="Administration">
+            <SiteMapNode menu="true" icon="fa fa-user" area="Administration" controller="Accounts" action="Index">
                 <SiteMapNode icon="fa fa-file-o" area="Administration" controller="Accounts" action="Create" />
                 <SiteMapNode icon="fa fa-info" area="Administration" controller="Accounts" action="Details" />
                 <SiteMapNode icon="fa fa-edit" area="Administration" controller="Accounts" action="Edit" />
             </SiteMapNode>
-            <SiteMapNode icon="fa fa-male" menu="true" area="Administration" controller="Roles" action="Index">
+            <SiteMapNode menu="true" icon="fa fa-male" area="Administration" controller="Roles" action="Index">
                 <SiteMapNode icon="fa fa-file-o" area="Administration" controller="Roles" action="Create" />
                 <SiteMapNode icon="fa fa-info" area="Administration" controller="Roles" action="Details" />
                 <SiteMapNode icon="fa fa-edit" area="Administration" controller="Roles" action="Edit" />

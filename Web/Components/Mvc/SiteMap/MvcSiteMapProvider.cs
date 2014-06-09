@@ -47,25 +47,13 @@ namespace Template.Components.Mvc.SiteMap
             allNodes = TreeToEnumerable(parser.GetNodes(siteMap));
             allMenus = parser.GetMenus(siteMap);
         }
-        private IEnumerable<MvcSiteMapNode> TreeToEnumerable(IEnumerable<MvcSiteMapNode> nodes)
-        {
-            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
-            foreach (MvcSiteMapNode node in nodes)
-            {
-                list.Add(node);
-                list.AddRange(TreeToEnumerable(node.Children));
-            }
-
-            return list;
-        }
 
         public MvcSiteMapMenuCollection GetMenus()
         {
-            IEnumerable<AccountPrivilege> accountPrivileges = Enumerable.Empty<AccountPrivilege>();
-            if (RoleFactory.Provider != null)
-                accountPrivileges = RoleFactory.Provider.GetAccountPrivileges(CurrentAccountId);
+            if (RoleFactory.Provider == null)
+                return GetAuthorizedMenus(allMenus, Enumerable.Empty<AccountPrivilege>());
 
-            return GetAuthorizedMenus(allMenus, accountPrivileges);
+            return GetAuthorizedMenus(allMenus, RoleFactory.Provider.GetAccountPrivileges(CurrentAccountId));
         }
         public MvcSiteMapBreadcrumb GetBreadcrumb()
         {
@@ -82,6 +70,18 @@ namespace Template.Components.Mvc.SiteMap
             }
 
             return breadcrumb;
+        }
+
+        private IEnumerable<MvcSiteMapNode> TreeToEnumerable(IEnumerable<MvcSiteMapNode> nodes)
+        {
+            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
+            foreach (MvcSiteMapNode node in nodes)
+            {
+                list.Add(node);
+                list.AddRange(TreeToEnumerable(node.Children));
+            }
+
+            return list;
         }
 
         private MvcSiteMapMenuCollection GetAuthorizedMenus(MvcSiteMapMenuCollection menus, IEnumerable<AccountPrivilege> privileges)

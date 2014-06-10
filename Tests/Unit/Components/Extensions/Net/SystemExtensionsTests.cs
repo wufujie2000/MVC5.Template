@@ -42,7 +42,7 @@ namespace Template.Tests.Unit.Components.Extensions.Net
         #endregion
 
         #region Extension method: Split(this String str, String separator)
-        
+
         [Test]
         public void Split_SplitsByStringSeperator()
         {
@@ -66,7 +66,7 @@ namespace Template.Tests.Unit.Components.Extensions.Net
         [Test]
         public void Split_SplitsByCharAndCount()
         {
-            CollectionAssert.AreEqual("M,,C,E,,D".Split(new[] { ',' }, 3), "M,,C,E,,D".Split(',', 3)); 
+            CollectionAssert.AreEqual("M,,C,E,,D".Split(new[] { ',' }, 3), "M,,C,E,,D".Split(',', 3));
         }
 
         #endregion

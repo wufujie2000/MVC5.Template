@@ -13,7 +13,7 @@ namespace Template.Tests.Unit.Data.Core
         public void Repository_GetsSameRepositoryInstance()
         {
             Context context = new Context();
-            
+
             Assert.AreSame(context.Repository<Account>(), context.Repository<Account>());
         }
 

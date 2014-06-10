@@ -97,7 +97,7 @@ namespace Template.Tests.Unit.Data.Core
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
-        
+
         #endregion
 
         #region Method: Query<TView>(Expression<Func<TModel, Boolean>> predicate)

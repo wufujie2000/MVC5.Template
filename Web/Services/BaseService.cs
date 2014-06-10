@@ -40,7 +40,7 @@ namespace Template.Services
             if (disposed) return;
             if (UnitOfWork != null)
                 UnitOfWork.Dispose();
-            
+
             disposed = true;
         }
     }

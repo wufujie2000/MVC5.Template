@@ -58,7 +58,7 @@ namespace <#= Model.Namespace #>
                 return View();
 
             Service.Edit(<#= Model.ModelName #>);
-            
+
             return RedirectIfAuthorized("Index");
         }
 

@@ -12,7 +12,7 @@ namespace Template.Controllers.Administration
                 return "Administration";
             }
         }
-        
+
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context

@@ -50,7 +50,7 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
             IEnumerable<MvcSiteMapMenuNode> expected = parser.GetMenus(siteMap);
             IEnumerable<MvcSiteMapMenuNode> actual = provider.GetMenus();
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);            
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
             HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Home";
             HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "Index";
             HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = null;
-            
+
             MvcSiteMapMenuNode expected = parser.GetMenus(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").First();
             IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus().Where(menu => menu.IsActive));
             MvcSiteMapMenuNode actual = actualMenus.First();
@@ -96,7 +96,7 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
             TestHelper.PropertyWiseEquals(expected, actual);
             Assert.AreEqual(1, actualMenus.Count());
         }
-  
+
         [Test]
         public void GetMenus_SetsHasActiveSubmenuIfAnyOfItsSubmenusAreActiveOrHasActiveSubmenus()
         {
@@ -125,6 +125,12 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
             IEnumerable<MvcSiteMapMenuNode> actual = TreeToEnumerable(provider.GetMenus());
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        [Test]
+        public void GetMenus_SetsMenuTitlesToCurrentCultureOnes()
+        {
+
         }
 
         #endregion

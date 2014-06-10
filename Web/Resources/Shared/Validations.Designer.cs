@@ -10,8 +10,8 @@
 
 namespace Template.Resources.Shared {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Template.Resources.Shared {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Validations {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Validations() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Template.Resources.Shared {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace Template.Resources.Shared {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field is required.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Template.Resources.Shared {
                 return ResourceManager.GetString("FieldIsRequired", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must be a date.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Template.Resources.Shared {
                 return ResourceManager.GetString("FieldMustBeDate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must be numeric.
         /// </summary>

@@ -43,11 +43,11 @@ namespace Template.Components.Alerts
 
         public void AddError(String message)
         {
-            AddError(String.Empty, message, 0); 
+            AddError(String.Empty, message, 0);
         }
         public void AddError(String key, String message)
         {
-            AddError(key, message, 0); 
+            AddError(key, message, 0);
         }
         public void AddError(String key, String message, Decimal fadeOutAfter)
         {

@@ -38,7 +38,7 @@ If ($AreaName)
     $ServicesAreaDir = "$AreaName"
     $ControllerTestsAreaDir = "Unit\Controllers\$AreaName"
     $ServiceTestsAreaDir = "Unit\Services\$AreaName"
-    
+
     $ViewControllerDir = "Views\$AreaName\$ControllerName"
     $ControllerControllerDir = "$AreaName\$ControllerName"
     $ModelControllerDir = "Models\$AreaName\$ControllerName"

@@ -31,7 +31,7 @@ namespace Template.Tests.Helpers
             Mock<ViewContext> viewContextMock = new Mock<ViewContext>(controllerContextMock.Object, new Mock<IView>().Object,
                 new ViewDataDictionary(), tempDataDictionary, new StringWriter()) { CallBase = true };
             viewContextMock.Object.ClientValidationEnabled = true;
-            
+
             Mock<IViewDataContainer> viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
             viewDataContainerMock.Setup(mock => mock.ViewData).Returns(viewContextMock.Object.ViewData);
 

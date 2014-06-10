@@ -302,7 +302,7 @@
                 return true;
             }
 
-            
+
             // if the element doesn't have the scroll set, see if it's possible to
             // set the scroll
             el[scroll] = 1;
@@ -408,7 +408,7 @@
             })();
         });
         constructor.prototype = $.widget.extend(basePrototype, {
-            
+
             // always use the name + a colon as the prefix, e.g., draggable:start
             // don't prefix for widgets that aren't DOM-based
             widgetEventPrefix: existingConstructor ? (basePrototype.widgetEventPrefix || name) : name
@@ -573,7 +573,7 @@
             this.element
                 .unbind(this.eventNamespace)
                 // 1.9 BC for #7810
-                
+
                 .removeData(this.widgetName)
                 .removeData(this.widgetFullName)
                 // support: jquery <1.6.3
@@ -856,7 +856,7 @@
             this.started = false;
         },
 
-        
+
         // other instances of mouse
         _mouseDestroy: function () {
             this.element.unbind("." + this.widgetName);
@@ -2782,14 +2782,14 @@
                 if (this.buttonElement.is("a")) {
                     this.buttonElement.keyup(function (event) {
                         if (event.keyCode === $.ui.keyCode.SPACE) {
-                            
+
                             $(this).click();
                         }
                     });
                 }
             }
 
-            
+
             // $.Widget.prototype._setOptionDisabled so it's easy to proxy and can
             // be overridden by individual plugins
             this._setOption("disabled", options.disabled);
@@ -3105,7 +3105,7 @@
         //Keep track of the maximum number of rows displayed (see #7043)
         maxRows: 4,
 
-        
+
         _widgetDatepicker: function () {
             return this.dpDiv;
         },
@@ -5724,7 +5724,7 @@
                 return true;
             }
 
-            
+
             // the .ui-front logic (#8989)
             return !!$(event.target).closest(".ui-datepicker").length;
         },
@@ -10005,7 +10005,7 @@
         },
 
         select: function (event) {
-            
+
             // point, but the tests don't trigger mouseenter before click.
             this.active = this.active || $(event.target).closest(".ui-menu-item");
             var ui = { item: this.active };
@@ -12219,7 +12219,7 @@
             });
 
             // Only after we got the offset, we can change the helper's position to absolute
-            
+
             this.helper.css("position", "absolute");
             this.cssPosition = this.helper.css("position");
 
@@ -13476,7 +13476,7 @@
                 }
                 this._repeat(null, $(event.currentTarget).hasClass("ui-spinner-up") ? 1 : -1, event);
             },
-            
+
             // shouldn't we just stop the repeater and wait until mouseup before
             // we trigger the stop event?
             "mouseleave .ui-spinner-button": "_stop"
@@ -13712,7 +13712,7 @@
             this.element.attr({
                 "aria-valuemin": this.options.min,
                 "aria-valuemax": this.options.max,
-                
+
                 "aria-valuenow": this._parse(this.element.val())
             });
         },

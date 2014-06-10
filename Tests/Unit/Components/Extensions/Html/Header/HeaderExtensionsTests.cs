@@ -44,7 +44,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             String controller = routeValues["controller"].ToString();
             String action = routeValues["action"].ToString();
             String area = routeValues["area"].ToString();
-            
+
             String actual = html.LanguageLink().ToString();
             String expected = String.Format("<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
                 + "<i class=\"fa fa-flag\"></i> {0} <span class=\"caret\"></span></a>"
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                 ResourceProvider.GetActionTitle("Language"),
                 new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area, Param1 = "Value1" }),
                 new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area, Param1 = "Value1" }));
-            
+
             Assert.AreEqual(expected, actual);
         }
 

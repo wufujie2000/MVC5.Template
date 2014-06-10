@@ -1108,7 +1108,7 @@
             // http://docs.jquery.com/Plugins/Validation/Methods/equalTo
             equalTo: function (value, element, param) {
                 // bind to the blur event of the target in order to revalidate whenever the target field is updated
-                
+
                 var target = $(param);
                 if (this.settings.onfocusout) {
                     target.unbind(".validate-equalTo").bind("blur.validate-equalTo", function () {

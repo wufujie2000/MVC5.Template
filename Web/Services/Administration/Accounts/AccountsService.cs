@@ -41,7 +41,7 @@ namespace Template.Services
 
             account.Username = accountInDatabase.Username;
             account.Passhash = accountInDatabase.Passhash;
-            
+
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
         }

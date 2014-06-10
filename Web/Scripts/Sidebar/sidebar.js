@@ -34,7 +34,7 @@
         else
             $('#SidebarNavigationList').find('.active').addClass('active-hovering');
     });
-    
+
     $(document).on('mouseenter', '#SidebarNavigationList > li > a', function () {
         var liElement = $(this).parent();
         if (liElement.hasClass('has-active-child'))
@@ -42,7 +42,7 @@
         else
             $('#SidebarNavigationList > li.has-active-child').addClass('active-child-hovering');
     });
-    
+
     $(document).on('mouseenter', '#SidebarNavigationList > li > ul a', function () {
         $('#SidebarNavigationList > .has-active-child').addClass('active-child-hovering');
     });
@@ -50,7 +50,7 @@
     $(document).on('mouseleave', '#SidebarNavigationList', function () {
         $('#SidebarNavigationList li.active-hovering').removeClass('active-hovering');
         $('#SidebarNavigationList li.active-child-hovering').removeClass('active-child-hovering');
-        
+
         if ($('#Sidebar').width() < 100) {
             var submenu = $('#SidebarNavigationList li.open');
             submenu.toggleClass('closing');

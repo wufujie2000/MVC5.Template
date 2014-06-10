@@ -21,7 +21,7 @@ namespace Template.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.RoleId);
-            
+
             CreateTable(
                 "dbo.Roles",
                 c => new
@@ -31,7 +31,7 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
+
             CreateTable(
                 "dbo.RolePrivileges",
                 c => new
@@ -46,7 +46,7 @@ namespace Template.Tests.Data.Migrations
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId)
                 .Index(t => t.PrivilegeId);
-            
+
             CreateTable(
                 "dbo.Privileges",
                 c => new
@@ -58,7 +58,7 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
+
             CreateTable(
                 "dbo.Languages",
                 c => new
@@ -69,7 +69,7 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
+
             CreateTable(
                 "dbo.Logs",
                 c => new
@@ -79,7 +79,7 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
+
             CreateTable(
                 "dbo.TestModels",
                 c => new
@@ -89,9 +89,9 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-            
+
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");

@@ -49,7 +49,7 @@ namespace Template.Components.Extensions.Html
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
             label.AddCssClass(LabelClass);
-            
+
             return new MvcHtmlString(label.ToString());
         }
         public static MvcHtmlString RequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)

@@ -30,10 +30,10 @@ namespace Template.Tests.Unit.Web
         {
             Assembly assembly = Assembly.GetAssembly(typeof(MvcApplication));
             FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            
+
             String expected = versionInfo.FileVersion;
             String actual = MvcApplication.Version;
-            
+
             Assert.AreEqual(expected, actual);
         }
 

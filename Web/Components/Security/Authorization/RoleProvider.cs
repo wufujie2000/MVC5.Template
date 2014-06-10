@@ -57,7 +57,7 @@ namespace Template.Components.Security
         {
             if (AllowsUnauthorized(area, controller, action))
                 return true;
-            
+
             return privileges.Any(privilege =>
                 privilege.Area == area &&
                 privilege.Controller == controller &&

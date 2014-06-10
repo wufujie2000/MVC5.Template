@@ -69,7 +69,7 @@ namespace Template.Services
                 .Repository<RolePrivilege>()
                 .Query(rolePrivilege => rolePrivilege.RoleId == view.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
-            
+
             IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
                 .Repository<Privilege>()
                 .Query()

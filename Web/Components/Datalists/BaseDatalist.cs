@@ -47,14 +47,14 @@ namespace Template.Components.Datalists
             DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
             if (column != null && column.Relation != null)
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
-            
+
             return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);
         }
         protected override String GetColumnCssClass(PropertyInfo property)
         {
             Type type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
             if (type.IsEnum) return "text-cell";
-            
+
             switch (Type.GetTypeCode(type))
             {
                 case TypeCode.SByte:

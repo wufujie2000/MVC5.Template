@@ -148,7 +148,7 @@ namespace Template.Tests.Unit.Services
         {
             LoginView accountView = ObjectFactory.CreateLoginView();
             service.Login(accountView);
-            
+
             DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
             DateTime expected = DateTime.Now.AddMonths(1).Date;
 

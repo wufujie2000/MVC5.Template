@@ -53,7 +53,7 @@ namespace Template.Controllers
         {
             if (RoleProvider == null) return true;
 
-            return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);            
+            return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);
         }
 
         protected override void OnAuthorization(AuthorizationContext filterContext)

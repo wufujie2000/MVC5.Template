@@ -11,7 +11,7 @@ namespace Template.Tests.Resources.Tests
     [TestFixture]
     public class ResourceProviderTests
     {
-        private RouteValueDictionary routeValues; 
+        private RouteValueDictionary routeValues;
 
         [SetUp]
         public void SetUp()

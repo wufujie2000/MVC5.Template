@@ -169,7 +169,7 @@ namespace Template.Tests.Unit.Services
 
             IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds;
             IEnumerable<String> actual = context.Set<Role>().SingleOrDefault(model => model.Id == roleView.Id).RolePrivileges.Select(r => r.PrivilegeId);
-            
+
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
@@ -360,7 +360,7 @@ namespace Template.Tests.Unit.Services
             expectedTree.Nodes.Add(rootNode);
             rootNode.Name = Template.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
-            
+
             IEnumerable<Privilege> allPrivileges = context.Set<Privilege>().ToList()
                 .Select(privilege => new Privilege
                     {

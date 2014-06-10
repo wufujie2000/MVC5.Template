@@ -45,7 +45,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
             String expected = String.Format("<div class=\"{0}\"></div>", BootstrapExtensions.ContentClass);
             String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
-            
+
             Assert.AreEqual(expected, actual);
         }
 

@@ -12,7 +12,7 @@
                 columns.AddActionLink(LinkAction.Details);
                 columns.AddActionLink(LinkAction.Edit);
                 columns.AddActionLink(LinkAction.Delete);
-                
+
 
             })
             .ApplyAttributes()

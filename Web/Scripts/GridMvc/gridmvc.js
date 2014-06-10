@@ -401,7 +401,7 @@ GridMvc.lang.en = {
 };
 /***
 * ============= FILTER WIDGETS =============
-* Filter widget allows onRender custom filter user interface for different columns. 
+* Filter widget allows onRender custom filter user interface for different columns.
 * For example if your added column is of type "DateTime" - widget can onRender calendar for picking filter value.
 * This script provider base widget for default .Net types: System.String, System.Int32, System.Decimal etc.
 * If you want to provide custom filter functionality - you can assign your own widget type for column and write widget for this types.

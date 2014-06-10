@@ -30,7 +30,7 @@ namespace Template.Controllers.Administration
         {
             if (!Service.CanCreate(account))
                 return View();
-            
+
             Service.Create(account);
 
             return RedirectIfAuthorized("Index");

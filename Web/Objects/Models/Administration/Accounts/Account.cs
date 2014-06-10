@@ -7,7 +7,7 @@ namespace Template.Objects
     {
         [Required]
         public String Username { get; set; }
-        
+
         [Required]
         public String Passhash { get; set; }
 

@@ -19,7 +19,7 @@ namespace Template.Tests.Unit.Data.Logging
         public AContext context;
         public EntityLogger logger;
         public AContext dataContext;
-        
+
         [SetUp]
         public void SetUp()
         {

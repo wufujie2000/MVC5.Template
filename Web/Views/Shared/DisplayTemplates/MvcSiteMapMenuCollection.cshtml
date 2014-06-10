@@ -8,7 +8,7 @@
     menuClass += node.IsActive ? " active active-hovering" : String.Empty;
     menuClass += node.Submenus.Count > 0 ? " submenu" : String.Empty;
     menuClass = menuClass.Trim();
-    
+
     <li class="@menuClass">
         <a href="@menuLink">
             <i class="@node.IconClass"></i>

@@ -80,7 +80,7 @@ namespace Template.Resources
             String key = String.Format("{0}{1}{2}", area, controller, action);
             return GetResourceFrom("Template.Resources.SiteMap.Titles", key);
         }
-        
+
         public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
         {
             MemberInfo member = (property.Body as MemberExpression).Member;

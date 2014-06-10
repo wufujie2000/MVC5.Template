@@ -85,7 +85,7 @@ namespace Template.Tests.Unit.Controllers.Datalist
         public void Roles_GetsRolesData()
         {
             controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(new JsonResult());
-            
+
             JsonResult expected = controllerMock.Object.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);
 

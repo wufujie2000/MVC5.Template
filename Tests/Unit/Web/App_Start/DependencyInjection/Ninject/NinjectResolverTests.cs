@@ -24,7 +24,7 @@ namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
         {
             Type expectedType = typeof(AContext);
             Object actualInstance = resolver.GetService(expectedType);
-            
+
             Assert.IsInstanceOf(expectedType, actualInstance);
         }
 

@@ -23,7 +23,7 @@ namespace Template.Controllers.Administration
         {
             RoleView role = new RoleView();
             Service.SeedPrivilegesTree(role);
-            
+
             return View(role);
         }
 
@@ -35,7 +35,7 @@ namespace Template.Controllers.Administration
                 return View();
 
             Service.Create(role);
-            
+
             return RedirectIfAuthorized("Index");
         }
 

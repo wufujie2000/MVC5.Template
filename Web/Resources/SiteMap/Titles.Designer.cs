@@ -10,8 +10,8 @@
 
 namespace Template.Resources.SiteMap {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Template.Resources.SiteMap {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Titles {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Titles() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Template.Resources.SiteMap {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace Template.Resources.SiteMap {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Administration.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("Administration", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("HomeError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
@@ -167,7 +167,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("HomeIndex", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Not found.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("HomeNotFound", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Unauthorized.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("HomeUnauthorized", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
@@ -194,7 +194,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
@@ -203,7 +203,7 @@ namespace Template.Resources.SiteMap {
                 return ResourceManager.GetString("ProfileDelete", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>

@@ -30,7 +30,7 @@ namespace Template.Tests.Unit.Services
         public void Dispose_DisposesUnitOfWork()
         {
             service.Dispose();
-            
+
             unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
         }
 

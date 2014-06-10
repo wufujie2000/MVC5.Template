@@ -41,7 +41,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             gridColumnCollection = gridColumnCollectionMock.Object;
 
             HttpContext.Current = new HttpMock().HttpContext;
-            
+
             roleProviderMock = new Mock<IRoleProvider>();
             RoleFactory.Provider = roleProviderMock.Object;
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
@@ -55,7 +55,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         }
 
         #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
-        
+
         [Test]
         public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
         {

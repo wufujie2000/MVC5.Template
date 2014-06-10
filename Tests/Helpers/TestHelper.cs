@@ -15,7 +15,7 @@ namespace Template.Tests.Helpers
             if (Object.Equals(expected, actual)) return;
             if (expected == null || actual == null)
                 throw new AssertionException(String.Format("'{0}' is not equal to '{1}'",expected, actual));
-            
+
             Type type = expected.GetType();
             if (type.IsValueType || type.IsEnum)
                 throw new AssertionException(String.Format("'{0}' is not equal to '{1}'", expected, actual));

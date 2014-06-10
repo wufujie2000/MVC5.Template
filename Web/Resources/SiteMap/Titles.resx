@@ -147,7 +147,25 @@
   <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Roles</value>
   </data>
+  <data name="HomeError" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="HomeIndex" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="HomeNotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="HomeUnauthorized" xml:space="preserve">
+    <value>Unauthorized</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="ProfileDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProfileEdit" xml:space="preserve">
+    <value>Edit</value>
   </data>
 </root>

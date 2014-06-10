@@ -151,11 +151,65 @@ namespace Template.Resources.SiteMap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string HomeError {
+            get {
+                return ResourceManager.GetString("HomeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string HomeIndex {
             get {
                 return ResourceManager.GetString("HomeIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        public static string HomeNotFound {
+            get {
+                return ResourceManager.GetString("HomeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized.
+        /// </summary>
+        public static string HomeUnauthorized {
+            get {
+                return ResourceManager.GetString("HomeUnauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ProfileDelete {
+            get {
+                return ResourceManager.GetString("ProfileDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string ProfileEdit {
+            get {
+                return ResourceManager.GetString("ProfileEdit", resourceCulture);
             }
         }
     }

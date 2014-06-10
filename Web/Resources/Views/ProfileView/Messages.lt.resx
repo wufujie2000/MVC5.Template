@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProfileDeleteDisclaimer" xml:space="preserve">
-    <value>Jūs ruošiatės ištrinti savo profilį, visa jūsų asmeninė informacija bus panaikinta</value>
+    <value>Jūs ruošiatės ištrinti savo paskyrą, visa jūsų asmeninė informacija bus panaikinta</value>
   </data>
   <data name="ProfileUpdated" xml:space="preserve">
-    <value>Profilis atnaujintas sėkmingai</value>
+    <value>Paskyra atnaujinta sėkmingai</value>
   </data>
 </root>

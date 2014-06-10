@@ -74,16 +74,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Menu\Titles.lt.Designer.cs">
-      <DependentUpon>Titles.lt.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Menu\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.resx</DependentUpon>
-    </Compile>
     <Compile Include="Privilege\Action\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -287,14 +277,6 @@
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Titles.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menu\Titles.lt.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menu\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>

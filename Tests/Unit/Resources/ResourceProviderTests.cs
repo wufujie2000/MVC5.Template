@@ -221,13 +221,13 @@ namespace Template.Tests.Resources.Tests
 
         #endregion
 
-        #region Static method: GetMenuTitle(String area, String controller, String action)
+        #region Static method: GetSiteMapTitle(String area, String controller, String action)
 
         [Test]
         public void GetMenuTitle_GetsTitle()
         {
-            String expected = Template.Resources.Menu.Titles.AdministrationRolesIndex;
-            String actual = ResourceProvider.GetMenuTitle("Administration", "Roles", "Index");
+            String expected = Template.Resources.SiteMap.Titles.AdministrationRolesIndex;
+            String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
 
             Assert.AreEqual(expected, actual);
         }
@@ -235,8 +235,8 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
         {
-            String expected = Template.Resources.Menu.Titles.Administration;
-            String actual = ResourceProvider.GetMenuTitle("Administration", null, null);
+            String expected = Template.Resources.SiteMap.Titles.Administration;
+            String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
 
             Assert.AreEqual(expected, actual);
         }
@@ -244,7 +244,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetMenuTitle_OnMenuNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetMenuTitle("Test", "Test", "Test"));
+            Assert.IsNull(ResourceProvider.GetSiteMapTitle("Test", "Test", "Test"));
         }
 
         #endregion

@@ -75,11 +75,6 @@ namespace Template.Resources
         {
             return GetResourceFrom("Template.Resources.Privilege.Controller.Titles", controller);
         }
-        public static String GetMenuTitle(String area, String controller, String action)
-        {
-            String key = String.Format("{0}{1}{2}", area, controller, action);
-            return GetResourceFrom("Template.Resources.Menu.Titles", key);
-        }
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Xml.Linq;
 using Template.Components.Security;
+using Template.Resources;
 
 namespace Template.Components.Mvc.SiteMap
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
         private IEnumerable<MvcSiteMapNode> allNodes;
-        private MvcSiteMapMenuCollection allMenus;
+        private IEnumerable<MvcSiteMapNode> allMenus;
 
         private String CurrentAccountId
         {
@@ -44,8 +45,8 @@ namespace Template.Components.Mvc.SiteMap
         public MvcSiteMapProvider(String siteMapPath, IMvcSiteMapParser parser)
         {
             XElement siteMap = XElement.Load(siteMapPath);
-            allNodes = TreeToEnumerable(parser.GetNodes(siteMap));
-            allMenus = parser.GetMenus(siteMap);
+            allNodes = TreeToEnumerable(parser.GetAllNodes(siteMap));
+            allMenus = parser.GetMenuNodes(siteMap);
         }
 
         public MvcSiteMapMenuCollection GetMenus()
@@ -65,7 +66,7 @@ namespace Template.Components.Mvc.SiteMap
 
             while (currentNode != null)
             {
-                breadcrumb.Insert(0, currentNode);
+                breadcrumb.Insert(0, CreateBreadcrumbNode(currentNode));
                 currentNode = currentNode.Parent;
             }
 
@@ -84,16 +85,13 @@ namespace Template.Components.Mvc.SiteMap
             return list;
         }
 
-        private MvcSiteMapMenuCollection GetAuthorizedMenus(MvcSiteMapMenuCollection menus, IEnumerable<AccountPrivilege> privileges)
+        private MvcSiteMapMenuCollection GetAuthorizedMenus(IEnumerable<MvcSiteMapNode> menus, IEnumerable<AccountPrivilege> privileges)
         {
             MvcSiteMapMenuCollection authorizedMenus = new MvcSiteMapMenuCollection();
-            foreach (MvcSiteMapMenuNode menu in menus)
+            foreach (MvcSiteMapNode menu in menus)
                 if (IsAuthorizedToView(menu, privileges))
                 {
-                    MvcSiteMapMenuNode authorizedMenu = CreateAuthorized(menu);
-                    authorizedMenu.Submenus = GetAuthorizedMenus(menu.Submenus, privileges);
-                    authorizedMenu.IsActive = menu.Area == CurrentArea && menu.Controller == CurrentController;
-                    authorizedMenu.HasActiveSubMenu = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveSubMenu);
+                    MvcSiteMapMenuNode authorizedMenu = CreateAuthorizedMenu(menu, privileges);
 
                     if (!IsEmpty(authorizedMenu))
                         authorizedMenus.Add(authorizedMenu);
@@ -101,19 +99,37 @@ namespace Template.Components.Mvc.SiteMap
 
             return authorizedMenus;
         }
-        private MvcSiteMapMenuNode CreateAuthorized(MvcSiteMapMenuNode menu)
+
+        private MvcSiteMapMenuNode CreateAuthorizedMenu(MvcSiteMapNode menu, IEnumerable<AccountPrivilege> privileges)
         {
-            return new MvcSiteMapMenuNode()
-            {
-                Title = menu.Title,
-                IconClass = menu.IconClass,
-                Controller = menu.Controller,
-                Action = menu.Action,
-                Area = menu.Area
-            };
+            MvcSiteMapMenuNode authorizedMenu = new MvcSiteMapMenuNode();
+            authorizedMenu.Title = ResourceProvider.GetSiteMapTitle(menu.Area, menu.Controller, menu.Action);
+            authorizedMenu.IconClass = menu.IconClass;
+
+            authorizedMenu.Controller = menu.Controller;
+            authorizedMenu.Action = menu.Action;
+            authorizedMenu.Area = menu.Area;
+
+            authorizedMenu.Submenus = GetAuthorizedMenus(menu.Children, privileges);
+            authorizedMenu.IsActive = menu.Area == CurrentArea && menu.Controller == CurrentController;
+            authorizedMenu.HasActiveSubMenu = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveSubMenu);
+
+            return authorizedMenu;
+        }
+        private MvcSiteMapBreadcrumbNode CreateBreadcrumbNode(MvcSiteMapNode node)
+        {
+            MvcSiteMapBreadcrumbNode breadcrumbNode = new MvcSiteMapBreadcrumbNode();
+            breadcrumbNode.Title = ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action);
+            breadcrumbNode.IconClass = node.IconClass;
+
+            breadcrumbNode.Controller = node.Controller;
+            breadcrumbNode.Action = node.Action;
+            breadcrumbNode.Area = node.Area;
+
+            return breadcrumbNode;
         }
 
-        private Boolean IsAuthorizedToView(MvcSiteMapMenuNode menu, IEnumerable<AccountPrivilege> privileges)
+        private Boolean IsAuthorizedToView(MvcSiteMapNode menu, IEnumerable<AccountPrivilege> privileges)
         {
             if (menu.Action == null) return true;
             if (RoleFactory.Provider == null) return true;

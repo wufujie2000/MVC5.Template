@@ -1,8 +1,8 @@
 ﻿@model MvcSiteMapBreadcrumb
 @{
-    MvcSiteMapNode current = Model.LastOrDefault();
+    MvcSiteMapBreadcrumbNode current = Model.LastOrDefault();
 }
-@foreach (MvcSiteMapNode node in Model)
+@foreach (MvcSiteMapBreadcrumbNode node in Model)
 {
     String nodeClass = node == current ? "current" : String.Empty;
     if (node.Action != null && node != current)

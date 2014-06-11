@@ -71,6 +71,7 @@
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapFactory.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumb.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumbNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapMenuNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapMenuCollection.cs" />

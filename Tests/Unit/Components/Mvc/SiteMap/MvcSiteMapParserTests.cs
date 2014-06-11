@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using Template.Components.Mvc.SiteMap;
-using Template.Resources;
 using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Mvc.SiteMap
@@ -27,7 +26,7 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
         [Test]
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
-            IEnumerable<MvcSiteMapNode> actualNodes = parser.GetNodes(siteMap);
+            IEnumerable<MvcSiteMapNode> actualNodes = parser.GetAllNodes(siteMap);
 
         }
 
@@ -38,18 +37,16 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
         [Test]
         public void GetMenus_ReturnsOnlyMenus()
         {
-            IEnumerable<MvcSiteMapMenuNode> actual = TreeToEnumerable(parser.GetMenus(siteMap));
-            IEnumerable<MvcSiteMapMenuNode> expected = new List<MvcSiteMapMenuNode>()
+            IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap));
+            IEnumerable<MvcSiteMapNode> expected = new List<MvcSiteMapNode>()
             {
-                new MvcSiteMapMenuNode()
+                new MvcSiteMapNode()
                 {
-                    Title = ResourceProvider.GetSiteMapTitle("Administration", null, null),
                     IconClass = "fa fa-users",
                     Area = "Administration"
                 },
-                new MvcSiteMapMenuNode()
+                new MvcSiteMapNode()
                 {
-                    Title = ResourceProvider.GetSiteMapTitle("Administration", "Accounts", "Create"),
                     IconClass = "fa fa-file-o",
                     Area = "Administration",
                     Controller = "Accounts",
@@ -63,20 +60,18 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
         [Test]
         public void GetMenus_ReplacesNonMenuNodesWithItsChildMenus()
         {
-            IEnumerable<MvcSiteMapMenuNode> actual = parser.GetMenus(siteMap);
-            IEnumerable<MvcSiteMapMenuNode> expected = new List<MvcSiteMapMenuNode>()
+            IEnumerable<MvcSiteMapNode> actual = parser.GetMenuNodes(siteMap);
+            IEnumerable<MvcSiteMapNode> expected = new List<MvcSiteMapNode>()
             {
-                new MvcSiteMapMenuNode()
+                new MvcSiteMapNode()
                 {
-                    Title = ResourceProvider.GetSiteMapTitle("Administration", null, null),
                     IconClass = "fa fa-users",
                     Area = "Administration",
 
-                    Submenus = new MvcSiteMapMenuCollection()
+                    Children = new List<MvcSiteMapNode>()
                     {
-                        new MvcSiteMapMenuNode()
+                        new MvcSiteMapNode()
                         {
-                            Title = ResourceProvider.GetSiteMapTitle("Administration", "Accounts", "Create"),
                             IconClass = "fa fa-file-o",
                             Area = "Administration",
                             Controller = "Accounts",
@@ -88,8 +83,8 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
             TestHelper.PropertyWiseEquals(expected.First(), actual.First());
-            TestHelper.EnumPropertyWiseEquals(expected.First().Submenus, actual.First().Submenus);
-            Assert.IsFalse(actual.First().Submenus.Any(submenu => submenu.Parent != actual.First()));
+            TestHelper.EnumPropertyWiseEquals(expected.First().Children, actual.First().Children);
+            Assert.IsFalse(actual.First().Children.Any(submenu => submenu.Parent != actual.First()));
         }
 
         #endregion
@@ -123,13 +118,13 @@ namespace Template.Tests.Unit.Components.Mvc.SiteMap
             return siteMapNode;
         }
 
-        private IEnumerable<MvcSiteMapMenuNode> TreeToEnumerable(IEnumerable<MvcSiteMapMenuNode> nodes)
+        private IEnumerable<MvcSiteMapNode> TreeToEnumerable(IEnumerable<MvcSiteMapNode> nodes)
         {
-            List<MvcSiteMapMenuNode> list = new List<MvcSiteMapMenuNode>();
-            foreach (MvcSiteMapMenuNode node in nodes)
+            List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
+            foreach (MvcSiteMapNode node in nodes)
             {
                 list.Add(node);
-                list.AddRange(TreeToEnumerable(node.Submenus));
+                list.AddRange(TreeToEnumerable(node.Children));
             }
 
             return list;

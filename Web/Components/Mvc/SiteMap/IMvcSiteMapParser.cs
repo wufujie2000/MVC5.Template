@@ -5,7 +5,7 @@ namespace Template.Components.Mvc.SiteMap
 {
     public interface IMvcSiteMapParser
     {
-        IEnumerable<MvcSiteMapNode> GetNodes(XElement siteMap);
-        MvcSiteMapMenuCollection GetMenus(XElement siteMap);
+        IEnumerable<MvcSiteMapNode> GetAllNodes(XElement siteMap);
+        IEnumerable<MvcSiteMapNode> GetMenuNodes(XElement siteMap);
     }
 }

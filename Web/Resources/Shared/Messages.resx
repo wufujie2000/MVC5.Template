@@ -124,6 +124,6 @@
     <value>Your request resulted in an unexpected system failure, please contact system administration</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
-    <value>You are unauthorized to access this page</value>
+    <value>You are unauthorized to view this page</value>
   </data>
 </root>

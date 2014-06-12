@@ -79,7 +79,7 @@ namespace Template.Resources.Shared {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to You are unauthorized to access this page.
+        ///   Looks up a localized string similar to You are unauthorized to view this page.
         /// </summary>
         public static string Unauthorized {
             get {

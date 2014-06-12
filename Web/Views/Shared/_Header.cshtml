@@ -1,19 +1,13 @@
 ﻿<div id="Header">
-    <div id="HeadersLeftPanel">
-    </div>
-    <div id="HeadersRightPanel">
-        <div id="TopNavigation">
-            <ul id="TopNavigationSections" class="btn-group">
-                <li class="btn">
-                    @Html.ProfileLink()
-                </li>
-                <li class="btn dropdown">
-                    @Html.LanguageLink()
-                </li>
-                <li class="btn">
-                    @Html.LogoutLink()
-                </li>
-            </ul>
-        </div>
-    </div>
+    <ul id="HeaderNavigation" class="btn-group">
+        <li class="btn">
+            @Html.ProfileLink()
+        </li>
+        <li class="btn dropdown">
+            @Html.LanguageLink()
+        </li>
+        <li class="btn">
+            @Html.LogoutLink()
+        </li>
+    </ul>
 </div>

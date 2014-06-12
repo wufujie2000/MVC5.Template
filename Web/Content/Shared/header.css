@@ -1,4 +1,4 @@
-﻿#Header {
+#Header {
   background-color: #31353c;
   background-image: -webkit-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
   background-image: -moz-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
@@ -8,43 +8,30 @@
   box-shadow: 0 0 1px 0 inset;
   min-height: 80px;
 }
-#HeadersLeftPanel {
-  float: left;
-}
-#HeadersRightPanel {
+#HeaderNavigation {
   float: right;
 }
-#TopNavigation {
-  margin-right: 20px;
-  float: right;
-}
-#TopNavigationSections {
-  padding: 0;
-  margin: 0;
-}
-#TopNavigationSections > .btn {
+#HeaderNavigation > .btn {
   border: none;
   padding: 0;
-  margin: 0;
 }
-#TopNavigationSections > .btn > a {
+#HeaderNavigation > .btn > a {
   color: #cccccc;
   text-shadow: 0 0 #ffffff;
   display: block;
   padding: 10px;
 }
-#TopNavigationSections > .btn > a .fa {
+#HeaderNavigation > .btn > a .fa {
   margin-right: 5px;
 }
-#TopNavigationSections > .btn.open > a,
-#TopNavigationSections > .btn:hover > a {
+#HeaderNavigation > .btn.open > a,
+#HeaderNavigation > .btn:hover > a {
   background: #1aaef3;
   color: #ffffff;
 }
-#TopNavigationSections > .btn .dropdown-menu {
+#HeaderNavigation > .btn .dropdown-menu {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   text-align: left;
-  box-shadow: none;
   margin-top: 0;
 }

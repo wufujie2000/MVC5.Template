@@ -44,7 +44,7 @@ namespace Template.Components.Extensions.Html
                         icon.AddCssClass("fa fa-info");
                         break;
                     case LinkAction.Edit:
-                        icon.AddCssClass("fa fa-edit");
+                        icon.AddCssClass("fa fa-pencil");
                         break;
                     case LinkAction.Delete:
                         icon.AddCssClass("fa fa-times");

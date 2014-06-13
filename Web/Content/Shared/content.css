@@ -1,4 +1,4 @@
-﻿#Content {
+#Content {
   background-color: #f2f2f2;
   border-radius: 8px 0 0 8px;
   margin-left: 200px;
@@ -13,12 +13,11 @@
   background-image: -o-linear-gradient(to bottom, #ffffff 0, #f2f2f2 100%);
   background-image: linear-gradient(to bottom, #ffffff 0, #f2f2f2 100%);
   border-top-left-radius: 8px;
-  min-height: 60px;
 }
 #ContentHeader h1 {
   color: #555555;
-  padding: 15px 20px;
-  font-size: 28px;
+  padding: 10px 15px;
+  font-size: 24px;
   margin: 0;
 }
 #ContentBreadcrumb {
@@ -28,29 +27,30 @@
   padding-left: 10px;
 }
 #ContentBreadcrumb > a {
-  background-image: url('/Images/Shared/breadcrumb.png');
-  background-position: center right;
-  background-repeat: no-repeat;
-  padding: 8px 20px 8px 10px;
   color: #555555;
   display: inline-block;
+  padding: 8px 5px;
   font-size: 11px;
 }
 #ContentBreadcrumb > a:hover {
   color: #555555;
 }
-#ContentBreadcrumb > a:last-child {
-  background-image: none;
+#ContentBreadcrumb > a i {
+  padding-right: 5px;
 }
-#ContentBreadcrumb > a > i {
-  margin-right: 5px;
+#ContentBreadcrumb span {
+  font-size: 11px;
 }
 #ContentBreadcrumb .current {
   color: #555555;
   font-weight: bold;
+}
+#ContentContainer {
+  padding-top: 15px;
 }
 @media (max-width: 767px) {
   #Content {
     margin-left: 45px;
   }
 }
+/*# sourceMappingURL=content.css.map */

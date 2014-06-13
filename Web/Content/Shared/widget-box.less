@@ -6,18 +6,16 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
     border: @content-border;
     margin-bottom: 15px;
-    border-radius: 6px;
-    margin-top: 15px;
+    border-radius: 10px;
     clear: both;
 }
 
 .widget-title {
     border-bottom: @content-border;
-    border-radius: 6px 6px 0 0;
     color: @content-text-color;
     height: 35px;
 
-    span.widget-title-icon {
+    .widget-title-icon {
         border-right: @content-border;
         padding: 9px 10px 5px;
         float: left;
@@ -33,7 +31,6 @@
 
     .widget-title-buttons {
         float: right;
-        margin: 0;
 
         .btn {
             border-left: @content-border;
@@ -41,7 +38,6 @@
             padding: 9px 10px 7px;
             border-radius: 0;
             font-size: 12px;
-            margin: 0;
 
             &:hover {
                 background: @active-color;
@@ -49,23 +45,21 @@
             }
 
             &:last-child {
-                border-radius: 0 5px 0 0;
+                border-radius: 0 10px 0 0;
             }
 
             > i {
-                margin-right: 5px;
+                padding-right: 5px;
             }
         }
     }
 }
 
 .widget-content {
-    clear: both;
-
     .form-group {
         border-bottom: @form-group-border-bottom;
         border-top: @form-group-border-top;
-        padding: 10px 0;
+        padding: 10px;
         margin: 0;
 
         &:before,
@@ -89,13 +83,12 @@
 
     .control-label {
         color: @content-text-color;
-        padding: 7px 0 7px 15px;
         text-align: right;
+        padding: 6px 15px;
         margin: 0;
 
         .required {
             color: @validation-color;
-            font-weight: normal;
         }
     }
 

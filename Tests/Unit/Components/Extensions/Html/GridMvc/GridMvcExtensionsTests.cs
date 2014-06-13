@@ -174,7 +174,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             gridColumnCollection.AddActionLink(LinkAction.Edit);
 
             String actual = editFunc.Invoke(view);
-            String expected = String.Format("<div class=\"action-link-container edit-action-link\"><a href=\"{0}\"><i class=\"fa fa-edit\"></i></a></div>",
+            String expected = String.Format("<div class=\"action-link-container edit-action-link\"><a href=\"{0}\"><i class=\"fa fa-pencil\"></i></a></div>",
                 new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Edit", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);

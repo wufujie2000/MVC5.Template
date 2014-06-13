@@ -2,6 +2,7 @@
 @{
     MvcSiteMapBreadcrumbNode current = Model.LastOrDefault();
 }
+
 @foreach (MvcSiteMapBreadcrumbNode node in Model)
 {
     String nodeClass = node == current ? "current" : String.Empty;
@@ -16,5 +17,10 @@
         <a class="@nodeClass">
             <i class="@node.IconClass"></i>@node.Title
         </a>
+    }
+
+    if (node != current)
+    {
+        <span class="fa fa-angle-right"></span>
     }
 }

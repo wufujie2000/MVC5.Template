@@ -2,7 +2,10 @@
 (function () {
     $(document).on('keyup', '#SearchInput', function () {
         var searchString = $(this).val().toLowerCase();
-        var menus = $('#SidebarNavigationList li');
+        if ($('#Sidebar').width() < 100)
+            searchString = '';
+
+        var menus = $('#SidebarNavigation li');
         menus.each(function (index, element) {
             var liElement = $(element);
             if (liElement.text().toLowerCase().contains(searchString))
@@ -22,37 +25,25 @@
 
 // Hovering
 (function () {
-    if ($('#SidebarNavigationList li:not(.active):hover').length == 0)
-        $('#SidebarNavigationList li.active').removeClass('active-hovering');
-    if ($('#SidebarNavigationList li.active:hover').length > 0)
-        $('#SidebarNavigationList li.active').removeClass('active-hovering');
-
-    $(document).on('mouseenter', '#SidebarNavigationList a', function () {
-        var liElement = $(this).parent();
-        if (liElement.hasClass('active'))
-            liElement.removeClass('active-hovering');
+    $(document).on('mouseenter', '#SidebarNavigation a', function () {
+        var parent = $(this).parent();
+        if (!parent.hasClass('active') && !parent.hasClass('inactive'))
+            $('#SidebarNavigation .active').removeClass('active').addClass('inactive');
         else
-            $('#SidebarNavigationList').find('.active').addClass('active-hovering');
-    });
+            parent.removeClass('inactive').addClass('active');
 
-    $(document).on('mouseenter', '#SidebarNavigationList > li > a', function () {
-        var liElement = $(this).parent();
-        if (liElement.hasClass('has-active-child'))
-            liElement.removeClass('active-child-hovering');
+        if (!parent.hasClass('has-active') && !parent.hasClass('has-active-hover'))
+            $('#SidebarNavigation .has-active').removeClass('has-active').addClass('has-active-hover');
         else
-            $('#SidebarNavigationList > li.has-active-child').addClass('active-child-hovering');
+            parent.removeClass('has-active-hover').addClass('has-active');
     });
 
-    $(document).on('mouseenter', '#SidebarNavigationList > li > ul a', function () {
-        $('#SidebarNavigationList > .has-active-child').addClass('active-child-hovering');
-    });
-
-    $(document).on('mouseleave', '#SidebarNavigationList', function () {
-        $('#SidebarNavigationList li.active-hovering').removeClass('active-hovering');
-        $('#SidebarNavigationList li.active-child-hovering').removeClass('active-child-hovering');
+    $(document).on('mouseleave', '#SidebarNavigation', function () {
+        $('#SidebarNavigation .has-active-hover').removeClass('has-active-hover').addClass('has-active');
+        $('#SidebarNavigation .inactive').removeClass('inactive').addClass('active');
 
         if ($('#Sidebar').width() < 100) {
-            var submenu = $('#SidebarNavigationList li.open');
+            var submenu = $('#SidebarNavigation li.open');
             submenu.toggleClass('closing');
             submenu.toggleClass('open');
             submenu.children('ul').fadeOut(200, function () {
@@ -92,8 +83,7 @@
                     submenu.toggleClass('closing');
                 }
             });
-        }
-        else {
+        } else {
             submenu.toggleClass('opening');
             submenuAction.siblings('ul').slideDown({
                 complete: function () {
@@ -120,8 +110,7 @@
             submenuAction.siblings('ul').fadeOut(200, function () {
                 submenu.toggleClass('closing');
             });
-        }
-        else {
+        } else {
             submenu.toggleClass('opening');
             submenuAction.siblings('ul').fadeIn(200, function () {
                 submenu.toggleClass('open');
@@ -134,12 +123,14 @@
 // Rendering on low resolutions
 (function () {
     if ($('#Sidebar').width() < 100)
-        $('#SidebarNavigationList li.open').removeClass('open');
+        $('#SidebarNavigation li.open').removeClass('open');
 
     $(window).on('resize', function () {
         if ($('#Sidebar').width() < 100)
-            $('#SidebarNavigationList li.open').removeClass('open').children('ul').hide();
+            $('#SidebarNavigation li.open').removeClass('open').children('ul').hide();
         else
-            $('#SidebarNavigationList li.has-active-child').addClass('open').children('ul').show();
+            $('#SidebarNavigation li.has-active').addClass('open').children('ul').show();
+
+        $('#SearchInput').keyup();
     });
 }());

@@ -102,7 +102,7 @@ namespace Template.Components.Extensions.Html
         }
         private static String GetEditLink<T>(T model) where T : BaseView
         {
-            return GetLink(model, LinkAction.Edit, "fa fa-edit");
+            return GetLink(model, LinkAction.Edit, "fa fa-pencil");
         }
         private static String GetDeleteLink<T>(T model) where T : BaseView
         {

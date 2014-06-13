@@ -1,4 +1,4 @@
-﻿.table thead {
+.table thead {
   background-color: transparent;
   background-image: -webkit-linear-gradient(center top, #fdfdfd, #eaeaea);
   background-image: -moz-linear-gradient(center top, #fdfdfd, #eaeaea);
@@ -17,10 +17,33 @@
   border-left: none;
 }
 .table .action-link-container {
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
   border-radius: 4px;
+  padding-top: 1.5px;
+  text-align: center;
   font-size: 11px;
   height: 20px;
   width: 20px;
+}
+.table .action-link-container:hover {
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.table .action-link-container a {
+  vertical-align: middle;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
 }
 .table .action-link-container i {
   color: #ffffff;
@@ -28,38 +51,11 @@
 .table .details-action-link {
   background-color: #5cb85c;
 }
-.table .details-action-link:hover {
-  background-color: #47a447;
-}
-.table .details-action-link a {
-  padding: 3px 8px;
-}
-.table .details-action-link i {
-  margin-top: 4.5px;
-}
 .table .edit-action-link {
   background-color: #f0ad4e;
 }
-.table .edit-action-link:hover {
-  background-color: #ed9c28;
-}
-.table .edit-action-link a {
-  padding: 3px 3.5px 3px 5.5px;
-}
-.table .edit-action-link i {
-  margin-top: 4.8px;
-}
 .table .delete-action-link {
   background-color: #d9534f;
-}
-.table .delete-action-link:hover {
-  background-color: #d2322d;
-}
-.table .delete-action-link a {
-  padding: 3px 6px;
-}
-.table .delete-action-link i {
-  margin-top: 4.5px;
 }
 .table .text-cell {
   text-align: left;
@@ -86,3 +82,7 @@
   background-image: linear-gradient(center bottom, rgba(0, 0, 0, 0.27) 0%, rgba(255, 255, 255, 0.27) 100%);
   color: #ffffff;
 }
+.grid-footer {
+  float: right;
+}
+/*# sourceMappingURL=table.css.map */

@@ -4,14 +4,14 @@
 {
     String menuLink = node.Action != null ? Url.Action(node.Action, node.Controller, new { area = node.Area }) : "#";
     String menuAddOn = node.Action == null ? "<i class='arrow fa fa-chevron-right'></i>" : String.Empty;
-    String menuClass = node.HasActiveSubMenu ? "has-active-child open" : String.Empty;
-    menuClass += node.IsActive ? " active active-hovering" : String.Empty;
+    String menuClass = node.HasActiveSubMenu ? "has-active open" : String.Empty;
     menuClass += node.Submenus.Count > 0 ? " submenu" : String.Empty;
+    menuClass += node.IsActive ? " active" : String.Empty;
     menuClass = menuClass.Trim();
 
     <li class="@menuClass">
         <a href="@menuLink">
-            <i class="@node.IconClass"></i>
+            <i class="menu-icon @node.IconClass"></i>
             <span>@node.Title</span>
             @Html.Raw(menuAddOn)
         </a>

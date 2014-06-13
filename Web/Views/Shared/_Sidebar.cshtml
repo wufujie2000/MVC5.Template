@@ -4,10 +4,8 @@
     <div id="SidebarSearch">
         @Html.TextBox("SearchInput", null, new { placeholder = Template.Resources.Shared.Resources.Search + "..." })
     </div>
-    <div id="SidebarNavigation">
-        <ul id="SidebarNavigationList">
-            @Html.DisplayForModel()
-        </ul>
-    </div>
+    <ul id="SidebarNavigation">
+        @Html.DisplayForModel()
+    </ul>
 </div>
 @Scripts.Render("~/Scripts/Sidebar/Bundle")

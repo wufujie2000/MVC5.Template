@@ -1,19 +1,17 @@
-﻿.widget-box {
+.widget-box {
   background-color: #fafafa;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
   border: 1px solid #cdcdcd;
   margin-bottom: 15px;
-  border-radius: 6px;
-  margin-top: 15px;
+  border-radius: 10px;
   clear: both;
 }
 .widget-title {
   border-bottom: 1px solid #cdcdcd;
-  border-radius: 6px 6px 0 0;
   color: #555555;
   height: 35px;
 }
-.widget-title span.widget-title-icon {
+.widget-title .widget-title-icon {
   border-right: 1px solid #cdcdcd;
   padding: 9px 10px 5px;
   float: left;
@@ -27,7 +25,6 @@
 }
 .widget-title .widget-title-buttons {
   float: right;
-  margin: 0;
 }
 .widget-title .widget-title-buttons .btn {
   border-left: 1px solid #cdcdcd;
@@ -35,25 +32,21 @@
   padding: 9px 10px 7px;
   border-radius: 0;
   font-size: 12px;
-  margin: 0;
 }
 .widget-title .widget-title-buttons .btn:hover {
   background: #1aaef3;
   color: #ffffff;
 }
 .widget-title .widget-title-buttons .btn:last-child {
-  border-radius: 0 5px 0 0;
+  border-radius: 0 10px 0 0;
 }
 .widget-title .widget-title-buttons .btn > i {
-  margin-right: 5px;
-}
-.widget-content {
-  clear: both;
+  padding-right: 5px;
 }
 .widget-content .form-group {
   border-bottom: 1px solid #eeeeee;
   border-top: 1px solid #ffffff;
-  padding: 10px 0;
+  padding: 10px;
   margin: 0;
 }
 .widget-content .form-group:before,
@@ -72,13 +65,12 @@
 }
 .widget-content .control-label {
   color: #555555;
-  padding: 7px 0 7px 15px;
   text-align: right;
+  padding: 6px 15px;
   margin: 0;
 }
 .widget-content .control-label .required {
   color: #d11919;
-  font-weight: normal;
 }
 .widget-content .input-validation-error {
   border-color: #d11919;

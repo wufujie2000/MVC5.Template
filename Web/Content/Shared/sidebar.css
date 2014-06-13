@@ -1,4 +1,4 @@
-﻿#Sidebar {
+#Sidebar {
   width: 200px;
   float: left;
 }
@@ -6,7 +6,7 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   margin: 10px;
 }
-#SearchInput {
+#SidebarSearch input {
   background-color: #1a1c20;
   color: #cccccc;
   border-radius: 4px;
@@ -17,100 +17,61 @@
   width: 100%;
 }
 #SidebarNavigation {
-  cursor: pointer;
-}
-#SidebarNavigationList {
-  border-bottom: 1px solid #383c45;
   padding: 0;
-  margin: 0;
 }
-#SidebarNavigationList > li {
-  border-bottom: 1px solid #2a2d34;
-  border-top: 1px solid #383c45;
-  position: relative;
-}
-#SidebarNavigationList > li.active-hovering,
-#SidebarNavigationList > li.has-active-child.active-hovering,
-#SidebarNavigationList > li.active-hovering a,
-#SidebarNavigationList > li.has-active-child.active-hovering a {
-  color: #cccccc;
-  background-color: inherit;
-  font-weight: inherit;
-}
-#SidebarNavigationList > li > a {
+#SidebarNavigation a {
   color: #cccccc;
   padding: 10px 0 10px 15px;
+  background: none;
   display: block;
 }
-#SidebarNavigationList > li > ul > li {
-  background: #3c414a;
-  border-top: 1px solid #383c45;
-}
-#SidebarNavigationList > li > ul > li.active-hovering,
-#SidebarNavigationList > li > ul > li.active-hovering a {
-  background-color: #3c414a;
-  color: #cccccc;
-  font-weight: normal;
-}
-#SidebarNavigationList > li > ul > li > a {
-  color: #cccccc;
-  padding: 10px 0 10px 25px;
-  display: block;
-}
-#SidebarNavigationList > li > ul > li > ul > li {
-  background: #474d58;
-  border-top: 1px solid #383c45;
-}
-#SidebarNavigationList > li > ul > li > ul > li.active-hovering,
-#SidebarNavigationList > li > ul > li > ul > li.active-hovering a {
-  background: #474d58;
-  color: #cccccc;
-  font-weight: normal;
-}
-#SidebarNavigationList > li > ul > li > ul > li > a {
-  color: #cccccc;
-  padding: 10px 0 10px 35px;
-  display: block;
-}
-#SidebarNavigationList .active,
-#SidebarNavigationList a:hover {
-  background: #1aaef3;
-  color: #ffffff;
-  font-weight: bold;
-}
-#SidebarNavigationList .active a {
-  background: url("/Images/Shared/menu-active.png") no-repeat scroll right center;
-  color: #ffffff;
-}
-#SidebarNavigationList .menu-icon {
+#SidebarNavigation a .menu-icon {
   width: 20px;
 }
-#SidebarNavigationList span {
-  margin-left: 5px;
+#SidebarNavigation a:hover,
+#SidebarNavigation .active > a {
+  background-color: #1aaef3;
+  color: #ffffff;
 }
-#SidebarNavigationList .arrow {
+#SidebarNavigation .active > a {
+  background-image: url("/Images/Shared/menu-active.png");
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+#SidebarNavigation li {
+  position: relative;
+}
+#SidebarNavigation li ul {
+  list-style: none;
+  z-index: 2;
+  padding: 0;
+}
+#SidebarNavigation li ul a {
+  background-color: #3c414a;
+  padding: 10px 0 10px 25px;
+}
+#SidebarNavigation li ul ul a {
+  background-color: #474d58;
+  padding: 10px 0 10px 35px;
+}
+#SidebarNavigation .arrow {
   -webkit-transition: transform 0.4s ease-out 0.1s;
   -moz-transition: transform 0.4s ease-out 0.1s;
   -o-transition: transform 0.4s ease-out 0.1s;
   transition: transform 0.4s ease-out 0.1s;
-  margin: 5px 20px 5px 5px;
+  margin: 6px 15px 5px 5px;
   font-size: 10px;
   float: right;
 }
-#SidebarNavigationList .opening > a > .arrow,
-#SidebarNavigationList .open > a > .arrow {
+#SidebarNavigation .opening > a > .arrow,
+#SidebarNavigation .open > a > .arrow {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   transform: rotate(90deg);
 }
-#SidebarNavigationList ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-#SidebarNavigationList li:not(.open):not(.closing) > ul {
+#SidebarNavigation li:not(.open):not(.closing) > ul {
   display: none;
 }
 @media (max-width: 767px) {
@@ -120,74 +81,52 @@
   #SidebarSearch {
     display: none;
   }
-  #SidebarNavigationList > li.has-active-child {
-    background: #1aaef3;
+  #SidebarNavigation > .has-active > a {
+    background-image: url("/Images/Shared/menu-active.png");
+    background-position: right center;
+    background-color: #1aaef3;
+    background-repeat: no-repeat;
     color: #ffffff;
   }
-  #SidebarNavigationList > li.has-active-child > a {
-    background: url("/Images/Shared/menu-active.png") no-repeat scroll right center;
-    color: #ffffff;
+  #SidebarNavigation .menu-icon {
+    text-align: center;
+    width: 10px;
   }
-  #SidebarNavigationList > li.active-child-hovering,
-  #SidebarNavigationList > li.active-child-hovering > a {
-    color: #cccccc;
-    background-color: inherit;
-    font-weight: inherit;
+  #SidebarNavigation .arrow,
+  #SidebarNavigation > li > a > span {
+    display: none;
   }
-  #SidebarNavigationList > li.open a,
-  #SidebarNavigationList > li.opening a {
-    background-image: none;
-  }
-  #SidebarNavigationList > li.active-child-hovering > ul > li a:hover {
-    background: #1aaef3;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  #SidebarNavigationList > li .active {
-    background: #3c414a;
-    font-weight: normal;
-  }
-  #SidebarNavigationList > li .active a {
+  #SidebarNavigation > li .active > a {
+    background-color: #3c414a;
     color: #cccccc;
     background-image: none;
   }
-  #SidebarNavigationList > li > a {
+  #SidebarNavigation > li .active > a:hover {
+    background-color: #1aaef3;
+    color: #ffffff;
+  }
+  #SidebarNavigation > li > a {
     text-align: center;
     padding-left: 0;
   }
-  #SidebarNavigationList > li > a > span {
-    display: none;
-  }
-  #SidebarNavigationList > li > ul {
+  #SidebarNavigation > li ul {
     position: absolute;
     width: 100px;
-    z-index: 2;
     left: 45px;
     top: 0;
   }
-  #SidebarNavigationList > li > ul .menu-icon {
-    width: 10px;
-  }
-  #SidebarNavigationList > li > ul > li > a,
-  #SidebarNavigationList > li > ul > li > ul > li > a {
-    padding: 6px 0 6px 8px;
+  #SidebarNavigation > li ul a {
     font-size: 10px;
+    padding: 6px;
   }
-  #SidebarNavigationList > li > ul > li:first-child,
-  #SidebarNavigationList > li > ul > li > ul > li:first-child {
-    border-top: none;
-  }
-  #SidebarNavigationList > li > ul > li > ul {
-    position: absolute;
-    width: 100px;
+  #SidebarNavigation > li ul ul {
     left: 100px;
-    z-index: 2;
-    top: 0;
   }
-  #SidebarNavigationList > li > ul > li > ul > li.active,
-  #SidebarNavigationList > li > ul > li > ul > li.active a {
-    background: #474d58;
-    color: #cccccc;
-    font-weight: normal;
+  #SidebarNavigation > li ul ul .active > a {
+    background-color: #474d58;
+    background-image: none;
+  }
+  #SidebarNavigation > li ul ul a {
+    padding: 6px;
   }
 }

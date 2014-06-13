@@ -5,19 +5,19 @@
         <SiteMapNode icon="fa fa-search" controller="Home" action="NotFound" />
         <SiteMapNode icon="fa fa-lock" controller="Home" action="Unauthorized" />
         <SiteMapNode icon="fa fa-user" controller="Profile">
-            <SiteMapNode icon="fa fa-edit" controller="Profile" action="Edit" />
+            <SiteMapNode icon="fa fa-pencil" controller="Profile" action="Edit" />
             <SiteMapNode icon="fa fa-times" controller="Profile" action="Delete" />
         </SiteMapNode>
         <SiteMapNode menu="true" icon="fa fa-users" area="Administration">
             <SiteMapNode menu="true" icon="fa fa-user" area="Administration" controller="Accounts" action="Index">
                 <SiteMapNode icon="fa fa-file-o" area="Administration" controller="Accounts" action="Create" />
                 <SiteMapNode icon="fa fa-info" area="Administration" controller="Accounts" action="Details" />
-                <SiteMapNode icon="fa fa-edit" area="Administration" controller="Accounts" action="Edit" />
+                <SiteMapNode icon="fa fa-pencil" area="Administration" controller="Accounts" action="Edit" />
             </SiteMapNode>
             <SiteMapNode menu="true" icon="fa fa-male" area="Administration" controller="Roles" action="Index">
                 <SiteMapNode icon="fa fa-file-o" area="Administration" controller="Roles" action="Create" />
                 <SiteMapNode icon="fa fa-info" area="Administration" controller="Roles" action="Details" />
-                <SiteMapNode icon="fa fa-edit" area="Administration" controller="Roles" action="Edit" />
+                <SiteMapNode icon="fa fa-pencil" area="Administration" controller="Roles" action="Edit" />
                 <SiteMapNode icon="fa fa-times" area="Administration" controller="Roles" action="Delete" />
             </SiteMapNode>
         </SiteMapNode>

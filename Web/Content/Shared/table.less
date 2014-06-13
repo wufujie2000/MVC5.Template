@@ -20,10 +20,35 @@
     }
 
     .action-link-container {
+        -moz-transition-duration: 0.3s;
+        -o-transition-duration: 0.3s;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
         border-radius: 4px;
+        padding-top: 1.5px;
+        text-align: center;
         font-size: 11px;
         height: 20px;
         width: 20px;
+
+        &:hover {
+            -moz-transition-duration: 0.3s;
+            -o-transition-duration: 0.3s;
+            -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+            -moz-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        a {
+            vertical-align: middle;
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+        }
 
         i {
             color: @active-text-color;
@@ -32,50 +57,14 @@
 
     .details-action-link {
         background-color: @details-action-color;
-
-        &:hover {
-            background-color: @details-action-active-color;
-        }
-
-        a {
-            padding: 3px 8px;
-        }
-
-        i {
-            margin-top: 4.5px;
-        }
     }
 
     .edit-action-link {
         background-color: @edit-action-color;
-
-        &:hover {
-            background-color: @edit-action-active-color;
-        }
-
-        a {
-            padding: 3px 3.5px 3px 5.5px;
-        }
-
-        i {
-            margin-top: 4.8px;
-        }
     }
 
     .delete-action-link {
         background-color: @delete-action-color;
-
-        &:hover {
-            background-color: @delete-action-active-color;
-        }
-
-        a {
-            padding: 3px 6px;
-        }
-
-        i {
-            margin-top: 4.5px;
-        }
     }
 
     .text-cell {
@@ -107,4 +96,8 @@
         .linear-gradient-background(center bottom, @gradient-from-color 0%, @gradient-to-color 100%, @active-color);
         color: @active-text-color;
     }
+}
+
+.grid-footer {
+    float: right;
 }

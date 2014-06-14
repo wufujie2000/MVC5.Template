@@ -1,10 +1,22 @@
 ﻿.linear-gradient-background(@gradient-definition, @from-color, @to-color, @default-color) {
     background-color: @default-color;
+
     background-image: -webkit-linear-gradient(@gradient-definition, @from-color, @to-color);
     background-image: -moz-linear-gradient(@gradient-definition, @from-color, @to-color);
     background-image: -ms-linear-gradient(@gradient-definition, @from-color, @to-color);
     background-image: -o-linear-gradient(@gradient-definition, @from-color, @to-color);
     background-image: linear-gradient(@gradient-definition, @from-color, @to-color);
+}
+
+.linear-gradient-background-image(@iamge-url, @gradient-definition, @from-color, @to-color, @default-color) {
+    background-color: @default-color;
+    background-image: @iamge-url;
+
+    background-image: @iamge-url, -webkit-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: @iamge-url, -moz-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: @iamge-url, -ms-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: @iamge-url, -o-linear-gradient(@gradient-definition, @from-color, @to-color);
+    background-image: @iamge-url, linear-gradient(@gradient-definition, @from-color, @to-color);
 }
 
 .transition-duration(@durasion) {

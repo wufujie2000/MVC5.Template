@@ -32,10 +32,21 @@
 #SidebarNavigation a:hover,
 #SidebarNavigation .active > a {
   background-color: #1aaef3;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
   color: #ffffff;
 }
 #SidebarNavigation .active > a {
+  background-color: #1aaef3;
   background-image: url("/Images/Shared/menu-active.png");
+  background-image: url("/Images/Shared/menu-active.png"), -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: url("/Images/Shared/menu-active.png"), -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: url("/Images/Shared/menu-active.png"), -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: url("/Images/Shared/menu-active.png"), -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: url("/Images/Shared/menu-active.png"), linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
   background-position: right center;
   background-repeat: no-repeat;
 }
@@ -83,9 +94,14 @@
     display: none;
   }
   #SidebarNavigation > .has-active > a {
-    background-image: url("/Images/Shared/menu-active.png");
-    background-position: right center;
     background-color: #1aaef3;
+    background-image: url("/Images/Shared/menu-active.png");
+    background-image: url("/Images/Shared/menu-active.png"), -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: url("/Images/Shared/menu-active.png"), -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: url("/Images/Shared/menu-active.png"), -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: url("/Images/Shared/menu-active.png"), -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: url("/Images/Shared/menu-active.png"), linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-position: right center;
     background-repeat: no-repeat;
     color: #ffffff;
   }
@@ -103,6 +119,11 @@
   }
   #SidebarNavigation > li .active > a:hover {
     background-color: #1aaef3;
+    background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+    background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
     color: #ffffff;
   }
   #SidebarNavigation > li > a {

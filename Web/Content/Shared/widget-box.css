@@ -3,7 +3,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
   border: 1px solid #cdcdcd;
   margin-bottom: 15px;
-  border-radius: 10px;
+  border-radius: 11px;
   clear: both;
 }
 .widget-title {
@@ -31,10 +31,16 @@
   color: #555555;
   padding: 9px 10px 7px;
   border-radius: 0;
+  border-top: none;
   font-size: 12px;
 }
 .widget-title .widget-title-buttons .btn:hover {
-  background: #1aaef3;
+  background-color: #1aaef3;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
   color: #ffffff;
 }
 .widget-title .widget-title-buttons .btn:last-child {
@@ -90,10 +96,10 @@
   text-align: center;
 }
 .widget-content table:last-of-type tr:last-child td:first-child {
-  border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 9px;
 }
 .widget-content table:last-of-type tr:last-child td:last-child {
-  border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 9px;
 }
 @media (min-width: 768px) {
   .widget-content .control-label {

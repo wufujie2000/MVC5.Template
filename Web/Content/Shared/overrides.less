@@ -2,6 +2,18 @@
 @import "../theme";
 
 /* Bootstrap */
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+    .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+    color: @active-color;
+    cursor: pointer;
+    z-index: 2;
+}
+
 .input-group .form-control {
     z-index: 1;
 }

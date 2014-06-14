@@ -1,4 +1,5 @@
-﻿@import "../theme";
+﻿@import "../mixins";
+@import "../theme";
 
 #Sidebar {
     width: 200px;
@@ -38,12 +39,12 @@
 
     a:hover,
     .active > a {
-        background-color: @active-background-color;
+        .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
         color: @active-color;
     }
 
     .active > a {
-        background-image: url("/Images/Shared/menu-active.png");
+        .linear-gradient-background-image(url("/Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
         background-position: right center;
         background-repeat: no-repeat;
     }
@@ -103,9 +104,8 @@
 
     #SidebarNavigation {
         > .has-active > a {
-            background-image: url("/Images/Shared/menu-active.png");
+            .linear-gradient-background-image(url("/Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
             background-position: right center;
-            background-color: @active-background-color;
             background-repeat: no-repeat;
             color: @active-color;
         }
@@ -126,7 +126,7 @@
                 color: @color;
 
                 &:hover {
-                    background-color: @active-background-color;
+                    .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
                     color: @active-color;
                 }
             }

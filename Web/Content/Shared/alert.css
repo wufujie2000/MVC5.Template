@@ -1,9 +1,9 @@
+.alert-messages {
+  margin-bottom: 10px;
+}
 .alert-messages .alert {
   padding: 10px 15px;
   margin-bottom: 3px;
-}
-.alert-messages .alert:first-child {
-  margin-top: 15px;
 }
 .alert-messages .alert > a {
   margin-left: 10px;

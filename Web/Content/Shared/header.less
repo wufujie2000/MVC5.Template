@@ -2,7 +2,6 @@
 @import "../theme";
 
 #Header {
-    .linear-gradient-background(to bottom, @background-from-color -40%, @background-to-color 50%, @background-color);
     box-shadow: 0 0 1px 0 inset;
     min-height: 80px;
 }
@@ -15,10 +14,10 @@
         padding: 0;
 
         > a {
-            color: @background-text-color;
-            text-shadow: @text-shadow;
+            text-shadow: 0 0 #ffffff;
             display: block;
             padding: 10px;
+            color: @color;
 
             .fa {
                 margin-right: 5px;
@@ -27,8 +26,8 @@
 
         &.open > a,
         &:hover > a {
-            background: @active-color;
-            color: @active-text-color;
+            background: @active-background-color;
+            color: @active-color;
         }
 
         .dropdown-menu {

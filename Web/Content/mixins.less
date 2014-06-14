@@ -7,6 +7,21 @@
     background-image: linear-gradient(@gradient-definition, @from-color, @to-color);
 }
 
+.transition-duration(@durasion) {
+    -moz-transition-duration: @durasion;
+    -o-transition-duration: @durasion;
+    -webkit-transition-duration: @durasion;
+    transition-duration: @durasion;
+}
+
+.transform(@transformation) {
+    -moz-transform: @transformation;
+    -ms-transform: @transformation;
+    -o-transform: @transformation;
+    -webkit-transform: @transformation;
+    transform: @transformation;
+}
+
 .box-shadow(@color) {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px @color;
 }

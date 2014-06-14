@@ -3,16 +3,16 @@
   float: left;
 }
 #SidebarSearch {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   margin: 10px;
 }
 #SidebarSearch input {
   background-color: #1a1c20;
-  color: #cccccc;
   border-radius: 4px;
   text-align: center;
   font-size: 12px;
   padding: 3px 0;
+  color: #cccccc;
   border: none;
   width: 100%;
 }
@@ -20,12 +20,13 @@
   padding: 0;
 }
 #SidebarNavigation a {
-  color: #cccccc;
   padding: 10px 0 10px 15px;
   background: none;
   display: block;
+  color: #cccccc;
 }
 #SidebarNavigation a .menu-icon {
+  text-align: center;
   width: 20px;
 }
 #SidebarNavigation a:hover,
@@ -47,11 +48,11 @@
   padding: 0;
 }
 #SidebarNavigation li ul a {
-  background-color: #3c414a;
+  background-color: #484e58;
   padding: 10px 0 10px 25px;
 }
 #SidebarNavigation li ul ul a {
-  background-color: #474d58;
+  background-color: #5f6774;
   padding: 10px 0 10px 35px;
 }
 #SidebarNavigation .arrow {
@@ -89,7 +90,6 @@
     color: #ffffff;
   }
   #SidebarNavigation .menu-icon {
-    text-align: center;
     width: 10px;
   }
   #SidebarNavigation .arrow,
@@ -97,9 +97,9 @@
     display: none;
   }
   #SidebarNavigation > li .active > a {
-    background-color: #3c414a;
-    color: #cccccc;
+    background-color: #484e58;
     background-image: none;
+    color: #cccccc;
   }
   #SidebarNavigation > li .active > a:hover {
     background-color: #1aaef3;
@@ -123,7 +123,7 @@
     left: 100px;
   }
   #SidebarNavigation > li ul ul .active > a {
-    background-color: #474d58;
+    background-color: #5f6774;
     background-image: none;
   }
   #SidebarNavigation > li ul ul a {

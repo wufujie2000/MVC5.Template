@@ -10,11 +10,10 @@
 }
 
 #ContentHeader {
-    .linear-gradient-background(to bottom, @content-background-from-color 0, @content-background-to-color 100%, @content-background-color);
     border-top-left-radius: 8px;
 
     h1 {
-        color: @content-text-color;
+        color: @content-color;
         padding: 10px 15px;
         font-size: 24px;
         margin: 0;
@@ -22,20 +21,16 @@
 }
 
 #ContentBreadcrumb {
-    background-color: @breadcrumb-color;
+    background-color: darken(@content-background-color, 3%);
     border-bottom: @content-border;
     border-top: @content-border;
     padding-left: 10px;
 
     > a {
-        color: @content-text-color;
+        color: @content-color;
         display: inline-block;
         padding: 8px 5px;
         font-size: 11px;
-
-        &:hover {
-            color: @breadcrumb-active-text-color;
-        }
 
         i {
             padding-right: 5px;
@@ -47,7 +42,6 @@
     }
 
     .current {
-        color: @breadcrumb-active-text-color;
         font-weight: bold;
     }
 }

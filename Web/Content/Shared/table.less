@@ -1,18 +1,18 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-.table {
+table {
     thead {
-        .linear-gradient-background(center top, @table-thead-top-color, @table-thead-bottom-color, transparent);
-
-        > tr > th {
-            border-bottom-width: 1px;
-        }
+        .linear-gradient-background(bottom, @gradient-middle-color 0, @gradient-to-color 100%, #ffffff);
     }
 
     th {
         text-align: center;
-        font-size: 12px;
+    }
+
+    th,
+    td {
+        border-left: @content-border;
     }
 
     .action-link-cell {
@@ -20,10 +20,7 @@
     }
 
     .action-link-container {
-        -moz-transition-duration: 0.3s;
-        -o-transition-duration: 0.3s;
-        -webkit-transition-duration: 0.3s;
-        transition-duration: 0.3s;
+        .transition-duration(0.3s);
         border-radius: 4px;
         padding-top: 1.5px;
         text-align: center;
@@ -32,26 +29,16 @@
         width: 20px;
 
         &:hover {
-            -moz-transition-duration: 0.3s;
-            -o-transition-duration: 0.3s;
-            -webkit-transition-duration: 0.3s;
-            transition-duration: 0.3s;
-            -moz-transform: scale(1.2);
-            -ms-transform: scale(1.2);
-            -o-transform: scale(1.2);
-            -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+            .transition-duration(0.3s);
+            .transform(scale(1.2));
         }
 
         a {
             vertical-align: middle;
             display: inline-block;
+            color: @active-color;
             height: 100%;
             width: 100%;
-        }
-
-        i {
-            color: @active-text-color;
         }
     }
 
@@ -91,10 +78,9 @@
 }
 
 .table-hover {
-    > tbody > tr:hover > td,
-    > tbody > tr:hover > th {
-        .linear-gradient-background(center bottom, @gradient-from-color 0%, @gradient-to-color 100%, @active-color);
-        color: @active-text-color;
+    > tbody > tr:hover > td {
+        .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
+        color: @active-color;
     }
 }
 

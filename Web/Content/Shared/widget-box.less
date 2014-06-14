@@ -2,7 +2,7 @@
 @import "../theme";
 
 .widget-box {
-    background-color: @widget-background-color;
+    background-color: lighten(@content-background-color, 3%);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
     border: @content-border;
     margin-bottom: 15px;
@@ -12,7 +12,7 @@
 
 .widget-title {
     border-bottom: @content-border;
-    color: @content-text-color;
+    color: @content-color;
     height: 35px;
 
     .widget-title-icon {
@@ -34,14 +34,14 @@
 
         .btn {
             border-left: @content-border;
-            color: @content-text-color;
+            color: @content-color;
             padding: 9px 10px 7px;
             border-radius: 0;
             font-size: 12px;
 
             &:hover {
-                background: @active-color;
-                color: @active-text-color;
+                background: @active-background-color;
+                color: @active-color;
             }
 
             &:last-child {
@@ -82,7 +82,7 @@
     }
 
     .control-label {
-        color: @content-text-color;
+        color: @content-color;
         text-align: right;
         padding: 6px 15px;
         margin: 0;
@@ -97,7 +97,6 @@
 
         &:focus {
             .box-shadow(lighten(@validation-color, 30%));
-            border-color: @validation-color;
         }
     }
 

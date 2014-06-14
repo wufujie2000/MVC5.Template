@@ -1,10 +1,4 @@
 #Header {
-  background-color: #31353c;
-  background-image: -webkit-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
-  background-image: -moz-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
-  background-image: -ms-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
-  background-image: -o-linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
-  background-image: linear-gradient(to bottom, #0056ba -40%, #31353c 50%);
   box-shadow: 0 0 1px 0 inset;
   min-height: 80px;
 }
@@ -16,10 +10,10 @@
   padding: 0;
 }
 #HeaderNavigation > .btn > a {
-  color: #cccccc;
   text-shadow: 0 0 #ffffff;
   display: block;
   padding: 10px;
+  color: #cccccc;
 }
 #HeaderNavigation > .btn > a .fa {
   margin-right: 5px;

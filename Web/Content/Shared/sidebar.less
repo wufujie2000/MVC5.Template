@@ -6,16 +6,16 @@
 }
 
 #SidebarSearch {
-    border-bottom: @sidebar-search-border-bottom;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     margin: 10px;
 
     input {
         background-color: darken(@background-color, 10%);
-        color: @background-text-color;
         border-radius: 4px;
         text-align: center;
         font-size: 12px;
         padding: 3px 0;
+        color: @color;
         border: none;
         width: 100%;
     }
@@ -25,20 +25,21 @@
     padding: 0;
 
     a {
-        color: @background-text-color;
         padding: 10px 0 10px 15px;
         background: none;
         display: block;
+        color: @color;
 
         .menu-icon {
+            text-align: center;
             width: 20px;
         }
     }
 
     a:hover,
     .active > a {
-        background-color: @active-color;
-        color: @active-text-color;
+        background-color: @active-background-color;
+        color: @active-color;
     }
 
     .active > a {
@@ -56,12 +57,12 @@
             padding: 0;
 
             a {
-                background-color: @sidebar-2nd-submenu-background-color;
+                background-color: lighten(@background-color, 10%);
                 padding: 10px 0 10px 25px;
             }
 
             ul a {
-                background-color: @sidebar-3rd-submenu-background-color;
+                background-color: lighten(@background-color, 20%);
                 padding: 10px 0 10px 35px;
             }
         }
@@ -104,13 +105,12 @@
         > .has-active > a {
             background-image: url("/Images/Shared/menu-active.png");
             background-position: right center;
-            background-color: @active-color;
+            background-color: @active-background-color;
             background-repeat: no-repeat;
-            color: @active-text-color;
+            color: @active-color;
         }
         
         .menu-icon {
-            text-align: center;
             width: 10px;
         }
 
@@ -121,13 +121,13 @@
 
         > li {
             .active > a {
-                background-color: @sidebar-2nd-submenu-background-color;
-                color: @background-text-color;
+                background-color: lighten(@background-color, 10%);
                 background-image: none;
+                color: @color;
 
                 &:hover {
-                    background-color: @active-color;
-                    color: @active-text-color;
+                    background-color: @active-background-color;
+                    color: @active-color;
                 }
             }
 
@@ -151,7 +151,7 @@
                     left: 100px;
 
                     .active > a {
-                        background-color: @sidebar-3rd-submenu-background-color;
+                        background-color: lighten(@background-color, 20%);
                         background-image: none;
                     }
 

@@ -3,14 +3,18 @@
     Session["Messages"] = null;
 }
 
-<div class="alert-messages">
+<div class="alerts">
     @if (messages != null)
     {
         foreach (AlertMessage alertMessage in messages)
         {
             <div class="alert alert-@alertMessage.Type.ToString().ToLowerInvariant()" data-fade-out-after="@alertMessage.FadeOutAfter" data-alert-for="@alertMessage.Key">
-                <span>@alertMessage.Message</span>
-                <a class="close" href="#">×</a>
+                <div class="alert-text">
+                    <span>@alertMessage.Message</span>
+                </div>
+                <div class="alert-close">
+                    <a class="close" href="#">×</a>
+                </div>
             </div>
         }
     }

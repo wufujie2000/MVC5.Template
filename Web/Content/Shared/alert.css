@@ -1,10 +1,17 @@
-.alert-messages {
-  margin-bottom: 10px;
-}
-.alert-messages .alert {
+.alerts .alert {
   padding: 10px 15px;
   margin-bottom: 3px;
+  width: 100%;
 }
-.alert-messages .alert > a {
-  margin-left: 10px;
+.alerts .alert div {
+  vertical-align: middle;
+  text-align: justify;
+  display: table-cell;
+}
+.alerts .alert .alert-text {
+  padding-right: 10px;
+  width: 100%;
+}
+.alerts .alert:last-child {
+  margin-bottom: 10px;
 }

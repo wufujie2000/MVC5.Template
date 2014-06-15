@@ -1,7 +1,7 @@
 ﻿// Alerts closing & fading
 (function () {
-    $(document).on('click', '.alert > a.close', function () {
-        $(this).parent().fadeTo(300, 0).slideUp(300, function () {
+    $(document).on('click', '.alert a.close', function () {
+        $(this).parent().parent().fadeTo(300, 0).slideUp(300, function () {
             $(this).remove();
         });
     });

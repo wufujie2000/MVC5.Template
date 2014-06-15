@@ -14,28 +14,40 @@ body {
 }
 
 #LoginContainer {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 420px;
+    max-width: 430px;
+    margin: 0 auto;
 }
 
 #LoginBox {
     background: @content-background-color;
     border-radius: 7px;
     min-height: 175px;
-    min-width: 420px;
+    min-width: 430px;
     position: fixed;
     top: 25%;
 
-    .alert-messages {
+    .alerts {
         margin: 10px 0;
 
         .alert {
             margin: 3px 20px 0;
             padding: 10px 15px;
 
-            > a {
-                margin-left: 10px;
+            .alert-text {
+                padding-right: 10px;
+                float: left;
+            }
+
+            .alert-close {
+                float: right;
+            }
+
+            &:after {
+                visibility: hidden;
+                display: block;
+                content: " ";
+                clear: both;
+                height: 0;
             }
         }
     }
@@ -53,6 +65,8 @@ body {
         padding-top: 7px;
 
         .select2-container {
+            width: 100%;
+
             .select2-choice {
                 box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
                 border-radius: 0 4px 4px 0;
@@ -61,7 +75,6 @@ body {
                 line-height: 1.42857;
                 padding: 6px 12px;
                 height: 34px;
-                width: 344px;
             }
 
             &.select2-dropdown-open .select2-choice {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Template.Components.Alerts;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Resources.Views.AccountView;
@@ -25,9 +26,10 @@ namespace Template.Tests.Unit.Services
         {
             context = new TestingContext();
             service = new AuthService(new UnitOfWork(context));
+            service.AlertMessages = new MessagesContainer();
+            service.ModelState = new ModelStateDictionary();
 
             httpMock = new HttpMock();
-            service.ModelState = new ModelStateDictionary();
             HttpContext.Current = httpMock.HttpContext;
 
             TearDownData();
@@ -83,16 +85,17 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanLogin_AddsErrorMessageThenCanNotLoginFromNotExistingAccount()
+        public void CanLogin_AddsErrorMessageThenCanNotLoginWithNotExistingAccount()
         {
             LoginView account = new LoginView();
             account.Username = String.Empty;
             service.CanLogin(account);
 
             String expected = Validations.IncorrectUsernameOrPassword;
-            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
+            AlertMessage actualMessage = service.AlertMessages.First();
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(expected, actualMessage.Message);
         }
 
         [Test]
@@ -112,9 +115,10 @@ namespace Template.Tests.Unit.Services
             service.CanLogin(loginView);
 
             String expected = Validations.IncorrectUsernameOrPassword;
-            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
+            AlertMessage actualMessage = service.AlertMessages.First();
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(expected, actualMessage.Message);
         }
 
         [Test]

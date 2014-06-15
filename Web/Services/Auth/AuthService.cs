@@ -51,7 +51,7 @@ namespace Template.Services
         private Boolean AccountExists(Account account)
         {
             if (account == null)
-                ModelState.AddModelError(String.Empty, Validations.IncorrectUsernameOrPassword);
+                AlertMessages.AddError(String.Empty, Validations.IncorrectUsernameOrPassword);
 
             return account != null;
         }
@@ -59,7 +59,7 @@ namespace Template.Services
         {
             Boolean passwordCorrect = BCrypter.Verify(password, passhash);
             if (!passwordCorrect)
-                ModelState.AddModelError(String.Empty, Validations.IncorrectUsernameOrPassword);
+                AlertMessages.AddError(String.Empty, Validations.IncorrectUsernameOrPassword);
 
             return passwordCorrect;
         }

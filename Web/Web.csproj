@@ -405,9 +405,6 @@
     <Content Include="Mvc.sitemap" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapBreadcrumb.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapMenuCollection.cshtml" />
   </ItemGroup>
   <ItemGroup>

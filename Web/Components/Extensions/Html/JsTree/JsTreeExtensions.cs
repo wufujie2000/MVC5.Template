@@ -7,22 +7,22 @@ using System.Web.Mvc;
 
 namespace Template.Components.Extensions.Html
 {
-    public static class TreeViewExtensions
+    public static class JsTreeExtensions
     {
-        public static MvcHtmlString TreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, Tree>> tree)
+        public static MvcHtmlString JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> model)
         {
-            return TreeViewFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(tree), "SelectedIds"),
-                ModelMetadata.FromLambdaExpression(tree, html.ViewData).Model as Tree);
+            return JsTreeViewFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(model), "SelectedIds"),
+                ModelMetadata.FromLambdaExpression(model, html.ViewData).Model as JsTree);
         }
 
-        private static MvcHtmlString TreeViewFor(String name, Tree tree)
+        private static MvcHtmlString JsTreeViewFor(String name, JsTree tree)
         {
             return new MvcHtmlString(FormIdSpan(name, tree.SelectedIds) + FormTreeView(name, tree.Nodes));
         }
         private static String FormIdSpan(String name, IList<String> selectedIds)
         {
             TagBuilder idSpan = new TagBuilder("span");
-            idSpan.AddCssClass("tree-view-ids");
+            idSpan.AddCssClass("js-tree-view-ids");
 
             StringBuilder hiddenInputs = new StringBuilder();
             TagBuilder input = new TagBuilder("input");
@@ -38,23 +38,23 @@ namespace Template.Components.Extensions.Html
             idSpan.InnerHtml = hiddenInputs.ToString();
             return idSpan.ToString();
         }
-        private static String FormTreeView(String name, IEnumerable<TreeNode> treeNodes)
+        private static String FormTreeView(String name, IEnumerable<JsTreeNode> treeNodes)
         {
             TagBuilder treeView = new TagBuilder("div");
             treeView.MergeAttribute("for", name);
-            treeView.AddCssClass("tree-view");
+            treeView.AddCssClass("js-tree-view");
 
             AddNodes(treeView, treeNodes);
             return treeView.ToString();
         }
-        private static void AddNodes(TagBuilder root, IEnumerable<TreeNode> nodes)
+        private static void AddNodes(TagBuilder root, IEnumerable<JsTreeNode> nodes)
         {
             if (nodes.Count() == 0) return;
 
             TagBuilder branch = new TagBuilder("ul");
             StringBuilder leafBuilder = new StringBuilder();
 
-            foreach (TreeNode treeNode in nodes)
+            foreach (JsTreeNode treeNode in nodes)
             {
                 TagBuilder node = new TagBuilder("li");
                 node.MergeAttribute("id", treeNode.Id);

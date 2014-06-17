@@ -16,7 +16,7 @@
             @Html.FormLabelFor(model => model.PrivilegesTree)
             using (Html.ContentGroup())
             {
-                @Html.TreeViewFor(model => model.PrivilegesTree)
+                @Html.JsTreeViewFor(model => model.PrivilegesTree)
             }
             @Html.FormValidationFor(model => model.PrivilegesTree)
         }

@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Html\ILinkableView.cs" />
-    <Compile Include="Extensions\Html\JsTree\Tree.cs" />
-    <Compile Include="Extensions\Html\JsTree\TreeNode.cs" />
+    <Compile Include="Extensions\Html\JsTree\JsTree.cs" />
+    <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Extensions\Html\Bootstrap\InputGroup.cs" />
     <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
     <Compile Include="Extensions\Html\Header\HeaderExtensions.cs" />
-    <Compile Include="Extensions\Html\JsTree\TreeViewExtensions.cs" />
+    <Compile Include="Extensions\Html\JsTree\JsTreeExtensions.cs" />
     <Compile Include="Extensions\Net\SystemExtensions.cs" />
     <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />

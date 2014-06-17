@@ -62,8 +62,8 @@ namespace Template.Services
 
         public virtual void SeedPrivilegesTree(RoleView view)
         {
-            TreeNode rootNode = new TreeNode();
-            view.PrivilegesTree = new Tree();
+            JsTreeNode rootNode = new JsTreeNode();
+            view.PrivilegesTree = new JsTree();
             view.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
             view.PrivilegesTree.SelectedIds = UnitOfWork
@@ -87,12 +87,12 @@ namespace Template.Services
 
             foreach (IGrouping<String, Privilege> areaPrivilege in allPrivileges)
             {
-                TreeNode areaNode = new TreeNode(areaPrivilege.Key);
+                JsTreeNode areaNode = new JsTreeNode(areaPrivilege.Key);
                 foreach (IGrouping<String, Privilege> controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
                 {
-                    TreeNode controllerNode = new TreeNode(controllerPrivilege.Key);
+                    JsTreeNode controllerNode = new JsTreeNode(controllerPrivilege.Key);
                     foreach (IGrouping<String, Privilege> actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
-                        controllerNode.Nodes.Add(new TreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
+                        controllerNode.Nodes.Add(new JsTreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
 
                     if (areaNode.Name == null)
                         rootNode.Nodes.Add(controllerNode);

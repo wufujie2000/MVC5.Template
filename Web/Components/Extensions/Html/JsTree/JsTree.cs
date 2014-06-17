@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Template.Components.Extensions.Html
 {
-    public class Tree
+    public class JsTree
     {
-        public IList<TreeNode> Nodes { get; set; }
+        public IList<JsTreeNode> Nodes { get; set; }
         public IList<String> SelectedIds { get; set; }
 
-        public Tree()
+        public JsTree()
         {
-            Nodes = new List<TreeNode>();
+            Nodes = new List<JsTreeNode>();
             SelectedIds = new List<String>();
         }
     }

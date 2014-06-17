@@ -54,7 +54,7 @@
 
 // JsTree binding
 (function () {
-    $('.tree-view').each(function () {
+    $('.js-tree-view').each(function () {
         var treeView = $(this).jstree({
             'plugins': [
                 'checkbox'
@@ -64,7 +64,7 @@
             }
         }).jstree();
 
-        $(this).prev('.tree-view-ids').children().each(function () {
+        $(this).prev('.js-tree-view-ids').children().each(function () {
             treeView.select_node($(this).val(), false, true);
         });
 
@@ -72,9 +72,9 @@
     });
 
     $(document).on('submit', 'form', function (e) {
-        $(this).find('.tree-view').each(function () {
+        $(this).find('.js-tree-view').each(function () {
             var treeView = $(this).jstree();
-            var treeIdSpan = $(this).prev('.tree-view-ids');
+            var treeIdSpan = $(this).prev('.js-tree-view-ids');
 
             treeIdSpan.empty();
             $.each(treeView.get_selected(), function () {

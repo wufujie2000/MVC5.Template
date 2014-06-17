@@ -2,13 +2,13 @@
 
 namespace Template.Tests.Unit.Components.Extensions.Html
 {
-    public class TreeViewModel
+    public class JsTreeView
     {
-        public Tree Tree { get; set; }
+        public JsTree JsTree { get; set; }
 
-        public TreeViewModel()
+        public JsTreeView()
         {
-            Tree = new Tree();
+            JsTree = new JsTree();
         }
     }
 }

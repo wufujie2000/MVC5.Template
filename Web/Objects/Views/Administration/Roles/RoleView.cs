@@ -11,11 +11,11 @@ namespace Template.Objects
         [DatalistColumn()]
         public String Name { get; set; }
 
-        public Tree PrivilegesTree { get; set; }
+        public JsTree PrivilegesTree { get; set; }
 
         public RoleView()
         {
-            PrivilegesTree = new Tree();
+            PrivilegesTree = new JsTree();
         }
     }
 }

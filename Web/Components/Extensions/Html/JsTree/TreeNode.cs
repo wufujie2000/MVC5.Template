@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Template.Objects
+namespace Template.Components.Extensions.Html
 {
     public class TreeNode
     {

@@ -179,8 +179,8 @@
     <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Objects\Models\LogTests.cs" />
-    <Compile Include="Unit\Objects\Shared\TreeNodeTests.cs" />
-    <Compile Include="Unit\Objects\Shared\TreeTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\JsTree\TreeNodeTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\JsTree\TreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Unit\Resources\NoResourcesModel.cs" />
@@ -236,7 +236,9 @@
       <DependentUpon>201405180636338_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Unit\Objects\Shared\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

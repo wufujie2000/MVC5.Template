@@ -71,6 +71,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Components\Components.csproj">
+      <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
+      <Name>Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Objects\Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
       <Name>Objects</Name>

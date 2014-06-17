@@ -52,6 +52,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Html\ILinkableView.cs" />
+    <Compile Include="Extensions\Html\JsTree\Tree.cs" />
+    <Compile Include="Extensions\Html\JsTree\TreeNode.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
@@ -93,10 +96,6 @@
     <Compile Include="Alerts\MessagesContainer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Objects\Objects.csproj">
-      <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
-      <Name>Objects</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Resources\Resources.csproj">
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>Resources</Name>

@@ -1,4 +1,4 @@
-﻿using Template.Objects;
+﻿using Template.Components.Extensions.Html;
 
 namespace Template.Tests.Unit.Components.Extensions.Html
 {

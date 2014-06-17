@@ -46,8 +46,6 @@
     <Compile Include="Models\System\Language.cs" />
     <Compile Include="Models\System\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Shared\Tree.cs" />
-    <Compile Include="Shared\TreeNode.cs" />
     <Compile Include="Views\Auth\LoginView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountView.cs" />
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
@@ -57,7 +55,12 @@
     <Compile Include="Views\Profile\ProfileView.cs" />
     <Compile Include="Views\System\LanguageView.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Components\Components.csproj">
+      <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
+      <Name>Components</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

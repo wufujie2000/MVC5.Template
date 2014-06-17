@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using Template.Components.Security;
-using Template.Objects;
 using Template.Resources;
 
 namespace Template.Components.Extensions.Html
@@ -35,7 +34,7 @@ namespace Template.Components.Extensions.Html
             }
         }
 
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : ILinkableView
         {
             if (RoleFactory.Provider != null && !RoleFactory.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
@@ -81,7 +80,7 @@ namespace Template.Components.Extensions.Html
                 .Sortable();
         }
 
-        private static void AddLinkHtml<T>(IGridColumn<T> gridColumn, LinkAction action) where T : BaseView
+        private static void AddLinkHtml<T>(IGridColumn<T> gridColumn, LinkAction action) where T : ILinkableView
         {
             switch (action)
             {
@@ -96,19 +95,19 @@ namespace Template.Components.Extensions.Html
                     break;
             }
         }
-        private static String GetDetailsLink<T>(T model) where T : BaseView
+        private static String GetDetailsLink<T>(T model) where T : ILinkableView
         {
             return GetLink(model, LinkAction.Details, "fa fa-info");
         }
-        private static String GetEditLink<T>(T model) where T : BaseView
+        private static String GetEditLink<T>(T model) where T : ILinkableView
         {
             return GetLink(model, LinkAction.Edit, "fa fa-pencil");
         }
-        private static String GetDeleteLink<T>(T model) where T : BaseView
+        private static String GetDeleteLink<T>(T model) where T : ILinkableView
         {
             return GetLink(model, LinkAction.Delete, "fa fa-times");
         }
-        private static String GetLink<T>(T model, LinkAction action, String iconClass) where T : BaseView
+        private static String GetLink<T>(T model, LinkAction action, String iconClass) where T : ILinkableView
         {
             TagBuilder actionContainer = new TagBuilder("div");
             TagBuilder actionTag = new TagBuilder("a");

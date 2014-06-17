@@ -1,6 +1,7 @@
 ﻿using Datalist;
 using System;
 using System.ComponentModel.DataAnnotations;
+using Template.Components.Extensions.Html;
 
 namespace Template.Objects
 {

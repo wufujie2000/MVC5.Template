@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Template.Components.Extensions.Html;
 
 namespace Template.Objects
 {
-    public abstract class BaseView
+    public abstract class BaseView : ILinkableView
     {
         private String id;
 

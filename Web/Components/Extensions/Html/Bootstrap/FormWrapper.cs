@@ -39,7 +39,7 @@ namespace Template.Components.Extensions.Html
             disposed = true;
         }
 
-        public override string ToString()
+        public override String ToString()
         {
             return wrapper.ToString();
         }

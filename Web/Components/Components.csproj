@@ -33,21 +33,9 @@
     <Reference Include="BCrypt.Net">
       <HintPath>..\..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
     </Reference>
-    <Reference Include="Datalist, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -98,19 +86,13 @@
     <Compile Include="Security\Authorization\AccountPrivilege.cs" />
     <Compile Include="Security\Authorization\AllowUnauthorizedAttribute.cs" />
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
-    <Compile Include="Security\Authorization\RoleProvider.cs" />
     <Compile Include="Security\Authorization\RoleFactory.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Alerts\AlertMessage.cs" />
     <Compile Include="Alerts\AlertMessageType.cs" />
     <Compile Include="Alerts\MessagesContainer.cs" />
-    <Compile Include="Datalists\BaseDatalist.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Objects\Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
       <Name>Objects</Name>

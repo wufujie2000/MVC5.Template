@@ -237,6 +237,10 @@
     <Content Include="Images\Flags\Flags page.url" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Template\Template.csproj">
+      <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
+      <Name>Template</Name>
+    </ProjectReference>
     <ProjectReference Include="Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>Components</Name>

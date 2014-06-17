@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8531B9AE-C8C5-4B73-A0CE-B9CDFAD69074}</ProjectGuid>
+    <ProjectGuid>{DDC2AAD3-EEBD-456F-A0ED-EA3900478B45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template.Controllers</RootNamespace>
-    <AssemblyName>Template.Controllers</AssemblyName>
+    <RootNamespace>Template</RootNamespace>
+    <AssemblyName>Template</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,54 +30,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    <Reference Include="Datalist">
+      <HintPath>..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthController.cs" />
-    <Compile Include="Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Administration\Accounts\AccountsController.cs" />
-    <Compile Include="Administration\Roles\RolesController.cs" />
-    <Compile Include="BaseController.cs" />
-    <Compile Include="Datalist\DatalistController.cs" />
-    <Compile Include="Home\HomeController.cs" />
-    <Compile Include="Profile\ProfileController.cs" />
+    <Compile Include="Components\Datalists\BaseDatalist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServicedController.cs" />
+    <Compile Include="Security\Authorization\RoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template\Template.csproj">
-      <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
-      <Name>Template</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Components\Components.csproj">
+    <ProjectReference Include="..\Web\Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
+    <ProjectReference Include="..\Web\Data\Data.csproj">
       <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
       <Name>Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Objects\Objects.csproj">
+    <ProjectReference Include="..\Web\Objects\Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
       <Name>Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
-      <Name>Services</Name>
+    <ProjectReference Include="..\Web\Resources\Resources.csproj">
+      <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
+      <Name>Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

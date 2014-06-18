@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Template.Web.DependencyInjection.Ninject
+namespace Template.Web.DependencyInjection
 {
     public class NinjectResolver : IDependencyResolver
     {

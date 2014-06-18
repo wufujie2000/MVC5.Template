@@ -106,11 +106,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\DependencyInjection\Ninject\MainModule.cs" />
-    <Compile Include="App_Start\DependencyInjection\DependencyContainer.cs" />
-    <Compile Include="App_Start\DependencyInjection\Ninject\NinjectResolver.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\ViewEngine.cs" />
+    <Compile Include="App_Start\DependencyInjection\MainModule.cs" />
+    <Compile Include="App_Start\DependencyInjection\NinjectResolver.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

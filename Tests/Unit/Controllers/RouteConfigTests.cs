@@ -3,9 +3,9 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Web;
+using Template.Controllers;
 
-namespace Template.Tests.Unit.Web.App_Start
+namespace Template.Tests.Unit.Controllers
 {
     [TestFixture]
     public class RouteConfigTests

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Specialized;
 using System.Web.Mvc;
-using Template.Components.Mvc.Binders;
+using Template.Components.Mvc;
 
-namespace Template.Tests.Unit.Components.Mvc.Binders
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class TrimmingModelBinderTests

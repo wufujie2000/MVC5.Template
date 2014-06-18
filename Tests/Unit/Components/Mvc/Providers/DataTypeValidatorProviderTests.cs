@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Mvc.Providers;
-using Template.Components.Mvc.Validators;
+using Template.Components.Mvc;
 
-namespace Template.Tests.Unit.Components.Mvc.Providers
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class DataTypeValidatorProviderTests

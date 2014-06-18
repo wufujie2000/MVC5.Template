@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Template.Web
+namespace Template.Components.Mvc
 {
     public class ViewEngine : RazorViewEngine
     {

@@ -1,4 +1,4 @@
-﻿namespace Template.Components.Mvc.SiteMap
+﻿namespace Template.Components.Mvc
 {
     public class MvcSiteMapFactory
     {

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Template.Data.Core;
-using Template.Web.DependencyInjection.Ninject;
+using Template.Web.DependencyInjection;
 
-namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
+namespace Template.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
     public class NinjectResolverTests

@@ -1,14 +1,14 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using System;
-using Template.Components.Mvc.SiteMap;
+using Template.Components.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Data.Logging;
 using Template.Services;
-using Template.Web.DependencyInjection.Ninject;
+using Template.Web.DependencyInjection;
 
-namespace Template.Tests.Unit.Web.DependencyInjection.Ninject
+namespace Template.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
     public class MainModuleTests

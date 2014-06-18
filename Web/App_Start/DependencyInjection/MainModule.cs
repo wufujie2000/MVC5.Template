@@ -2,14 +2,14 @@
 using System;
 using System.Reflection;
 using System.Web.Hosting;
-using Template.Components.Mvc.SiteMap;
+using Template.Components.Mvc;
 using Template.Components.Security;
 using Template.Controllers;
 using Template.Data.Core;
 using Template.Data.Logging;
 using Template.Services;
 
-namespace Template.Web.DependencyInjection.Ninject
+namespace Template.Web.DependencyInjection
 {
     public class MainModule : NinjectModule
     {

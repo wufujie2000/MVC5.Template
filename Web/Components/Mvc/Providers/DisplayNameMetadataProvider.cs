@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Template.Resources;
 
-namespace Template.Components.Mvc.Providers
+namespace Template.Components.Mvc
 {
     public class DisplayNameMetadataProvider : DataAnnotationsModelMetadataProvider
     {

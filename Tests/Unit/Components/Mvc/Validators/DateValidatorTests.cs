@@ -2,12 +2,11 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Mvc.Providers;
-using Template.Components.Mvc.Validators;
+using Template.Components.Mvc;
 using Template.Objects;
 using Template.Resources.Shared;
 
-namespace Template.Tests.Unit.Components.Mvc.Validators
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class DateValidatorTests

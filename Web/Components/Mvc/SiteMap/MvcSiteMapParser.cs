@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Template.Components.Mvc.SiteMap
+namespace Template.Components.Mvc
 {
     public class MvcSiteMapParser : IMvcSiteMapParser
     {

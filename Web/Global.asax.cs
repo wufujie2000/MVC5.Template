@@ -9,13 +9,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Template.Components.Mvc.Adapters;
-using Template.Components.Mvc.Binders;
-using Template.Components.Mvc.Providers;
-using Template.Components.Mvc.SiteMap;
+using Template.Components.Mvc;
 using Template.Components.Security;
+using Template.Controllers;
 using Template.Web.DependencyInjection;
-using Template.Web.DependencyInjection.Ninject;
 
 namespace Template.Web
 {
@@ -60,7 +57,7 @@ namespace Template.Web
         }
         private void RegisterDependencyResolver()
         {
-            DependencyContainer.RegisterResolver(new NinjectResolver(new MainModule()));
+            DependencyResolver.SetResolver(new NinjectResolver(new MainModule()));
         }
         private void RegisterDataTypeValidator()
         {
@@ -69,11 +66,11 @@ namespace Template.Web
         }
         private void RegisterSiteMapProvider()
         {
-            MvcSiteMapFactory.Provider = DependencyContainer.Resolve<IMvcSiteMapProvider>();
+            MvcSiteMapFactory.Provider = DependencyResolver.Current.GetService<IMvcSiteMapProvider>();
         }
         private void RegisterRoleProvider()
         {
-            RoleFactory.Provider = DependencyContainer.Resolve<IRoleProvider>();
+            RoleFactory.Provider = DependencyResolver.Current.GetService<IRoleProvider>();
         }
         private void RegisterModelBinders()
         {

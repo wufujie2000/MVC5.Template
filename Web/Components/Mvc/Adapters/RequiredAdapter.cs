@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Template.Resources.Shared;
 
-namespace Template.Components.Mvc.Adapters
+namespace Template.Components.Mvc
 {
     public class RequiredAdapter : RequiredAttributeAdapter
     {

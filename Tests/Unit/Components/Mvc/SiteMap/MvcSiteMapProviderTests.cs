@@ -7,12 +7,12 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Xml.Linq;
-using Template.Components.Mvc.SiteMap;
+using Template.Components.Mvc;
 using Template.Components.Security;
 using Template.Resources;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Mvc.SiteMap
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class MvcSiteMapProviderTests

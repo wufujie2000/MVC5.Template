@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using Template.Components.Security;
 using Template.Resources;
 
-namespace Template.Components.Mvc.SiteMap
+namespace Template.Components.Mvc
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {

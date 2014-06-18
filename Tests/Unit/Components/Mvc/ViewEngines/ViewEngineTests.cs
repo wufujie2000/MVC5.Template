@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using System;
-using Template.Web;
+using Template.Components.Mvc;
 
-namespace Template.Tests.Unit.Web.App_Start
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class ViewEngineTests

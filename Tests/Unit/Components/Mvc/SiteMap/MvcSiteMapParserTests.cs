@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Template.Components.Mvc.SiteMap;
+using Template.Components.Mvc;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Mvc.SiteMap
+namespace Template.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class MvcSiteMapParserTests

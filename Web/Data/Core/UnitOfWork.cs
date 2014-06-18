@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using System;
-using Template.Data.Logging;
+using Template.Components.Logging;
 using Template.Objects;
 
 namespace Template.Data.Core

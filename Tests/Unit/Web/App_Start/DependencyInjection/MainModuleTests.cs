@@ -1,10 +1,10 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using System;
+using Template.Components.Logging;
 using Template.Components.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
-using Template.Data.Logging;
 using Template.Services;
 using Template.Web.DependencyInjection;
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 
-namespace Template.Data.Logging
+namespace Template.Components.Logging
 {
     public interface IEntityLogger
     {

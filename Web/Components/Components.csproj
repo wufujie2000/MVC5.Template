@@ -33,6 +33,9 @@
     <Reference Include="BCrypt.Net">
       <HintPath>..\..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
@@ -56,6 +59,9 @@
     <Compile Include="Extensions\Html\JsTree\JsTree.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
+    <Compile Include="Logging\IEntityLogger.cs" />
+    <Compile Include="Logging\LoggableEntry.cs" />
+    <Compile Include="Logging\LoggableEntryProperty.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />

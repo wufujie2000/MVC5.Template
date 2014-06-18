@@ -144,9 +144,9 @@
     <Compile Include="Unit\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="Unit\Controllers\SecurityTests.cs" />
     <Compile Include="Unit\Controllers\ServicedControllerTests.cs" />
-    <Compile Include="Unit\Data\Logging\EntityLoggerTests.cs" />
-    <Compile Include="Unit\Data\Logging\LoggableEntryPropertyTests.cs" />
-    <Compile Include="Unit\Data\Logging\LoggableEntryTests.cs" />
+    <Compile Include="Unit\Components\Logging\EntityLoggerTests.cs" />
+    <Compile Include="Unit\Components\Logging\LoggableEntryPropertyTests.cs" />
+    <Compile Include="Unit\Components\Logging\LoggableEntryTests.cs" />
     <Compile Include="Unit\Data\Core\RepositoryTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />
@@ -178,7 +178,7 @@
     <Compile Include="Unit\Services\GenericServiceTests.cs" />
     <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
-    <Compile Include="Unit\Objects\Models\LogTests.cs" />
+    <Compile Include="Unit\Objects\Models\System\LogTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeNodeTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />

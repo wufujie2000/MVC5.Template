@@ -2,11 +2,11 @@
 using System;
 using System.Reflection;
 using System.Web.Hosting;
+using Template.Components.Logging;
 using Template.Components.Mvc;
 using Template.Components.Security;
 using Template.Controllers;
 using Template.Data.Core;
-using Template.Data.Logging;
 using Template.Services;
 
 namespace Template.Web.DependencyInjection

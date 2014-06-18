@@ -5,13 +5,13 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using Template.Components.Logging;
 using Template.Data.Core;
-using Template.Data.Logging;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Data.Logging
+namespace Template.Tests.Unit.Components.Logging
 {
     [TestFixture]
     public class EntityLoggerTests

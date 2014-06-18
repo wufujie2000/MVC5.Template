@@ -6,7 +6,7 @@ using System.Text;
 using Template.Data.Core;
 using Template.Objects;
 
-namespace Template.Data.Logging
+namespace Template.Components.Logging
 {
     public class EntityLogger : IEntityLogger
     {

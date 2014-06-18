@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 
-namespace Template.Data.Logging
+namespace Template.Components.Logging
 {
     public class LoggableEntry
     {

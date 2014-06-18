@@ -2,11 +2,11 @@
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using Template.Data.Logging;
+using Template.Components.Logging;
 using Template.Tests.Data;
 using Template.Tests.Objects;
 
-namespace Template.Tests.Unit.Data.Logging
+namespace Template.Tests.Unit.Components.Logging
 {
     [TestFixture]
     public class LoggableEntryPropertyTests

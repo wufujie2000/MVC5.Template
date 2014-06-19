@@ -113,7 +113,7 @@ namespace Template.Tests.Unit.Data.Core
             unitOfWork.Commit();
 
             loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
-            loggerMock.Verify(mock => mock.SaveLogs(), Times.Once());
+            loggerMock.Verify(mock => mock.Save(), Times.Once());
         }
 
 
@@ -134,7 +134,7 @@ namespace Template.Tests.Unit.Data.Core
             }
 
             loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
-            loggerMock.Verify(mock => mock.SaveLogs(), Times.Never());
+            loggerMock.Verify(mock => mock.Save(), Times.Never());
         }
 
         #endregion

@@ -60,6 +60,7 @@
     <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Logging\IEntityLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LoggableEntry.cs" />
     <Compile Include="Logging\LoggableEntryProperty.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />

@@ -41,6 +41,7 @@ namespace Template.Web
             RegisterModelBinders();
             RegisterViewEngine();
             RegisterAdapters();
+            RegisterFilters();
             RegisterBundles();
             RegisterRoutes();
         }
@@ -86,6 +87,10 @@ namespace Template.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(
                 typeof(RequiredAttribute),
                 typeof(RequiredAdapter));
+        }
+        private void RegisterFilters()
+        {
+            GlobalFilters.Filters.Add(DependencyResolver.Current.GetService<IExceptionFilter>());
         }
         private void RegisterBundles()
         {

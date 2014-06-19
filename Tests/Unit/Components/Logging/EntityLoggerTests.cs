@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -10,31 +9,38 @@ using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
+using Template.Tests.Objects;
 
 namespace Template.Tests.Unit.Components.Logging
 {
     [TestFixture]
     public class EntityLoggerTests
     {
-        public AContext context;
-        public EntityLogger logger;
-        public AContext dataContext;
+        private AContext loggerContext;
+        private AContext dataContext;
+
+        private EntityLogger logger;
+        private DbEntityEntry entry;
 
         [SetUp]
         public void SetUp()
         {
-            context = new TestingContext();
-            logger = new EntityLogger(context);
+            loggerContext = new TestingContext();
+            logger = new EntityLogger(loggerContext);
             dataContext = new TestingContext();
-
             TearDownData();
+
+            TestModel model = ObjectFactory.CreateTestModel();
+            dataContext.Set<TestModel>().Add(model);
+            entry = dataContext.Entry(model);
+            dataContext.SaveChanges();
         }
 
         [TearDown]
         public void TearDown()
         {
             dataContext.Dispose();
-            context.Dispose();
+            loggerContext.Dispose();
         }
 
         #region Method: Log(IEnumerable<DbEntityEntry> entries)
@@ -42,10 +48,6 @@ namespace Template.Tests.Unit.Components.Logging
         [Test]
         public void Log_LogsAddedEntities()
         {
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
-
-            DbEntityEntry<Account> entry = dataContext.Entry(model);
             entry.State = EntityState.Added;
 
             Logs(entry);
@@ -54,13 +56,7 @@ namespace Template.Tests.Unit.Components.Logging
         [Test]
         public void Log_LogsModifiedEntities()
         {
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
-
-            DbEntityEntry<Account> entry = dataContext.Entry(model);
-            dataContext.SaveChanges();
-            model.Username += "1";
-
+            (entry.Entity as TestModel).Text += "?";
             entry.State = EntityState.Modified;
 
             Logs(entry);
@@ -69,25 +65,14 @@ namespace Template.Tests.Unit.Components.Logging
         [Test]
         public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
         {
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
-            DbEntityEntry<Account> entry = dataContext.Entry(model);
-            dataContext.SaveChanges();
-
             entry.State = EntityState.Modified;
 
-            Assert.IsFalse(context.Set<Log>().Any());
+            Assert.IsFalse(loggerContext.Set<Log>().Any());
         }
 
         [Test]
         public void Log_LogsDeletedEntities()
         {
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
-
-            DbEntityEntry<Account> entry = dataContext.Entry(model);
-            dataContext.SaveChanges();
-
             entry.State = EntityState.Deleted;
 
             Logs(entry);
@@ -96,35 +81,67 @@ namespace Template.Tests.Unit.Components.Logging
         [Test]
         public void Log_DoesNotLogUnsupportedStates()
         {
-            IEnumerable<EntityState> unsupportedStates = new[] { EntityState.Detached, EntityState.Unchanged };
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
+            entry.State = EntityState.Detached;
+            logger.Log(new[] { entry });
 
-            foreach (EntityState unsupportedState in unsupportedStates)
-            {
-                DbEntityEntry entry = dataContext.Entry(model);
-                entry.State = unsupportedState;
-                logger.Log(new[] { entry });
-            }
+            entry.State = EntityState.Unchanged;
+            logger.Log(new[] { entry });
+            logger.Save();
 
-            Assert.IsFalse(context.Set<Log>().Any());
+            Assert.IsFalse(loggerContext.Set<Log>().Any());
         }
 
         [Test]
         public void Log_LogsFormattedMessage()
         {
-            Account model = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(model);
-
-            DbEntityEntry entry = dataContext.Entry(model);
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
-            logger.SaveLogs();
+            logger.Save();
 
+            String actual = loggerContext.Set<Log>().First().Message;
             String expected = FormExpectedMessage(entry);
-            String actual = context.Set<Log>().First().Message;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Log_DoesNotSaveLogs()
+        {
+            entry.State = EntityState.Added;
+            logger.Log(new[] { entry });
+
+            Assert.IsFalse(loggerContext.Set<Log>().Any());
+        }
+
+        #endregion
+
+        #region Method: Save()
+
+        [Test]
+        public void Save_SavesLogs()
+        {
+            if (loggerContext.Set<Log>().Count() > 0)
+                Assert.Inconclusive();
+
+            entry.State = EntityState.Added;
+            logger.Log(new[] { entry });
+            logger.Save();
+
+            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
+        }
+
+        [Test]
+        public void Save_ClearsLogMessagesBuffer()
+        {
+            if (loggerContext.Set<Log>().Count() > 0)
+                Assert.Inconclusive();
+
+            entry.State = EntityState.Added;
+            logger.Log(new[] { entry });
+            logger.Save();
+            logger.Save();
+
+            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
         }
 
         #endregion
@@ -133,13 +150,13 @@ namespace Template.Tests.Unit.Components.Logging
 
         private void Logs(DbEntityEntry entry)
         {
-            if (context.Set<Log>().Count() > 0)
+            if (loggerContext.Set<Log>().Count() > 0)
                 Assert.Inconclusive();
 
             logger.Log(new[] { entry });
-            logger.SaveLogs();
+            logger.Save();
 
-            Assert.AreEqual(1, context.Set<Log>().Count());
+            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
         }
 
         private String FormExpectedMessage(DbEntityEntry entry)
@@ -159,10 +176,10 @@ namespace Template.Tests.Unit.Components.Logging
 
         private void TearDownData()
         {
-            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Log>().RemoveRange(context.Set<Log>());
+            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            loggerContext.Set<Log>().RemoveRange(loggerContext.Set<Log>());
             dataContext.SaveChanges();
-            context.SaveChanges();
+            loggerContext.SaveChanges();
         }
 
         #endregion

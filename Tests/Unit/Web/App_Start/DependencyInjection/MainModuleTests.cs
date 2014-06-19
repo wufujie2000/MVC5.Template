@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using NUnit.Framework;
 using System;
+using System.Web.Mvc;
 using Template.Components.Logging;
 using Template.Components.Mvc;
 using Template.Components.Security;
@@ -26,101 +27,101 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         #region Method: Load()
 
         [Test]
+        public void Load_BindsILogger()
+        {
+            AssertBind<ILogger, Logger>();
+        }
+
+        [Test]
         public void Load_BindsAContext()
         {
-            Type expected = typeof(Context);
-            Type actual = kernel.Get<AContext>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<AContext, Context>();
         }
 
         [Test]
         public void Load_BindsIUnitOfWork()
         {
-            Type expected = typeof(UnitOfWork);
-            Type actual = kernel.Get<IUnitOfWork>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IUnitOfWork, UnitOfWork>();
         }
 
         [Test]
         public void Load_BindsIEntityLogger()
         {
-            Type expected = typeof(EntityLogger);
-            Type actual = kernel.Get<IEntityLogger>().GetType();
+            AssertBind<IEntityLogger, EntityLogger>();
+        }
 
-            Assert.AreEqual(expected, actual);
+        [Test]
+        public void Load_BindsIExceptionFilter()
+        {
+            AssertBind<IExceptionFilter, ExceptionFilter>();
         }
 
         [Test]
         public void Load_BindsIRoleProvider()
         {
-            Type expected = typeof(RoleProvider);
-            Type actual = kernel.Get<IRoleProvider>().GetType();
+            AssertBind<IRoleProvider, RoleProvider>();
+        }
 
-            Assert.AreEqual(expected, actual);
+        [Test]
+        public void Load_BindsIRoleProviderToConstant()
+        {
+            IRoleProvider expected = kernel.Get<IRoleProvider>();
+            IRoleProvider actual = kernel.Get<IRoleProvider>();
+
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
         public void Load_BindsIMvcSiteMapParser()
         {
-            Type expected = typeof(MvcSiteMapParser);
-            Type actual = kernel.Get<IMvcSiteMapParser>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IMvcSiteMapParser, MvcSiteMapParser>();
         }
 
         [Test]
         [Ignore]
         public void Load_BindsIMvcSiteMapProvider()
         {
-            Type expected = typeof(MvcSiteMapProvider);
-            Type actual = kernel.Get<IMvcSiteMapProvider>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IMvcSiteMapProvider, MvcSiteMapProvider>();
         }
 
         [Test]
         public void Load_BindsIAuthService()
         {
-            Type expected = typeof(AuthService);
-            Type actual = kernel.Get<IAuthService>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IAuthService, AuthService>();
         }
 
         [Test]
         public void Load_BindsIHomeService()
         {
-            Type expected = typeof(HomeService);
-            Type actual = kernel.Get<IHomeService>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IHomeService, HomeService>();
         }
 
         [Test]
         public void Load_BindsIRolesService()
         {
-            Type expected = typeof(RolesService);
-            Type actual = kernel.Get<IRolesService>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IRolesService, RolesService>();
         }
 
         [Test]
         public void Load_BindsIProfileService()
         {
-            Type expected = typeof(ProfileService);
-            Type actual = kernel.Get<IProfileService>().GetType();
-
-            Assert.AreEqual(expected, actual);
+            AssertBind<IProfileService, ProfileService>();
         }
 
         [Test]
         public void Load_BindsIAccountsService()
         {
-            Type expected = typeof(AccountsService);
-            Type actual = kernel.Get<IAccountsService>().GetType();
+            AssertBind<IAccountsService, AccountsService>();
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private void AssertBind<TAbstraction, TImplementation>()
+        {
+            Type actual = kernel.Get<TAbstraction>().GetType();
+            Type expected = typeof(TImplementation);
 
             Assert.AreEqual(expected, actual);
         }

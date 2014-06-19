@@ -35,8 +35,7 @@ namespace Template.Components.Logging
                 }
             }
         }
-
-        public virtual void SaveLogs()
+        public virtual void Save()
         {
             context.SaveChanges();
         }

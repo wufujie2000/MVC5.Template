@@ -6,6 +6,6 @@ namespace Template.Components.Logging
     public interface IEntityLogger
     {
         void Log(IEnumerable<DbEntityEntry> entries);
-        void SaveLogs();
+        void Save();
     }
 }

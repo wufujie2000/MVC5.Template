@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using System.Web.Hosting;
+using System.Web.Mvc;
 using Template.Components.Logging;
 using Template.Components.Mvc;
 using Template.Components.Security;
@@ -15,9 +16,12 @@ namespace Template.Web.DependencyInjection
     {
         public override void Load()
         {
+            Bind<ILogger>().To<Logger>();
             Bind<AContext>().To<Context>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IEntityLogger>().To<EntityLogger>();
+
+            Bind<IExceptionFilter>().To<ExceptionFilter>();
 
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
             Bind<IRoleProvider>().ToConstant(CreateRoleProvider());

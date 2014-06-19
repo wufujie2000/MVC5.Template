@@ -48,7 +48,7 @@ namespace Template.Data.Core
             context.SaveChanges();
 
             if (logger != null)
-                logger.SaveLogs();
+                logger.Save();
         }
 
         public void Dispose()

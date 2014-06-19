@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Datalists\BaseDatalist.cs" />
+    <Compile Include="Components\Logging\Logger.cs" />
     <Compile Include="Components\Logging\EntityLogger.cs" />
+    <Compile Include="Components\Mvc\Filters\ExceptionFilter.cs" />
     <Compile Include="Components\Mvc\ViewEngines\ViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authorization\RoleProvider.cs" />

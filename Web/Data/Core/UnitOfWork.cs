@@ -37,8 +37,10 @@ namespace Template.Data.Core
 
         public void Rollback()
         {
+            AContext newContext = Activator.CreateInstance(context.GetType()) as AContext;
+
             context.Dispose();
-            context = new Context();
+            context = newContext;
         }
         public void Commit()
         {

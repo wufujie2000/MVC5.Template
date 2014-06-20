@@ -22,11 +22,11 @@ namespace Template.Components.Extensions.Html
             TagBuilder titleButtons = new TagBuilder("div");
             widgetContent = new TagBuilder("div");
 
-            widgetBox.AddCssClass("widget-box");
-            widgetTitle.AddCssClass("widget-title");
-            widgetContent.AddCssClass("widget-content");
-            titleIconSpan.AddCssClass("widget-title-icon");
             titleButtons.AddCssClass("widget-title-buttons");
+            titleIconSpan.AddCssClass("widget-title-icon");
+            widgetContent.AddCssClass("widget-content");
+            widgetTitle.AddCssClass("widget-title");
+            widgetBox.AddCssClass("widget-box");
             titleIcon.AddCssClass(iconClass);
             titleButtons.InnerHtml = buttons;
             titleHeader.InnerHtml = title;
@@ -47,8 +47,12 @@ namespace Template.Components.Extensions.Html
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
+
             writer.Write(widgetBox.ToString(TagRenderMode.EndTag));
             writer.Write(widgetContent.ToString(TagRenderMode.EndTag));
+            widgetContent = null;
+            widgetBox = null;
+
             disposed = true;
         }
     }

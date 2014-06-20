@@ -6,9 +6,9 @@ namespace Template.Components.Extensions.Html
 {
     public class FormWrapper : IDisposable
     {
-        protected Boolean disposed;
-        protected TextWriter writer;
         protected TagBuilder wrapper;
+        protected TextWriter writer;
+        private Boolean disposed;
 
         public FormWrapper(String cssClass)
         {
@@ -35,7 +35,11 @@ namespace Template.Components.Extensions.Html
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
+
             writer.Write(wrapper.ToString(TagRenderMode.EndTag));
+            wrapper = null;
+            writer = null;
+
             disposed = true;
         }
 

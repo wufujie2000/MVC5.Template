@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Services;
 
@@ -8,6 +9,7 @@ namespace Template.Controllers
         where TService : IService
     {
         protected TService Service;
+        private Boolean disposed;
 
         protected ServicedController(TService service)
         {
@@ -28,6 +30,18 @@ namespace Template.Controllers
             MessagesContainer current = Session["Messages"] as MessagesContainer;
             if (current != Service.AlertMessages)
                 current.Merge(Service.AlertMessages);
+        }
+
+        protected override void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+
+            Service.Dispose();
+            Service = default(TService);
+
+            disposed = true;
+
+            base.Dispose(disposing);
         }
     }
 }

@@ -18,17 +18,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                 textWriter.Write("Test");
 
             String actual = textWriter.GetStringBuilder().ToString();
-            String expected = String.Format("<div class=\"widget-box\">"
-                + "<div class=\"widget-title\">"
-                + "<span class=\"widget-title-icon\">"
-                + "<i class=\"Icon\"></i></span>"
-                + "<h5>Title</h5>"
-                + "<div class=\"widget-title-buttons\">Buttons</div></div>"
-                + "<div class=\"widget-content\">Test</div></div>",
-                "icon-class",
-                "Header title",
-                "<button>Button html</button>",
-                "<span>Content html</span>");
+            String expected = GetExpectedWidgetBoxHtml();
 
             Assert.AreEqual(expected, actual);
         }
@@ -38,7 +28,21 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanBeDisposedMultipleTimes()
+        public void Dispose_ClosesWidgetDivs()
+        {
+            StringWriter textWriter = new StringWriter();
+            WidgetBox widgetBox = new WidgetBox(textWriter, "Icon", "Title", "Buttons");
+            textWriter.Write("Test");
+            widgetBox.Dispose();
+
+            String actual = textWriter.GetStringBuilder().ToString();
+            String expected = GetExpectedWidgetBoxHtml();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
         {
             StringWriter textWriter = new StringWriter();
             WidgetBox widgetBox = new WidgetBox(textWriter, "Icon", "Title", "Buttons");
@@ -47,19 +51,24 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             widgetBox.Dispose();
 
             String actual = textWriter.GetStringBuilder().ToString();
-            String expected = String.Format("<div class=\"widget-box\">"
+            String expected = GetExpectedWidgetBoxHtml();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private String GetExpectedWidgetBoxHtml()
+        {
+            return "<div class=\"widget-box\">"
                 + "<div class=\"widget-title\">"
                 + "<span class=\"widget-title-icon\">"
                 + "<i class=\"Icon\"></i></span>"
                 + "<h5>Title</h5>"
                 + "<div class=\"widget-title-buttons\">Buttons</div></div>"
-                + "<div class=\"widget-content\">Test</div></div>",
-                "icon-class",
-                "Header title",
-                "<button>Button html</button>",
-                "<span>Content html</span>");
-
-            Assert.AreEqual(expected, actual);
+                + "<div class=\"widget-content\">Test</div></div>";
         }
 
         #endregion

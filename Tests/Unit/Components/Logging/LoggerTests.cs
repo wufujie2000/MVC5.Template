@@ -48,5 +48,16 @@ namespace Template.Tests.Unit.Components.Logging
         }
 
         #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
+        {
+            logger.Dispose();
+            logger.Dispose();
+        }
+
+        #endregion
     }
 }

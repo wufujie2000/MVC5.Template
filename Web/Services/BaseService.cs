@@ -5,7 +5,7 @@ using Template.Data.Core;
 
 namespace Template.Services
 {
-    public abstract class BaseService : IService, IDisposable
+    public abstract class BaseService : IService
     {
         private Boolean disposed;
 
@@ -38,8 +38,9 @@ namespace Template.Services
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
-            if (UnitOfWork != null)
-                UnitOfWork.Dispose();
+
+            UnitOfWork.Dispose();
+            UnitOfWork = null;
 
             disposed = true;
         }

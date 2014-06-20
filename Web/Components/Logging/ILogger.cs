@@ -2,7 +2,7 @@
 
 namespace Template.Components.Logging
 {
-    public interface ILogger
+    public interface ILogger : IDisposable
     {
         void Log(String message);
     }

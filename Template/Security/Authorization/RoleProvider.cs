@@ -101,7 +101,10 @@ namespace Template.Components.Security
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
+
             unitOfWork.Dispose();
+            unitOfWork = null;
+
             disposed = true;
         }
     }

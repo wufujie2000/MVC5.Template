@@ -55,5 +55,16 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         }
 
         #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
+        {
+            resolver.Dispose();
+            resolver.Dispose();
+        }
+
+        #endregion
     }
 }

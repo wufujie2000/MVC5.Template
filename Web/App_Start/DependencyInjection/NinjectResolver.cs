@@ -6,8 +6,9 @@ using System.Web.Mvc;
 
 namespace Template.Web.DependencyInjection
 {
-    public class NinjectResolver : IDependencyResolver
+    public class NinjectResolver : IDependencyResolver, IDisposable
     {
+        private Boolean disposed;
         private IKernel kernel;
 
         public NinjectResolver(params INinjectModule[] modules)
@@ -22,6 +23,21 @@ namespace Template.Web.DependencyInjection
         public IEnumerable<Object> GetServices(Type serviceType)
         {
             return kernel.GetAll(serviceType);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+
+            kernel.Dispose();
+            kernel = null;
+
+            disposed = true;
         }
     }
 }

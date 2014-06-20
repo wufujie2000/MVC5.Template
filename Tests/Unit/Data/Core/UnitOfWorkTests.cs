@@ -142,7 +142,18 @@ namespace Template.Tests.Unit.Data.Core
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanBeDisposedMultipleTimes()
+        public void Dispose_DiposesLogger()
+        {
+            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
+            UnitOfWork disposableUnitOfWork = new UnitOfWork(new TestingContext(), loggerMock.Object);
+
+            disposableUnitOfWork.Dispose();
+
+            loggerMock.Verify(mock => mock.Dispose(), Times.Once());
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
         {
             unitOfWork.Dispose();
             unitOfWork.Dispose();

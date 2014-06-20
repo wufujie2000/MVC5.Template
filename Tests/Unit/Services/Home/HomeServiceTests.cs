@@ -1,7 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using Template.Components.Alerts;
+using Template.Data.Core;
 using Template.Resources.Shared;
 using Template.Services;
 
@@ -15,7 +17,7 @@ namespace Template.Tests.Unit.Services
         [SetUp]
         public void SetUp()
         {
-            service = new HomeService(null);
+            service = new HomeService(new Mock<IUnitOfWork>().Object);
             service.AlertMessages = new MessagesContainer();
         }
 

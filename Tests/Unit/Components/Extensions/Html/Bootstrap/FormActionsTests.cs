@@ -28,7 +28,21 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanBeDisposedMultipleTimes()
+        public void Dispose_ClosesFormActionDivs()
+        {
+            StringWriter textWriter = new StringWriter(new StringBuilder());
+            FormActions formActions = new FormActions(textWriter, "css-class");
+            textWriter.Write("Content");
+            formActions.Dispose();
+
+            String expected = "<div class=\"form-group\"><div class=\"css-class\">Content</div></div>";
+            String actual = textWriter.GetStringBuilder().ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
         {
             StringWriter textWriter = new StringWriter(new StringBuilder());
             FormActions formActions = new FormActions(textWriter, "css-class");

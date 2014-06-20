@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,13 @@ namespace Template.Tests.Unit.Security
             provider = new RoleProvider(typeof(BaseController).Assembly, new UnitOfWork(context));
 
             TearDownData();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            context.Dispose();
+            provider.Dispose();
         }
 
         #region Method: GetAccountPrivileges(String accountId)
@@ -191,7 +199,17 @@ namespace Template.Tests.Unit.Security
         #region Method: Dispose()
 
         [Test]
-        public void Dispose_CanBeDisposedMultipleTimes()
+        public void Dispose_DisposesUnitOfWork()
+        {
+            Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
+            RoleProvider roleProvider = new RoleProvider(typeof(BaseController).Assembly, unitOfWorkMock.Object);
+            roleProvider.Dispose();
+
+            unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
         {
             provider.Dispose();
             provider.Dispose();

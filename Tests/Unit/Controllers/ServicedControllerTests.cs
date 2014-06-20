@@ -28,6 +28,13 @@ namespace Template.Tests.Unit.Controllers
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
+        [TearDown]
+        public void TearDwon()
+        {
+            service.Dispose();
+            controller.Dispose();
+        }
+
         #region Constructor: ServicedController(TService service)
 
         [Test]
@@ -115,6 +122,28 @@ namespace Template.Tests.Unit.Controllers
             IEnumerable<AlertMessage> actual = controller.Session["Messages"] as IEnumerable<AlertMessage>;
 
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_DisposesService()
+        {
+            Mock<IService> serviceMock = new Mock<IService>();
+            ServicedControllerStub disposableController = new ServicedControllerStub(serviceMock.Object);
+
+            disposableController.Dispose();
+
+            serviceMock.Verify(mock => mock.Dispose(), Times.Once());
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
+        {
+            controller.Dispose();
+            controller.Dispose();
         }
 
         #endregion

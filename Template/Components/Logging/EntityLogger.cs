@@ -11,6 +11,7 @@ namespace Template.Components.Logging
     public class EntityLogger : IEntityLogger
     {
         private AContext context;
+        private Boolean disposed;
 
         public EntityLogger(AContext context)
         {
@@ -52,6 +53,21 @@ namespace Template.Components.Logging
                 messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
 
             return messageBuilder.ToString();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+
+            context.Dispose();
+            context = null;
+
+            disposed = true;
         }
     }
 }

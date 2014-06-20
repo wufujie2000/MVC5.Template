@@ -6,6 +6,7 @@ namespace Template.Components.Extensions.Html
     public class FormActions : FormGroup
     {
         private FormWrapper formWrapper;
+        private Boolean disposed;
 
         public FormActions(TextWriter writer, String cssClass)
             : base(writer)
@@ -16,7 +17,11 @@ namespace Template.Components.Extensions.Html
         protected override void Dispose(Boolean disposing)
         {
             if (disposed) return;
+
             formWrapper.Dispose();
+            formWrapper = null;
+            disposed = true;
+
             base.Dispose(disposing);
         }
     }

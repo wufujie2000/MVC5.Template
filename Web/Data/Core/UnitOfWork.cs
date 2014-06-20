@@ -7,9 +7,9 @@ namespace Template.Data.Core
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private Boolean disposed;
-        private AContext context;
         private IEntityLogger logger;
+        private AContext context;
+        private Boolean disposed;
 
         public UnitOfWork(AContext context, IEntityLogger logger = null)
         {
@@ -59,8 +59,11 @@ namespace Template.Data.Core
         protected virtual void Dispose(Boolean disposing)
         {
             if (disposed) return;
+
+            if (logger != null) logger.Dispose();
             context.Dispose();
             context = null;
+            logger = null;
 
             disposed = true;
         }

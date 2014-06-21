@@ -119,15 +119,6 @@ namespace Template.Tests.Helpers
                 Abbreviation = "Abbreviation" + instanceNumber.ToString()
             };
         }
-        public static LanguageView CreateLanguageView(Int32 instanceNumber = 1)
-        {
-            return new LanguageView()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + instanceNumber.ToString(),
-                Abbreviation = "Abbreviation" + instanceNumber.ToString()
-            };
-        }
 
         public static TestModel CreateTestModel(Int32 instanceNumber = 1)
         {

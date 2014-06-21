@@ -7,17 +7,15 @@ namespace Template.Data.Mapping
     {
         public static void MapObjects()
         {
-            MapAuths();
+            MapAuth();
 
             MapAccounts();
             MapRoles();
-
-            MapSystem();
         }
 
         #region Auth
 
-        private static void MapAuths()
+        private static void MapAuth()
         {
             Mapper.CreateMap<LoginView, Account>();
         }
@@ -45,16 +43,6 @@ namespace Template.Data.Mapping
 
             Mapper.CreateMap<Privilege, PrivilegeView>();
             Mapper.CreateMap<PrivilegeView, Privilege>();
-        }
-
-        #endregion
-
-        #region System
-
-        private static void MapSystem()
-        {
-            Mapper.CreateMap<Language, LanguageView>();
-            Mapper.CreateMap<LanguageView, Language>();
         }
 
         #endregion

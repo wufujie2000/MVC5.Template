@@ -53,7 +53,6 @@
     <Compile Include="Views\Administration\Roles\RoleView.cs" />
     <Compile Include="Views\BaseView.cs" />
     <Compile Include="Views\Profile\ProfileView.cs" />
-    <Compile Include="Views\System\LanguageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Components\Components.csproj">

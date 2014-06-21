@@ -195,33 +195,5 @@ namespace Template.Tests.Data.Mapping
         }
 
         #endregion
-
-        #region Static method: MapSystem()
-
-        [Test]
-        public void MapSystem_MapsLanguageTolanguageView()
-        {
-            Language expected = ObjectFactory.CreateLanguage();
-            LanguageView actual = Mapper.Map<Language, LanguageView>(expected);
-
-            Assert.AreEqual(expected.Abbreviation, actual.Abbreviation);
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Id, actual.Id);
-        }
-
-        [Test]
-        public void MapRoles_MapsLanguageViewToLanguage()
-        {
-            LanguageView expected = ObjectFactory.CreateLanguageView();
-            Language actual = Mapper.Map<LanguageView, Language>(expected);
-
-            Assert.AreEqual(expected.Abbreviation, actual.Abbreviation);
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
-            Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Id, actual.Id);
-        }
-
-        #endregion
     }
 }

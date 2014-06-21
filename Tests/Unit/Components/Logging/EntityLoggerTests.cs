@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Template.Components.Logging;
 using Template.Data.Core;
 using Template.Objects;
@@ -28,7 +29,16 @@ namespace Template.Tests.Unit.Components.Logging
             loggerContext = new TestingContext();
             logger = new EntityLogger(loggerContext);
             dataContext = new TestingContext();
+
             TearDownData();
+
+            Account account = ObjectFactory.CreateAccount();
+            dataContext.Set<Account>().Add(account);
+            dataContext.SaveChanges();
+
+            HttpMock httpMock = new HttpMock();
+            HttpContext.Current = httpMock.HttpContext;
+            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(account.Id);
 
             TestModel model = ObjectFactory.CreateTestModel();
             dataContext.Set<TestModel>().Add(model);
@@ -41,6 +51,7 @@ namespace Template.Tests.Unit.Components.Logging
         {
             dataContext.Dispose();
             loggerContext.Dispose();
+            HttpContext.Current = null;
         }
 
         #region Method: Log(IEnumerable<DbEntityEntry> entries)
@@ -89,6 +100,19 @@ namespace Template.Tests.Unit.Components.Logging
             logger.Save();
 
             Assert.IsFalse(loggerContext.Set<Log>().Any());
+        }
+
+        [Test]
+        public void Log_LogsCurrentAccountId()
+        {
+            entry.State = EntityState.Added;
+            logger.Log(new[] { entry });
+            logger.Save();
+
+            String actual = loggerContext.Set<Log>().First().AccountId;
+            String expected = HttpContext.Current.User.Identity.Name;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -187,7 +211,8 @@ namespace Template.Tests.Unit.Components.Logging
 
         private void TearDownData()
         {
-            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
+            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             loggerContext.Set<Log>().RemoveRange(loggerContext.Set<Log>());
             dataContext.SaveChanges();
             loggerContext.SaveChanges();

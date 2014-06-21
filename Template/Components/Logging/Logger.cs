@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using Template.Data.Core;
 using Template.Objects;
 
@@ -16,7 +17,8 @@ namespace Template.Components.Logging
 
         public virtual void Log(String message)
         {
-            context.Set<Log>().Add(new Log(message));
+            String accountId = HttpContext.Current.User.Identity.Name;
+            context.Set<Log>().Add(new Log(accountId, message));
             context.SaveChanges();
         }
 

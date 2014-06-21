@@ -107,16 +107,16 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="Migrations\201406210703157_Initial.cs" />
+    <Compile Include="Migrations\201406210703157_Initial.Designer.cs">
+      <DependentUpon>201406210703157_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mvc\Binders\TrimmingModelBinderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Filters\ExceptionFilterTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
     <Compile Include="Unit\Data\Migrations\InitialDataTests.cs" />
-    <Compile Include="Data\Migrations\201405180636338_Initial.cs" />
-    <Compile Include="Data\Migrations\201405180636338_Initial.Designer.cs">
-      <DependentUpon>201405180636338_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Objects\Models\TestModel.cs" />
     <Compile Include="Objects\Views\TestView.cs" />
     <Compile Include="Data\TestingContext.cs" />
@@ -233,11 +233,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201405180636338_Initial.resx">
-      <DependentUpon>201405180636338_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201406210703157_Initial.resx">
+      <DependentUpon>201406210703157_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

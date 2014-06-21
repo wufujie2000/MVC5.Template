@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Web;
 using Template.Components.Logging;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Components.Logging
 {
@@ -20,17 +22,40 @@ namespace Template.Tests.Unit.Components.Logging
             context = new TestingContext();
             logger = new Logger(context);
 
-            context.Set<Log>().RemoveRange(context.Set<Log>());
+            TearDownData();
+
+            Account account = ObjectFactory.CreateAccount();
+            context.Set<Account>().Add(account);
             context.SaveChanges();
+
+            HttpMock httpMock = new HttpMock();
+            HttpContext.Current = httpMock.HttpContext;
+            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(account.Id);
         }
 
         [TearDown]
         public void TearDown()
         {
+            HttpContext.Current = null;
             context.Dispose();
         }
 
         #region Method: Log(String message)
+
+        [Test]
+        public void Log_LogsCurrentAccountId()
+        {
+            if (context.Set<Log>().Count() > 0)
+                Assert.Inconclusive();
+
+            logger.Log("Message");
+
+            String expected = HttpContext.Current.User.Identity.Name;
+            Log actualLog = context.Set<Log>().First();
+
+            Assert.AreEqual(1, context.Set<Log>().Count());
+            Assert.AreEqual(expected, actualLog.AccountId);
+        }
 
         [Test]
         public void Log_LogsMessage()
@@ -56,6 +81,17 @@ namespace Template.Tests.Unit.Components.Logging
         {
             logger.Dispose();
             logger.Dispose();
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private void TearDownData()
+        {
+            context.Set<Account>().RemoveRange(context.Set<Account>().Where(acc => acc.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Log>().RemoveRange(context.Set<Log>());
+            context.SaveChanges();
         }
 
         #endregion

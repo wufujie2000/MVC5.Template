@@ -96,12 +96,14 @@ namespace Template.Data.Migrations
                 {
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
+                    Email = "admin@admins.com",
                     RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id
                 },
                 new Account()
                 {
                     Username = "test",
-                    Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm" // test
+                    Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm", // test
+                    Email = "test@tests.com"
                 }
             };
 

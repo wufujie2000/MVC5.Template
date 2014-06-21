@@ -70,6 +70,15 @@ namespace Template.Resources.Views.ProfileView {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to E-mail.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to New password.
         /// </summary>
         public static string NewPassword {

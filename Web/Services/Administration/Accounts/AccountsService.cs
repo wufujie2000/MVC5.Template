@@ -23,6 +23,9 @@ namespace Template.Services
             isValid &= IsUniqueUsername(view);
             isValid &= IsLegalPassword(view);
 
+            isValid &= IsEmailSpecified(view);
+            isValid &= IsUniqueEmail(view);
+
             return isValid;
         }
 
@@ -41,6 +44,7 @@ namespace Template.Services
 
             account.Username = accountInDatabase.Username;
             account.Passhash = accountInDatabase.Passhash;
+            account.Email = accountInDatabase.Email;
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
@@ -79,6 +83,30 @@ namespace Template.Services
                 ModelState.AddModelError<AccountView>(model => model.Password, Validations.IllegalPassword);
 
             return isLegal;
+        }
+        private Boolean IsEmailSpecified(AccountView view)
+        {
+            Boolean isSpecified = !String.IsNullOrEmpty(view.Email);
+
+            if (!isSpecified)
+            {
+                String errorMessage = String.Format(Resources.Shared.Validations.FieldIsRequired, Titles.Email);
+                ModelState.AddModelError<AccountView>(model => model.Email, errorMessage);
+            }
+
+            return isSpecified;
+        }
+        private Boolean IsUniqueEmail(AccountView view)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(account => account.Email.ToUpper() == view.Email.ToUpper())
+                .Any();
+
+            if (!isUnique)
+                ModelState.AddModelError<AccountView>(model => model.Email, Validations.EmailIsAlreadyUsed);
+
+            return isUnique;
         }
     }
 }

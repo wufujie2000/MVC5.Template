@@ -107,9 +107,9 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="Migrations\201406210703157_Initial.cs" />
-    <Compile Include="Migrations\201406210703157_Initial.Designer.cs">
-      <DependentUpon>201406210703157_Initial.cs</DependentUpon>
+    <Compile Include="Data\Migrations\201406211231520_Initial.cs" />
+    <Compile Include="Data\Migrations\201406211231520_Initial.Designer.cs">
+      <DependentUpon>201406211231520_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mvc\Binders\TrimmingModelBinderTests.cs" />
@@ -232,9 +232,10 @@
       <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201406210703157_Initial.resx">
-      <DependentUpon>201406210703157_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Data\Migrations\201406211231520_Initial.resx">
+      <DependentUpon>201406211231520_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

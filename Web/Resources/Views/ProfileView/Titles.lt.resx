@@ -120,6 +120,9 @@
   <data name="CurrentPassword" xml:space="preserve">
     <value>Esamas slaptažodis</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Elektroninis paštas</value>
+  </data>
   <data name="NewPassword" xml:space="preserve">
     <value>Naujas slaptažodis</value>
   </data>

@@ -22,6 +22,7 @@ namespace Template.Tests.Helpers
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
+                Email = TestId + instanceNumber.ToString() + "@tests.com"
             };
         }
         public static LoginView CreateLoginView(Int32 instanceNumber = 1)
@@ -38,6 +39,7 @@ namespace Template.Tests.Helpers
             return new ProfileView()
             {
                 Username = "Username" + TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 CurrentPassword = "Password1",
                 NewPassword = "NewPassword1"
             };
@@ -47,6 +49,7 @@ namespace Template.Tests.Helpers
             return new AccountView()
             {
                 Id = TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 RoleName = "Name" + TestId + instanceNumber.ToString(),
                 RoleId = TestId + instanceNumber.ToString(),

@@ -15,6 +15,7 @@ namespace Template.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false),
                         Passhash = c.String(nullable: false),
+                        Email = c.String(nullable: false),
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })

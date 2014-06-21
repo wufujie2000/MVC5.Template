@@ -26,6 +26,9 @@ namespace Template.Services
             isValid &= IsUniqueUsername(profile);
             isValid &= IsLegalPassword(profile);
 
+            isValid &= IsEmailSpecified(profile);
+            isValid &= IsUniqueEmail(profile);
+
             return isValid;
         }
         public Boolean CanDelete(ProfileView profile)
@@ -107,6 +110,32 @@ namespace Template.Services
                 ModelState.AddModelError<ProfileView>(model => model.NewPassword, Validations.IllegalPassword);
 
             return isLegal;
+        }
+        private Boolean IsEmailSpecified(ProfileView profile)
+        {
+            Boolean isSpecified = !String.IsNullOrEmpty(profile.Email);
+
+            if (!isSpecified)
+            {
+                String errorMessage = String.Format(Resources.Shared.Validations.FieldIsRequired, Titles.Email);
+                ModelState.AddModelError<ProfileView>(model => model.Email, errorMessage);
+            }
+
+            return isSpecified;
+        }
+        private Boolean IsUniqueEmail(ProfileView profile)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(account =>
+                    account.Id != HttpContext.Current.User.Identity.Name &&
+                    account.Email.ToUpper() == profile.Email.ToUpper())
+                .Any();
+
+            if (!isUnique)
+                ModelState.AddModelError<ProfileView>(model => model.Email, Validations.EmailIsAlreadyUsed);
+
+            return isUnique;
         }
 
         private Account GetAccountFrom(ProfileView profile)

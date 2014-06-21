@@ -61,6 +61,15 @@ namespace Template.Resources.Views.AccountView {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to E-mail address is already used.
+        /// </summary>
+        public static string EmailIsAlreadyUsed {
+            get {
+                return ResourceManager.GetString("EmailIsAlreadyUsed", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit).
         /// </summary>
         public static string IllegalPassword {

@@ -118,7 +118,7 @@ namespace Template.Tests.Unit.Services
         public void CanEdit_CanEditUsingItsOwnUsername()
         {
             ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.Username = account.Username.ToUpper();
+            profile.Username = profile.Username.ToUpper();
 
             Assert.IsTrue(service.CanEdit(profile));
         }
@@ -217,6 +217,72 @@ namespace Template.Tests.Unit.Services
         {
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.NewPassword = null;
+
+            Assert.IsTrue(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditWithNullEmail()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.Email = null;
+
+            Assert.IsFalse(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_AddsErorrMessageThenCanNotEditWithNullEmail()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.Email = null;
+
+            service.CanEdit(profile);
+
+            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Email);
+            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditToAlreadyUsedEmail()
+        {
+            Account takenEmailAccount = ObjectFactory.CreateAccount();
+            takenEmailAccount.Username += "1";
+            takenEmailAccount.Id += "1";
+
+            context.Set<Account>().Add(takenEmailAccount);
+            context.SaveChanges();
+
+            ProfileView profile = ObjectFactory.CreateProfileView();
+
+            Assert.IsFalse(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
+        {
+            Account takenEmailAccount = ObjectFactory.CreateAccount();
+            takenEmailAccount.Username += "1";
+            takenEmailAccount.Id += "1";
+
+            context.Set<Account>().Add(takenEmailAccount);
+            context.SaveChanges();
+
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            service.CanEdit(profile);
+
+            String expected = Validations.EmailIsAlreadyUsed;
+            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanEdit_CanEditUsingItsOwnEmail()
+        {
+            ProfileView profile = ObjectFactory.CreateProfileView();
+            profile.Email = profile.Email.ToUpper();
 
             Assert.IsTrue(service.CanEdit(profile));
         }

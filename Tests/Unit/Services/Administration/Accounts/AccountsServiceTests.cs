@@ -233,9 +233,55 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanCreateValidUser()
+        public void CanCreate_CanNotCreateWithNullEmail()
         {
-            Assert.IsTrue(service.CanCreate(ObjectFactory.CreateAccountView()));
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Email = null;
+
+            Assert.IsFalse(service.CanCreate(account));
+        }
+
+        [Test]
+        public void CanCreate_AddsErorrMessageThenCanNotCreateWithNullEmail()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Email = null;
+
+            service.CanCreate(account);
+
+            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Email);
+            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanCreate_CanNotCreateWithAlreadyUsedEmail()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+
+            Assert.IsFalse(service.CanCreate(account));
+        }
+
+        [Test]
+        public void CanCreate_AddsErorrMessageThenCanNotCreateWithAlreadyUsedEmail()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            service.CanCreate(account);
+
+            String expected = Validations.EmailIsAlreadyUsed;
+            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanCreate_CanCreateValidAccount()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Email += "s";
+
+            Assert.IsTrue(service.CanCreate(account));
         }
 
         #endregion
@@ -312,6 +358,21 @@ namespace Template.Tests.Unit.Services
 
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void Edit_DoesNotEditAccountsEmail()
+        {
+            AccountView account = service.GetView(accountId);
+            String expected = account.Email;
+
+            account.Email = "Edit_DoesNotEditAccountsEmail@tests.com";
+            service.Edit(account);
+
+            String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id).Email;
+
+            Assert.AreEqual(expected, actual);
+        }
+
 
         #endregion
 

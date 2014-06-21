@@ -11,5 +11,8 @@ namespace Template.Objects
         [Required]
         public String CurrentPassword { get; set; }
         public String NewPassword { get; set; }
+
+        [EmailAddress]
+        public String Email { get; set; }
     }
 }

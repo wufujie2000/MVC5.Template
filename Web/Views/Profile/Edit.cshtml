@@ -23,6 +23,12 @@
             @Html.FormPasswordFor(model => model.NewPassword)
             @Html.FormValidationFor(model => model.NewPassword)
         }
+        using (Html.FormGroup())
+        {
+            @Html.FormLabelFor(model => model.Email)
+            @Html.FormTextBoxFor(model => model.Email)
+            @Html.FormValidationFor(model => model.Email)
+        }
         using (Html.FormActions())
         {
             @Html.FormSubmit()

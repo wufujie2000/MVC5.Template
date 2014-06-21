@@ -11,6 +11,10 @@ namespace Template.Objects
         [Required]
         public String Passhash { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public String Email { get; set; }
+
         public String RoleId { get; set; }
 
         public virtual Role Role { get; set; }

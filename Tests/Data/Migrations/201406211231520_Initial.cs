@@ -15,6 +15,7 @@ namespace Template.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false),
                         Passhash = c.String(nullable: false),
+                        Email = c.String(nullable: false),
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
@@ -92,6 +93,7 @@ namespace Template.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
+
         }
 
         public override void Down()

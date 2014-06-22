@@ -314,36 +314,6 @@ namespace Template.Tests.Unit.Services
         #region Method: CanDelete(ProfileView profile)
 
         [Test]
-        public void CanDelete_CanNotDeleteWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanDelete(ObjectFactory.CreateProfileView()));
-        }
-
-        [Test]
-        public void CanDelete_CanNotDeleteWithIncorrectUsername()
-        {
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.Username = String.Empty;
-
-            Assert.IsFalse(service.CanDelete(profile));
-        }
-
-        [Test]
-        public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectUsername()
-        {
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.Username = String.Empty;
-            service.CanDelete(profile);
-
-            String expected = Validations.IncorrectUsername;
-            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
             ProfileView profile = ObjectFactory.CreateProfileView();

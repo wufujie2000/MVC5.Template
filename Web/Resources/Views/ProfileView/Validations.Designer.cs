@@ -88,15 +88,6 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username is incorrect..
-        /// </summary>
-        public static string IncorrectUsername {
-            get {
-                return ResourceManager.GetString("IncorrectUsername", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Username is already taken..
         /// </summary>
         public static string UsernameIsAlreadyTaken {

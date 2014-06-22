@@ -37,11 +37,7 @@ namespace Template.Services
         }
         public Boolean CanDelete(ProfileView profile)
         {
-            Boolean isValid = CanDelete(profile.Id);
-            isValid &= IsCorrectUsername(profile);
-            isValid &= IsCorrectPassword(profile);
-
-            return isValid;
+            return IsCorrectPassword(profile);
         }
 
         public override void Edit(ProfileView profile)
@@ -58,20 +54,6 @@ namespace Template.Services
             AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
         }
 
-        private Boolean IsCorrectUsername(ProfileView profile)
-        {
-            String username = UnitOfWork
-                .Repository<Account>()
-                .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
-                .Select(account => account.Username)
-                .First();
-
-            Boolean isCorrectUsername = username.ToUpperInvariant() == profile.Username.ToUpperInvariant();
-            if (!isCorrectUsername)
-                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.IncorrectUsername);
-
-            return isCorrectUsername;
-        }
         private Boolean IsCorrectPassword(ProfileView profile)
         {
             String profilePasshash = UnitOfWork

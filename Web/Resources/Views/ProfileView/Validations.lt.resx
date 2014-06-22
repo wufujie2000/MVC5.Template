@@ -126,9 +126,6 @@
   <data name="IncorrectPassword" xml:space="preserve">
     <value>Neteisingas slaptažodis.</value>
   </data>
-  <data name="IncorrectUsername" xml:space="preserve">
-    <value>Neteisingas vartotojo vardas.</value>
-  </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
     <value>Vartotojo vardas jau užimtas.</value>
   </data>

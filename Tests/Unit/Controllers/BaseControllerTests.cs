@@ -2,6 +2,7 @@
 using Moq.Protected;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
@@ -28,6 +29,7 @@ namespace Template.Tests.Unit.Controllers
             accountId = httpMock.HttpContextBase.User.Identity.Name;
             controllerMock.Object.Url = new UrlHelper(requestContext);
             controllerMock.Object.ControllerContext = new ControllerContext();
+            controllerMock.Object.ControllerContext.Controller = controllerMock.Object;
             controllerMock.Object.ControllerContext.HttpContext = httpMock.HttpContextBase;
             controllerMock.Object.ControllerContext.RouteData = httpMock.HttpContextBase.Request.RequestContext.RouteData;
 
@@ -53,36 +55,6 @@ namespace Template.Tests.Unit.Controllers
             IRoleProvider actual = baseController.BaseRoleProvider;
 
             Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Method: RedirectIfAuthorized(String action)
-
-        [Test]
-        public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
-        {
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(false);
-
-            RedirectToRouteResult actual = baseController.BaseRedirectIfAuthorized("Action");
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void RedirectIfAuthorized_RedirectsToActionIfAuthorized()
-        {
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(true);
-
-            RouteValueDictionary actual = baseController.BaseRedirectIfAuthorized("Action").RouteValues;
-            RouteValueDictionary expected = baseController.BaseRedirectToAction("Action").RouteValues;
-
-            Assert.AreEqual(expected["language"], actual["language"]);
-            Assert.AreEqual(expected["controller"], actual["controller"]);
-            Assert.AreEqual(expected["action"], actual["action"]);
-            Assert.AreEqual(expected["area"], actual["area"]);
         }
 
         #endregion
@@ -142,6 +114,36 @@ namespace Template.Tests.Unit.Controllers
 
         #endregion
 
+        #region Method: RedirectIfAuthorized(String action)
+
+        [Test]
+        public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
+        {
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(false);
+
+            RedirectToRouteResult actual = baseController.BaseRedirectIfAuthorized("Action");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void RedirectIfAuthorized_RedirectsToActionIfAuthorized()
+        {
+            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(true);
+
+            RouteValueDictionary actual = baseController.BaseRedirectIfAuthorized("Action").RouteValues;
+            RouteValueDictionary expected = baseController.BaseRedirectToAction("Action").RouteValues;
+
+            Assert.AreEqual(expected["language"], actual["language"]);
+            Assert.AreEqual(expected["controller"], actual["controller"]);
+            Assert.AreEqual(expected["action"], actual["action"]);
+            Assert.AreEqual(expected["area"], actual["area"]);
+        }
+
+        #endregion
+
         #region Method: IsAuthorizedFor(String action)
 
         [Test]
@@ -183,6 +185,22 @@ namespace Template.Tests.Unit.Controllers
             baseController.BaseRoleProvider = roleProviderMock.Object;
 
             Assert.IsTrue(baseController.BaseIsAuthorizedFor("AR", "CO", "AC"));
+        }
+
+        #endregion
+
+        #region Method: BeginExecuteCore(AsyncCallback callback, Object state)
+
+        [Test]
+        public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
+        {
+            baseController.RouteData.Values["language"] = "lt-LT";
+            baseController.BaseBeginExecuteCore((asyncResult) => { }, null);
+
+            CultureInfo expected = new CultureInfo("lt-LT");
+
+            Assert.AreEqual(expected, CultureInfo.CurrentCulture);
+            Assert.AreEqual(expected, CultureInfo.CurrentUICulture);
         }
 
         #endregion

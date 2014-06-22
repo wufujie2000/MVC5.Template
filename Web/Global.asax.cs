@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -44,12 +42,6 @@ namespace Template.Web
             RegisterFilters();
             RegisterBundles();
             RegisterRoutes();
-        }
-        protected void Application_PreRequestHandlerExecute(Object sender, EventArgs e)
-        {
-            CultureInfo culture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
-            Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
         }
 
         private void RegisterModelMetadataProvider()

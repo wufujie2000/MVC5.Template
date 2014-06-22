@@ -19,14 +19,6 @@ namespace Template.Tests.Unit.Controllers
             }
         }
 
-        public RedirectToRouteResult BaseRedirectToAction(String action)
-        {
-            return base.RedirectToAction(action);
-        }
-        public RedirectToRouteResult BaseRedirectIfAuthorized(String action)
-        {
-            return base.RedirectIfAuthorized(action);
-        }
         public ActionResult BaseRedirectToLocal(String url)
         {
             return base.RedirectToLocal(url);
@@ -39,9 +31,13 @@ namespace Template.Tests.Unit.Controllers
         {
             return base.RedirectToUnauthorized();
         }
-        public void BaseOnAuthorization(AuthorizationContext filterContext)
+        public RedirectToRouteResult BaseRedirectIfAuthorized(String action)
         {
-            base.OnAuthorization(filterContext);
+            return base.RedirectIfAuthorized(action);
+        }
+        public RedirectToRouteResult BaseRedirectToAction(String action)
+        {
+            return base.RedirectToAction(action);
         }
 
         public Boolean BaseIsAuthorizedFor(String action)
@@ -51,6 +47,16 @@ namespace Template.Tests.Unit.Controllers
         public Boolean BaseIsAuthorizedFor(String area, String controller, String action)
         {
             return base.IsAuthorizedFor(area, controller, action);
+        }
+
+        public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
+        {
+            return base.BeginExecuteCore(callback, state);
+        }
+
+        public void BaseOnAuthorization(AuthorizationContext filterContext)
+        {
+            base.OnAuthorization(filterContext);
         }
     }
 }

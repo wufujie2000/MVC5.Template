@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Security;
@@ -54,6 +56,15 @@ namespace Template.Controllers
             if (RoleProvider == null) return true;
 
             return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);
+        }
+
+        protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
+        {
+            CultureInfo culture = new CultureInfo(Request.RequestContext.RouteData.Values["language"].ToString());
+            Thread.CurrentThread.CurrentUICulture = culture;
+            Thread.CurrentThread.CurrentCulture = culture;
+
+            return base.BeginExecuteCore(callback, state);
         }
 
         protected override void OnAuthorization(AuthorizationContext filterContext)

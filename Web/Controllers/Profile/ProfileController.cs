@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Template.Components.Security;
 using Template.Objects;
 using Template.Services;
@@ -33,7 +32,7 @@ namespace Template.Controllers.Profile
             if (Service.CanEdit(profile))
                 Service.Edit(profile);
 
-            return View();
+            return View(profile);
         }
 
         [HttpGet]
@@ -42,11 +41,9 @@ namespace Template.Controllers.Profile
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();
 
-            ProfileView profile = Service.GetView(HttpContext.User.Identity.Name);
             Service.AddDeleteDisclaimerMessage();
-            profile.Username = String.Empty;
 
-            return View(profile);
+            return View();
         }
 
         [HttpPost]
@@ -61,6 +58,7 @@ namespace Template.Controllers.Profile
                 return View();
 
             Service.Delete(HttpContext.User.Identity.Name);
+
             return LogOut();
         }
 

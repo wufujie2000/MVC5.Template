@@ -19,13 +19,6 @@ namespace Template.Controllers
             RoleProvider = RoleFactory.Provider;
         }
 
-        protected virtual RedirectToRouteResult RedirectIfAuthorized(String action)
-        {
-            if (!IsAuthorizedFor(action))
-                return RedirectToDefault();
-
-            return RedirectToAction(action);
-        }
         protected virtual ActionResult RedirectToLocal(String url)
         {
             if (!Url.IsLocalUrl(url))
@@ -35,11 +28,18 @@ namespace Template.Controllers
         }
         protected virtual RedirectToRouteResult RedirectToDefault()
         {
-            return RedirectToAction(String.Empty, String.Empty, new { language = RouteData.Values["language"], area = String.Empty });
+            return RedirectToAction(String.Empty, String.Empty, new { area = String.Empty, language = RouteData.Values["language"] });
         }
         protected virtual RedirectToRouteResult RedirectToUnauthorized()
         {
-            return RedirectToAction("Unauthorized", new { language = RouteData.Values["language"], area = String.Empty, controller = "Home" });
+            return RedirectToAction("Unauthorized", "Home", new { area = String.Empty, language = RouteData.Values["language"] });
+        }
+        protected virtual RedirectToRouteResult RedirectIfAuthorized(String action)
+        {
+            if (!IsAuthorizedFor(action))
+                return RedirectToDefault();
+
+            return RedirectToAction(action);
         }
 
         protected virtual Boolean IsAuthorizedFor(String action)

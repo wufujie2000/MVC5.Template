@@ -35,6 +35,12 @@ namespace Template.Services
         public override RoleView GetView(String id)
         {
             RoleView role = base.GetView(id);
+            role.PrivilegesTree.SelectedIds = UnitOfWork
+                .Repository<RolePrivilege>()
+                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                .Select(rolePrivilege => rolePrivilege.PrivilegeId)
+                .ToList();
+
             SeedPrivilegesTree(role);
 
             return role;
@@ -63,25 +69,20 @@ namespace Template.Services
         public virtual void SeedPrivilegesTree(RoleView view)
         {
             JsTreeNode rootNode = new JsTreeNode();
-            view.PrivilegesTree = new JsTree();
             view.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
-            view.PrivilegesTree.SelectedIds = UnitOfWork
-                .Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == view.Id)
-                .Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
 
             IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
                 .Repository<Privilege>()
                 .Query()
                 .ToList()
                 .Select(privilege => new Privilege
-                    {
-                        Id = privilege.Id,
-                        Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                        Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                        Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
-                    })
+                {
+                    Id = privilege.Id,
+                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                })
                 .GroupBy(privilege => privilege.Area)
                 .OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller);
 

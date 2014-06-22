@@ -77,12 +77,12 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Create_ReturnsNullModelIfCanNotCreate()
+        public void Create_ReturnsSameModelIfCanNotCreate()
         {
             AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.CanCreate(account)).Returns(false);
 
-            Assert.IsNull((controller.Create(account) as ViewResult).Model);
+            Assert.AreSame(account, (controller.Create(account) as ViewResult).Model);
         }
 
         [Test]
@@ -144,12 +144,12 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: Edit(AccountView account)
 
         [Test]
-        public void Edit_ReturnsNullModelIfCanNotEdit()
+        public void Edit_ReturnsSameModelIfCanNotEdit()
         {
             AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.CanEdit(account)).Returns(false);
 
-            Assert.IsNull((controller.Edit(account) as ViewResult).Model);
+            Assert.AreSame(account, (controller.Edit(account) as ViewResult).Model);
         }
 
         [Test]

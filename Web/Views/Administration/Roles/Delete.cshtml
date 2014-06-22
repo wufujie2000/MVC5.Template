@@ -6,6 +6,7 @@
     {
         @Html.NotRequiredLabelFor(model => model.Name)
         @Html.FormTextBoxFor(model => model.Name)
+        @Html.FormValidationFor(model => model.Name)
     }
     using (Html.FormGroup())
     {
@@ -14,9 +15,10 @@
         {
             @Html.JsTreeViewFor(model => model.PrivilegesTree)
         }
+        @Html.FormValidationFor(model => model.PrivilegesTree)
     }
 
-    using(Html.BeginForm())
+    using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         using (Html.FormActions())

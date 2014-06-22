@@ -60,7 +60,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         #region Method: Edit(ProfileView profile)
 
         [Test]
-        public void Edit_OnPostRedirectsToLogoutIfAccountDoesNotExistAnymore()
+        public void Edit_RedirectsToLogoutIfAccountDoesNotExistAnymore()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
@@ -94,13 +94,13 @@ namespace Template.Tests.Unit.Controllers.Profile
         }
 
         [Test]
-        public void Edit_ReturnsNullModel()
+        public void Edit_ReturnsSameModel()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(false);
             serviceMock.Setup(mock => mock.Edit(profile));
 
-            Assert.IsNull((controller.Edit(profile) as ViewResult).Model);
+            Assert.AreSame(profile, (controller.Edit(profile) as ViewResult).Model);
         }
 
         #endregion
@@ -129,29 +129,13 @@ namespace Template.Tests.Unit.Controllers.Profile
         }
 
         [Test]
-        public void Delete_SetsUsernameToEmptyString()
-        {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            serviceMock.Setup(mock => mock.GetView(accountId)).Returns(profile);
-            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
-            profile.Username = "Username";
-
-            controller.Delete();
-
-            Assert.AreEqual(String.Empty, profile.Username);
-        }
-
-        [Test]
-        public void Delete_ReturnsCurrentProfileView()
+        public void Delete_ReturnsNullModel()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.GetView(accountId)).Returns(profile);
             serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
 
-            ProfileView actual = (controller.Delete() as ViewResult).Model as ProfileView;
-            ProfileView expected = profile;
-
-            Assert.AreEqual(expected, actual);
+            Assert.IsNull((controller.Delete() as ViewResult).Model);
         }
 
         #endregion

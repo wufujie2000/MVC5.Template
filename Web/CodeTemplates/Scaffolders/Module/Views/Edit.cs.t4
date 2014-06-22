@@ -4,7 +4,7 @@
 
 @using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Delete))
 {
-    using(Html.BeginForm())
+    using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 

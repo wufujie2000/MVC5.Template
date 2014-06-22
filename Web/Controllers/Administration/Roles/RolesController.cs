@@ -32,7 +32,10 @@ namespace Template.Controllers.Administration
         public ActionResult Create([Bind(Exclude = "Id")] RoleView role)
         {
             if (!Service.CanCreate(role))
-                return View();
+            {
+                Service.SeedPrivilegesTree(role);
+                return View(role);
+            }
 
             Service.Create(role);
 
@@ -56,7 +59,10 @@ namespace Template.Controllers.Administration
         public ActionResult Edit(RoleView role)
         {
             if (!Service.CanEdit(role))
-                return View();
+            {
+                Service.SeedPrivilegesTree(role);
+                return View(role);
+            }
 
             Service.Edit(role);
 
@@ -75,7 +81,7 @@ namespace Template.Controllers.Administration
         public ActionResult DeleteConfirmed(String id)
         {
             if (!Service.CanDelete(id))
-                return View();
+                return View(Service.GetView(id));
 
             Service.Delete(id);
 

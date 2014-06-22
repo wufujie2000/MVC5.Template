@@ -87,12 +87,25 @@ namespace Template.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Create_ReturnsNullModelIfCanNotCreate()
+        public void Create_SeedsPrivilegesTreeIfCanNotCreate()
         {
             RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
             serviceMock.Setup(mock => mock.CanCreate(role)).Returns(false);
 
-            Assert.IsNull((controller.Create(role) as ViewResult).Model);
+            controller.Create(role);
+
+            serviceMock.Verify(mock => mock.SeedPrivilegesTree(role), Times.Once());
+        }
+
+        [Test]
+        public void Create_ReturnsSameModelIfCanNotCreate()
+        {
+            RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
+            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(false);
+
+            Assert.AreSame(role, (controller.Create(role) as ViewResult).Model);
         }
 
         [Test]
@@ -154,12 +167,25 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: Edit(RoleView role)
 
         [Test]
-        public void Edit_ReturnsNullModelIfCanNotEdit()
+        public void Edit_SeedsPrivilegesTreeIfCanNotEdit()
         {
             RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
             serviceMock.Setup(mock => mock.CanEdit(role)).Returns(false);
 
-            Assert.IsNull((controller.Edit(role) as ViewResult).Model);
+            controller.Edit(role);
+
+            serviceMock.Verify(mock => mock.SeedPrivilegesTree(role), Times.Once());
+        }
+
+        [Test]
+        public void Edit_ReturnsSameModelIfCanNotEdit()
+        {
+            RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
+            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(false);
+
+            Assert.AreSame(role, (controller.Edit(role) as ViewResult).Model);
         }
 
         [Test]
@@ -207,12 +233,13 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: DeleteConfirmed(String id)
 
         [Test]
-        public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
+        public void DeleteConfirmed_ReturnsModelIfCanNotDelete()
         {
-            String roleId = "Test";
-            serviceMock.Setup(mock => mock.CanDelete(roleId)).Returns(false);
+            RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
+            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(false);
 
-            Assert.IsNull((controller.DeleteConfirmed(roleId) as ViewResult).Model);
+            Assert.AreSame(role, (controller.DeleteConfirmed(role.Id) as ViewResult).Model);
         }
 
         [Test]

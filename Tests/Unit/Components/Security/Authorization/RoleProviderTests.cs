@@ -3,8 +3,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Template.Components.Security;
-using Template.Controllers;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Tests.Data;
@@ -22,7 +22,7 @@ namespace Template.Tests.Unit.Security
         public void SetUp()
         {
             context = new TestingContext();
-            provider = new RoleProvider(typeof(BaseController).Assembly, new UnitOfWork(context));
+            provider = new RoleProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
 
             TearDownData();
         }
@@ -37,7 +37,7 @@ namespace Template.Tests.Unit.Security
         #region Method: GetAccountPrivileges(String accountId)
 
         [Test]
-        public void GetAccountPrivileges_GetAccoountsPrivileges()
+        public void GetAccountPrivileges_GetAccountsPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
 
@@ -78,120 +78,601 @@ namespace Template.Tests.Unit.Security
 
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
 
+        #region Not attributed controller
+
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttribute()
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive("There is no controller with allow anonymous action.");
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "NotAttributedGetAction"));
         }
 
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowUnauthorizedAttribute()
+        public void IsAuthorizedFor_AuthorizesNotAttributedNonGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive("There is no controller with allow unauthorized action.");
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "NotAttributedNonGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttribute()
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnNotAttributedController()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Auth", "Login"));
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AuthorizeGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttribute()
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnNotAttributedController()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Home", "Index"));
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsNotAuthorizedForAction()
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedNonGetActionOnNotAttributedController()
         {
-            Assert.IsFalse(provider.IsAuthorizedFor((String)null, "Administration", "Roles", "Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AuthorizeNonGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_OnNotExistingActionThrows()
+        public void IsAuthorizedFor_AuthorizesAuthorizedNonGetActionOnNotAttributedController()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Test");
-            String expectedMessage = "'RolesController' does not have 'Test' action";
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeNonGetAction");
 
-            Assert.Throws<Exception>(() => provider.IsAuthorizedFor(account.Id, "Administration", "Roles", "Test"), expectedMessage);
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeNonGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForGetAction()
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnNotAttributedController()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Administration", "Roles", "Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AllowAnonymousGetAction"));
         }
 
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForNonGetAction()
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousNonGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive();
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedNonGetActionOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "NotAttributed", "AllowUnauthorizedNonGetAction"));
         }
 
         #endregion
 
+        #region Authorized controller
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesNotAttributedGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "Authorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesNotAttributedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "Authorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedNonGetActionOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "Authorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "Authorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedNonGetActionOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Authorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousNonGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Authorized", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Authorized", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "Authorized", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        #region Allow anonymous controller
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAllowAnonymousController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedNonGetActionOnAllowAnonymousController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowAnonymous", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        #region Allow unauthorized controller
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "AllowUnauthorized", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        [Test]
+        public void IsAuthorizedFor_OnNotExistingActionThrows()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "Test");
+            String expectedMessage = "'NotAttributedController' does not have 'Test' action";
+
+            Assert.Throws<Exception>(() => provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "Test"), expectedMessage);
+        }
+        
+        #endregion
+
         #region Method: IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
 
+        #region Not attributed controller
+
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForActionWithAllowAnonymousAttributeWithoutPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive("There is no controller with allow anonymous action.");
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "NotAttributedGetAction"));
         }
 
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForActionrWithAllowUnauthorizedAttributeWithoutPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedNonGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive("There is no controller with allow unauthorized action.");
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "NotAttributedNonGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowAnonymousAttributeWithoutPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedGetActionOnNotAttributedController()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Auth", "Login"));
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AuthorizeGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForActionOnControllerWithAllowUnauthorizedAttributeWithoutPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedGetActionOnNotAttributedController()
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Home", "Index"));
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "NotAttributed", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "NotAttributed", "AuthorizeGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsNotAuthorizedForActionWithoutPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedNonGetActionOnNotAttributedController()
         {
-            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), "Administration", "Roles", "Index"));
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AuthorizeNonGetAction"));
         }
 
         [Test]
-        public void IsAuthorizedFor_IsAuthorizedForGetActionWithPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedNonGetActionOnNotAttributedController()
         {
-            Account account = CreateAccountWithPrivilegeFor("Administration", "Roles", "Index");
-            IEnumerable<AccountPrivilege> privileges = new List<AccountPrivilege>()
-            {
-                new AccountPrivilege()
-                {
-                    Area = "Administration",
-                    Controller = "Roles",
-                    Action = "Index"
-                }
-            };
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "NotAttributed", "AuthorizeNonGetAction");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(privileges, "Administration", "Roles", "Index"));
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "NotAttributed", "AuthorizeNonGetAction"));
         }
 
         [Test]
-        [Ignore]
-        public void IsAuthorizedFor_IsAuthorizedForNonGetActionWithPrivileges()
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousGetActionOnNotAttributedController()
         {
-            Assert.Inconclusive();
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousNonGetActionOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedGetActionOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedNonGetActionOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        #region Authorized controller
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesNotAttributedGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedGetActionOnAuthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "Authorized", "NotAttributedGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "Authorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesNotAttributedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedNonGetActionOnAuthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "Authorized", "NotAttributedNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "Authorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedGetActionOnAuthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "Authorized", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "Authorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedNonGetActionOnAuthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "Authorized", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "Authorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousNonGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedNonGetActionOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "Authorized", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        #region Allow anonymous controller
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedGetActionOnAllowAnonymousController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "AllowAnonymous", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "AllowAnonymous", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedNonGetActionOnAllowAnonymousController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "AllowAnonymous", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "AllowAnonymous", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedNonGetActionOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowAnonymous", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        #region Allow unauthorized controller
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "NotAttributedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesNotAttributedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "NotAttributedNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "AllowUnauthorized", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "AllowUnauthorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_NotAuthorizesAuthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAuthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            IEnumerable<AccountPrivilege> privileges = CreateAccountPrivilegeEnumerableFor(null, "AllowUnauthorized", "AuthorizeNonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(privileges, null, "AllowUnauthorized", "AuthorizeNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowAnonymousNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AllowAnonymousNonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AllowUnauthorizedGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_AuthorizesAllowUnauthorizedNonGetActionOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "AllowUnauthorized", "AllowUnauthorizedNonGetAction"));
+        }
+
+        #endregion
+
+        [Test]
+        public void IsAuthorizedFor_WithPrivileges_OnNotExistingActionThrows()
+        {
+            String expectedMessage = "'NotAttributedController' does not have 'Test' action";
+
+            Assert.Throws<Exception>(() => provider.IsAuthorizedFor(Enumerable.Empty<AccountPrivilege>(), null, "NotAttributed", "Test"), expectedMessage);
         }
 
         #endregion
@@ -202,7 +683,7 @@ namespace Template.Tests.Unit.Security
         public void Dispose_DisposesUnitOfWork()
         {
             Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
-            RoleProvider roleProvider = new RoleProvider(typeof(BaseController).Assembly, unitOfWorkMock.Object);
+            RoleProvider roleProvider = new RoleProvider(Assembly.GetExecutingAssembly(), unitOfWorkMock.Object);
             roleProvider.Dispose();
 
             unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
@@ -254,6 +735,19 @@ namespace Template.Tests.Unit.Security
 
             return account;
         }
+        private IEnumerable<AccountPrivilege> CreateAccountPrivilegeEnumerableFor(String area, String controller, String action)
+        {
+            return new List<AccountPrivilege>()
+            {
+                new AccountPrivilege()
+                {
+                    Area = area,
+                    Controller = controller,
+                    Action = action
+                }
+            };
+        }
+
         private void TearDownData()
         {
             context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));

@@ -69,12 +69,15 @@ namespace Template.Components.Security
             Type controllerType = GetController(area, controller);
             MethodInfo actionInfo = GetAction(controllerType, action);
 
+            if (actionInfo.IsDefined(typeof(AuthorizeAttribute))) return false;
             if (actionInfo.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (actionInfo.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+
+            if (controllerType.IsDefined(typeof(AuthorizeAttribute))) return false;
             if (controllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (controllerType.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
 
-            return false;
+            return true;
         }
         private Type GetController(String area, String controller)
         {

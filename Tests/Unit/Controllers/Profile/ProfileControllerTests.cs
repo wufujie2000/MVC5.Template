@@ -153,10 +153,22 @@ namespace Template.Tests.Unit.Controllers.Profile
         }
 
         [Test]
+        public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
+        {
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(false);
+            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
+            controller.DeleteConfirmed(profile);
+
+            serviceMock.Verify(mock => mock.AddDeleteDisclaimerMessage(), Times.Once());
+        }
+
+        [Test]
         public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(false);
+            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
 
             Assert.IsNull((controller.DeleteConfirmed(profile) as ViewResult).Model);
         }

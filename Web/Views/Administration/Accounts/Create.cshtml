@@ -20,7 +20,7 @@
         }
         using (Html.FormGroup())
         {
-            @Html.FormLabelFor(model => model.Email)
+            @Html.RequiredLabelFor(model => model.Email)
             @Html.FormTextBoxFor(model => model.Email)
             @Html.FormValidationFor(model => model.Email)
         }

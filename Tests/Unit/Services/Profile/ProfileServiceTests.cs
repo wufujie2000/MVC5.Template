@@ -46,6 +46,22 @@ namespace Template.Tests.Unit.Services
             context.Dispose();
         }
 
+        #region Method: AccountExists(String accountId)
+
+        [Test]
+        public void AccountExists_ReturnsTrueIfAccountExistsInDatabase()
+        {
+            Assert.IsTrue(service.AccountExists(account.Id));
+        }
+
+        [Test]
+        public void AccountExists_ReturnsFalseIfAccountDoesNotExistInDatabase()
+        {
+            Assert.IsFalse(service.AccountExists("Test"));
+        }
+
+        #endregion
+
         #region Method: CanEdit(ProfileView profile)
 
         [Test]
@@ -415,22 +431,6 @@ namespace Template.Tests.Unit.Services
             Assert.AreEqual(disclaimer.Type, AlertMessageType.Danger);
             Assert.AreEqual(disclaimer.Key, String.Empty);
             Assert.AreEqual(disclaimer.FadeOutAfter, 0);
-        }
-
-        #endregion
-
-        #region Method: AccountExists(String accountId)
-
-        [Test]
-        public void AccountExists_ReturnsTrueIfAccountExistsInDatabase()
-        {
-            Assert.IsTrue(service.AccountExists(account.Id));
-        }
-
-        [Test]
-        public void AccountExists_ReturnsFalseIfAccountDoesNotExistInDatabase()
-        {
-            Assert.IsFalse(service.AccountExists("Test"));
         }
 
         #endregion

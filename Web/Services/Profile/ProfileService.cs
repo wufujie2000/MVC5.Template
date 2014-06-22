@@ -19,6 +19,10 @@ namespace Template.Services
         {
         }
 
+        public virtual Boolean AccountExists(String accountId)
+        {
+            return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
+        }
         public override Boolean CanEdit(ProfileView profile)
         {
             Boolean isValid = base.CanEdit(profile);
@@ -52,11 +56,6 @@ namespace Template.Services
         public void AddDeleteDisclaimerMessage()
         {
             AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
-        }
-
-        public virtual Boolean AccountExists(String accountId)
-        {
-            return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
 
         private Boolean IsCorrectUsername(ProfileView profile)

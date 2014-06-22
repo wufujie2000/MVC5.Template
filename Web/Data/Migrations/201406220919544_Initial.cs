@@ -1,4 +1,4 @@
-namespace Template.Tests.Data.Migrations
+namespace Template.Data.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Diagnostics.CodeAnalysis;
@@ -76,37 +76,21 @@ namespace Template.Tests.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        AccountId = c.String(maxLength: 128),
+                        AccountId = c.String(),
                         Message = c.String(nullable: false),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.Accounts", t => t.AccountId)
-                .Index(t => t.AccountId);
-
-            CreateTable(
-                "dbo.TestModels",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Text = c.String(),
-                        EntityDate = c.DateTime(nullable: false),
-                    })
                 .PrimaryKey(t => t.Id, clustered: false);
-
         }
 
         public override void Down()
         {
-            DropForeignKey("dbo.Logs", "AccountId", "dbo.Accounts");
             DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropIndex("dbo.Logs", new[] { "AccountId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.Accounts", new[] { "RoleId" });
-            DropTable("dbo.TestModels");
             DropTable("dbo.Logs");
             DropTable("dbo.Languages");
             DropTable("dbo.Privileges");

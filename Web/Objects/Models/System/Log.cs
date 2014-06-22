@@ -10,8 +10,6 @@ namespace Template.Objects
         [Required]
         public String Message { get; set; }
 
-        public Account Account { get; set; }
-
         public Log()
         {
         }

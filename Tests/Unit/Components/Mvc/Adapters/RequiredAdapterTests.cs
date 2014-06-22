@@ -10,30 +10,24 @@ namespace Template.Tests.Unit.Components.Mvc
     [TestFixture]
     public class RequiredAdapterTests
     {
-        private RequiredAttribute requiredAttribute;
+        private RequiredAttribute attribute;
         private ModelMetadata metadata;
 
         [SetUp]
         public void SetUp()
         {
-            requiredAttribute = new RequiredAttribute();
+            attribute = new RequiredAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(TestView), "Text");
-            new RequiredAdapter(metadata, new ControllerContext(), requiredAttribute);
+            new RequiredAdapter(metadata, new ControllerContext(), attribute);
         }
 
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Test]
-        public void RequiredAdapter_SetsAttributeErrorMessageResourceType()
+        public void RequiredAdapter_SetsAttributeErrorMessage()
         {
-            Assert.AreEqual(requiredAttribute.ErrorMessageResourceType, typeof(Validations));
-        }
-
-        [Test]
-        public void RequiredAdapter_SetsAttributeErrorMessageResourceName()
-        {
-            Assert.AreEqual(requiredAttribute.ErrorMessageResourceName, "FieldIsRequired");
+            Assert.AreEqual(attribute.ErrorMessage, Validations.FieldIsRequired);
         }
 
         #endregion

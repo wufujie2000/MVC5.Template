@@ -61,6 +61,15 @@ namespace Template.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field is not a valid e-mail address..
+        /// </summary>
+        public static string FieldIsNotValidEmail {
+            get {
+                return ResourceManager.GetString("FieldIsNotValidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field is required..
         /// </summary>
         public static string FieldIsRequired {

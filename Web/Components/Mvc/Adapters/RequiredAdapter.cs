@@ -9,8 +9,7 @@ namespace Template.Components.Mvc
         public RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
             : base(metadata, context, attribute)
         {
-            Attribute.ErrorMessageResourceType = typeof(Validations);
-            Attribute.ErrorMessageResourceName = "FieldIsRequired";
+            Attribute.ErrorMessage = Validations.FieldIsRequired;
         }
     }
 }

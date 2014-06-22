@@ -10,8 +10,8 @@
 
 namespace Template.Resources.Views.ProfileView {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Template.Resources.Views.ProfileView {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Validations {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Validations() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Template.Resources.Views.ProfileView {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,45 +59,45 @@ namespace Template.Resources.Views.ProfileView {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to E-mail address is already used.
+        ///   Looks up a localized string similar to E-mail address is already used..
         /// </summary>
         public static string EmailIsAlreadyUsed {
             get {
                 return ResourceManager.GetString("EmailIsAlreadyUsed", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit).
+        ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit)..
         /// </summary>
         public static string IllegalPassword {
             get {
                 return ResourceManager.GetString("IllegalPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Password is incorrect.
+        ///   Looks up a localized string similar to Password is incorrect..
         /// </summary>
         public static string IncorrectPassword {
             get {
                 return ResourceManager.GetString("IncorrectPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Username is incorrect.
+        ///   Looks up a localized string similar to Username is incorrect..
         /// </summary>
         public static string IncorrectUsername {
             get {
                 return ResourceManager.GetString("IncorrectUsername", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Username is already taken.
+        ///   Looks up a localized string similar to Username is already taken..
         /// </summary>
         public static string UsernameIsAlreadyTaken {
             get {

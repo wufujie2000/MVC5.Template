@@ -4,7 +4,6 @@
     {
         // TODO: Add project renaming utility
         // TODO: Rename tests, to more readable form
-        // TODO: Add periods and the end of all validation messages
         // TODO: Try combining profile/accounts/auth services
         // TODO: Make services and other program module naming consistent with one another
         // TODO: Fix profile deletion then it has logs

@@ -10,8 +10,8 @@
 
 namespace Template.Resources.Content {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Template.Resources.Content {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Titles {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Titles() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Template.Resources.Content {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace Template.Resources.Content {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account creation.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account deletion.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationAccountsDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account details.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Account edit.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Role creation.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Role deletion.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Role details.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Role edit.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("AuthLogin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to System error.
         /// </summary>
@@ -167,7 +167,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("HomeError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("HomeIndex", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Not found.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("HomeNotFound", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unauthorized.
         /// </summary>
@@ -194,7 +194,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("HomeUnauthorized", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile deletion.
         /// </summary>
@@ -203,7 +203,7 @@ namespace Template.Resources.Content {
                 return ResourceManager.GetString("ProfileDelete", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Profile edit.
         /// </summary>

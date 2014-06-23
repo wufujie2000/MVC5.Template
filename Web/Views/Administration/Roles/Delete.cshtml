@@ -21,9 +21,12 @@
     using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        using (Html.FormActions())
+        using (Html.FormGroup())
         {
-            @Html.FormSubmit()
+            using (Html.FormActions())
+            {
+                @Html.FormSubmit()
+            }
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 using System;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Template.Controllers.Auth;
 using Template.Objects;
 using Template.Services;
@@ -12,6 +16,7 @@ namespace Template.Tests.Unit.Controllers.Auth
     [TestFixture]
     public class AuthControllerTests
     {
+        private Mock<AuthController> controllerMock;
         private Mock<IAuthService> serviceMock;
         private AuthController controller;
 
@@ -21,21 +26,126 @@ namespace Template.Tests.Unit.Controllers.Auth
             serviceMock = new Mock<IAuthService>(MockBehavior.Strict);
             serviceMock.SetupAllProperties();
 
-            controller = new AuthController(serviceMock.Object);
-            controller.ControllerContext = new ControllerContext();
-            controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
+            controllerMock = new Mock<AuthController>(serviceMock.Object) { CallBase = true };
+            controllerMock.Object.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
+            controllerMock.Object.ControllerContext = new ControllerContext();
+            controller = controllerMock.Object;
         }
 
-        #region Method: Login(String returnUrl)
+        #region Method: Register()
 
         [Test]
-        public void Login_RedirectsToUrlIfAlreadyLoggedIn()
+        public void Register_RedirectsToDefaultlIfAlreadyLoggedIn()
         {
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
-            RedirectResult result = controller.Login("/Home/Index") as RedirectResult;
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
 
-            Assert.AreEqual("/Home/Index", result.Url);
+            ActionResult actual = controller.Register();
+
+            Assert.AreSame(expected, actual);
         }
+
+        [Test]
+        public void Register_ReturnsNullModelIfNotLoggedIn()
+        {
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+
+            Assert.IsNull((controller.Register() as ViewResult).Model);
+        }
+
+        #endregion
+
+        #region Method: Register(AuthView account)
+
+        [Test]
+        public void Register_ProtectsFromOverpostingId()
+        {
+            MethodInfo createMethod = controller
+                .GetType()
+                .GetMethods()
+                .First(method =>
+                    method.Name == "Register" &&
+                    method.GetCustomAttribute<HttpPostAttribute>() != null);
+
+            CustomAttributeData customParameterAttribute = createMethod.GetParameters().First().CustomAttributes.First();
+
+            Assert.AreEqual(typeof(BindAttribute), customParameterAttribute.AttributeType);
+            Assert.AreEqual("Exclude", customParameterAttribute.NamedArguments.First().MemberName);
+            Assert.AreEqual("Id", customParameterAttribute.NamedArguments.First().TypedValue.Value);
+        }
+
+        [Test]
+        public void Register_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        {
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
+
+            ActionResult actual = controller.Register(null);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Register_ReturnsSameModelIfCanNotRegister()
+        {
+            AuthView expected = ObjectFactory.CreateAuthView();
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            serviceMock.Setup(mock => mock.CanRegister(expected)).Returns(false);
+
+            Assert.AreSame(expected, (controller.Register(expected) as ViewResult).Model);
+        }
+
+        [Test]
+        public void Register_RegistersAccount()
+        {
+            AuthView account = ObjectFactory.CreateAuthView();
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
+            serviceMock.Setup(mock => mock.Register(account));
+
+            controller.Register(account);
+
+            serviceMock.Verify(mock => mock.Register(account), Times.Once());
+        }
+
+        [Test]
+        public void Register_AddsSuccessfulRegistrationMessage()
+        {
+            AuthView account = ObjectFactory.CreateAuthView();
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
+            serviceMock.Setup(mock => mock.Register(account));
+
+            controller.Register(account);
+
+            serviceMock.Verify(mock => mock.AddSuccessfulRegistrationMessage(), Times.Once());
+        }
+
+        [Test]
+        public void Register_RedirectsToLoginAfterSuccessfulRegistration()
+        {
+            AuthView account = ObjectFactory.CreateAuthView();
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
+            serviceMock.Setup(mock => mock.Register(account));
+
+            RedirectToRouteResult result = controller.Register(account) as RedirectToRouteResult;
+            RouteValueDictionary actual = result.RouteValues;
+
+            Assert.AreEqual("Login", actual["action"]);
+            Assert.IsNull(actual["controller"]);
+            Assert.IsNull(actual["language"]);
+            Assert.IsNull(actual["area"]);
+        }
+
+        #endregion
+
+        #region Method: Login(String returnUrl)
 
         [Test]
         public void Login_ReturnsNullModelIfNotLoggedIn()
@@ -47,12 +157,12 @@ namespace Template.Tests.Unit.Controllers.Auth
 
         #endregion
 
-        #region Method: Login(LoginView account, String returnUrl)
+        #region Method: Login(AuthView account, String returnUrl)
 
         [Test]
         public void Login_ReturnsNullModelIfCanNotLogin()
         {
-            LoginView account = new LoginView();
+            AuthView account = new AuthView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(false);
 
             Assert.IsNull((controller.Login(account, null) as ViewResult).Model);
@@ -61,7 +171,7 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_LogsInAccount()
         {
-            LoginView account = new LoginView();
+            AuthView account = new AuthView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             serviceMock.Setup(mock => mock.Login(account));
             controller.Login(account, null);
@@ -72,7 +182,7 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            LoginView account = new LoginView();
+            AuthView account = new AuthView();
             serviceMock.Setup(mock => mock.Login(account));
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             RedirectResult result = controller.Login(account, "/Home/Index") as RedirectResult;

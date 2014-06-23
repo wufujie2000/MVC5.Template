@@ -29,18 +29,23 @@ namespace Template.Components.Extensions.Html
         {
             return new InputGroup(html.ViewContext.Writer);
         }
-        public static FormActions FormActions(this HtmlHelper html)
+        public static FormWrapper FormActions(this HtmlHelper html)
         {
-            return new FormActions(html.ViewContext.Writer, FormActionsClass);
+            return new FormWrapper(html.ViewContext.Writer, FormActionsClass);
         }
-        public static MvcHtmlString FormSubmit(this HtmlHelper html)
+
+        public static MvcHtmlString Submit(this HtmlHelper html, String value)
         {
             TagBuilder submit = new TagBuilder("input");
             submit.MergeAttribute("type", "submit");
             submit.AddCssClass("btn btn-primary");
-            submit.MergeAttribute("value", Resources.Shared.Resources.Submit);
+            submit.MergeAttribute("value", value);
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
+        }
+        public static MvcHtmlString FormSubmit(this HtmlHelper html)
+        {
+            return html.Submit(Resources.Shared.Resources.Submit);
         }
 
         public static MvcHtmlString NotRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)

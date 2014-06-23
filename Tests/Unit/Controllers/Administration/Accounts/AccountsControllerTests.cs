@@ -57,7 +57,7 @@ namespace Template.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Create(AccountView account)
+        #region Method: Create([Bind(Exclude = "Id")] AccountView account)
 
         [Test]
         public void Create_ProtectsFromOverpostingId()

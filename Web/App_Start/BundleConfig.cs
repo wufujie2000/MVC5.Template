@@ -20,7 +20,7 @@ namespace Template.Web
             bundles.Add(new ScriptBundle("~/Scripts/Select2/Bundle").Include("~/Scripts/Select2/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/JsTree/Bundle").Include("~/Scripts/JsTree/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").Include("~/Scripts/Datalist/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/Login/Bundle").Include("~/Scripts/Login/*.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/Auth/Bundle").Include("~/Scripts/Auth/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Shared/Bundle").Include("~/Scripts/Shared/*.js"));
         }
         private static void RegisterCss(BundleCollection bundles)
@@ -32,7 +32,7 @@ namespace Template.Web
             bundles.Add(new StyleBundle("~/Content/Select2/Bundle").Include("~/Content/Select2/*.css"));
             bundles.Add(new StyleBundle("~/Content/JsTree/Bundle").Include("~/Content/JsTree/*.css"));
             bundles.Add(new StyleBundle("~/Content/Datalist/Bundle").Include("~/Content/Datalist/*.css"));
-            bundles.Add(new StyleBundle("~/Content/Login/Bundle").Include("~/Content/Login/*.css"));
+            bundles.Add(new StyleBundle("~/Content/Auth/Bundle").Include("~/Content/Auth/*.css"));
             bundles.Add(new StyleBundle("~/Content/Shared/Bundle").Include("~/Content/Shared/*.css"));
         }
     }

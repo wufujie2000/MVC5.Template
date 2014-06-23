@@ -29,9 +29,12 @@
             @Html.FormTextBoxFor(model => model.Email)
             @Html.FormValidationFor(model => model.Email)
         }
-        using (Html.FormActions())
+        using (Html.FormGroup())
         {
-            @Html.FormSubmit()
+            using (Html.FormActions())
+            {
+                @Html.FormSubmit()
+            }
         }
     }
 }

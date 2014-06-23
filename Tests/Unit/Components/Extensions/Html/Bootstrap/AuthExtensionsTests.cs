@@ -8,7 +8,7 @@ using Template.Tests.Helpers;
 namespace Template.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
-    public class LoginExtensionsTests
+    public class AuthExtensionsTests
     {
         private HtmlHelper<BootstrapModel> html;
         private BootstrapModel bootstrapModel;
@@ -34,14 +34,14 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             html = new HtmlMock<BootstrapModel>(bootstrapModel).Html;
         }
 
-        #region Extensions method: LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void LoginUsernameFor_FormsLoginUsernameFor()
+        public void AuthUsernameFor_FormsAuthUsernameFor()
         {
             Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
 
-            String actual = html.LoginUsernameFor(expression).ToString();
+            String actual = html.AuthUsernameFor(expression).ToString();
             String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-user\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
@@ -52,14 +52,14 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extensions method: LoginPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        #region Extension method: AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void LoginPasswordFor_FormsLoginPasswordFor()
+        public void AuthPasswordFor_FormsAuthPasswordFor()
         {
             Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
 
-            String actual = html.LoginPasswordFor(expression).ToString();
+            String actual = html.AuthPasswordFor(expression).ToString();
             String expected = String.Format("<span class=\"input-group-addon lock-span\"><i class=\"fa fa-lock\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression));
@@ -69,29 +69,33 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extensions method: LoginLanguageSelect<TModel>(this HtmlHelper<TModel> html)
+        #region Extension method: AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void LoginLanguageSelect_FormsLoginLanguageSelect()
+        public void AuthEmailFor_FormsAuthEmailFor()
         {
-            String actual = html.LoginLanguageSelect().ToString();
-            String expected = String.Format("<span class=\"input-group-addon flag-span\"><i class=\"fa fa-flag\"></i></span><input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input><select id=\"Language\"><option value=\"{0}\">{1}</option><option value=\"{2}\">{3}</option></select>",
-                "en-GB", "English",
-                "lt-LT", "Lietuvių");
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
+
+            String actual = html.AuthEmailFor(expression).ToString();
+            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-envelope\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.Relation.Required);
 
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Extensions method: LoginSubmit<TModel>(this HtmlHelper<TModel> html)
+        #region Extension method: AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
 
         [Test]
-        public void LoginSubmit_FormsLoginSubmit()
+        public void AuthLanguageSelect_FormsAuthLanguageSelect()
         {
-            String actual = html.LoginSubmit().ToString();
-            String expected = String.Format("<div class=\"login-form-actions\"><input class=\"btn btn-block btn-primary btn-default\" type=\"submit\" value=\"{0}\"></input></div>",
-                Template.Resources.Shared.Resources.Login);
+            String actual = html.AuthLanguageSelect().ToString();
+            String expected = String.Format("<span class=\"input-group-addon flag-span\"><i class=\"fa fa-flag\"></i></span><input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input><select id=\"Language\"><option value=\"{0}\">{1}</option><option value=\"{2}\">{3}</option></select>",
+                "en-GB", "English",
+                "lt-LT", "Lietuvių");
 
             Assert.AreEqual(expected, actual);
         }

@@ -358,6 +358,7 @@ namespace Template.Tests.Unit.Services
             Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Email, actual.Email);
         }
 
         [Test]
@@ -395,12 +396,13 @@ namespace Template.Tests.Unit.Services
         public void AddDeleteDisclaimerMessage_AddsDisclaimer()
         {
             service.AddDeleteDisclaimerMessage();
-            AlertMessage disclaimer = service.AlertMessages.First();
 
-            Assert.AreEqual(disclaimer.Message, Messages.ProfileDeleteDisclaimer);
-            Assert.AreEqual(disclaimer.Type, AlertMessageType.Danger);
-            Assert.AreEqual(disclaimer.Key, String.Empty);
-            Assert.AreEqual(disclaimer.FadeOutAfter, 0);
+            AlertMessage actual = service.AlertMessages.First();
+
+            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         #endregion

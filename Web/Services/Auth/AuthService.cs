@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Template.Components.Alerts;
+using Template.Components.Extensions.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
@@ -21,15 +24,39 @@ namespace Template.Services
         {
             return HttpContext.Current.User.Identity.IsAuthenticated;
         }
-        public Boolean CanLogin(LoginView accountView)
+        public Boolean CanLogin(AuthView auth)
         {
             Boolean isValid = ModelState.IsValid;
-            isValid &= IsAuthenticated(accountView.Username, accountView.Password);
+            isValid &= IsAuthenticated(auth.Username, auth.Password);
+
+            return isValid;
+        }
+        public Boolean CanRegister(AuthView account)
+        {
+            Boolean isValid = ModelState.IsValid;
+            isValid &= IsUniqueUsername(account);
+            isValid &= IsLegalPassword(account);
+
+            isValid &= IsEmailSpecified(account);
+            isValid &= IsUniqueEmail(account);
 
             return isValid;
         }
 
-        public void Login(LoginView account)
+        public void AddSuccessfulRegistrationMessage()
+        {
+            AlertMessages.Add(AlertMessageType.Success, Messages.SuccesfulRegistration);
+        }
+
+        public void Register(AuthView account)
+        {
+            Account registration = UnitOfWork.ToModel<AuthView, Account>(account);
+            registration.Passhash = BCrypter.HashPassword(account.Password);
+
+            UnitOfWork.Repository<Account>().Insert(registration);
+            UnitOfWork.Commit();
+        }
+        public void Login(AuthView account)
         {
             SetAccountId(account);
             CreateCookieFor(account);
@@ -64,7 +91,51 @@ namespace Template.Services
             return passwordCorrect;
         }
 
-        private void SetAccountId(LoginView account)
+        private Boolean IsUniqueUsername(AuthView account)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(acc =>
+                    acc.Id != account.Id &&
+                    acc.Username.ToUpper() == account.Username.ToUpper())
+                .Any();
+
+            if (!isUnique)
+                AlertMessages.AddError(String.Empty, Validations.UsernameIsAlreadyTaken);
+
+            return isUnique;
+        }
+        private Boolean IsLegalPassword(AuthView account)
+        {
+            Boolean isLegal = Regex.IsMatch(account.Password ?? String.Empty, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            if (!isLegal)
+                AlertMessages.AddError(String.Empty, Validations.IllegalPassword);
+
+            return isLegal;
+        }
+        private Boolean IsEmailSpecified(AuthView account)
+        {
+            Boolean isSpecified = !String.IsNullOrEmpty(account.Email);
+
+            if (!isSpecified)
+                ModelState.AddModelError<AuthView>(model => model.Email, String.Empty);
+
+            return isSpecified;
+        }
+        private Boolean IsUniqueEmail(AuthView account)
+        {
+            Boolean isUnique = !UnitOfWork
+                .Repository<Account>()
+                .Query(acc => acc.Email.ToUpper() == account.Email.ToUpper())
+                .Any();
+
+            if (!isUnique)
+                AlertMessages.AddError(String.Empty, Validations.EmailIsAlreadyUsed);
+
+            return isUnique;
+        }
+
+        private void SetAccountId(AuthView account)
         {
             account.Id = UnitOfWork
                 .Repository<Account>()
@@ -72,7 +143,7 @@ namespace Template.Services
                 .First()
                 .Id;
         }
-        private void CreateCookieFor(LoginView account)
+        private void CreateCookieFor(AuthView account)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id, DateTime.Now, DateTime.Now.AddMonths(1), true, account.Id);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))

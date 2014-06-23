@@ -5,13 +5,6 @@
             $(this).remove();
         });
     });
-
-    $(document).on('keyup', '.login-input', function () {
-        $(this).parent().removeClass('has-error');
-        $('#LoginBox .alert').fadeTo(300, 0).slideUp(300, function () {
-            $('#LoginBox .alert').remove();
-        });
-    });
 }());
 
 // Language selector
@@ -35,18 +28,20 @@
     }
 }());
 
-// Login form submit handling
+// Auth form submit handling
 (function () {
-    $('#LoginBox > form').on('submit').submit(function (e) {
+    $('#AuthBox > form').on('submit').submit(function (e) {
         var thisForm = $(this);
-        var userinput = $('#Username');
-        var passinput = $('#Password');
+        var userInput = $('#Username');
+        var passInput = $('#Password');
+        var emailInput = $('#Email');
 
-        if (userinput.val() == '' || passinput.val() == '') {
+        if (userInput.val() == '' || passInput.val() == '' || emailInput.val() == '') {
             e.preventDefault();
-            toggleError(userinput);
-            toggleError(passinput);
-            $('#LoginBox').effect('shake', { times: 2, distance: 10 }, 100);
+            toggleError(userInput);
+            toggleError(passInput);
+            toggleError(emailInput);
+            $('#AuthBox').effect('shake', { times: 2, distance: 10 }, 300);
 
             return false;
         } else {

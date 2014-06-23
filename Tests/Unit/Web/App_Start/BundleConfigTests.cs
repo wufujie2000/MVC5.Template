@@ -24,7 +24,7 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Scripts/Select2/Bundle",
                 "~/Scripts/JsTree/Bundle",
                 "~/Scripts/Datalist/Bundle",
-                "~/Scripts/Login/Bundle",
+                "~/Scripts/Auth/Bundle",
                 "~/Scripts/Shared/Bundle"
             };
 
@@ -47,7 +47,7 @@ namespace Template.Tests.Unit.Web.App_Start
                 "~/Content/Select2/Bundle",
                 "~/Content/JsTree/Bundle",
                 "~/Content/Datalist/Bundle",
-                "~/Content/Login/Bundle",
+                "~/Content/Auth/Bundle",
                 "~/Content/Shared/Bundle"
             };
 

@@ -20,10 +20,12 @@
             }
             @Html.FormValidationFor(model => model.PrivilegesTree)
         }
-
-        using (Html.FormActions())
+        using (Html.FormGroup())
         {
-            @Html.FormSubmit()
+            using (Html.FormActions())
+            {
+                @Html.FormSubmit()
+            }
         }
     }
 }

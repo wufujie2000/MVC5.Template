@@ -18,13 +18,14 @@ namespace Template.Tests.Data.Mapping
         #region Static method: MapAuths()
 
         [Test]
-        public void MapAuths_MapsLoginViewToAccount()
+        public void MapAuths_MapsAuthViewToAccount()
         {
-            LoginView expected = ObjectFactory.CreateLoginView();
-            Account actual = Mapper.Map<LoginView, Account>(expected);
+            AuthView expected = ObjectFactory.CreateAuthView();
+            Account actual = Mapper.Map<AuthView, Account>(expected);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNull(actual.Passhash);
             Assert.IsNull(actual.RoleId);

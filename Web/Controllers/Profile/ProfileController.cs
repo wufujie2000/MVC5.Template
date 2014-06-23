@@ -59,7 +59,7 @@ namespace Template.Controllers.Profile
                 Service.AddDeleteDisclaimerMessage();
                 return View();
             }
-            
+
             Service.Delete(HttpContext.User.Identity.Name);
 
             return LogOut();

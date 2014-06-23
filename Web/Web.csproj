@@ -115,6 +115,9 @@
     <Compile Include="Todo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Auth\auth.css">
+      <DependentUpon>auth.less</DependentUpon>
+    </Content>
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Datalist\datalist.css" />
@@ -123,9 +126,6 @@
     <Content Include="Content\GridMvc\gridmvc.css" />
     <Content Include="Content\JQueryUI\jquery-ui-1.10.4.custom.css" />
     <Content Include="Content\JsTree\jstree.css" />
-    <Content Include="Content\Login\login.css">
-      <DependentUpon>login.less</DependentUpon>
-    </Content>
     <Content Include="Content\Select2\select2.css" />
     <Content Include="Content\Shared\alert.css">
       <DependentUpon>alert.less</DependentUpon>
@@ -207,7 +207,7 @@
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.min.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\JsTree\jstree.min.js" />
-    <Content Include="Scripts\Login\login.js" />
+    <Content Include="Scripts\Auth\auth.js" />
     <Content Include="Scripts\Select2\select2.js" />
     <Content Include="Scripts\Select2\select2.min.js" />
     <Content Include="Scripts\Shared\shared.js" />
@@ -313,7 +313,7 @@
     <Content Include="Content\Shared\widget-box.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Login\login.less" />
+    <Content Include="Content\Auth\auth.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\mixins.less" />
@@ -410,6 +410,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Auth\Register.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Login" xml:space="preserve">
-    <value>Prisijungti</value>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>Registruotis</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Ieškoti</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>Patvirtinti</value>
+  <data name="SuccesfulRegistration" xml:space="preserve">
+    <value>Your account has been created, you can now log in</value>
   </data>
 </root>

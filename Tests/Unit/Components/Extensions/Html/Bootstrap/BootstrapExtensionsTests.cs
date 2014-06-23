@@ -88,8 +88,21 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         {
             html.FormActions().Dispose();
 
-            String expected = String.Format("<div class=\"form-group\"><div class=\"{0}\"></div></div>", BootstrapExtensions.FormActionsClass);
+            String expected = String.Format("<div class=\"{0}\"></div>", BootstrapExtensions.FormActionsClass);
             String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Extension method: Submit(this HtmlHelper html, String value)
+
+        [Test]
+        public void Submit_FormsSubmitHtml()
+        {
+            String expected = "<input class=\"btn btn-primary\" type=\"submit\" value=\"Value\" />";
+            String actual = html.Submit("Value").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -99,7 +112,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormSubmit(this HtmlHelper html)
 
         [Test]
-        public void FormSubmit_FormsSubmitHtml()
+        public void FormSubmit_FormsFormSubmitHtml()
         {
             String expected = String.Format("<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />", Template.Resources.Shared.Resources.Submit);
             String actual = html.FormSubmit().ToString();

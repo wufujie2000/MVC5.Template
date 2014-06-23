@@ -25,12 +25,13 @@ namespace Template.Tests.Helpers
                 Email = TestId + instanceNumber.ToString() + "@tests.com"
             };
         }
-        public static LoginView CreateLoginView(Int32 instanceNumber = 1)
+        public static AuthView CreateAuthView(Int32 instanceNumber = 1)
         {
-            return new LoginView()
+            return new AuthView()
             {
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 Password = "Password1"
             };
         }

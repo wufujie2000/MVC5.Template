@@ -6,9 +6,13 @@ namespace Template.Services
     public interface IAuthService : IService
     {
         Boolean IsLoggedIn();
-        Boolean CanLogin(LoginView account);
+        Boolean CanLogin(AuthView account);
+        Boolean CanRegister(AuthView account);
 
-        void Login(LoginView account);
+        void AddSuccessfulRegistrationMessage();
+
+        void Register(AuthView account);
+        void Login(AuthView account);
         void Logout();
     }
 }

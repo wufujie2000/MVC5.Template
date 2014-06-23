@@ -480,7 +480,7 @@ namespace Template.Tests.Unit.Security
 
             Assert.Throws<Exception>(() => provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "Test"), expectedMessage);
         }
-        
+
         #endregion
 
         #region Method: IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)

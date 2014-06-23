@@ -46,7 +46,7 @@
     <Compile Include="Models\System\Language.cs" />
     <Compile Include="Models\System\Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Auth\LoginView.cs" />
+    <Compile Include="Views\Auth\AuthView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountView.cs" />
     <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />

@@ -21,7 +21,7 @@
             }, alertDiv.data('fade-out-after') * 1000);
         }
     });
-    
+
     $(document).on('click', '.alert a.close', function () {
         $(this).parent().parent().fadeTo(300, 0).slideUp(300, function () {
             $(this).hide();

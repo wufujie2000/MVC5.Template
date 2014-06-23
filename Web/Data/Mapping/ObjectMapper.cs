@@ -17,7 +17,7 @@ namespace Template.Data.Mapping
 
         private static void MapAuth()
         {
-            Mapper.CreateMap<LoginView, Account>();
+            Mapper.CreateMap<AuthView, Account>();
         }
 
         #endregion

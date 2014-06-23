@@ -67,7 +67,7 @@ namespace Template.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Create(RoleView role)
+        #region Method: Create([Bind(Exclude = "Id")] RoleView role)
 
         [Test]
         public void Create_ProtectsFromOverpostingId()

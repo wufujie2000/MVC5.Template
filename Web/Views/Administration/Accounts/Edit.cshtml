@@ -23,10 +23,12 @@
             }
             @Html.FormValidationFor(model => model.RoleId)
         }
-
-        using (Html.FormActions())
+        using (Html.FormGroup())
         {
-            @Html.FormSubmit()
+            using (Html.FormActions())
+            {
+                @Html.FormSubmit()
+            }
         }
     }
 }

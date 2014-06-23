@@ -9,7 +9,7 @@ namespace Template.Tests.Unit.Components.Security.Authorization
         {
             return View();
         }
-        
+
         [HttpPost]
         public ActionResult NonGetAction()
         {

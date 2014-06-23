@@ -8,9 +8,9 @@ using Template.Resources;
 
 namespace Template.Components.Extensions.Html
 {
-    public static class LoginExtensions
+    public static class AuthExtensions
     {
-        public static MvcHtmlString LoginUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        public static MvcHtmlString AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-user");
@@ -24,7 +24,7 @@ namespace Template.Components.Extensions.Html
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
-        public static MvcHtmlString LoginPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        public static MvcHtmlString AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-lock");
@@ -38,7 +38,21 @@ namespace Template.Components.Extensions.Html
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes)));
         }
-        public static MvcHtmlString LoginLanguageSelect<TModel>(this HtmlHelper<TModel> html)
+        public static MvcHtmlString AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        {
+            TagBuilder icon = new TagBuilder("i");
+            icon.AddCssClass("fa fa-envelope");
+            TagBuilder addon = new TagBuilder("span");
+            addon.AddCssClass("input-group-addon");
+            addon.InnerHtml = icon.ToString();
+
+            RouteValueDictionary attributes = new RouteValueDictionary();
+            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
+            attributes["class"] = "form-control";
+
+            return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
+        }
+        public static MvcHtmlString AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
         {
             TagBuilder addon = new TagBuilder("span");
             addon.AddCssClass("input-group-addon flag-span");
@@ -66,19 +80,6 @@ namespace Template.Components.Extensions.Html
             }
 
             return new MvcHtmlString(String.Format("{0}{1}{2}", addon, input, select));
-        }
-
-        public static MvcHtmlString LoginSubmit<TModel>(this HtmlHelper<TModel> html)
-        {
-            TagBuilder formActions = new TagBuilder("div");
-            formActions.AddCssClass("login-form-actions");
-            TagBuilder submit = new TagBuilder("input");
-            submit.AddCssClass("btn btn-block btn-primary btn-default");
-            submit.MergeAttribute("value", Resources.Shared.Resources.Login);
-            submit.MergeAttribute("type", "submit");
-            formActions.InnerHtml = submit.ToString();
-
-            return new MvcHtmlString(formActions.ToString());
         }
     }
 }

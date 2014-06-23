@@ -1,19 +1,12 @@
-﻿// Alerts closing & fading
+﻿// Language selector
 (function () {
-    $(document).on('click', '.alert a.close', function () {
-        $(this).parent().parent().fadeTo(300, 0).slideUp(300, function () {
-            $(this).remove();
-        });
+    $("#Language").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: -1,
+            formatResult: formatSelection,
+            formatSelection: formatSelection
+        }).select2('val', currentLanguage);
     });
-}());
-
-// Language selector
-(function () {
-    $("#Language").select2({
-        minimumResultsForSearch: -1,
-        formatResult: formatSelection,
-        formatSelection: formatSelection
-    }).select2('val', currentLanguage);
     $('#TempLanguage').hide();
 
     $(document).on("change", "#Language", function (e) {
@@ -30,18 +23,17 @@
 
 // Auth form submit handling
 (function () {
-    $('#AuthBox > form').on('submit').submit(function (e) {
+    $('form').on('submit').submit(function (e) {
         var thisForm = $(this);
         var userInput = $('#Username');
         var passInput = $('#Password');
         var emailInput = $('#Email');
 
         if (userInput.val() == '' || passInput.val() == '' || emailInput.val() == '') {
-            e.preventDefault();
-            toggleError(userInput);
-            toggleError(passInput);
             toggleError(emailInput);
-            $('#AuthBox').effect('shake', { times: 2, distance: 10 }, 300);
+            toggleError(passInput);
+            toggleError(userInput);
+            e.preventDefault();
 
             return false;
         } else {

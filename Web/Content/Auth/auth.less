@@ -1,149 +1,63 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-html,
-body {
-    background: @background-color;
-    height: 100%;
-    width: 100%;
-}
-
-.left-float {
-    margin-bottom: 10px;
-    font-weight: bold;
-    float: left;
-}
-
-.right-float {
-    margin-bottom: 10px;
-    float: right;
-}
-
-.grey a {
-    font-weight: normal;
-    color: #aaaaaa;
-}
-
-.input-validation-error {
-    border-color: @validation-color;
-
-    &:focus {
-        .box-shadow(lighten(@validation-color, 30%));
-    }
-}
-
 #AuthContainer {
     text-align: center;
     position: absolute;
     top: 20%;
     right: 0;
     left: 0;
-}
 
-#AuthBox {
-    background: @active-color;
-    display: inline-block;
-    border-radius: 7px;
-    min-height: 175px;
-    min-width: 380px;
+    > div {
+        background: @active-color;
+        display: inline-block;
+        border-radius: 7px;
+        min-width: 380px;
+    
+        > form {
+            padding: 15px 20px 15px;
 
-    .alerts {
-        margin: 10px 0;
-
-        .alert {
-            margin: 3px 20px 0;
-            padding: 10px 15px;
-
-            .alert-text {
-                padding-right: 10px;
-                float: left;
-            }
-
-            .alert-close {
-                float: right;
-            }
-
-            &:after {
-                visibility: hidden;
-                display: block;
-                content: " ";
-                clear: both;
-                height: 0;
-            }
-        }
-    }
-
-    .input-group {
-        padding: 0 20px 5px;
-        width: 100%;
-
-        > span:first-child {
-            width: 39px;
-        }
-    }
-
-    > form {
-        padding-top: 7px;
-
-        .select2-container {
-            width: 100%;
-
-            .select2-choice {
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-                border: 1px solid #cccccc;
-                border-radius: 0 4px 4px 0;
-                background-image: none;
-                line-height: 1.42857;
-                padding: 6px 12px;
-                text-align: left;
-                height: 34px;
-            }
-
-            &.select2-dropdown-open .select2-choice {
-                border-radius: 0 4px 0 0;
-            }
-
-            .select2-choice .select2-arrow b {
-                background-position: 0 4px;
-            }
-        }
-
-        .select2-dropdown-open .select2-choice .select2-arrow b {
-            background-position: -18px 4px;
-        }
-
-        .select2-container-active .select2-choice {
-            .box-shadow(rgba(102, 175, 233, 0.6));
-            border-color: #66afe9;
-        }
-
-        .auth-form-actions {
-            padding: 5px 20px 15px;
-
-            input {
-                display: block;
+            .input-group {
+                padding-bottom: 5px;
                 width: 100%;
+
+                > span:first-child {
+                    width: 39px;
+                }
+            }
+
+            #TempLanguage {
+                border-bottom-right-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+
+            #Language {
+                display: none;
+            }
+
+            .auth-form-actions {
+                padding-top: 5px;
+
+                .left-panel {
+                    margin-bottom: 10px;
+                    font-weight: bold;
+                    float: left;
+                }
+
+                .right-panel {
+                    margin-bottom: 10px;
+                    float: right;
+                }
+
+                .grey a {
+                    font-weight: normal;
+                    color: #aaaaaa;
+                }
+
+                input {
+                    width: 100%;
+                }
             }
         }
     }
-}
-
-#TempLanguage {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
-
-#Language {
-    display: none;
-}
-
-.select2-drop,
-.select2-drop-active {
-    .box-shadow(rgba(102, 175, 233, 0.6));
-    border-color: #66afe9;
-}
-
-.select2-results .select2-highlighted {
-    background-color: #f5f5f5;
-    color: #262626;
 }

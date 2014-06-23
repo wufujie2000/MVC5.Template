@@ -7,19 +7,19 @@
     @Styles.Render("~/Content/FontAwesome/Bundle")
     @Styles.Render("~/Content/Select2/Bundle")
     @Styles.Render("~/Content/Auth/Bundle")
+    @Styles.Render("~/Content/Shared/Bundle")
     <meta charset="UTF-8" />
     <title>@ResourceProvider.GetCurrentContentTitle()</title>
 </head>
 <body>
     <div id="AuthContainer">
-        <div id="AuthBox">
+        <div id="AuthContent">
             @RenderBody()
         </div>
     </div>
 </body>
     @Scripts.Render("~/Scripts/JQuery/Bundle")
-    @Scripts.Render("~/Scripts/JQueryUI/Bundle")
-    @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/Select2/Bundle")
     @Scripts.Render("~/Scripts/Auth/Bundle")
+    @Scripts.Render("~/Scripts/Shared/Bundle")
 </html>

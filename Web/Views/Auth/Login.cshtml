@@ -19,7 +19,7 @@
     }
     using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
     {
-        <div class="left-float">
+        <div class="left-panel">
             @Html.ActionLink(Template.Resources.Views.AccountView.Texts.CreateNewAccount, "Register")
         </div>
         @Html.Submit(Template.Resources.Shared.Resources.Login)

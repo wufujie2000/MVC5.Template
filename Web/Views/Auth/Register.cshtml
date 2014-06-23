@@ -19,12 +19,9 @@
     }
     using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
     {
-        <div class="left-float grey">
+        <div class="left-panel grey">
             @Html.ActionLink(Template.Resources.Views.AccountView.Texts.Login, "Login")
         </div>
         @Html.Submit(Template.Resources.Shared.Resources.Register)
     }
-    <script>
-        var currentLanguage = '@Request.RequestContext.RouteData.Values["language"].ToString()';
-    </script>
 }

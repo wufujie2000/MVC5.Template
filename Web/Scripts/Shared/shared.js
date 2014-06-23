@@ -43,13 +43,16 @@
 
 // GridMvc configuration
 (function () {
-    // Removing row selecting feature
-    GridMvc.prototype.markRowSelected = function () {};
+    // Removing row selection feature
+    if (typeof GridMvc !== 'undefined')
+        GridMvc.prototype.markRowSelected = function () { };
 }());
 
 // Datepicker binding
 (function () {
-    $(".datepicker").datepicker();
+    $(".datepicker").each(function () {
+        $(this).datepicker();
+    });
 }());
 
 // JsTree binding
@@ -89,5 +92,7 @@
 
 // Datalist binding
 (function () {
-    $('.datalist-input').datalist();
+    $('.datalist-input').each(function () {
+        $(this).datalist();
+    });
 }());

@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   src: local('PT Sans'), local('PTSans-Regular'), url('Fonts/PTSans.woff') format('woff');
   font-family: 'PT Sans';
   font-style: normal;
@@ -16,8 +16,8 @@
 }
 body {
   background-color: #31353c;
-  color: #555555;
   font-family: 'PT Sans', consolas;
+  color: #555555;
   overflow-x: hidden;
   overflow-y: auto;
 }

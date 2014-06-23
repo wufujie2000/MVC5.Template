@@ -1,4 +1,4 @@
-/* Bootstrap */
+﻿/* Bootstrap */
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
@@ -71,11 +71,33 @@
   cursor: pointer;
 }
 /* Select2 */
-.select2-dropdown-open .select2-choice .select2-arrow b {
-  background-position: -18px 4px;
+.select2-container {
+  width: 100%;
+}
+.select2-container .select2-choice {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border: 1px solid #cccccc;
+  border-radius: 0 4px 4px 0;
+  background-image: none;
+  line-height: 1.42857;
+  padding: 6px 12px;
+  text-align: left;
+  height: 34px;
 }
 .select2-container .select2-choice .select2-arrow b {
   background-position: 0 4px;
+}
+.select2-container.select2-dropdown-open .select2-choice {
+  border-radius: 0 4px 0 0;
+}
+.select2-container.select2-dropdown-open .select2-choice .select2-arrow b {
+  background-position: -18px 4px;
+}
+.select2-drop,
+.select2-drop-active,
+.select2-container-active .select2-choice {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+  border-color: #66afe9;
 }
 .select2-results .select2-highlighted {
   background-color: #f5f5f5;

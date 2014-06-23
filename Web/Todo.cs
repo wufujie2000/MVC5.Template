@@ -10,6 +10,5 @@
         // TODO: Disconnect deleted users from home controller
         // TODO: Hide datalist controller's getdata method from public access
         // TODO: Create account registration and password recovery functionality
-        // TODO: Check role provider's AllowsUnauthorized method for inheritence situations
     }
 }

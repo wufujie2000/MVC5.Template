@@ -12,11 +12,12 @@ namespace Template.Components.Security
     {
         private IEnumerable<Type> controllerTypes;
         private IUnitOfWork unitOfWork;
+        private Type controllerType;
         private Boolean disposed;
 
         public RoleProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
         {
-            Type controllerType = typeof(Controller);
+            controllerType = typeof(Controller);
             this.controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));
             this.unitOfWork = unitOfWork;
         }
@@ -66,16 +67,21 @@ namespace Template.Components.Security
 
         private Boolean AllowsUnauthorized(String area, String controller, String action)
         {
-            Type controllerType = GetController(area, controller);
-            MethodInfo actionInfo = GetAction(controllerType, action);
+            Type authorizedControllerType = GetController(area, controller);
+            MethodInfo actionInfo = GetAction(authorizedControllerType, action);
 
             if (actionInfo.IsDefined(typeof(AuthorizeAttribute), false)) return false;
             if (actionInfo.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (actionInfo.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
 
-            if (controllerType.IsDefined(typeof(AuthorizeAttribute), false)) return false;
-            if (controllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
-            if (controllerType.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+            while (authorizedControllerType != controllerType)
+            {
+                if (authorizedControllerType.IsDefined(typeof(AuthorizeAttribute), false)) return false;
+                if (authorizedControllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
+                if (authorizedControllerType.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+
+                authorizedControllerType = authorizedControllerType.BaseType;
+            }
 
             return true;
         }

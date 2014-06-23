@@ -117,8 +117,11 @@
     <Compile Include="Unit\Components\Mvc\Filters\ExceptionFilterTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\InheritedAuthorizedController.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\InheritedAllowUnauthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AllowUnauthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AllowAnonymousController.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\InheritedAllowAnonymousController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\NotAttributedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AuthorizedController.cs" />
     <Compile Include="Unit\Data\Migrations\InitialDataTests.cs" />

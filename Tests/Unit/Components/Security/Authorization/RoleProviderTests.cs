@@ -366,6 +366,112 @@ namespace Template.Tests.Unit.Security
 
         #endregion
 
+        #region Inherited authorized controller
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesGetActionOnInheritedAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "InheritedAuthorized", "GetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "GetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "GetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesNonGetActionOnInheritedAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "InheritedAuthorized", "NonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNonGetActionOnInheritedAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "NonGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "NonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "InheritedAuthorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "AllowAnonymousGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "AllowAnonymousGetAction"));
+        }
+
+        #endregion
+
+        #region Inherited allow anonymous controller
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "InheritedAllowAnonymous", "GetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNonGetActionOnInheritedAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "InheritedAllowAnonymous", "NonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "InheritedAllowAnonymous", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAllowAnonymousController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAllowAnonymous", "AllowAnonymousGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowAnonymous", "AllowAnonymousGetAction"));
+        }
+
+        #endregion
+
+        #region Inherited alow unauthorized controller
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "InheritedAllowUnauthorized", "GetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNonGetActionOnInheritedAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor((String)null, null, "InheritedAllowUnauthorized", "NonGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor((String)null, null, "InheritedAllowUnauthorized", "AllowAnonymousGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAllowUnauthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAllowUnauthorized", "AllowAnonymousGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowUnauthorized", "AllowAnonymousGetAction"));
+        }
+
+        #endregion
+
         [Test]
         public void IsAuthorizedFor_OnNotExistingActionThrows()
         {

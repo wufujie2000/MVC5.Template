@@ -1,7 +1,7 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-#Content {
+#ContentContainer {
     background-color: @content-background-color;
     border-radius: 8px 0 0 8px;
     margin-left: 200px;
@@ -46,12 +46,43 @@
     }
 }
 
-#ContentContainer {
+#Content {
     padding: 15px;
+    float: left;
+    width: 100%;
+}
+
+.control-label {
+    color: @content-color;
+    text-align: right;
+    padding: 6px 15px;
+    margin: 0;
+
+    .required {
+        color: @validation-color;
+    }
+}
+
+.input-validation-error {
+    border-color: @validation-color;
+
+    &:focus {
+        .box-shadow(lighten(@validation-color, 30%));
+        border-color: @validation-color;
+    }
+}
+
+.field-validation-error {
+    color: @validation-color;
+    vertical-align: middle;
+    display: inline-table;
+    padding-top: 10px;
+    text-align: left;
+    height: 34px;
 }
 
 @media (max-width: 767px) {
-    #Content {
+    #ContentContainer {
         margin-left: 45px;
     }
 }

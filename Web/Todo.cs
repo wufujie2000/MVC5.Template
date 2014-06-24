@@ -2,8 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Disconnect deleted users from home controller
-        // TODO: Fix email validation styling in registration form
         // TODO: Disable autocomplete from password fields, exept login
         // TODO: Hide datalist controller's getdata method from public access
         // TODO: Mock all protected controller methods which are used in tests
@@ -15,6 +13,7 @@
         // TODO: Add index/create/edit/delete specific views
         // TODO: Lower password security to 8 symbols
         // TODO: Remove usage of home service and replace it with accounts service ~
+        // TODO: Disconnect deleted users from home controller
         // TODO: Add password recovery functionality
         // TODO: Make attributed or special input fields not editable by css/js
         // TODO: Add protection from registering two accounts with the same username/email at the same time

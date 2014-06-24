@@ -18,14 +18,14 @@
     @Html.Partial("_Header")
     @Html.Partial("_Sidebar", MvcSiteMapFactory.Provider.GetMenus())
     @Html.Partial("_Datalist")
-    <div id="Content">
+    <div id="ContentContainer">
         <div id="ContentHeader">
             <h1>@ResourceProvider.GetCurrentContentTitle()</h1>
         </div>
         <div id="ContentBreadcrumb">
             @Html.Partial("_Breadcrumb", MvcSiteMapFactory.Provider.GetBreadcrumb())
         </div>
-        <div id="ContentContainer">
+        <div id="Content">
             @Html.Partial("_AlertMessages")
             @RenderBody()
         </div>

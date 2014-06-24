@@ -78,7 +78,7 @@ namespace Template.Services
         private Boolean AccountExists(Account account)
         {
             if (account == null)
-                AlertMessages.AddError(String.Empty, Validations.IncorrectUsernameOrPassword);
+                AlertMessages.AddError(Validations.IncorrectUsernameOrPassword);
 
             return account != null;
         }
@@ -86,7 +86,7 @@ namespace Template.Services
         {
             Boolean passwordCorrect = BCrypter.Verify(password, passhash);
             if (!passwordCorrect)
-                AlertMessages.AddError(String.Empty, Validations.IncorrectUsernameOrPassword);
+                AlertMessages.AddError(Validations.IncorrectUsernameOrPassword);
 
             return passwordCorrect;
         }
@@ -101,7 +101,7 @@ namespace Template.Services
                 .Any();
 
             if (!isUnique)
-                AlertMessages.AddError(String.Empty, Validations.UsernameIsAlreadyTaken);
+                AlertMessages.AddError(Validations.UsernameIsAlreadyTaken);
 
             return isUnique;
         }
@@ -109,7 +109,7 @@ namespace Template.Services
         {
             Boolean isLegal = Regex.IsMatch(account.Password ?? String.Empty, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
-                AlertMessages.AddError(String.Empty, Validations.IllegalPassword);
+                AlertMessages.AddError(Validations.IllegalPassword);
 
             return isLegal;
         }
@@ -130,7 +130,7 @@ namespace Template.Services
                 .Any();
 
             if (!isUnique)
-                AlertMessages.AddError(String.Empty, Validations.EmailIsAlreadyUsed);
+                AlertMessages.AddError(Validations.EmailIsAlreadyUsed);
 
             return isUnique;
         }

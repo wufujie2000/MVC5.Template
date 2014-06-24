@@ -27,7 +27,7 @@ namespace Template.Controllers.Datalist
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);
         }
 
-        public virtual JsonResult Role(DatalistFilter filter)
+        public JsonResult Role(DatalistFilter filter)
         {
             return GetData(new BaseDatalist<Role, RoleView>(unitOfWork), filter);
         }

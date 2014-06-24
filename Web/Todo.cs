@@ -3,8 +3,6 @@
     internal sealed class Todo
     {
         // TODO: Disable autocomplete from password fields, exept login
-        // TODO: Hide datalist controller's getdata method from public access
-        // TODO: Mock all protected controller methods which are used in tests
         // TODO: Removed Add...Message() methods from services and move them to controller
         // TODO: Change generic service usage by moving generic views to methods
 
@@ -19,6 +17,7 @@
         // TODO: Make services and other program module naming consistent with one another
         // TODO: Rename tests, to more readable form
         // TODO: Rename resources assembly or it's resources resources files and then change Template.Resources.Shared.Resources occurences
+        // TODO: Hide datalist controller's Role and others method from unauthorized access
         // TODO: Add project renaming utility
     }
 }

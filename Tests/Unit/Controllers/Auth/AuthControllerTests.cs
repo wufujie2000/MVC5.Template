@@ -150,10 +150,13 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
+            ActionResult expected = new RedirectResult("/Home/Index");
+            controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
-            RedirectResult result = controller.Login("/Home/Index") as RedirectResult;
 
-            Assert.AreEqual("/Home/Index", result.Url);
+            ActionResult actual = controller.Login("/Home/Index");
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -192,11 +195,14 @@ namespace Template.Tests.Unit.Controllers.Auth
         public void Login_RedirectsToUrlIfCanLogin()
         {
             AuthView account = new AuthView();
-            serviceMock.Setup(mock => mock.Login(account));
+            ActionResult expected = new RedirectResult("/Home/Index");
+            controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
-            RedirectResult result = controller.Login(account, "/Home/Index") as RedirectResult;
+            serviceMock.Setup(mock => mock.Login(account));
 
-            Assert.IsNotNull("/Home/Index", result.Url);
+            ActionResult actual = controller.Login(account, "/Home/Index");
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

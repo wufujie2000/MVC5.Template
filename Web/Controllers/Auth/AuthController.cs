@@ -56,6 +56,7 @@ namespace Template.Controllers.Auth
                 return View();
 
             Service.Login(account);
+
             return RedirectToLocal(returnUrl);
         }
 

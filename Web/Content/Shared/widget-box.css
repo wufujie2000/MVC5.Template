@@ -1,10 +1,9 @@
-.widget-box {
+﻿.widget-box {
   background-color: #fafafa;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
   border: 1px solid #cdcdcd;
   margin-bottom: 15px;
   border-radius: 11px;
-  clear: both;
 }
 .widget-title {
   border-bottom: 1px solid #cdcdcd;
@@ -54,6 +53,7 @@
   border-top: 1px solid #ffffff;
   padding: 10px;
   margin: 0;
+  zoom: 1;
 }
 .widget-content .form-group:before,
 .widget-content .form-group:after {

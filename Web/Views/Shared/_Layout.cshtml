@@ -26,10 +26,8 @@
             @Html.Partial("_Breadcrumb", MvcSiteMapFactory.Provider.GetBreadcrumb())
         </div>
         <div id="ContentContainer">
-            <div class="col-xs-12">
-                @Html.Partial("_AlertMessages")
-                @RenderBody()
-            </div>
+            @Html.Partial("_AlertMessages")
+            @RenderBody()
         </div>
     </div>
     @Html.Partial("_Footer")

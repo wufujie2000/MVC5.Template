@@ -5,7 +5,6 @@
         // TODO: Disable autocomplete from password fields, exept login
         // TODO: Hide datalist controller's getdata method from public access
         // TODO: Mock all protected controller methods which are used in tests
-        // TODO: Wrap up code in extensions like auth extensions having duplicate code
         // TODO: Removed Add...Message() methods from services and move them to controller
         // TODO: Change generic service usage by moving generic views to methods
 

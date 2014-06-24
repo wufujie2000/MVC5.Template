@@ -12,43 +12,22 @@ namespace Template.Components.Extensions.Html
     {
         public static MvcHtmlString AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            TagBuilder icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-user");
-            TagBuilder addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon");
-            addon.InnerHtml = icon.ToString();
-
-            RouteValueDictionary attributes = new RouteValueDictionary();
-            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
-            attributes["class"] = "form-control";
+            TagBuilder addon = CreateAddon("fa-user");
+            RouteValueDictionary attributes = CreateAttributesFor(expression);
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
         public static MvcHtmlString AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            TagBuilder icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-lock");
-            TagBuilder addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon lock-span");
-            addon.InnerHtml = icon.ToString();
-
-            RouteValueDictionary attributes = new RouteValueDictionary();
-            attributes["class"] = "form-control";
-            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
+            TagBuilder addon = CreateAddon("fa-lock");
+            RouteValueDictionary attributes = CreateAttributesFor(expression);
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes)));
         }
         public static MvcHtmlString AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
         {
-            TagBuilder icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-envelope");
-            TagBuilder addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon");
-            addon.InnerHtml = icon.ToString();
-
-            RouteValueDictionary attributes = new RouteValueDictionary();
-            attributes["placeholder"] = ResourceProvider.GetPropertyTitle(expression);
-            attributes["class"] = "form-control";
+            TagBuilder addon = CreateAddon("fa-envelope");
+            RouteValueDictionary attributes = CreateAttributesFor(expression);
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
@@ -80,6 +59,25 @@ namespace Template.Components.Extensions.Html
             }
 
             return new MvcHtmlString(String.Format("{0}{1}{2}", addon, input, select));
+        }
+
+        private static TagBuilder CreateAddon(String iconClass)
+        {
+            TagBuilder addon = new TagBuilder("span");
+            addon.AddCssClass("input-group-addon");
+            TagBuilder icon = new TagBuilder("i");
+            icon.AddCssClass("fa " + iconClass);
+            addon.InnerHtml = icon.ToString();
+
+            return addon;
+        }
+        private static RouteValueDictionary CreateAttributesFor<TModel>(Expression<Func<TModel, String>> expression)
+        {
+            RouteValueDictionary attributes = new RouteValueDictionary();
+            attributes.Add("placeholder", ResourceProvider.GetPropertyTitle(expression));
+            attributes.Add("class", "form-control");
+
+            return attributes;
         }
     }
 }

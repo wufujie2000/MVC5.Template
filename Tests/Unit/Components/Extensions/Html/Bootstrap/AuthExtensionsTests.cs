@@ -60,7 +60,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
             Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
 
             String actual = html.AuthPasswordFor(expression).ToString();
-            String expected = String.Format("<span class=\"input-group-addon lock-span\"><i class=\"fa fa-lock\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
+            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-lock\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression));
 

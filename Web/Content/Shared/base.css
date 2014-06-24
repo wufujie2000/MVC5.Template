@@ -22,6 +22,14 @@ body {
   overflow-y: auto;
 }
 .clear {
+  zoom: 1;
+}
+.clear:before,
+.clear:after {
+  content: "";
+  display: table;
+}
+.clear:after {
   clear: both;
 }
 #Footer {

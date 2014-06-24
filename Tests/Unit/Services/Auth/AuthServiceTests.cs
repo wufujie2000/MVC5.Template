@@ -169,7 +169,7 @@ namespace Template.Tests.Unit.Services
 
             AlertMessage actual = service.AlertMessages.First();
 
-            Assert.AreEqual(Validations.EmailIsAlreadyUsed, actual.Message);
+            Assert.AreEqual(Validations.UsernameIsAlreadyTaken, actual.Message);
             Assert.AreEqual(AlertMessageType.Danger, actual.Type);
         }
 
@@ -185,7 +185,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordIsTooShort()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AuthView account = ObjectFactory.CreateAuthView(2);
             account.Password = "AaaAaa1";
 
             service.CanRegister(account);
@@ -208,7 +208,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainUpperLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AuthView account = ObjectFactory.CreateAuthView(2);
             account.Password = "aaaaaaaaaaaa1";
 
             service.CanRegister(account);
@@ -222,7 +222,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotCreateIfPasswordDoesNotContainLowerLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AuthView account = ObjectFactory.CreateAuthView(2);
             account.Password = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanRegister(account));
@@ -231,7 +231,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainLowerLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AuthView account = ObjectFactory.CreateAuthView(2);
             account.Password = "AAAAAAAAAAA1";
 
             service.CanRegister(account);
@@ -254,7 +254,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainADigit()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AuthView account = ObjectFactory.CreateAuthView(2);
             account.Password = "AaAaAaAaAaAa";
 
             service.CanRegister(account);
@@ -300,6 +300,7 @@ namespace Template.Tests.Unit.Services
         public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
         {
             AuthView account = ObjectFactory.CreateAuthView();
+            account.Username += "Test username";
             service.CanRegister(account);
 
             AlertMessage actual = service.AlertMessages.First();
@@ -311,8 +312,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanRegisterValidAccount()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
-            account.Email += "s";
+            AuthView account = ObjectFactory.CreateAuthView(2);
 
             Assert.IsTrue(service.CanRegister(account));
         }

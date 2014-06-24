@@ -99,7 +99,6 @@ namespace Template.Services
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
                 .Query(acc =>
-                    acc.Id != account.Id &&
                     acc.Username.ToUpper() == account.Username.ToUpper())
                 .Any();
 
@@ -110,7 +109,7 @@ namespace Template.Services
         }
         private Boolean IsLegalPassword(AuthView account)
         {
-            Boolean isLegal = Regex.IsMatch(account.Password ?? String.Empty, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
+            Boolean isLegal = Regex.IsMatch(account.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
                 AlertMessages.AddError(Validations.IllegalPassword);
 

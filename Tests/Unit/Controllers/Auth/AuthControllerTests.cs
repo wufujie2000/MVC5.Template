@@ -148,6 +148,15 @@ namespace Template.Tests.Unit.Controllers.Auth
         #region Method: Login(String returnUrl)
 
         [Test]
+        public void Login_RedirectsToUrlIfAlreadyLoggedIn()
+        {
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
+            RedirectResult result = controller.Login("/Home/Index") as RedirectResult;
+
+            Assert.AreEqual("/Home/Index", result.Url);
+        }
+
+        [Test]
         public void Login_ReturnsNullModelIfNotLoggedIn()
         {
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);

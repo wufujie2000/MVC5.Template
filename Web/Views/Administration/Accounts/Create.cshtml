@@ -5,7 +5,6 @@
     using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
         using (Html.FormGroup())
         {
             @Html.RequiredLabelFor(model => model.Username)

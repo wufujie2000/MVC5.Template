@@ -31,7 +31,7 @@ namespace <#= Model.Namespace #>
         public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
         {
             if (!Service.CanCreate(<#= Model.ModelName #>))
-                return View();
+                return View(<#= Model.ModelName #>);
 
             Service.Create(<#= Model.ModelName #>);
 
@@ -55,7 +55,7 @@ namespace <#= Model.Namespace #>
         public ActionResult Edit(<#= Model.View #> <#= Model.ModelName #>)
         {
             if (!Service.CanEdit(<#= Model.ModelName #>))
-                return View();
+                return View(<#= Model.ModelName #>);
 
             Service.Edit(<#= Model.ModelName #>);
 
@@ -74,7 +74,7 @@ namespace <#= Model.Namespace #>
         public ActionResult DeleteConfirmed(String id)
         {
             if (!Service.CanDelete(id))
-                return View();
+                return View(Service.GetView(id));
 
             Service.Delete(id);
 

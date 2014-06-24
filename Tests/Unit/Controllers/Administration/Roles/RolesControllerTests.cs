@@ -233,7 +233,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: DeleteConfirmed(String id)
 
         [Test]
-        public void DeleteConfirmed_ReturnsModelIfCanNotDelete()
+        public void DeleteConfirmed_ReturnsSameModelIfCanNotDelete()
         {
             RoleView role = new RoleView();
             serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
@@ -245,25 +245,25 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void DeleteConfirmed_DeletesRoleView()
         {
-            String roleId = "Test";
-            serviceMock.Setup(mock => mock.CanDelete(roleId)).Returns(true);
-            serviceMock.Setup(mock => mock.Delete(roleId));
-            controller.DeleteConfirmed(roleId);
+            RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(true);
+            serviceMock.Setup(mock => mock.Delete(role.Id));
+            controller.DeleteConfirmed(role.Id);
 
-            serviceMock.Verify(mock => mock.Delete(roleId), Times.Once());
+            serviceMock.Verify(mock => mock.Delete(role.Id), Times.Once());
         }
 
         [Test]
         public void Delete_AfterSuccessfulDeleteRedirectsToIndexIfAuthorized()
         {
-            String roleId = "Test";
-            serviceMock.Setup(mock => mock.CanDelete(roleId)).Returns(true);
-            serviceMock.Setup(mock => mock.Delete(roleId));
+            RoleView role = new RoleView();
+            serviceMock.Setup(mock => mock.Delete(role.Id));
+            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(true);
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
             Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
-            RedirectToRouteResult actual = controllerMock.Object.DeleteConfirmed(roleId) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controllerMock.Object.DeleteConfirmed(role.Id) as RedirectToRouteResult;
 
             Assert.AreEqual(expected, actual);
         }

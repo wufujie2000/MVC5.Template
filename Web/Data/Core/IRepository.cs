@@ -13,7 +13,7 @@ namespace Template.Data.Core
         IQueryable<TModel> Query();
         IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate);
         IQueryable<TView> Query<TView>() where TView : BaseView;
-        IQueryable<TView> Query<TView>(Expression<Func<TModel, Boolean>> predicate) where TView : BaseView;
+        IQueryable<TView> Query<TView>(Expression<Func<TView, Boolean>> predicate) where TView : BaseView;
 
         void Insert(TModel model);
         void Update(TModel model);

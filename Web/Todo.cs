@@ -2,7 +2,6 @@
 {
     internal sealed class Todo
     {
-        // TODO: Try adding repository.insert(View) method
         // TODO: Disconnect deleted users from home controller
         // TODO: Fix email validation styling in registration form
         // TODO: Disable autocomplete from password fields, exept login
@@ -10,8 +9,10 @@
         // TODO: Mock all protected controller methods which are used in tests
         // TODO: Wrap up code in extensions like auth extensions having duplicate code
         // TODO: Removed Add...Message() methods from services and move them to controller
+        // TODO: Change generic service usage by moving generic views to methods
 
-        // TODO: Try combining profile/accounts/auth services
+        // TODO: Combine profile/accounts/auth services
+        // TODO: Add index/create/edit/delete specific views
         // TODO: Lower password security to 8 symbols
         // TODO: Remove usage of home service and replace it with accounts service ~
         // TODO: Add password recovery functionality

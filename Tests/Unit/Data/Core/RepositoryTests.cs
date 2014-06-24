@@ -100,7 +100,7 @@ namespace Template.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Query<TView>(Expression<Func<TModel, Boolean>> predicate)
+        #region Method: Query<TView>(Expression<Func<TView, Boolean>> predicate)
 
         [Test]
         public void Query_FiltersProjectedViewsByPredicate()

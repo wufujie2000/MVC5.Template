@@ -39,12 +39,12 @@ namespace Template.Data.Core
 
         public IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate)
         {
-            return dbSet.Where(predicate);
+            return Query().Where(predicate);
         }
-        public IQueryable<TView> Query<TView>(Expression<Func<TModel, Boolean>> predicate)
+        public IQueryable<TView> Query<TView>(Expression<Func<TView, Boolean>> predicate)
             where TView : BaseView
         {
-            return Query(predicate).Project().To<TView>();
+            return Query<TView>().Where(predicate);
         }
 
         public void Insert(TModel model)

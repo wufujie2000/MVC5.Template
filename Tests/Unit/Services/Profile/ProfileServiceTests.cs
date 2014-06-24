@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web;
@@ -17,9 +18,11 @@ namespace Template.Tests.Unit.Services
     [TestFixture]
     public class ProfileServiceTests
     {
+        private Mock<IHasher> hasherMock;
         private ProfileService service;
         private AContext context;
         private Account account;
+        private IHasher hasher;
 
         [SetUp]
         public void SetUp()
@@ -27,8 +30,12 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
             HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
-            service = new ProfileService(new UnitOfWork(context));
+            hasherMock = new Mock<IHasher>(MockBehavior.Strict);
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
+            hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
+            service = new ProfileService(new UnitOfWork(context), hasherMock.Object);
             httpMock.IdentityMock.Setup(mock => mock.Name).Returns(() => account.Id);
+            hasher = hasherMock.Object;
 
             service.ModelState = new ModelStateDictionary();
             service.AlertMessages = new MessagesContainer();
@@ -75,6 +82,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
 
@@ -84,6 +92,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
             service.CanEdit(profile);
@@ -316,6 +325,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
 
@@ -325,6 +335,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             ProfileView profile = ObjectFactory.CreateProfileView();
             profile.CurrentPassword += "1";
             service.CanDelete(profile);
@@ -355,7 +366,7 @@ namespace Template.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
-            Assert.IsTrue(BCrypter.Verify(profileView.NewPassword, actual.Passhash));
+            Assert.AreEqual(hasher.HashPassword(profileView.NewPassword), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
@@ -370,7 +381,7 @@ namespace Template.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
-            Assert.IsTrue(BCrypter.Verify(profileView.CurrentPassword, actual.Passhash));
+            Assert.IsTrue(hasher.Verify(profileView.CurrentPassword, actual.Passhash));
         }
 
         #endregion

@@ -1,3 +1,4 @@
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -18,13 +19,17 @@ namespace Template.Tests.Unit.Services
         private AccountsService service;
         private String accountId;
         private Context context;
+        private IHasher hasher;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            service = new AccountsService(new UnitOfWork(context));
+            Mock<IHasher> hasherMock = new Mock<IHasher>(MockBehavior.Strict);
+            hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
+            service = new AccountsService(new UnitOfWork(context), hasherMock.Object);
             service.ModelState = new ModelStateDictionary();
+            hasher = hasherMock.Object;
 
             TearDownData();
             SetUpData();
@@ -302,7 +307,7 @@ namespace Template.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
-            Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
+            Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);

@@ -101,6 +101,7 @@
     <Compile Include="Alerts\AlertMessage.cs" />
     <Compile Include="Alerts\AlertMessageType.cs" />
     <Compile Include="Alerts\MessagesContainer.cs" />
+    <Compile Include="Security\Cryptography\IHasher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Resources\Resources.csproj">

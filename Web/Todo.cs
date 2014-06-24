@@ -9,7 +9,6 @@
         // TODO: Disconnect deleted users from home controller
         // TODO: Hide datalist controller's getdata method from public access
         // TODO: Mock all protected controller methods which are used in tests
-        // TODO: Make hashing algorithms injectable
         // TODO: Try adding repository.insert(View) method
         // TODO: Wrap up code in extensions like auth extensions having duplicate code
         // TODO: Add better clearfixes

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web;
@@ -18,17 +19,23 @@ namespace Template.Tests.Unit.Services
     [TestFixture]
     public class AuthServiceTests
     {
+        private Mock<IHasher> hasherMock;
         private AuthService service;
         private HttpMock httpMock;
         private AContext context;
+        private IHasher hasher;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            service = new AuthService(new UnitOfWork(context));
+            hasherMock = new Mock<IHasher>(MockBehavior.Strict);
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
+            hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
+            service = new AuthService(new UnitOfWork(context), hasherMock.Object);
             service.AlertMessages = new MessagesContainer();
             service.ModelState = new ModelStateDictionary();
+            hasher = hasherMock.Object;
 
             httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
@@ -102,8 +109,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             AuthView account = ObjectFactory.CreateAuthView();
-            account.Password += "Incorrect";
 
             Assert.IsFalse(service.CanLogin(account));
         }
@@ -111,6 +118,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
         {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
             AuthView account = ObjectFactory.CreateAuthView();
             account.Password += "Incorrect";
             service.CanLogin(account);
@@ -339,7 +347,7 @@ namespace Template.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
-            Assert.IsTrue(BCrypter.Verify(expected.Password, actual.Passhash));
+            Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);

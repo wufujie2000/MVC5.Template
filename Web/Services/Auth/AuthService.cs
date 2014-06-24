@@ -15,9 +15,12 @@ namespace Template.Services
 {
     public class AuthService : BaseService, IAuthService
     {
-        public AuthService(IUnitOfWork unitOfWork)
+        private IHasher hasher;
+
+        public AuthService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
+            this.hasher = hasher;
         }
 
         public Boolean IsLoggedIn()
@@ -51,7 +54,7 @@ namespace Template.Services
         public void Register(AuthView account)
         {
             Account registration = UnitOfWork.ToModel<AuthView, Account>(account);
-            registration.Passhash = BCrypter.HashPassword(account.Password);
+            registration.Passhash = hasher.HashPassword(account.Password);
 
             UnitOfWork.Repository<Account>().Insert(registration);
             UnitOfWork.Commit();
@@ -84,7 +87,7 @@ namespace Template.Services
         }
         private Boolean IsCorrectPassword(String password, String passhash)
         {
-            Boolean passwordCorrect = BCrypter.Verify(password, passhash);
+            Boolean passwordCorrect = hasher.Verify(password, passhash);
             if (!passwordCorrect)
                 AlertMessages.AddError(Validations.IncorrectUsernameOrPassword);
 

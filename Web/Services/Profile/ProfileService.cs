@@ -14,9 +14,12 @@ namespace Template.Services
 {
     public class ProfileService : GenericService<Account, ProfileView>, IProfileService
     {
-        public ProfileService(IUnitOfWork unitOfWork)
+        private IHasher hasher;
+
+        public ProfileService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
+            this.hasher = hasher;
         }
 
         public virtual Boolean AccountExists(String accountId)
@@ -62,7 +65,7 @@ namespace Template.Services
                 .Select(account => account.Passhash)
                 .First();
 
-            Boolean isCorrectPassword = BCrypter.Verify(profile.CurrentPassword, profilePasshash);
+            Boolean isCorrectPassword = hasher.Verify(profile.CurrentPassword, profilePasshash);
             if (!isCorrectPassword)
                 ModelState.AddModelError<ProfileView>(model => model.CurrentPassword, Validations.IncorrectPassword);
 
@@ -125,7 +128,7 @@ namespace Template.Services
             account.Username = profile.Username;
 
             if (!String.IsNullOrWhiteSpace(profile.NewPassword))
-                account.Passhash = BCrypter.HashPassword(profile.NewPassword);
+                account.Passhash = hasher.HashPassword(profile.NewPassword);
 
             return account;
         }

@@ -85,6 +85,12 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         }
 
         [Test]
+        public void Load_BindsIHasher()
+        {
+            AssertBind<IHasher, BCrypter>(); 
+        }
+
+        [Test]
         public void Load_BindsIAuthService()
         {
             AssertBind<IAuthService, AuthService>();

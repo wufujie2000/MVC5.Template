@@ -28,6 +28,7 @@ namespace Template.Web.DependencyInjection
             String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
             Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
 
+            Bind<IHasher>().To<BCrypter>();
             Bind<IAuthService>().To<AuthService>();
             Bind<IHomeService>().To<HomeService>();
             Bind<IRolesService>().To<RolesService>();

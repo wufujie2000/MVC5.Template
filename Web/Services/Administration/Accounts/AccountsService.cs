@@ -11,9 +11,12 @@ namespace Template.Services
 {
     public class AccountsService : GenericService<Account, AccountView>, IAccountsService
     {
-        public AccountsService(IUnitOfWork unitOfWork)
+        private IHasher hasher;
+
+        public AccountsService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
+            this.hasher = hasher;
         }
 
         public override Boolean CanCreate(AccountView view)
@@ -32,7 +35,7 @@ namespace Template.Services
         public override void Create(AccountView view)
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
-            account.Passhash = BCrypter.HashPassword(view.Password);
+            account.Passhash = hasher.HashPassword(view.Password);
 
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();

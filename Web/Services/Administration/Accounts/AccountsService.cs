@@ -19,9 +19,9 @@ namespace Template.Services
             this.hasher = hasher;
         }
 
-        public override Boolean CanCreate(AccountView view)
+        public Boolean CanCreate(AccountView view)
         {
-            Boolean isValid = base.CanCreate(view);
+            Boolean isValid = ModelState.IsValid;
             isValid &= IsUsernameSpecified(view);
             isValid &= IsUniqueUsername(view);
             isValid &= IsLegalPassword(view);
@@ -31,8 +31,12 @@ namespace Template.Services
 
             return isValid;
         }
+        public Boolean CanEdit(AccountView view)
+        {
+            return ModelState.IsValid;
+        }
 
-        public override void Create(AccountView view)
+        public void Create(AccountView view)
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             account.Passhash = hasher.HashPassword(view.Password);
@@ -40,7 +44,7 @@ namespace Template.Services
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
         }
-        public override void Edit(AccountView view)
+        public void Edit(AccountView view)
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             Account accountInDatabase = UnitOfWork.Repository<Account>().GetById(account.Id);

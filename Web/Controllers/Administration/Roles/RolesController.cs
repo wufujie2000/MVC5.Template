@@ -80,9 +80,6 @@ namespace Template.Controllers.Administration
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(String id)
         {
-            if (!Service.CanDelete(id))
-                return View(Service.GetView(id));
-
             Service.Delete(id);
 
             return RedirectIfAuthorized("Index");

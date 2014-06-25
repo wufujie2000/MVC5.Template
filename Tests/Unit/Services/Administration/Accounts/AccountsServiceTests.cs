@@ -291,6 +291,18 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
+        #region Method: CanEdit(AccountView view)
+
+        [Test]
+        public void CanEdit_CanNotEditWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(service.CanEdit(new AccountView()));
+        }
+
+        #endregion
+
         #region Method: Create(AccountView view)
 
         [Test]

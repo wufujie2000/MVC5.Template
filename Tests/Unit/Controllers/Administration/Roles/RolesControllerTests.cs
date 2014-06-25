@@ -233,20 +233,9 @@ namespace Template.Tests.Unit.Controllers.Administration
         #region Method: DeleteConfirmed(String id)
 
         [Test]
-        public void DeleteConfirmed_ReturnsSameModelIfCanNotDelete()
-        {
-            RoleView role = new RoleView();
-            serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
-            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(false);
-
-            Assert.AreSame(role, (controller.DeleteConfirmed(role.Id) as ViewResult).Model);
-        }
-
-        [Test]
         public void DeleteConfirmed_DeletesRoleView()
         {
             RoleView role = new RoleView();
-            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(true);
             serviceMock.Setup(mock => mock.Delete(role.Id));
             controller.DeleteConfirmed(role.Id);
 
@@ -258,7 +247,6 @@ namespace Template.Tests.Unit.Controllers.Administration
         {
             RoleView role = new RoleView();
             serviceMock.Setup(mock => mock.Delete(role.Id));
-            serviceMock.Setup(mock => mock.CanDelete(role.Id)).Returns(true);
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
             Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };

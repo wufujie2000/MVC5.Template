@@ -22,13 +22,14 @@ namespace Template.Services
             this.hasher = hasher;
         }
 
-        public virtual Boolean AccountExists(String accountId)
+        public Boolean AccountExists(String accountId)
         {
             return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
-        public override Boolean CanEdit(ProfileView profile)
+
+        public Boolean CanEdit(ProfileView profile)
         {
-            Boolean isValid = base.CanEdit(profile);
+            Boolean isValid = ModelState.IsValid;
             isValid &= IsCorrectPassword(profile);
             isValid &= IsUniqueUsername(profile);
             isValid &= IsLegalPassword(profile);
@@ -43,13 +44,18 @@ namespace Template.Services
             return IsCorrectPassword(profile);
         }
 
-        public override void Edit(ProfileView profile)
+        public void Edit(ProfileView profile)
         {
             Account account = GetAccountFrom(profile);
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
 
             AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
+        }
+        public void Delete(String id)
+        {
+            UnitOfWork.Repository<Account>().Delete(id);
+            UnitOfWork.Commit();
         }
         
         private Boolean IsCorrectPassword(ProfileView profile)

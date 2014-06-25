@@ -3,9 +3,9 @@
     internal sealed class Todo
     {
         // TODO: Disable autocomplete from password fields, exept login
-        // TODO: Change generic service usage by moving generic views to methods
 
         // TODO: Combine profile/accounts/auth services
+        // TODO: Always rehash pass
         // TODO: Add index/create/edit/delete specific views
         // TODO: Lower password security to 8 symbols
         // TODO: Remove usage of home service and replace it with accounts service ~

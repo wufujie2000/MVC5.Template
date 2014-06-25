@@ -40,6 +40,85 @@ namespace Template.Tests.Unit.Services
             service.Dispose();
         }
 
+        #region Method: SeedPrivilegesTree(RoleView role)
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsSelectedIds()
+        {
+            IEnumerable<String> expected = GetExpectedTree().SelectedIds;
+            IEnumerable<String> actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
+
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsFirstLevelNodes()
+        {
+            RoleView roleView = service.GetView(role.Id);
+
+            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.GetEnumerator();
+            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.GetEnumerator();
+
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
+                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
+            }
+        }
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsSecondLevelNodes()
+        {
+            RoleView roleView = service.GetView(role.Id);
+
+            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).GetEnumerator();
+
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
+                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
+            }
+        }
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsThirdLevelNodes()
+        {
+            RoleView roleView = service.GetView(role.Id);
+
+            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
+            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
+
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
+                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
+            }
+        }
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsBranchesWithoutId()
+        {
+            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            IEnumerable<JsTreeNode> branches = GetAllBranchNodes(rootNode);
+
+            Assert.IsFalse(branches.Any(branch => branch.Id != null));
+        }
+
+        [Test]
+        public void SeedPrivilegesTree_SeedsLeafsWithId()
+        {
+            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            IEnumerable<JsTreeNode> leafs = GetAllLeafNodes(rootNode);
+
+            Assert.IsFalse(leafs.Any(leaf => leaf.Id == null));
+        }
+
+        #endregion
+
         #region Method: CanCreate(RoleView view)
 
         [Test]
@@ -230,85 +309,6 @@ namespace Template.Tests.Unit.Services
             context = new TestingContext();
 
             Assert.IsNull(context.Set<Role>().SingleOrDefault(model => model.Id == role.Id));
-        }
-
-        #endregion
-
-        #region Method: SeedPrivilegesTree(RoleView role)
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsSelectedIds()
-        {
-            IEnumerable<String> expected = GetExpectedTree().SelectedIds;
-            IEnumerable<String> actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
-
-            CollectionAssert.AreEquivalent(expected, actual);
-        }
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsFirstLevelNodes()
-        {
-            RoleView roleView = service.GetView(role.Id);
-
-            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.GetEnumerator();
-            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
-                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
-                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
-            }
-        }
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsSecondLevelNodes()
-        {
-            RoleView roleView = service.GetView(role.Id);
-
-            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).GetEnumerator();
-            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
-                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
-                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
-            }
-        }
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsThirdLevelNodes()
-        {
-            RoleView roleView = service.GetView(role.Id);
-
-            IEnumerator<JsTreeNode> expected = GetExpectedTree().Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
-            IEnumerator<JsTreeNode> actual = roleView.PrivilegesTree.Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
-                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
-                Assert.AreEqual(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
-            }
-        }
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsBranchesWithoutId()
-        {
-            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
-            IEnumerable<JsTreeNode> branches = GetAllBranchNodes(rootNode);
-
-            Assert.IsFalse(branches.Any(branch => branch.Id != null));
-        }
-
-        [Test]
-        public void SeedPrivilegesTree_SeedsLeafsWithId()
-        {
-            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
-            IEnumerable<JsTreeNode> leafs = GetAllLeafNodes(rootNode);
-
-            Assert.IsFalse(leafs.Any(leaf => leaf.Id == null));
         }
 
         #endregion

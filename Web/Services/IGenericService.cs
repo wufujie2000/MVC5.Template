@@ -9,13 +9,5 @@ namespace Template.Services
     {
         IQueryable<TView> GetViews();
         TView GetView(String id);
-
-        Boolean CanCreate(TView view);
-        Boolean CanDelete(String id);
-        Boolean CanEdit(TView view);
-
-        void Create(TView view);
-        void Delete(String id);
-        void Edit(TView view);
     }
 }

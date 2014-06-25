@@ -17,55 +17,6 @@ namespace Template.Services
         {
         }
 
-        public override Boolean CanCreate(RoleView view)
-        {
-            Boolean isValid = base.CanCreate(view);
-            isValid &= IsUniqueRole(view);
-
-            return isValid;
-        }
-        public override Boolean CanEdit(RoleView view)
-        {
-            Boolean isValid = base.CanEdit(view);
-            isValid &= IsUniqueRole(view);
-
-            return isValid;
-        }
-
-        public override RoleView GetView(String id)
-        {
-            RoleView role = base.GetView(id);
-            role.PrivilegesTree.SelectedIds = UnitOfWork
-                .Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
-                .Select(rolePrivilege => rolePrivilege.PrivilegeId)
-                .ToList();
-
-            SeedPrivilegesTree(role);
-
-            return role;
-        }
-
-        public override void Create(RoleView view)
-        {
-            CreateRole(view);
-            CreateRolePrivileges(view);
-            UnitOfWork.Commit();
-        }
-        public override void Edit(RoleView view)
-        {
-            EditRole(view);
-            DeleteRolePrivileges(view);
-            CreateRolePrivileges(view);
-            UnitOfWork.Commit();
-        }
-        public override void Delete(String id)
-        {
-            RemoveRoleFromAccounts(id);
-            UnitOfWork.Repository<Role>().Delete(id);
-            UnitOfWork.Commit();
-        }
-
         public virtual void SeedPrivilegesTree(RoleView view)
         {
             JsTreeNode rootNode = new JsTreeNode();
@@ -104,6 +55,55 @@ namespace Template.Services
                 if (areaNode.Name != null)
                     rootNode.Nodes.Add(areaNode);
             }
+        }
+
+        public Boolean CanCreate(RoleView view)
+        {
+            Boolean isValid = ModelState.IsValid;
+            isValid &= IsUniqueRole(view);
+
+            return isValid;
+        }
+        public Boolean CanEdit(RoleView view)
+        {
+            Boolean isValid = ModelState.IsValid;
+            isValid &= IsUniqueRole(view);
+
+            return isValid;
+        }
+
+        public override RoleView GetView(String id)
+        {
+            RoleView role = base.GetView(id);
+            role.PrivilegesTree.SelectedIds = UnitOfWork
+                .Repository<RolePrivilege>()
+                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                .Select(rolePrivilege => rolePrivilege.PrivilegeId)
+                .ToList();
+
+            SeedPrivilegesTree(role);
+
+            return role;
+        }
+
+        public void Create(RoleView view)
+        {
+            CreateRole(view);
+            CreateRolePrivileges(view);
+            UnitOfWork.Commit();
+        }
+        public void Edit(RoleView view)
+        {
+            EditRole(view);
+            DeleteRolePrivileges(view);
+            CreateRolePrivileges(view);
+            UnitOfWork.Commit();
+        }
+        public void Delete(String id)
+        {
+            RemoveRoleFromAccounts(id);
+            UnitOfWork.Repository<Role>().Delete(id);
+            UnitOfWork.Commit();
         }
 
         private Boolean IsUniqueRole(RoleView view)

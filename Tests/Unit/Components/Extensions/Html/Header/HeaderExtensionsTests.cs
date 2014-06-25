@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Template.Components.Extensions.Html;
@@ -37,7 +38,6 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         #region Extension method: LanguageLink(this HtmlHelper html)
 
         [Test]
-        [Ignore]
         public void LanguageLink_FormsLanguageLink()
         {
             RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
@@ -52,8 +52,8 @@ namespace Template.Tests.Unit.Components.Extensions.Html
                 + "<a href=\"{1}\"><img src='/Images/Flags/en-GB.gif' /> English</a></li><li>"
                 + "<a href=\"{2}\"><img src='/Images/Flags/lt-LT.gif' /> Lietuvių</a></li></ul>",
                 ResourceProvider.GetActionTitle("Language"),
-                new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area, Param1 = "Value1" }),
-                new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area, Param1 = "Value1" }));
+                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area, Param1 = "Value1" })),
+                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area, Param1 = "Value1" })));
 
             Assert.AreEqual(expected, actual);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Template.Components.Security;
+using Template.Resources.Shared;
 using Template.Services;
 
 namespace Template.Controllers.Home
@@ -21,7 +22,7 @@ namespace Template.Controllers.Home
         [HttpGet]
         public ViewResult Error()
         {
-            Service.AddSystemErrorMessage();
+            Service.AlertMessages.AddError(Messages.SystemError);
 
             return View();
         }
@@ -29,7 +30,7 @@ namespace Template.Controllers.Home
         [HttpGet]
         public ViewResult NotFound()
         {
-            Service.AddPageNotFoundMessage();
+            Service.AlertMessages.AddError(Messages.PageNotFound);
 
             return View();
         }
@@ -37,7 +38,7 @@ namespace Template.Controllers.Home
         [HttpGet]
         public ViewResult Unauthorized()
         {
-            Service.AddUnauthorizedMessage();
+            Service.AlertMessages.AddError(Messages.Unauthorized);
 
             return View();
         }

@@ -142,7 +142,6 @@
     <Compile Include="Unit\Services\Auth\AuthServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountsServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
-    <Compile Include="Unit\Services\Home\HomeServiceTests.cs" />
     <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Unit\Controllers\Auth\AuthControllerTests.cs" />

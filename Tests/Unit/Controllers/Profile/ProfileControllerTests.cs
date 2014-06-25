@@ -1,9 +1,12 @@
 ﻿using Moq;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Controllers.Profile;
 using Template.Objects;
+using Template.Resources.Views.ProfileView;
 using Template.Services;
 using Template.Tests.Helpers;
 
@@ -122,10 +125,14 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.GetView(accountId)).Returns(profile);
-            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
             controller.Delete();
 
-            serviceMock.Verify(mock => mock.AddDeleteDisclaimerMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         [Test]
@@ -133,7 +140,6 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.GetView(accountId)).Returns(profile);
-            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
 
             Assert.IsNull((controller.Delete() as ViewResult).Model);
         }
@@ -157,10 +163,14 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(false);
-            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
             controller.DeleteConfirmed(profile);
 
-            serviceMock.Verify(mock => mock.AddDeleteDisclaimerMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         [Test]
@@ -168,7 +178,6 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(profile)).Returns(false);
-            serviceMock.Setup(mock => mock.AddDeleteDisclaimerMessage());
 
             Assert.IsNull((controller.DeleteConfirmed(profile) as ViewResult).Model);
         }

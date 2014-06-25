@@ -401,23 +401,6 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: AddDeleteDisclaimerMessage()
-
-        [Test]
-        public void AddDeleteDisclaimerMessage_AddsDisclaimer()
-        {
-            service.AddDeleteDisclaimerMessage();
-
-            AlertMessage actual = service.AlertMessages.First();
-
-            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
-        }
-
-        #endregion
-
         #region Test helpers
 
         private void SetUpData()

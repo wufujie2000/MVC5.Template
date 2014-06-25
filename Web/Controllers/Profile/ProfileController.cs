@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Objects;
+using Template.Resources.Views.ProfileView;
 using Template.Services;
 
 namespace Template.Controllers.Profile
@@ -41,7 +43,7 @@ namespace Template.Controllers.Profile
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();
 
-            Service.AddDeleteDisclaimerMessage();
+            Service.AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
 
             return View();
         }
@@ -56,7 +58,7 @@ namespace Template.Controllers.Profile
 
             if (!Service.CanDelete(profile))
             {
-                Service.AddDeleteDisclaimerMessage();
+                Service.AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
                 return View();
             }
 

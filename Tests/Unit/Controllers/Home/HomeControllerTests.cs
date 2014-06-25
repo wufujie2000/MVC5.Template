@@ -1,7 +1,11 @@
 ﻿using Moq;
 using NUnit.Framework;
+using System;
+using System.Linq;
 using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Controllers.Home;
+using Template.Resources.Shared;
 using Template.Services;
 
 namespace Template.Tests.Unit.Controllers.Home
@@ -16,7 +20,10 @@ namespace Template.Tests.Unit.Controllers.Home
         public void SetUp()
         {
             serviceMock = new Mock<IHomeService>();
+            serviceMock.SetupAllProperties();
+
             controller = new HomeController(serviceMock.Object);
+            serviceMock.Object.AlertMessages = new MessagesContainer();
         }
 
         #region Method: Index()
@@ -36,13 +43,18 @@ namespace Template.Tests.Unit.Controllers.Home
         {
             controller.Error();
 
-            serviceMock.Verify(mock => mock.AddSystemErrorMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(Messages.SystemError, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         [Test]
-        public void Error_ReturnsView()
+        public void Error_ReturnsNullViewModel()
         {
-            Assert.IsInstanceOf<ViewResult>(controller.Error());
+            Assert.IsNull((controller.NotFound() as ViewResult).Model);
         }
 
         #endregion
@@ -54,13 +66,18 @@ namespace Template.Tests.Unit.Controllers.Home
         {
             controller.NotFound();
 
-            serviceMock.Verify(mock => mock.AddPageNotFoundMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(Messages.PageNotFound, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         [Test]
-        public void NotFound_ReturnsView()
+        public void NotFound_ReturnsNullViewModel()
         {
-            Assert.IsInstanceOf<ViewResult>(controller.NotFound());
+            Assert.IsNull((controller.NotFound() as ViewResult).Model);
         }
 
         #endregion
@@ -72,13 +89,18 @@ namespace Template.Tests.Unit.Controllers.Home
         {
             controller.Unauthorized();
 
-            serviceMock.Verify(mock => mock.AddUnauthorizedMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(Messages.Unauthorized, actual.Message);
+            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(0, actual.FadeOutAfter);
         }
 
         [Test]
-        public void Unauthorized_ReturnsView()
+        public void Unauthorized_ReturnsNullViewModel()
         {
-            Assert.IsInstanceOf<ViewResult>(controller.Unauthorized());
+            Assert.IsNull((controller.Unauthorized() as ViewResult).Model);
         }
 
         #endregion

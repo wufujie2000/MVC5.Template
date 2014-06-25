@@ -3,7 +3,6 @@
     internal sealed class Todo
     {
         // TODO: Disable autocomplete from password fields, exept login
-        // TODO: Removed Add...Message() methods from services and move them to controller
         // TODO: Change generic service usage by moving generic views to methods
 
         // TODO: Combine profile/accounts/auth services

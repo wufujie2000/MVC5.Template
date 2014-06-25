@@ -6,8 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Template.Components.Alerts;
 using Template.Controllers.Auth;
 using Template.Objects;
+using Template.Resources.Views.AccountView;
 using Template.Services;
 using Template.Tests.Helpers;
 
@@ -103,7 +105,6 @@ namespace Template.Tests.Unit.Controllers.Auth
             AuthView account = ObjectFactory.CreateAuthView();
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
             serviceMock.Setup(mock => mock.Register(account));
 
             controller.Register(account);
@@ -117,12 +118,16 @@ namespace Template.Tests.Unit.Controllers.Auth
             AuthView account = ObjectFactory.CreateAuthView();
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
             serviceMock.Setup(mock => mock.Register(account));
 
             controller.Register(account);
 
-            serviceMock.Verify(mock => mock.AddSuccessfulRegistrationMessage(), Times.Once());
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
+            Assert.AreEqual(Messages.SuccesfulRegistration, actual.Message);
+            Assert.AreEqual(AlertMessageType.Success, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
         }
 
         [Test]
@@ -131,7 +136,6 @@ namespace Template.Tests.Unit.Controllers.Auth
             AuthView account = ObjectFactory.CreateAuthView();
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.AddSuccessfulRegistrationMessage());
             serviceMock.Setup(mock => mock.Register(account));
 
             RedirectToRouteResult result = controller.Register(account) as RedirectToRouteResult;

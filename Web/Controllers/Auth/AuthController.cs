@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
+using Template.Components.Alerts;
 using Template.Objects;
+using Template.Resources.Views.AccountView;
 using Template.Services;
 
 namespace Template.Controllers.Auth
@@ -33,8 +35,7 @@ namespace Template.Controllers.Auth
                 return View(account);
 
             Service.Register(account);
-
-            Service.AddSuccessfulRegistrationMessage();
+            Service.AlertMessages.Add(AlertMessageType.Success, Messages.SuccesfulRegistration);
 
             return RedirectToAction("Login");
         }

@@ -319,22 +319,6 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: AddSuccessfulRegistrationMessage()
-
-        [Test]
-        public void AddSuccessfulRegistrationMessage_AddsSuccessMessage()
-        {
-            service.AddSuccessfulRegistrationMessage();
-            AlertMessage actual = service.AlertMessages.First();
-
-            Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
-            Assert.AreEqual(Messages.SuccesfulRegistration, actual.Message);
-            Assert.AreEqual(AlertMessageType.Success, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-        }
-
-        #endregion
-
         #region Method: Register(AuthView account)
 
         [Test]

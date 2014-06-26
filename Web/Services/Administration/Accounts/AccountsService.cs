@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Template.Components.Extensions.Mvc;
@@ -9,7 +10,7 @@ using Template.Resources.Views.AccountView;
 
 namespace Template.Services
 {
-    public class AccountsService : GenericService<Account, AccountView>, IAccountsService
+    public class AccountsService : BaseService, IAccountsService
     {
         private IHasher hasher;
 
@@ -31,9 +32,21 @@ namespace Template.Services
 
             return isValid;
         }
-        public Boolean CanEdit(AccountView view)
+        public Boolean CanEdit(AccountEditView view)
         {
             return ModelState.IsValid;
+        }
+
+        public IEnumerable<AccountView> GetViews()
+        {
+            return UnitOfWork
+                .Repository<Account>()
+                .Query<AccountView>()
+                .OrderByDescending(view => view.EntityDate);
+        }
+        public TView GetView<TView>(String id) where TView : BaseView
+        {
+            return UnitOfWork.Repository<Account>().GetById<TView>(id);
         }
 
         public void Create(AccountView view)
@@ -44,9 +57,9 @@ namespace Template.Services
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
         }
-        public void Edit(AccountView view)
+        public void Edit(AccountEditView view)
         {
-            Account account = UnitOfWork.ToModel<AccountView, Account>(view);
+            Account account = UnitOfWork.ToModel<AccountEditView, Account>(view);
             Account accountInDatabase = UnitOfWork.Repository<Account>().GetById(account.Id);
 
             account.Username = accountInDatabase.Username;

@@ -6,8 +6,8 @@
 
         // TODO: Combine profile/accounts/auth services
         // TODO: Always rehash pass
-        // TODO: Add index/create/edit/delete specific views
         // TODO: Lower password security to 8 symbols
+        // TODO: Change profile deletion model to String only
         // TODO: Remove usage of home service and replace it with accounts service ~
         // TODO: Disconnect deleted users from home controller
         // TODO: Add password recovery functionality

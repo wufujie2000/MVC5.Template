@@ -291,20 +291,20 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanEdit(AccountView view)
+        #region Method: CanEdit(AccountEditView view)
 
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             service.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(service.CanEdit(new AccountView()));
+            Assert.IsFalse(service.CanEdit(new AccountEditView()));
         }
 
         [Test]
         public void CanEdit_CanEditValidAccount()
         {
-            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateAccountView()));
+            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateAccountEditView()));
         }
 
         #endregion
@@ -335,7 +335,7 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Edit(AccountView view)
+        #region Method: Edit(AccountEditView view)
 
         [Test]
         public void Edit_EditsAccount()
@@ -344,7 +344,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            AccountView expected = service.GetView(accountId);
+            AccountEditView expected = service.GetView<AccountEditView>(accountId);
             expected.RoleId = role.Id;
             service.Edit(expected);
 
@@ -361,7 +361,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Edit_DoesNotEditAccountsUsername()
         {
-            AccountView account = service.GetView(accountId);
+            AccountEditView account = service.GetView<AccountEditView>(accountId);
             String expected = account.Username;
             account.Username += "Edition";
             service.Edit(account);
@@ -375,8 +375,8 @@ namespace Template.Tests.Unit.Services
         public void Edit_DoesNotEditAccountsPassword()
         {
             String expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId).Passhash;
-            AccountView account = service.GetView(accountId);
-            account.Password += "Edition";
+            AccountEditView account = service.GetView<AccountEditView>(accountId);
+            account.Username += "Edition";
             service.Edit(account);
 
             String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id).Passhash;
@@ -387,7 +387,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Edit_DoesNotEditAccountsEmail()
         {
-            AccountView account = service.GetView(accountId);
+            AccountEditView account = service.GetView<AccountEditView>(accountId);
             String expected = account.Email;
 
             account.Email = "Edit_DoesNotEditAccountsEmail@tests.com";

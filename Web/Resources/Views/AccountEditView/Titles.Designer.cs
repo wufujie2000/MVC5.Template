@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Template.Resources.Views.ProfileView {
+namespace Template.Resources.Views.AccountEditView {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Template.Resources.Views.ProfileView {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Validations {
+    public class Titles {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Validations() {
+        internal Titles() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Template.Resources.Views.ProfileView {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.ProfileView.Validations", typeof(Validations).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.AccountEditView.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,20 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-mail address is already used..
+        ///   Looks up a localized string similar to E-mail.
         /// </summary>
-        public static string EmailIsAlreadyUsed {
+        public static string Email {
             get {
-                return ResourceManager.GetString("EmailIsAlreadyUsed", resourceCulture);
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit)..
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string IllegalPassword {
+        public static string Username {
             get {
-                return ResourceManager.GetString("IllegalPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password is incorrect..
-        /// </summary>
-        public static string IncorrectPassword {
-            get {
-                return ResourceManager.GetString("IncorrectPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Username is already taken..
-        /// </summary>
-        public static string UsernameIsAlreadyTaken {
-            get {
-                return ResourceManager.GetString("UsernameIsAlreadyTaken", resourceCulture);
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

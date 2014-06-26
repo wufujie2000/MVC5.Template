@@ -1,4 +1,4 @@
-﻿@model ProfileView
+﻿@model ProfileEditView
 
 @using (Html.FormWidgetBox(LinkAction.Delete))
 {
@@ -13,9 +13,9 @@
         }
         using (Html.FormGroup())
         {
-            @Html.FormLabelFor(model => model.CurrentPassword)
-            @Html.FormPasswordFor(model => model.CurrentPassword)
-            @Html.FormValidationFor(model => model.CurrentPassword)
+            @Html.FormLabelFor(model => model.Password)
+            @Html.FormPasswordFor(model => model.Password)
+            @Html.FormValidationFor(model => model.Password)
         }
         using (Html.FormGroup())
         {

@@ -7,20 +7,9 @@ namespace Template.Data.Mapping
     {
         public static void MapObjects()
         {
-            MapAuth();
-
             MapAccounts();
             MapRoles();
         }
-
-        #region Auth
-
-        private static void MapAuth()
-        {
-            Mapper.CreateMap<AuthView, Account>();
-        }
-
-        #endregion
 
         #region Administration
 
@@ -29,8 +18,11 @@ namespace Template.Data.Mapping
             Mapper.CreateMap<Account, AccountView>();
             Mapper.CreateMap<AccountView, Account>();
 
-            Mapper.CreateMap<Account, ProfileView>();
-            Mapper.CreateMap<ProfileView, Account>();
+            Mapper.CreateMap<Account, AccountEditView>();
+            Mapper.CreateMap<AccountEditView, Account>();
+
+            Mapper.CreateMap<Account, ProfileEditView>();
+            Mapper.CreateMap<ProfileEditView, Account>();
         }
 
         private static void MapRoles()
@@ -38,11 +30,11 @@ namespace Template.Data.Mapping
             Mapper.CreateMap<Role, RoleView>();
             Mapper.CreateMap<RoleView, Role>();
 
-            Mapper.CreateMap<RolePrivilege, RolePrivilegeView>();
-            Mapper.CreateMap<RolePrivilegeView, RolePrivilege>();
-
             Mapper.CreateMap<Privilege, PrivilegeView>();
             Mapper.CreateMap<PrivilegeView, Privilege>();
+
+            Mapper.CreateMap<RolePrivilege, RolePrivilegeView>();
+            Mapper.CreateMap<RolePrivilegeView, RolePrivilege>();
         }
 
         #endregion

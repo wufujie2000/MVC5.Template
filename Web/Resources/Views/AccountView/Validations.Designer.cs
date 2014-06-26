@@ -79,6 +79,15 @@ namespace Template.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Password is incorrect..
+        /// </summary>
+        public static string IncorrectPassword {
+            get {
+                return ResourceManager.GetString("IncorrectPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The username or password you entered is incorrect..
         /// </summary>
         public static string IncorrectUsernameOrPassword {

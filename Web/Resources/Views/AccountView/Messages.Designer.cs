@@ -61,6 +61,24 @@ namespace Template.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are about to delete your profile, all your personal information will be deleted.
+        /// </summary>
+        public static string ProfileDeleteDisclaimer {
+            get {
+                return ResourceManager.GetString("ProfileDeleteDisclaimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile updated successfully.
+        /// </summary>
+        public static string ProfileUpdated {
+            get {
+                return ResourceManager.GetString("ProfileUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your account has been created, you can now log in.
         /// </summary>
         public static string SuccesfulRegistration {

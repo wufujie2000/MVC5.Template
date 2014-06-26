@@ -39,18 +39,18 @@ namespace Template.Controllers.Administration
         [HttpGet]
         public ViewResult Details(String id)
         {
-            return View(Service.GetView(id));
+            return View(Service.GetView<AccountView>(id));
         }
 
         [HttpGet]
         public ViewResult Edit(String id)
         {
-            return View(Service.GetView(id));
+            return View(Service.GetView<AccountEditView>(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AccountView account)
+        public ActionResult Edit(AccountEditView account)
         {
             if (!Service.CanEdit(account))
                 return View(account);

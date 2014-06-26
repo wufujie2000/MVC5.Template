@@ -119,7 +119,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         public void Details_ReturnsAccountView()
         {
             AccountView expected = new AccountView();
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(expected);
+            serviceMock.Setup(mock => mock.GetView<AccountView>("Test")).Returns(expected);
             AccountView actual = controller.Details("Test").Model as AccountView;
 
             Assert.AreEqual(expected, actual);
@@ -132,21 +132,21 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsAccountView()
         {
-            AccountView expected = new AccountView();
-            serviceMock.Setup(mock => mock.GetView("Test")).Returns(expected);
-            AccountView actual = controller.Edit("Test").Model as AccountView;
+            AccountEditView expected = new AccountEditView();
+            serviceMock.Setup(mock => mock.GetView<AccountEditView>("Test")).Returns(expected);
+            AccountEditView actual = controller.Edit("Test").Model as AccountEditView;
 
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
 
-        #region Method: Edit(AccountView account)
+        #region Method: Edit(AccountEditView account)
 
         [Test]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            AccountView account = new AccountView();
+            AccountEditView account = new AccountEditView();
             serviceMock.Setup(mock => mock.CanEdit(account)).Returns(false);
 
             Assert.AreSame(account, (controller.Edit(account) as ViewResult).Model);
@@ -155,7 +155,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_EditsAccountView()
         {
-            AccountView account = new AccountView();
+            AccountEditView account = new AccountEditView();
             serviceMock.Setup(mock => mock.CanEdit(account)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(account));
             controller.Edit(account);
@@ -166,7 +166,7 @@ namespace Template.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
-            AccountView account = new AccountView();
+            AccountEditView account = new AccountEditView();
             serviceMock.Setup(mock => mock.CanEdit(account)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(account));
 

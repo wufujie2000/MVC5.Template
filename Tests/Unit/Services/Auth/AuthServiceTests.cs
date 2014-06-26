@@ -73,20 +73,20 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanLogin(AuthView account)
+        #region Method: CanLogin(AccountLoginView account)
 
         [Test]
         public void CanLogin_CanNotLoginWithInvalidModelState()
         {
             service.ModelState.AddModelError("Key", "ErrorMesages");
 
-            Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAuthView()));
+            Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAccountLoginView()));
         }
 
         [Test]
         public void CanLogin_CanNotLoginFromNonExistingAccount()
         {
-            AuthView account = new AuthView();
+            AccountLoginView account = new AccountLoginView();
             account.Username = String.Empty;
 
             Assert.IsFalse(service.CanLogin(account));
@@ -95,7 +95,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithNotExistingAccount()
         {
-            AuthView account = new AuthView();
+            AccountLoginView account = new AccountLoginView();
             account.Username = String.Empty;
             service.CanLogin(account);
 
@@ -110,7 +110,7 @@ namespace Template.Tests.Unit.Services
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
 
             Assert.IsFalse(service.CanLogin(account));
         }
@@ -119,7 +119,7 @@ namespace Template.Tests.Unit.Services
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
             account.Password += "Incorrect";
             service.CanLogin(account);
 
@@ -133,7 +133,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
             account.Username = account.Username.ToUpper();
 
             Assert.IsTrue(service.CanLogin(account));
@@ -142,25 +142,25 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanLogin_CanLoginWithValidAccount()
         {
-            Assert.IsTrue(service.CanLogin(ObjectFactory.CreateAuthView()));
+            Assert.IsTrue(service.CanLogin(ObjectFactory.CreateAccountLoginView()));
         }
 
         #endregion
 
-        #region Method: CanRegister(AuthView account)
+        #region Method: CanRegister(AccountView account)
 
         [Test]
         public void CanRegister_CanNotRegisterWithInvalidModelState()
         {
             service.ModelState.AddModelError("Key", "Error");
 
-            Assert.IsFalse(service.CanRegister(ObjectFactory.CreateAuthView()));
+            Assert.IsFalse(service.CanRegister(ObjectFactory.CreateAccountView()));
         }
 
         [Test]
         public void CanRegister_CanNotRegisterWithAlreadyTakenUsername()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Username = account.Username.ToLower();
 
             Assert.IsFalse(service.CanRegister(account));
@@ -169,7 +169,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterWithAlreadyTakenUsername()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Username = account.Username.ToLower();
             service.CanRegister(account);
 
@@ -182,7 +182,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotRegisterIfPasswordIsTooShort()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Password = "AaaAaa1";
 
             Assert.IsFalse(service.CanRegister(account));
@@ -191,7 +191,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordIsTooShort()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
+            AccountView account = ObjectFactory.CreateAccountView(2);
             account.Password = "AaaAaa1";
 
             service.CanRegister(account);
@@ -205,7 +205,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotCreateIfPasswordDoesNotContainUpperLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Password = "aaaaaaaaaaaa1";
 
             Assert.IsFalse(service.CanRegister(account));
@@ -214,7 +214,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainUpperLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
+            AccountView account = ObjectFactory.CreateAccountView(2);
             account.Password = "aaaaaaaaaaaa1";
 
             service.CanRegister(account);
@@ -228,7 +228,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotCreateIfPasswordDoesNotContainLowerLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
+            AccountView account = ObjectFactory.CreateAccountView(2);
             account.Password = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanRegister(account));
@@ -237,7 +237,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainLowerLetter()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
+            AccountView account = ObjectFactory.CreateAccountView(2);
             account.Password = "AAAAAAAAAAA1";
 
             service.CanRegister(account);
@@ -251,7 +251,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotRegisterIfPasswordDoesNotContainADigit()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Password = "AaAaAaAaAaAa";
 
             Assert.IsFalse(service.CanRegister(account));
@@ -260,7 +260,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainADigit()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
+            AccountView account = ObjectFactory.CreateAccountView(2);
             account.Password = "AaAaAaAaAaAa";
 
             service.CanRegister(account);
@@ -274,7 +274,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotRegisterWithoutEmail()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Email = null;
 
             Assert.IsFalse(service.CanRegister(account));
@@ -283,7 +283,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddEmptyModelStateErrorThenCanNotRegisterWithoutEmail()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Email = null;
 
             service.CanRegister(account);
@@ -297,7 +297,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
 
             Assert.IsFalse(service.CanRegister(account));
         }
@@ -305,7 +305,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Username += "Test username";
             service.CanRegister(account);
 
@@ -318,19 +318,19 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanRegisterValidAccount()
         {
-            Assert.IsTrue(service.CanRegister(ObjectFactory.CreateAuthView(2)));
+            Assert.IsTrue(service.CanRegister(ObjectFactory.CreateAccountView(2)));
         }
 
         #endregion
 
-        #region Method: Register(AuthView account)
+        #region Method: Register(AccountView account)
 
         [Test]
         public void Register_CreatesAccount()
         {
             TearDownData();
 
-            AuthView expected = ObjectFactory.CreateAuthView();
+            AccountView expected = ObjectFactory.CreateAccountView();
             service.Register(expected);
 
             Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
@@ -345,12 +345,12 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Login(AuthView account)
+        #region Method: Login(AccountLoginView account)
 
         [Test]
         public void Login_SetsAccountId()
         {
-            AuthView accountView = ObjectFactory.CreateAuthView();
+            AccountLoginView accountView = ObjectFactory.CreateAccountLoginView();
             String expected = accountView.Id;
             accountView.Id = null;
 
@@ -363,8 +363,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesCookieForAMonth()
         {
-            AuthView accountView = ObjectFactory.CreateAuthView();
-            service.Login(accountView);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account);
 
             DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
             DateTime expected = DateTime.Now.AddMonths(1).Date;
@@ -375,8 +375,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesPersistentCookie()
         {
-            AuthView authView = ObjectFactory.CreateAuthView();
-            service.Login(authView);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
@@ -386,8 +386,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_CreatesCookieWithoutClientSideAccess()
         {
-            AuthView authView = ObjectFactory.CreateAuthView();
-            service.Login(authView);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account);
 
             Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
         }
@@ -395,11 +395,11 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Login_SetAccountIdAsCookieValue()
         {
-            AuthView authView = ObjectFactory.CreateAuthView();
-            service.Login(authView);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
-            String expected = authView.Id;
+            String expected = account.Id;
             String actual = ticket.Name;
 
             Assert.AreEqual(expected, actual);
@@ -412,8 +412,8 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Logout_MakesAccountCookieExpired()
         {
-            AuthView authView = ObjectFactory.CreateAuthView();
-            service.Login(authView);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account);
             service.Logout();
 
             DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;

@@ -58,7 +58,7 @@ namespace Template.Tests.Unit.Controllers.Auth
 
         #endregion
 
-        #region Method: Register(AuthView account)
+        #region Method: Register(AccountView account)
 
         [Test]
         public void Register_ProtectsFromOverpostingId()
@@ -92,9 +92,9 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_ReturnsSameModelIfCanNotRegister()
         {
-            AuthView expected = ObjectFactory.CreateAuthView();
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            AccountView expected = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanRegister(expected)).Returns(false);
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
 
             Assert.AreSame(expected, (controller.Register(expected) as ViewResult).Model);
         }
@@ -102,9 +102,9 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RegistersAccount()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.Register(account));
 
             controller.Register(account);
@@ -115,7 +115,7 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_AddsSuccessfulRegistrationMessage()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
             serviceMock.Setup(mock => mock.Register(account));
@@ -133,9 +133,9 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RedirectsToLoginAfterSuccessfulRegistration()
         {
-            AuthView account = ObjectFactory.CreateAuthView();
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            AccountView account = ObjectFactory.CreateAccountView();
             serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.Register(account));
 
             RedirectToRouteResult result = controller.Register(account) as RedirectToRouteResult;
@@ -173,12 +173,12 @@ namespace Template.Tests.Unit.Controllers.Auth
 
         #endregion
 
-        #region Method: Login(AuthView account, String returnUrl)
+        #region Method: Login(AccountLoginView account, String returnUrl)
 
         [Test]
         public void Login_ReturnsNullModelIfCanNotLogin()
         {
-            AuthView account = new AuthView();
+            AccountLoginView account = new AccountLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(false);
 
             Assert.IsNull((controller.Login(account, null) as ViewResult).Model);
@@ -187,7 +187,7 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_LogsInAccount()
         {
-            AuthView account = new AuthView();
+            AccountLoginView account = new AccountLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
             serviceMock.Setup(mock => mock.Login(account));
             controller.Login(account, null);
@@ -198,7 +198,7 @@ namespace Template.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            AuthView account = new AuthView();
+            AccountLoginView account = new AccountLoginView();
             ActionResult expected = new RedirectResult("/Home/Index");
             controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);

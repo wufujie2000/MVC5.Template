@@ -123,6 +123,9 @@
   <data name="IllegalPassword" xml:space="preserve">
     <value>Slaptažodžio lauką turi sudaryti bent 8 simboliai iš didžiūjų, mažūjų raidžių ir skaičių.</value>
   </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Neteisingas slaptažodis.</value>
+  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Įvestas netinkamas naudotojo vardas arba slaptažodis.</value>
   </data>

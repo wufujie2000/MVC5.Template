@@ -117,16 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailIsAlreadyUsed" xml:space="preserve">
-    <value>E-mail address is already used.</value>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
   </data>
-  <data name="IllegalPassword" xml:space="preserve">
-    <value>Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit).</value>
-  </data>
-  <data name="IncorrectPassword" xml:space="preserve">
-    <value>Password is incorrect.</value>
-  </data>
-  <data name="UsernameIsAlreadyTaken" xml:space="preserve">
-    <value>Username is already taken.</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

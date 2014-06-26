@@ -254,8 +254,8 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
-            String expected = Template.Resources.Views.ProfileView.Titles.Username;
-            String actual = ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Username);
+            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Username);
 
             Assert.AreEqual(expected, actual);
         }
@@ -273,7 +273,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_OnPropertyFromExpressionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle<ProfileView, String>(profile => profile.Id));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Id));
         }
 
         [Test]
@@ -289,8 +289,8 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitle()
         {
-            String expected = Template.Resources.Views.ProfileView.Titles.Username;
-            String actual = ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Username");
+            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "Username");
 
             Assert.AreEqual(expected, actual);
         }
@@ -307,7 +307,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_OnPropertyNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(ProfileView), "Id"));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(AccountView), "Id"));
         }
 
         [Test]

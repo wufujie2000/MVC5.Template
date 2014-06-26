@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Template.Resources.Views.ProfileView {
+namespace Template.Resources.Views.ProfileEditView {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Template.Resources.Views.ProfileView {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.ProfileView.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Template.Resources.Views.AccountView.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,15 +61,6 @@ namespace Template.Resources.Views.ProfileView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current password.
-        /// </summary>
-        public static string CurrentPassword {
-            get {
-                return ResourceManager.GetString("CurrentPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to E-mail.
         /// </summary>
         public static string Email {
@@ -84,6 +75,15 @@ namespace Template.Resources.Views.ProfileView {
         public static string NewPassword {
             get {
                 return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         

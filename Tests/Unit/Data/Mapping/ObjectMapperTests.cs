@@ -15,25 +15,6 @@ namespace Template.Tests.Data.Mapping
             ObjectMapper.MapObjects();
         }
 
-        #region Static method: MapAuths()
-
-        [Test]
-        public void MapAuths_MapsAuthViewToAccount()
-        {
-            AuthView expected = ObjectFactory.CreateAuthView();
-            Account actual = Mapper.Map<AuthView, Account>(expected);
-
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.Passhash);
-            Assert.IsNull(actual.RoleId);
-            Assert.IsNull(actual.Role);
-        }
-
-        #endregion
-
         #region Static method: MapAccounts()
 
         [Test]
@@ -70,24 +51,59 @@ namespace Template.Tests.Data.Mapping
         }
 
         [Test]
-        public void MapAccounts_MapsAccountToProfileView()
+        public void MapAccounts_MapsAccountToAccountEditView()
         {
             Account expected = ObjectFactory.CreateAccount();
-            ProfileView actual = Mapper.Map<Account, ProfileView>(expected);
+            expected.Role = ObjectFactory.CreateRole();
+            expected.RoleId = expected.Role.Id;
+
+            AccountEditView actual = Mapper.Map<Account, AccountEditView>(expected);
+
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.Role.Name, actual.RoleName);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Id, actual.Id);
+        }
+
+        [Test]
+        public void MapAccounts_MapsAccountEditViewToAccount()
+        {
+            AccountEditView expected = ObjectFactory.CreateAccountEditView();
+            expected.RoleName = "Not used property";
+            expected.RoleId = expected.Id;
+
+            Account actual = Mapper.Map<AccountEditView, Account>(expected);
+
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.Passhash);
+            Assert.IsNull(actual.Role);
+        }
+
+        [Test]
+        public void MapAccounts_MapsAccountToProfileEditView()
+        {
+            Account expected = ObjectFactory.CreateAccount();
+            ProfileEditView actual = Mapper.Map<Account, ProfileEditView>(expected);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.CurrentPassword);
+            Assert.IsNull(actual.Password);
             Assert.IsNull(actual.NewPassword);
         }
 
         [Test]
-        public void MapAccounts_MapsProfileViewToAccount()
+        public void MapAccounts_MapsProfileEditViewToAccount()
         {
-            ProfileView expected = ObjectFactory.CreateProfileView();
-            Account actual = Mapper.Map<ProfileView, Account>(expected);
+            ProfileEditView expected = ObjectFactory.CreateProfileEditView();
+            Account actual = Mapper.Map<ProfileEditView, Account>(expected);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);

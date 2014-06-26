@@ -17,7 +17,7 @@ namespace Template.Tests.Unit.Components.Mvc
         [SetUp]
         public void SetUp()
         {
-            metadata = new DisplayNameMetadataProvider().GetMetadataForProperty(null, typeof(ProfileView), "Username");
+            metadata = new DisplayNameMetadataProvider().GetMetadataForProperty(null, typeof(AccountView), "Username");
             validator = new DateValidator(metadata, new ControllerContext());
         }
 

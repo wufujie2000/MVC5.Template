@@ -25,26 +25,6 @@ namespace Template.Tests.Helpers
                 Email = TestId + instanceNumber.ToString() + "@tests.com"
             };
         }
-        public static AuthView CreateAuthView(Int32 instanceNumber = 1)
-        {
-            return new AuthView()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
-                Password = "Password1"
-            };
-        }
-        public static ProfileView CreateProfileView(Int32 instanceNumber = 1)
-        {
-            return new ProfileView()
-            {
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
-                CurrentPassword = "Password1",
-                NewPassword = "NewPassword1"
-            };
-        }
         public static AccountView CreateAccountView(Int32 instanceNumber = 1)
         {
             return new AccountView()
@@ -52,8 +32,37 @@ namespace Template.Tests.Helpers
                 Id = TestId + instanceNumber.ToString(),
                 Email = TestId + instanceNumber.ToString() + "@tests.com",
                 Username = "Username" + TestId + instanceNumber.ToString(),
+                Password = "Password1"
+            };
+        }
+        public static ProfileEditView CreateProfileEditView(Int32 instanceNumber = 1)
+        {
+            return new ProfileEditView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
+                Password = "Password1",
+                NewPassword = "NewPassword1",
+            };
+        }
+        public static AccountEditView CreateAccountEditView(Int32 instanceNumber = 1)
+        {
+            return new AccountEditView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 RoleName = "Name" + TestId + instanceNumber.ToString(),
                 RoleId = TestId + instanceNumber.ToString(),
+            };
+        }
+        public static AccountLoginView CreateAccountLoginView(Int32 instanceNumber = 1)
+        {
+            return new AccountLoginView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password1"
             };
         }

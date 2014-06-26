@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using Template.Objects;
 
 namespace Template.Services
 {
-    public interface IProfileService : IGenericService<ProfileView>
+    public interface IProfileService : IService
     {
         Boolean AccountExists(String accountId);
 
-        Boolean CanEdit(ProfileView profile);
-        Boolean CanDelete(ProfileView profile);
+        Boolean CanEdit(ProfileEditView profile);
+        Boolean CanDelete(AccountView profile);
 
-        void Edit(ProfileView profile);
+        TView GetView<TView>(String id) where TView : BaseView;
+
+        void Edit(ProfileEditView profile);
         void Delete(String id);
     }
 }

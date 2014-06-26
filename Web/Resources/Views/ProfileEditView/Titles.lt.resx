@@ -117,16 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmailIsAlreadyUsed" xml:space="preserve">
-    <value>Elektroninis paštas jau yra naudojamas.</value>
+  <data name="Email" xml:space="preserve">
+    <value>Elektroninis paštas</value>
   </data>
-  <data name="IllegalPassword" xml:space="preserve">
-    <value>Slaptažodžio lauką turi sudaryti bent 8 simboliai iš didžiūjų, mažūjų raidžių ir skaičių.</value>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Naujas slaptažodis</value>
   </data>
-  <data name="IncorrectPassword" xml:space="preserve">
-    <value>Neteisingas slaptažodis.</value>
+  <data name="Password" xml:space="preserve">
+    <value>Slaptažodis</value>
   </data>
-  <data name="UsernameIsAlreadyTaken" xml:space="preserve">
-    <value>Vartotojo vardas jau užimtas.</value>
+  <data name="Username" xml:space="preserve">
+    <value>Vartotojo vardas</value>
   </data>
 </root>

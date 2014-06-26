@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ProfileDeleteDisclaimer" xml:space="preserve">
-    <value>You are about to delete your profile, all your personal information will be deleted</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="ProfileUpdated" xml:space="preserve">
-    <value>Profile updated successfully</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

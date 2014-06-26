@@ -2,7 +2,7 @@
 using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Objects;
-using Template.Resources.Views.ProfileView;
+using Template.Resources.Views.AccountView;
 using Template.Services;
 
 namespace Template.Controllers.Profile
@@ -21,12 +21,12 @@ namespace Template.Controllers.Profile
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();
 
-            return View(Service.GetView(HttpContext.User.Identity.Name));
+            return View(Service.GetView<ProfileEditView>(HttpContext.User.Identity.Name));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProfileView profile)
+        public ActionResult Edit(ProfileEditView profile)
         {
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();
@@ -51,7 +51,7 @@ namespace Template.Controllers.Profile
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(ProfileView profile)
+        public ActionResult DeleteConfirmed(AccountView profile)
         {
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();

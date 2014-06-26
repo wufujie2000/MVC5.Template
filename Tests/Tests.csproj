@@ -183,7 +183,6 @@
     <Compile Include="Unit\Components\Mvc\Validators\NumberValidatorTests.cs" />
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
     <Compile Include="Unit\Services\BaseServiceTests.cs" />
-    <Compile Include="Unit\Services\GenericServiceTests.cs" />
     <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Objects\Models\System\LogTests.cs" />

@@ -26,7 +26,7 @@ namespace Template.Controllers.Auth
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Exclude = "Id")] AuthView account)
+        public ActionResult Register([Bind(Exclude = "Id")] AccountView account)
         {
             if (Service.IsLoggedIn())
                 return RedirectToDefault();
@@ -51,7 +51,7 @@ namespace Template.Controllers.Auth
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(AuthView account, String returnUrl)
+        public ActionResult Login(AccountLoginView account, String returnUrl)
         {
             if (!Service.CanLogin(account))
                 return View();

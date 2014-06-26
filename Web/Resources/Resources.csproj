@@ -164,6 +164,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\AccountEditView\Titles.Designer.cs">
+      <DependentUpon>Titles.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\AccountEditView\Titles.lt.Designer.cs">
+      <DependentUpon>Titles.lt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\AccountLoginView\Titles.Designer.cs">
+      <DependentUpon>Titles.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\AccountLoginView\Titles.lt.Designer.cs">
+      <DependentUpon>Titles.lt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\AccountView\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -206,26 +226,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileView\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfileView\Messages.lt.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.lt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProfileView\Titles.Designer.cs">
-      <DependentUpon>Titles.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Views\ProfileView\Titles.lt.Designer.cs">
-      <DependentUpon>Titles.lt.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Shared\Validations.lt.Designer.cs">
       <DependentUpon>Validations.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -236,15 +236,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileView\Validations.Designer.cs">
+    <Compile Include="Views\ProfileEditView\Titles.Designer.cs">
+      <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileView\Validations.lt.Designer.cs">
+    <Compile Include="Views\ProfileEditView\Titles.lt.Designer.cs">
+      <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Validations.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\RoleView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
@@ -372,6 +372,22 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AccountEditView\Titles.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AccountEditView\Titles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AccountLoginView\Titles.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AccountLoginView\Titles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AccountView\Messages.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.lt.Designer.cs</LastGenOutput>
@@ -404,22 +420,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Messages.lt.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.lt.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Messages.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Titles.lt.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Titles.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Shared\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
@@ -428,13 +428,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Validations.lt.resx">
+    <EmbeddedResource Include="Views\ProfileEditView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileView\Validations.resx">
+    <EmbeddedResource Include="Views\ProfileEditView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Validations.Designer.cs</LastGenOutput>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RoleView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -453,6 +453,7 @@
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

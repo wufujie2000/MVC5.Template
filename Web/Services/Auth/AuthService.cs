@@ -27,14 +27,14 @@ namespace Template.Services
         {
             return HttpContext.Current.User.Identity.IsAuthenticated;
         }
-        public Boolean CanLogin(AuthView auth)
+        public Boolean CanLogin(AccountLoginView auth)
         {
             Boolean isValid = ModelState.IsValid;
             isValid &= IsAuthenticated(auth.Username, auth.Password);
 
             return isValid;
         }
-        public Boolean CanRegister(AuthView account)
+        public Boolean CanRegister(AccountView account)
         {
             Boolean isValid = ModelState.IsValid;
             isValid &= IsUniqueUsername(account);
@@ -46,15 +46,15 @@ namespace Template.Services
             return isValid;
         }
 
-        public void Register(AuthView account)
+        public void Register(AccountView account)
         {
-            Account registration = UnitOfWork.ToModel<AuthView, Account>(account);
+            Account registration = UnitOfWork.ToModel<AccountView, Account>(account);
             registration.Passhash = hasher.HashPassword(account.Password);
 
             UnitOfWork.Repository<Account>().Insert(registration);
             UnitOfWork.Commit();
         }
-        public void Login(AuthView account)
+        public void Login(AccountLoginView account)
         {
             SetAccountId(account);
             CreateCookieFor(account);
@@ -89,7 +89,7 @@ namespace Template.Services
             return passwordCorrect;
         }
 
-        private Boolean IsUniqueUsername(AuthView account)
+        private Boolean IsUniqueUsername(AccountView account)
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
@@ -102,7 +102,7 @@ namespace Template.Services
 
             return isUnique;
         }
-        private Boolean IsLegalPassword(AuthView account)
+        private Boolean IsLegalPassword(AccountView account)
         {
             Boolean isLegal = Regex.IsMatch(account.Password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
@@ -110,16 +110,16 @@ namespace Template.Services
 
             return isLegal;
         }
-        private Boolean IsEmailSpecified(AuthView account)
+        private Boolean IsEmailSpecified(AccountView account)
         {
             Boolean isSpecified = !String.IsNullOrEmpty(account.Email);
 
             if (!isSpecified)
-                ModelState.AddModelError<AuthView>(model => model.Email, String.Empty);
+                ModelState.AddModelError<AccountView>(model => model.Email, String.Empty);
 
             return isSpecified;
         }
-        private Boolean IsUniqueEmail(AuthView account)
+        private Boolean IsUniqueEmail(AccountView account)
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
@@ -132,7 +132,7 @@ namespace Template.Services
             return isUnique;
         }
 
-        private void SetAccountId(AuthView account)
+        private void SetAccountId(AccountLoginView account)
         {
             account.Id = UnitOfWork
                 .Repository<Account>()
@@ -140,7 +140,7 @@ namespace Template.Services
                 .First()
                 .Id;
         }
-        private void CreateCookieFor(AuthView account)
+        private void CreateCookieFor(AccountLoginView account)
         {
             FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id, DateTime.Now, DateTime.Now.AddMonths(1), true, account.Id);
             HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))

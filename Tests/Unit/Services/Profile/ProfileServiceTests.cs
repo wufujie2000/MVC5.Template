@@ -8,7 +8,7 @@ using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
-using Template.Resources.Views.ProfileView;
+using Template.Resources.Views.AccountView;
 using Template.Services;
 using Template.Tests.Data;
 using Template.Tests.Helpers;
@@ -69,22 +69,22 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanEdit(ProfileView profile)
+        #region Method: CanEdit(ProfileEditView profile)
 
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             service.ModelState.AddModelError("Key", "ErrorMessages");
 
-            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateProfileView()));
+            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateProfileEditView()));
         }
 
         [Test]
         public void CanEdit_CanNotEditWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.CurrentPassword += "1";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Password += "1";
 
             Assert.IsFalse(service.CanEdit(profile));
         }
@@ -93,12 +93,12 @@ namespace Template.Tests.Unit.Services
         public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.CurrentPassword += "1";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Password += "1";
             service.CanEdit(profile);
 
             String expected = Validations.IncorrectPassword;
-            String actual = service.ModelState["CurrentPassword"].Errors[0].ErrorMessage;
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
 
             Assert.AreEqual(expected, actual);
         }
@@ -113,7 +113,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = takenAccount.Username;
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -129,7 +129,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = takenAccount.Username;
             service.CanEdit(profile);
 
@@ -142,7 +142,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanEditUsingItsOwnUsername()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = profile.Username.ToUpper();
 
             Assert.IsTrue(service.CanEdit(profile));
@@ -151,7 +151,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordIsTooShort()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AaaAaa1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -161,7 +161,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordIsTooShort()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AaaAaa1";
             service.CanEdit(profile);
 
@@ -174,7 +174,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainUpperLetter()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "aaaaaaaaaaaa1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -183,7 +183,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainUpperLetter()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "aaaaaaaaaaaa1";
             service.CanEdit(profile);
 
@@ -196,7 +196,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainLowerLetter()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AAAAAAAAAAA1";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -205,7 +205,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainLowerLetter()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AAAAAAAAAAA1";
             service.CanEdit(profile);
 
@@ -218,7 +218,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditIfNewPasswordDoesNotContainADigit()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AaAaAaAaAaAa";
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -227,7 +227,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainADigit()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = "AaAaAaAaAaAa";
             service.CanEdit(profile);
 
@@ -240,7 +240,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanEditWithoutSpecifyingNewPassword()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.NewPassword = null;
 
             Assert.IsTrue(service.CanEdit(profile));
@@ -249,7 +249,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanNotEditWithNullEmail()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Email = null;
 
             Assert.IsFalse(service.CanEdit(profile));
@@ -258,7 +258,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_AddsErorrMessageThenCanNotEditWithNullEmail()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Email = null;
 
             service.CanEdit(profile);
@@ -279,7 +279,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
 
             Assert.IsFalse(service.CanEdit(profile));
         }
@@ -294,7 +294,7 @@ namespace Template.Tests.Unit.Services
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             service.CanEdit(profile);
 
             String expected = Validations.EmailIsAlreadyUsed;
@@ -306,7 +306,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanEditUsingItsOwnEmail()
         {
-            ProfileView profile = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Email = profile.Email.ToUpper();
 
             Assert.IsTrue(service.CanEdit(profile));
@@ -315,19 +315,19 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanEdit_CanEditValidProfile()
         {
-            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateProfileView()));
+            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateProfileEditView()));
         }
 
         #endregion
 
-        #region Method: CanDelete(ProfileView profile)
+        #region Method: CanDelete(AccountView profile)
 
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.CurrentPassword += "1";
+            AccountView profile = ObjectFactory.CreateAccountView();
+            profile.Password += "1";
 
             Assert.IsFalse(service.CanDelete(profile));
         }
@@ -336,37 +336,37 @@ namespace Template.Tests.Unit.Services
         public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
         {
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
-            ProfileView profile = ObjectFactory.CreateProfileView();
-            profile.CurrentPassword += "1";
+            AccountView profile = ObjectFactory.CreateAccountView();
+            profile.Password += "1";
             service.CanDelete(profile);
 
             String expected = Validations.IncorrectPassword;
-            String actual = service.ModelState["CurrentPassword"].Errors[0].ErrorMessage;
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void CanDelete_CanDeleteValidProfileView()
+        public void CanDelete_CanDeleteValidAccountView()
         {
-            Assert.IsTrue(service.CanDelete(ObjectFactory.CreateProfileView()));
+            Assert.IsTrue(service.CanDelete(ObjectFactory.CreateAccountView()));
         }
 
         #endregion
 
-        #region Method: Edit(ProfileView profile)
+        #region Method: Edit(ProfileEditView profile)
 
         [Test]
         public void Edit_EditsAccount()
         {
-            ProfileView profileView = ObjectFactory.CreateProfileView();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             Account expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
-            profileView.Username += "1";
-            service.Edit(profileView);
+            profile.Username += "1";
+            service.Edit(profile);
 
             Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
-            Assert.AreEqual(hasher.HashPassword(profileView.NewPassword), actual.Passhash);
+            Assert.AreEqual(hasher.HashPassword(profile.NewPassword), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
@@ -375,13 +375,26 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void Edit_LeavesCurrentPasswordAfterEditing()
         {
-            ProfileView profileView = ObjectFactory.CreateProfileView();
-            profileView.NewPassword = null;
-            service.Edit(profileView);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = null;
+            service.Edit(profile);
 
             Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id);
 
-            Assert.IsTrue(hasher.Verify(profileView.CurrentPassword, actual.Passhash));
+            Assert.IsTrue(hasher.Verify(profile.Password, actual.Passhash));
+        }
+
+        [Test]
+        public void Edit_LeavesCurrentRoleAfterEditing()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Username += "New username";
+            service.Edit(profile);
+
+            String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == account.Id).RoleId;
+            String expected = account.RoleId;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

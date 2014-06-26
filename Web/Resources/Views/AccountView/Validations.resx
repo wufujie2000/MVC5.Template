@@ -123,6 +123,9 @@
   <data name="IllegalPassword" xml:space="preserve">
     <value>Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit).</value>
   </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Password is incorrect.</value>
+  </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>The username or password you entered is incorrect.</value>
   </data>

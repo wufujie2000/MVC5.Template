@@ -10,7 +10,7 @@ using Template.Resources.Views.RoleView;
 
 namespace Template.Services
 {
-    public class RolesService : GenericService<Role, RoleView>, IRolesService
+    public class RolesService : BaseService, IRolesService
     {
         public RolesService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -72,9 +72,16 @@ namespace Template.Services
             return isValid;
         }
 
-        public override RoleView GetView(String id)
+        public IEnumerable<RoleView> GetViews()
         {
-            RoleView role = base.GetView(id);
+            return UnitOfWork
+                .Repository<Role>()
+                .Query<RoleView>()
+                .OrderByDescending(view => view.EntityDate);
+        }
+        public RoleView GetView(String id)
+        {
+            RoleView role = UnitOfWork.Repository<Role>().GetById<RoleView>(id);
             role.PrivilegesTree.SelectedIds = UnitOfWork
                 .Repository<RolePrivilege>()
                 .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)

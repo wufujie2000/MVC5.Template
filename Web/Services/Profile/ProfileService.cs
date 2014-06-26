@@ -8,11 +8,11 @@ using Template.Components.Extensions.Mvc;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
-using Template.Resources.Views.ProfileView;
+using Template.Resources.Views.AccountView;
 
 namespace Template.Services
 {
-    public class ProfileService : GenericService<Account, ProfileView>, IProfileService
+    public class ProfileService : BaseService, IProfileService
     {
         private IHasher hasher;
 
@@ -27,7 +27,7 @@ namespace Template.Services
             return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
 
-        public Boolean CanEdit(ProfileView profile)
+        public Boolean CanEdit(ProfileEditView profile)
         {
             Boolean isValid = ModelState.IsValid;
             isValid &= IsCorrectPassword(profile);
@@ -39,12 +39,20 @@ namespace Template.Services
 
             return isValid;
         }
-        public Boolean CanDelete(ProfileView profile)
+        public Boolean CanDelete(AccountView profile)
         {
-            return IsCorrectPassword(profile);
+            ProfileEditView view = new ProfileEditView();
+            view.Password = profile.Password;
+
+            return IsCorrectPassword(view);
         }
 
-        public void Edit(ProfileView profile)
+        public TView GetView<TView>(String id) where TView : BaseView
+        {
+            return UnitOfWork.Repository<Account>().GetById<TView>(id);
+        }
+
+        public void Edit(ProfileEditView profile)
         {
             Account account = GetAccountFrom(profile);
             UnitOfWork.Repository<Account>().Update(account);
@@ -58,7 +66,7 @@ namespace Template.Services
             UnitOfWork.Commit();
         }
 
-        private Boolean IsCorrectPassword(ProfileView profile)
+        private Boolean IsCorrectPassword(ProfileEditView profile)
         {
             String profilePasshash = UnitOfWork
                 .Repository<Account>()
@@ -66,13 +74,13 @@ namespace Template.Services
                 .Select(account => account.Passhash)
                 .First();
 
-            Boolean isCorrectPassword = hasher.Verify(profile.CurrentPassword, profilePasshash);
+            Boolean isCorrectPassword = hasher.Verify(profile.Password, profilePasshash);
             if (!isCorrectPassword)
-                ModelState.AddModelError<ProfileView>(model => model.CurrentPassword, Validations.IncorrectPassword);
+                ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 
             return isCorrectPassword;
         }
-        private Boolean IsUniqueUsername(ProfileView profile)
+        private Boolean IsUniqueUsername(ProfileEditView profile)
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
@@ -82,33 +90,33 @@ namespace Template.Services
                  .Any();
 
             if (!isUnique)
-                ModelState.AddModelError<ProfileView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
+                ModelState.AddModelError<ProfileEditView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
 
             return isUnique;
         }
-        private Boolean IsLegalPassword(ProfileView profile)
+        private Boolean IsLegalPassword(ProfileEditView profile)
         {
             if (String.IsNullOrWhiteSpace(profile.NewPassword)) return true;
 
             Boolean isLegal = Regex.IsMatch(profile.NewPassword, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
             if (!isLegal)
-                ModelState.AddModelError<ProfileView>(model => model.NewPassword, Validations.IllegalPassword);
+                ModelState.AddModelError<ProfileEditView>(model => model.NewPassword, Validations.IllegalPassword);
 
             return isLegal;
         }
-        private Boolean IsEmailSpecified(ProfileView profile)
+        private Boolean IsEmailSpecified(ProfileEditView profile)
         {
             Boolean isSpecified = !String.IsNullOrEmpty(profile.Email);
 
             if (!isSpecified)
             {
                 String errorMessage = String.Format(Resources.Shared.Validations.FieldIsRequired, Titles.Email);
-                ModelState.AddModelError<ProfileView>(model => model.Email, errorMessage);
+                ModelState.AddModelError<ProfileEditView>(model => model.Email, errorMessage);
             }
 
             return isSpecified;
         }
-        private Boolean IsUniqueEmail(ProfileView profile)
+        private Boolean IsUniqueEmail(ProfileEditView profile)
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
@@ -118,12 +126,12 @@ namespace Template.Services
                 .Any();
 
             if (!isUnique)
-                ModelState.AddModelError<ProfileView>(model => model.Email, Validations.EmailIsAlreadyUsed);
+                ModelState.AddModelError<ProfileEditView>(model => model.Email, Validations.EmailIsAlreadyUsed);
 
             return isUnique;
         }
 
-        private Account GetAccountFrom(ProfileView profile)
+        private Account GetAccountFrom(ProfileEditView profile)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
             account.Username = profile.Username;

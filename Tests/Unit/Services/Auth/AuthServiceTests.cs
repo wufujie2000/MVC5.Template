@@ -139,6 +139,12 @@ namespace Template.Tests.Unit.Services
             Assert.IsTrue(service.CanLogin(account));
         }
 
+        [Test]
+        public void CanLogin_CanLoginWithValidAccount()
+        {
+            Assert.IsTrue(service.CanLogin(ObjectFactory.CreateAuthView()));
+        }
+
         #endregion
 
         #region Method: CanRegister(AuthView account)
@@ -312,9 +318,7 @@ namespace Template.Tests.Unit.Services
         [Test]
         public void CanRegister_CanRegisterValidAccount()
         {
-            AuthView account = ObjectFactory.CreateAuthView(2);
-
-            Assert.IsTrue(service.CanRegister(account));
+            Assert.IsTrue(service.CanRegister(ObjectFactory.CreateAuthView(2)));
         }
 
         #endregion

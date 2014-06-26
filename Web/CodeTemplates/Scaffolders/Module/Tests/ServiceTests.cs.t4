@@ -15,6 +15,7 @@ namespace Template.Tests.Unit.Services
     {
         private <#= Model.Service #> service;
         private Context context;
+        private <#= Model.Model #> <#= Model.ModelName #>;
 
         [SetUp]
         public void SetUp()
@@ -34,14 +35,106 @@ namespace Template.Tests.Unit.Services
             context.Dispose();
         }
 
+        #region Method: CanCreate(<#= Model.View #> view)
+
+        [Test]
+        public void CanCreate_CanNotCreateWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(service.CanCreate(new <#= Model.View #>()));
+        }
+
+        [Test]
+        public void CanCreate_CanCreateValid<#= Model.Model #>()
+        {
+            Assert.IsTrue(service.CanCreate(new <#= Model.View #>()));
+        }
+
+        #endregion
+
+        #region Method: CanEdit(<#= Model.View #> view)
+
+        [Test]
+        public void CanEdit_CanNotEditWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(service.CanEdit(new <#= Model.View #>()));
+        }
+
+        [Test]
+        public void CanEdit_CanEditValid<#= Model.Model #>()
+        {
+            Assert.IsTrue(service.CanEdit(new <#= Model.View #>()));
+        }
+
+        #endregion
+
+        #region Method: Create(<#= Model.View #> view)
+
+        [Test]
+        public void Create_Creates<#= Model.Model #>()
+        {
+            TearDownData();
+
+            <#= Model.View #> expected = new <#= Model.View #>();
+            service.Create(expected);
+
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == expected.Id);
+
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.Inconclusive("Not all properties tested");
+        }
+
+        #endregion
+
+        #region Method: Edit(<#= Model.View #> view)
+
+        [Test]
+        public void Edit_Edits<#= Model.Model #>()
+        {
+            <#= Model.View #> expected = service.GetView(<#= Model.ModelName #>.Id);
+            Assert.Inconclusive("No update made");
+            service.Edit(expected);
+
+            context = new TestingContext();
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == expected.Id);
+
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.Inconclusive("Not all properties tested");
+        }
+
+        #endregion
+
+        #region Method: Delete(String id)
+
+        [Test]
+        public void Delete_Deletes<#= Model.Model #>()
+        {
+            if (context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id) == null)
+                Assert.Inconclusive();
+
+            service.Delete(<#= Model.ModelName #>.Id);
+            context = new TestingContext();
+
+            Assert.IsNull(context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id));
+        }
+
+        #endregion
+
         #region Test helpers
 
         private void SetUpData()
         {
+            <#= Model.ModelName #> = new <#= Model.Model #>();
+
+            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
             context.SaveChanges();
         }
         private void TearDownData()
         {
+            context.Set<<#= Model.Model #>>().RemoveRange(context.Set<<#= Model.Model #>>().Where(model => model.Id == <#= Model.ModelName #>.Id));
             context.SaveChanges();
         }
 

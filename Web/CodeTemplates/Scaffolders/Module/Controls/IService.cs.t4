@@ -7,5 +7,11 @@ namespace Template.Services
 {
     public interface <#= Model.Name #> : IGenericService<<#= Model.View #>>
     {
+        Boolean CanCreate(<#= Model.View #> view);
+        Boolean CanEdit(<#= Model.View #> view);
+
+        void Create(<#= Model.View #> view);
+        void Edit(<#= Model.View #> view);
+        void Delete(String id);
     }
 }

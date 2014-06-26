@@ -1,8 +1,8 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
 using System;
-using Template.Objects;
 using Template.Data.Core;
+using Template.Objects;
 
 namespace Template.Services
 {
@@ -11,6 +11,33 @@ namespace Template.Services
         public <#= Model.Name #>(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
+        }
+
+        public Boolean CanCreate(<#= Model.View #> view)
+        {
+            return ModelState.IsValid;
+        }
+        public Boolean CanEdit(<#= Model.View #> view)
+        {
+            return ModelState.IsValid;
+        }
+
+        public virtual void Create(<#= Model.View #> view)
+        {
+            <#= Model.Model #> model = UnitOfWork.ToModel<<#= Model.View #>, <#= Model.Model #>>(view);
+            UnitOfWork.Repository<<#= Model.Model #>>().Insert(model);
+            UnitOfWork.Commit();
+        }
+        public virtual void Edit(<#= Model.View #> view)
+        {
+            <#= Model.Model #> model = UnitOfWork.ToModel<<#= Model.View #>, <#= Model.Model #>>(view);
+            UnitOfWork.Repository<<#= Model.Model #>>().Update(model);
+            UnitOfWork.Commit();
+        }
+        public virtual void Delete(String id)
+        {
+            UnitOfWork.Repository<<#= Model.Model #>>().Delete(id);
+            UnitOfWork.Commit();
         }
     }
 }

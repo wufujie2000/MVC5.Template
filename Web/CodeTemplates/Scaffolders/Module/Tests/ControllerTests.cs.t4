@@ -57,7 +57,7 @@ namespace <#= Model.Namespace #>
 
         #endregion
 
-        #region Method: Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ViewName #>)
+        #region Method: Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
 
         [Test]
         public void Create_ProtectsFromOverpostingId()
@@ -79,34 +79,34 @@ namespace <#= Model.Namespace #>
         [Test]
         public void Create_ReturnsSameModelIfCanNotCreate()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ViewName #>)).Returns(false);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ModelName #>)).Returns(false);
 
-            Assert.AreSame(<#= Model.ViewName #>, (controller.Create(<#= Model.ViewName #>) as ViewResult).Model);
+            Assert.AreSame(<#= Model.ModelName #>, (controller.Create(<#= Model.ModelName #>) as ViewResult).Model);
         }
 
         [Test]
         public void Create_Creates<#= Model.View #>()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ViewName #>)).Returns(true);
-            serviceMock.Setup(mock => mock.Create(<#= Model.ViewName #>));
-            controller.Create(<#= Model.ViewName #>);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.Create(<#= Model.ModelName #>));
+            controller.Create(<#= Model.ModelName #>);
 
-            serviceMock.Verify(mock => mock.Create(<#= Model.ViewName #>), Times.Once());
+            serviceMock.Verify(mock => mock.Create(<#= Model.ModelName #>), Times.Once());
         }
 
         [Test]
         public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ViewName #>)).Returns(true);
-            serviceMock.Setup(mock => mock.Create(<#= Model.ViewName #>));
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanCreate(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.Create(<#= Model.ModelName #>));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
             Mock<<#= Model.Controller #>> controllerMock = new Mock<<#= Model.Controller #>>(serviceMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
-            RedirectToRouteResult actual = controllerMock.Object.Create(<#= Model.ViewName #>) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controllerMock.Object.Create(<#= Model.ModelName #>) as RedirectToRouteResult;
 
             Assert.AreEqual(expected, actual);
         }
@@ -141,39 +141,39 @@ namespace <#= Model.Namespace #>
 
         #endregion
 
-        #region Method: Edit(<#= Model.View #> <#= Model.ViewName #>)
+        #region Method: Edit(<#= Model.View #> <#= Model.ModelName #>)
 
         [Test]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ViewName #>)).Returns(false);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ModelName #>)).Returns(false);
 
-            Assert.AreSame(<#= Model.ViewName #>, (controller.Edit(<#= Model.ViewName #>) as ViewResult).Model);
+            Assert.AreSame(<#= Model.ModelName #>, (controller.Edit(<#= Model.ModelName #>) as ViewResult).Model);
         }
 
         [Test]
         public void Edit_Edits<#= Model.View #>()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ViewName #>)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(<#= Model.ViewName #>));
-            controller.Edit(<#= Model.ViewName #>);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.Edit(<#= Model.ModelName #>));
+            controller.Edit(<#= Model.ModelName #>);
 
-            serviceMock.Verify(mock => mock.Edit(<#= Model.ViewName #>), Times.Once());
+            serviceMock.Verify(mock => mock.Edit(<#= Model.ModelName #>), Times.Once());
         }
 
         [Test]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ViewName #>)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(<#= Model.ViewName #>));
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.CanEdit(<#= Model.ModelName #>)).Returns(true);
+            serviceMock.Setup(mock => mock.Edit(<#= Model.ModelName #>));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
             Mock<<#= Model.Controller #>> controllerMock = new Mock<<#= Model.Controller #>>(serviceMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
-            RedirectToRouteResult actual = controllerMock.Object.Edit(<#= Model.ViewName #>) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controllerMock.Object.Edit(<#= Model.ModelName #>) as RedirectToRouteResult;
 
             Assert.AreEqual(expected, actual);
         }
@@ -197,37 +197,25 @@ namespace <#= Model.Namespace #>
         #region Method: DeleteConfirmed(String id)
 
         [Test]
-        public void DeleteConfirmed_ReturnsSameModelIfCanNotDelete()
-        {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanDelete(<#= Model.ViewName #>.Id)).Returns(false);
-            serviceMock.Setup(mock => mock.GetView(<#= Model.ViewName #>.Id)).Returns(<#= Model.ViewName #>);
-
-            Assert.AreSame(<#= Model.ViewName #>, (controller.DeleteConfirmed(<#= Model.ViewName #>.Id) as ViewResult).Model);
-        }
-
-        [Test]
         public void DeleteConfirmed_Deletes<#= Model.View #>()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.CanDelete(<#= Model.ViewName #>.Id)).Returns(true);
-            serviceMock.Setup(mock => mock.Delete(<#= Model.ViewName #>.Id));
-            controller.DeleteConfirmed(<#= Model.ViewName #>.Id);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.Delete(<#= Model.ModelName #>.Id));
+            controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
 
-            serviceMock.Verify(mock => mock.Delete(<#= Model.ViewName #>.Id), Times.Once());
+            serviceMock.Verify(mock => mock.Delete(<#= Model.ModelName #>.Id), Times.Once());
         }
 
         [Test]
         public void Delete_AfterSuccessfulDeleteRedirectsToIndexIfAuthorized()
         {
-            <#= Model.View #> <#= Model.ViewName #> = new <#= Model.View #>();
-            serviceMock.Setup(mock => mock.Delete(<#= Model.ViewName #>.Id));
-            serviceMock.Setup(mock => mock.CanDelete(<#= Model.ViewName #>.Id)).Returns(true);
+            <#= Model.View #> <#= Model.ModelName #> = new <#= Model.View #>();
+            serviceMock.Setup(mock => mock.Delete(<#= Model.ModelName #>.Id));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
             Mock<<#= Model.Controller #>> controllerMock = new Mock<<#= Model.Controller #>>(serviceMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
-            RedirectToRouteResult actual = controllerMock.Object.DeleteConfirmed(<#= Model.ViewName #>.Id) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controllerMock.Object.DeleteConfirmed(<#= Model.ModelName #>.Id) as RedirectToRouteResult;
 
             Assert.AreEqual(expected, actual);
         }

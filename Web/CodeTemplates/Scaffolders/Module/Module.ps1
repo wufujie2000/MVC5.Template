@@ -73,7 +73,7 @@ $CreateViewPath = "Views\$ElementPath\Create"
 $DeleteViewPath = "Views\$ElementPath\Delete"
 $DetailsViewPath = "Views\$ElementPath\Details"
 $ControllerPath = "$ElementPath\$Controller"
-$ModelPath = "Models\$ElementPath\$ModelName"
+$ModelPath = "Models\$ElementPath\$Model"
 $ServicePath = "$ElementPath\$Service"
 $IServicePath = "$ElementPath\$IService"
 $ControllerTestsPath = "Unit\Controllers\$ElementPath\$ControllerTests"
@@ -123,7 +123,7 @@ Else
     Add-ProjectItemViaTemplate $ModelPath `
         -Template "Controls\Model" `
         -Model @{ `
-		    Name = $ModelName `
+		    Name = $Model `
 	    } `
         -SuccessMessage "Added $ObjectsProject\{0}" `
         -TemplateFolders $TemplateFolders `
@@ -155,8 +155,8 @@ Else
         -Template "Controls\Service" `
         -Model @{ `
 		    Interface = $IService; `
-		    Model = $ModelName; `
 		    Name = $Service; `
+		    Model = $Model; `
 		    View = $View `
 	    } `
         -SuccessMessage "Added $ServiceProject\{0}" `
@@ -167,7 +167,7 @@ Else
     Add-ProjectItemViaTemplate $ControllerPath `
         -Template "Controls\Controller" `
         -Model @{ `
-            ModelName = $ModelName.SubString(0, 1).ToLower() + $ModelName.SubString(1); `
+            ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
 	        Namespace = $ControllerNamespace; `
 		    Service = $IService; `
 		    Name = $Controller; `
@@ -233,8 +233,11 @@ Else
     Add-ProjectItemViaTemplate $ServiceTestsPath `
         -Template "Tests\ServiceTests" `
         -Model @{ `
+            ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
 		    Name = $ServiceTests; `
-		    Service = $Service `
+		    Service = $Service; `
+            Model = $Model; `
+            View = $View `
 	    } `
         -SuccessMessage "Added $TestsProject\{0}" `
         -TemplateFolders $TemplateFolders `
@@ -244,7 +247,7 @@ Else
     Add-ProjectItemViaTemplate $ControllerTestsPath `
         -Template "Tests\ControllerTests" `
         -Model @{ `
-            ViewName = $ModelName.SubString(0, 1).ToLower() + $ModelName.SubString(1); `
+            ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
 		    ControllerNamespace = $ControllerNamespace; `
 	        Namespace = $ControllerTestsNamespace; `
 		    ServiceInterface = $IService; `

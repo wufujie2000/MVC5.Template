@@ -57,7 +57,7 @@ namespace Template.Services
             UnitOfWork.Repository<Account>().Delete(id);
             UnitOfWork.Commit();
         }
-        
+
         private Boolean IsCorrectPassword(ProfileView profile)
         {
             String profilePasshash = UnitOfWork

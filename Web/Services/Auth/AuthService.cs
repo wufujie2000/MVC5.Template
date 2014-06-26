@@ -45,7 +45,7 @@ namespace Template.Services
 
             return isValid;
         }
-        
+
         public void Register(AuthView account)
         {
             Account registration = UnitOfWork.ToModel<AuthView, Account>(account);

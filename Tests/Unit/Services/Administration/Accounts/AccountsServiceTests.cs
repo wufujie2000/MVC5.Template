@@ -301,6 +301,12 @@ namespace Template.Tests.Unit.Services
             Assert.IsFalse(service.CanEdit(new AccountView()));
         }
 
+        [Test]
+        public void CanEdit_CanEditValidAccount()
+        {
+            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateAccountView()));
+        }
+
         #endregion
 
         #region Method: Create(AccountView view)

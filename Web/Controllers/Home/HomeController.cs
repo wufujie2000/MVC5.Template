@@ -6,9 +6,9 @@ using Template.Services;
 namespace Template.Controllers.Home
 {
     [AllowUnauthorized]
-    public class HomeController : ServicedController<IHomeService>
+    public class HomeController : ServicedController<IAccountsService>
     {
-        public HomeController(IHomeService service)
+        public HomeController(IAccountsService service)
             : base(service)
         {
         }

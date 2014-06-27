@@ -13,13 +13,13 @@ namespace Template.Tests.Unit.Controllers.Home
     [TestFixture]
     public class HomeControllerTests
     {
-        private Mock<IHomeService> serviceMock;
+        private Mock<IAccountsService> serviceMock;
         private HomeController controller;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IHomeService>();
+            serviceMock = new Mock<IAccountsService>();
             serviceMock.SetupAllProperties();
 
             controller = new HomeController(serviceMock.Object);

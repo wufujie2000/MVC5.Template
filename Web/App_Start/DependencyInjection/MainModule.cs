@@ -29,7 +29,6 @@ namespace Template.Web.DependencyInjection
             Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
 
             Bind<IHasher>().To<BCrypter>();
-            Bind<IHomeService>().To<HomeService>();
             Bind<IRolesService>().To<RolesService>();
             Bind<IAccountsService>().To<AccountsService>();
         }

@@ -91,12 +91,6 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         }
 
         [Test]
-        public void Load_BindsIHomeService()
-        {
-            AssertBind<IHomeService, HomeService>();
-        }
-
-        [Test]
         public void Load_BindsIRolesService()
         {
             AssertBind<IRolesService, RolesService>();

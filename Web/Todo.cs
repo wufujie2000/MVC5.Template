@@ -4,7 +4,6 @@
     {
         // TODO: Disable autocomplete from password fields, exept login
 
-        // TODO: Remove usage of home service and replace it with accounts service ~
         // TODO: Add alert messages to login/register views
         // TODO: Disconnect deleted users from home controller
         // TODO: Add password recovery functionality
@@ -15,7 +14,7 @@
         // TODO: Add tests for non member expressions in resource methods
         // TODO: Rename resources assembly or it's resources resources files and then change Template.Resources.Shared.Resources occurences
         // TODO: Hide datalist controller's Role and others method from unauthorized access
-        // TODO: Selecting views and models dives different datetime results
+        // TODO: Selecting views and models gives different datetime results
         // TODO: Add project renaming utility
     }
 }

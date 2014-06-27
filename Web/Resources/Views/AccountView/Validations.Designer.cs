@@ -70,15 +70,6 @@ namespace Template.Resources.Views.AccountView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password field must be at least 8 symbols long and contain at least one of each (uppercase letter, lowercase letter, a digit)..
-        /// </summary>
-        public static string IllegalPassword {
-            get {
-                return ResourceManager.GetString("IllegalPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Password is incorrect..
         /// </summary>
         public static string IncorrectPassword {

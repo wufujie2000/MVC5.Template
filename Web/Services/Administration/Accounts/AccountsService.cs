@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using Template.Components.Extensions.Mvc;
@@ -42,7 +41,6 @@ namespace Template.Services
         {
             Boolean isValid = IsUniqueUsername(account.Id, account.Username);
             isValid &= IsUniqueEmail(account.Id, account.Email);
-            isValid &= IsLegalPassword(account.Password);
             isValid &= ModelState.IsValid;
 
             return isValid;
@@ -51,7 +49,6 @@ namespace Template.Services
         {
             Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, profile.Username);
             isValid &= IsUniqueEmail(HttpContext.Current.User.Identity.Name, profile.Email);
-            isValid &= IsLegalPassword(profile.NewPassword);
             isValid &= IsCorrectPassword(profile);
             isValid &= ModelState.IsValid;
 
@@ -155,16 +152,6 @@ namespace Template.Services
                 ModelState.AddModelError<AccountView>(model => model.Email, Validations.EmailIsAlreadyUsed);
 
             return isUnique;
-        }
-        private Boolean IsLegalPassword(String password)
-        {
-            if (password == null) return true;
-
-            Boolean isLegal = Regex.IsMatch(password, "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$");
-            if (!isLegal)
-                ModelState.AddModelError<AccountView>(model => model.Password, Validations.IllegalPassword);
-
-            return isLegal;
         }
 
         private Boolean IsAuthenticated(String username, String password)

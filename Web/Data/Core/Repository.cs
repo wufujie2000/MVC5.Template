@@ -25,7 +25,7 @@ namespace Template.Data.Core
         }
         public TView GetById<TView>(String id) where TView : BaseView
         {
-            return Query().Project().To<TView>().SingleOrDefault(view => view.Id == id);
+            return Query<TView>().SingleOrDefault(view => view.Id == id);
         }
         public IQueryable<TModel> Query()
         {

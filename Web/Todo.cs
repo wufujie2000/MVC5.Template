@@ -4,7 +4,6 @@
     {
         // TODO: Disable autocomplete from password fields, exept login
 
-        // TODO: Change profile deletion model to String only
         // TODO: Remove NotReq & Reqa label helpers
         // TODO: Remove usage of home service and replace it with accounts service ~
         // TODO: Add alert messages to login/register views

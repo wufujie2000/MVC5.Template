@@ -49,7 +49,7 @@ namespace Template.Services
         {
             Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, profile.Username);
             isValid &= IsUniqueEmail(HttpContext.Current.User.Identity.Name, profile.Email);
-            isValid &= IsCorrectPassword(profile);
+            isValid &= IsCorrectPassword(profile.Password);
             isValid &= ModelState.IsValid;
 
             return isValid;
@@ -60,10 +60,7 @@ namespace Template.Services
         }
         public Boolean CanDelete(AccountView account)
         {
-            ProfileEditView view = new ProfileEditView();
-            view.Password = account.Password;
-
-            return IsCorrectPassword(view);
+            return IsCorrectPassword(account.Password);
         }
 
         public IEnumerable<AccountView> GetViews()
@@ -172,15 +169,15 @@ namespace Template.Services
 
             return passwordCorrect;
         }
-        private Boolean IsCorrectPassword(ProfileEditView profile)
+        private Boolean IsCorrectPassword(String password)
         {
-            String profilePasshash = UnitOfWork
+            String passhash = UnitOfWork
                 .Repository<Account>()
                 .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Passhash)
                 .First();
 
-            Boolean isCorrectPassword = hasher.Verify(profile.Password, profilePasshash);
+            Boolean isCorrectPassword = passhash != null && hasher.Verify(password, passhash);
             if (!isCorrectPassword)
                 ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 

@@ -5,7 +5,6 @@
         // TODO: Disable autocomplete from password fields, exept login
 
         // TODO: Add alert messages to login/register views
-        // TODO: Disconnect deleted users from home controller
         // TODO: Add password recovery functionality
         // TODO: Make attributed or special input fields not editable by css/js
         // TODO: Add protection from registering two accounts with the same username/email at the same time

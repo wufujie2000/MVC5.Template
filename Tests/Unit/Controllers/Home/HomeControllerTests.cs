@@ -2,11 +2,13 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Template.Components.Alerts;
 using Template.Controllers.Home;
 using Template.Resources.Shared;
 using Template.Services;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Controllers.Home
 {
@@ -15,28 +17,62 @@ namespace Template.Tests.Unit.Controllers.Home
     {
         private Mock<IAccountsService> serviceMock;
         private HomeController controller;
+        private String accountId;
 
         [SetUp]
         public void SetUp()
         {
+            HttpMock httpMock = new HttpMock();
+            HttpContext.Current = httpMock.HttpContext;
+            accountId = HttpContext.Current.User.Identity.Name;
+
             serviceMock = new Mock<IAccountsService>();
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            serviceMock.Object.AlertMessages = new MessagesContainer();
             serviceMock.SetupAllProperties();
 
             controller = new HomeController(serviceMock.Object);
-            serviceMock.Object.AlertMessages = new MessagesContainer();
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = httpMock.HttpContextBase;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            HttpContext.Current = null;
         }
 
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsIndexView()
+        public void Index_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            Assert.IsInstanceOf<ViewResult>(controller.Index());
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+        }
+
+        [Test]
+        public void Index_ReturnsViewWithNullModel()
+        {
+            Assert.IsNull((controller.Index() as ViewResult).Model);
         }
 
         #endregion
 
         #region Method: Error()
+
+        [Test]
+        public void Error_RedirectsToLogoutIfAccountDoesNotExist()
+        {
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            RedirectToRouteResult actual = controller.Error() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void Error_AddsSystemErrorMessage()
@@ -52,14 +88,24 @@ namespace Template.Tests.Unit.Controllers.Home
         }
 
         [Test]
-        public void Error_ReturnsNullViewModel()
+        public void Error_ReturnsViewWithNullModell()
         {
-            Assert.IsNull((controller.NotFound() as ViewResult).Model);
+            Assert.IsNull((controller.Error() as ViewResult).Model);
         }
 
         #endregion
 
         #region Method: NotFound()
+
+        [Test]
+        public void NotFound_RedirectsToLogoutIfAccountDoesNotExist()
+        {
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            RedirectToRouteResult actual = controller.NotFound() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void NotFound_AddsPageNotFoundMessage()
@@ -75,7 +121,7 @@ namespace Template.Tests.Unit.Controllers.Home
         }
 
         [Test]
-        public void NotFound_ReturnsNullViewModel()
+        public void NotFound_ReturnsViewWithNullModel()
         {
             Assert.IsNull((controller.NotFound() as ViewResult).Model);
         }
@@ -83,6 +129,16 @@ namespace Template.Tests.Unit.Controllers.Home
         #endregion
 
         #region Method: Unauthorized()
+
+        [Test]
+        public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
+        {
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
+
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+        }
 
         [Test]
         public void Unauthorized_AddsUnauthorizedMessage()
@@ -98,7 +154,7 @@ namespace Template.Tests.Unit.Controllers.Home
         }
 
         [Test]
-        public void Unauthorized_ReturnsNullViewModel()
+        public void Unauthorized_ReturnsViewWithNullModel()
         {
             Assert.IsNull((controller.Unauthorized() as ViewResult).Model);
         }

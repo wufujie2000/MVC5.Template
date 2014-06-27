@@ -37,7 +37,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         #region Method: Edit()
 
         [Test]
-        public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExistAnymore()
+        public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExist()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
@@ -63,7 +63,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         #region Method: Edit(ProfileEditView profile)
 
         [Test]
-        public void Edit_RedirectsToLogoutIfAccountDoesNotExistAnymore()
+        public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
@@ -128,7 +128,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         #region Method: Delete()
 
         [Test]
-        public void Delete_RedirectsToLogoutIfAccountDoesNotExistAnymore()
+        public void Delete_RedirectsToLogoutIfAccountDoesNotExist()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
@@ -164,7 +164,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         #region Method: DeleteConfirmed(AccountView profile)
 
         [Test]
-        public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExistAnymore()
+        public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
         {
             AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);

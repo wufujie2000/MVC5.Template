@@ -38,8 +38,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthService.cs" />
-    <Compile Include="Auth\IAuthService.cs" />
     <Compile Include="Administration\Accounts\AccountsService.cs" />
     <Compile Include="Administration\Accounts\IAccountsService.cs" />
     <Compile Include="Administration\Roles\IRolesService.cs" />
@@ -48,8 +46,6 @@
     <Compile Include="Home\HomeService.cs" />
     <Compile Include="Home\IHomeService.cs" />
     <Compile Include="IService.cs" />
-    <Compile Include="Profile\IProfileService.cs" />
-    <Compile Include="Profile\ProfileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,8 +20,5 @@ namespace Template.Components.Security
         {
             return BCrypt.Net.BCrypt.Verify(value, hash);
         }
-
-
-        
     }
 }

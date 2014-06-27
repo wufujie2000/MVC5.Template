@@ -4,11 +4,11 @@
     {
         // TODO: Disable autocomplete from password fields, exept login
 
-        // TODO: Combine profile/accounts/auth services
-        // TODO: Always rehash pass
         // TODO: Lower password security to 8 symbols
         // TODO: Change profile deletion model to String only
+        // TODO: Remove NotReq & Reqa label helpers
         // TODO: Remove usage of home service and replace it with accounts service ~
+        // TODO: Add alert messages to login/register views
         // TODO: Disconnect deleted users from home controller
         // TODO: Add password recovery functionality
         // TODO: Make attributed or special input fields not editable by css/js

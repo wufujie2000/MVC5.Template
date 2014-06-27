@@ -1,4 +1,6 @@
-﻿using Moq;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -203,12 +205,33 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
+        #region Method: GetViews()
+
+        [Test]
+        public void GetViews_GetsAccountViews()
+        {
+            IEnumerable<RoleView> actual = service.GetViews();
+            IEnumerable<RoleView> expected = context
+                .Set<Role>()
+                .Project()
+                .To<RoleView>()
+                .OrderByDescending(account => account.EntityDate);
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
         #region Method: GetView(String id)
 
         [Test]
         public void GetView_GetsViewById()
         {
-            Assert.AreEqual(role.Id, service.GetView(role.Id).Id);
+            Role roleInDatabase = context.Set<Role>().SingleOrDefault(model => model.Id == role.Id);
+            RoleView expected = Mapper.Map<Role, RoleView>(roleInDatabase);
+            RoleView actual = service.GetView(role.Id);
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         [Test]

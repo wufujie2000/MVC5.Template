@@ -139,10 +139,8 @@
     <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleFactoryTests.cs" />
-    <Compile Include="Unit\Services\Auth\AuthServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountsServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
-    <Compile Include="Unit\Services\Profile\ProfileServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Unit\Controllers\Auth\AuthControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreRegistrationTests.cs" />

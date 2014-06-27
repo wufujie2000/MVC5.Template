@@ -72,7 +72,7 @@ namespace Template.Tests.Helpers
 
             IdentityMock = new Mock<IIdentity>();
             IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
-            IdentityMock.Setup(mock => mock.Name).Returns(ObjectFactory.TestId);
+            IdentityMock.Setup(mock => mock.Name).Returns(ObjectFactory.TestId + "1");
 
             Mock<IPrincipal> principalMock = new Mock<IPrincipal>();
             principalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
@@ -89,29 +89,40 @@ namespace Template.Tests.Helpers
 
     public class HttpSessionStub : HttpSessionStateBase
     {
-        private readonly Dictionary<String, Object> _objects = new Dictionary<String, Object>();
+        private Dictionary<String, Object> objects;
+
+        public HttpSessionStub()
+        {
+            objects = new Dictionary<String, Object>();
+        }
 
         public override Object this[String name]
         {
-            get { return (_objects.ContainsKey(name)) ? _objects[name] : null; }
-            set { _objects[name] = value; }
+            get
+            {
+                return (objects.ContainsKey(name)) ? objects[name] : null;
+            }
+            set
+            {
+                objects[name] = value;
+            }
         }
 
         public override void Add(String name, Object value)
         {
-            _objects.Add(name, value);
+            objects.Add(name, value);
             base.Add(name, value);
         }
 
         public override void Remove(String name)
         {
-            _objects.Remove(name);
+            objects.Remove(name);
             base.Remove(name);
         }
 
         public override void Clear()
         {
-            _objects.Clear();
+            objects.Clear();
             base.Clear();
         }
 

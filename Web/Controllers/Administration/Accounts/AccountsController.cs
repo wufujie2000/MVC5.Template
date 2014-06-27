@@ -19,24 +19,6 @@ namespace Template.Controllers.Administration
         }
 
         [HttpGet]
-        public ViewResult Create()
-        {
-            return View(new AccountView());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] AccountView account)
-        {
-            if (!Service.CanCreate(account))
-                return View(account);
-
-            Service.Create(account);
-
-            return RedirectIfAuthorized("Index");
-        }
-
-        [HttpGet]
         public ViewResult Details(String id)
         {
             return View(Service.GetView<AccountView>(id));

@@ -8,9 +8,9 @@ using Template.Services;
 namespace Template.Controllers.Profile
 {
     [AllowUnauthorized]
-    public class ProfileController : ServicedController<IProfileService>
+    public class ProfileController : ServicedController<IAccountsService>
     {
-        public ProfileController(IProfileService service)
+        public ProfileController(IAccountsService service)
             : base(service)
         {
         }
@@ -32,8 +32,11 @@ namespace Template.Controllers.Profile
                 return LogOut();
 
             if (Service.CanEdit(profile))
+            {
                 Service.Edit(profile);
-
+                Service.AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
+            }
+            
             return View(profile);
         }
 

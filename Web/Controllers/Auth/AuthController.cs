@@ -8,9 +8,9 @@ using Template.Services;
 namespace Template.Controllers.Auth
 {
     [AllowAnonymous]
-    public class AuthController : ServicedController<IAuthService>
+    public class AuthController : ServicedController<IAccountsService>
     {
-        public AuthController(IAuthService service)
+        public AuthController(IAccountsService service)
             : base(service)
         {
         }
@@ -56,7 +56,7 @@ namespace Template.Controllers.Auth
             if (!Service.CanLogin(account))
                 return View();
 
-            Service.Login(account);
+            Service.Login(account.Username);
 
             return RedirectToLocal(returnUrl);
         }

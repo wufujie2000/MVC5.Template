@@ -19,13 +19,13 @@ namespace Template.Tests.Unit.Controllers.Auth
     public class AuthControllerTests
     {
         private Mock<AuthController> controllerMock;
-        private Mock<IAuthService> serviceMock;
+        private Mock<IAccountsService> serviceMock;
         private AuthController controller;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IAuthService>(MockBehavior.Strict);
+            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
             serviceMock.SetupAllProperties();
 
             controllerMock = new Mock<AuthController>(serviceMock.Object) { CallBase = true };
@@ -189,10 +189,10 @@ namespace Template.Tests.Unit.Controllers.Auth
         {
             AccountLoginView account = new AccountLoginView();
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
-            serviceMock.Setup(mock => mock.Login(account));
+            serviceMock.Setup(mock => mock.Login(account.Username));
             controller.Login(account, null);
 
-            serviceMock.Verify(mock => mock.Login(account), Times.Once());
+            serviceMock.Verify(mock => mock.Login(account.Username), Times.Once());
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace Template.Tests.Unit.Controllers.Auth
             ActionResult expected = new RedirectResult("/Home/Index");
             controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
             serviceMock.Setup(mock => mock.CanLogin(account)).Returns(true);
-            serviceMock.Setup(mock => mock.Login(account));
+            serviceMock.Setup(mock => mock.Login(account.Username));
 
             ActionResult actual = controller.Login(account, "/Home/Index");
 

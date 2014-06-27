@@ -15,7 +15,7 @@ namespace Template.Tests.Unit.Controllers.Profile
     [TestFixture]
     public class ProfileControllerTests
     {
-        private Mock<IProfileService> serviceMock;
+        private Mock<IAccountsService> serviceMock;
         private ProfileController controller;
         private ProfileEditView profile;
         private String accountId;
@@ -25,7 +25,7 @@ namespace Template.Tests.Unit.Controllers.Profile
         {
             profile = new ProfileEditView();
 
-            serviceMock = new Mock<IProfileService>(MockBehavior.Strict);
+            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
             serviceMock.SetupAllProperties();
 
             controller = new ProfileController(serviceMock.Object);
@@ -82,6 +82,23 @@ namespace Template.Tests.Unit.Controllers.Profile
             controller.Edit(profile);
 
             serviceMock.Verify(mock => mock.Edit(profile), Times.Once());
+        }
+
+        [Test]
+        public void Edit_AddsProfileUpdatedMessage()
+        {
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            serviceMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
+            serviceMock.Setup(mock => mock.Edit(profile));
+
+            controller.Edit(profile);
+
+            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+
+            Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
+            Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
+            Assert.AreEqual(AlertMessageType.Success, actual.Type);
+            Assert.AreEqual(String.Empty, actual.Key);
         }
 
         [Test]

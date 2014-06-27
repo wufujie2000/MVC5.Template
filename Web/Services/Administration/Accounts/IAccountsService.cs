@@ -6,13 +6,24 @@ namespace Template.Services
 {
     public interface IAccountsService : IService
     {
-        Boolean CanCreate(AccountView view);
-        Boolean CanEdit(AccountEditView view);
+        Boolean IsLoggedIn();
+        Boolean AccountExists(String accountId);
+
+        Boolean CanLogin(AccountLoginView account);
+        Boolean CanRegister(AccountView account);
+        Boolean CanEdit(ProfileEditView profile);
+        Boolean CanEdit(AccountEditView account);
+        Boolean CanDelete(AccountView profile);
 
         IEnumerable<AccountView> GetViews();
         TView GetView<TView>(String id) where TView : BaseView;
 
-        void Create(AccountView view);
+        void Register(AccountView account);
+        void Edit(ProfileEditView profile);
         void Edit(AccountEditView view);
+        void Delete(String accountId);
+
+        void Login(String username);
+        void Logout();
     }
 }

@@ -1,8 +1,14 @@
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Template.Components.Alerts;
 using Template.Components.Security;
 using Template.Data.Core;
 using Template.Objects;
@@ -16,7 +22,9 @@ namespace Template.Tests.Unit.Services
     [TestFixture]
     public class AccountsServiceTests
     {
+        private Mock<IHasher> hasherMock;
         private AccountsService service;
+        private HttpMock httpMock;
         private String accountId;
         private Context context;
         private IHasher hasher;
@@ -24,10 +32,14 @@ namespace Template.Tests.Unit.Services
         [SetUp]
         public void SetUp()
         {
+            httpMock = new HttpMock();
             context = new TestingContext();
-            Mock<IHasher> hasherMock = new Mock<IHasher>(MockBehavior.Strict);
+            HttpContext.Current = httpMock.HttpContext;
+            hasherMock = new Mock<IHasher>(MockBehavior.Strict);
             hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
             service = new AccountsService(new UnitOfWork(context), hasherMock.Object);
+            service.AlertMessages = new MessagesContainer();
             service.ModelState = new ModelStateDictionary();
             hasher = hasherMock.Object;
 
@@ -38,83 +50,340 @@ namespace Template.Tests.Unit.Services
         [TearDown]
         public void TearDown()
         {
+            HttpContext.Current = null;
             service.Dispose();
             context.Dispose();
         }
 
-        #region Method: CanCreate(AccountView view)
+        #region Method: IsLoggedIn()
 
         [Test]
-        public void CanCreate_CanNotCreateWithInvalidModelState()
+        public void IsLoggedIn_ReturnsTrueThenAccountIsAuthenticated()
         {
-            service.ModelState.AddModelError("Test", "Test");
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
 
-            Assert.IsFalse(service.CanCreate(new AccountView()));
+            Assert.IsTrue(service.IsLoggedIn());
         }
 
         [Test]
-        public void CanCreate_CanNotCreateWithNullUsername()
+        public void IsLoggedIn_ReturnsFalseThenAccountIsNotAuthenticated()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = null;
+            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
 
-            Assert.IsFalse(service.CanCreate(account));
+            Assert.IsFalse(service.IsLoggedIn());
+        }
+
+        #endregion
+
+        #region Method: AccountExists(String accountId)
+
+        [Test]
+        public void AccountExists_ReturnsTrueIfAccountExists()
+        {
+            Assert.IsTrue(service.AccountExists(accountId));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateWithNullUsername()
+        public void AccountExists_ReturnsFalseIfAccountDoesNotExist()
+        {
+            Assert.IsFalse(service.AccountExists("Test"));
+        }
+
+        #endregion
+
+        #region Method: CanLogin(AccountLoginView account)
+
+        [Test]
+        public void CanLogin_CanNotLoginWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Key", "ErrorMesages");
+
+            Assert.IsFalse(service.CanLogin(ObjectFactory.CreateAccountLoginView()));
+        }
+
+        [Test]
+        public void CanLogin_CanNotLoginFromNonExistingAccount()
+        {
+            AccountLoginView account = new AccountLoginView();
+            account.Username = String.Empty;
+
+            Assert.IsFalse(service.CanLogin(account));
+        }
+
+        [Test]
+        public void CanLogin_AddsErrorMessageThenCanNotLoginWithNotExistingAccount()
+        {
+            AccountLoginView account = new AccountLoginView();
+            account.Username = String.Empty;
+            service.CanLogin(account);
+
+            String expected = Validations.IncorrectUsernameOrPassword;
+            AlertMessage actualMessage = service.AlertMessages.First();
+
+            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(expected, actualMessage.Message);
+        }
+
+        [Test]
+        public void CanLogin_CanNotLoginWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+
+            Assert.IsFalse(service.CanLogin(account));
+        }
+
+        [Test]
+        public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            account.Password += "Incorrect";
+            service.CanLogin(account);
+
+            String expected = Validations.IncorrectUsernameOrPassword;
+            AlertMessage actualMessage = service.AlertMessages.First();
+
+            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(expected, actualMessage.Message);
+        }
+
+        [Test]
+        public void CanLogin_CanLoginWithCaseInsensitiveUsername()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            account.Username = account.Username.ToUpper();
+
+            Assert.IsTrue(service.CanLogin(account));
+        }
+
+        [Test]
+        public void CanLogin_CanLoginWithValidAccount()
+        {
+            Assert.IsTrue(service.CanLogin(ObjectFactory.CreateAccountLoginView()));
+        }
+
+        #endregion
+
+        #region Method: CanRegister(AccountView account)
+
+        [Test]
+        public void CanRegister_CanNotRegisterWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Key", "Error");
+
+            Assert.IsFalse(service.CanRegister(ObjectFactory.CreateAccountView()));
+        }
+
+        [Test]
+        public void CanRegister_CanNotRegisterWithAlreadyTakenUsername()
         {
             AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = null;
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
 
-            service.CanCreate(account);
+            Assert.IsFalse(service.CanRegister(account));
+        }
 
-            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Username);
+        [Test]
+        public void CanRegister_AddsErorrMessageThenCanNotRegisterWithAlreadyTakenUsername()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
+            service.CanRegister(account);
+
             String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
+            String expeced = Validations.UsernameIsAlreadyTaken;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanNotRegisterIfPasswordIsTooShort()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Password = "AaaAaa1";
+
+            Assert.IsFalse(service.CanRegister(account));
+        }
+
+        [Test]
+        public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordIsTooShort()
+        {
+            AccountView account = ObjectFactory.CreateAccountView(2);
+            account.Password = "AaaAaa1";
+
+            service.CanRegister(account);
+
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            String expeced = Validations.IllegalPassword;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanNotCreateIfPasswordDoesNotContainUpperLetter()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Password = "aaaaaaaaaaaa1";
+
+            Assert.IsFalse(service.CanRegister(account));
+        }
+
+        [Test]
+        public void CanRegister_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainUpperLetter()
+        {
+            AccountView account = ObjectFactory.CreateAccountView(2);
+            account.Password = "aaaaaaaaaaaa1";
+
+            service.CanRegister(account);
+
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            String expeced = Validations.IllegalPassword;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanNotCreateIfPasswordDoesNotContainLowerLetter()
+        {
+            AccountView account = ObjectFactory.CreateAccountView(2);
+            account.Password = "AAAAAAAAAAA1";
+
+            Assert.IsFalse(service.CanRegister(account));
+        }
+
+        [Test]
+        public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainLowerLetter()
+        {
+            AccountView account = ObjectFactory.CreateAccountView(2);
+            account.Password = "AAAAAAAAAAA1";
+
+            service.CanRegister(account);
+            
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            String expeced = Validations.IllegalPassword;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanNotRegisterIfPasswordDoesNotContainADigit()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Password = "AaAaAaAaAaAa";
+
+            Assert.IsFalse(service.CanRegister(account));
+        }
+
+        [Test]
+        public void CanRegister_AddsErorrMessageThenCanNotRegisterIfPasswordDoesNotContainADigit()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Password = "AaAaAaAaAaAa";
+
+            service.CanRegister(account);
+
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            String expeced = Validations.IllegalPassword;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
+        {
+            AccountView account = ObjectFactory.CreateAccountView(1);
+            account.Id += "DifferentValue";
+
+            Assert.IsFalse(service.CanRegister(account));
+        }
+
+        [Test]
+        public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
+        {
+            AccountView account = ObjectFactory.CreateAccountView();
+            account.Id += "DifferentValue";
+            service.CanRegister(account);
+
+            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
+            String expeced = Validations.EmailIsAlreadyUsed;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanRegister_CanRegisterValidAccount()
+        {
+            Assert.IsTrue(service.CanRegister(ObjectFactory.CreateAccountView(2)));
+        }
+
+        #endregion
+
+        #region Method: CanEdit(ProfileEditView profile)
+
+        [Test]
+        public void CanEdit_CanNotEditWithInvalidModelState()
+        {
+            service.ModelState.AddModelError("Key", "ErrorMessages");
+
+            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateProfileEditView()));
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Password += "1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Password += "1";
+            service.CanEdit(profile);
+
+            String expected = Validations.IncorrectPassword;
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void CanCreate_CanNotCreateWithEmptyUsername()
+        public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = String.Empty;
+            Account takenAccount = ObjectFactory.CreateAccount();
+            takenAccount.Username += "1";
+            takenAccount.Id += "1";
 
-            Assert.IsFalse(service.CanCreate(account));
+            context.Set<Account>().Add(takenAccount);
+            context.SaveChanges();
+
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Username = takenAccount.Username;
+
+            Assert.IsFalse(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateWithEmptyUsername()
+        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenUsername()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = String.Empty;
+            Account takenAccount = ObjectFactory.CreateAccount();
+            takenAccount.Username += "1";
+            takenAccount.Id += "1";
 
-            service.CanCreate(account);
+            context.Set<Account>().Add(takenAccount);
+            context.SaveChanges();
 
-            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Username);
-            String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanCreate_CanNotCreateWithAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "1";
-
-            Assert.IsFalse(service.CanCreate(account));
-        }
-
-        [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateWithAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "OtherIdValue";
-            service.CanCreate(account);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Username = takenAccount.Username;
+            service.CanEdit(profile);
 
             String expected = Validations.UsernameIsAlreadyTaken;
             String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
@@ -123,21 +392,52 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordIsNull()
+        public void CanEdit_CanEditUsingItsOwnUsername()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = null;
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Username = profile.Username.ToUpper();
 
-            Assert.IsFalse(service.CanCreate(account));
+            Assert.IsTrue(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateIfPasswordIsNull()
+        public void CanEdit_CanNotEditIfNewPasswordIsTooShort()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = null;
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AaaAaa1";
 
-            service.CanCreate(account);
+            Assert.IsFalse(service.CanEdit(profile));
+            Assert.AreEqual(service.ModelState["Password"].Errors[0].ErrorMessage, Validations.IllegalPassword);
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordIsTooShort()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AaaAaa1";
+            service.CanEdit(profile);
+
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            String expeced = Validations.IllegalPassword;
+
+            Assert.AreEqual(expeced, actual);
+        }
+
+        [Test]
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainUpperLetter()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "aaaaaaaaaaaa1";
+
+            Assert.IsFalse(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainUpperLetter()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "aaaaaaaaaaaa1";
+            service.CanEdit(profile);
 
             String expected = Validations.IllegalPassword;
             String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
@@ -146,21 +446,20 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordIsTooShort()
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainLowerLetter()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AaaAaa1";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AAAAAAAAAAA1";
 
-            Assert.IsFalse(service.CanCreate(account));
+            Assert.IsFalse(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateIfPasswordIsTooShort()
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainLowerLetter()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AaaAaa1";
-
-            service.CanCreate(account);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AAAAAAAAAAA1";
+            service.CanEdit(profile);
 
             String expected = Validations.IllegalPassword;
             String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
@@ -169,21 +468,20 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordDoesNotContainUpperLetter()
+        public void CanEdit_CanNotEditIfNewPasswordDoesNotContainADigit()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "aaaaaaaaaaaa1";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AaAaAaAaAaAa";
 
-            Assert.IsFalse(service.CanCreate(account));
+            Assert.IsFalse(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainUpperLetter()
+        public void CanEdit_AddsErrorMessageThenCanNotEditIfNewPasswordDoesNotContainADigit()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "aaaaaaaaaaaa1";
-
-            service.CanCreate(account);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = "AaAaAaAaAaAa";
+            service.CanEdit(profile);
 
             String expected = Validations.IllegalPassword;
             String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
@@ -192,87 +490,41 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordDoesNotContainLowerLetter()
+        public void CanEdit_CanEditWithoutSpecifyingNewPassword()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AAAAAAAAAAA1";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = null;
 
-            Assert.IsFalse(service.CanCreate(account));
+            Assert.IsTrue(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainLowerLetter()
+        public void CanEdit_CanNotEditToAlreadyUsedEmail()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AAAAAAAAAAA1";
+            Account takenEmailAccount = ObjectFactory.CreateAccount();
+            takenEmailAccount.Username += "1";
+            takenEmailAccount.Id += "1";
 
-            service.CanCreate(account);
+            context.Set<Account>().Add(takenEmailAccount);
+            context.SaveChanges();
 
-            String expected = Validations.IllegalPassword;
-            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
 
-            Assert.AreEqual(expected, actual);
+            Assert.IsFalse(service.CanEdit(profile));
         }
 
         [Test]
-        public void CanCreate_CanNotCreateIfPasswordDoesNotContainADigit()
+        public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AaAaAaAaAaAa";
+            Account takenEmailAccount = ObjectFactory.CreateAccount();
+            takenEmailAccount.Username += "1";
+            takenEmailAccount.Id += "1";
 
-            Assert.IsFalse(service.CanCreate(account));
-        }
+            context.Set<Account>().Add(takenEmailAccount);
+            context.SaveChanges();
 
-        [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateIfPasswordDoesNotContainADigit()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Password = "AaAaAaAaAaAa";
-
-            service.CanCreate(account);
-
-            String expected = Validations.IllegalPassword;
-            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanCreate_CanNotCreateWithNullEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Email = null;
-
-            Assert.IsFalse(service.CanCreate(account));
-        }
-
-        [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateWithNullEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Email = null;
-
-            service.CanCreate(account);
-
-            String expected = String.Format(Template.Resources.Shared.Validations.FieldIsRequired, Titles.Email);
-            String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanCreate_CanNotCreateWithAlreadyUsedEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-
-            Assert.IsFalse(service.CanCreate(account));
-        }
-
-        [Test]
-        public void CanCreate_AddsErorrMessageThenCanNotCreateWithAlreadyUsedEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            service.CanCreate(account);
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            service.CanEdit(profile);
 
             String expected = Validations.EmailIsAlreadyUsed;
             String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
@@ -281,12 +533,18 @@ namespace Template.Tests.Unit.Services
         }
 
         [Test]
-        public void CanCreate_CanCreateValidAccount()
+        public void CanEdit_CanEditUsingItsOwnEmail()
         {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Email += "s";
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Email = profile.Email.ToUpper();
 
-            Assert.IsTrue(service.CanCreate(account));
+            Assert.IsTrue(service.CanEdit(profile));
+        }
+
+        [Test]
+        public void CanEdit_CanEditValidProfile()
+        {
+            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateProfileEditView()));
         }
 
         #endregion
@@ -294,7 +552,7 @@ namespace Template.Tests.Unit.Services
         #region Method: CanEdit(AccountEditView view)
 
         [Test]
-        public void CanEdit_CanNotEditWithInvalidModelState()
+        public void CanEdit_CanNotEditAccountWithInvalidModelState()
         {
             service.ModelState.AddModelError("Test", "Test");
 
@@ -309,28 +567,134 @@ namespace Template.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Create(AccountView view)
+        #region Method: CanDelete(AccountView profile)
 
         [Test]
-        public void Create_CreatesAccount()
+        public void CanDelete_CanNotDeleteWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            AccountView profile = ObjectFactory.CreateAccountView();
+            profile.Password += "1";
+
+            Assert.IsFalse(service.CanDelete(profile));
+        }
+
+        [Test]
+        public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
+        {
+            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            AccountView profile = ObjectFactory.CreateAccountView();
+            profile.Password += "1";
+            service.CanDelete(profile);
+
+            String expected = Validations.IncorrectPassword;
+            String actual = service.ModelState["Password"].Errors[0].ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanDelete_CanDeleteValidAccountView()
+        {
+            Assert.IsTrue(service.CanDelete(ObjectFactory.CreateAccountView()));
+        }
+
+        #endregion
+
+        #region Method: GetViews()
+
+        [Test]
+        public void GetViews_GetsAccountViews()
+        {
+            IEnumerable<AccountView> actual = service.GetViews();
+            IEnumerable<AccountView> expected = context
+                .Set<Account>()
+                .Project()
+                .To<AccountView>()
+                .OrderByDescending(account => account.EntityDate);
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: GetView<TView>(String id)
+
+        [Test]
+        public void GetView_GetsViewById()
+        {
+            Account account = context.Set<Account>().SingleOrDefault(model => model.Id == accountId);
+            AccountView expected = Mapper.Map<Account, AccountView>(account);
+            AccountView actual = service.GetView<AccountView>(accountId);
+
+            TestHelper.PropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Register(AccountView account)
+
+        [Test]
+        public void Register_CreatesAccount()
         {
             TearDownData();
 
             AccountView expected = ObjectFactory.CreateAccountView();
-            Role role = ObjectFactory.CreateRole();
-            context.Set<Role>().Add(role);
-            context.SaveChanges();
-
-            service.Create(expected);
+            service.Register(expected);
 
             Account actual = context.Set<Account>().SingleOrDefault(account => account.Id == expected.Id);
 
             Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.RoleId);
+        }
+
+        #endregion
+
+        #region Method: Edit(ProfileEditView profile)
+
+        [Test]
+        public void Edit_EditsProfile()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            Account expected = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId);
+            profile.Username += "1";
+            service.Edit(profile);
+
+            Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId);
+
+            Assert.AreEqual(hasher.HashPassword(profile.NewPassword), actual.Passhash);
+            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.Email, actual.Email);
+        }
+
+        [Test]
+        public void Edit_LeavesCurrentPasswordAfterEditing()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.NewPassword = null;
+            service.Edit(profile);
+
+            Account actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId);
+
+            Assert.IsTrue(hasher.Verify(profile.Password, actual.Passhash));
+        }
+
+        [Test]
+        public void Edit_LeavesCurrentRoleAfterEditing()
+        {
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Username += "New username";
+            service.Edit(profile);
+
+            String actual = context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId).RoleId;
+            String expected = accountId;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -398,6 +762,86 @@ namespace Template.Tests.Unit.Services
             Assert.AreEqual(expected, actual);
         }
 
+
+        #endregion
+
+        #region Method: Delete(String id)
+
+        [Test]
+        public void Delete_DeletesAccount()
+        {
+            if (context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId) == null)
+                Assert.Inconclusive();
+
+            service.Delete(accountId);
+
+            Assert.IsNull(context.Set<Account>().SingleOrDefault(acc => acc.Id == accountId));
+        }
+
+        #endregion
+
+        #region Method: Login(String accountId)
+
+        [Test]
+        public void Login_CreatesCookieForAMonth()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+
+            DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
+            DateTime expected = DateTime.Now.AddMonths(1).Date;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Login_CreatesPersistentCookie()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+
+            Assert.IsTrue(ticket.IsPersistent);
+        }
+
+        [Test]
+        public void Login_CreatesCookieWithoutClientSideAccess()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+
+            Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
+        }
+
+        [Test]
+        public void Login_SetAccountIdAsCookieValue()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+            String expected = account.Id;
+            String actual = ticket.Name;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Logout()
+
+        [Test]
+        public void Logout_MakesAccountCookieExpired()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+            service.Logout();
+
+            DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;
+
+            Assert.That(cookieExpirationDate, Is.LessThan(DateTime.Now));
+        }
 
         #endregion
 

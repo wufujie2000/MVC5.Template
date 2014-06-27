@@ -4,13 +4,13 @@
 {
     using (Html.FormGroup())
     {
-        @Html.NotRequiredLabelFor(model => model.Username)
+        @Html.FormLabelFor(model => model.Username)
         @Html.FormTextBoxFor(model => model.Username)
         @Html.FormValidationFor(model => model.Username)
     }
     using (Html.FormGroup())
     {
-        @Html.NotRequiredLabelFor(model => model.Email)
+        @Html.FormLabelFor(model => model.Email)
         @Html.FormTextBoxFor(model => model.Email)
         @Html.FormValidationFor(model => model.Email)
     }
@@ -19,7 +19,7 @@
     }
     using (Html.FormGroup())
     {
-        @Html.NotRequiredLabelFor(model => model.RoleName)
+        @Html.FormLabelFor(model => model.RoleName)
         @Html.FormTextBoxFor(model => model.RoleName)
     }
 }

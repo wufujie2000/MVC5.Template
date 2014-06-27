@@ -48,36 +48,23 @@ namespace Template.Components.Extensions.Html
             return html.Submit(Resources.Shared.Resources.Submit);
         }
 
-        public static MvcHtmlString NotRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
-        {
-            TagBuilder label = new TagBuilder("label");
-            label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
-            label.AddCssClass(LabelClass);
-
-            return new MvcHtmlString(label.ToString());
-        }
-        public static MvcHtmlString RequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
-        {
-            TagBuilder label = new TagBuilder("label");
-            label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression);
-            label.AddCssClass(LabelClass);
-
-            TagBuilder requiredSpan = new TagBuilder("span");
-            requiredSpan.AddCssClass("required");
-            requiredSpan.InnerHtml = " *";
-
-            label.InnerHtml += requiredSpan.ToString();
-
-            return new MvcHtmlString(label.ToString());
-        }
         public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
+            TagBuilder label = new TagBuilder("label");
             if (expression.IsRequired())
-                return html.RequiredLabelFor(expression);
+            {
+                TagBuilder requiredSpan = new TagBuilder("span");
+                requiredSpan.AddCssClass("required");
+                requiredSpan.InnerHtml = " *";
 
-            return html.NotRequiredLabelFor(expression);
+                label.InnerHtml = requiredSpan.ToString();
+            }
+
+            label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + label.InnerHtml;
+            label.AddCssClass(LabelClass);
+            
+            return new MvcHtmlString(label.ToString());
         }
         public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
         {

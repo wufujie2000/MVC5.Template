@@ -122,40 +122,6 @@ namespace Template.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: NotRequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
-
-        [Test]
-        public void NotRequiredLabelFor_FormsNotRequiredLabelFor()
-        {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
-
-            String actual = html.NotRequiredLabelFor(expression).ToString();
-            String expected = String.Format("<label class=\"{0}\" for=\"{1}\"></label>",
-                BootstrapExtensions.LabelClass,
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Extension method: RequiredLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
-
-        [Test]
-        public void BootstrapRequiredLabelFor_FormsRequiredLabelFor()
-        {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.NotRequired;
-
-            String actual = html.RequiredLabelFor(expression).ToString();
-            String expected = String.Format("<label class=\"{0}\" for=\"{1}\"><span class=\"required\"> *</span></label>",
-                BootstrapExtensions.LabelClass,
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
         #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]

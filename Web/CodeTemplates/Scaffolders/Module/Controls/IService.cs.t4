@@ -1,14 +1,18 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
 using System;
+using System.Collections.Generic;
 using Template.Objects;
 
 namespace Template.Services
 {
-    public interface <#= Model.Name #> : IGenericService<<#= Model.View #>>
+    public interface <#= Model.Name #> : IService
     {
         Boolean CanCreate(<#= Model.View #> view);
         Boolean CanEdit(<#= Model.View #> view);
+
+        IEnumerable<<#= Model.View #>> GetViews();
+        <#= Model.View #> GetView(String id);
 
         void Create(<#= Model.View #> view);
         void Edit(<#= Model.View #> view);

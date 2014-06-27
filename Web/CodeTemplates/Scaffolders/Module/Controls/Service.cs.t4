@@ -1,12 +1,14 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Template.Data.Core;
 using Template.Objects;
 
 namespace Template.Services
 {
-    public class <#= Model.Name #> : GenericService<<#= Model.Model #>, <#= Model.View #>>, <#= Model.Interface #>
+    public class <#= Model.Name #> : BaseService, <#= Model.Interface #>
     {
         public <#= Model.Name #>(IUnitOfWork unitOfWork)
             : base(unitOfWork)
@@ -20,6 +22,18 @@ namespace Template.Services
         public Boolean CanEdit(<#= Model.View #> view)
         {
             return ModelState.IsValid;
+        }
+
+        public IEnumerable<<#= Model.View #>> GetViews()
+        {
+            return UnitOfWork
+                .Repository<<#= Model.Model #>>()
+                .Query<<#= Model.View #>>()
+                .OrderByDescending(view => view.EntityDate);
+        }
+        public <#= Model.View #> GetView(String id)
+        {
+            return UnitOfWork.Repository<<#= Model.Model #>>().GetById<<#= Model.View #>>(id);
         }
 
         public virtual void Create(<#= Model.View #> view)

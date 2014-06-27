@@ -1,12 +1,16 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Template.Data.Core;
 using Template.Objects;
 using Template.Services;
 using Template.Tests.Data;
+using Template.Tests.Helpers;
 
 namespace Template.Tests.Unit.Services
 {
@@ -14,8 +18,8 @@ namespace Template.Tests.Unit.Services
     public class <#= Model.Name #>
     {
         private <#= Model.Service #> service;
-        private Context context;
         private <#= Model.Model #> <#= Model.ModelName #>;
+        private Context context;
 
         [SetUp]
         public void SetUp()
@@ -67,6 +71,37 @@ namespace Template.Tests.Unit.Services
         public void CanEdit_CanEditValid<#= Model.Model #>()
         {
             Assert.IsTrue(service.CanEdit(new <#= Model.View #>()));
+        }
+
+        #endregion
+
+        #region Method: GetViews()
+
+        [Test]
+        public void GetViews_Gets<#= Model.View #>s()
+        {
+            IEnumerable<<#= Model.View #>> actual = service.GetViews();
+            IEnumerable<<#= Model.View #>> expected = context
+                .Set<<#= Model.Model #>>()
+                .Project()
+                .To<<#= Model.View #>>()
+                .OrderByDescending(view => view.EntityDate);
+
+            TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: GetView(String id)
+
+        [Test]
+        public void GetView_GetsViewById()
+        {
+            <#= Model.Model #> modelInDatabase = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id);
+            <#= Model.View #> expected = Mapper.Map<<#= Model.Model #>, <#= Model.View #>>(modelInDatabase);
+            <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion

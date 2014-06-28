@@ -61,7 +61,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .AddProperty(property)
                 .Css("date-cell");
         }
-        public static IGridColumn<T> AddProperty<T, TKey>(this IGridColumnCollection<T> column, Expression<Func<T, TKey>> property)
+        public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
         {
             return column
                 .Add(property)
@@ -75,6 +75,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .SetLanguage(CultureInfo.CurrentCulture.Name)
                 .Named(typeof(T).Name)
                 .WithMultipleFilters()
+                .Selectable(false)
                 .WithPaging(15)
                 .Filterable()
                 .Sortable();

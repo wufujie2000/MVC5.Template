@@ -41,13 +41,6 @@
     };
 }());
 
-// GridMvc configuration
-(function () {
-    // Removing row selection feature
-    if (typeof GridMvc !== 'undefined')
-        GridMvc.prototype.markRowSelected = function () { };
-}());
-
 // Datepicker binding
 (function () {
     $(".datepicker").each(function () {

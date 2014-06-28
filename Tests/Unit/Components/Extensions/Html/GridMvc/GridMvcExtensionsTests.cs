@@ -269,7 +269,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddProperty<T, TKey>(this IGridColumnCollection<T> column, Expression<Func<T, TKey>> property)
+        #region Extension method: AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
 
         [Test]
         public void AddProperty_AddsGridColumn()
@@ -326,6 +326,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
+        public void ApplyAttributes_DisablesRowSelection()
+        {
+            gridHtmlOptions.ApplyAttributes();
+
+            gridHtmlOptionsMock.Verify(mock => mock.Selectable(false), Times.Once());
+        }
+
+        [Test]
         public void ApplyAttributes_SetsPagingStepTo15()
         {
             gridHtmlOptions.ApplyAttributes();
@@ -374,6 +382,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             options.Setup(mock => mock.EmptyText(It.IsAny<String>())).Returns(options.Object);
             options.Setup(mock => mock.Named(It.IsAny<String>())).Returns(options.Object);
             options.Setup(mock => mock.WithMultipleFilters()).Returns(options.Object);
+            options.Setup(mock => mock.Selectable(false)).Returns(options.Object);
             options.Setup(mock => mock.Filterable()).Returns(options.Object);
             options.Setup(mock => mock.Sortable()).Returns(options.Object);
 

@@ -22,6 +22,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             {
                 NotRequired = "NotRequired",
                 Required = "Required",
+                NotReadOnly = "Not",
+                ReadOnlyFalse = "F",
+                ReadOnlyTrue = "T",
                 Date = DateTime.Now,
                 Number = 10.7854M,
                 Relation = new BootstrapModel()
@@ -29,6 +32,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     NotRequired = "NotRequiredRelation",
                     Date = new DateTime(2011, 01, 01),
                     Required = "RequiredRelation",
+                    NotReadOnly = "NotRelation",
+                    ReadOnlyFalse = "FRelation",
+                    ReadOnlyTrue = "TRelation",
                     Number = 1.6666M,
                 }
             };
@@ -127,8 +133,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormLabelFor_OnNonMemberExpressionThrows()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Method();
-
             Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(model => model.Method()), "Expression must be a member expression");
         }
 
@@ -218,6 +222,72 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
                 bootstrapModel.Relation.NotRequired);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FormTextBoxFor_DoesNotOverwriteReadOnlyAttribute()
+        {
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.ReadOnlyTrue;
+
+            String actual = html.FormTextBoxFor(expression, null, new { @readonly = "false" }).ToString();
+            String expected = String.Format("<div class=\"{0}\"><input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" readonly=\"false\" type=\"text\" value=\"{3}\" /></div>",
+                BootstrapExtensions.ContentClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.ReadOnlyTrue);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FormTextBoxFor_OnNonMemberExpressionThrows()
+        {
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(model => model.Method()), "Expression must be a member expression");
+        }
+
+        [Test]
+        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeWithoutReadOnlyAttribute()
+        {
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.NotReadOnly;
+
+            String actual = html.FormTextBoxFor(expression).ToString();
+            String expected = String.Format("<div class=\"{0}\"><input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"text\" value=\"{3}\" /></div>",
+                BootstrapExtensions.ContentClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.NotReadOnly);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeWithReadOnlyAttributeBeingFalse()
+        {
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.ReadOnlyFalse;
+
+            String actual = html.FormTextBoxFor(expression).ToString();
+            String expected = String.Format("<div class=\"{0}\"><input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"text\" value=\"{3}\" /></div>",
+                BootstrapExtensions.ContentClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.ReadOnlyFalse);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FormTextBoxFor_AddsReadOnlyAttributeWithReadOnlyAttributeBeingTrue()
+        {
+            Expression<Func<BootstrapModel, String>> expression = (model) => model.ReadOnlyTrue;
+
+            String actual = html.FormTextBoxFor(expression).ToString();
+            String expected = String.Format("<div class=\"{0}\"><input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" readonly=\"readonly\" type=\"text\" value=\"{3}\" /></div>",
+                BootstrapExtensions.ContentClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                bootstrapModel.ReadOnlyTrue);
 
             Assert.AreEqual(expected, actual);
         }

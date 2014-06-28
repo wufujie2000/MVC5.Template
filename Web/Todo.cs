@@ -2,9 +2,7 @@
 {
     internal sealed class Todo
     {
-        // TODO: Disable autocomplete from password fields, exept login
         // TODO: Add password recovery functionality
-        // TODO: Make attributed or special input fields not editable by css/js
         // TODO: Add protection from registering two accounts with the same username/email at the same time
         // TODO: Make services and other program module naming consistent with one another
         // TODO: Rename tests, to more readable form

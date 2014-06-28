@@ -1,4 +1,5 @@
 ﻿@{
+    IEnumerable<String> errors = ViewData.ModelState.SelectMany(state => state.Value.Errors).Select(error => error.ErrorMessage);
     MessagesContainer messages = Session["Messages"] as MessagesContainer;
     Session["Messages"] = null;
 }
@@ -19,5 +20,16 @@
                 </div>
             </div>
         }
+    }
+    @foreach (String errorMessage in errors)
+    {
+        <div class="alert alert-@AlertMessageType.Danger.ToString().ToLowerInvariant()">
+            <div class="alert-text">
+                <span>@errorMessage</span>
+            </div>
+            <div class="alert-close">
+                <a class="close" href="#">×</a>
+            </div>
+        </div>
     }
 </div>

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Web.Mvc;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public class FormWrapper : IDisposable
     {

@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Mvc;
+using NUnit.Framework;
 using System;
 using System.Collections.Specialized;
 using System.Web.Mvc;
-using Template.Components.Mvc;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class TrimmingModelBinderTests

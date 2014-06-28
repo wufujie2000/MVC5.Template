@@ -7,8 +7,8 @@
     <ProjectGuid>{8531B9AE-C8C5-4B73-A0CE-B9CDFAD69074}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template.Controllers</RootNamespace>
-    <AssemblyName>Template.Controllers</AssemblyName>
+    <RootNamespace>MvcTemplate.Controllers</RootNamespace>
+    <AssemblyName>MvcTemplate.Controllers</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -55,9 +55,9 @@
     <Compile Include="ServicedController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Template\Template.csproj">
+    <ProjectReference Include="..\..\MvcTemplate\MvcTemplate.csproj">
       <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
-      <Name>Template</Name>
+      <Name>MvcTemplate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>

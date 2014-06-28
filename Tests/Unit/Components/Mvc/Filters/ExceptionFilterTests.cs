@@ -1,11 +1,11 @@
 ﻿using Moq;
+using MvcTemplate.Components.Logging;
+using MvcTemplate.Components.Mvc;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
-using Template.Components.Logging;
-using Template.Components.Mvc;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class ExceptionFilterTests

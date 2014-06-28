@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MvcTemplate.Data.Mapping;
+using MvcTemplate.Objects;
+using System;
 using System.Collections;
 using System.Data.Entity;
-using Template.Data.Mapping;
-using Template.Objects;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public class Context : AContext
     {

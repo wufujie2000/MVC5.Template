@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Template.Tests.Helpers
+namespace MvcTemplate.Tests.Helpers
 {
     public static class TestHelper
     {

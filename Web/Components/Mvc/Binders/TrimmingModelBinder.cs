@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class TrimmingModelBinder : IModelBinder
     {

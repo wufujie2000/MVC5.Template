@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Web;
 using System.Web.Routing;
-using Template.Objects;
-using Template.Resources;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Resources.Tests
+namespace MvcTemplate.Tests.Resources.Tests
 {
     [TestFixture]
     public class ResourceProviderTests
@@ -34,7 +34,7 @@ namespace Template.Tests.Resources.Tests
             routeValues["area"] = "Administration";
             routeValues["controller"] = "Roles";
 
-            String expected = Template.Resources.Form.Titles.AdministrationRoles;
+            String expected = MvcTemplate.Resources.Form.Titles.AdministrationRoles;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -46,7 +46,7 @@ namespace Template.Tests.Resources.Tests
             routeValues["area"] = null;
             routeValues["controller"] = "Profile";
 
-            String expected = Template.Resources.Form.Titles.Profile;
+            String expected = MvcTemplate.Resources.Form.Titles.Profile;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -69,7 +69,7 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Roles";
             routeValues["action"] = "Index";
 
-            String expected = Template.Resources.Table.Titles.AdministrationRolesIndex;
+            String expected = MvcTemplate.Resources.Table.Titles.AdministrationRolesIndex;
             String actual = ResourceProvider.GetCurrentTableTitle();
 
             Assert.AreEqual(expected, actual);
@@ -99,7 +99,7 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Roles";
             routeValues["action"] = "Edit";
 
-            String expected = Template.Resources.Content.Titles.AdministrationRolesEdit;
+            String expected = MvcTemplate.Resources.Content.Titles.AdministrationRolesEdit;
             String actual = ResourceProvider.GetCurrentContentTitle();
 
             Assert.AreEqual(expected, actual);
@@ -112,7 +112,7 @@ namespace Template.Tests.Resources.Tests
             routeValues["controller"] = "Profile";
             routeValues["action"] = "Delete";
 
-            String expected = Template.Resources.Content.Titles.ProfileDelete;
+            String expected = MvcTemplate.Resources.Content.Titles.ProfileDelete;
             String actual = ResourceProvider.GetCurrentContentTitle();
 
             Assert.AreEqual(expected, actual);
@@ -131,7 +131,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetActionTitle_GetsTitle()
         {
-            String expected = Template.Resources.Action.Titles.Create;
+            String expected = MvcTemplate.Resources.Action.Titles.Create;
             String actual = ResourceProvider.GetActionTitle("Create");
 
             Assert.AreEqual(expected, actual);
@@ -150,7 +150,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetDatalistTitle_GetsTitle()
         {
-            String expected = Template.Resources.Datalist.Titles.Role;
+            String expected = MvcTemplate.Resources.Datalist.Titles.Role;
             String actual = ResourceProvider.GetDatalistTitle<Role>();
 
             Assert.AreEqual(expected, actual);
@@ -169,7 +169,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeAreaTitle_GetsTitle()
         {
-            String expected = Template.Resources.Privilege.Area.Titles.Administration;
+            String expected = MvcTemplate.Resources.Privilege.Area.Titles.Administration;
             String actual = ResourceProvider.GetPrivilegeAreaTitle("Administration");
 
             Assert.AreEqual(expected, actual);
@@ -188,7 +188,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeControllerTitle_GetsTitle()
         {
-            String expected = Template.Resources.Privilege.Controller.Titles.Roles;
+            String expected = MvcTemplate.Resources.Privilege.Controller.Titles.Roles;
             String actual = ResourceProvider.GetPrivilegeControllerTitle("Roles");
 
             Assert.AreEqual(expected, actual);
@@ -207,7 +207,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPrivilegeActionTitle_GetsTitle()
         {
-            String expected = Template.Resources.Privilege.Action.Titles.Index;
+            String expected = MvcTemplate.Resources.Privilege.Action.Titles.Index;
             String actual = ResourceProvider.GetPrivilegeActionTitle("Index");
 
             Assert.AreEqual(expected, actual);
@@ -226,7 +226,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetMenuTitle_GetsTitle()
         {
-            String expected = Template.Resources.SiteMap.Titles.AdministrationRolesIndex;
+            String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
             String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
 
             Assert.AreEqual(expected, actual);
@@ -235,7 +235,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
         {
-            String expected = Template.Resources.SiteMap.Titles.Administration;
+            String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
             String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
 
             Assert.AreEqual(expected, actual);
@@ -254,7 +254,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
-            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Username);
 
             Assert.AreEqual(expected, actual);
@@ -289,7 +289,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitle()
         {
-            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "Username");
 
             Assert.AreEqual(expected, actual);
@@ -298,7 +298,7 @@ namespace Template.Tests.Resources.Tests
         [Test]
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
-            String expected = Template.Resources.Views.AccountView.Titles.Username;
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountUsername");
 
             Assert.AreEqual(expected, actual);

@@ -1,12 +1,12 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public class <#= Model.Name #> : BaseService, <#= Model.Interface #>
     {

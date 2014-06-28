@@ -1,6 +1,6 @@
 ﻿using System.Web.Optimization;
 
-namespace Template.Web
+namespace MvcTemplate.Web
 {
     public class BundleConfig
     {

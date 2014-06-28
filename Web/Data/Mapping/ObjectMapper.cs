@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Template.Objects;
+using MvcTemplate.Objects;
 
-namespace Template.Data.Mapping
+namespace MvcTemplate.Data.Mapping
 {
     public static class ObjectMapper
     {

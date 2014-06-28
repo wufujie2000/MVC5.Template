@@ -3,7 +3,7 @@
 @using (Html.BeginForm())
 {
     @Html.Partial("_AlertMessages")
-    
+
     @Html.AntiForgeryToken()
     using (Html.InputGroup())
     {
@@ -20,9 +20,9 @@
     using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
     {
         <div class="left-panel">
-            @Html.ActionLink(Template.Resources.Views.AccountView.Texts.CreateNewAccount, "Register")
+            @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount, "Register")
         </div>
-        @Html.Submit(Template.Resources.Shared.Resources.Login)
+        @Html.Submit(MvcTemplate.Resources.Shared.Resources.Login)
     }
     <script>
         var currentLanguage = '@Request.RequestContext.RouteData.Values["language"].ToString()';

@@ -1,8 +1,8 @@
-﻿using System.Web.Mvc;
-using Template.Controllers;
-using Template.Services;
+﻿using MvcTemplate.Controllers;
+using MvcTemplate.Services;
+using System.Web.Mvc;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class ServicedControllerStub : ServicedController<IService>
     {

@@ -1,4 +1,4 @@
-namespace Template.Tests.Data.Migrations
+namespace MvcTemplate.Tests.Data.Migrations
 {
     using System.Data.Entity.Migrations;
     using System.Diagnostics.CodeAnalysis;

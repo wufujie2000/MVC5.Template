@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace Template.Controllers.Administration
+namespace MvcTemplate.Controllers.Administration
 {
     public class AdministrationAreaRegistration : AreaRegistration
     {
@@ -21,7 +21,7 @@ namespace Template.Controllers.Administration
                     "{language}/Administration/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt-LT" },
-                    new[] { "Template.Controllers.Administration" });
+                    new[] { "MvcTemplate.Controllers.Administration" });
 
             context
                 .MapRoute(
@@ -29,7 +29,7 @@ namespace Template.Controllers.Administration
                     "Administration/{controller}/{action}/{id}",
                     new { language = "en-GB", area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "en-GB" },
-                    new[] { "Template.Controllers.Administration" });
+                    new[] { "MvcTemplate.Controllers.Administration" });
         }
     }
 }

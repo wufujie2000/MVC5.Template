@@ -3,10 +3,10 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("Template.Web")]
-[assembly: AssemblyProduct("Template.Web")]
+[assembly: AssemblyTitle("MvcTemplate.Web")]
+[assembly: AssemblyProduct("MvcTemplate.Web")]
 [assembly: AssemblyCompany("NonFactors")]
-[assembly: AssemblyCopyright("Copyright © NonFactors 2014")]
+[assembly: AssemblyCopyright("Copyright © NonFactors")]
 [assembly: NeutralResourcesLanguageAttribute("en")]
 [assembly: AssemblyFileVersion("0.9.4.0")]
 [assembly: AssemblyVersion("0.9.4.0")]

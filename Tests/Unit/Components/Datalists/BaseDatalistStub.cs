@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MvcTemplate.Components.Datalists;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using System;
 using System.Linq;
 using System.Reflection;
-using Template.Components.Datalists;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Tests.Unit.Components.Datalists
+namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
     public class BaseDatalistStub<TModel, TView> : BaseDatalist<TModel, TView>
         where TModel : BaseModel

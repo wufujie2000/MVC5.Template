@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Template.Data.Core;
-using Template.Objects;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using NUnit.Framework;
 
-namespace Template.Tests.Unit.Data.Core
+namespace MvcTemplate.Tests.Unit.Data.Core
 {
     [TestFixture]
     public class ContextTests

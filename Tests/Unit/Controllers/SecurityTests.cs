@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class SecurityTests
@@ -15,7 +15,7 @@ namespace Template.Tests.Unit.Controllers
         public void AllControllerPostMethods_HasValidateAntiForgeryToken()
         {
             IEnumerable<MethodInfo> postMethods = Assembly
-                .Load("Template.Controllers")
+                .Load("MvcTemplate.Controllers")
                 .GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods())

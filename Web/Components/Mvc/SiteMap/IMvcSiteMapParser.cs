@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public interface IMvcSiteMapParser
     {

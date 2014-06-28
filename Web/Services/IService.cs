@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MvcTemplate.Components.Alerts;
+using System;
 using System.Web.Mvc;
-using Template.Components.Alerts;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public interface IService : IDisposable
     {

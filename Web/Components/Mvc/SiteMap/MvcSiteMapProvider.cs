@@ -1,12 +1,12 @@
-﻿using System;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
-using Template.Components.Security;
-using Template.Resources;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {

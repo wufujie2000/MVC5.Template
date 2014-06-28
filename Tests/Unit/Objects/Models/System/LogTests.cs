@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Objects;
+using NUnit.Framework;
 using System;
-using Template.Objects;
 
-namespace Template.Tests.Unit.Objects.Models
+namespace MvcTemplate.Tests.Unit.Objects.Models
 {
     [TestFixture]
     public class LogTests

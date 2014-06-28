@@ -1,9 +1,9 @@
 ﻿using Moq;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Services;
 using NUnit.Framework;
-using Template.Data.Core;
-using Template.Services;
 
-namespace Template.Tests.Unit.Services
+namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
     public class BaseServiceTests

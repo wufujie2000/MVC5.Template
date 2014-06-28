@@ -1,18 +1,18 @@
 ﻿using Datalist;
 using Moq;
+using MvcTemplate.Components.Datalists;
+using MvcTemplate.Controllers.Datalist;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Datalists;
-using Template.Controllers.Datalist;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Datalist
+namespace MvcTemplate.Tests.Unit.Controllers.Datalist
 {
     [TestFixture]
     public class DatalistControllerTests

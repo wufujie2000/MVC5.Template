@@ -1,8 +1,8 @@
 ﻿using Datalist;
+using MvcTemplate.Objects;
 using System;
-using Template.Objects;
 
-namespace Template.Tests.Unit.Components.Datalists
+namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
     public class DatalistView : BaseView
     {

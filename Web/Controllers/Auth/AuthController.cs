@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Services;
+using System;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using Template.Services;
 
-namespace Template.Controllers.Auth
+namespace MvcTemplate.Controllers.Auth
 {
     [AllowAnonymous]
     public class AuthController : ServicedController<IAccountsService>

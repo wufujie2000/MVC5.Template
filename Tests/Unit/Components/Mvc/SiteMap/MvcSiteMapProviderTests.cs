@@ -1,4 +1,8 @@
 ﻿using Moq;
+using MvcTemplate.Components.Mvc;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -7,12 +11,8 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Xml.Linq;
-using Template.Components.Mvc;
-using Template.Components.Security;
-using Template.Resources;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class MvcSiteMapProviderTests
@@ -95,7 +95,7 @@ namespace Template.Tests.Unit.Components.Mvc
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap)).Skip(1).Take(2).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = TreeToEnumerable(provider.GetMenus()).GetEnumerator();
-            
+
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.AreEqual(ResourceProvider.GetSiteMapTitle(expected.Current.Area, expected.Current.Controller, expected.Current.Action), actual.Current.Title);
@@ -178,7 +178,7 @@ namespace Template.Tests.Unit.Components.Mvc
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
-            String expected = Template.Resources.SiteMap.Titles.HomeIndex;
+            String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
             String actual = provider.GetMenus().First().Title;
 
             Assert.AreEqual(expected, actual);
@@ -210,7 +210,7 @@ namespace Template.Tests.Unit.Components.Mvc
             HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = null;
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
-            String expected = Template.Resources.SiteMap.Titles.HomeIndex;
+            String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
             String actual = provider.GetBreadcrumb().First().Title;
 
             Assert.AreEqual(expected, actual);

@@ -1,8 +1,8 @@
 ﻿using Moq;
+using MvcTemplate.Components.Security;
 using NUnit.Framework;
-using Template.Components.Security;
 
-namespace Template.Tests.Unit.Security
+namespace MvcTemplate.Tests.Unit.Security
 {
     [TestFixture]
     public class RoleFactoryTests

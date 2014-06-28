@@ -1,16 +1,16 @@
 ﻿using Moq;
 using Moq.Protected;
+using MvcTemplate.Controllers.Administration;
+using MvcTemplate.Objects;
+using MvcTemplate.Services;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Controllers.Administration;
-using Template.Objects;
-using Template.Services;
 
-namespace Template.Tests.Unit.Controllers.Administration
+namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
     [TestFixture]
     public class RolesControllerTests

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Data.Core;
+using System;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Data.Core;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public abstract class BaseService : IService
     {

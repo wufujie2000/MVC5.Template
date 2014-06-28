@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Template.Objects
+namespace MvcTemplate.Objects
 {
     public class ProfileEditView : BaseView
     {

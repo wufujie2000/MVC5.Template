@@ -1,6 +1,14 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Moq;
+using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,16 +16,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Template.Components.Alerts;
-using Template.Components.Security;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using Template.Services;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Services
+namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
     public class AccountsServiceTests

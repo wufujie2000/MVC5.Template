@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
-namespace Template.Components.Logging
+namespace MvcTemplate.Components.Logging
 {
     public class LoggableEntryProperty
     {

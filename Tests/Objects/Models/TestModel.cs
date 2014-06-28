@@ -1,7 +1,7 @@
-﻿using System;
-using Template.Objects;
+﻿using MvcTemplate.Objects;
+using System;
 
-namespace Template.Tests.Objects
+namespace MvcTemplate.Tests.Objects
 {
     public class TestModel : BaseModel
     {

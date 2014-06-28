@@ -1,14 +1,14 @@
 ﻿using AutoMapper.QueryableExtensions;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Data.Core
+namespace MvcTemplate.Tests.Unit.Data.Core
 {
     [TestFixture]
     public class RepositoryTests

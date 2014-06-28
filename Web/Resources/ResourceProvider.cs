@@ -6,7 +6,7 @@ using System.Resources;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Template.Resources
+namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
@@ -42,43 +42,43 @@ namespace Template.Resources
         public static String GetCurrentFormTitle()
         {
             String key = String.Format("{0}{1}", CurrentArea, CurrentController);
-            return GetResourceFrom("Template.Resources.Form.Titles", key);
+            return GetResourceFrom("MvcTemplate.Resources.Form.Titles", key);
         }
         public static String GetCurrentTableTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
-            return GetResourceFrom("Template.Resources.Table.Titles", key);
+            return GetResourceFrom("MvcTemplate.Resources.Table.Titles", key);
         }
         public static String GetCurrentContentTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
-            return GetResourceFrom("Template.Resources.Content.Titles", key);
+            return GetResourceFrom("MvcTemplate.Resources.Content.Titles", key);
         }
 
         public static String GetActionTitle(String action)
         {
-            return GetResourceFrom("Template.Resources.Action.Titles", action);
+            return GetResourceFrom("MvcTemplate.Resources.Action.Titles", action);
         }
         public static String GetDatalistTitle<TModel>() where TModel : class
         {
-            return GetResourceFrom("Template.Resources.Datalist.Titles", typeof(TModel).Name);
+            return GetResourceFrom("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
         }
         public static String GetPrivilegeAreaTitle(String area)
         {
-            return GetResourceFrom("Template.Resources.Privilege.Area.Titles", area);
+            return GetResourceFrom("MvcTemplate.Resources.Privilege.Area.Titles", area);
         }
         public static String GetPrivilegeActionTitle(String action)
         {
-            return GetResourceFrom("Template.Resources.Privilege.Action.Titles", action);
+            return GetResourceFrom("MvcTemplate.Resources.Privilege.Action.Titles", action);
         }
         public static String GetPrivilegeControllerTitle(String controller)
         {
-            return GetResourceFrom("Template.Resources.Privilege.Controller.Titles", controller);
+            return GetResourceFrom("MvcTemplate.Resources.Privilege.Controller.Titles", controller);
         }
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);
-            return GetResourceFrom("Template.Resources.SiteMap.Titles", key);
+            return GetResourceFrom("MvcTemplate.Resources.SiteMap.Titles", key);
         }
 
         public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
@@ -94,7 +94,7 @@ namespace Template.Resources
 
         private static String GetPropertyTitle(String viewTypeName, String propertyName)
         {
-            String baseName = String.Format("Template.Resources.Views.{0}.Titles", viewTypeName);
+            String baseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", viewTypeName);
             String title = GetResourceFrom(baseName, propertyName);
             if (title == null)
             {

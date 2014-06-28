@@ -1,19 +1,19 @@
 ﻿using Moq;
 using Moq.Protected;
+using MvcTemplate.Components.Alerts;
+using MvcTemplate.Controllers.Auth;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Components.Alerts;
-using Template.Controllers.Auth;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using Template.Services;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Auth
+namespace MvcTemplate.Tests.Unit.Controllers.Auth
 {
     [TestFixture]
     public class AuthControllerTests

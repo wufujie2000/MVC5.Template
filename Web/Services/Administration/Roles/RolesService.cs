@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Extensions.Mvc;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using MvcTemplate.Resources.Views.RoleView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Components.Extensions.Html;
-using Template.Components.Extensions.Mvc;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources;
-using Template.Resources.Views.RoleView;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public class RolesService : BaseService, IRolesService
     {

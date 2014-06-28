@@ -1,4 +1,4 @@
-﻿namespace Template.Components.Mvc
+﻿namespace MvcTemplate.Components.Mvc
 {
     public interface IMvcSiteMapProvider
     {

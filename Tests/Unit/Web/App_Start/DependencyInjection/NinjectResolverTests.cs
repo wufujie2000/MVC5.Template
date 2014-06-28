@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Web.DependencyInjection;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using Template.Data.Core;
-using Template.Web.DependencyInjection;
 
-namespace Template.Tests.Unit.Web.DependencyInjection
+namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
     public class NinjectResolverTests

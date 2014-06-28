@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using Template.Components.Mvc;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class MvcSiteMapParserTests

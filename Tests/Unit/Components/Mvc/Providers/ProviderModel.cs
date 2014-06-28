@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class ProviderModel
     {

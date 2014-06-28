@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MvcTemplate.Components.Security;
+using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Components.Security;
 
-namespace Template.Controllers
+namespace MvcTemplate.Controllers
 {
     [Authorize]
     public abstract class BaseController : Controller

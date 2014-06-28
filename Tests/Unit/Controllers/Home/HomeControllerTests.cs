@@ -1,16 +1,16 @@
 ﻿using Moq;
+using MvcTemplate.Components.Alerts;
+using MvcTemplate.Controllers.Home;
+using MvcTemplate.Resources.Shared;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Controllers.Home;
-using Template.Resources.Shared;
-using Template.Services;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Home
+namespace MvcTemplate.Tests.Unit.Controllers.Home
 {
     [TestFixture]
     public class HomeControllerTests

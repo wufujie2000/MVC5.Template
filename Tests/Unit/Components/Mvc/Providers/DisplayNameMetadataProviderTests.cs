@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using NUnit.Framework;
 using System;
-using Template.Components.Mvc;
-using Template.Objects;
-using Template.Resources;
 
-namespace Template.Tests.Components.Mvc
+namespace MvcTemplate.Tests.Components.Mvc
 {
     [TestFixture]
     public class DisplayNameMetadataProviderTests

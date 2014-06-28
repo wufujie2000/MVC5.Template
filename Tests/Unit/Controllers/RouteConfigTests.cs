@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Controllers;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Controllers;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class RouteConfigTests
@@ -33,7 +33,7 @@ namespace Template.Tests.Unit.Controllers
             RouteConfig.RegisterRoutes(routes);
             Route actual = routes["Default"] as Route;
 
-            CollectionAssert.AreEqual(new[] { "Template.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual("en-GB", actual.Constraints["language"]);
@@ -50,7 +50,7 @@ namespace Template.Tests.Unit.Controllers
             RouteConfig.RegisterRoutes(routes);
             Route actual = routes["DefaultMultilingual"] as Route;
 
-            CollectionAssert.AreEqual(new[] { "Template.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("lt-LT", actual.Constraints["language"]);

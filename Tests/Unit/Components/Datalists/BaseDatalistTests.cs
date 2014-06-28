@@ -1,16 +1,16 @@
 ﻿using Datalist;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Datalists
+namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
     [TestFixture]
     public class BaseDatalistTests

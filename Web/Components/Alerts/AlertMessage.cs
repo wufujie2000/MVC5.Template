@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Alerts
+namespace MvcTemplate.Components.Alerts
 {
     public class AlertMessage
     {

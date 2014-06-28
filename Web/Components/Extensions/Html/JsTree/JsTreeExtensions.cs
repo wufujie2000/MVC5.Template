@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Web.Mvc;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public static class JsTreeExtensions
     {

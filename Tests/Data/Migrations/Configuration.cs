@@ -1,10 +1,10 @@
-namespace Template.Tests.Data.Migrations
+namespace MvcTemplate.Tests.Data.Migrations
 {
+    using MvcTemplate.Tests.Data;
+    using MvcTemplate.Tests.Objects;
     using System;
     using System.Data.Entity.Migrations;
     using System.Diagnostics.CodeAnalysis;
-    using Template.Tests.Data;
-    using Template.Tests.Objects;
 
     [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<TestingContext>
@@ -12,7 +12,7 @@ namespace Template.Tests.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "Template.Tests.Data";
+            ContextKey = "MvcTemplate.Tests.Data";
         }
 
         protected override void Seed(TestingContext context)

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using System;
 using System.Web;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Components.Logging
+namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {

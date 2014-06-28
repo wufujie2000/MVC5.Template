@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers;
+using MvcTemplate.Web.DependencyInjection;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
@@ -7,12 +11,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Template.Components.Mvc;
-using Template.Components.Security;
-using Template.Controllers;
-using Template.Web.DependencyInjection;
 
-namespace Template.Web
+namespace MvcTemplate.Web
 {
     public class MvcApplication : HttpApplication
     {

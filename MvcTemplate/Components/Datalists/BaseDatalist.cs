@@ -1,13 +1,13 @@
 ﻿using Datalist;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources;
 
-namespace Template.Components.Datalists
+namespace MvcTemplate.Components.Datalists
 {
     public class BaseDatalist<TModel, TView> : GenericDatalist<TView>
         where TModel : BaseModel

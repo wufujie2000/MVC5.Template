@@ -1,9 +1,9 @@
 ﻿using Moq;
+using MvcTemplate.Objects;
 using NUnit.Framework;
 using System;
-using Template.Objects;
 
-namespace Template.Tests.Unit.Objects
+namespace MvcTemplate.Tests.Unit.Objects
 {
     [TestFixture]
     public class BaseViewTests

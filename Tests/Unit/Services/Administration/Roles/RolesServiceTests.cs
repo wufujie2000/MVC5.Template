@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Moq;
+using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using MvcTemplate.Resources.Views.RoleView;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Extensions.Html;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources;
-using Template.Resources.Views.RoleView;
-using Template.Services;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Services
+namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
     public class RolesServiceTests
@@ -382,7 +382,7 @@ namespace Template.Tests.Unit.Services
             JsTree expectedTree = new JsTree();
             JsTreeNode rootNode = new JsTreeNode();
             expectedTree.Nodes.Add(rootNode);
-            rootNode.Name = Template.Resources.Privilege.Titles.All;
+            rootNode.Name = MvcTemplate.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
 
             IEnumerable<Privilege> allPrivileges = context.Set<Privilege>().ToList()

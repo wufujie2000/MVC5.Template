@@ -1,8 +1,7 @@
-﻿using System;
+﻿using MvcTemplate.Components.Security;
 using System.Web.Mvc;
-using Template.Components.Security;
 
-namespace Template.Tests.Unit.Components.Security.Authorization
+namespace MvcTemplate.Tests.Unit.Components.Security.Authorization
 {
     public class NotAttributedController : Controller
     {

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using MvcTemplate.Resources;
+using System;
 using System.Web.Mvc;
-using Template.Resources;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class DisplayNameMetadataProvider : DataAnnotationsModelMetadataProvider
     {

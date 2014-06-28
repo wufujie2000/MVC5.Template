@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Tests.Unit.Data.Migrations
+namespace MvcTemplate.Tests.Unit.Data.Migrations
 {
     [TestFixture]
     public class InitialDataTests

@@ -13,10 +13,10 @@ $ObjectsProject = "Objects"
 $ServiceProject = "Services"
 $ControllerProject = "Controllers"
 
-$ControllerNamespace = "Template.Controllers"
-If ($AreaName) { $ControllerNamespace = "Template.Controllers.$AreaName" }
-$ControllerTestsNamespace = "Template.Tests.Unit.Controllers"
-If ($AreaName) { $ControllerTestsNamespace = "Template.Tests.Unit.Controllers.$AreaName" }
+$ControllerNamespace = "MvcTemplate.Controllers"
+If ($AreaName) { $ControllerNamespace = "MvcTemplate.Controllers.$AreaName" }
+$ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
+If ($AreaName) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$AreaName" }
 
 $Model = $ModelName
 $View = $ModelName + "View"

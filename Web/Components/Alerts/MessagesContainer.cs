@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Template.Components.Alerts
+namespace MvcTemplate.Components.Alerts
 {
     public class MessagesContainer : IEnumerable<AlertMessage>
     {

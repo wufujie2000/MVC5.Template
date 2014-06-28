@@ -1,15 +1,15 @@
+using MvcTemplate.Components.Extensions.Mvc;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
-using Template.Components.Extensions.Mvc;
-using Template.Components.Security;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public class AccountsService : BaseService, IAccountsService
     {

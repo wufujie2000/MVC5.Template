@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Resources.Shared;
+using MvcTemplate.Tests.Objects;
+using NUnit.Framework;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Template.Components.Mvc;
-using Template.Resources.Shared;
-using Template.Tests.Objects;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class RequiredAdapterTests

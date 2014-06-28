@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Extensions.Net;
+using NUnit.Framework;
 using System;
-using Template.Components.Extensions.Net;
 
-namespace Template.Tests.Unit.Components.Extensions.Net
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Net
 {
     [TestFixture]
     public class SystemExtensionsTests

@@ -7,8 +7,8 @@
     <ProjectGuid>{4D89DE56-C68C-4D17-8424-866D96F2E000}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template.Components</RootNamespace>
-    <AssemblyName>Template.Components</AssemblyName>
+    <RootNamespace>MvcTemplate.Components</RootNamespace>
+    <AssemblyName>MvcTemplate.Components</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

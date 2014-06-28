@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Template.Components.Alerts;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Alerts
+namespace MvcTemplate.Tests.Unit.Components.Alerts
 {
     [TestFixture]
     public class MessagesContainerTests

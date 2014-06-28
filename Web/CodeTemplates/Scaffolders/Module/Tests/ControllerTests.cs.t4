@@ -2,15 +2,15 @@
 <#@ Output Extension="cs" #>
 using Moq;
 using Moq.Protected;
+using <#= Model.ControllerNamespace #>;
+using MvcTemplate.Objects;
+using MvcTemplate.Services;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
-using <#= Model.ControllerNamespace #>;
-using Template.Objects;
-using Template.Services;
 
 namespace <#= Model.Namespace #>
 {

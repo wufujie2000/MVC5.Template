@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapNode
     {

@@ -1,8 +1,8 @@
+using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
-using Template.Objects;
 
-namespace Template.Services
+namespace MvcTemplate.Services
 {
     public interface IAccountsService : IService
     {

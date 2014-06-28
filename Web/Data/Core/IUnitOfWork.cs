@@ -1,7 +1,7 @@
-﻿using System;
-using Template.Objects;
+﻿using MvcTemplate.Objects;
+using System;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public interface IUnitOfWork : IDisposable
     {

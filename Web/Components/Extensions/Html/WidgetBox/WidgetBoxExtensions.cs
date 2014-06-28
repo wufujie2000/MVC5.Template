@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
+using System;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Template.Components.Security;
-using Template.Resources;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public static class WidgetBoxExtensions
     {

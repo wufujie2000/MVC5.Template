@@ -1,14 +1,14 @@
 ﻿using Moq;
 using Moq.Protected;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Components.Security;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class BaseControllerTests

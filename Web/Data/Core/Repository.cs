@@ -1,12 +1,12 @@
 ﻿using AutoMapper.QueryableExtensions;
+using MvcTemplate.Objects;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using Template.Objects;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public class Repository<TModel> : IRepository<TModel> where TModel : BaseModel
     {

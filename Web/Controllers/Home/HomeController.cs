@@ -1,9 +1,9 @@
-﻿using System.Web.Mvc;
-using Template.Components.Security;
-using Template.Resources.Shared;
-using Template.Services;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Resources.Shared;
+using MvcTemplate.Services;
+using System.Web.Mvc;
 
-namespace Template.Controllers.Home
+namespace MvcTemplate.Controllers.Home
 {
     [AllowUnauthorized]
     public class HomeController : ServicedController<IAccountsService>

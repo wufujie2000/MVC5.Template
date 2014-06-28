@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers;
+using System;
 using System.Web.Mvc;
-using Template.Components.Security;
-using Template.Controllers;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class BaseControllerStub : BaseController
     {

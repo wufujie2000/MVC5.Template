@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Controllers.Administration;
+using NUnit.Framework;
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Controllers.Administration;
 
-namespace Template.Tests.Unit.Controllers.Administration
+namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
     [TestFixture]
     public class AdministrationAreRegistrationTests
@@ -39,7 +39,7 @@ namespace Template.Tests.Unit.Controllers.Administration
             areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["Administration"] as Route;
 
-            CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("Administration", actual.Defaults["area"]);
@@ -54,7 +54,7 @@ namespace Template.Tests.Unit.Controllers.Administration
             areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
 
-            CollectionAssert.AreEqual(new[] { "Template.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("Administration", actual.Defaults["area"]);

@@ -1,14 +1,14 @@
 ﻿using GridMvc.Columns;
 using GridMvc.Html;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Security;
-using Template.Resources;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public static class GridMvcExtensions
     {

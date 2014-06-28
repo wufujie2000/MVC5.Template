@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Template.Objects
+namespace MvcTemplate.Objects
 {
     public class Role : BaseModel
     {

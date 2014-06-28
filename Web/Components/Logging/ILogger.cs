@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Logging
+namespace MvcTemplate.Components.Logging
 {
     public interface ILogger : IDisposable
     {

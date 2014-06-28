@@ -1,6 +1,6 @@
-﻿using Template.Objects;
+﻿using MvcTemplate.Objects;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class GridMvcView : BaseView
     {

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using MvcTemplate.Resources.Shared;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Template.Resources.Shared;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class EmailAddressAdapter : DataAnnotationsModelValidator<EmailAddressAttribute>
     {

@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Template.Components.Security;
+﻿using MvcTemplate.Components.Security;
+using NUnit.Framework;
 
-namespace Template.Tests.Unit.Components.Security
+namespace MvcTemplate.Tests.Unit.Components.Security
 {
     [TestFixture]
     public class BCrypterTests

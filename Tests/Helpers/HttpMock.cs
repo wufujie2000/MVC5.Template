@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Template.Tests.Helpers
+namespace MvcTemplate.Tests.Helpers
 {
     public class HttpMock
     {

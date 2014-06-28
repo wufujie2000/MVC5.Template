@@ -7,8 +7,8 @@
     <ProjectGuid>{DDC2AAD3-EEBD-456F-A0ED-EA3900478B45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template</RootNamespace>
-    <AssemblyName>Template</AssemblyName>
+    <RootNamespace>MvcTemplate</RootNamespace>
+    <AssemblyName>MvcTemplate</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

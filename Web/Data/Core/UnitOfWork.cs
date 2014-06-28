@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using MvcTemplate.Components.Logging;
+using MvcTemplate.Objects;
 using System;
-using Template.Components.Logging;
-using Template.Objects;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public class UnitOfWork : IUnitOfWork
     {

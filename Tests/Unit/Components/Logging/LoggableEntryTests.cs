@@ -1,16 +1,16 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using Template.Components.Logging;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Logging
+namespace MvcTemplate.Tests.Unit.Components.Logging
 {
     [TestFixture]
     public class LoggableEntryTests

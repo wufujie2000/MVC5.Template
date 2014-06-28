@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Extensions.Net
+namespace MvcTemplate.Components.Extensions.Net
 {
     public static class SystemExtensions
     {

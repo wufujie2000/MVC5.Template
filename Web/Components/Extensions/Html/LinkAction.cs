@@ -1,4 +1,4 @@
-﻿namespace Template.Components.Extensions.Html
+﻿namespace MvcTemplate.Components.Extensions.Html
 {
     public enum LinkAction
     {

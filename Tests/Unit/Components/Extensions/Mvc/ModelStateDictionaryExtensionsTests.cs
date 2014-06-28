@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Extensions.Mvc;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using Template.Components.Extensions.Mvc;
 
-namespace Template.Tests.Unit.Components.Extensions.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
 {
     [TestFixture]
     public class ModelStateDictionaryExtensionsTests

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapMenuCollection : List<MvcSiteMapMenuNode>
     {

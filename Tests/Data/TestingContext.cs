@@ -1,13 +1,13 @@
-﻿using System;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Data.Mapping;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data.Mapping;
+using MvcTemplate.Tests.Objects;
+using System;
 using System.Collections;
 using System.Data.Entity;
-using Template.Data.Core;
-using Template.Data.Mapping;
-using Template.Objects;
-using Template.Tests.Data.Mapping;
-using Template.Tests.Objects;
 
-namespace Template.Tests.Data
+namespace MvcTemplate.Tests.Data
 {
     public class TestingContext : Context
     {

@@ -1,6 +1,10 @@
 ﻿using GridMvc.Columns;
 using GridMvc.Html;
 using Moq;
+using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -10,12 +14,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
-using Template.Components.Extensions.Html;
-using Template.Components.Security;
-using Template.Resources;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class GridMvcExtensionsTests
@@ -298,7 +298,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         {
             gridHtmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.EmptyText(Template.Resources.Table.Resources.NoDataFound), Times.Once());
+            gridHtmlOptionsMock.Verify(mock => mock.EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound), Times.Once());
         }
 
         [Test]

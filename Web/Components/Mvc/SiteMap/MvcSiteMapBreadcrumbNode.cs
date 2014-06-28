@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapBreadcrumbNode
     {

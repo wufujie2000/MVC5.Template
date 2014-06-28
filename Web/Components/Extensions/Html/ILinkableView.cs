@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public interface ILinkableView
     {

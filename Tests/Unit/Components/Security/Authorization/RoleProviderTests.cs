@@ -1,16 +1,16 @@
 ﻿using Moq;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Template.Components.Security;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Security
+namespace MvcTemplate.Tests.Unit.Security
 {
     [TestFixture]
     public class RoleProviderTests

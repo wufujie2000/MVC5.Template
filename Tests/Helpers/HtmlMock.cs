@@ -1,10 +1,9 @@
 ﻿using Moq;
-using System;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Template.Tests.Helpers
+namespace MvcTemplate.Tests.Helpers
 {
     public class HtmlMock
     {

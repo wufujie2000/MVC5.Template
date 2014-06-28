@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using MvcTemplate.Data.Mapping;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
-using Template.Data.Mapping;
-using Template.Objects;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Data.Mapping
+namespace MvcTemplate.Tests.Data.Mapping
 {
     [TestFixture]
     public class ObjectMapperTests

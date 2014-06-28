@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Web;
+using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Reflection;
-using Template.Web;
 
-namespace Template.Tests.Unit.Web
+namespace MvcTemplate.Tests.Unit.Web
 {
     [TestFixture]
     public class MvcApplicationTests

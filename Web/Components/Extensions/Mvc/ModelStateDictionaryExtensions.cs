@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
-namespace Template.Components.Extensions.Mvc
+namespace MvcTemplate.Components.Extensions.Mvc
 {
     public static class ModelStateDictionaryExtensions
     {

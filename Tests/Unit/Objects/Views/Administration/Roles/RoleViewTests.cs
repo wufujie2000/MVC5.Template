@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Template.Objects;
+﻿using MvcTemplate.Objects;
+using NUnit.Framework;
 
-namespace Template.Tests.Unit.Objects
+namespace MvcTemplate.Tests.Unit.Objects
 {
     [TestFixture]
     public class RoleViewTests

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Template.Tests.Objects;
+using MvcTemplate.Tests.Objects;
 
-namespace Template.Tests.Data.Mapping
+namespace MvcTemplate.Tests.Data.Mapping
 {
     public class TestObjectMapper
     {

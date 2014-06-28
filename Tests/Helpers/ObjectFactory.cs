@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Objects;
+using MvcTemplate.Tests.Objects;
+using NUnit.Framework;
 using System;
-using Template.Objects;
-using Template.Tests.Objects;
 
-namespace Template.Tests.Helpers
+namespace MvcTemplate.Tests.Helpers
 {
     public class ObjectFactory
     {

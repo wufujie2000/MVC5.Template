@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Template.Components.Extensions.Html;
-using Template.Resources;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class HeaderExtensionsTests

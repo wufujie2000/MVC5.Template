@@ -1,16 +1,16 @@
-﻿using Ninject.Modules;
+﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Components.Mvc;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Services;
+using Ninject.Modules;
 using System;
 using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using Template.Components.Logging;
-using Template.Components.Mvc;
-using Template.Components.Security;
-using Template.Controllers;
-using Template.Data.Core;
-using Template.Services;
 
-namespace Template.Web.DependencyInjection
+namespace MvcTemplate.Web.DependencyInjection
 {
     public class MainModule : NinjectModule
     {

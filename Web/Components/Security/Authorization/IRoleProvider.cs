@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Template.Components.Security
+namespace MvcTemplate.Components.Security
 {
     public interface IRoleProvider
     {

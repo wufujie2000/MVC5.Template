@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Tests.Unit.Components.Extensions.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
 {
     public class ModelStateView
     {

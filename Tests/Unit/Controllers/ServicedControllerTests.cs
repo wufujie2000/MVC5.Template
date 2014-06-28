@@ -1,14 +1,14 @@
 ﻿using Moq;
+using MvcTemplate.Components.Alerts;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Services;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class ServicedControllerTests

@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Extensions.Html;
+using NUnit.Framework;
 using System;
 using System.IO;
-using Template.Components.Extensions.Html;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class WidgetBoxTests

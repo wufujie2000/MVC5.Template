@@ -1,16 +1,16 @@
 ﻿using Moq;
+using MvcTemplate.Components.Alerts;
+using MvcTemplate.Controllers.Profile;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Controllers.Profile;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using Template.Services;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Controllers.Profile
+namespace MvcTemplate.Tests.Unit.Controllers.Profile
 {
     [TestFixture]
     public class ProfileControllerTests

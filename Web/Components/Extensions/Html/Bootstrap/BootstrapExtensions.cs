@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcTemplate.Resources;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -6,9 +7,8 @@ using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
-using Template.Resources;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public static class BootstrapExtensions
     {
@@ -63,7 +63,7 @@ namespace Template.Components.Extensions.Html
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + label.InnerHtml;
             label.AddCssClass(LabelClass);
-            
+
             return new MvcHtmlString(label.ToString());
         }
         public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)

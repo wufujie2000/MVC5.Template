@@ -1,7 +1,7 @@
-﻿using System.Data.Entity;
-using Template.Objects;
+﻿using MvcTemplate.Objects;
+using System.Data.Entity;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public abstract class AContext : DbContext
     {

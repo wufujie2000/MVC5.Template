@@ -1,4 +1,4 @@
-﻿namespace Template.Components.Security
+﻿namespace MvcTemplate.Components.Security
 {
     public sealed class RoleFactory
     {

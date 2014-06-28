@@ -1,13 +1,13 @@
-﻿using System;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Text;
 using System.Web;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Components.Logging
+namespace MvcTemplate.Components.Logging
 {
     public class EntityLogger : IEntityLogger
     {

@@ -1,13 +1,13 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Tests.Helpers;
+using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
 using System.Web.Mvc;
-using Template.Components.Extensions.Html;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class BootstrapExtensionsTests
@@ -114,7 +114,7 @@ namespace Template.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormSubmit_FormsFormSubmitHtml()
         {
-            String expected = String.Format("<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />", Template.Resources.Shared.Resources.Submit);
+            String expected = String.Format("<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />", MvcTemplate.Resources.Shared.Resources.Submit);
             String actual = html.FormSubmit().ToString();
 
             Assert.AreEqual(expected, actual);

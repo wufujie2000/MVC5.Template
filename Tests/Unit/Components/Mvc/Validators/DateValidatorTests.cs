@@ -1,12 +1,12 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Shared;
+using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Components.Mvc;
-using Template.Objects;
-using Template.Resources.Shared;
 
-namespace Template.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class DateValidatorTests

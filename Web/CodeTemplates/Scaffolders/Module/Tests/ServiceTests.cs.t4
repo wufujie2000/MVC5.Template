@@ -2,17 +2,17 @@
 <#@ Output Extension="cs" #>
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Services;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Template.Data.Core;
-using Template.Objects;
-using Template.Services;
-using Template.Tests.Data;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Services
+namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
     public class <#= Model.Name #>

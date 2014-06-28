@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Template.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions.Html;
+using NUnit.Framework;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class JsTreeNodeTests

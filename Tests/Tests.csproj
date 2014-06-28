@@ -6,8 +6,8 @@
     <ProjectGuid>{BE2D3CAD-747C-4CC3-850B-883420C40EC9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Template.Tests</RootNamespace>
-    <AssemblyName>Template.Tests</AssemblyName>
+    <RootNamespace>MvcTemplate.Tests</RootNamespace>
+    <AssemblyName>MvcTemplate.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -202,9 +202,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Template\Template.csproj">
+    <ProjectReference Include="..\MvcTemplate\MvcTemplate.csproj">
       <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
-      <Name>Template</Name>
+      <Name>MvcTemplate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Web\Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>

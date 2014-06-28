@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Template.Components.Security
+namespace MvcTemplate.Components.Security
 {
     public interface IHasher
     {

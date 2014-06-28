@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using Template.Components.Logging;
+using MvcTemplate.Components.Logging;
 
-namespace Template.Components.Mvc
+namespace MvcTemplate.Components.Mvc
 {
     public class ExceptionFilter : IExceptionFilter
     {

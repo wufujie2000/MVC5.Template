@@ -1,11 +1,11 @@
-﻿using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Components.Security;
-using Template.Objects;
-using Template.Resources.Views.AccountView;
-using Template.Services;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Services;
+using System.Web.Mvc;
 
-namespace Template.Controllers.Profile
+namespace MvcTemplate.Controllers.Profile
 {
     [AllowUnauthorized]
     public class ProfileController : ServicedController<IAccountsService>
@@ -36,7 +36,7 @@ namespace Template.Controllers.Profile
                 Service.Edit(profile);
                 Service.AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
             }
-            
+
             return View(profile);
         }
 

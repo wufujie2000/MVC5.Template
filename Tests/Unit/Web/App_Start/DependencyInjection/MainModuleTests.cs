@@ -1,15 +1,15 @@
-﻿using Ninject;
+﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Components.Mvc;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Data.Core;
+using MvcTemplate.Services;
+using MvcTemplate.Web.DependencyInjection;
+using Ninject;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
-using Template.Components.Logging;
-using Template.Components.Mvc;
-using Template.Components.Security;
-using Template.Data.Core;
-using Template.Services;
-using Template.Web.DependencyInjection;
 
-namespace Template.Tests.Unit.Web.DependencyInjection
+namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
     public class MainModuleTests
@@ -87,7 +87,7 @@ namespace Template.Tests.Unit.Web.DependencyInjection
         [Test]
         public void Load_BindsIHasher()
         {
-            AssertBind<IHasher, BCrypter>(); 
+            AssertBind<IHasher, BCrypter>();
         }
 
         [Test]

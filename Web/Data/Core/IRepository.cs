@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Objects;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Template.Objects;
 
-namespace Template.Data.Core
+namespace MvcTemplate.Data.Core
 {
     public interface IRepository<TModel> where TModel : BaseModel
     {

@@ -1,9 +1,9 @@
-﻿using NUnit.Framework;
+﻿using MvcTemplate.Web;
+using NUnit.Framework;
 using System;
 using System.Web.Optimization;
-using Template.Web;
 
-namespace Template.Tests.Unit.Web.App_Start
+namespace MvcTemplate.Tests.Unit.Web.App_Start
 {
     [TestFixture]
     public class BundleConfigTests

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Services;
+using System;
 using System.Web.Mvc;
-using Template.Components.Alerts;
-using Template.Services;
 
-namespace Template.Controllers
+namespace MvcTemplate.Controllers
 {
     public abstract class ServicedController<TService> : BaseController
         where TService : IService

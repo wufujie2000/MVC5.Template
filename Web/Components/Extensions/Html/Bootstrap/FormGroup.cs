@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Template.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions.Html
 {
     public class FormGroup : FormWrapper
     {

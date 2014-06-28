@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Template.Controllers
+namespace MvcTemplate.Controllers
 {
     public class RouteConfig
     {
@@ -15,7 +15,7 @@ namespace Template.Controllers
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt-LT" },
-                    new[] { "Template.Controllers.Home" });
+                    new[] { "MvcTemplate.Controllers.Home" });
 
             routes
                 .MapRoute(
@@ -23,7 +23,7 @@ namespace Template.Controllers
                     "{controller}/{action}/{id}",
                     new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "en-GB" },
-                    new[] { "Template.Controllers.Home" });
+                    new[] { "MvcTemplate.Controllers.Home" });
         }
     }
 }

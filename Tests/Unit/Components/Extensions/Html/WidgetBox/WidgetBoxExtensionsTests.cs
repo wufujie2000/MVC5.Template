@@ -1,4 +1,8 @@
 ﻿using Moq;
+using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Security;
+using MvcTemplate.Resources;
+using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -6,12 +10,8 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Template.Components.Extensions.Html;
-using Template.Components.Security;
-using Template.Resources;
-using Template.Tests.Helpers;
 
-namespace Template.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class WidgetBoxExtensionsTests

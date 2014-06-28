@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MvcTemplate.Objects;
+using MvcTemplate.Services;
+using System;
 using System.Web.Mvc;
-using Template.Objects;
-using Template.Services;
 
-namespace Template.Controllers.Administration
+namespace MvcTemplate.Controllers.Administration
 {
     public class RolesController : ServicedController<IRolesService>
     {

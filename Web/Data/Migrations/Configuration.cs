@@ -1,12 +1,12 @@
-﻿using System;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Template.Data.Core;
-using Template.Objects;
 
-namespace Template.Data.Migrations
+namespace MvcTemplate.Data.Migrations
 {
     [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
@@ -16,7 +16,7 @@ namespace Template.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "Template.Data";
+            ContextKey = "MvcTemplate.Data";
         }
 
         protected override void Seed(Context context)

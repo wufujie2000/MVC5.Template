@@ -1,9 +1,9 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
+using MvcTemplate.Objects;
+using MvcTemplate.Services;
 using System;
 using System.Web.Mvc;
-using Template.Objects;
-using Template.Services;
 
 namespace <#= Model.Namespace #>
 {

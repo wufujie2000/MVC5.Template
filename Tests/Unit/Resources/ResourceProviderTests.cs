@@ -252,6 +252,14 @@ namespace MvcTemplate.Tests.Resources.Tests
         #region Static method: GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
 
         [Test]
+        public void GetPropertyTitle_OnNonMemberExpressionThrows()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(profile => profile.Method()),
+                "Expression must be a member expression");
+        }
+
+        [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
             String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;

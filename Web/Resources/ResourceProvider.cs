@@ -83,9 +83,11 @@ namespace MvcTemplate.Resources
 
         public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
         {
-            MemberInfo member = (property.Body as MemberExpression).Member;
+            MemberExpression memberExpression = property.Body as MemberExpression;
+            if (memberExpression == null)
+                throw new InvalidOperationException("Expression must be a member expression");
 
-            return GetPropertyTitle(member.ReflectedType, member.Name);
+            return GetPropertyTitle(memberExpression.Member.ReflectedType, memberExpression.Member.Name);
         }
         public static String GetPropertyTitle(Type viewType, String propertyName)
         {

@@ -10,6 +10,12 @@ namespace MvcTemplate.Controllers.Auth
     [AllowAnonymous]
     public class AuthController : ServicedController<IAccountsService>
     {
+        private static Object registrationLock;
+
+        static AuthController()
+        {
+            registrationLock = new Object();
+        }
         public AuthController(IAccountsService service)
             : base(service)
         {
@@ -28,16 +34,19 @@ namespace MvcTemplate.Controllers.Auth
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Exclude = "Id")] AccountView account)
         {
-            if (Service.IsLoggedIn())
-                return RedirectToDefault();
+            lock (registrationLock)
+            {
+                if (Service.IsLoggedIn())
+                    return RedirectToDefault();
 
-            if (!Service.CanRegister(account))
-                return View(account);
+                if (!Service.CanRegister(account))
+                    return View(account);
 
-            Service.Register(account);
-            Service.Alerts.Add(AlertTypes.Success, Messages.SuccesfulRegistration);
+                Service.Register(account);
+                Service.Alerts.Add(AlertTypes.Success, Messages.SuccesfulRegistration);
 
-            return RedirectToAction("Login");
+                return RedirectToAction("Login");
+            }
         }
 
         [HttpGet]

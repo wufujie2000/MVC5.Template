@@ -18,17 +18,17 @@ namespace MvcTemplate.Controllers.Profile
         [HttpGet]
         public ActionResult Edit()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            return View(Service.GetView<ProfileEditView>(HttpContext.User.Identity.Name));
+            return View(Service.GetView<ProfileEditView>(CurrentAccountId));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ProfileEditView profile)
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             if (Service.CanEdit(profile))
@@ -43,7 +43,7 @@ namespace MvcTemplate.Controllers.Profile
         [HttpGet]
         public ActionResult Delete()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             Service.Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
@@ -56,7 +56,7 @@ namespace MvcTemplate.Controllers.Profile
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(AccountView profile)
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             if (!Service.CanDelete(profile))
@@ -65,7 +65,7 @@ namespace MvcTemplate.Controllers.Profile
                 return View();
             }
 
-            Service.Delete(HttpContext.User.Identity.Name);
+            Service.Delete(CurrentAccountId);
 
             return LogOut();
         }

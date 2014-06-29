@@ -25,11 +25,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
             HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
             accountId = HttpContext.Current.User.Identity.Name;
+            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
 
-            serviceMock = new Mock<IAccountsService>();
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            serviceMock.Object.Alerts = new AlertsContainer();
             serviceMock.SetupAllProperties();
+            serviceMock.Object.Alerts = new AlertsContainer();
+            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
 
             controller = new HomeController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();

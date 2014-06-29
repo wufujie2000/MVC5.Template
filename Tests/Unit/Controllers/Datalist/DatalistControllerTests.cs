@@ -47,8 +47,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         {
             controller.GetData(datalist, filter);
 
-            DatalistFilter expected = filter;
             DatalistFilter actual = datalist.CurrentFilter;
+            DatalistFilter expected = filter;
 
             Assert.AreEqual(expected, actual);
         }
@@ -71,10 +71,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
             JsonResult jsonResult = controller.GetData(datalist, filter);
 
             DatalistData expected = datalistMock.Object.GetData();
-            DatalistData actual = jsonResult.Data as DatalistData;
+            Object actual = jsonResult.Data;
 
             Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

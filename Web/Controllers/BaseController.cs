@@ -10,6 +10,13 @@ namespace MvcTemplate.Controllers
     [Authorize]
     public abstract class BaseController : Controller
     {
+        protected String CurrentAccountId
+        {
+            get
+            {
+                return HttpContext.User.Identity.Name;
+            }
+        }
         protected IRoleProvider RoleProvider
         {
             get;
@@ -55,7 +62,7 @@ namespace MvcTemplate.Controllers
         {
             if (RoleProvider == null) return true;
 
-            return RoleProvider.IsAuthorizedFor(HttpContext.User.Identity.Name, area, controller, action);
+            return RoleProvider.IsAuthorizedFor(CurrentAccountId, area, controller, action);
         }
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)

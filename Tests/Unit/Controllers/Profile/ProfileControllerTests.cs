@@ -18,15 +18,16 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         private Mock<IAccountsService> serviceMock;
         private ProfileController controller;
         private ProfileEditView profile;
+        private AccountView account;
         private String accountId;
 
         [SetUp]
         public void SetUp()
         {
-            profile = new ProfileEditView();
-
             serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
             serviceMock.SetupAllProperties();
+            profile = new ProfileEditView();
+            account = new AccountView();
 
             controller = new ProfileController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();
@@ -52,10 +53,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.GetView<ProfileEditView>(accountId)).Returns(new ProfileEditView());
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
 
-            ProfileEditView actual = (controller.Edit() as ViewResult).Model as ProfileEditView;
             ProfileEditView expected = serviceMock.Object.GetView<ProfileEditView>(accountId);
+            Object actual = (controller.Edit() as ViewResult).Model;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -130,6 +131,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         public void Delete_RedirectsToLogoutIfAccountDoesNotExist()
         {
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -164,7 +166,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
             RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
 
@@ -175,7 +176,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
         {
-            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(false);
             controller.DeleteConfirmed(account);
@@ -190,7 +190,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
         {
-            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(false);
 
@@ -200,7 +199,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_DeletesProfileIfCanDelete()
         {
-            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(true);
             serviceMock.Setup(mock => mock.Delete(accountId));
@@ -212,7 +210,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
-            AccountView account = new AccountView();
             serviceMock.Setup(mock => mock.Delete(accountId));
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(true);
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);

@@ -16,7 +16,7 @@ namespace MvcTemplate.Controllers.Home
         [HttpGet]
         public ActionResult Index()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             return View();
@@ -25,7 +25,7 @@ namespace MvcTemplate.Controllers.Home
         [HttpGet]
         public ActionResult Error()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             Service.Alerts.AddError(Messages.SystemError);
@@ -36,7 +36,7 @@ namespace MvcTemplate.Controllers.Home
         [HttpGet]
         public ActionResult NotFound()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             Service.Alerts.AddError(Messages.PageNotFound);
@@ -47,7 +47,7 @@ namespace MvcTemplate.Controllers.Home
         [HttpGet]
         public ActionResult Unauthorized()
         {
-            if (!Service.AccountExists(HttpContext.User.Identity.Name))
+            if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
             Service.Alerts.AddError(Messages.Unauthorized);

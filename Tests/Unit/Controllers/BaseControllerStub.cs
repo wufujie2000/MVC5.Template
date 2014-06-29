@@ -7,6 +7,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class BaseControllerStub : BaseController
     {
+        public String BaseCurrentAccountId
+        {
+            get
+            {
+                return base.CurrentAccountId;
+            }
+        }
         public IRoleProvider BaseRoleProvider
         {
             get

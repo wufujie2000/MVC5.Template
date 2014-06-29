@@ -14,8 +14,7 @@ namespace MvcTemplate.Controllers
         protected ServicedController(TService service)
         {
             Service = service;
-            Service.ModelState = Service.ModelState ?? ModelState;
-            Service.Alerts = Service.Alerts ?? new AlertsContainer();
+            Service.ModelState = ModelState;
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

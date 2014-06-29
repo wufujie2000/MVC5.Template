@@ -27,6 +27,7 @@ namespace MvcTemplate.Services
 
         public BaseService(IUnitOfWork unitOfWork)
         {
+            Alerts = new AlertsContainer();
             UnitOfWork = unitOfWork;
         }
 

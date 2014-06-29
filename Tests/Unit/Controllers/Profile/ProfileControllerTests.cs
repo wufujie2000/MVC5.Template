@@ -26,9 +26,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         {
             serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
             serviceMock.SetupAllProperties();
+
             profile = new ProfileEditView();
             account = new AccountView();
 
+            serviceMock.Object.Alerts = new AlertsContainer();
             controller = new ProfileController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;

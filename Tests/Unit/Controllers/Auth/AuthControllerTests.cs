@@ -32,6 +32,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = ObjectFactory.CreateAccountView();
 
+            serviceMock.Object.Alerts = new AlertsContainer();
             controllerMock = new Mock<AuthController>(serviceMock.Object) { CallBase = true };
             controllerMock.Object.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
             controllerMock.Object.ControllerContext = new ControllerContext();

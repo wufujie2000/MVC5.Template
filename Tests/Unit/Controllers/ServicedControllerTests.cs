@@ -23,6 +23,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             serviceMock.SetupAllProperties();
             service = serviceMock.Object;
 
+            service.Alerts = new AlertsContainer();
             controller = new ServicedControllerStub(service);
             controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
@@ -40,45 +41,23 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ServicedController_SetsService()
         {
-            Assert.AreEqual(service, controller.BaseService);
+            controller = new ServicedControllerStub(service);
+
+            IService actual = controller.BaseService;
+            IService expected = service;
+
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
-        public void ServicedController_OnNotNullModelStateSetsExistingModelState()
+        public void ServicedController_SetsServiceModelState()
         {
-            ModelStateDictionary expected = service.ModelState = new ModelStateDictionary();
             controller = new ServicedControllerStub(service);
+
+            ModelStateDictionary expected = controller.ModelState;
             ModelStateDictionary actual = service.ModelState;
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ServicedController_OnNullModelStateCreatesNewModelState()
-        {
-            service.ModelState = null;
-            controller = new ServicedControllerStub(service);
-
-            Assert.IsNotNull(service.ModelState);
-        }
-
-        [Test]
-        public void ServicedController_OnNotNullAlertsKeepsExistingAlerts()
-        {
-            AlertsContainer expected = service.Alerts = new AlertsContainer();
-            controller = new ServicedControllerStub(service);
-            AlertsContainer actual = service.Alerts;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void ServicedController_OnNullAlertsCreatesNewAlerts()
-        {
-            service.Alerts = null;
-            controller = new ServicedControllerStub(service);
-
-            Assert.IsNotNull(service.Alerts);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -91,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             AlertsContainer alerts = service.Alerts;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
-            Assert.AreEqual(alerts, controller.Session["Alerts"]);
+            Assert.AreSame(alerts, controller.Session["Alerts"]);
         }
 
         [Test]
@@ -108,7 +87,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             Object actual = controller.Session["Alerts"];
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]

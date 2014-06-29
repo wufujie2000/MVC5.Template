@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Constructor: FormWrapper(ViewContext viewContext, String cssClass)
+        #region Constructor: FormWrapper(TextWriter writer, String cssClass)
 
         [Test]
         public void FormWrapper_WritesWrapper()
@@ -43,8 +43,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringWriter textWriter = new StringWriter(new StringBuilder());
             using (new FormWrapper(textWriter, "test-class")) textWriter.Write("Content");
 
-            String actual = textWriter.GetStringBuilder().ToString();
             String expected = "<div class=\"test-class\">Content</div>";
+            String actual = textWriter.GetStringBuilder().ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -61,8 +61,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             textWriter.Write("Content");
             formActions.Dispose();
 
-            String actual = textWriter.GetStringBuilder().ToString();
             String expected = "<div class=\"test-class\">Content</div>";
+            String actual = textWriter.GetStringBuilder().ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -76,8 +76,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             formActions.Dispose();
             formActions.Dispose();
 
-            String actual = textWriter.GetStringBuilder().ToString();
             String expected = "<div class=\"test-class\">Content</div>";
+            String actual = textWriter.GetStringBuilder().ToString();
 
             Assert.AreEqual(expected, actual);
         }

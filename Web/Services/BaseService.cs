@@ -14,7 +14,7 @@ namespace MvcTemplate.Services
             get;
             set;
         }
-        public MessagesContainer AlertMessages
+        public AlertsContainer Alerts
         {
             get;
             set;

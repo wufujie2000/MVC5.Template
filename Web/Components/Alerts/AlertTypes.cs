@@ -1,6 +1,6 @@
 ﻿namespace MvcTemplate.Components.Alerts
 {
-    public enum AlertMessageType
+    public enum AlertTypes
     {
         Danger,
         Warning,

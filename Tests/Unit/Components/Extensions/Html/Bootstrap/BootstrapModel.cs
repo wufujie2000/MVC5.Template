@@ -26,5 +26,30 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             return String.Empty;
         }
+
+        public BootstrapModel()
+        {
+            NotRequired = "NotRequired";
+            Required = "Required";
+            Date = DateTime.Now;
+            NotReadOnly = "Not";
+            ReadOnlyFalse = "F";
+            ReadOnlyTrue = "T";
+            Number = 10.7854M;
+
+            Relation = new BootstrapModel(true)
+            {
+                NotRequired = "NotRequiredRelation",
+                Date = new DateTime(2011, 01, 01),
+                Required = "RequiredRelation",
+                NotReadOnly = "NotRelation",
+                ReadOnlyFalse = "FRelation",
+                ReadOnlyTrue = "TRelation",
+                Number = 1.6666M,
+            };
+        }
+        private BootstrapModel(Boolean noInit)
+        {
+        }
     }
 }

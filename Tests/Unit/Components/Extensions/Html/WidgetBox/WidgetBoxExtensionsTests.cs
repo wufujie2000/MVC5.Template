@@ -169,7 +169,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
 
-
         #endregion
 
         #region Test helpers

@@ -122,12 +122,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
 
             controller.Register(account);
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
-            Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
+            Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.SuccesfulRegistration, actual.Message);
-            Assert.AreEqual(AlertMessageType.Success, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(AlertTypes.Success, actual.Type);
         }
 
         [Test]

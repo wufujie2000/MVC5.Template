@@ -22,13 +22,13 @@ namespace MvcTemplate.Components.Mvc
             {
                 MvcSiteMapNode node = new MvcSiteMapNode();
 
-                node.Parent = parent;
-                node.Children = GetNodes(siteMapNode, node);
-                node.Area = (String)siteMapNode.Attribute("area");
-                node.Action = (String)siteMapNode.Attribute("action");
-                node.IconClass = (String)siteMapNode.Attribute("icon");
-                node.Controller = (String)siteMapNode.Attribute("controller");
                 node.IsMenu = (Boolean?)siteMapNode.Attribute("menu") == true;
+                node.Controller = (String)siteMapNode.Attribute("controller");
+                node.IconClass = (String)siteMapNode.Attribute("icon");
+                node.Action = (String)siteMapNode.Attribute("action");
+                node.Area = (String)siteMapNode.Attribute("area");
+                node.Children = GetNodes(siteMapNode, node);
+                node.Parent = parent;
 
                 nodes.Add(node);
             }

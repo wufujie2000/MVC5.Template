@@ -42,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Dispose();
         }
 
-        #region Method: SeedPrivilegesTree(RoleView role)
+        #region Method: SeedPrivilegesTree(RoleView view)
 
         [Test]
         public void SeedPrivilegesTree_SeedsSelectedIds()

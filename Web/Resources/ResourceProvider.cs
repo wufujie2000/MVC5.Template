@@ -59,7 +59,7 @@ namespace MvcTemplate.Resources
         {
             return GetResourceFrom("MvcTemplate.Resources.Action.Titles", action);
         }
-        public static String GetDatalistTitle<TModel>() where TModel : class
+        public static String GetDatalistTitle<TModel>()
         {
             return GetResourceFrom("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
         }
@@ -81,7 +81,7 @@ namespace MvcTemplate.Resources
             return GetResourceFrom("MvcTemplate.Resources.SiteMap.Titles", key);
         }
 
-        public static String GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
+        public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
         {
             MemberExpression memberExpression = property.Body as MemberExpression;
             if (memberExpression == null)

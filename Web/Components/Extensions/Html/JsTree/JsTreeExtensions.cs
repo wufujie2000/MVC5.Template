@@ -36,6 +36,7 @@ namespace MvcTemplate.Components.Extensions.Html
             }
 
             idSpan.InnerHtml = hiddenInputs.ToString();
+
             return idSpan.ToString();
         }
         private static String FormTreeView(String name, IEnumerable<JsTreeNode> treeNodes)
@@ -45,6 +46,7 @@ namespace MvcTemplate.Components.Extensions.Html
             treeView.AddCssClass("js-tree-view");
 
             AddNodes(treeView, treeNodes);
+
             return treeView.ToString();
         }
         private static void AddNodes(TagBuilder root, IEnumerable<JsTreeNode> nodes)

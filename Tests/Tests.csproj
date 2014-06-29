@@ -161,7 +161,7 @@
     <Compile Include="Helpers\HttpMock.cs" />
     <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\ProviderModel.cs" />
-    <Compile Include="Unit\Components\Alerts\MessagesContainerTests.cs" />
+    <Compile Include="Unit\Components\Alerts\AlertsContainerTests.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormGroupTests.cs" />

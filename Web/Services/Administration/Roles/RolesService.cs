@@ -156,7 +156,6 @@ namespace MvcTemplate.Services
                     PrivilegeId = privilegeId
                 });
         }
-
         private void RemoveRoleFromAccounts(String roleId)
         {
             IQueryable<Account> accountsWithRole = UnitOfWork.Repository<Account>()

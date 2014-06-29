@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Services
             hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
             service = new AccountsService(new UnitOfWork(context), hasherMock.Object);
-            service.AlertMessages = new MessagesContainer();
+            service.Alerts = new AlertsContainer();
             service.ModelState = new ModelStateDictionary();
             hasher = hasherMock.Object;
 
@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanLogin(AccountLoginView account)
+        #region Method: CanLogin(AccountLoginView view)
 
         [Test]
         public void CanLogin_CanNotLoginWithInvalidModelState()
@@ -118,9 +118,9 @@ namespace MvcTemplate.Tests.Unit.Services
             service.CanLogin(account);
 
             String expected = Validations.IncorrectUsernameOrPassword;
-            AlertMessage actualMessage = service.AlertMessages.First();
+            Alert actualMessage = service.Alerts.First();
 
-            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(AlertTypes.Danger, actualMessage.Type);
             Assert.AreEqual(expected, actualMessage.Message);
         }
 
@@ -142,9 +142,9 @@ namespace MvcTemplate.Tests.Unit.Services
             service.CanLogin(account);
 
             String expected = Validations.IncorrectUsernameOrPassword;
-            AlertMessage actualMessage = service.AlertMessages.First();
+            Alert actualMessage = service.Alerts.First();
 
-            Assert.AreEqual(AlertMessageType.Danger, actualMessage.Type);
+            Assert.AreEqual(AlertTypes.Danger, actualMessage.Type);
             Assert.AreEqual(expected, actualMessage.Message);
         }
 
@@ -165,7 +165,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanRegister(AccountView account)
+        #region Method: CanRegister(AccountView view)
 
         [Test]
         public void CanRegister_CanNotRegisterWithInvalidModelState()
@@ -194,9 +194,9 @@ namespace MvcTemplate.Tests.Unit.Services
             service.CanRegister(account);
 
             String actual = service.ModelState["Username"].Errors[0].ErrorMessage;
-            String expeced = Validations.UsernameIsAlreadyTaken;
+            String expected = Validations.UsernameIsAlreadyTaken;
 
-            Assert.AreEqual(expeced, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -216,9 +216,9 @@ namespace MvcTemplate.Tests.Unit.Services
             service.CanRegister(account);
 
             String actual = service.ModelState["Email"].Errors[0].ErrorMessage;
-            String expeced = Validations.EmailIsAlreadyUsed;
+            String expected = Validations.EmailIsAlreadyUsed;
 
-            Assert.AreEqual(expeced, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanEdit(ProfileEditView profile)
+        #region Method: CanEdit(ProfileEditView view)
 
         [Test]
         public void CanEdit_CanNotEditWithInvalidModelState()
@@ -386,7 +386,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanDelete(AccountView profile)
+        #region Method: CanDelete(AccountView view)
 
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
@@ -451,7 +451,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Register(AccountView account)
+        #region Method: Register(AccountView view)
 
         [Test]
         public void Register_CreatesAccount()
@@ -473,7 +473,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Edit(ProfileEditView profile)
+        #region Method: Edit(ProfileEditView view)
 
         [Test]
         public void Edit_EditsProfile()
@@ -581,7 +581,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected, actual);
         }
 
-
         #endregion
 
         #region Method: Delete(String id)
@@ -599,7 +598,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Login(String accountId)
+        #region Method: Login(String username)
 
         [Test]
         public void Login_CreatesCookieForAMonth()

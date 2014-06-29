@@ -98,9 +98,9 @@
     <Compile Include="Security\Authorization\IRoleProvider.cs" />
     <Compile Include="Security\Authorization\RoleFactory.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
-    <Compile Include="Alerts\AlertMessage.cs" />
-    <Compile Include="Alerts\AlertMessageType.cs" />
-    <Compile Include="Alerts\MessagesContainer.cs" />
+    <Compile Include="Alerts\Alert.cs" />
+    <Compile Include="Alerts\AlertTypes.cs" />
+    <Compile Include="Alerts\AlertsContainer.cs" />
     <Compile Include="Security\Cryptography\IHasher.cs" />
   </ItemGroup>
   <ItemGroup>

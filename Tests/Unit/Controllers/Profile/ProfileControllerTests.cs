@@ -93,12 +93,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
 
             controller.Edit(profile);
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
-            Assert.AreEqual(MessagesContainer.DefaultFadeOut, actual.FadeOutAfter);
+            Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
-            Assert.AreEqual(AlertMessageType.Success, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
+            Assert.AreEqual(AlertTypes.Success, actual.Type);
         }
 
         [Test]
@@ -143,12 +142,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             controller.Delete();
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]
@@ -182,12 +180,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(false);
             controller.DeleteConfirmed(account);
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]

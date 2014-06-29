@@ -178,7 +178,6 @@ Else
 	    -CodeLanguage $CodeLanguage `
 	    -Project $ControllerProject
 
-
     Add-ProjectItemViaTemplate $IndexViewPath `
         -Template "Views\Index" `
         -Model @{ `
@@ -228,7 +227,6 @@ Else
         -TemplateFolders $TemplateFolders `
 	    -CodeLanguage $CodeLanguage `
 	    -Project $RazorViewProject
-
 
     Add-ProjectItemViaTemplate $ServiceTestsPath `
         -Template "Tests\ServiceTests" `

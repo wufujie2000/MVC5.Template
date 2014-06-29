@@ -279,7 +279,7 @@
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Profile\Delete.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
-    <Content Include="Views\Shared\_AlertMessages.cshtml" />
+    <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
@@ -414,7 +414,7 @@
     <Content Include="Views\Auth\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Auth\_AuthMessages.cshtml" />
+    <Content Include="Views\Auth\_AuthAlerts.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

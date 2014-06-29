@@ -30,8 +30,8 @@ namespace MvcTemplate.Tests.Helpers
             return new AccountView()
             {
                 Id = TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 Username = "Username" + TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 Password = "Password1"
             };
         }
@@ -42,8 +42,8 @@ namespace MvcTemplate.Tests.Helpers
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Email = TestId + instanceNumber.ToString() + "@tests.com",
-                Password = "Password1",
                 NewPassword = "NewPassword1",
+                Password = "Password1"
             };
         }
         public static AccountEditView CreateAccountEditView(Int32 instanceNumber = 1)
@@ -105,8 +105,8 @@ namespace MvcTemplate.Tests.Helpers
             {
                 Id = TestId + instanceNumber.ToString(),
                 Area = "Area" + instanceNumber.ToString(),
-                Controller = "Controller" + instanceNumber.ToString(),
-                Action = "Action" + instanceNumber.ToString()
+                Action = "Action" + instanceNumber.ToString(),
+                Controller = "Controller" + instanceNumber.ToString()
             };
         }
         public static PrivilegeView CreatePrivilegeView(Int32 instanceNumber = 1)

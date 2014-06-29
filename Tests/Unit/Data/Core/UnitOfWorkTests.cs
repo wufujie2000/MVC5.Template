@@ -116,7 +116,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             loggerMock.Verify(mock => mock.Save(), Times.Once());
         }
 
-
         [Test]
         public void Commit_DoesNotSaveLogsOnFailedCommit()
         {

@@ -30,37 +30,37 @@ namespace MvcTemplate.Services
             return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
         }
 
-        public Boolean CanLogin(AccountLoginView login)
+        public Boolean CanLogin(AccountLoginView view)
         {
-            Boolean isValid = IsAuthenticated(login.Username, login.Password);
+            Boolean isValid = IsAuthenticated(view.Username, view.Password);
             isValid &= ModelState.IsValid;
 
             return isValid;
         }
-        public Boolean CanRegister(AccountView account)
+        public Boolean CanRegister(AccountView view)
         {
-            Boolean isValid = IsUniqueUsername(account.Id, account.Username);
-            isValid &= IsUniqueEmail(account.Id, account.Email);
+            Boolean isValid = IsUniqueUsername(view.Id, view.Username);
+            isValid &= IsUniqueEmail(view.Id, view.Email);
             isValid &= ModelState.IsValid;
 
             return isValid;
         }
-        public Boolean CanEdit(ProfileEditView profile)
+        public Boolean CanEdit(ProfileEditView view)
         {
-            Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, profile.Username);
-            isValid &= IsUniqueEmail(HttpContext.Current.User.Identity.Name, profile.Email);
-            isValid &= IsCorrectPassword(profile.Password);
+            Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, view.Username);
+            isValid &= IsUniqueEmail(HttpContext.Current.User.Identity.Name, view.Email);
+            isValid &= IsCorrectPassword(view.Password);
             isValid &= ModelState.IsValid;
 
             return isValid;
         }
-        public Boolean CanEdit(AccountEditView account)
+        public Boolean CanEdit(AccountEditView view)
         {
             return ModelState.IsValid;
         }
-        public Boolean CanDelete(AccountView account)
+        public Boolean CanDelete(AccountView view)
         {
-            return IsCorrectPassword(account.Password);
+            return IsCorrectPassword(view.Password);
         }
 
         public IEnumerable<AccountView> GetViews()
@@ -75,34 +75,30 @@ namespace MvcTemplate.Services
             return UnitOfWork.Repository<Account>().GetById<TView>(id);
         }
 
-        public void Register(AccountView account)
+        public void Register(AccountView view)
         {
-            Account registration = UnitOfWork.ToModel<AccountView, Account>(account);
-            registration.Passhash = hasher.HashPassword(account.Password);
+            Account account = UnitOfWork.ToModel<AccountView, Account>(view);
+            account.Passhash = hasher.HashPassword(view.Password);
 
-            UnitOfWork.Repository<Account>().Insert(registration);
+            UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
         }
-        public void Edit(ProfileEditView profile)
+        public void Edit(ProfileEditView view)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
-            account.Username = profile.Username;
-            account.Email = profile.Email;
+            account.Username = view.Username;
+            account.Email = view.Email;
 
-            if (!String.IsNullOrWhiteSpace(profile.NewPassword))
-                account.Passhash = hasher.HashPassword(profile.NewPassword);
+            if (!String.IsNullOrWhiteSpace(view.NewPassword))
+                account.Passhash = hasher.HashPassword(view.NewPassword);
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
         }
         public void Edit(AccountEditView view)
         {
-            Account accountInDatabase = UnitOfWork.Repository<Account>().GetById(view.Id);
-            Account account = UnitOfWork.ToModel<AccountEditView, Account>(view);
-
-            account.Username = accountInDatabase.Username;
-            account.Passhash = accountInDatabase.Passhash;
-            account.Email = accountInDatabase.Email;
+            Account account = UnitOfWork.Repository<Account>().GetById(view.Id);
+            account.RoleId = view.RoleId;
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
@@ -165,7 +161,7 @@ namespace MvcTemplate.Services
         {
             Boolean passwordCorrect = passhash != null && hasher.Verify(password, passhash);
             if (!passwordCorrect)
-                AlertMessages.AddError(Validations.IncorrectUsernameOrPassword);
+                Alerts.AddError(Validations.IncorrectUsernameOrPassword);
 
             return passwordCorrect;
         }

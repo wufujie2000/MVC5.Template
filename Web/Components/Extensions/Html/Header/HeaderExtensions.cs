@@ -17,13 +17,14 @@ namespace MvcTemplate.Components.Extensions.Html
             icon.AddCssClass("fa fa-user");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Profile");
+
             return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", new { controller = "Profile", area = String.Empty }).ToString(), icon,  span));
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
+            TagBuilder span = new TagBuilder("span");
             TagBuilder action = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
-            TagBuilder span = new TagBuilder("span");
 
             action.MergeAttribute("data-toggle", "dropdown");
             action.AddCssClass("dropdown-toggle");
@@ -62,6 +63,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             html.ViewContext.RequestContext.RouteData.Values["language"] = currentLanguage;
             RemoveQueryValues(html);
+
             return new MvcHtmlString(String.Format("{0}{1}", action, languageList));
         }
         public static MvcHtmlString LogoutLink(this HtmlHelper html)
@@ -71,6 +73,7 @@ namespace MvcTemplate.Components.Extensions.Html
             icon.AddCssClass("fa fa-share");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
+
             return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Auth", area = String.Empty }).ToString(), icon, span));
         }
 

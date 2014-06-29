@@ -13,12 +13,12 @@
     $('div.alert').each(function (index, element) {
         var alertDiv = $(element);
 
-        if (alertDiv.data('fade-out-after') != null && alertDiv.data('fade-out-after') != 0) {
+        if (alertDiv.data('fadeout-after') != null && alertDiv.data('fadeout-after') != 0) {
             setTimeout(function () {
                 alertDiv.fadeTo(300, 0).slideUp(300, function () {
                     $(this).remove();
                 });
-            }, alertDiv.data('fade-out-after') * 1000);
+            }, alertDiv.data('fadeout-after'));
         }
     });
 

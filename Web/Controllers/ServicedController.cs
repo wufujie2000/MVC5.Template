@@ -15,21 +15,22 @@ namespace MvcTemplate.Controllers
         {
             Service = service;
             Service.ModelState = Service.ModelState ?? ModelState;
-            Service.AlertMessages = Service.AlertMessages ?? new MessagesContainer();
+            Service.Alerts = Service.Alerts ?? new AlertsContainer();
         }
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             base.OnActionExecuted(filterContext);
 
-            if (Session["Messages"] == null) {
-                Session["Messages"] = Service.AlertMessages;
+            if (Session["Alerts"] == null)
+            {
+                Session["Alerts"] = Service.Alerts;
                 return;
             }
 
-            MessagesContainer current = Session["Messages"] as MessagesContainer;
-            if (current != Service.AlertMessages)
-                current.Merge(Service.AlertMessages);
+            AlertsContainer current = Session["Alerts"] as AlertsContainer;
+            if (current != Service.Alerts)
+                current.Merge(Service.Alerts);
         }
 
         protected override void Dispose(Boolean disposing)

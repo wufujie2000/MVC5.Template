@@ -10,28 +10,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class AuthExtensionsTests
     {
+        private Expression<Func<BootstrapModel, String>> expression;
         private HtmlHelper<BootstrapModel> html;
-        private BootstrapModel bootstrapModel;
+        private BootstrapModel model;
 
         [SetUp]
         public void SetUp()
         {
-            bootstrapModel = new BootstrapModel()
-            {
-                NotRequired = "NotRequired",
-                Required = "Required",
-                Date = DateTime.Now,
-                Number = 10.7854M,
-                Relation = new BootstrapModel()
-                {
-                    NotRequired = "NotRequiredRelation",
-                    Date = new DateTime(2011, 01, 01),
-                    Required = "RequiredRelation",
-                    Number = 1.6666M,
-                }
-            };
-
-            html = new HtmlMock<BootstrapModel>(bootstrapModel).Html;
+            model = new BootstrapModel();
+            html = new HtmlMock<BootstrapModel>(model).Html;
+            expression = (expModel) => expModel.Relation.Required;
         }
 
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
@@ -39,13 +27,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthUsernameFor_FormsAuthUsernameFor()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
-
             String actual = html.AuthUsernameFor(expression).ToString();
-            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-user\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
+            String expected = String.Format(
+                "<span class=\"input-group-addon\">" +
+                    "<i class=\"fa fa-user\"></i>" +
+                "</span>" +
+                "<input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                bootstrapModel.Relation.Required);
+                model.Relation.Required);
 
             Assert.AreEqual(expected, actual);
         }
@@ -57,10 +47,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthPasswordFor_FormsAuthPasswordFor()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
-
             String actual = html.AuthPasswordFor(expression).ToString();
-            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-lock\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
+            String expected = String.Format(
+                "<span class=\"input-group-addon\">" +
+                    "<i class=\"fa fa-lock\"></i>" +
+                "</span>" +
+                "<input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression));
 
@@ -74,13 +66,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthEmailFor_FormsAuthEmailFor()
         {
-            Expression<Func<BootstrapModel, String>> expression = (model) => model.Relation.Required;
-
             String actual = html.AuthEmailFor(expression).ToString();
-            String expected = String.Format("<span class=\"input-group-addon\"><i class=\"fa fa-envelope\"></i></span><input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
+            String expected = String.Format(
+                "<span class=\"input-group-addon\">" +
+                    "<i class=\"fa fa-envelope\"></i>" +
+                "</span>" +
+                "<input class=\"form-control\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                bootstrapModel.Relation.Required);
+                model.Relation.Required);
 
             Assert.AreEqual(expected, actual);
         }
@@ -93,9 +87,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AuthLanguageSelect_FormsAuthLanguageSelect()
         {
             String actual = html.AuthLanguageSelect().ToString();
-            String expected = String.Format("<span class=\"input-group-addon flag-span\"><i class=\"fa fa-flag\"></i></span><input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input><select id=\"Language\"><option value=\"{0}\">{1}</option><option value=\"{2}\">{3}</option></select>",
-                "en-GB", "English",
-                "lt-LT", "Lietuvių");
+            String expected =
+                "<span class=\"input-group-addon flag-span\">" +
+                "<i class=\"fa fa-flag\"></i>" +
+                "</span>" +
+                "<input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input>" +
+                "<select id=\"Language\">" +
+                    "<option value=\"en-GB\">English</option>" +
+                    "<option value=\"lt-LT\">Lietuvių</option>" +
+                "</select>";
 
             Assert.AreEqual(expected, actual);
         }

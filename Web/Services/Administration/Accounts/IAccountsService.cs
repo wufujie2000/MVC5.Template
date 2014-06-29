@@ -9,17 +9,17 @@ namespace MvcTemplate.Services
         Boolean IsLoggedIn();
         Boolean AccountExists(String accountId);
 
-        Boolean CanLogin(AccountLoginView account);
-        Boolean CanRegister(AccountView account);
-        Boolean CanEdit(ProfileEditView profile);
-        Boolean CanEdit(AccountEditView account);
-        Boolean CanDelete(AccountView profile);
+        Boolean CanLogin(AccountLoginView view);
+        Boolean CanRegister(AccountView view);
+        Boolean CanEdit(ProfileEditView view);
+        Boolean CanEdit(AccountEditView view);
+        Boolean CanDelete(AccountView view);
 
         IEnumerable<AccountView> GetViews();
         TView GetView<TView>(String id) where TView : BaseView;
 
-        void Register(AccountView account);
-        void Edit(ProfileEditView profile);
+        void Register(AccountView view);
+        void Edit(ProfileEditView view);
         void Edit(AccountEditView view);
         void Delete(String accountId);
 

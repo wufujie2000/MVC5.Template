@@ -18,10 +18,6 @@ namespace MvcTemplate.Components.Extensions.Html
         public const String FormActionsClass = "form-actions col-sm-12 col-md-12 col-lg-7";
         public const String ValidationClass = "control-validation col-sm-12 col-md-12 col-lg-5";
 
-        public static FormWrapper ContentGroup(this HtmlHelper html)
-        {
-            return new FormWrapper(html.ViewContext.Writer, ContentClass);
-        }
         public static FormGroup FormGroup(this HtmlHelper html)
         {
             return new FormGroup(html.ViewContext.Writer);
@@ -34,7 +30,15 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new FormWrapper(html.ViewContext.Writer, FormActionsClass);
         }
+        public static FormWrapper ContentGroup(this HtmlHelper html)
+        {
+            return new FormWrapper(html.ViewContext.Writer, ContentClass);
+        }
 
+        public static MvcHtmlString FormSubmit(this HtmlHelper html)
+        {
+            return html.Submit(Resources.Shared.Resources.Submit);
+        }
         public static MvcHtmlString Submit(this HtmlHelper html, String value)
         {
             TagBuilder submit = new TagBuilder("input");
@@ -44,12 +48,8 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
         }
-        public static MvcHtmlString FormSubmit(this HtmlHelper html)
-        {
-            return html.Submit(Resources.Shared.Resources.Submit);
-        }
 
-        public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             if (expression.IsRequired())
@@ -81,7 +81,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
         }
-        public static MvcHtmlString FormPasswordFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
             return new MvcHtmlString(WrapWith(html.PasswordFor(expression, AddClass(null, "form-control")), ContentClass));
         }
@@ -94,7 +94,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new FormWrapper(content, cssClass).ToString();
         }
-        private static Boolean IsRequired<T, V>(this Expression<Func<T, V>> expression)
+        private static Boolean IsRequired<TModel, TProperty>(this Expression<Func<TModel, TProperty>> expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null)

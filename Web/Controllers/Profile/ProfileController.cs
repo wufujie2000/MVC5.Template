@@ -34,7 +34,7 @@ namespace MvcTemplate.Controllers.Profile
             if (Service.CanEdit(profile))
             {
                 Service.Edit(profile);
-                Service.AlertMessages.Add(AlertMessageType.Success, Messages.ProfileUpdated);
+                Service.Alerts.Add(AlertTypes.Success, Messages.ProfileUpdated);
             }
 
             return View(profile);
@@ -46,7 +46,7 @@ namespace MvcTemplate.Controllers.Profile
             if (!Service.AccountExists(HttpContext.User.Identity.Name))
                 return LogOut();
 
-            Service.AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
+            Service.Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
 
             return View();
         }
@@ -61,7 +61,7 @@ namespace MvcTemplate.Controllers.Profile
 
             if (!Service.CanDelete(profile))
             {
-                Service.AlertMessages.Add(AlertMessageType.Danger, Messages.ProfileDeleteDisclaimer, 0);
+                Service.Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
                 return View();
             }
 

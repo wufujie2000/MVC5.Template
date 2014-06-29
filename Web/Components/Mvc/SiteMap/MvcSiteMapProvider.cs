@@ -99,7 +99,6 @@ namespace MvcTemplate.Components.Mvc
 
             return authorizedMenus;
         }
-
         private MvcSiteMapMenuNode CreateAuthorizedMenu(MvcSiteMapNode menu, IEnumerable<AccountPrivilege> privileges)
         {
             MvcSiteMapMenuNode authorizedMenu = new MvcSiteMapMenuNode();

@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
 
         [Test]
-        public void AddModelError_AddsModelErrorMEssageWithKey()
+        public void AddModelError_AddsModelErrorMessageWithKey()
         {
             modelState.AddModelError(expression, "Test error");
 

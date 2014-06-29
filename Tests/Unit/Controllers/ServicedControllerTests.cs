@@ -63,22 +63,22 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void ServicedController_OnNotNullAlertMessagesKeepsExistingAlertMessages()
+        public void ServicedController_OnNotNullAlertsKeepsExistingAlerts()
         {
-            MessagesContainer expected = service.AlertMessages = new MessagesContainer();
+            AlertsContainer expected = service.Alerts = new AlertsContainer();
             controller = new ServicedControllerStub(service);
-            MessagesContainer actual = service.AlertMessages;
+            AlertsContainer actual = service.Alerts;
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void ServicedController_OnNullAlertMessagesCreatesNewAlertMessages()
+        public void ServicedController_OnNullAlertsCreatesNewAlerts()
         {
-            service.AlertMessages = null;
+            service.Alerts = null;
             controller = new ServicedControllerStub(service);
 
-            Assert.IsNotNull(service.AlertMessages);
+            Assert.IsNotNull(service.Alerts);
         }
 
         #endregion
@@ -86,27 +86,27 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: OnActionExecuted(ActionExecutedContext filterContext)
 
         [Test]
-        public void OnActionExecuted_SetsMessagesToSessionThenMessagesInSessionAreNull()
+        public void OnActionExecuted_SetsAlertsToSessionThenAlertsInSessionAreNull()
         {
-            MessagesContainer alertMessages = service.AlertMessages;
+            AlertsContainer alerts = service.Alerts;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
-            Assert.AreEqual(alertMessages, controller.Session["Messages"]);
+            Assert.AreEqual(alerts, controller.Session["Alerts"]);
         }
 
         [Test]
-        public void OnActionExecuted_MergesMessagesToSession()
+        public void OnActionExecuted_MergesAlertsToSession()
         {
-            Object expected = service.AlertMessages;
-            service.AlertMessages.AddError("First");
+            Object expected = service.Alerts;
+            service.Alerts.AddError("First");
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            MessagesContainer newContainer = new MessagesContainer();
+            AlertsContainer newContainer = new AlertsContainer();
             newContainer.AddError("Second");
 
-            service.AlertMessages = newContainer;
+            service.Alerts = newContainer;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            Object actual = controller.Session["Messages"];
+            Object actual = controller.Session["Alerts"];
 
             Assert.AreEqual(expected, actual);
         }
@@ -114,12 +114,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnActionExecuted_DoesNotMergeSameContainers()
         {
-            service.AlertMessages.AddError("First");
-            IEnumerable<AlertMessage> expected = service.AlertMessages.ToList();
+            service.Alerts.AddError("First");
+            IEnumerable<Alert> expected = service.Alerts.ToList();
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            IEnumerable<AlertMessage> actual = controller.Session["Messages"] as IEnumerable<AlertMessage>;
+            IEnumerable<Alert> actual = controller.Session["Alerts"] as IEnumerable<Alert>;
 
             CollectionAssert.AreEqual(expected, actual);
         }

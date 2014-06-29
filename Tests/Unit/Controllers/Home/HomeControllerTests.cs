@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
 
             serviceMock = new Mock<IAccountsService>();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            serviceMock.Object.AlertMessages = new MessagesContainer();
+            serviceMock.Object.Alerts = new AlertsContainer();
             serviceMock.SetupAllProperties();
 
             controller = new HomeController(serviceMock.Object);
@@ -79,12 +79,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.Error();
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
             Assert.AreEqual(Messages.SystemError, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]
@@ -112,12 +111,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.NotFound();
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
             Assert.AreEqual(Messages.PageNotFound, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]
@@ -145,12 +143,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.Unauthorized();
 
-            AlertMessage actual = serviceMock.Object.AlertMessages.First();
+            Alert actual = serviceMock.Object.Alerts.First();
 
             Assert.AreEqual(Messages.Unauthorized, actual.Message);
-            Assert.AreEqual(AlertMessageType.Danger, actual.Type);
-            Assert.AreEqual(String.Empty, actual.Key);
-            Assert.AreEqual(0, actual.FadeOutAfter);
+            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]

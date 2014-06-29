@@ -20,25 +20,25 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class GridMvcExtensionsTests
     {
-        private Mock<IGridColumnCollection<GridMvcView>> gridColumnCollectionMock;
-        private IGridColumnCollection<GridMvcView> gridColumnCollection;
-        private Mock<IGridHtmlOptions<GridMvcView>> gridHtmlOptionsMock;
-        private IGridHtmlOptions<GridMvcView> gridHtmlOptions;
-        private Mock<IGridColumn<GridMvcView>> gridColumnMock;
+        private Mock<IGridColumnCollection<GridMvcView>> columnCollectionMock;
+        private IGridColumnCollection<GridMvcView> columnCollection;
+        private Mock<IGridHtmlOptions<GridMvcView>> htmlOptionsMock;
+        private IGridHtmlOptions<GridMvcView> htmlOptions;
+        private Mock<IGridColumn<GridMvcView>> columnMock;
         private Mock<IRoleProvider> roleProviderMock;
-        private IGridColumn<GridMvcView> gridColumn;
+        private IGridColumn<GridMvcView> column;
 
         [SetUp]
         public void SetUp()
         {
-            gridColumnMock = CreateIGridColumnMock();
-            gridColumn = gridColumnMock.Object;
+            columnMock = CreateIGridColumnMock();
+            column = columnMock.Object;
 
-            gridHtmlOptionsMock = CreateIGridHtmlOptionsMock();
-            gridHtmlOptions = gridHtmlOptionsMock.Object;
+            htmlOptionsMock = CreateIGridHtmlOptionsMock();
+            htmlOptions = htmlOptionsMock.Object;
 
-            gridColumnCollectionMock = CreateIGridCollumnCollectionMock(gridColumn);
-            gridColumnCollection = gridColumnCollectionMock.Object;
+            columnCollectionMock = CreateIGridCollumnCollectionMock(column);
+            columnCollection = columnCollectionMock.Object;
 
             HttpContext.Current = new HttpMock().HttpContext;
 
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(false);
 
-            Assert.IsNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
+            Assert.IsNull(columnCollection.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
@@ -69,47 +69,47 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             RoleFactory.Provider = null;
 
-            Assert.IsNotNull(gridColumnCollection.AddActionLink(LinkAction.Edit));
+            Assert.IsNotNull(columnCollection.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
         public void AddActionLink_AddsGridColumn()
         {
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
-            gridColumnCollectionMock.Verify(mock => mock.Add(), Times.Once());
+            columnCollectionMock.Verify(mock => mock.Add(), Times.Once());
         }
 
         [Test]
         public void AddActionLink_SetsGridColumnWidthTo25()
         {
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
-            gridColumnMock.Verify(mock => mock.SetWidth(25), Times.Once());
+            columnMock.Verify(mock => mock.SetWidth(25), Times.Once());
         }
 
         [Test]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
-            gridColumnMock.Verify(mock => mock.Encoded(false), Times.Once());
+            columnMock.Verify(mock => mock.Encoded(false), Times.Once());
         }
 
         [Test]
         public void AddActionLink_DoesNotSanitizeGridColumn()
         {
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
-            gridColumnMock.Verify(mock => mock.Sanitized(false), Times.Once());
+            columnMock.Verify(mock => mock.Sanitized(false), Times.Once());
         }
 
         [Test]
         public void AddActionLink_SetsCssOnGridColumn()
         {
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
-            gridColumnMock.Verify(mock => mock.Css("action-link-cell"), Times.Once());
+            columnMock.Verify(mock => mock.Css("action-link-cell"), Times.Once());
         }
 
         [Test]
@@ -124,9 +124,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     action != LinkAction.Delete);
 
             foreach (LinkAction action in notSupportedActions)
-                gridColumnCollection.AddActionLink(action);
+                columnCollection.AddActionLink(action);
 
-            gridColumnMock.Verify(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()), Times.Never());
+            columnMock.Verify(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()), Times.Never());
         }
 
         [Test]
@@ -141,9 +141,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     action == LinkAction.Delete);
 
             foreach (LinkAction action in supportedActions)
-                gridColumnCollection.AddActionLink(action);
+                columnCollection.AddActionLink(action);
 
-            gridColumnMock.Verify(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()), Times.Exactly(supportedActions.Count()));
+            columnMock.Verify(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()), Times.Exactly(supportedActions.Count()));
         }
 
         [Test]
@@ -151,10 +151,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             GridMvcView view = new GridMvcView();
             Func<GridMvcView, String> detailsFunc = null;
-            gridColumnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
+            columnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
                 .Callback<Func<GridMvcView, String>>(renderFunc => detailsFunc = renderFunc)
-                .Returns(gridColumn);
-            gridColumnCollection.AddActionLink(LinkAction.Details);
+                .Returns(column);
+            columnCollection.AddActionLink(LinkAction.Details);
 
             String actual = detailsFunc.Invoke(view);
             String expected = String.Format("<div class=\"action-link-container details-action-link\"><a href=\"{0}\"><i class=\"fa fa-info\"></i></a></div>",
@@ -168,10 +168,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             GridMvcView view = new GridMvcView();
             Func<GridMvcView, String> editFunc = null;
-            gridColumnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
+            columnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
                 .Callback<Func<GridMvcView, String>>(renderFunc => editFunc = renderFunc)
-                .Returns(gridColumn);
-            gridColumnCollection.AddActionLink(LinkAction.Edit);
+                .Returns(column);
+            columnCollection.AddActionLink(LinkAction.Edit);
 
             String actual = editFunc.Invoke(view);
             String expected = String.Format("<div class=\"action-link-container edit-action-link\"><a href=\"{0}\"><i class=\"fa fa-pencil\"></i></a></div>",
@@ -185,10 +185,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             GridMvcView view = new GridMvcView();
             Func<GridMvcView, String> deleteFunc = null;
-            gridColumnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
+            columnMock.Setup(mock => mock.RenderValueAs(It.IsAny<Func<GridMvcView, String>>()))
                 .Callback<Func<GridMvcView, String>>(renderFunc => deleteFunc = renderFunc)
-                .Returns(gridColumn);
-            gridColumnCollection.AddActionLink(LinkAction.Delete);
+                .Returns(column);
+            columnCollection.AddActionLink(LinkAction.Delete);
 
             String actual = deleteFunc.Invoke(view);
             String expected = String.Format("<div class=\"action-link-container delete-action-link\"><a href=\"{0}\"><i class=\"fa fa-times\"></i></a></div>",
@@ -204,9 +204,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_AddsGridColumn()
         {
-            gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
+            columnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
-            gridColumnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
+            columnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
         }
 
         [Test]
@@ -214,17 +214,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
-            gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
+            columnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Titled(expected), Times.Once());
+            columnMock.Verify(mock => mock.Titled(expected), Times.Once());
         }
 
         [Test]
         public void AddDateProperty_SetsGridColumnCss()
         {
-            gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
+            columnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Css("date-cell"), Times.Once());
+            columnMock.Verify(mock => mock.Css("date-cell"), Times.Once());
         }
 
         [Test]
@@ -232,9 +232,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
-            gridColumnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
+            columnCollection.AddDateProperty<GridMvcView>(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Format(expected), Times.Once());
+            columnMock.Verify(mock => mock.Format(expected), Times.Once());
         }
 
         #endregion
@@ -244,9 +244,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            gridColumnCollection.AddDateTimeProperty(model => model.EntityDate);
+            columnCollection.AddDateTimeProperty(model => model.EntityDate);
 
-            gridColumnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
+            columnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
         }
 
         [Test]
@@ -254,17 +254,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
-            gridColumnCollection.AddDateTimeProperty(model => model.EntityDate);
+            columnCollection.AddDateTimeProperty(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Titled(expected), Times.Once());
+            columnMock.Verify(mock => mock.Titled(expected), Times.Once());
         }
 
         [Test]
         public void AddDateTimeProperty_SetsGridColumnCss()
         {
-            gridColumnCollection.AddDateTimeProperty(model => model.EntityDate);
+            columnCollection.AddDateTimeProperty(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Css("date-cell"), Times.Once());
+            columnMock.Verify(mock => mock.Css("date-cell"), Times.Once());
         }
 
         #endregion
@@ -274,9 +274,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddProperty_AddsGridColumn()
         {
-            gridColumnCollection.AddProperty(model => model.EntityDate);
+            columnCollection.AddProperty(model => model.EntityDate);
 
-            gridColumnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
+            columnCollectionMock.Verify(mock => mock.Add<DateTime?>(model => model.EntityDate), Times.Once());
         }
 
         [Test]
@@ -284,9 +284,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<GridMvcView, DateTime?>(model => model.EntityDate);
 
-            gridColumnCollection.AddProperty(model => model.EntityDate);
+            columnCollection.AddProperty(model => model.EntityDate);
 
-            gridColumnMock.Verify(mock => mock.Titled(expected), Times.Once());
+            columnMock.Verify(mock => mock.Titled(expected), Times.Once());
         }
 
         #endregion
@@ -296,65 +296,65 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void ApplyAttributes_SetsEmptyText()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_SetsLanguage()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.SetLanguage(CultureInfo.CurrentCulture.Name), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.SetLanguage(CultureInfo.CurrentCulture.Name), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_SetsName()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.Named(typeof(GridMvcView).Name), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.Named(typeof(GridMvcView).Name), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_EnablesMultipleFilters()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.WithMultipleFilters(), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.WithMultipleFilters(), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_DisablesRowSelection()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.Selectable(false), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.Selectable(false), Times.Once());
         }
 
         [Test]
-        public void ApplyAttributes_SetsPagingStepTo15()
+        public void ApplyAttributes_SetsPaging()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.WithPaging(15), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.WithPaging(15), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_EnablesFiltering()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.Filterable(), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.Filterable(), Times.Once());
         }
 
         [Test]
         public void ApplyAttributes_EnablesSorting()
         {
-            gridHtmlOptions.ApplyAttributes();
+            htmlOptions.ApplyAttributes();
 
-            gridHtmlOptionsMock.Verify(mock => mock.Sortable(), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.Sortable(), Times.Once());
         }
 
         #endregion

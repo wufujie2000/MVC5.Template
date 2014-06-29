@@ -145,7 +145,7 @@ namespace MvcTemplate.Tests.Resources.Tests
 
         #endregion
 
-        #region Static method: GetDatalistTitle<TModel>() where TModel : class
+        #region Static method: GetDatalistTitle<TModel>()
 
         [Test]
         public void GetDatalistTitle_GetsTitle()
@@ -249,10 +249,10 @@ namespace MvcTemplate.Tests.Resources.Tests
 
         #endregion
 
-        #region Static method: GetPropertyTitle<T, TKey>(Expression<Func<T, TKey>> property)
+        #region Static method: GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
 
         [Test]
-        public void GetPropertyTitle_OnNonMemberExpressionThrows()
+        public void GetPropertyTitle_OnNotMemberExpressionThrows()
         {
             Assert.Throws<InvalidOperationException>(() =>
                 ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(profile => profile.Method()),

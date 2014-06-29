@@ -6,7 +6,7 @@ namespace MvcTemplate.Services
 {
     public interface IRolesService : IService
     {
-        void SeedPrivilegesTree(RoleView role);
+        void SeedPrivilegesTree(RoleView view);
 
         Boolean CanCreate(RoleView view);
         Boolean CanEdit(RoleView view);

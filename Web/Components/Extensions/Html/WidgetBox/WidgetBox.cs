@@ -13,14 +13,14 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public WidgetBox(TextWriter writer, String iconClass, String title, String buttons)
         {
-            this.writer = writer;
-            widgetBox = new TagBuilder("div");
-            TagBuilder widgetTitle = new TagBuilder("div");
             TagBuilder titleIconSpan = new TagBuilder("span");
-            TagBuilder titleIcon = new TagBuilder("i");
-            TagBuilder titleHeader = new TagBuilder("h5");
             TagBuilder titleButtons = new TagBuilder("div");
+            TagBuilder widgetTitle = new TagBuilder("div");
+            TagBuilder titleHeader = new TagBuilder("h5");
+            TagBuilder titleIcon = new TagBuilder("i");
             widgetContent = new TagBuilder("div");
+            widgetBox = new TagBuilder("div");
+            this.writer = writer;
 
             titleButtons.AddCssClass("widget-title-buttons");
             titleIconSpan.AddCssClass("widget-title-icon");

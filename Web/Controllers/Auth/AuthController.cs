@@ -43,7 +43,7 @@ namespace MvcTemplate.Controllers.Auth
                     return View(account);
 
                 Service.Register(account);
-                Service.Alerts.Add(AlertTypes.Success, Messages.SuccesfulRegistration);
+                Alerts.Add(AlertTypes.Success, Messages.SuccesfulRegistration);
 
                 return RedirectToAction("Login");
             }

@@ -30,7 +30,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             profile = new ProfileEditView();
             account = new AccountView();
 
-            serviceMock.Object.Alerts = new AlertsContainer();
             controller = new ProfileController(serviceMock.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
@@ -96,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
 
             controller.Edit(profile);
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
@@ -146,7 +145,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
             controller.Delete();
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
@@ -182,7 +181,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             serviceMock.Setup(mock => mock.CanDelete(account)).Returns(false);
             controller.DeleteConfirmed(account);
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);

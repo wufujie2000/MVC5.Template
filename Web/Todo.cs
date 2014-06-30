@@ -10,6 +10,5 @@
         // TODO: Selecting views and models gives different datetime results
         // TOOD: Separate validation logic from services?
         // TODO: Add unique indexes on username email and role name
-        // TODO: Move alerts to controller
     }
 }

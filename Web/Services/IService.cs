@@ -7,6 +7,5 @@ namespace MvcTemplate.Services
     public interface IService : IDisposable
     {
         ModelStateDictionary ModelState { get; set; }
-        AlertsContainer Alerts { get; set; }
     }
 }

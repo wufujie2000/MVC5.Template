@@ -1,10 +1,13 @@
 ﻿using Moq;
 using Moq.Protected;
+using MvcTemplate.Components.Alerts;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -68,6 +71,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             IRoleProvider expected = RoleFactory.Provider;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void BaseController_CreatessEmptyAlertsContainer()
+        {
+            CollectionAssert.IsEmpty(baseController.Alerts);
         }
 
         #endregion
@@ -269,6 +278,55 @@ namespace MvcTemplate.Tests.Unit.Controllers
             baseController.BaseOnAuthorization(filterContext);
 
             Assert.IsNull(filterContext.Result);
+        }
+
+        #endregion
+
+        #region Method: OnActionExecuted(ActionExecutedContext context)
+
+        [Test]
+        public void OnActionExecuted_SetsAlertsToSessionThenAlertsInSessionAreNull()
+        {
+            baseController.BaseOnActionExecuted(new ActionExecutedContext());
+
+            AlertsContainer expected = baseController.Alerts;
+            Object actual = baseController.Session["Alerts"];
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void OnActionExecuted_MergesAlertsToSession()
+        {
+            HttpContextBase context = baseController.HttpContext;
+            Object expected = baseController.Alerts;
+            baseController.Alerts.AddError("First");
+
+            baseController.BaseOnActionExecuted(new ActionExecutedContext());
+            AlertsContainer newContainer = new AlertsContainer();
+            newContainer.AddError("Second");
+
+            baseController = new BaseControllerStub();
+            baseController.ControllerContext = new ControllerContext();
+            baseController.ControllerContext.HttpContext = context;
+
+            baseController.BaseOnActionExecuted(new ActionExecutedContext());
+            Object actual = baseController.Session["Alerts"];
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void OnActionExecuted_DoesNotMergeSameContainers()
+        {
+            baseController.Alerts.AddError("First");
+            IEnumerable<Alert> expected = baseController.Alerts;
+
+            baseController.BaseOnActionExecuted(new ActionExecutedContext());
+            baseController.BaseOnActionExecuted(new ActionExecutedContext());
+            IEnumerable<Alert> actual = baseController.Session["Alerts"] as IEnumerable<Alert>;
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

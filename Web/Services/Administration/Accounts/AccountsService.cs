@@ -161,7 +161,7 @@ namespace MvcTemplate.Services
         {
             Boolean passwordCorrect = passhash != null && hasher.Verify(password, passhash);
             if (!passwordCorrect)
-                Alerts.AddError(Validations.IncorrectUsernameOrPassword);
+                ModelState.AddModelError(String.Empty, Validations.IncorrectUsernameOrPassword);
 
             return passwordCorrect;
         }

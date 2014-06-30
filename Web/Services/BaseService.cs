@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Data.Core;
 using System;
 using System.Web.Mvc;
 
@@ -9,17 +8,12 @@ namespace MvcTemplate.Services
     {
         private Boolean disposed;
 
-        public ModelStateDictionary ModelState
-        {
-            get;
-            set;
-        }
-        public AlertsContainer Alerts
-        {
-            get;
-            set;
-        }
         protected IUnitOfWork UnitOfWork
+        {
+            get;
+            set;
+        }
+        public ModelStateDictionary ModelState
         {
             get;
             set;
@@ -27,7 +21,6 @@ namespace MvcTemplate.Services
 
         public BaseService(IUnitOfWork unitOfWork)
         {
-            Alerts = new AlertsContainer();
             UnitOfWork = unitOfWork;
         }
 

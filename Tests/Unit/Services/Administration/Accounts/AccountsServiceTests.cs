@@ -39,7 +39,6 @@ namespace MvcTemplate.Tests.Unit.Services
             hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
             hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
             service = new AccountsService(new UnitOfWork(context), hasherMock.Object);
-            service.Alerts = new AlertsContainer();
             service.ModelState = new ModelStateDictionary();
             hasher = hasherMock.Object;
 
@@ -117,11 +116,10 @@ namespace MvcTemplate.Tests.Unit.Services
             account.Username = String.Empty;
             service.CanLogin(account);
 
+            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
-            Alert actualMessage = service.Alerts.First();
 
-            Assert.AreEqual(AlertTypes.Danger, actualMessage.Type);
-            Assert.AreEqual(expected, actualMessage.Message);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -141,11 +139,10 @@ namespace MvcTemplate.Tests.Unit.Services
             account.Password += "Incorrect";
             service.CanLogin(account);
 
+            String actual = service.ModelState[String.Empty].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
-            Alert actualMessage = service.Alerts.First();
 
-            Assert.AreEqual(AlertTypes.Danger, actualMessage.Type);
-            Assert.AreEqual(expected, actualMessage.Message);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

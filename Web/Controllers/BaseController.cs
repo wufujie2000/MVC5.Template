@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Security;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -10,6 +11,11 @@ namespace MvcTemplate.Controllers
     [Authorize]
     public abstract class BaseController : Controller
     {
+        protected IRoleProvider RoleProvider
+        {
+            get;
+            set;
+        }
         protected String CurrentAccountId
         {
             get
@@ -17,14 +23,15 @@ namespace MvcTemplate.Controllers
                 return HttpContext.User.Identity.Name;
             }
         }
-        protected IRoleProvider RoleProvider
+        public AlertsContainer Alerts
         {
             get;
-            set;
+            private set;
         }
 
         public BaseController()
         {
+            Alerts = new AlertsContainer();
             RoleProvider = RoleFactory.Provider;
         }
 
@@ -73,7 +80,6 @@ namespace MvcTemplate.Controllers
 
             return base.BeginExecuteCore(callback, state);
         }
-
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
@@ -85,6 +91,20 @@ namespace MvcTemplate.Controllers
 
             if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();
+        }
+        protected override void OnActionExecuted(ActionExecutedContext context)
+        {
+            base.OnActionExecuted(context);
+
+            if (Session["Alerts"] == null)
+            {
+                Session["Alerts"] = Alerts;
+                return;
+            }
+
+            AlertsContainer current = Session["Alerts"] as AlertsContainer;
+            if (current != Alerts)
+                current.Merge(Alerts);
         }
     }
 }

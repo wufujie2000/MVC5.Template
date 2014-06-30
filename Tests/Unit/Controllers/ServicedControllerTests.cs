@@ -1,11 +1,7 @@
 ﻿using Moq;
-using MvcTemplate.Components.Alerts;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -23,7 +19,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             serviceMock.SetupAllProperties();
             service = serviceMock.Object;
 
-            service.Alerts = new AlertsContainer();
             controller = new ServicedControllerStub(service);
             controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
@@ -58,49 +53,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ModelStateDictionary actual = service.ModelState;
 
             Assert.AreSame(expected, actual);
-        }
-
-        #endregion
-
-        #region Method: OnActionExecuted(ActionExecutedContext filterContext)
-
-        [Test]
-        public void OnActionExecuted_SetsAlertsToSessionThenAlertsInSessionAreNull()
-        {
-            AlertsContainer alerts = service.Alerts;
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-
-            Assert.AreSame(alerts, controller.Session["Alerts"]);
-        }
-
-        [Test]
-        public void OnActionExecuted_MergesAlertsToSession()
-        {
-            Object expected = service.Alerts;
-            service.Alerts.AddError("First");
-
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-            AlertsContainer newContainer = new AlertsContainer();
-            newContainer.AddError("Second");
-
-            service.Alerts = newContainer;
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-            Object actual = controller.Session["Alerts"];
-
-            Assert.AreSame(expected, actual);
-        }
-
-        [Test]
-        public void OnActionExecuted_DoesNotMergeSameContainers()
-        {
-            service.Alerts.AddError("First");
-            IEnumerable<Alert> expected = service.Alerts.ToList();
-
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
-            IEnumerable<Alert> actual = controller.Session["Alerts"] as IEnumerable<Alert>;
-
-            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

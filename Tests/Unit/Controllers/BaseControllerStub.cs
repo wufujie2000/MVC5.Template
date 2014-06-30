@@ -60,10 +60,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             return base.BeginExecuteCore(callback, state);
         }
-
         public void BaseOnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
+        }
+        public void BaseOnActionExecuted(ActionExecutedContext context)
+        {
+            base.OnActionExecuted(context);
         }
     }
 }

@@ -28,7 +28,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
             serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
 
             serviceMock.SetupAllProperties();
-            serviceMock.Object.Alerts = new AlertsContainer();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
 
             controller = new HomeController(serviceMock.Object);
@@ -79,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.Error();
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.SystemError, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
@@ -111,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.NotFound();
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.PageNotFound, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
@@ -143,7 +142,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             controller.Unauthorized();
 
-            Alert actual = serviceMock.Object.Alerts.First();
+            Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.Unauthorized, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);

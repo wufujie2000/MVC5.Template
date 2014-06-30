@@ -28,7 +28,7 @@ namespace MvcTemplate.Controllers.Home
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            Service.Alerts.AddError(Messages.SystemError);
+            Alerts.AddError(Messages.SystemError);
 
             return View();
         }
@@ -39,7 +39,7 @@ namespace MvcTemplate.Controllers.Home
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            Service.Alerts.AddError(Messages.PageNotFound);
+            Alerts.AddError(Messages.PageNotFound);
 
             return View();
         }
@@ -50,7 +50,7 @@ namespace MvcTemplate.Controllers.Home
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            Service.Alerts.AddError(Messages.Unauthorized);
+            Alerts.AddError(Messages.Unauthorized);
 
             return View();
         }

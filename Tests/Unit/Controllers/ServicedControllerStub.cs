@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Controllers;
 using MvcTemplate.Services;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -17,11 +16,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public ServicedControllerStub(IService service)
             : base(service)
         {
-        }
-
-        public void BaseOnActionExecuted(ActionExecutedContext filterContext)
-        {
-            base.OnActionExecuted(filterContext);
         }
     }
 }

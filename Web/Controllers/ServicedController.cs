@@ -1,35 +1,23 @@
-﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Services;
+﻿using MvcTemplate.Services;
 using System;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers
 {
     public abstract class ServicedController<TService> : BaseController
         where TService : IService
     {
-        protected TService Service;
         private Boolean disposed;
+
+        protected TService Service
+        {
+            get;
+            private set;
+        }
 
         protected ServicedController(TService service)
         {
             Service = service;
             Service.ModelState = ModelState;
-        }
-
-        protected override void OnActionExecuted(ActionExecutedContext filterContext)
-        {
-            base.OnActionExecuted(filterContext);
-
-            if (Session["Alerts"] == null)
-            {
-                Session["Alerts"] = Service.Alerts;
-                return;
-            }
-
-            AlertsContainer current = Session["Alerts"] as AlertsContainer;
-            if (current != Service.Alerts)
-                current.Merge(Service.Alerts);
         }
 
         protected override void Dispose(Boolean disposing)

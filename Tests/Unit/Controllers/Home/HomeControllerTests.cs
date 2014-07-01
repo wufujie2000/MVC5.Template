@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
     [TestFixture]
     public class HomeControllerTests
     {
-        private Mock<IAccountsService> serviceMock;
+        private Mock<IAccountService> serviceMock;
         private HomeController controller;
         private String accountId;
 
@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
             HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
             accountId = HttpContext.Current.User.Identity.Name;
-            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
+            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
 
             serviceMock.SetupAllProperties();
             serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);

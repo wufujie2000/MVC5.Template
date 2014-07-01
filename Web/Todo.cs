@@ -8,7 +8,8 @@
         // TODO: Rename resources assembly or it's resources resources files and then change MvcTemplate.Resources.Shared.Resources occurences
         // TODO: Hide datalist controller's Role and others method from unauthorized access
         // TODO: Selecting views and models gives different datetime results
-        // TOOD: Separate validation logic from services?
         // TODO: Add unique indexes on username email and role name
+        // TODO: Move packages/app configs to properties folder?
+        // TODO: Remove resources from service?
     }
 }

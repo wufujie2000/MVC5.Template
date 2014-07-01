@@ -264,6 +264,10 @@
       <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
       <Name>Services</Name>
     </ProjectReference>
+    <ProjectReference Include="Validators\Validators.csproj">
+      <Project>{02d12b45-ab59-4ac0-8b43-607e4dc282e6}</Project>
+      <Name>Validators</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Login.cshtml" />
@@ -415,6 +419,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\_AuthAlerts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Controls\IValidator.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Controls\Validator.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ValidatorTests.cs.t4" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

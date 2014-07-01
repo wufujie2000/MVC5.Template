@@ -3,6 +3,7 @@ using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using MvcTemplate.Web.DependencyInjection;
 using Ninject;
 using NUnit.Framework;
@@ -93,13 +94,25 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [Test]
         public void Load_BindsIRolesService()
         {
-            AssertBind<IRolesService, RolesService>();
+            AssertBind<IRoleService, RoleService>();
         }
 
         [Test]
         public void Load_BindsIAccountsService()
         {
-            AssertBind<IAccountsService, AccountsService>();
+            AssertBind<IAccountService, AccountService>();
+        }
+
+        [Test]
+        public void Load_BindsIRoleValidator()
+        {
+            AssertBind<IRoleValidator, RoleValidator>();
+        }
+
+        [Test]
+        public void Load_BindsIAccountValidator()
+        {
+            AssertBind<IAccountValidator, AccountValidator>();
         }
 
         #endregion

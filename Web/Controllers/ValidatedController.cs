@@ -1,29 +1,33 @@
 ﻿using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System;
 
 namespace MvcTemplate.Controllers
 {
-    public abstract class ServicedController<TService> : BaseController
+    public abstract class ValidatedController<TService, TValidator> : ServicedController<TService>
+        where TValidator : IValidator
         where TService : IService
     {
         private Boolean disposed;
 
-        protected TService Service
+        protected TValidator Validator
         {
             get;
             private set;
         }
 
-        protected ServicedController(TService service)
+        protected ValidatedController(TService service, TValidator validator)
+            : base(service)
         {
-            Service = service;
+            Validator = validator;
+            Validator.ModelState = ModelState;
         }
 
         protected override void Dispose(Boolean disposing)
         {
             if (disposed) return;
 
-            Service.Dispose();
+            Validator.Dispose();
 
             disposed = true;
 

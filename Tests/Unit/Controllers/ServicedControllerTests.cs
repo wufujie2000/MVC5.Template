@@ -24,13 +24,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
-        [TearDown]
-        public void TearDwon()
-        {
-            service.Dispose();
-            controller.Dispose();
-        }
-
         #region Constructor: ServicedController(TService service)
 
         [Test]
@@ -40,17 +33,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             IService actual = controller.BaseService;
             IService expected = service;
-
-            Assert.AreSame(expected, actual);
-        }
-
-        [Test]
-        public void ServicedController_SetsServiceModelState()
-        {
-            controller = new ServicedControllerStub(service);
-
-            ModelStateDictionary expected = controller.ModelState;
-            ModelStateDictionary actual = service.ModelState;
 
             Assert.AreSame(expected, actual);
         }

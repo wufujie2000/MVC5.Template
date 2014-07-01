@@ -2,13 +2,14 @@
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Auth
 {
     [AllowAnonymous]
-    public class AuthController : ServicedController<IAccountsService>
+    public class AuthController : ValidatedController<IAccountService, IAccountValidator>
     {
         private static Object registrationLock;
 
@@ -16,8 +17,8 @@ namespace MvcTemplate.Controllers.Auth
         {
             registrationLock = new Object();
         }
-        public AuthController(IAccountsService service)
-            : base(service)
+        public AuthController(IAccountService service, IAccountValidator validator)
+            : base(service, validator)
         {
         }
 
@@ -39,7 +40,7 @@ namespace MvcTemplate.Controllers.Auth
                 if (Service.IsLoggedIn())
                     return RedirectToDefault();
 
-                if (!Service.CanRegister(account))
+                if (!Validator.CanRegister(account))
                     return View(account);
 
                 Service.Register(account);
@@ -62,7 +63,7 @@ namespace MvcTemplate.Controllers.Auth
         [ValidateAntiForgeryToken]
         public ActionResult Login(AccountLoginView account, String returnUrl)
         {
-            if (!Service.CanLogin(account))
+            if (!Validator.CanLogin(account))
                 return View();
 
             Service.Login(account.Username);

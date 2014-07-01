@@ -1,14 +1,15 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
-    public class RolesController : ServicedController<IRolesService>
+    public class RolesController : ValidatedController<IRoleService, IRoleValidator>
     {
-        public RolesController(IRolesService service)
-            : base(service)
+        public RolesController(IRoleService service, IRoleValidator validator)
+            : base(service, validator)
         {
         }
 
@@ -31,7 +32,7 @@ namespace MvcTemplate.Controllers.Administration
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "Id")] RoleView role)
         {
-            if (!Service.CanCreate(role))
+            if (!Validator.CanCreate(role))
             {
                 Service.SeedPrivilegesTree(role);
                 return View(role);
@@ -58,7 +59,7 @@ namespace MvcTemplate.Controllers.Administration
         [ValidateAntiForgeryToken]
         public ActionResult Edit(RoleView role)
         {
-            if (!Service.CanEdit(role))
+            if (!Validator.CanEdit(role))
             {
                 Service.SeedPrivilegesTree(role);
                 return View(role);

@@ -38,10 +38,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administration\Accounts\AccountsService.cs" />
-    <Compile Include="Administration\Accounts\IAccountsService.cs" />
-    <Compile Include="Administration\Roles\IRolesService.cs" />
-    <Compile Include="Administration\Roles\RolesService.cs" />
+    <Compile Include="Administration\Accounts\AccountService.cs" />
+    <Compile Include="Administration\Accounts\IAccountService.cs" />
+    <Compile Include="Administration\Roles\IRoleService.cs" />
+    <Compile Include="Administration\Roles\RoleService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

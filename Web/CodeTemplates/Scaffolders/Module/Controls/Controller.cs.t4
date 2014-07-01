@@ -2,15 +2,16 @@
 <#@ Output Extension="cs" #>
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
 namespace <#= Model.Namespace #>
 {
-    public class <#= Model.Name #> : ServicedController<<#= Model.Service #>>
+    public class <#= Model.Name #> : ValidatedController<<#= Model.IService #>, <#= Model.IValidator #>>
     {
-        public <#= Model.Name #>(<#= Model.Service #> service)
-            : base(service)
+        public <#= Model.Name #>(<#= Model.IService #> service, <#= Model.IValidator #> validator)
+            : base(service, validator)
         {
         }
 
@@ -30,7 +31,7 @@ namespace <#= Model.Namespace #>
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
         {
-            if (!Service.CanCreate(<#= Model.ModelName #>))
+            if (!Validator.CanCreate(<#= Model.ModelName #>))
                 return View(<#= Model.ModelName #>);
 
             Service.Create(<#= Model.ModelName #>);
@@ -54,7 +55,7 @@ namespace <#= Model.Namespace #>
         [ValidateAntiForgeryToken]
         public ActionResult Edit(<#= Model.View #> <#= Model.ModelName #>)
         {
-            if (!Service.CanEdit(<#= Model.ModelName #>))
+            if (!Validator.CanEdit(<#= Model.ModelName #>))
                 return View(<#= Model.ModelName #>);
 
             Service.Edit(<#= Model.ModelName #>);

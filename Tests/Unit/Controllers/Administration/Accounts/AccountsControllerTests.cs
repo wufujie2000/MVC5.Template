@@ -3,6 +3,7 @@ using Moq.Protected;
 using MvcTemplate.Controllers.Administration;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
     [TestFixture]
     public class AccountsControllerTests
     {
-        private Mock<IAccountsService> serviceMock;
+        private Mock<IAccountValidator> validatorMock;
+        private Mock<IAccountService> serviceMock;
         private AccountsController controller;
         private AccountEditView accountEdit;
         private AccountView account;
@@ -22,13 +24,16 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
+            validatorMock = new Mock<IAccountValidator>(MockBehavior.Strict);
+            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
+            validatorMock.SetupAllProperties();
             serviceMock.SetupAllProperties();
 
             accountEdit = new AccountEditView();
             account = new AccountView();
 
-            controller = new AccountsController(serviceMock.Object);
+            controller = new AccountsController(
+                serviceMock.Object, validatorMock.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }
@@ -82,7 +87,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            serviceMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(false);
+            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(false);
 
             Object actual = (controller.Edit(accountEdit) as ViewResult).Model;
             AccountEditView expected = accountEdit;
@@ -93,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_EditsAccountView()
         {
-            serviceMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
+            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(accountEdit));
 
             controller.Edit(accountEdit);
@@ -104,11 +109,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
-            serviceMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
+            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(accountEdit));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            Mock<AccountsController> controllerMock = new Mock<AccountsController>(serviceMock.Object) { CallBase = true };
+            Mock<AccountsController> controllerMock = new Mock<AccountsController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
             RedirectToRouteResult actual = controllerMock.Object.Edit(accountEdit) as RedirectToRouteResult;
 

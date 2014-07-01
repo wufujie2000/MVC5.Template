@@ -1,18 +1,16 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using MvcTemplate.Components.Extensions.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
-using MvcTemplate.Resources.Views.RoleView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MvcTemplate.Services
 {
-    public class RolesService : BaseService, IRolesService
+    public class RoleService : BaseService, IRoleService
     {
-        public RolesService(IUnitOfWork unitOfWork)
+        public RoleService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }
@@ -57,21 +55,6 @@ namespace MvcTemplate.Services
             }
         }
 
-        public Boolean CanCreate(RoleView view)
-        {
-            Boolean isValid = ModelState.IsValid;
-            isValid &= IsUniqueRole(view);
-
-            return isValid;
-        }
-        public Boolean CanEdit(RoleView view)
-        {
-            Boolean isValid = ModelState.IsValid;
-            isValid &= IsUniqueRole(view);
-
-            return isValid;
-        }
-
         public IEnumerable<RoleView> GetViews()
         {
             return UnitOfWork
@@ -111,20 +94,6 @@ namespace MvcTemplate.Services
             RemoveRoleFromAccounts(id);
             UnitOfWork.Repository<Role>().Delete(id);
             UnitOfWork.Commit();
-        }
-
-        private Boolean IsUniqueRole(RoleView view)
-        {
-            Boolean isUnique = !UnitOfWork.Repository<Role>()
-                .Query(role =>
-                    role.Id != view.Id &&
-                    role.Name.ToUpper() == view.Name.ToUpper())
-                .Any();
-
-            if (!isUnique)
-                ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyTaken);
-
-            return isUnique;
         }
 
         private void CreateRole(RoleView view)

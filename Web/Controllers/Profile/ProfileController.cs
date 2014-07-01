@@ -3,15 +3,16 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Profile
 {
     [AllowUnauthorized]
-    public class ProfileController : ServicedController<IAccountsService>
+    public class ProfileController : ValidatedController<IAccountService, IAccountValidator>
     {
-        public ProfileController(IAccountsService service)
-            : base(service)
+        public ProfileController(IAccountService service, IAccountValidator validator)
+            : base(service, validator)
         {
         }
 
@@ -31,7 +32,7 @@ namespace MvcTemplate.Controllers.Profile
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            if (Service.CanEdit(profile))
+            if (Validator.CanEdit(profile))
             {
                 Service.Edit(profile);
                 Alerts.Add(AlertTypes.Success, Messages.ProfileUpdated);
@@ -59,7 +60,7 @@ namespace MvcTemplate.Controllers.Profile
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            if (!Service.CanDelete(profile))
+            if (!Validator.CanDelete(profile))
             {
                 Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
                 return View();

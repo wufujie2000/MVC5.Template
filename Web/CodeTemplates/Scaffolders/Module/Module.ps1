@@ -11,6 +11,7 @@ $TestsProject = "Tests"
 $RazorViewProject = "Web"
 $ObjectsProject = "Objects"
 $ServiceProject = "Services"
+$ValidatorProject = "Validators"
 $ControllerProject = "Controllers"
 
 $ControllerNamespace = "MvcTemplate.Controllers"
@@ -20,9 +21,12 @@ If ($AreaName) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers
 
 $Model = $ModelName
 $View = $ModelName + "View"
-$Service = $ControllerName + "Service"
+$Service = $ModelName + "Service"
+$Validator = $ModelName + "Validator"
+$IService = "I" + $ModelName + "Service"
 $Controller = $ControllerName + "Controller"
-$IService = "I" + $ControllerName + "Service"
+$IValidator = "I" + $ModelName + "Validator"
+$ValidatorTests = $ModelName + "Validator" + "Tests"
 $ServiceTests = $ControllerName + "Service" + "Tests"
 $ControllerTests = $ControllerName + "Controller" + "Tests"
 
@@ -31,39 +35,47 @@ Else { $ElementPath = $ControllerName }
 
 If ($AreaName)
 {
+    $ServicesAreaDir = "$AreaName"
     $ViewAreaDir = "Views\$AreaName"
     $ControllerAreaDir = "$AreaName"
+    $ValidatorsAreaDir = "$AreaName"
     $ModelAreaDir = "Models\$AreaName"
     $RazorViewAreaDir = "Views\$AreaName"
-    $ServicesAreaDir = "$AreaName"
-    $ControllerTestsAreaDir = "Unit\Controllers\$AreaName"
     $ServiceTestsAreaDir = "Unit\Services\$AreaName"
+    $ValidatorTestsAreaDir = "Unit\Validators\$AreaName"
+    $ControllerTestsAreaDir = "Unit\Controllers\$AreaName"
 
+    $ServicesControllerDir = "$AreaName\$ControllerName"
     $ViewControllerDir = "Views\$AreaName\$ControllerName"
+    $ValidatorsControllerDir = "$AreaName\$ControllerName"
     $ControllerControllerDir = "$AreaName\$ControllerName"
     $ModelControllerDir = "Models\$AreaName\$ControllerName"
     $RazorViewControllerDir = "Views\$AreaName\$ControllerName"
-    $ServicesControllerDir = "$AreaName\$ControllerName"
-    $ControllerTestsControllerDir = "Unit\Controllers\$AreaName\$ControllerName"
     $ServiceTestsControllerDir = "Unit\Services\$AreaName\$ControllerName"
+    $ValidatorTestsControllerDir = "Unit\Validators\$AreaName\$ControllerName"
+    $ControllerTestsControllerDir = "Unit\Controllers\$AreaName\$ControllerName"
 }
 Else
 {
+    $ServicesAreaDir = "$ControllerName"
     $ViewAreaDir = "Views\$ControllerName"
     $ControllerAreaDir = "$ControllerName"
+    $ValidatorsAreaDir = "$ControllerName"
     $ModelAreaDir = "Models\$ControllerName"
     $RazorViewAreaDir = "Views\$ControllerName"
-    $ServicesAreaDir = "$ControllerName"
-    $ControllerTestsAreaDir = "Unit\Controllers\$ControllerName"
     $ServiceTestsAreaDir = "Unit\Services\$ControllerName"
+    $ValidatorTestsAreaDir = "Unit\Validators\$ControllerName"
+    $ControllerTestsAreaDir = "Unit\Controllers\$ControllerName"
 
+    $ServicesControllerDir = "$ControllerName"
     $ViewControllerDir = "Views\$ControllerName"
     $ControllerControllerDir = "$ControllerName"
+    $ValidatorsControllerDir = "$ControllerName"
     $ModelControllerDir = "Models\$ControllerName"
     $RazorViewControllerDir = "Views\$ControllerName"
-    $ServicesControllerDir = "$ControllerName"
-    $ControllerTestsControllerDir = "Unit\Controllers\$ControllerName"
     $ServiceTestsControllerDir = "Unit\Services\$ControllerName"
+    $ValidatorTestsControllerDir = "Unit\Validators\$ControllerName"
+    $ControllerTestsControllerDir = "Unit\Controllers\$ControllerName"
 }
 
 $ViewPath = "Views\$ElementPath\$View"
@@ -76,7 +88,10 @@ $ControllerPath = "$ElementPath\$Controller"
 $ModelPath = "Models\$ElementPath\$Model"
 $ServicePath = "$ElementPath\$Service"
 $IServicePath = "$ElementPath\$IService"
+$ValidatorPath = "$ElementPath\$Validator"
+$IValidatorPath = "$ElementPath\$IValidator"
 $ControllerTestsPath = "Unit\Controllers\$ElementPath\$ControllerTests"
+$ValidatorTestsPath = "Unit\Validators\$ElementPath\$ValidatorTests"
 $ServiceTestsPath = "Unit\Services\$ElementPath\$ServiceTests"
 
 $ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
@@ -84,18 +99,24 @@ $ScriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 If ($Delete)
 {
-	Delete-ProjectItem $TestsProject "$ControllerTestsPath.cs"
-	Delete-ProjectItem $TestsProject "$ServiceTestsPath.cs"
-	Delete-ProjectItem $RazorViewProject "$DeleteViewPath.cshtml"
-	Delete-ProjectItem $RazorViewProject "$EditViewPath.cshtml"
 	Delete-ProjectItem $RazorViewProject "$DetailsViewPath.cshtml"
+	Delete-ProjectItem $RazorViewProject "$DeleteViewPath.cshtml"
 	Delete-ProjectItem $RazorViewProject "$CreateViewPath.cshtml"
 	Delete-ProjectItem $RazorViewProject "$IndexViewPath.cshtml"
+	Delete-ProjectItem $RazorViewProject "$EditViewPath.cshtml"
+	Delete-ProjectItem $TestsProject "$ControllerTestsPath.cs"
+	Delete-ProjectItem $TestsProject "$ValidatorTestsPath.cs"
+	Delete-ProjectItem $TestsProject "$ServiceTestsPath.cs"
 	Delete-ProjectItem $ControllerProject "$ControllerPath.cs"
-	Delete-ProjectItem $ServiceProject "$ServicePath.cs"
+	Delete-ProjectItem $ValidatorProject "$IValidatorPath.cs"
+	Delete-ProjectItem $ValidatorProject "$ValidatorPath.cs"
 	Delete-ProjectItem $ServiceProject "$IServicePath.cs"
-	Delete-ProjectItem $ObjectsProject "$ViewPath.cs"
+	Delete-ProjectItem $ServiceProject "$ServicePath.cs"
 	Delete-ProjectItem $ObjectsProject "$ModelPath.cs"
+	Delete-ProjectItem $ObjectsProject "$ViewPath.cs"
+
+    Delete-IfEmpty $TestsProject $ValidatorTestsControllerDir
+    Delete-IfEmpty $TestsProject $ValidatorTestsAreaDir
 
     Delete-IfEmpty $TestsProject $ControllerTestsControllerDir
     Delete-IfEmpty $TestsProject $ControllerTestsAreaDir
@@ -108,6 +129,9 @@ If ($Delete)
 
     Delete-IfEmpty $ControllerProject $ControllerControllerDir
     Delete-IfEmpty $ControllerProject $ControllerAreaDir
+
+    Delete-IfEmpty $ValidatorProject $ValidatorsControllerDir
+    Delete-IfEmpty $ValidatorProject $ValidatorsAreaDir
 
     Delete-IfEmpty $ServiceProject $ServicesControllerDir
     Delete-IfEmpty $ServiceProject $ServicesAreaDir
@@ -164,12 +188,36 @@ Else
 	    -CodeLanguage $CodeLanguage `
 	    -Project $ServiceProject
 
+    Add-ProjectItemViaTemplate $IValidatorPath `
+        -Template "Controls\IValidator" `
+        -Model @{ `
+		    Name = $IValidator; `
+		    View = $View `
+	    } `
+        -SuccessMessage "Added $ValidatorProject\{0}" `
+        -TemplateFolders $TemplateFolders `
+	    -CodeLanguage $CodeLanguage `
+	    -Project $ValidatorProject
+
+    Add-ProjectItemViaTemplate $ValidatorPath `
+        -Template "Controls\Validator" `
+        -Model @{ `
+		    Interface = $IValidator; `
+		    Name = $Validator; `
+		    View = $View `
+	    } `
+        -SuccessMessage "Added $ValidatorProject\{0}" `
+        -TemplateFolders $TemplateFolders `
+	    -CodeLanguage $CodeLanguage `
+	    -Project $ValidatorProject
+
     Add-ProjectItemViaTemplate $ControllerPath `
         -Template "Controls\Controller" `
         -Model @{ `
             ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
 	        Namespace = $ControllerNamespace; `
-		    Service = $IService; `
+		    IValidator = $IValidator; `
+		    IService = $IService; `
 		    Name = $Controller; `
 		    View = $View `
 	    } `
@@ -242,12 +290,26 @@ Else
 	    -CodeLanguage $CodeLanguage `
 	    -Project $TestsProject
 
+    Add-ProjectItemViaTemplate $ValidatorTestsPath `
+        -Template "Tests\ValidatorTests" `
+        -Model @{ `
+		    Name = $ValidatorTests; `
+		    Validator = $Validator; `
+            Model = $Model; `
+            View = $View `
+	    } `
+        -SuccessMessage "Added $TestsProject\{0}" `
+        -TemplateFolders $TemplateFolders `
+	    -CodeLanguage $CodeLanguage `
+	    -Project $TestsProject
+
     Add-ProjectItemViaTemplate $ControllerTestsPath `
         -Template "Tests\ControllerTests" `
         -Model @{ `
             ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
 		    ControllerNamespace = $ControllerNamespace; `
 	        Namespace = $ControllerTestsNamespace; `
+		    ValidatorInterface = $IValidator; `
 		    ServiceInterface = $IService; `
 		    Controller = $Controller; `
 		    Name = $ControllerTests; `

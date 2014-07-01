@@ -4,6 +4,7 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using Ninject.Modules;
 using System;
 using System.Reflection;
@@ -29,8 +30,11 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
 
             Bind<IHasher>().To<BCrypter>();
-            Bind<IRolesService>().To<RolesService>();
-            Bind<IAccountsService>().To<AccountsService>();
+            Bind<IRoleService>().To<RoleService>();
+            Bind<IAccountService>().To<AccountService>();
+
+            Bind<IRoleValidator>().To<RoleValidator>();
+            Bind<IAccountValidator>().To<AccountValidator>();
         }
 
         private IRoleProvider CreateRoleProvider()

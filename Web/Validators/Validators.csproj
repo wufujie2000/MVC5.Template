@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8531B9AE-C8C5-4B73-A0CE-B9CDFAD69074}</ProjectGuid>
+    <ProjectGuid>{02D12B45-AB59-4AC0-8B43-607E4DC282E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MvcTemplate.Controllers</RootNamespace>
-    <AssemblyName>MvcTemplate.Controllers</AssemblyName>
+    <RootNamespace>MvcTemplate.Validators</RootNamespace>
+    <AssemblyName>MvcTemplate.Validators</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -42,24 +38,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthController.cs" />
-    <Compile Include="Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Administration\Accounts\AccountsController.cs" />
-    <Compile Include="Administration\Roles\RolesController.cs" />
-    <Compile Include="BaseController.cs" />
-    <Compile Include="Datalist\DatalistController.cs" />
-    <Compile Include="Home\HomeController.cs" />
-    <Compile Include="Profile\ProfileController.cs" />
+    <Compile Include="Administration\Accounts\AccountValidator.cs" />
+    <Compile Include="Administration\Accounts\IAccountValidator.cs" />
+    <Compile Include="Administration\Roles\IRoleValidator.cs" />
+    <Compile Include="Administration\Roles\RoleValidator.cs" />
+    <Compile Include="BaseValidator.cs" />
+    <Compile Include="IValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteConfig.cs" />
-    <Compile Include="ValidatedController.cs" />
-    <Compile Include="ServicedController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MvcTemplate\MvcTemplate.csproj">
-      <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
-      <Name>MvcTemplate</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Components\Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>Components</Name>
@@ -76,15 +63,8 @@
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Services\Services.csproj">
-      <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
-      <Name>Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Validators\Validators.csproj">
-      <Project>{02d12b45-ab59-4ac0-8b43-607e4dc282e6}</Project>
-      <Name>Validators</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

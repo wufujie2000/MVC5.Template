@@ -1,10 +1,10 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
-[assembly: AssemblyTitle("MvcTemplate.Data")]
-[assembly: AssemblyProduct("MvcTemplate.Data")]
+[assembly: AssemblyTitle("MvcTemplate.Validators")]
+[assembly: AssemblyProduct("MvcTemplate.Validators")]
 [assembly: AssemblyCompany("NonFactors")]
 [assembly: AssemblyCopyright("Copyright © NonFactors")]
 [assembly: NeutralResourcesLanguageAttribute("en")]

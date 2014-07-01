@@ -1,0 +1,69 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Tests.Data;
+using MvcTemplate.Validators;
+using NUnit.Framework;
+using System.Web.Mvc;
+
+namespace MvcTemplate.Tests.Unit.Validators
+{
+    [TestFixture]
+    public class <#= Model.Name #>
+    {
+        private <#= Model.Validator #> validator;
+        private Context context;
+
+        [SetUp]
+        public void SetUp()
+        {
+            context = new TestingContext();
+            validator = new <#= Model.Validator #>(new UnitOfWork(context));
+            validator.ModelState = new ModelStateDictionary();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            context.Dispose();
+            validator.Dispose();
+        }
+
+        #region Method: CanCreate(<#= Model.View #> view)
+
+        [Test]
+        public void CanCreate_CanNotCreateWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(validator.CanCreate(new <#= Model.View #>()));
+        }
+
+        [Test]
+        public void CanCreate_CanCreateValid<#= Model.Model #>()
+        {
+            Assert.IsTrue(validator.CanCreate(new <#= Model.View #>()));
+        }
+
+        #endregion
+
+        #region Method: CanEdit(<#= Model.View #> view)
+
+        [Test]
+        public void CanEdit_CanNotEditWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(validator.CanEdit(new <#= Model.View #>()));
+        }
+
+        [Test]
+        public void CanEdit_CanEditValid<#= Model.Model #>()
+        {
+            Assert.IsTrue(validator.CanEdit(new <#= Model.View #>()));
+        }
+
+        #endregion
+    }
+}

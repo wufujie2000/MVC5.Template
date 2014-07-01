@@ -3,6 +3,7 @@ using Moq.Protected;
 using MvcTemplate.Controllers.Administration;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -14,18 +15,22 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
     [TestFixture]
     public class RolesControllerTests : AControllerTests
     {
-        private Mock<IRolesService> serviceMock;
+        private Mock<IRoleValidator> validatorMock;
+        private Mock<IRoleService> serviceMock;
         private RolesController controller;
         private RoleView role;
 
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IRolesService>(MockBehavior.Strict);
+            validatorMock = new Mock<IRoleValidator>(MockBehavior.Strict);
+            serviceMock = new Mock<IRoleService>(MockBehavior.Strict);
+            validatorMock.SetupAllProperties();
             serviceMock.SetupAllProperties();
             role = new RoleView();
 
-            controller = new RolesController(serviceMock.Object);
+            controller = new RolesController(
+                serviceMock.Object, validatorMock.Object);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }
@@ -80,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_SeedsPrivilegesTreeIfCanNotCreate()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(false);
+            validatorMock.Setup(mock => mock.CanCreate(role)).Returns(false);
             serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
 
             controller.Create(role);
@@ -91,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_ReturnsSameModelIfCanNotCreate()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(false);
+            validatorMock.Setup(mock => mock.CanCreate(role)).Returns(false);
             serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
 
             Assert.AreSame(role, (controller.Create(role) as ViewResult).Model);
@@ -100,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_CreatesRoleView()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(true);
+            validatorMock.Setup(mock => mock.CanCreate(role)).Returns(true);
             serviceMock.Setup(mock => mock.Create(role));
 
             controller.Create(role);
@@ -111,11 +116,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_AfterSuccessfulCreateRedirectsToIndex()
         {
-            serviceMock.Setup(mock => mock.CanCreate(role)).Returns(true);
+            validatorMock.Setup(mock => mock.CanCreate(role)).Returns(true);
             serviceMock.Setup(mock => mock.Create(role));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };
+            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
             RedirectToRouteResult actual = controllerMock.Object.Create(role) as RedirectToRouteResult;
 
@@ -159,7 +164,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_SeedsPrivilegesTreeIfCanNotEdit()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(false);
+            validatorMock.Setup(mock => mock.CanEdit(role)).Returns(false);
             serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
 
             controller.Edit(role);
@@ -170,7 +175,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(false);
+            validatorMock.Setup(mock => mock.CanEdit(role)).Returns(false);
             serviceMock.Setup(mock => mock.SeedPrivilegesTree(role));
 
             Object actual = (controller.Edit(role) as ViewResult).Model;
@@ -182,7 +187,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_EditsRoleView()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
+            validatorMock.Setup(mock => mock.CanEdit(role)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(role));
 
             controller.Edit(role);
@@ -193,11 +198,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_AfterSuccessfulEditRedirectsToIndex()
         {
-            serviceMock.Setup(mock => mock.CanEdit(role)).Returns(true);
+            validatorMock.Setup(mock => mock.CanEdit(role)).Returns(true);
             serviceMock.Setup(mock => mock.Edit(role));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };
+            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
             RedirectToRouteResult actual = controllerMock.Object.Edit(role) as RedirectToRouteResult;
 
@@ -239,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             serviceMock.Setup(mock => mock.Delete(role.Id));
 
             RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object) { CallBase = true };
+            Mock<RolesController> controllerMock = new Mock<RolesController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
             controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
             RedirectToRouteResult actual = controllerMock.Object.DeleteConfirmed(role.Id) as RedirectToRouteResult;
 

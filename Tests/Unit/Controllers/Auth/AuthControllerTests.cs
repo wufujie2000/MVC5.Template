@@ -6,6 +6,7 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
+using MvcTemplate.Validators;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -17,8 +18,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
     [TestFixture]
     public class AuthControllerTests : AControllerTests
     {
+        private Mock<IAccountValidator> validatorMock;
         private Mock<AuthController> controllerMock;
-        private Mock<IAccountsService> serviceMock;
+        private Mock<IAccountService> serviceMock;
         private AccountLoginView accountLogin;
         private AuthController controller;
         private AccountView account;
@@ -26,13 +28,15 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [SetUp]
         public void SetUp()
         {
-            serviceMock = new Mock<IAccountsService>(MockBehavior.Strict);
+            validatorMock = new Mock<IAccountValidator>(MockBehavior.Strict);
+            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
+            validatorMock.SetupAllProperties();
             serviceMock.SetupAllProperties();
-            
+
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = ObjectFactory.CreateAccountView();
 
-            controllerMock = new Mock<AuthController>(serviceMock.Object) { CallBase = true };
+            controllerMock = new Mock<AuthController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
             controllerMock.Object.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
             controllerMock.Object.ControllerContext = new ControllerContext();
             controller = controllerMock.Object;
@@ -85,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_ReturnsSameModelIfCanNotRegister()
         {
-            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(false);
+            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(false);
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
 
             Object actual = (controller.Register(account) as ViewResult).Model;
@@ -97,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RegistersAccount()
         {
-            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.Register(account));
 
@@ -109,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_AddsSuccessfulRegistrationMessage()
         {
-            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.Register(account));
 
@@ -125,7 +129,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RedirectsToLoginAfterSuccessfulRegistration()
         {
-            serviceMock.Setup(mock => mock.CanRegister(account)).Returns(true);
+            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
             serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
             serviceMock.Setup(mock => mock.Register(account));
 
@@ -168,7 +172,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_ReturnsNullModelIfCanNotLogin()
         {
-            serviceMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(false);
+            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(false);
 
             Assert.IsNull((controller.Login(accountLogin, null) as ViewResult).Model);
         }
@@ -176,7 +180,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_LogsInAccount()
         {
-            serviceMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
+            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
             serviceMock.Setup(mock => mock.Login(accountLogin.Username));
 
             controller.Login(accountLogin, null);
@@ -187,7 +191,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            serviceMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
+            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
             serviceMock.Setup(mock => mock.Login(account.Username));
 
             ActionResult expected = new RedirectResult("/Home/Index");

@@ -5,7 +5,6 @@ using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
-using MvcTemplate.Resources.Views.RoleView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
@@ -13,14 +12,13 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
-    public class RolesServiceTests
+    public class RoleServiceTests
     {
-        private RolesService service;
+        private RoleService service;
         private Context context;
         private Role role;
 
@@ -28,8 +26,7 @@ namespace MvcTemplate.Tests.Unit.Services
         public void SetUp()
         {
             context = new TestingContext();
-            service = new RolesService(new UnitOfWork(context));
-            service.ModelState = new ModelStateDictionary();
+            service = new RoleService(new UnitOfWork(context));
 
             TearDownData();
             SetUpData();
@@ -121,90 +118,6 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: CanCreate(RoleView view)
-
-        [Test]
-        public void CanCreate_CanNotCreateWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanCreate(ObjectFactory.CreateRoleView()));
-        }
-
-        [Test]
-        public void CanCreate_CanNotCreateWithAlreadyTakenRoleName()
-        {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "1";
-
-            Assert.IsFalse(service.CanCreate(roleView));
-        }
-
-        [Test]
-        public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyTakenRoleName()
-        {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "OtherIdValue";
-            service.CanCreate(roleView);
-
-            String expected = Validations.RoleNameIsAlreadyTaken;
-            String actual = service.ModelState["Name"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanCreate_CanCreateValidRole()
-        {
-            Assert.IsTrue(service.CanCreate(ObjectFactory.CreateRoleView()));
-        }
-
-        #endregion
-
-        #region Method: CanEdit(RoleView view)
-
-        [Test]
-        public void CanEdit_CanNotEditWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanEdit(ObjectFactory.CreateRoleView()));
-        }
-
-        [Test]
-        public void CanEdit_CanNotEditToAlreadyTakenRoleName()
-        {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "1";
-
-            Assert.IsFalse(service.CanEdit(roleView));
-        }
-
-        [Test]
-        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenRoleName()
-        {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "OtherIdValue";
-            service.CanEdit(roleView);
-
-            String expected = Validations.RoleNameIsAlreadyTaken;
-            String actual = service.ModelState["Name"].Errors[0].ErrorMessage;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void CanEdit_CanEditValidRole()
-        {
-            Assert.IsTrue(service.CanEdit(ObjectFactory.CreateRoleView()));
-        }
-
-        #endregion
-
         #region Method: GetViews()
 
         [Test]
@@ -237,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetView_SeedsPrivilegesTree()
         {
-            Mock<RolesService> serviceMock = new Mock<RolesService>(new UnitOfWork(context)) { CallBase = true };
+            Mock<RoleService> serviceMock = new Mock<RoleService>(new UnitOfWork(context)) { CallBase = true };
             service = serviceMock.Object;
 
             RoleView roleView = service.GetView(role.Id);

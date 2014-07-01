@@ -4,12 +4,9 @@ using System.Collections.Generic;
 
 namespace MvcTemplate.Services
 {
-    public interface IRolesService : IService
+    public interface IRoleService : IService
     {
         void SeedPrivilegesTree(RoleView view);
-
-        Boolean CanCreate(RoleView view);
-        Boolean CanEdit(RoleView view);
 
         IEnumerable<RoleView> GetViews();
         RoleView GetView(String id);

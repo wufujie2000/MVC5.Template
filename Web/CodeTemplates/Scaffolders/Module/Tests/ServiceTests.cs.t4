@@ -10,7 +10,6 @@ using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
@@ -26,7 +25,6 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             service = new <#= Model.Service #>(new UnitOfWork(context));
-            service.ModelState = new ModelStateDictionary();
 
             TearDownData();
             SetUpData();
@@ -38,42 +36,6 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Dispose();
             context.Dispose();
         }
-
-        #region Method: CanCreate(<#= Model.View #> view)
-
-        [Test]
-        public void CanCreate_CanNotCreateWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanCreate(new <#= Model.View #>()));
-        }
-
-        [Test]
-        public void CanCreate_CanCreateValid<#= Model.Model #>()
-        {
-            Assert.IsTrue(service.CanCreate(new <#= Model.View #>()));
-        }
-
-        #endregion
-
-        #region Method: CanEdit(<#= Model.View #> view)
-
-        [Test]
-        public void CanEdit_CanNotEditWithInvalidModelState()
-        {
-            service.ModelState.AddModelError("Test", "Test");
-
-            Assert.IsFalse(service.CanEdit(new <#= Model.View #>()));
-        }
-
-        [Test]
-        public void CanEdit_CanEditValid<#= Model.Model #>()
-        {
-            Assert.IsTrue(service.CanEdit(new <#= Model.View #>()));
-        }
-
-        #endregion
 
         #region Method: GetViews()
 

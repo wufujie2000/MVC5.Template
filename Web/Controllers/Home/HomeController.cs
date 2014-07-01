@@ -6,9 +6,9 @@ using System.Web.Mvc;
 namespace MvcTemplate.Controllers.Home
 {
     [AllowUnauthorized]
-    public class HomeController : ServicedController<IAccountsService>
+    public class HomeController : ServicedController<IAccountService>
     {
-        public HomeController(IAccountsService service)
+        public HomeController(IAccountService service)
             : base(service)
         {
         }

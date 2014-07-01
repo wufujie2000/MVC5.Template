@@ -1,11 +1,8 @@
-﻿using MvcTemplate.Components.Alerts;
-using System;
-using System.Web.Mvc;
+﻿using System;
 
 namespace MvcTemplate.Services
 {
     public interface IService : IDisposable
     {
-        ModelStateDictionary ModelState { get; set; }
     }
 }

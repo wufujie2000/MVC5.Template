@@ -4,16 +4,10 @@ using System.Collections.Generic;
 
 namespace MvcTemplate.Services
 {
-    public interface IAccountsService : IService
+    public interface IAccountService : IService
     {
         Boolean IsLoggedIn();
         Boolean AccountExists(String accountId);
-
-        Boolean CanLogin(AccountLoginView view);
-        Boolean CanRegister(AccountView view);
-        Boolean CanEdit(ProfileEditView view);
-        Boolean CanEdit(AccountEditView view);
-        Boolean CanDelete(AccountView view);
 
         IEnumerable<AccountView> GetViews();
         TView GetView<TView>(String id) where TView : BaseView;

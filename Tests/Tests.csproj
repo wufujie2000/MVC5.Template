@@ -125,6 +125,8 @@
     <Compile Include="Unit\Components\Security\Authorization\NotAttributedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AuthorizedController.cs" />
     <Compile Include="Unit\Controllers\AControllerTests.cs" />
+    <Compile Include="Unit\Controllers\ValidatedControllerStub.cs" />
+    <Compile Include="Unit\Controllers\ValidatedControllerTests.cs" />
     <Compile Include="Unit\Data\Migrations\InitialDataTests.cs" />
     <Compile Include="Objects\Models\TestModel.cs" />
     <Compile Include="Objects\Views\TestView.cs" />
@@ -140,8 +142,8 @@
     <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleFactoryTests.cs" />
-    <Compile Include="Unit\Services\Administration\Accounts\AccountsServiceTests.cs" />
-    <Compile Include="Unit\Services\Administration\Roles\RolesServiceTests.cs" />
+    <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />
+    <Compile Include="Unit\Services\Administration\Roles\RoleServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleProviderTests.cs" />
     <Compile Include="Unit\Controllers\Auth\AuthControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreRegistrationTests.cs" />
@@ -191,6 +193,9 @@
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Unit\Resources\NoResourcesModel.cs" />
     <Compile Include="Unit\Resources\ResourceProviderTests.cs" />
+    <Compile Include="Unit\Validators\Administration\Accounts\AccountValidatorTests.cs" />
+    <Compile Include="Unit\Validators\Administration\Roles\RoleValidatorTests.cs" />
+    <Compile Include="Unit\Validators\BaseValidatorTests.cs" />
     <Compile Include="Unit\Web\App_Start\BundleConfigTests.cs" />
     <Compile Include="Unit\Web\App_Start\DependencyInjection\MainModuleTests.cs" />
     <Compile Include="Unit\Web\App_Start\DependencyInjection\NinjectResolverTests.cs" />
@@ -230,6 +235,10 @@
     <ProjectReference Include="..\Web\Services\Services.csproj">
       <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
       <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Validators\Validators.csproj">
+      <Project>{02d12b45-ab59-4ac0-8b43-607e4dc282e6}</Project>
+      <Name>Validators</Name>
     </ProjectReference>
     <ProjectReference Include="..\Web\Web.csproj">
       <Project>{b201b326-86eb-4abd-aebb-0dde4c4a5366}</Project>

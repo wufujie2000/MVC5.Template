@@ -8,9 +8,6 @@ namespace MvcTemplate.Services
 {
     public interface <#= Model.Name #> : IService
     {
-        Boolean CanCreate(<#= Model.View #> view);
-        Boolean CanEdit(<#= Model.View #> view);
-
         IEnumerable<<#= Model.View #>> GetViews();
         <#= Model.View #> GetView(String id);
 

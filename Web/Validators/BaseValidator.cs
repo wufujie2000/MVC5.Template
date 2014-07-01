@@ -1,19 +1,25 @@
 ﻿using MvcTemplate.Data.Core;
 using System;
+using System.Web.Mvc;
 
-namespace MvcTemplate.Services
+namespace MvcTemplate.Validators
 {
-    public abstract class BaseService
+    public abstract class BaseValidator : IValidator
     {
         private Boolean disposed;
 
+        public ModelStateDictionary ModelState
+        {
+            get;
+            set;
+        }
         protected IUnitOfWork UnitOfWork
         {
             get;
             private set;
         }
 
-        public BaseService(IUnitOfWork unitOfWork)
+        public BaseValidator(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
@@ -29,6 +35,7 @@ namespace MvcTemplate.Services
 
             UnitOfWork.Dispose();
             UnitOfWork = null;
+            ModelState = null;
 
             disposed = true;
         }

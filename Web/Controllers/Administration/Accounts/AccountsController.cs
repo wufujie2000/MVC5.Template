@@ -1,14 +1,15 @@
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
+using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
-    public class AccountsController : ServicedController<IAccountsService>
+    public class AccountsController : ValidatedController<IAccountService, IAccountValidator>
     {
-        public AccountsController(IAccountsService service)
-            : base(service)
+        public AccountsController(IAccountService service, IAccountValidator validator)
+            : base(service, validator)
         {
         }
 
@@ -34,7 +35,7 @@ namespace MvcTemplate.Controllers.Administration
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AccountEditView account)
         {
-            if (!Service.CanEdit(account))
+            if (!Validator.CanEdit(account))
                 return View(account);
 
             Service.Edit(account);

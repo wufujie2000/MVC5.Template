@@ -8,7 +8,8 @@ namespace MvcTemplate.Objects
     public class RoleView : BaseView
     {
         [Required]
-        [DatalistColumn()]
+        [DatalistColumn]
+        [StringLength(128)]
         public String Name { get; set; }
 
         public JsTree PrivilegesTree { get; set; }

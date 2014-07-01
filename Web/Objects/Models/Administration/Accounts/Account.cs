@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvcTemplate.Objects
 {
     public class Account : BaseModel
     {
         [Required]
+        [StringLength(128)]
+        [Index(IsUnique = true)]
         public String Username { get; set; }
 
         [Required]

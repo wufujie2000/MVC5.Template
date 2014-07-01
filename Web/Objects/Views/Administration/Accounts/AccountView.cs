@@ -6,6 +6,7 @@ namespace MvcTemplate.Objects
     public class AccountView : BaseView
     {
         [Required]
+        [StringLength(128)]
         public String Username { get; set; }
 
         [Required]

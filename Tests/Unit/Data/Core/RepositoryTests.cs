@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<Account>().Add(expected);
             context.SaveChanges();
 
-            expected.Username = "Test";
+            expected.Username += "Test";
             repository.Update(expected);
             context.SaveChanges();
 
@@ -160,7 +160,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<Account>().Add(expected);
             context.SaveChanges();
 
-            expected.Username = "Test";
+            expected.Username += "Test";
             context = new TestingContext();
             repository = new Repository<Account>(context);
             repository.Update(expected);

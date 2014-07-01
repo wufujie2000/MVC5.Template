@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Username = c.String(nullable: false),
+                        Username = c.String(nullable: false, maxLength: 128),
                         Passhash = c.String(nullable: false),
                         Email = c.String(nullable: false),
                         RoleId = c.String(maxLength: 128),
@@ -21,18 +21,20 @@ namespace MvcTemplate.Tests.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
+                .Index(t => t.Username, unique: true)
                 .Index(t => t.RoleId);
-
+            
             CreateTable(
                 "dbo.Roles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false),
+                        Name = c.String(nullable: false, maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
-
+                .PrimaryKey(t => t.Id, clustered: false)
+                .Index(t => t.Name, unique: true);
+            
             CreateTable(
                 "dbo.RolePrivileges",
                 c => new
@@ -47,7 +49,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.RoleId)
                 .Index(t => t.PrivilegeId);
-
+            
             CreateTable(
                 "dbo.Privileges",
                 c => new
@@ -59,7 +61,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-
+            
             CreateTable(
                 "dbo.Languages",
                 c => new
@@ -70,7 +72,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-
+            
             CreateTable(
                 "dbo.Logs",
                 c => new
@@ -81,7 +83,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
-
+            
             CreateTable(
                 "dbo.TestModels",
                 c => new
@@ -91,8 +93,9 @@ namespace MvcTemplate.Tests.Data.Migrations
                         EntityDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
+            
         }
-
+        
         public override void Down()
         {
             DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
@@ -100,7 +103,9 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
+            DropIndex("dbo.Roles", new[] { "Name" });
             DropIndex("dbo.Accounts", new[] { "RoleId" });
+            DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.TestModels");
             DropTable("dbo.Logs");
             DropTable("dbo.Languages");

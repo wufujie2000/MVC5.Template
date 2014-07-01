@@ -6,6 +6,7 @@ namespace MvcTemplate.Objects
     public class ProfileEditView : BaseView
     {
         [Required]
+        [StringLength(128)]
         public String Username { get; set; }
 
         [Required]

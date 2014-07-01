@@ -46,17 +46,22 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -119,7 +124,6 @@
       <DependentUpon>auth.less</DependentUpon>
     </Content>
     <Content Include="Content\Bootstrap\bootstrap.css" />
-    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\FontAwesome\font-awesome.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
@@ -151,6 +155,7 @@
     <Content Include="Content\Shared\widget-box.css">
       <DependentUpon>widget-box.less</DependentUpon>
     </Content>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\Flags\en-GB.gif" />
@@ -367,15 +372,6 @@
     <Content Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
   </ItemGroup>
   <ItemGroup>
@@ -429,6 +425,16 @@
   <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\ValidatorTests.cs.t4" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

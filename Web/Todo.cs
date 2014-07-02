@@ -8,9 +8,5 @@
         // TODO: Rename resources assembly or it's resources resources files and then change MvcTemplate.Resources.Shared.Resources occurences
         // TODO: Hide datalist controller's Role and others method from unauthorized access
         // TODO: Selecting views and models gives different datetime results
-        // TODO: Move packages/app configs to properties folder?
-        // TODO: Images not shown in published domain
-        // TODO: Split MultiKeywordCode in resources??
-        // TODO: Breadcrumb last element clickable
     }
 }

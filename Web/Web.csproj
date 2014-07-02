@@ -40,9 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Datalist, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Datalist, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Datalist.3.0.4\lib\net45\Datalist.dll</HintPath>
+      <HintPath>..\packages\Datalist.3.1.0\lib\Datalist.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -184,10 +184,6 @@
     <Content Include="Images\Shared\menu-active.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
-    <Content Include="Scripts\Datalist\bind-with-delay.js" />
-    <Content Include="Scripts\Datalist\bind-with-delay.min.js" />
-    <Content Include="Scripts\Datalist\bootstrap-paginator.js" />
-    <Content Include="Scripts\Datalist\bootstrap-paginator.min.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
@@ -390,9 +386,6 @@
     <Content Include="Content\Shared\Fonts\PTSans.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_Datalist.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Administration\Accounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +426,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Datalist.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

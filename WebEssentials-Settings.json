@@ -41,7 +41,9 @@
     "ValidateStarSelector": true,
     "ValidateVendorSpecifics": true,
     "ValidateZeroUnit": true,
-    "ValidationLocation": "Messages"
+    "ValidationLocation": "Messages",
+    "Autoprefix": false,
+    "AutoprefixerBrowsers": null
   },
   "General": {
     "AllMessagesToOutputWindow": false,
@@ -80,7 +82,7 @@
   "JavaScript": {
     "AutoMinify": false,
     "BlockCommentCompletion": true,
-    "GenerateSourceMaps": true,
+    "GenerateSourceMaps": false,
     "GzipMinifiedFiles": false,
     "LintOnBuild": false,
     "LintOnSave": true,
@@ -133,7 +135,8 @@
     "OutputDirectory": null,
     "ProcessSourceMapsForEditorEnhancements": true,
     "ShowPreviewPane": true,
-    "StrictMath": false
+    "StrictMath": false,
+    "OutputStyle": "Expanded"
   },
   "Sprite": {
     "CssOutputDirectory": null,

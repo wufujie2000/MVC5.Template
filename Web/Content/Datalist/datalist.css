@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.0.4
+ * Datalist 3.1.0
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -17,14 +17,11 @@
     width: 100%;
 }
 
-.ui-button-icon-only .ui-icon {
-    margin-left: -8.3px;
-}
-
 .datalist {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
+    text-align: center;
     display: none;
 }
 
@@ -39,22 +36,29 @@
 
 .datalist-search-group {
     margin: 5px 5px 10px;
+    height: 32px;
 }
 
     .datalist-search-group .datalist-search-box {
+        height: 100%;
         float: left;
         width: 87%;
     }
 
     .datalist-search-group .datalist-spinner-box {
+        height: 100%;
         float: right;
         width: 13%;
     }
 
+        .datalist-search-group .datalist-spinner-box > span {
+            height: 100%;
+        }
+
     .datalist-search-group .datalist-search-input {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
-        height: 32px;
+        height: 100%;
     }
 
     .datalist-search-group .datalist-items-per-page {
@@ -63,7 +67,7 @@
         text-align: center;
         color: #555555;
         display: block;
-        height: 30px;
+        height: 100%;
         width: 100%;
         margin: 0;
     }
@@ -102,27 +106,18 @@
     min-width: 50px;
     display: none;
     left: 44%;
-    top: 37%;
+    top: 44%;
 }
 
 .datalist-error {
-    background-color: #F2DEDE;
-    position: absolute;
+    display: inline-block;
     text-align: center;
-    border-radius: 5px;
-    border: 1px solid;
-    font-size: 13px;
-    color: #A94442;
-    padding: 15px;
-    display: none;
+    margin-top: 20px;
     width: 320px;
-    left: 15%;
-    top: 45%;
 }
 
 .datalist-data {
     height: auto;
-    clear: both;
     margin: 5px;
 }
 
@@ -176,28 +171,19 @@
         top: -2.5px;
     }
 
-.datalist-pager {
-    clear: both;
+.datalist-pager .pagination {
+    margin: 5px 5px 0 0;
+    float: right;
 }
 
-    .datalist-pager .pagination {
-        margin: 5px 5px 0 0;
-        float: right;
+    .datalist-pager .pagination > li {
+        cursor: pointer;
     }
 
-        .datalist-pager .pagination > li {
-            cursor: pointer;
+        .datalist-pager .pagination > li > a {
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            padding: 2px 7px;
         }
-
-            .datalist-pager .pagination > li > a {
-                padding: 2px 7px;
-                color: #428BCA;
-            }
-
-            .datalist-pager .pagination > li.active > a {
-                color: #FFFFFF;
-            }
-
-            .datalist-pager .pagination > li:not(.active) > a:hover {
-                color: #2A6496;
-            }

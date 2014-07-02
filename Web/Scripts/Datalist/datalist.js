@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.0.4
+ * Datalist 3.1.0
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -29,9 +29,9 @@
             o.filters = e.attr('data-datalist-filters').split(',');
             o.sortColumn = e.attr('data-datalist-sort-column');
             o.sortOrder = e.attr('data-datalist-sort-order');
+            o.page = parseInt(e.attr('data-datalist-page'));
             o.title = e.attr('data-datalist-dialog-title');
             o.term = e.attr('data-datalist-term');
-            o.page = parseInt(e.attr('data-datalist-page'));
             o.url = e.attr('data-datalist-url');
             e.addClass('mvc-datalist');
         },
@@ -88,14 +88,19 @@
 
                 this._on(datalistAddon, {
                     click: function () {
+                        var timeout;
                         datalist
                             .find('.datalist-search-input')
                             .unbind('keyup.datalist')
-                            .bindWithDelay('keyup.datalist', function () {
-                                that.options.term = this.value;
-                                that.options.page = 0;
-                                that._update(datalist);
-                            }, 500, false)
+                            .bind('keyup.datalist', null, function () {
+                                var input = this;
+                                clearTimeout(timeout);
+                                timeout = setTimeout(function () {
+                                    that.options.term = input.value;
+                                    that.options.page = 0;
+                                    that._update(datalist);
+                                }, 500);
+                            })
                             .val(that.options.term);
                         datalist
                             .find('.datalist-items-per-page')
@@ -209,8 +214,9 @@
             var term = datalist.find('.datalist-search-input').val();
 
             datalist.find('.datalist-error').fadeOut(300);
-            var timeOut = setTimeout(function () {
+            var timeout = setTimeout(function () {
                 datalist.find('.datalist-processing').fadeIn(300);
+                datalist.find('.datalist-pager').fadeOut(300);
                 datalist.find('.datalist-data').fadeOut(300);
             }, 500);
 
@@ -222,13 +228,13 @@
                     that._updateData(datalist, data);
                     that._updateNavbar(datalist, data.FilteredRecords);
 
-                    clearTimeout(timeOut);
+                    clearTimeout(timeout);
                     datalist.find('.datalist-processing').fadeOut(300);
                     datalist.find('.datalist-pager').fadeIn(300);
                     datalist.find('.datalist-data').fadeIn(300);
                 },
                 error: function () {
-                    clearTimeout(timeOut);
+                    clearTimeout(timeout);
                     datalist.find('.datalist-processing').fadeOut(300);
                     datalist.find('.datalist-pager').fadeOut(300);
                     datalist.find('.datalist-data').fadeOut(300);
@@ -288,7 +294,6 @@
                 this._bindSelect(datalist, selectCells[i], data.Rows[i]);
         },
         _updateNavbar: function (datalist, filteredRecords) {
-            var that = this;
             var pageLength = datalist.find('.datalist-items-per-page').val();
             var totalPages = parseInt(filteredRecords / pageLength) + 1;
             if (filteredRecords % pageLength == 0)
@@ -297,32 +302,33 @@
             if (totalPages == 0)
                 datalist.find('.datalist-pager > .pagination').empty();
             else
-                datalist.find('.datalist-pager > .pagination').bootstrapPaginator({
-                    currentPage: that.options.page + 1,
-                    bootstrapMajorVersion: 3,
-                    totalPages: totalPages,
-                    onPageChanged: function (e, oldPage, newPage) {
-                        that.options.page = newPage - 1;
-                        that._update(datalist);
-                    },
-                    tooltipTitles: function (type, page, current) {
-                        return '';
-                    },
-                    itemTexts: function (type, page, current) {
-                        switch (type) {
-                            case 'first':
-                                return '&laquo;';
-                            case 'prev':
-                                return '&lsaquo;';
-                            case 'next':
-                                return '&rsaquo;';
-                            case 'last':
-                                return '&raquo;';
-                            case 'page':
-                                return page;
-                        }
-                    }
-                });
+                this._paginate(totalPages);
+        },
+        _paginate: function (totalPages) {
+            var startingPage = Math.floor(this.options.page / 5) * 5;
+            var currentPage = this.options.page;
+            var page = startingPage;
+            var pagination = '';
+            var that = this;
+
+            if (totalPages > 5 && currentPage > 0)
+                pagination = '<li><a data-page="0">&laquo;</a></li><li><a data-page="' + (currentPage - 1) + '">&lsaquo;</a></li>';
+
+            while (page < totalPages && page < startingPage + 5) {
+                var liClass = '';
+                if (page == this.options.page)
+                    liClass = ' class="active"';
+
+                pagination += '<li' + liClass + '><a data-page="' + page + '">' + (++page) + '</a></li>';
+            }
+
+            if (totalPages > 5 && currentPage < (totalPages - 1))
+                pagination += '<li><a data-page="' + (currentPage + 1) + '">&rsaquo;</a></li><li><a data-page="' + (totalPages - 1) + '">&raquo;</a></li>';
+
+            datalist.find('.datalist-pager > .pagination').html(pagination).find('li:not(.active) > a').click(function () {
+                that.options.page = parseInt($(this).data('page'));
+                that._update(datalist);
+            });
         },
         _bindSelect: function (datalist, selectCell, data) {
             var that = this;
@@ -353,9 +359,7 @@
             return this._super();
         }
     });
-})(jQuery);
 
-(function ($) {
     $.fn.datalist.lang = {
         Error: 'Error while retrieving records',
         NoDataFound: 'No data found',
@@ -372,4 +376,4 @@
         width: 'auto',
         modal: true
     });
-}(jQuery));
+})(jQuery);

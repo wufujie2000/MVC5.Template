@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             adapter = new EmailAddressAdapter(metadata, new ControllerContext(), attribute);
         }
 
-        #region Constructor: EmailAddressAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
+        #region Constructor: EmailAddressAdapter(ModelMetadata metadata, ControllerContext context, EmailAddressAttribute attribute)
 
         [Test]
         public void EmailAddressAdapter_SetsAttributeErrorMessage()
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetClientValidationRules()
 
         [Test]
-        public void GetClientValidationRules_CreatesEmailValidationRule()
+        public void GetClientValidationRules_ReturnsEmailValidationRule()
         {
             ModelClientValidationRule expected = adapter.GetClientValidationRules().First();
             String expectedErrorMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName());

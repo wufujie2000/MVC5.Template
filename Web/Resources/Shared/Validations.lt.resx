@@ -126,7 +126,13 @@
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>Laukas '{0}' turi būti data.</value>
   </data>
+  <data name="FieldMustBeInRangeOfLength" xml:space="preserve">
+    <value>Laukas '{0}' turi būti sudarytas iš bent {2} , bet neviršyti {1} simbolių.</value>
+  </data>
   <data name="FieldMustBeNumeric" xml:space="preserve">
     <value>Laukas '{0}' turi būti skaičius.</value>
+  </data>
+  <data name="FieldMustNotExceedLength" xml:space="preserve">
+    <value>Laukas '{0}' negali viršyti maksimalaus {1} simbolių ilgio.</value>
   </data>
 </root>

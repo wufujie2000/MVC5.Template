@@ -83,6 +83,10 @@ namespace MvcTemplate.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(
                 typeof(EmailAddressAttribute),
                 typeof(EmailAddressAdapter));
+            
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(
+                typeof(StringLengthAttribute),
+                typeof(StringLengthAdapter));
         }
         private void RegisterFilters()
         {

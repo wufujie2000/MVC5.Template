@@ -126,7 +126,13 @@
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>'{0}' field must be a date.</value>
   </data>
+  <data name="FieldMustBeInRangeOfLength" xml:space="preserve">
+    <value>'{0}' field must contain between {2} and {1} symbols.</value>
+  </data>
   <data name="FieldMustBeNumeric" xml:space="preserve">
     <value>'{0}' field must be numeric.</value>
+  </data>
+  <data name="FieldMustNotExceedLength" xml:space="preserve">
+    <value>'{0}' field must not exceed maximum length of {1}.</value>
   </data>
 </root>

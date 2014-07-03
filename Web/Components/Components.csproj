@@ -68,6 +68,7 @@
     <Compile Include="Logging\LoggableEntry.cs" />
     <Compile Include="Logging\LoggableEntryProperty.cs" />
     <Compile Include="Mvc\Adapters\EmailAddressAdapter.cs" />
+    <Compile Include="Mvc\Adapters\StringLengthAttributeAdapter.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />

@@ -292,7 +292,7 @@ namespace MvcTemplate.Tests.Resources.Tests
 
         #endregion
 
-        #region Static method: GetPropertyTitle(Type viewType, String propertyName)
+        #region Static method: GetPropertyTitle(Type view, String property)
 
         [Test]
         public void GetPropertyTitle_GetsTitle()
@@ -308,6 +308,15 @@ namespace MvcTemplate.Tests.Resources.Tests
         {
             String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountUsername");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetPropertyTitle_GetsTitleFromMultipleRelations()
+        {
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
+            String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountRoleAccountUsername");
 
             Assert.AreEqual(expected, actual);
         }

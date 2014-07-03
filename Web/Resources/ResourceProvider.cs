@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -10,6 +11,7 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
+        private static IEnumerable<String> resourceFullNames;
         private static Assembly executingAssembly;
 
         private static String CurrentArea
@@ -37,6 +39,7 @@ namespace MvcTemplate.Resources
         static ResourceProvider()
         {
             executingAssembly = Assembly.GetExecutingAssembly();
+            resourceFullNames = executingAssembly.DefinedTypes.Select(type => type.FullName);
         }
 
         public static String GetCurrentFormTitle()
@@ -89,23 +92,32 @@ namespace MvcTemplate.Resources
 
             return GetPropertyTitle(memberExpression.Member.ReflectedType, memberExpression.Member.Name);
         }
-        public static String GetPropertyTitle(Type viewType, String propertyName)
+        public static String GetPropertyTitle(Type view, String property)
         {
-            return GetPropertyTitle(viewType.Name, propertyName);
+            return GetPropertyTitle(view.Name, property);
         }
 
-        private static String GetPropertyTitle(String viewTypeName, String propertyName)
+        private static String GetPropertyTitle(String view, String property)
         {
-            String baseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", viewTypeName);
-            String title = GetResourceFrom(baseName, propertyName);
-            if (title == null)
+            String baseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", view);
+            String title = GetResourceFrom(baseName, property);
+            if (title != null) return title;
+
+            String[] camelCasedProperties = SplitCamelCase(property);
+            for (Int32 skippedProperties = 0; skippedProperties < camelCasedProperties.Length; skippedProperties++)
             {
-                String[] baseNames = SplitCamelCase(propertyName);
-                if (baseNames.Length > 1)
-                    return GetPropertyTitle(baseNames[0] + "View", String.Concat(baseNames.Skip(1)));
+                for (Int32 viewSize = 1; viewSize < camelCasedProperties.Length - skippedProperties; viewSize++)
+                {
+                    String joinedView = String.Concat(camelCasedProperties.Skip(skippedProperties).Take(viewSize)) + "View";
+                    String joinedProperty = String.Concat(camelCasedProperties.Skip(viewSize + skippedProperties));
+                    String joinedbaseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", joinedView);
+
+                    title = GetResourceFrom(joinedbaseName, joinedProperty);
+                    if (title != null) return title;
+                }
             }
 
-            return title;
+            return null;
         }
 
         private static String[] SplitCamelCase(String value)
@@ -114,14 +126,10 @@ namespace MvcTemplate.Resources
         }
         private static String GetResourceFrom(String baseName, String key)
         {
-            try
-            {
-                return new ResourceManager(baseName, executingAssembly).GetString(key);
-            }
-            catch(Exception)
-            {
-                return null;
-            }
+            if (resourceFullNames.Any(typeFullName => typeFullName == baseName))
+                return new ResourceManager(baseName, executingAssembly).GetString(key ?? String.Empty);
+
+            return null;
         }
     }
 }

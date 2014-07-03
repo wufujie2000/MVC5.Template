@@ -8,5 +8,7 @@
         // TODO: Rename resources assembly or it's resources resources files and then change MvcTemplate.Resources.Shared.Resources occurences
         // TODO: Hide datalist controller's Role and others method from unauthorized access
         // TODO: Selecting views and models gives different datetime results
+        // TODO: Clean up and separate scaffolding template
+        // TODO: Add number cell in grid mvc column helper
     }
 }

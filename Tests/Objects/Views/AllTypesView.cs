@@ -2,9 +2,9 @@
 using MvcTemplate.Objects;
 using System;
 
-namespace MvcTemplate.Tests.Unit.Components.Datalists
+namespace MvcTemplate.Tests.Objects.Views
 {
-    public class DatalistView : BaseView
+    public class AllTypesView : BaseView
     {
         public TestEnum EnumField { get; set; }
         public SByte SByteField { get; set; }
@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public String StringField { get; set; }
 
         [DatalistColumn(Relation = "StringField")]
-        public DatalistView Child { get; set; }
+        public AllTypesView Child { get; set; }
     }
 
     public enum TestEnum

@@ -110,6 +110,7 @@
     <Compile Include="Data\Migrations\201407011137069_Initial.Designer.cs">
       <DependentUpon>201407011137069_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EmailAddressAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\StringLengthAdapterTests.cs" />
@@ -136,10 +137,8 @@
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerStub.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistStub.cs" />
-    <Compile Include="Unit\Components\Datalists\DatalistView.cs" />
     <Compile Include="Unit\Controllers\ServicedControllerStub.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Components\Security\Authorization\RoleFactoryTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />

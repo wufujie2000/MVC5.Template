@@ -9,6 +9,5 @@
         // TODO: Hide datalist controller's Role and others method from unauthorized access
         // TODO: Selecting views and models gives different datetime results
         // TODO: Clean up and separate scaffolding template
-        // TODO: Add number cell in grid mvc column helper
     }
 }

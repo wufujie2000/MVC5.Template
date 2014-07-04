@@ -4,6 +4,7 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using MvcTemplate.Tests.Objects.Views;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -108,7 +109,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            AssertPropertyTitleFor<DatalistView>("Child", null);
+            AssertPropertyTitleFor<AllTypesView>("Child", null);
         }
 
         #endregion
@@ -118,163 +119,163 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetColumnCssClass_GetsTextCellForEnum()
         {
-            AssertCssClassFor<DatalistView>("EnumField", "text-cell");
+            AssertCssClassFor<AllTypesView>("EnumField", "text-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForSByte()
         {
-            AssertCssClassFor<DatalistView>("SByteField", "number-cell");
+            AssertCssClassFor<AllTypesView>("SByteField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForByte()
         {
-            AssertCssClassFor<DatalistView>("ByteField", "number-cell");
+            AssertCssClassFor<AllTypesView>("ByteField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForInt16()
         {
-            AssertCssClassFor<DatalistView>("Int16Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("Int16Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForUInt16()
         {
-            AssertCssClassFor<DatalistView>("UInt16Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("UInt16Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForInt32()
         {
-            AssertCssClassFor<DatalistView>("Int32Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("Int32Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForUInt32()
         {
-            AssertCssClassFor<DatalistView>("UInt32Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("UInt32Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForInt64()
         {
-            AssertCssClassFor<DatalistView>("Int64Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("Int64Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForUInt64()
         {
-            AssertCssClassFor<DatalistView>("UInt64Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("UInt64Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForSingle()
         {
-            AssertCssClassFor<DatalistView>("SingleField", "number-cell");
+            AssertCssClassFor<AllTypesView>("SingleField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForDouble()
         {
-            AssertCssClassFor<DatalistView>("DoubleField", "number-cell");
+            AssertCssClassFor<AllTypesView>("DoubleField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForDecimal()
         {
-            AssertCssClassFor<DatalistView>("DecimalField", "number-cell");
+            AssertCssClassFor<AllTypesView>("DecimalField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsDateCellForDateTime()
         {
-            AssertCssClassFor<DatalistView>("DateTimeField", "date-cell");
+            AssertCssClassFor<AllTypesView>("DateTimeField", "date-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsTextCellForNullableEnum()
         {
-            AssertCssClassFor<DatalistView>("NullableEnumField", "text-cell");
+            AssertCssClassFor<AllTypesView>("NullableEnumField", "text-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableSByte()
         {
-            AssertCssClassFor<DatalistView>("NullableSByteField", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableSByteField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableByte()
         {
-            AssertCssClassFor<DatalistView>("NullableByteField", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableByteField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableInt16()
         {
-            AssertCssClassFor<DatalistView>("NullableInt16Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableInt16Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableUInt16()
         {
-            AssertCssClassFor<DatalistView>("NullableUInt16Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableUInt16Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableInt32()
         {
-            AssertCssClassFor<DatalistView>("NullableInt32Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableInt32Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableUInt32()
         {
-            AssertCssClassFor<DatalistView>("NullableUInt32Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableUInt32Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableInt64()
         {
-            AssertCssClassFor<DatalistView>("NullableInt64Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableInt64Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableUInt64()
         {
-            AssertCssClassFor<DatalistView>("NullableUInt64Field", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableUInt64Field", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableSingle()
         {
-            AssertCssClassFor<DatalistView>("NullableSingleField", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableSingleField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableDouble()
         {
-            AssertCssClassFor<DatalistView>("NullableDoubleField", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableDoubleField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsNumberCellForNullableDecimal()
         {
-            AssertCssClassFor<DatalistView>("NullableDecimalField", "number-cell");
+            AssertCssClassFor<AllTypesView>("NullableDecimalField", "number-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsDateCellForNullableDateTime()
         {
-            AssertCssClassFor<DatalistView>("NullableDateTimeField", "date-cell");
+            AssertCssClassFor<AllTypesView>("NullableDateTimeField", "date-cell");
         }
 
         [Test]
         public void GetColumnCssClass_GetsTextCellForOtherTypes()
         {
-            AssertCssClassFor<DatalistView>("StringField", "text-cell");
+            AssertCssClassFor<AllTypesView>("StringField", "text-cell");
         }
 
         #endregion

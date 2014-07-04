@@ -52,19 +52,14 @@ namespace MvcTemplate.Components.Extensions.Html
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
         {
             return column
-                .AddDateTimeProperty(property)
-                .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern));
-        }
-        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
-        {
-            return column
                 .AddProperty(property)
-                .Css("date-cell");
+                .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern));
         }
         public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
         {
             return column
                 .Add(property)
+                .Css(GetCssClassFor(property))
                 .Titled(ResourceProvider.GetPropertyTitle(property));
         }
 
@@ -79,6 +74,32 @@ namespace MvcTemplate.Components.Extensions.Html
                 .WithPaging(15)
                 .Filterable()
                 .Sortable();
+        }
+
+        private static String GetCssClassFor<T, TProperty>(Expression<Func<T, TProperty>> property)
+        {
+            Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
+            if (type.IsEnum) return "text-cell";
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return "number-cell";
+                case TypeCode.DateTime:
+                    return "date-cell";
+                default:
+                    return "text-cell";
+            }
         }
 
         private static void AddLinkHtml<T>(IGridColumn<T> gridColumn, LinkAction action) where T : ILinkableView

@@ -6,11 +6,11 @@ using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
-namespace <#= Model.Namespace #>
+namespace <#= Model.ControllerNamespace #>
 {
-    public class <#= Model.Name #> : ValidatedController<<#= Model.IService #>, <#= Model.IValidator #>>
+    public class <#= Model.Controller #> : ValidatedController<<#= Model.IService #>, <#= Model.IValidator #>>
     {
-        public <#= Model.Name #>(<#= Model.IService #> service, <#= Model.IValidator #> validator)
+        public <#= Model.Controller #>(<#= Model.IService #> service, <#= Model.IValidator #> validator)
             : base(service, validator)
         {
         }

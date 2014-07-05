@@ -12,21 +12,21 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace <#= Model.Namespace #>
+namespace <#= Model.ControllerTestNamespace #>
 {
     [TestFixture]
-    public class <#= Model.Name #> : AControllerTests
+    public class <#= Model.ControllerTests #> : AControllerTests
     {
-        private Mock<<#= Model.ValidatorInterface #>> validatorMock;
-        private Mock<<#= Model.ServiceInterface #>> serviceMock;
+        private Mock<<#= Model.IValidator #>> validatorMock;
+        private Mock<<#= Model.IService #>> serviceMock;
         private <#= Model.Controller #> controller;
         private <#= Model.View #> <#= Model.ModelName #>;
 
         [SetUp]
         public void SetUp()
         {
-            validatorMock = new Mock<<#= Model.ValidatorInterface #>>(MockBehavior.Strict);
-            serviceMock = new Mock<<#= Model.ServiceInterface #>>(MockBehavior.Strict);
+            validatorMock = new Mock<<#= Model.IValidator #>>(MockBehavior.Strict);
+            serviceMock = new Mock<<#= Model.IService #>>(MockBehavior.Strict);
             validatorMock.SetupAllProperties();
             serviceMock.SetupAllProperties();
             <#= Model.ModelName #> = new <#= Model.View #>();

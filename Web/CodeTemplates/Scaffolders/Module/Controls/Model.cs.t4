@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Objects
 {
-    public class <#= Model.Name #> : BaseModel
+    public class <#= Model.Model #> : BaseModel
     {
     }
 }

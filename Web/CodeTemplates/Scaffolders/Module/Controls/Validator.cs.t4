@@ -6,9 +6,9 @@ using System;
 
 namespace MvcTemplate.Validators
 {
-    public class <#= Model.Name #> : BaseValidator, <#= Model.Interface #>
+    public class <#= Model.Validator #> : BaseValidator, <#= Model.IValidator #>
     {
-        public <#= Model.Name #>(IUnitOfWork unitOfWork)
+        public <#= Model.Validator #>(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

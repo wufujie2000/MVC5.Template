@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace MvcTemplate.Services
 {
-    public class <#= Model.Name #> : BaseService, <#= Model.Interface #>
+    public class <#= Model.Service #> : BaseService, <#= Model.IService #>
     {
-        public <#= Model.Name #>(IUnitOfWork unitOfWork)
+        public <#= Model.Service #>(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

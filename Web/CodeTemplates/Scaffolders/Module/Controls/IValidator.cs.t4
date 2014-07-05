@@ -5,7 +5,7 @@ using System;
 
 namespace MvcTemplate.Validators
 {
-    public interface <#= Model.Name #> : IValidator
+    public interface <#= Model.IValidator #> : IValidator
     {
         Boolean CanCreate(<#= Model.View #> view);
         Boolean CanEdit(<#= Model.View #> view);

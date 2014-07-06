@@ -1,0 +1,7 @@
+<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
+<#@ Output Extension="cs" #>
+#region <#= Model.Area #>
+
+private DbSet<<#= Model.Model #>> <#= Model.Models #> { get; set; }
+
+#endregion

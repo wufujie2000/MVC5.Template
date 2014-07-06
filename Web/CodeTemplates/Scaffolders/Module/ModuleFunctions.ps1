@@ -19,7 +19,7 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
 		    ControllerTests = $Controller + "ControllerTests"; `
 		    ValidatorTests = $Model + "ValidatorTests"; `
 		    ServiceTests = $Model + "ServiceTests"; `
-            
+
 	        ControllerTestNamespace = $ControllerTestsNamespace; `
             ControllerNamespace = $ControllerNamespace; `
 
@@ -31,7 +31,7 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
             View = $Model + "View"; `
             Model = $Model; `
 	    } `
-        -SuccessMessage "Added $Project\{0}" `
+        -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `
 	    -Project $Project
 }
@@ -49,9 +49,41 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         -Model @{ `
             View = $Model + "View"; `
 	    } `
-        -SuccessMessage "Added $Project\{0}" `
+        -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `
 	    -Project $Project
+}
+
+Function Scaffold-DbSet()
+{
+    if (!$Delete)
+    {
+        $TestingContext = Get-ProjectType -Project $TestsProject -Type "TestingContext"
+	    $Context = Get-ProjectType -Project $DataProject -Type "Context"
+        $Models = Get-PluralizedWord $Model
+
+        Add-ClassMemberViaTemplate `
+            -SuccessMessage "Added DbSet<$Model> member to testing context." `
+            -TemplateFolders $TemplateFolders `
+            -CodeClass $TestingContext `
+            -Template "Members\DbSet" `
+            -Model @{ `
+                Area = $ElementArea; `
+                Models = $Models; `
+                Model = $Model; `
+            }
+
+        Add-ClassMemberViaTemplate `
+            -SuccessMessage "Added DbSet<$Model> member to context." `
+            -TemplateFolders $TemplateFolders `
+            -Template "Members\DbSet" `
+            -CodeClass $Context `
+            -Model @{ `
+                Area = $ElementArea; `
+                Models = $Models; `
+                Model = $Model; `
+            }
+    }
 }
 
 Function Delete-ProjectItem([String]$Project, [String]$Path)

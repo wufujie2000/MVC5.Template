@@ -7,6 +7,7 @@ param(
     [Switch]$Delete = $false
 )
 
+$DataProject = "Data"
 $TestsProject = "Tests"
 $RazorViewProject = "Web"
 $ObjectsProject = "Objects"
@@ -39,6 +40,8 @@ Scaffold-CshtmlTemplate "Views\Create"  $RazorViewProject "Views\$ElementPath\Cr
 Scaffold-CshtmlTemplate "Views\Details" $RazorViewProject "Views\$ElementPath\Details"
 Scaffold-CshtmlTemplate "Views\Edit"    $RazorViewProject "Views\$ElementPath\Edit"
 Scaffold-CshtmlTemplate "Views\Delete"  $RazorViewProject "Views\$ElementPath\Delete"
+
+Scaffold-DbSet
 
 If ($Delete)
 {

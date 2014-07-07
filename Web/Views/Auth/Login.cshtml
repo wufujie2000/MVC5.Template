@@ -25,6 +25,6 @@
         @Html.Submit(MvcTemplate.Resources.Shared.Resources.Login)
     }
     <script>
-        var currentLanguage = '@Request.RequestContext.RouteData.Values["language"].ToString()';
+        var currentLanguage = '@UICulture';
     </script>
 }

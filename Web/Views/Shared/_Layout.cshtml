@@ -1,10 +1,10 @@
 ﻿<!doctype html>
-<html lang="@{@Request.RequestContext.RouteData.Values["language"]}">
+<html lang="@CultureInfo.CurrentCulture.TwoLetterISOLanguageName">
 <head>
-    <meta charset="UTF-8" />
-    <title>@ResourceProvider.GetCurrentContentTitle()</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>@ResourceProvider.GetCurrentContentTitle()</title>
+
     @Styles.Render("~/Content/JQueryUI/Bundle")
     @Styles.Render("~/Content/Bootstrap/Bundle")
     @Styles.Render("~/Content/FontAwesome/Bundle")
@@ -31,7 +31,7 @@
         </div>
     </div>
     @Html.Partial("_Footer")
-</body>
+
     @Scripts.Render("~/Scripts/Globalize/Bundle")
     @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/JQueryUI/Bundle")
@@ -39,10 +39,11 @@
     @Scripts.Render("~/Scripts/JsTree/Bundle")
     @Scripts.Render("~/Scripts/Datalist/Bundle")
 
-    <script src="~/Scripts/GridMvc/Cultures/gridmvc.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
-    <script src="~/Scripts/JQuery/Cultures/datepicker.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
-    <script src="~/Scripts/Datalist/Cultures/datalist.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
-    <script src="~/Scripts/Globalize/Cultures/globalize.culture.@{@Request.RequestContext.RouteData.Values["language"]}.js"></script>
+    <script src="~/Scripts/GridMvc/Cultures/gridmvc.culture.@(UICulture).js"></script>
+    <script src="~/Scripts/JQuery/Cultures/datepicker.culture.@(UICulture).js"></script>
+    <script src="~/Scripts/Datalist/Cultures/datalist.culture.@(UICulture).js"></script>
+    <script src="~/Scripts/Globalize/Cultures/globalize.culture.@(UICulture).js"></script>
 
     @Scripts.Render("~/Scripts/Shared/Bundle")
+</body>
 </html>

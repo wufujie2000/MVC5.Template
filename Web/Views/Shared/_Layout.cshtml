@@ -12,7 +12,6 @@
     @Styles.Render("~/Content/JsTree/Bundle")
     @Styles.Render("~/Content/Datalist/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
-    @Scripts.Render("~/Scripts/JQuery/Bundle")
 </head>
 <body>
     @Html.Partial("_Header")
@@ -32,6 +31,7 @@
     </div>
     @Html.Partial("_Footer")
 
+    @Scripts.Render("~/Scripts/JQuery/Bundle")
     @Scripts.Render("~/Scripts/Globalize/Bundle")
     @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/JQueryUI/Bundle")

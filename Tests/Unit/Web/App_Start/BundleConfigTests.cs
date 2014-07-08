@@ -16,7 +16,6 @@ namespace MvcTemplate.Tests.Unit.Web.App_Start
             String[] expectedBundles = new[]
             {
                 "~/Scripts/JQuery/Bundle",
-                "~/Scripts/Sidebar/Bundle",
                 "~/Scripts/Bootstrap/Bundle",
                 "~/Scripts/JQueryUI/Bundle",
                 "~/Scripts/Globalize/Bundle",

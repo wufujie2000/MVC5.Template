@@ -12,7 +12,6 @@ namespace MvcTemplate.Web
         private static void RegisterScripts(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").Include("~/Scripts/JQuery/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/Sidebar/Bundle").Include("~/Scripts/Sidebar/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Bootstrap/Bundle").Include("~/Scripts/Bootstrap/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").Include("~/Scripts/JQueryUI/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Globalize/Bundle").Include("~/Scripts/Globalize/*.js"));

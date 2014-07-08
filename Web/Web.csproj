@@ -211,8 +211,8 @@
     <Content Include="Scripts\Auth\auth.js" />
     <Content Include="Scripts\Select2\select2.js" />
     <Content Include="Scripts\Select2\select2.min.js" />
-    <Content Include="Scripts\Shared\shared.js" />
-    <Content Include="Scripts\Sidebar\sidebar.js" />
+    <Content Include="Scripts\Shared\site.js" />
+    <Content Include="Scripts\Shared\sidebar.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

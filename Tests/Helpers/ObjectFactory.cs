@@ -120,16 +120,6 @@ namespace MvcTemplate.Tests.Helpers
             };
         }
 
-        public static Language CreateLanguage(Int32 instanceNumber = 1)
-        {
-            return new Language()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + instanceNumber.ToString(),
-                Abbreviation = "Abbreviation" + instanceNumber.ToString()
-            };
-        }
-
         public static TestModel CreateTestModel(Int32 instanceNumber = 1)
         {
             return new TestModel()

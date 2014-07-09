@@ -29,7 +29,6 @@ namespace MvcTemplate.Data.Core
         #region System
 
         private DbSet<Log> Logs { get; set; }
-        private DbSet<Language> Languages { get; set; }
 
         #endregion
 

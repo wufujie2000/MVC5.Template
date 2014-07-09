@@ -24,29 +24,6 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
             context.Dispose();
         }
 
-        #region Table: Languages
-
-        [Test]
-        public void LanguagesTable_HasEnglishBritishLanguage()
-        {
-            HasLanguage("en-GB", "English");
-        }
-
-        [Test]
-        public void LanguagesTable_HasLithuanianLanguage()
-        {
-            HasLanguage("lt-LT", "Lietuvių");
-        }
-
-        private void HasLanguage(String abbrevation, String name)
-        {
-            Assert.IsNotNull(context.Set<Language>().SingleOrDefault(language =>
-                language.Abbreviation == abbrevation &&
-                language.Name == name));
-        }
-
-        #endregion
-
         #region Table: Privileges
 
         [Test]

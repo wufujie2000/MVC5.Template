@@ -32,7 +32,6 @@ namespace MvcTemplate.Tests.Data
         #region System
 
         private DbSet<Log> Logs { get; set; }
-        private DbSet<Language> Languages { get; set; }
 
         #endregion
 

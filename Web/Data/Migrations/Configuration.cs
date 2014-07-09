@@ -23,24 +23,9 @@ namespace MvcTemplate.Data.Migrations
         {
             unitOfWork = new UnitOfWork(context);
 
-            SeedLanguages();
             SeedAllPrivileges();
             SeedAdministratorRole();
             SeedAccounts();
-        }
-        private void SeedLanguages()
-        {
-            List<Language> languages = new List<Language>()
-            {
-                new Language() { Abbreviation = "en-GB", Name = "English" },
-                new Language() { Abbreviation = "lt-LT", Name = "Lietuvių" }
-            };
-
-            foreach (Language language in languages)
-                if (!unitOfWork.Repository<Language>().Query().Any(lang => lang.Abbreviation == language.Abbreviation))
-                    unitOfWork.Repository<Language>().Insert(language);
-
-            unitOfWork.Commit();
         }
         private void SeedAllPrivileges()
         {

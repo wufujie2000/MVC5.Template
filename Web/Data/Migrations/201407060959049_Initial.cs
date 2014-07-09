@@ -63,17 +63,6 @@ namespace MvcTemplate.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
-                "dbo.Languages",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Abbreviation = c.String(nullable: false),
-                        Name = c.String(nullable: false),
-                        EntityDate = c.DateTime(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id, clustered: false);
-            
-            CreateTable(
                 "dbo.Logs",
                 c => new
                     {
@@ -97,7 +86,6 @@ namespace MvcTemplate.Data.Migrations
             DropIndex("dbo.Accounts", new[] { "RoleId" });
             DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.Logs");
-            DropTable("dbo.Languages");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");

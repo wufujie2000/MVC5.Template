@@ -106,9 +106,9 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="Data\Migrations\201407011137069_Initial.cs" />
-    <Compile Include="Data\Migrations\201407011137069_Initial.Designer.cs">
-      <DependentUpon>201407011137069_Initial.cs</DependentUpon>
+    <Compile Include="Data\Migrations\201407060959185_Initial.cs" />
+    <Compile Include="Data\Migrations\201407060959185_Initial.Designer.cs">
+      <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
@@ -245,8 +245,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Data\Migrations\201407011137069_Initial.resx">
-      <DependentUpon>201407011137069_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Data\Migrations\201407060959185_Initial.resx">
+      <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>

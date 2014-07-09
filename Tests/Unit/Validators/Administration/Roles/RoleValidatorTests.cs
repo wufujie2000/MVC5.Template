@@ -156,7 +156,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         private void TearDownData()
         {
             context.Set<Privilege>().RemoveRange(context.Set<Privilege>().Where(privilege => privilege.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Language>().RemoveRange(context.Set<Language>().Where(language => language.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Account>().RemoveRange(context.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
             context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
             context.SaveChanges();

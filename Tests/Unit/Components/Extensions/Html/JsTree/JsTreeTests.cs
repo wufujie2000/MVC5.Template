@@ -9,13 +9,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Constructor: JsTree()
 
         [Test]
-        public void JsTree_NodesAreEmpty()
+        public void JsTree_CreatesEmptyTree()
         {
             CollectionAssert.IsEmpty(new JsTree().Nodes);
         }
 
         [Test]
-        public void JsTree_SelectedIdsAreEmpty()
+        public void JsTree_CreatesUnselectedTree()
         {
             CollectionAssert.IsEmpty(new JsTree().SelectedIds);
         }

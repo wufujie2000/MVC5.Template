@@ -9,10 +9,10 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class JsTreeExtensions
     {
-        public static MvcHtmlString JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> model)
+        public static MvcHtmlString JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
         {
-            return JsTreeViewFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(model), "SelectedIds"),
-                ModelMetadata.FromLambdaExpression(model, html.ViewData).Model as JsTree);
+            return JsTreeViewFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(expression), "SelectedIds"),
+                ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model as JsTree);
         }
 
         private static MvcHtmlString JsTreeViewFor(String name, JsTree tree)

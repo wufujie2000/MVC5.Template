@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void AuthUsernameFor_FormsAuthUsernameFor()
+        public void AuthUsernameFor_FormsUsernameGroupElements()
         {
             String actual = html.AuthUsernameFor(expression).ToString();
             String expected = String.Format(
@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void AuthPasswordFor_FormsAuthPasswordFor()
+        public void AuthPasswordFor_FormsPasswordGroupElements()
         {
             String actual = html.AuthPasswordFor(expression).ToString();
             String expected = String.Format(
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void AuthEmailFor_FormsAuthEmailFor()
+        public void AuthEmailFor_FormsEmailGroupElements()
         {
             String actual = html.AuthEmailFor(expression).ToString();
             String expected = String.Format(
@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
 
         [Test]
-        public void AuthLanguageSelect_FormsAuthLanguageSelect()
+        public void AuthLanguageSelect_FormsLanguageSelectGroupElements()
         {
             String actual = html.AuthLanguageSelect().ToString();
             String expected =

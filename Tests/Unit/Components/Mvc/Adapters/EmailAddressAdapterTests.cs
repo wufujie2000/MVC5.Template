@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: EmailAddressAdapter(ModelMetadata metadata, ControllerContext context, EmailAddressAttribute attribute)
 
         [Test]
-        public void EmailAddressAdapter_SetsAttributeErrorMessage()
+        public void EmailAddressAdapter_SetsErrorMessage()
         {
             Assert.AreEqual(attribute.ErrorMessage, Validations.FieldIsNotValidEmail);
         }

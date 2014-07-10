@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
+using System.Text;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
@@ -13,6 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     public class BootstrapExtensionsTests
     {
         private HtmlHelper<BootstrapModel> html;
+        private StringBuilder htmlStringBuilder;
         private BootstrapModel model;
 
         [SetUp]
@@ -20,6 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             model = new BootstrapModel();
             html = new HtmlMock<BootstrapModel>(model).Html;
+            htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
         }
 
         #region Extension method: FormGroup(this HtmlHelper html)
@@ -29,8 +32,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             html.FormGroup().Dispose();
 
-            String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
             String expected = "<div class=\"form-group\"></div>";
+            String actual = htmlStringBuilder.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -44,8 +47,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             html.InputGroup().Dispose();
 
-            String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
             String expected = "<div class=\"input-group\"></div>";
+            String actual = htmlStringBuilder.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -60,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.FormActions().Dispose();
 
             String expected = String.Format("<div class=\"{0}\"></div>", BootstrapExtensions.FormActionsClass);
-            String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
+            String actual = htmlStringBuilder.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -75,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.ContentGroup().Dispose();
 
             String expected = String.Format("<div class=\"{0}\"></div>", BootstrapExtensions.ContentClass);
-            String actual = (html.ViewContext.Writer as StringWriter).GetStringBuilder().ToString();
+            String actual = htmlStringBuilder.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -121,7 +124,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormLabelFor_FormsRequiredLabelFor()
+        public void FormLabelFor_FormsRequiredLabel()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 
@@ -137,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormLabelFor_FormsNotRequiredLabelFor()
+        public void FormLabelFor_FormsNotRequiredLabel()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
 
@@ -154,7 +157,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
 
         [Test]
-        public void FormTextBoxFor_FormsTextBoxFor()
+        public void FormTextBoxFor_FormsTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
 
@@ -252,7 +255,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeWithoutReadOnlyAttribute()
+        public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
 
@@ -270,7 +273,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeWithReadOnlyAttributeBeingFalse()
+        public void FormTextBoxFor_DoesNotAddFalseReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
 
@@ -288,7 +291,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_AddsReadOnlyAttributeWithReadOnlyAttributeBeingTrue()
+        public void FormTextBoxFor_AddsReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
 
@@ -310,7 +313,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]
-        public void FormDatePickerFor_FormsDatePickerFor()
+        public void FormDatePickerFor_FormsDatePicker()
         {
             Expression<Func<BootstrapModel, DateTime>> expression = (exp) => exp.Relation.Date;
 
@@ -333,7 +336,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
         [Test]
-        public void FormPasswordFor_FormsPasswordFor()
+        public void FormPasswordFor_FormsPassword()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 
@@ -354,7 +357,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
         [Test]
-        public void FormValidationFor_FormsValidationFor()
+        public void FormValidationFor_FormsValidation()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 

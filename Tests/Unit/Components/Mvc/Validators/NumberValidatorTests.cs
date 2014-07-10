@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: Validate(Object container)
 
         [Test]
-        public void Validate_ReturnsEmptyEnumerable()
+        public void Validate_DoesNotValidate()
         {
             CollectionAssert.IsEmpty(validator.Validate(null));
         }
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void GetClientValidationRules_HasValidationMessage()
+        public void GetClientValidationRules_SetsValidationMessages()
         {
             Assert.AreEqual(
                 String.Format(Validations.FieldMustBeNumeric, metadata.GetDisplayName()),
@@ -48,13 +48,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void GetClientValidationRules_ValidationParametersAreEmpty()
+        public void GetClientValidationRules_DoesNotHaveValidationParameters()
         {
             CollectionAssert.IsEmpty(validator.GetClientValidationRules().First().ValidationParameters);
         }
 
         [Test]
-        public void GetClientValidationRules_HasOneRule()
+        public void GetClientValidationRules_ReturnsOnlyOneRule()
         {
             Assert.AreEqual(1, validator.GetClientValidationRules().Count());
         }

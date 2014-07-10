@@ -13,11 +13,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void WidgetBox_WritesWidgetBox()
         {
-            StringWriter textWriter = new StringWriter();
-            using (new WidgetBox(textWriter, "Icon", "Title", "Buttons"))
-                textWriter.Write("Test");
+            StringWriter writer = new StringWriter();
+            using (new WidgetBox(writer, "Icon", "Title", "Buttons"))
+                writer.Write("Test");
 
-            String actual = textWriter.GetStringBuilder().ToString();
+            String actual = writer.GetStringBuilder().ToString();
             String expected = GetExpectedWidgetBoxHtml();
 
             Assert.AreEqual(expected, actual);
@@ -62,13 +62,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         private String GetExpectedWidgetBoxHtml()
         {
-            return "<div class=\"widget-box\">"
-                + "<div class=\"widget-title\">"
-                + "<span class=\"widget-title-icon\">"
-                + "<i class=\"Icon\"></i></span>"
-                + "<h5>Title</h5>"
-                + "<div class=\"widget-title-buttons\">Buttons</div></div>"
-                + "<div class=\"widget-content\">Test</div></div>";
+            return
+                "<div class=\"widget-box\">" +
+                    "<div class=\"widget-title\">" +
+                        "<span class=\"widget-title-icon\">" +
+                            "<i class=\"Icon\"></i>" +
+                        "</span>" +
+                        "<h5>Title</h5>" +
+                        "<div class=\"widget-title-buttons\">Buttons</div>" +
+                    "</div>" +
+                    "<div class=\"widget-content\">Test</div>" +
+                "</div>";
         }
 
         #endregion

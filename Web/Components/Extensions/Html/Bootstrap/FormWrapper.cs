@@ -10,20 +10,11 @@ namespace MvcTemplate.Components.Extensions.Html
         protected TextWriter writer;
         private Boolean disposed;
 
-        public FormWrapper(String cssClass)
-        {
-            wrapper = new TagBuilder("div");
-            wrapper.AddCssClass(cssClass.Trim());
-        }
-        public FormWrapper(Object content, String cssClass)
-            : this(cssClass)
-        {
-            wrapper.InnerHtml = content.ToString();
-        }
         public FormWrapper(TextWriter writer, String cssClass)
-            : this(cssClass)
         {
             this.writer = writer;
+            wrapper = new TagBuilder("div");
+            wrapper.AddCssClass(cssClass.Trim());
             writer.Write(wrapper.ToString(TagRenderMode.StartTag));
         }
 

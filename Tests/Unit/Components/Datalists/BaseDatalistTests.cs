@@ -1,8 +1,8 @@
 ﻿using Datalist;
+using Moq;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
-using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects.Views;
 using NUnit.Framework;
@@ -17,22 +17,24 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
     public class BaseDatalistTests
     {
         private BaseDatalistStub<Role, RoleView> datalist;
-        private IUnitOfWork unitOfWork;
+        private Mock<IUnitOfWork> unitOfWorkMock;
 
         [SetUp]
         public void SetUp()
         {
+            unitOfWorkMock = new Mock<IUnitOfWork>();
             HttpContext.Current = new HttpMock().HttpContext;
-            unitOfWork = new UnitOfWork(new TestingContext());
+            datalist = new BaseDatalistStub<Role, RoleView>(unitOfWorkMock.Object);
 
-            datalist = new BaseDatalistStub<Role, RoleView>(unitOfWork);
+            unitOfWorkMock
+                .Setup(mock => mock.Repository<Role>().Query<RoleView>())
+                .Returns(Enumerable.Empty<RoleView>().AsQueryable());
         }
 
         [TearDown]
         public void TearDown()
         {
             HttpContext.Current = null;
-            unitOfWork.Dispose();
         }
 
         #region Constructor: BaseDatalist()
@@ -47,10 +49,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         [Test]
-        public void BaseDatalist_SetsDatalistUrlForDefaultLanguage()
+        public void BaseDatalist_FormsDefaultDatalistUrl()
         {
             HttpRequest request = HttpContext.Current.Request;
-            request.RequestContext.RouteData.Values["language"] = "en-GB";
             datalist = new BaseDatalistStub<Role, RoleView>();
 
             String actual = datalist.DatalistUrl;
@@ -64,10 +65,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         [Test]
-        public void BaseDatalist_SetsDatalistUrlForLanguage()
+        public void BaseDatalist_FormsLocalizedDatalistUrl()
         {
+            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt-LT";
             HttpRequest request = HttpContext.Current.Request;
-            request.RequestContext.RouteData.Values["language"] = "lt-LT";
             datalist = new BaseDatalistStub<Role, RoleView>();
 
             String actual = new BaseDatalistStub<Role, RoleView>().DatalistUrl;
@@ -88,8 +89,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsUnitOfWork()
         {
-            IUnitOfWork actual = new BaseDatalistStub<Role, RoleView>(unitOfWork).BaseUnitOfWork;
-            IUnitOfWork expected = unitOfWork;
+            IUnitOfWork actual = new BaseDatalistStub<Role, RoleView>(unitOfWorkMock.Object).BaseUnitOfWork;
+            IUnitOfWork expected = unitOfWorkMock.Object;
 
             Assert.AreEqual(expected, actual);
         }
@@ -101,15 +102,20 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetColumnHeader_GetsNamePropertyTitle()
         {
-            String expectedTitle = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
+            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
+            PropertyInfo property = typeof(RoleView).GetProperty("Name");
+            String actual = datalist.BaseGetColumnHeader(property);
 
-            AssertPropertyTitleFor<RoleView>("Name", expectedTitle);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetColumnHeader_GetsPropertyRelationTitle()
         {
-            AssertPropertyTitleFor<AllTypesView>("Child", null);
+            PropertyInfo property = typeof(AllTypesView).GetProperty("Child");
+            String actual = datalist.BaseGetColumnHeader(property);
+
+            Assert.IsNull(actual);
         }
 
         #endregion
@@ -285,23 +291,16 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_GetsModelsProjectedToViews()
         {
-            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().Query<RoleView>();
+            IQueryable<RoleView> expected = unitOfWorkMock.Object.Repository<Role>().Query<RoleView>();
             IQueryable<RoleView> actual = datalist.BaseGetModels();
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion
 
         #region Test helpers
 
-        private void AssertPropertyTitleFor<T>(String propertyName, String expectedTitle)
-        {
-            PropertyInfo property = typeof(T).GetProperty(propertyName);
-            String actualTitle = datalist.BaseGetColumnHeader(property);
-
-            Assert.AreEqual(expectedTitle, actualTitle);
-        }
         private void AssertCssClassFor<T>(String propertyName, String expectedClass)
         {
             PropertyInfo property = typeof(T).GetProperty(propertyName);

@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Test]
-        public void RequiredAdapter_SetsAttributeErrorMessage()
+        public void RequiredAdapter_SetsErrorMessage()
         {
             Assert.AreEqual(attribute.ErrorMessage, Validations.FieldIsRequired);
         }

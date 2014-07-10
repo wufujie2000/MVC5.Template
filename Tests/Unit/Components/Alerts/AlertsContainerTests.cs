@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -22,8 +21,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         #region Constanct: DefaultFadeout
 
         [Test]
-        public void DefaultFadeout_IsContanst()
+        public void DefaultFadeout_IsContant()
         {
+            Assert.IsTrue(typeof(AlertsContainer).GetField("DefaultFadeout").IsLiteral);
             Assert.AreEqual(4000, AlertsContainer.DefaultFadeout);
         }
 
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         #region Contructor: AlertsContainer()
 
         [Test]
-        public void AlertsContainer_IsEmpty()
+        public void AlertsContainer_CreatesEmptyContainer()
         {
             CollectionAssert.IsEmpty(new AlertsContainer());
         }
@@ -47,14 +47,14 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
             Alert expected = new Alert()
             {
                 Message = "TestMessage",
-                FadeoutAfter = 100000000,
-                Type = AlertTypes.Success
+                Type = AlertTypes.Success,
+                FadeoutAfter = 10000000000
             };
 
             container.Add(expected);
             Alert actual = container.First();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -149,11 +149,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void GetEnumerator_ReturnsAlerts()
         {
-            IEnumerable<Alert> alerts = new List<Alert>()
-            {
-                new Alert(),
-                new Alert()
-            };
+            List<Alert> alerts = new List<Alert>();
+            alerts.Add(new Alert());
+            alerts.Add(new Alert());
 
             foreach (Alert message in alerts)
                 container.Add(message);
@@ -162,7 +160,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
             IEnumerator<Alert> actual = container.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
-                Assert.AreEqual(expected.Current, actual.Current);
+                Assert.AreSame(expected.Current, actual.Current);
         }
 
         [Test]
@@ -175,7 +173,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
             IEnumerator actual = (container as IEnumerable).GetEnumerator();
 
             while(expected.MoveNext() | actual.MoveNext())
-                Assert.AreEqual(expected.Current, actual.Current);
+                Assert.AreSame(expected.Current, actual.Current);
         }
 
         #endregion

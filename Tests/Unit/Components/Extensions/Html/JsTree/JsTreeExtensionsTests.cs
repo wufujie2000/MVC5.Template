@@ -24,14 +24,26 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html = new HtmlMock<JsTreeView>(model).Html;
         }
 
-        #region Extension method: JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> model)
+        #region Extension method: JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
 
         [Test]
         public void JsTreeViewFor_FormsJsTreeViewFor()
         {
             String actual = html.JsTreeViewFor(model => model.JsTree).ToString();
-            String expected = "<span class=\"js-tree-view-ids\"><input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"1\" /></span>"
-                + "<div class=\"js-tree-view\" for=\"JsTree.SelectedIds\"><ul><li>Test<ul><li id=\"1\">Test1</li><li id=\"2\">Test2</li></ul></li></ul></div>";
+            String expected =
+                "<span class=\"js-tree-view-ids\">" +
+                    "<input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"1\" />" +
+                "</span>" +
+                "<div class=\"js-tree-view\" for=\"JsTree.SelectedIds\">" +
+                    "<ul>" +
+                        "<li>Test" +
+                            "<ul>" +
+                                "<li id=\"1\">Test1</li>" +
+                                "<li id=\"2\">Test2</li>" +
+                            "</ul>" +
+                        "</li>" +
+                    "</ul>" +
+                "</div>";
 
             Assert.AreEqual(expected, actual);
         }

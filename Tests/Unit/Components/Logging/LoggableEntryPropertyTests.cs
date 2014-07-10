@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
                 TestModel model = new TestModel();
                 context.Set<TestModel>().Add(model);
                 context.Entry(model).State = EntityState.Modified;
-                entry = context.Entry(model).Property(prop => prop.Text);
+                entry = context.Entry(model).Property(property => property.Text);
             }
         }
 

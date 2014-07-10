@@ -22,10 +22,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            HtmlMock htmlMock = new HtmlMock();
-
-            html = htmlMock.Html;
             roleProviderMock = new Mock<IRoleProvider>();
+            HtmlMock htmlMock = new HtmlMock();
+            html = htmlMock.Html;
+
             HttpContext.Current = htmlMock.HttpMock.HttpContext;
             RoleFactory.Provider = roleProviderMock.Object;
         }
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: TableWidgetBox(this HtmlHelper html, params LinkAction[] actions)
 
         [Test]
-        public void TableWidgetBox_FormsTableWidgetBoxWithoutButtons()
+        public void TableWidgetBox_FormsWidgetBox()
         {
             StringBuilder expected = new StringBuilder();
             new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void TableWidgetBox_OnNullRoleProviderFormsTableWidgetBoxWithButtons()
+        public void TableWidgetBox_FormsWidgetBoxWithButtons()
         {
             RoleFactory.Provider = null;
 
@@ -69,27 +69,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void TableWidgetBox_FormsTableWidgetBoxWithButtons()
+        public void TableWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
-                   It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
-
-            StringBuilder expected = new StringBuilder();
-            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
-            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
-
-            StringBuilder actual = new StringBuilder();
-            html.ViewContext.Writer = new StringWriter(actual);
-            html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
-
-            Assert.AreEqual(expected.ToString(), actual.ToString());
-        }
-
-        [Test]
-        public void TableWidgetBox_FormsTableWidgetBoxWithAuthorizedButtons()
-        {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
-                   It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsIn<String>("Details", "Delete"))).Returns(true);
+            roleProviderMock
+                .Setup(mock => mock
+                    .IsAuthorizedFor(
+                       It.IsAny<String>(),
+                       It.IsAny<String>(),
+                       It.IsAny<String>(),
+                       It.IsIn<String>("Details", "Delete")))
+                .Returns(true);
 
             StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
@@ -107,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormWidgetBox(this HtmlHelper html, params LinkAction[] actions)
 
         [Test]
-        public void FormWidgetBox_FormsFormWidgetBoxWithoutButtons()
+        public void FormWidgetBox_FormsWidgetBox()
         {
             StringBuilder expected = new StringBuilder();
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty).Dispose();
@@ -120,7 +109,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormWidgetBox_OnNullRoleProviderFormsFormWidgetBoxWithButtons()
+        public void FormWidgetBox_FormsWidgetBoxWithButtons()
         {
             RoleFactory.Provider = null;
 
@@ -136,35 +125,23 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormWidgetBox_FormsFormWidgetBoxWithAuthorizedButtons()
+        public void FormWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
-                It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>())).Returns(true);
+            roleProviderMock
+                .Setup(mock => mock.IsAuthorizedFor(
+                    It.IsAny<String>(),
+                    It.IsAny<String>(),
+                    It.IsAny<String>(),
+                    It.IsIn<String>("Create", "Edit")))
+                .Returns(true);
 
             StringBuilder expected = new StringBuilder();
-            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Details);
+            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Edit);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
             StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
-            html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Details).Dispose();
-
-            Assert.AreEqual(expected.ToString(), actual.ToString());
-        }
-
-        [Test]
-        public void FormWidgetBox_FormsFormWidgetBoxWithButtons()
-        {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(
-                   It.IsAny<String>(), It.IsAny<String>(), It.IsAny<String>(), It.IsIn<String>("Details", "Delete"))).Returns(true);
-
-            StringBuilder expected = new StringBuilder();
-            String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
-            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
-
-            StringBuilder actual = new StringBuilder();
-            html.ViewContext.Writer = new StringWriter(actual);
-            html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
+            html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit).Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }

@@ -90,9 +90,13 @@ namespace MvcTemplate.Components.Extensions.Html
             return new MvcHtmlString(WrapWith(html.ValidationMessageFor(expression), ValidationClass));
         }
 
-        private static String WrapWith(Object content, String cssClass)
+        private static String WrapWith(MvcHtmlString content, String cssClass)
         {
-            return new FormWrapper(content, cssClass).ToString();
+            TagBuilder wrapper = new TagBuilder("div");
+            wrapper.InnerHtml = content.ToString();
+            wrapper.AddCssClass(cssClass.Trim());
+
+            return wrapper.ToString();
         }
         private static Boolean IsRequired<TModel, TProperty>(this Expression<Func<TModel, TProperty>> expression)
         {

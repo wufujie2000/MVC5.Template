@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
 
         [Test]
-        public void StringLengthAdapter_SetsAttributeMaxLengthErrorMessage()
+        public void StringLengthAdapter_SetsMaxLengthErrorMessage()
         {
             StringLengthAttribute attribute = new StringLengthAttribute(128);
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void StringLengthAdapter_SetsAttributeMinMaxLengthErrorMessage()
+        public void StringLengthAdapter_SetsMinMaxLengthErrorMessage()
         {
             StringLengthAttribute attribute = new StringLengthAttribute(128) { MinimumLength = 4 };
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);

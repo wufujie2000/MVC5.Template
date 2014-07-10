@@ -494,16 +494,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Test helpers
 
-        private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)
-        {
-            columnCollectionMock = CreateIGridCollumnCollectionMock<TProperty>(column);
-            columnCollection = columnCollectionMock.Object;
-
-            columnCollection.AddProperty(property);
-
-            columnMock.Verify(mock => mock.Css(expected), Times.Once());
-        }
-
         private Mock<IGridColumn<AllTypesView>> CreateIGridColumnMock()
         {
             Mock<IGridColumn<AllTypesView>> column = new Mock<IGridColumn<AllTypesView>>();
@@ -538,6 +528,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             collection.Setup(mock => mock.Add()).Returns(gridColumn);
 
             return collection;
+        }
+
+        private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)
+        {
+            columnCollectionMock = CreateIGridCollumnCollectionMock<TProperty>(column);
+            columnCollection = columnCollectionMock.Object;
+
+            columnCollection.AddProperty(property);
+
+            columnMock.Verify(mock => mock.Css(expected), Times.Once());
         }
 
         #endregion

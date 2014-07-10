@@ -33,16 +33,17 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
         {
-            TagBuilder addon = new TagBuilder("span");
-            addon.AddCssClass("input-group-addon flag-span");
-            TagBuilder icon = new TagBuilder("i");
-            icon.AddCssClass("fa fa-flag");
+            TagBuilder select = new TagBuilder("select");
             TagBuilder input = new TagBuilder("input");
+            TagBuilder addon = new TagBuilder("span");
+            TagBuilder icon = new TagBuilder("i");
+
+            addon.AddCssClass("input-group-addon flag-span");
             input.MergeAttribute("id", "TempLanguage");
+            select.MergeAttribute("id", "Language");
             input.MergeAttribute("type", "text");
             input.AddCssClass("form-control");
-            TagBuilder select = new TagBuilder("select");
-            select.MergeAttribute("id", "Language");
+            icon.AddCssClass("fa fa-flag");
 
             addon.InnerHtml = icon.ToString();
             Dictionary<String, String> languages = new Dictionary<String, String>()

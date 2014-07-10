@@ -45,8 +45,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             if (entry.Entity.GetType().Namespace != "System.Data.Entity.DynamicProxies")
                 Assert.Inconclusive();
 
-            Type expected = model.GetType();
             Type actual = new LoggableEntry(entry).EntityType;
+            Type expected = model.GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -58,8 +58,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             if (entry.Entity.GetType().Namespace == "System.Data.Entity.DynamicProxies")
                 Assert.Inconclusive();
 
-            Type expected = model.GetType();
             Type actual = new LoggableEntry(entry).EntityType;
+            Type expected = model.GetType();
 
             Assert.AreEqual(expected, actual);
         }
@@ -82,7 +82,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Test]
-        public void LoggableEntry_DoNoHasChangesIfNoPropertiesAreModified()
+        public void LoggableEntry_DoNoHaveChangesIfPropertiesAreNotModified()
         {
             Assert.IsFalse(new LoggableEntry(entry).HasChanges);
         }

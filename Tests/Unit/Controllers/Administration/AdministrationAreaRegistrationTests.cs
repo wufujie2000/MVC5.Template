@@ -7,7 +7,7 @@ using System.Web.Routing;
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
     [TestFixture]
-    public class AdministrationAreRegistrationTests
+    public class AdministrationAreaRegistrationTests
     {
         private AdministrationAreaRegistration areaRegistration;
         private AreaRegistrationContext registrationContext;

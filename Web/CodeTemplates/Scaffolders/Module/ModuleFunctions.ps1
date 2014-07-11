@@ -8,19 +8,16 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
 
     $ControllerNamespace = "MvcTemplate.Controllers"
     $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
-    If ($AreaName) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
-    If ($AreaName) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area" }
+    If ($Area) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
+    If ($Area) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area" }
 
     Add-ProjectItemViaTemplate `
         -OutputPath $OutputPath `
         -Template $Template `
         -Model @{ `
             ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
-		    ControllerTests = $Controller + "ControllerTests"; `
-		    ValidatorTests = $Model + "ValidatorTests"; `
-		    ServiceTests = $Model + "ServiceTests"; `
-
 	        ControllerTestNamespace = $ControllerTestsNamespace; `
+            AreaRegistration = $Area + "AreaRegistration"; `
             ControllerNamespace = $ControllerNamespace; `
 
 		    Controller = $Controller + "Controller"; `
@@ -30,10 +27,34 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
 		    Service = $Model + "Service"; `
             View = $Model + "View"; `
             Model = $Model; `
+            Area = $Area; `
 	    } `
         -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `
 	    -Project $Project
+}
+Function Scaffold-AreaRegistration([String]$Template, [String]$Project, [String]$OutputPath)
+{
+    if (!$Delete)
+    {
+	    $ControllerNamespace = "MvcTemplate.Controllers"
+        $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
+        If ($Area) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
+        If ($Area) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area" }
+
+        Add-ProjectItemViaTemplate `
+            -OutputPath $OutputPath `
+            -Template $Template `
+            -Model @{ `
+	            ControllerTestNamespace = $ControllerTestsNamespace; `
+                AreaRegistration = $Area + "AreaRegistration"; `
+                ControllerNamespace = $ControllerNamespace; `
+                Area = $Area; `
+	        } `
+            -SuccessMessage "Added $Project\{0}." `
+            -TemplateFolders $TemplateFolders `
+	        -Project $Project
+    }
 }
 Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$OutputPath)
 {
@@ -54,30 +75,18 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
 	    -Project $Project
 }
 
-Function Scaffold-DbSet()
+Function Scaffold-DbSet([String]$Project, [String]$Context)
 {
     if (!$Delete)
     {
-        $TestingContext = Get-ProjectType -Project $TestsProject -Type "TestingContext"
-	    $Context = Get-ProjectType -Project $DataProject -Type "Context"
+        $ContextClass = Get-ProjectType -Project $Project -Type $Context
         $Models = Get-PluralizedWord $Model
 
         Add-ClassMemberViaTemplate `
-            -SuccessMessage "Added DbSet<$Model> member to testing context." `
+            -SuccessMessage "Added DbSet<$Model> member to $Context." `
             -TemplateFolders $TemplateFolders `
-            -CodeClass $TestingContext `
+            -CodeClass $ContextClass `
             -Template "Members\DbSet" `
-            -Model @{ `
-                Area = $ElementArea; `
-                Models = $Models; `
-                Model = $Model; `
-            }
-
-        Add-ClassMemberViaTemplate `
-            -SuccessMessage "Added DbSet<$Model> member to context." `
-            -TemplateFolders $TemplateFolders `
-            -Template "Members\DbSet" `
-            -CodeClass $Context `
             -Model @{ `
                 Area = $ElementArea; `
                 Models = $Models; `
@@ -86,6 +95,19 @@ Function Scaffold-DbSet()
     }
 }
 
+Function Delete-AreaRegistration([String]$Project, [String]$AreaPath, [String]$Path)
+{
+    $AreaRegistrationDir = Get-ProjectItem -Project $Project -Path $AreaPath
+    If ($AreaRegistrationDir)
+    {
+        $ObjectCount = (Get-ChildItem $AreaRegistrationDir.FileNames(0) | Measure-Object).Count
+        If ($ObjectCount -eq 1)
+        {
+            Delete-ProjectItem $Project "$Path.cs"
+            Delete-EmptyDir $Project $AreaPath
+        }
+    }
+}
 Function Delete-ProjectItem([String]$Project, [String]$Path)
 {
     $ProjectItem = Get-ProjectItem -Project $Project -Path $Path

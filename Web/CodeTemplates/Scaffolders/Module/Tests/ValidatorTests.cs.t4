@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace MvcTemplate.Tests.Unit.Validators
 {
     [TestFixture]
-    public class <#= Model.ValidatorTests #>
+    public class <#= Model.Validator #>Tests
     {
         private <#= Model.Validator #> validator;
         private Context context;

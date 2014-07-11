@@ -41,7 +41,14 @@ Scaffold-CshtmlTemplate "Views\Details" $RazorViewProject "Views\$ElementPath\De
 Scaffold-CshtmlTemplate "Views\Edit"    $RazorViewProject "Views\$ElementPath\Edit"
 Scaffold-CshtmlTemplate "Views\Delete"  $RazorViewProject "Views\$ElementPath\Delete"
 
-Scaffold-DbSet
+If ($Area)
+{
+    Scaffold-AreaRegistration "Controls\AreaRegistration"   $ControllerProject ("$ElementArea\$Area" + "AreaRegistration")
+    Scaffold-AreaRegistration "Tests\AreaRegistrationTests" $TestsProject ("Unit\Controllers\$ElementArea\$Area" + "AreaRegistrationTests")
+}
+
+Scaffold-DbSet $TestsProject "TestingContext"
+Scaffold-DbSet $DataProject "Context"
 
 If ($Delete)
 {
@@ -49,6 +56,10 @@ If ($Delete)
     Delete-EmptyDir $TestsProject "Unit\Validators\$ElementArea"
 
     Delete-EmptyDir $TestsProject "Unit\Controllers\$ElementPath"
+    if ($Area)
+    {
+        Delete-AreaRegistration $TestsProject "Unit\Controllers\$ElementArea" ("Unit\Controllers\$ElementArea\$Area" + "AreaRegistrationTests")
+    }
     Delete-EmptyDir $TestsProject "Unit\Controllers\$ElementArea"
 
     Delete-EmptyDir $TestsProject "Unit\Services\$ElementPath"
@@ -58,6 +69,10 @@ If ($Delete)
     Delete-EmptyDir $RazorViewProject "Views\$ElementArea"
 
     Delete-EmptyDir $ControllerProject $ElementPath
+    If ($Area)
+    {
+        Delete-AreaRegistration $ControllerProject $ElementArea ("$ElementArea\$Area" + "AreaRegistration")
+    }
     Delete-EmptyDir $ControllerProject $ElementArea
 
     Delete-EmptyDir $ValidatorProject $ElementPath

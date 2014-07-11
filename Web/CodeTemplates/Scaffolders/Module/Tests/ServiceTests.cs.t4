@@ -14,7 +14,7 @@ using System.Linq;
 namespace MvcTemplate.Tests.Unit.Services
 {
     [TestFixture]
-    public class <#= Model.ServiceTests #>
+    public class <#= Model.Service #>Tests
     {
         private <#= Model.Service #> service;
         private <#= Model.Model #> <#= Model.ModelName #>;

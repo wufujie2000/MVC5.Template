@@ -18,6 +18,11 @@ namespace MvcTemplate.Tests.Helpers
             private set;
         }
 
+        public Mock<HttpServerUtilityBase> HttpServerMock
+        {
+            get;
+            private set;
+        }
         public HttpContextBase HttpContextBase
         {
             get;
@@ -64,10 +69,13 @@ namespace MvcTemplate.Tests.Helpers
             HttpRequestMock.Object.QueryString.Add("Param1", "Value1");
             HttpContext = new HttpContext(request, response);
 
+            HttpServerMock = new Mock<HttpServerUtilityBase>();
+
             Mock<HttpContextWrapper> httpContextBaseMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
             httpContextBaseMock.Setup(mock => mock.Response).Returns(new HttpResponseWrapper(response));
             httpContextBaseMock.Setup(mock => mock.Request).Returns(HttpRequestMock.Object);
             httpContextBaseMock.Setup(mock => mock.Session).Returns(new HttpSessionStub());
+            httpContextBaseMock.Setup(mock => mock.Server).Returns(HttpServerMock.Object);
             HttpContextBase = httpContextBaseMock.Object;
 
             IdentityMock = new Mock<IIdentity>();

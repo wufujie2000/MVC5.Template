@@ -210,7 +210,7 @@
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.min.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\JsTree\jstree.min.js" />
-    <Content Include="Scripts\Auth\auth.js" />
+    <Content Include="Scripts\Shared\Auth\auth.js" />
     <Content Include="Scripts\Select2\select2.js" />
     <Content Include="Scripts\Select2\select2.min.js" />
     <Content Include="Scripts\Shared\site.js" />

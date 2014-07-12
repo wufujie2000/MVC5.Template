@@ -23,7 +23,6 @@ namespace MvcTemplate.Tests.Unit.Web.App_Start
                 "~/Scripts/Select2/Bundle",
                 "~/Scripts/JsTree/Bundle",
                 "~/Scripts/Datalist/Bundle",
-                "~/Scripts/Auth/Bundle",
                 "~/Scripts/Shared/Bundle"
             };
 

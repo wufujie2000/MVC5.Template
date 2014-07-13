@@ -33,10 +33,5 @@ namespace MvcTemplate.Components.Extensions.Html
 
             disposed = true;
         }
-
-        public override String ToString()
-        {
-            return wrapper.ToString();
-        }
     }
 }

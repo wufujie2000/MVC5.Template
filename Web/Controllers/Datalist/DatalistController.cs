@@ -1,5 +1,6 @@
 ﻿using Datalist;
 using MvcTemplate.Components.Datalists;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
@@ -27,6 +28,7 @@ namespace MvcTemplate.Controllers.Datalist
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);
         }
 
+        [AjaxOnly]
         public JsonResult Role(DatalistFilter filter)
         {
             return GetData(new BaseDatalist<Role, RoleView>(unitOfWork), filter);

@@ -72,6 +72,7 @@
     <Compile Include="Mvc\Adapters\StringLengthAttributeAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
+    <Compile Include="Mvc\Filters\ExceptionFilter.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
+    <Compile Include="Mvc\ViewEngines\ViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authorization\AccountPrivilege.cs" />
     <Compile Include="Security\Authorization\AllowUnauthorizedAttribute.cs" />

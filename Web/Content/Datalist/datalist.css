@@ -97,7 +97,7 @@
         }
 
 .datalist-processing {
-    background: url(/Images/Datalist/loading.gif) no-repeat center;
+    background: url(../../Images/Datalist/loading.gif) no-repeat center;
     border: 1px solid #DDDDDD;
     background-color: #FFFFFF;
     position: absolute;

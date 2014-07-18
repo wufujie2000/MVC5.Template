@@ -17,6 +17,6 @@
     });
 
     function formatSelection(selection) {
-        return "<img src='/Images/Flags/" + selection.id + ".gif' /> " + selection.text;
+        return "<img src='../../Images/Flags/" + selection.id + ".gif' /> " + selection.text;
     }
 }());

@@ -12,12 +12,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class HeaderExtensionsTests
     {
+        private HttpMock httpMock;
         private HtmlHelper html;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            html = new HtmlMock().Html;
+            HtmlMock htmlMock = new HtmlMock();
+            httpMock = htmlMock.HttpMock;
+            html = htmlMock.Html;
         }
 
         #region Extension method: ProfileLink(this HtmlHelper html)
@@ -51,6 +54,28 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 + "<ul class=\"dropdown-menu\" role=\"menu\"><li>"
                 + "<a href=\"{1}\"><img src='/Images/Flags/en-GB.gif' /> English</a></li><li>"
                 + "<a href=\"{2}\"><img src='/Images/Flags/lt-LT.gif' /> Lietuvių</a></li></ul>",
+                ResourceProvider.GetActionTitle("Language"),
+                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area, Param1 = "Value1" })),
+                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area, Param1 = "Value1" })));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void LanguageLink_FormsLanguageLinkOnSpecificDomain()
+        {
+            httpMock.HttpRequestMock.Setup(mock => mock.ApplicationPath).Returns("/TestDomain");
+            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            String controller = routeValues["controller"].ToString();
+            String action = routeValues["action"].ToString();
+            String area = routeValues["area"].ToString();
+
+            String actual = html.LanguageLink().ToString();
+            String expected = String.Format("<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
+                + "<i class=\"fa fa-flag\"></i> {0} <span class=\"caret\"></span></a>"
+                + "<ul class=\"dropdown-menu\" role=\"menu\"><li>"
+                + "<a href=\"{1}\"><img src='/TestDomain/Images/Flags/en-GB.gif' /> English</a></li><li>"
+                + "<a href=\"{2}\"><img src='/TestDomain/Images/Flags/lt-LT.gif' /> Lietuvių</a></li></ul>",
                 ResourceProvider.GetActionTitle("Language"),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en-GB", controller = controller, area = area, Param1 = "Value1" })),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt-LT", controller = controller, area = area, Param1 = "Value1" })));

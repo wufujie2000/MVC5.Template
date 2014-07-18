@@ -37,6 +37,10 @@ namespace MvcTemplate.Components.Extensions.Html
             languageList.MergeAttribute("role", "menu");
             languageList.AddCssClass("dropdown-menu");
 
+            String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
+            if (!appPath.EndsWith("/")) appPath += "/";
+
+            String flagImagesPath = String.Format("{0}Images/Flags/", appPath);
             Dictionary<String, String> languages = new Dictionary<String, String>()
             {
                 { "en-GB", "English" },
@@ -56,7 +60,8 @@ namespace MvcTemplate.Components.Extensions.Html
                             html.ViewContext.RequestContext.RouteData.Values["action"].ToString(),
                             html.ViewContext.RequestContext.RouteData.Values)
                         .ToString(),
-                    "<img src='/Images/Flags/" + language.Key + ".gif' />", language.Value);
+                    String.Format("<img src='{0}{1}.gif' />", flagImagesPath, language.Key),
+                    language.Value);
 
                 languageList.InnerHtml += languageItem.ToString();
             }

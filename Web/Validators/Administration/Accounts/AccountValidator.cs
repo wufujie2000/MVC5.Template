@@ -56,10 +56,9 @@ namespace MvcTemplate.Validators
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
-                .Query(account =>
+                .Any(account =>
                     account.Id != accountId &&
-                    account.Username.ToUpper() == username.ToUpper())
-                .Any();
+                    account.Username.ToUpper() == username.ToUpper());
 
             if (!isUnique)
                 ModelState.AddModelError<AccountView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
@@ -70,10 +69,9 @@ namespace MvcTemplate.Validators
         {
             Boolean isUnique = !UnitOfWork
                 .Repository<Account>()
-                .Query(account =>
+                .Any(account =>
                     account.Id != accountId &&
-                    account.Email.ToUpper() == email.ToUpper())
-                .Any();
+                    account.Email.ToUpper() == email.ToUpper());
 
             if (!isUnique)
                 ModelState.AddModelError<AccountView>(model => model.Email, Validations.EmailIsAlreadyUsed);
@@ -85,7 +83,7 @@ namespace MvcTemplate.Validators
         {
             String passhash = UnitOfWork
                 .Repository<Account>()
-                .Query(acc => acc.Username.ToUpper() == username.ToUpper())
+                .Where(acc => acc.Username.ToUpper() == username.ToUpper())
                 .Select(acc => acc.Passhash)
                 .SingleOrDefault();
 
@@ -103,7 +101,7 @@ namespace MvcTemplate.Validators
         {
             String passhash = UnitOfWork
                 .Repository<Account>()
-                .Query(account => account.Id == HttpContext.Current.User.Identity.Name)
+                .Where(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Passhash)
                 .First();
 

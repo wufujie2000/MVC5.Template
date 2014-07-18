@@ -31,11 +31,11 @@ namespace MvcTemplate.Validators
 
         private Boolean IsUniqueRole(RoleView view)
         {
-            Boolean isUnique = !UnitOfWork.Repository<Role>()
-                .Query(role =>
+            Boolean isUnique = !UnitOfWork
+                .Repository<Role>()
+                .Any(role =>
                     role.Id != view.Id &&
-                    role.Name.ToUpper() == view.Name.ToUpper())
-                .Any();
+                    role.Name.ToUpper() == view.Name.ToUpper());
 
             if (!isUnique)
                 ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyTaken);

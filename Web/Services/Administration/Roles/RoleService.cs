@@ -22,9 +22,7 @@ namespace MvcTemplate.Services
             rootNode.Name = Resources.Privilege.Titles.All;
 
             IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
-                .Repository<Privilege>()
-                .Query()
-                .ToList()
+                .Repository<Privilege>().ToList()
                 .Select(privilege => new Privilege
                 {
                     Id = privilege.Id,
@@ -59,7 +57,7 @@ namespace MvcTemplate.Services
         {
             return UnitOfWork
                 .Repository<Role>()
-                .Query<RoleView>()
+                .ProjectTo<RoleView>()
                 .OrderByDescending(view => view.EntityDate);
         }
         public RoleView GetView(String id)
@@ -67,7 +65,7 @@ namespace MvcTemplate.Services
             RoleView role = UnitOfWork.Repository<Role>().GetById<RoleView>(id);
             role.PrivilegesTree.SelectedIds = UnitOfWork
                 .Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                .Where(rolePrivilege => rolePrivilege.RoleId == role.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId)
                 .ToList();
 
@@ -110,7 +108,7 @@ namespace MvcTemplate.Services
         private void DeleteRolePrivileges(RoleView view)
         {
             IQueryable<String> rolePrivileges = UnitOfWork.Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == view.Id)
+                .Where(rolePrivilege => rolePrivilege.RoleId == view.Id)
                 .Select(rolePrivilege => rolePrivilege.Id);
 
             foreach (String rolePrivilege in rolePrivileges)
@@ -127,8 +125,9 @@ namespace MvcTemplate.Services
         }
         private void RemoveRoleFromAccounts(String roleId)
         {
-            IQueryable<Account> accountsWithRole = UnitOfWork.Repository<Account>()
-                .Query(account => account.RoleId == roleId);
+            IQueryable<Account> accountsWithRole = UnitOfWork
+                .Repository<Account>()
+                .Where(account => account.RoleId == roleId);
 
             foreach (Account account in accountsWithRole)
             {

@@ -1,6 +1,8 @@
 ﻿using AutoMapper.QueryableExtensions;
 using MvcTemplate.Objects;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -11,51 +13,60 @@ namespace MvcTemplate.Data.Core
     public class Repository<TModel> : IRepository<TModel> where TModel : BaseModel
     {
         private AContext context;
-        private DbSet<TModel> dbSet;
+        private IDbSet<TModel> repository;
+
+        Type IQueryable.ElementType
+        {
+            get
+            {
+                return repository.ElementType;
+            }
+        }
+        Expression IQueryable.Expression
+        {
+            get
+            {
+                return repository.Expression;
+            }
+        }
+        IQueryProvider IQueryable.Provider
+        {
+            get
+            {
+                return repository.Provider;
+            }
+        }
 
         public Repository(AContext context)
         {
             this.context = context;
-            dbSet = context.Set<TModel>();
+            repository = context.Set<TModel>();
         }
 
         public TModel GetById(String id)
         {
-            return dbSet.SingleOrDefault(model => model.Id == id);
+            return repository.SingleOrDefault(model => model.Id == id);
         }
         public TView GetById<TView>(String id) where TView : BaseView
         {
-            return Query<TView>().SingleOrDefault(view => view.Id == id);
-        }
-        public IQueryable<TModel> Query()
-        {
-            return dbSet;
-        }
-        public IQueryable<TView> Query<TView>()
-            where TView : BaseView
-        {
-            return Query().Project().To<TView>();
+            return ProjectTo<TView>().SingleOrDefault(view => view.Id == id);
         }
 
-        public IQueryable<TModel> Query(Expression<Func<TModel, Boolean>> predicate)
-        {
-            return Query().Where(predicate);
-        }
-        public IQueryable<TView> Query<TView>(Expression<Func<TView, Boolean>> predicate)
+        public IQueryable<TView> ProjectTo<TView>()
             where TView : BaseView
         {
-            return Query<TView>().Where(predicate);
+            return repository.Project().To<TView>();
         }
 
         public void Insert(TModel model)
         {
-            dbSet.Add(model);
+            repository.Add(model);
         }
         public void Update(TModel model)
         {
-            TModel attachedModel = dbSet.Local.SingleOrDefault(localModel => localModel.Id == model.Id);
+            TModel attachedModel = repository.Local.SingleOrDefault(localModel => localModel.Id == model.Id);
             if (attachedModel == null)
-                attachedModel = dbSet.Attach(model);
+                attachedModel = repository.Attach(model);
             else
                 context.Entry(attachedModel).CurrentValues.SetValues(model);
 
@@ -65,7 +76,16 @@ namespace MvcTemplate.Data.Core
         }
         public void Delete(String id)
         {
-            dbSet.Remove(dbSet.Find(id));
+            repository.Remove(repository.Find(id));
+        }
+
+        public IEnumerator<TModel> GetEnumerator()
+        {
+            return repository.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

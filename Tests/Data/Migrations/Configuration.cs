@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Data.Migrations
 
         protected override void Seed(TestingContext context)
         {
-            for (Int32 i = 1; i <= 100; i++)
+            for (Int32 i = 1; i <= 10; i++)
                 if (context.Set<TestModel>().Find(i.ToString()) == null)
                     context.Set<TestModel>().Add(new TestModel()
                     {

@@ -25,8 +25,7 @@ namespace MvcTemplate.Components.Security
         public virtual IEnumerable<AccountPrivilege> GetAccountPrivileges(String accountId)
         {
             return unitOfWork.Repository<Account>()
-                .Query(account =>
-                    account.Id == accountId)
+                .Where(account => account.Id == accountId)
                 .SelectMany(account => account.Role.RolePrivileges)
                 .Select(rolePrivilege => new AccountPrivilege()
                 {
@@ -46,13 +45,12 @@ namespace MvcTemplate.Components.Security
 
              return unitOfWork
                 .Repository<Account>()
-                .Query(account =>
+                .Any(account =>
                     account.Id == accountId &&
                     account.Role.RolePrivileges.Any(rolePrivilege =>
                         rolePrivilege.Privilege.Area == area &&
                         rolePrivilege.Privilege.Controller == controller &&
-                        rolePrivilege.Privilege.Action == action))
-                .Any();
+                        rolePrivilege.Privilege.Action == action));
         }
         public virtual Boolean IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
         {

@@ -42,7 +42,7 @@ namespace MvcTemplate.Data.Migrations
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
             privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
 
-            IEnumerable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().Query().ToList();
+            IEnumerable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().ToList();
             foreach (Privilege privilege in privileges)
                 if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
                     unitOfWork.Repository<Privilege>().Insert(privilege);
@@ -51,19 +51,19 @@ namespace MvcTemplate.Data.Migrations
         }
         private void SeedAdministratorRole()
         {
-            if (!unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").Any())
+            if (!unitOfWork.Repository<Role>().Any(role => role.Name == "Sys_Admin"))
             {
                 unitOfWork.Repository<Role>().Insert(new Role() { Name = "Sys_Admin" });
                 unitOfWork.Commit();
             }
 
-            String adminRoleId = unitOfWork.Repository<Role>().Query(role => role.Name == "Sys_Admin").First().Id;
+            String adminRoleId = unitOfWork.Repository<Role>().First(role => role.Name == "Sys_Admin").Id;
             IEnumerable<RolePrivilege> adminPrivileges = unitOfWork
                 .Repository<RolePrivilege>()
-                .Query(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
+                .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
                 .ToList();
 
-            foreach (Privilege privilege in unitOfWork.Repository<Privilege>().Query())
+            foreach (Privilege privilege in unitOfWork.Repository<Privilege>())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
                     unitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
                     {
@@ -82,7 +82,7 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
-                    RoleId = unitOfWork.Repository<Role>().Query(p => p.Name == "Sys_Admin").First().Id
+                    RoleId = unitOfWork.Repository<Role>().First(p => p.Name == "Sys_Admin").Id
                 },
                 new Account()
                 {
@@ -93,7 +93,7 @@ namespace MvcTemplate.Data.Migrations
             };
 
             foreach (Account account in accounts)
-                if (!unitOfWork.Repository<Account>().Query(acc => acc.Username == account.Username).Any())
+                if (!unitOfWork.Repository<Account>().Any(acc => acc.Username == account.Username))
                     unitOfWork.Repository<Account>().Insert(account);
 
             unitOfWork.Commit();

@@ -25,14 +25,14 @@ namespace MvcTemplate.Services
         }
         public Boolean AccountExists(String accountId)
         {
-            return UnitOfWork.Repository<Account>().Query(account => account.Id == accountId).Any();
+            return UnitOfWork.Repository<Account>().Any(account => account.Id == accountId);
         }
 
         public IEnumerable<AccountView> GetViews()
         {
             return UnitOfWork
                 .Repository<Account>()
-                .Query<AccountView>()
+                .ProjectTo<AccountView>()
                 .OrderByDescending(view => view.EntityDate);
         }
         public TView GetView<TView>(String id) where TView : BaseView
@@ -87,8 +87,7 @@ namespace MvcTemplate.Services
         {
             return UnitOfWork
                 .Repository<Account>()
-                .Query(acc => acc.Username.ToUpper() == username.ToUpper())
-                .First()
+                .First(acc => acc.Username.ToUpper() == username.ToUpper())
                 .Id;
         }
         private void CreateCookieFor(String accountId)

@@ -15,6 +15,20 @@ table {
         border-left: @content-border;
     }
 
+    td {
+        .text-cell {
+            text-align: left;
+        }
+
+        .date-cell {
+            text-align: center;
+        }
+
+        .number-cell {
+            text-align: right;
+        }
+    }
+
     .action-link-cell {
         border-left: none;
     }
@@ -52,18 +66,6 @@ table {
 
     .delete-action-link {
         background-color: @delete-action-color;
-    }
-
-    .text-cell {
-        text-align: left;
-    }
-
-    .date-cell {
-        text-align: center;
-    }
-
-    .number-cell {
-        text-align: right;
     }
 }
 

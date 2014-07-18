@@ -1,4 +1,4 @@
-table thead {
+﻿table thead {
   background-color: #ffffff;
   background-image: -webkit-linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
   background-image: -moz-linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
@@ -12,6 +12,15 @@ table th {
 table th,
 table td {
   border-left: 1px solid #cdcdcd;
+}
+table td .text-cell {
+  text-align: left;
+}
+table td .date-cell {
+  text-align: center;
+}
+table td .number-cell {
+  text-align: right;
 }
 table .action-link-cell {
   border-left: none;
@@ -54,15 +63,6 @@ table .edit-action-link {
 }
 table .delete-action-link {
   background-color: #d9534f;
-}
-table .text-cell {
-  text-align: left;
-}
-table .date-cell {
-  text-align: center;
-}
-table .number-cell {
-  text-align: right;
 }
 .table-striped > tbody > tr:nth-child(even) > td {
   background-color: #ffffff;

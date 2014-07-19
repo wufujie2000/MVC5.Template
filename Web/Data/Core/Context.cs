@@ -8,27 +8,27 @@ namespace MvcTemplate.Data.Core
 {
     public class Context : AContext
     {
-        private Hashtable repositories;
+        protected Hashtable repositories;
 
         #region DbSets
 
         #region Account
 
-        private DbSet<Account> Accounts { get; set; }
+        protected DbSet<Account> Accounts { get; set; }
 
         #endregion
 
         #region Administration
 
-        private DbSet<Role> Roles { get; set; }
-        private DbSet<Privilege> Privileges { get; set; }
-        private DbSet<RolePrivilege> RolePrivileges { get; set; }
+        protected DbSet<Role> Roles { get; set; }
+        protected DbSet<Privilege> Privileges { get; set; }
+        protected DbSet<RolePrivilege> RolePrivileges { get; set; }
 
         #endregion
 
         #region System
 
-        private DbSet<Log> Logs { get; set; }
+        protected DbSet<Log> Logs { get; set; }
 
         #endregion
 

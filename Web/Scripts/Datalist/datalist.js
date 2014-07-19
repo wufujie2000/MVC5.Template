@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.0
+ * Datalist 3.1.1
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -119,8 +119,16 @@
                         datalist.dialog('option', 'title', that.options.title);
                         datalist.find('.datalist-table-head').empty();
                         datalist.find('.datalist-table-body').empty();
-                        datalist.dialog('open');
                         that._update(datalist);
+
+                        setTimeout(function () {
+                            datalist.dialog('open')
+                                .parent().position({
+                                    my: "center",
+                                    at: "center",
+                                    of: window
+                                });
+                        }, 100);
                     }
                 });
             }
@@ -272,7 +280,8 @@
         },
         _updateData: function (datalist, data) {
             if (data.Rows.length == 0) {
-                datalist.find('.datalist-table-body').html('<tr><td colspan="0" style="text-align: center">' + $.fn.datalist.lang.NoDataFound + '</td></tr>');
+                var columns = (data.Columns) ? data.Columns.length + 1 : 1;
+                datalist.find('.datalist-table-body').html('<tr><td colspan="' + columns + '" style="text-align: center">' + $.fn.datalist.lang.NoDataFound + '</td></tr>');
                 return;
             }
 

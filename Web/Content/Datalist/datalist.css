@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.0
+ * Datalist 3.1.1
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -21,7 +21,6 @@
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
-    text-align: center;
     display: none;
 }
 
@@ -40,15 +39,21 @@
 }
 
     .datalist-search-group .datalist-search-box {
+        margin-right: -55px;
         height: 100%;
+        width: 100%;
         float: left;
-        width: 87%;
+    }
+
+    .datalist-search-group .datalist-search-box-content {
+        margin-right: 55px;
+        height: 100%;
     }
 
     .datalist-search-group .datalist-spinner-box {
         height: 100%;
         float: right;
-        width: 13%;
+        width: 55px;
     }
 
         .datalist-search-group .datalist-spinner-box > span {
@@ -58,6 +63,8 @@
     .datalist-search-group .datalist-search-input {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
+        padding-top: 6px;
+        font-size: 15px;
         height: 100%;
     }
 
@@ -128,12 +135,6 @@
     .datalist-table thead > tr > th > .datalist-sort-arrow {
         margin-left: 2px;
         font-size: 11px;
-    }
-
-    .datalist-table thead > tr > th {
-        vertical-align: middle;
-        text-align: center;
-        cursor: pointer;
     }
 
     .datalist-table thead > tr > th,

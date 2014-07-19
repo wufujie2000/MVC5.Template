@@ -95,7 +95,8 @@
     $('body').niceScroll({
         cursoropacitymin: 0.3,
         cursorborderradius: 0,
-        cursorborder: "none"
+        cursorborder: "none",
+        zindex: 1000
     });
 
     $('.grid-wrap').niceScroll({

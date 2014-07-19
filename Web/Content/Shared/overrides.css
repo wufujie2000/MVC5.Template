@@ -104,8 +104,14 @@
   color: #262626;
 }
 /* GridMvc */
+.grid-wrap {
+  width: 100%;
+}
 .grid-empty-text {
   text-align: center;
+}
+.grid-footer {
+  float: right;
 }
 /* JsTree */
 .js-tree-view {

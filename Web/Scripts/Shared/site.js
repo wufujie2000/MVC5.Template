@@ -89,3 +89,17 @@
         $(this).datalist();
     });
 }());
+
+// NiceScroll binding
+(function () {
+    $('body').niceScroll({
+        cursoropacitymin: 0.3,
+        cursorborderradius: 0,
+        cursorborder: "none"
+    });
+
+    $('.grid-wrap').niceScroll({
+        cursorborderradius: 0,
+        cursorborder: "none"
+    });
+}());

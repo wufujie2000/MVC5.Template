@@ -203,6 +203,8 @@
     <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.min.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.min.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.js" />

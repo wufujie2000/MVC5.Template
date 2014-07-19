@@ -6,7 +6,6 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.33);
     border: @content-border;
     margin-bottom: 15px;
-    border-radius: 11px;
 }
 
 .widget-title {
@@ -16,7 +15,7 @@
 
     .widget-title-icon {
         border-right: @content-border;
-        padding: 9px 10px 5px;
+        padding: 8px 10px 6px;
         float: left;
     }
 
@@ -34,7 +33,7 @@
         .btn {
             border-left: @content-border;
             color: @content-color;
-            padding: 10px 10px 7px;
+            padding: 9px 10px 8px;
             border-radius: 0;
             border-top: none;
             font-size: 12px;
@@ -42,10 +41,6 @@
             &:hover {
                 .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
                 color: @active-color;
-            }
-
-            &:last-child {
-                border-radius: 0 10px 0 0;
             }
 
             > i {
@@ -84,14 +79,6 @@
 
     .form-actions {
         text-align: center;
-    }
-
-    table:last-of-type tr:last-child td:first-child {
-        border-bottom-left-radius: 9px;
-    }
-
-    table:last-of-type tr:last-child td:last-child {
-        border-bottom-right-radius: 9px;
     }
 }
 

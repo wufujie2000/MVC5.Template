@@ -6,6 +6,9 @@
   background-image: -o-linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
   background-image: linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
 }
+table tbody tr .action-link-cell {
+  vertical-align: middle;
+}
 table th {
   text-align: center;
 }

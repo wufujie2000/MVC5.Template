@@ -71,7 +71,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Named(typeof(T).Name)
                 .WithMultipleFilters()
                 .Selectable(false)
-                .WithPaging(15)
+                .WithPaging(20)
                 .Filterable()
                 .Sortable();
         }

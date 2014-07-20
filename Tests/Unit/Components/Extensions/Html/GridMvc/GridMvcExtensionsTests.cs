@@ -471,7 +471,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             htmlOptions.ApplyAttributes();
 
-            htmlOptionsMock.Verify(mock => mock.WithPaging(15), Times.Once());
+            htmlOptionsMock.Verify(mock => mock.WithPaging(20), Times.Once());
         }
 
         [Test]

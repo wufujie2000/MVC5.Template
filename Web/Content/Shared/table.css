@@ -13,6 +13,9 @@ table th,
 table td {
   border-left: 1px solid #cdcdcd;
 }
+table td {
+  border-bottom: 1px solid #dddddd;
+}
 table td .text-cell {
   text-align: left;
 }

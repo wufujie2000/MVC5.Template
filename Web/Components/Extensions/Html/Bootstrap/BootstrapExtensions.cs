@@ -43,7 +43,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             TagBuilder submit = new TagBuilder("input");
             submit.MergeAttribute("type", "submit");
-            submit.AddCssClass("btn btn-primary");
+            submit.AddCssClass("btn btn-success");
             submit.MergeAttribute("value", value);
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));

@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String actual = html.FormSubmit().ToString();
             String expected = String.Format(
-                "<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />",
+                "<input class=\"btn btn-success\" type=\"submit\" value=\"{0}\" />",
                 MvcTemplate.Resources.Shared.Resources.Submit);
 
             Assert.AreEqual(expected, actual);
@@ -105,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void Submit_FormsSubmitHtml()
         {
-            String expected = "<input class=\"btn btn-primary\" type=\"submit\" value=\"Value\" />";
+            String expected = "<input class=\"btn btn-success\" type=\"submit\" value=\"Value\" />";
             String actual = html.Submit("Value").ToString();
 
             Assert.AreEqual(expected, actual);

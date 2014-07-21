@@ -19,13 +19,13 @@ table td {
 table td {
   border-bottom: 1px solid #dddddd;
 }
-table td .text-cell {
+table td.text-cell {
   text-align: left;
 }
-table td .date-cell {
+table td.date-cell {
   text-align: center;
 }
-table td .number-cell {
+table td.number-cell {
   text-align: right;
 }
 table .action-link-cell {

@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.1
+ * Datalist 3.1.2
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -116,11 +116,13 @@
     top: 44%;
 }
 
-.datalist-error {
-    display: inline-block;
+.datalist-error-container {
+    margin: 30px 5px 0;
     text-align: center;
-    margin-top: 20px;
-    width: 320px;
+}
+
+.datalist-error {
+    text-align: center;
 }
 
 .datalist-data {

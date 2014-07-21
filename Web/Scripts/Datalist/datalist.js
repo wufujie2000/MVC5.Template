@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.1
+ * Datalist 3.1.2
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -10,7 +10,9 @@
 (function ($) {
     $.widget('mvc.datalist', {
         _create: function () {
-            if (!this.element.hasClass('datalist-input')) return;
+            if (!this.element.hasClass('datalist-input')) {
+                return;
+            }
 
             this._initOptions();
             this._initFilters();
@@ -36,18 +38,22 @@
             e.addClass('mvc-datalist');
         },
         _initFilters: function () {
-            for (i = 0; i < this.options.filters.length; i++)
+            for (i = 0; i < this.options.filters.length; i++) {
                 this._initFilter($('#' + this.options.filters[i]));
+            }
         },
         _initFilter: function (filter) {
             var that = this;
             that._on(filter, {
                 change: function () {
                     var event = $.Event(that._select);
-                    if (that.options.filterChange)
+                    if (that.options.filterChange) {
                         that.options.filterChange(event, that.element[0], that.options.hiddenElement, filter[0]);
-                    if (!event.isDefaultPrevented())
+                    }
+
+                    if (!event.isDefaultPrevented()) {
                         that._select(null);
+                    }
                 }
             });
         },
@@ -63,7 +69,7 @@
                                     label: item.DatalistAcKey,
                                     value: item.DatalistAcKey,
                                     item: item
-                                }
+                                };
                             }));
                         }
                     });
@@ -75,8 +81,9 @@
             });
 
             this.element.bind('keyup.datalist', function () {
-                if (this.value.length == 0)
+                if (this.value.length == 0) {
                     that._select(null);
+                }
             });
             this.element.prevAll('.ui-helper-hidden-accessible').remove();
         },
@@ -122,12 +129,19 @@
                         that._update(datalist);
 
                         setTimeout(function () {
-                            datalist.dialog('open')
-                                .parent().position({
-                                    my: "center",
-                                    at: "center",
-                                    of: window
-                                });
+                            var dialog = datalist.dialog('open').parent();
+                            dialog.position({
+                                my: "center",
+                                at: "center",
+                                of: window
+                            });
+
+                            if (parseInt(dialog.css('left')) < 0) {
+                                dialog.css('left', 0);
+                            }
+                            if (parseInt(dialog.css('top')) < 0) {
+                                dialog.css('top', 0);
+                            }
                         }, 100);
                     }
                 });
@@ -155,8 +169,9 @@
             var additionaFilter = '';
             for (i = 0; i < this.options.filters.length; i++) {
                 var filter = $('#' + this.options.filters[i]);
-                if (filter.length == 1)
+                if (filter.length == 1) {
                     additionaFilter += '&' + this.options.filters[i] + '=' + filter.val();
+                }
             }
 
             return additionaFilter;
@@ -166,8 +181,7 @@
             if (data) {
                 $(this.options.hiddenElement).val(data.DatalistIdKey).change();
                 $(this.element).val(data.DatalistAcKey).change();
-            }
-            else {
+            } else {
                 $(this.element).val(null).change();
                 $(this.options.hiddenElement).val(null).change();
             }
@@ -180,33 +194,42 @@
                     url: that.options.url + '?Id=' + id + '&RecordsPerPage=1',
                     cache: false,
                     success: function (data) {
-                        if (data.Rows.length > 0)
+                        if (data.Rows.length > 0) {
                             that._select(data.Rows[0]);
+                        }
                     }
                 });
             }
         },
         _select: function (data) {
             var event = $.Event(this._defaultSelect);
-            if (this.options.select)
+            if (this.options.select) {
                 this.options.select(event, this.element[0], this.options.hiddenElement, data);
-            if (!event.isDefaultPrevented())
+            }
+
+            if (!event.isDefaultPrevented()) {
                 this._defaultSelect(data);
+            }
         },
 
         _limitTo: function (value, min, max) {
             value = parseInt(value);
-            if (isNaN(value))
+            if (isNaN(value)) {
                 return 20;
-            if (value < 1)
-                return 1;
-            if (value > 99)
-                return 99;
+            }
+
+            if (value < min) {
+                return min;
+            }
+
+            if (value > max) {
+                return max;
+            }
 
             return value;
         },
         _cleanUp: function () {
-            this.element.removeAttr('data-datalist-records-per-page')
+            this.element.removeAttr('data-datalist-records-per-page');
             this.element.removeAttr('data-datalist-dialog-title');
             this.element.removeAttr('data-datalist-hidden-input');
             this.element.removeAttr('data-datalist-sort-column');
@@ -221,8 +244,8 @@
             var that = this;
             var term = datalist.find('.datalist-search-input').val();
 
-            datalist.find('.datalist-error').fadeOut(300);
             var timeout = setTimeout(function () {
+                datalist.find('.datalist-error-container').fadeOut(300);
                 datalist.find('.datalist-processing').fadeIn(300);
                 datalist.find('.datalist-pager').fadeOut(300);
                 datalist.find('.datalist-data').fadeOut(300);
@@ -238,15 +261,16 @@
 
                     clearTimeout(timeout);
                     datalist.find('.datalist-processing').fadeOut(300);
+                    datalist.find('.datalist-error-container').hide();
                     datalist.find('.datalist-pager').fadeIn(300);
                     datalist.find('.datalist-data').fadeIn(300);
                 },
                 error: function () {
                     clearTimeout(timeout);
-                    datalist.find('.datalist-processing').fadeOut(300);
-                    datalist.find('.datalist-pager').fadeOut(300);
-                    datalist.find('.datalist-data').fadeOut(300);
-                    datalist.find('.datalist-error').fadeIn(300);
+                    datalist.find('.datalist-error-container').fadeIn(300);
+                    datalist.find('.datalist-processing').hide();
+                    datalist.find('.datalist-pager').hide();
+                    datalist.find('.datalist-data').hide();
                 }
             });
         },
@@ -268,11 +292,15 @@
             datalist.find('.datalist-table-head').html('<tr>' + header + '<th class="datalist-select-header"></th></tr>');
             datalist.find('.datalist-table-head th').click(function () {
                 var header = $(this);
-                if (!header.attr('data-column')) return false;
-                if (that.options.sortColumn == header.attr('data-column'))
+                if (!header.attr('data-column')) {
+                    return false;
+                }
+
+                if (that.options.sortColumn == header.attr('data-column')) {
                     that.options.sortOrder = that.options.sortOrder == 'Asc' ? 'Desc' : 'Asc';
-                else
+                } else {
                     that.options.sortOrder = 'Asc';
+                }
 
                 that.options.sortColumn = header.attr('data-column');
                 that._update(datalist);
@@ -287,7 +315,7 @@
 
             var tableData = '';
             for (var i = 0; i < data.Rows.length; i++) {
-                var tableRow = '<tr>'
+                var tableRow = '<tr>';
                 var row = data.Rows[i];
                 $.each(data.Columns, function (index, column) {
                     tableRow += '<td class="' + (column.CssClass != null ? column.CssClass : '') + '">' + (row[column.Key] != null ? row[column.Key] : '') + '</td>';
@@ -299,19 +327,22 @@
 
             datalist.find('.datalist-table-body').html(tableData);
             var selectCells = datalist.find('td.datalist-select-cell');
-            for (var i = 0; i < selectCells.length; i++)
+            for (var i = 0; i < selectCells.length; i++) {
                 this._bindSelect(datalist, selectCells[i], data.Rows[i]);
+            }
         },
         _updateNavbar: function (datalist, filteredRecords) {
             var pageLength = datalist.find('.datalist-items-per-page').val();
             var totalPages = parseInt(filteredRecords / pageLength) + 1;
-            if (filteredRecords % pageLength == 0)
+            if (filteredRecords % pageLength == 0) {
                 totalPages--;
+            }
 
-            if (totalPages == 0)
+            if (totalPages == 0) {
                 datalist.find('.datalist-pager > .pagination').empty();
-            else
+            } else {
                 this._paginate(totalPages);
+            }
         },
         _paginate: function (totalPages) {
             var startingPage = Math.floor(this.options.page / 5) * 5;
@@ -320,19 +351,22 @@
             var pagination = '';
             var that = this;
 
-            if (totalPages > 5 && currentPage > 0)
+            if (totalPages > 5 && currentPage > 0) {
                 pagination = '<li><a data-page="0">&laquo;</a></li><li><a data-page="' + (currentPage - 1) + '">&lsaquo;</a></li>';
+            }
 
             while (page < totalPages && page < startingPage + 5) {
                 var liClass = '';
-                if (page == this.options.page)
+                if (page == this.options.page) {
                     liClass = ' class="active"';
+                }
 
                 pagination += '<li' + liClass + '><a data-page="' + page + '">' + (++page) + '</a></li>';
             }
 
-            if (totalPages > 5 && currentPage < (totalPages - 1))
+            if (totalPages > 5 && currentPage < (totalPages - 1)) {
                 pagination += '<li><a data-page="' + (currentPage + 1) + '">&rsaquo;</a></li><li><a data-page="' + (totalPages - 1) + '">&raquo;</a></li>';
+            }
 
             datalist.find('.datalist-pager > .pagination').html(pagination).find('li:not(.active) > a').click(function () {
                 that.options.page = parseInt($(this).data('page'));

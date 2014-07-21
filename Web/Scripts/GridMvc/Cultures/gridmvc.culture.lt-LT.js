@@ -15,5 +15,5 @@ GridMvc.lang["lt-LT"] = {
     code: 'lt',
     boolTrueLabel: "Taip",
     boolFalseLabel: "Ne",
-    clearFilterLabel: "Valyti filtrus"
+    clearFilterLabel: "Netaikyti filtro"
 };

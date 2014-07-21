@@ -20,15 +20,15 @@ namespace MvcTemplate.Controllers.Administration
                     "AdministrationMultilingual",
                     "{language}/Administration/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
+                    new { language = "lt" },
                     new[] { "MvcTemplate.Controllers.Administration" });
 
             context
                 .MapRoute(
                     "Administration",
                     "Administration/{controller}/{action}/{id}",
-                    new { language = "en-GB", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" },
+                    new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en" },
                     new[] { "MvcTemplate.Controllers.Administration" });
         }
     }

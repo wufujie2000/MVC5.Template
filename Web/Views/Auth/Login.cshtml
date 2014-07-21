@@ -25,6 +25,7 @@
         @Html.Submit(MvcTemplate.Resources.Shared.Resources.Login)
     }
     <script>
-        var currentLanguage = '@UICulture';
+        var defaultLanguage = '@LocalizationManager.Provider.DefaultLanguage.Abbrevation';
+        var currentLanguage = '@Request.RequestContext.RouteData.Values["language"]';
     </script>
 }

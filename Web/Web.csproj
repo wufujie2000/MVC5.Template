@@ -127,6 +127,7 @@
     <Content Include="Scripts\Datalist\datalist.js" />
     <Content Include="Scripts\Datalist\datalist.min.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
+    <Content Include="Languages.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Auth\auth.css">
@@ -165,8 +166,8 @@
     </Content>
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\Flags\en-GB.gif" />
-    <Content Include="Images\Flags\lt-LT.gif" />
+    <Content Include="Images\Flags\en.gif" />
+    <Content Include="Images\Flags\lt.gif" />
     <Content Include="Images\JQueryUI\animated-overlay.gif" />
     <Content Include="Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />

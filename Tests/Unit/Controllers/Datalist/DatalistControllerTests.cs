@@ -1,6 +1,7 @@
 ﻿using Datalist;
 using Moq;
 using MvcTemplate.Components.Datalists;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Controllers.Datalist;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
@@ -37,6 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [TearDown]
         public void TearDown()
         {
+            LocalizationManager.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -84,7 +86,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [Test]
         public void Roles_GetsRolesData()
         {
-            controllerMock.Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null)).Returns(new JsonResult());
+            controllerMock
+                .Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null))
+                .Returns(new JsonResult());
+
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
 
             JsonResult expected = controllerMock.Object.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);

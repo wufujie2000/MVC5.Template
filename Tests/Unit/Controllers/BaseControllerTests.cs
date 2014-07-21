@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Moq.Protected;
 using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
@@ -43,6 +44,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [TearDown]
         public void TearDown()
         {
+            LocalizationManager.Provider = null;
             RoleFactory.Provider = null;
         }
 
@@ -109,13 +111,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToDefault_RedirectsToDefault()
         {
-            baseController.RouteData.Values["language"] = "lt-LT";
+            baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.BaseRedirectToDefault().RouteValues;
 
             Assert.AreEqual(String.Empty, actual["controller"]);
             Assert.AreEqual(String.Empty, actual["action"]);
             Assert.AreEqual(String.Empty, actual["area"]);
-            Assert.AreEqual("lt-LT", actual["language"]);
+            Assert.AreEqual("lt", actual["language"]);
         }
 
         #endregion
@@ -125,10 +127,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectsToUnauthorized_RedirectsToHomeUnauthorized()
         {
-            baseController.RouteData.Values["language"] = "lt-LT";
+            baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.BaseRedirectToUnauthorized().RouteValues;
 
-            Assert.AreEqual("lt-LT", actual["language"]);
+            Assert.AreEqual("lt", actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Home", actual["controller"]);
             Assert.AreEqual("Unauthorized", actual["action"]);
@@ -215,7 +217,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
         {
-            baseController.RouteData.Values["language"] = "lt-LT";
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+
+            baseController.RouteData.Values["language"] = "lt";
             baseController.BaseBeginExecuteCore((asyncResult) => { }, null);
 
             CultureInfo expected = new CultureInfo("lt-LT");

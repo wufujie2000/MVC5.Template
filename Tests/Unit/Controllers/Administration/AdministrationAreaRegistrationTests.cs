@@ -43,8 +43,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("Administration", actual.Defaults["area"]);
-            Assert.AreEqual("en-GB", actual.Constraints["language"]);
-            Assert.AreEqual("en-GB", actual.Defaults["language"]);
+            Assert.AreEqual("en", actual.Constraints["language"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 
@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("Administration", actual.Defaults["area"]);
-            Assert.AreEqual("lt-LT", actual.Constraints["language"]);
+            Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 

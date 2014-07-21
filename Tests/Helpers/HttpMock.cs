@@ -46,14 +46,14 @@ namespace MvcTemplate.Tests.Helpers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" });
+                    new { language = "lt" });
 
             RouteTable.Routes
                 .MapRoute(
                     "Default",
                     "{controller}/{action}/{id}",
-                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" });
+                    new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en" });
         }
 
         public HttpMock()
@@ -89,8 +89,8 @@ namespace MvcTemplate.Tests.Helpers
             HttpContext.User = principalMock.Object;
 
             request.RequestContext.RouteData.Values["controller"] = "Controller";
-            request.RequestContext.RouteData.Values["language"] = "en-GB";
             request.RequestContext.RouteData.Values["action"] = "Action";
+            request.RequestContext.RouteData.Values["language"] = "en";
             request.RequestContext.RouteData.Values["area"] = "Area";
         }
     }

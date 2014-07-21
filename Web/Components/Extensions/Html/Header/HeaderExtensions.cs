@@ -1,7 +1,9 @@
-﻿using MvcTemplate.Resources;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
@@ -22,6 +24,9 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
+            IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
+            if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
+
             TagBuilder span = new TagBuilder("span");
             TagBuilder action = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
@@ -41,17 +46,12 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!appPath.EndsWith("/")) appPath += "/";
 
             String flagImagesPath = String.Format("{0}Images/Flags/", appPath);
-            Dictionary<String, String> languages = new Dictionary<String, String>()
-            {
-                { "en-GB", "English" },
-                { "lt-LT", "Lietuvių" }
-            };
-
             Object currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
             AddQueryValues(html);
-            foreach (KeyValuePair<String, String> language in languages)
+
+            foreach (Language language in languages)
             {
-                html.ViewContext.RequestContext.RouteData.Values["language"] = language.Key;
+                html.ViewContext.RequestContext.RouteData.Values["language"] = language.Abbrevation;
                 TagBuilder languageItem = new TagBuilder("li");
                 languageItem.InnerHtml = String.Format(
                     html
@@ -60,8 +60,8 @@ namespace MvcTemplate.Components.Extensions.Html
                             html.ViewContext.RequestContext.RouteData.Values["action"].ToString(),
                             html.ViewContext.RequestContext.RouteData.Values)
                         .ToString(),
-                    String.Format("<img src='{0}{1}.gif' />", flagImagesPath, language.Key),
-                    language.Value);
+                    String.Format("<img src='{0}{1}.gif' />", flagImagesPath, language.Abbrevation),
+                    language.Name);
 
                 languageList.InnerHtml += languageItem.ToString();
             }

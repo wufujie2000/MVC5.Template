@@ -80,6 +80,13 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [Test]
         [Ignore]
+        public void Load_BindsILanguageProvider()
+        {
+            AssertBind<ILanguageProvider, LanguageProvider>();
+        }
+
+        [Test]
+        [Ignore]
         public void Load_BindsIMvcSiteMapProvider()
         {
             AssertBind<IMvcSiteMapProvider, MvcSiteMapProvider>();

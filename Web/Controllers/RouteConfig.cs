@@ -14,15 +14,15 @@ namespace MvcTemplate.Controllers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
+                    new { language = "lt" },
                     new[] { "MvcTemplate.Controllers.Home" });
 
             routes
                 .MapRoute(
                     "Default",
                     "{controller}/{action}/{id}",
-                    new { language = "en-GB", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" },
+                    new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en" },
                     new[] { "MvcTemplate.Controllers.Home" });
         }
     }

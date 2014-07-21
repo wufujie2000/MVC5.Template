@@ -1,5 +1,6 @@
 ﻿using Datalist;
 using Moq;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -7,6 +8,7 @@ using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects.Views;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -24,6 +26,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             unitOfWorkMock = new Mock<IUnitOfWork>();
             HttpContext.Current = new HttpMock().HttpContext;
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
             datalist = new BaseDatalistStub<Role, RoleView>(unitOfWorkMock.Object);
 
             unitOfWorkMock
@@ -34,6 +37,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [TearDown]
         public void TearDown()
         {
+            LocalizationManager.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -67,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_FormsLocalizedDatalistUrl()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt-LT";
+            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt";
             HttpRequest request = HttpContext.Current.Request;
             datalist = new BaseDatalistStub<Role, RoleView>();
 

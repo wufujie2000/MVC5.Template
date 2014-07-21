@@ -34,6 +34,7 @@ namespace MvcTemplate.Web
             RegisterModelMetadataProvider();
             RegisterDependencyResolver();
             RegisterDataTypeValidator();
+            RegisterLanguageProvider();
             RegisterSiteMapProvider();
             RegisterRoleProvider();
             RegisterModelBinders();
@@ -56,6 +57,10 @@ namespace MvcTemplate.Web
         {
             ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
+        }
+        private void RegisterLanguageProvider()
+        {
+            LocalizationManager.Provider = DependencyResolver.Current.GetService<ILanguageProvider>();
         }
         private void RegisterSiteMapProvider()
         {
@@ -83,7 +88,7 @@ namespace MvcTemplate.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(
                 typeof(EmailAddressAttribute),
                 typeof(EmailAddressAdapter));
-            
+
             DataAnnotationsModelValidatorProvider.RegisterAdapter(
                 typeof(StringLengthAttribute),
                 typeof(StringLengthAdapter));

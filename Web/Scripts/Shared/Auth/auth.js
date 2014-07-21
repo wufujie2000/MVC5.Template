@@ -10,7 +10,7 @@
     $('#TempLanguage').hide();
 
     $(document).on("change", "#Language", function (e) {
-        if (e.val == 'en-GB')
+        if (e.val == defaultLanguage)
             document.location = '/Auth/Login';
         else
             document.location = '/' + e.val + '/Auth/Login';

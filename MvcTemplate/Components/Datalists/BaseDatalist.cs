@@ -1,4 +1,5 @@
 ﻿using Datalist;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -25,8 +26,9 @@ namespace MvcTemplate.Components.Datalists
             if (!applicationPath.EndsWith("/"))
                 applicationPath += "/";
 
-            String language = (String) HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
-            language = language == "en-GB" ? String.Empty : language + "/";
+            String language = (String)HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
+            String defaultLanguage = LocalizationManager.Provider.DefaultLanguage.Abbrevation;
+            language = language == defaultLanguage ? String.Empty : language + "/";
 
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
             DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",

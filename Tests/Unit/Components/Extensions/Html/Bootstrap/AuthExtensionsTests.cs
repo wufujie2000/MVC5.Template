@@ -1,7 +1,9 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 
@@ -20,6 +22,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             model = new BootstrapModel();
             html = new HtmlMock<BootstrapModel>(model).Html;
             expression = (expModel) => expModel.Relation.Required;
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            LocalizationManager.Provider = null;
         }
 
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
@@ -84,6 +93,20 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
 
         [Test]
+        public void AuthLanguageSelect_OnSingleLanguageReturnsEmptyHtml()
+        {
+            LanguageProviderMock providerMock = new LanguageProviderMock();
+            List<Language> languages = new List<Language>() { new Language() };
+            providerMock.Mock.Setup(mock => mock.Languages).Returns(languages);
+            LocalizationManager.Provider = providerMock.Provider;
+
+            String actual = html.AuthLanguageSelect().ToString();
+            String expected = String.Empty;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void AuthLanguageSelect_FormsLanguageSelectGroupElements()
         {
             String actual = html.AuthLanguageSelect().ToString();
@@ -93,8 +116,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</span>" +
                 "<input class=\"form-control\" id=\"TempLanguage\" type=\"text\"></input>" +
                 "<select id=\"Language\">" +
-                    "<option value=\"en-GB\">English</option>" +
-                    "<option value=\"lt-LT\">Lietuvių</option>" +
+                    "<option value=\"en\">English</option>" +
+                    "<option value=\"lt\">Lietuvių</option>" +
                 "</select>";
 
             Assert.AreEqual(expected, actual);

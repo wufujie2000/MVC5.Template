@@ -44,8 +44,8 @@ namespace <#= Model.ControllerTestNamespace #>
             Assert.AreEqual("<#= Model.Area #>/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
-            Assert.AreEqual("en-GB", actual.Constraints["language"]);
-            Assert.AreEqual("en-GB", actual.Defaults["language"]);
+            Assert.AreEqual("en", actual.Constraints["language"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 
@@ -59,7 +59,7 @@ namespace <#= Model.ControllerTestNamespace #>
             Assert.AreEqual("{language}/<#= Model.Area #>/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
-            Assert.AreEqual("lt-LT", actual.Constraints["language"]);
+            Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
         }
 

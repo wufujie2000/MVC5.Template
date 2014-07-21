@@ -22,16 +22,16 @@ namespace <#= Model.ControllerNamespace #>
                     "<#= Model.Area #>Multilingual",
                     "{language}/<#= Model.Area #>/{controller}/{action}/{id}",
                     new { area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt-LT" },
+                    new { language = "lt" },
                     new[] { "<#= Model.ControllerNamespace #>" });
 
             context
                 .MapRoute(
                     "<#= Model.Area #>",
                     "<#= Model.Area #>/{controller}/{action}/{id}",
-                    new { language = "en-GB", area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en-GB" },
+                    new { language = "en", area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en" },
                     new[] { "<#= Model.ControllerNamespace #>" });
-        }  
+        }
     }
 }

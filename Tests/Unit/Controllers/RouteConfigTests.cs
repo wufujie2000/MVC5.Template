@@ -36,10 +36,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("{controller}/{action}/{id}", actual.Url);
-            Assert.AreEqual("en-GB", actual.Constraints["language"]);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
-            Assert.AreEqual("en-GB", actual.Defaults["language"]);
+            Assert.AreEqual("en", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
             Assert.IsNull(actual.Defaults["area"]);
         }
 
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Home" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.AreEqual("lt-LT", actual.Constraints["language"]);
+            Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
             Assert.IsNull(actual.Defaults["language"]);

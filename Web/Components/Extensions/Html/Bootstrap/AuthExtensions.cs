@@ -1,6 +1,8 @@
-﻿using MvcTemplate.Resources;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Resources;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -33,6 +35,9 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
         {
+            IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
+            if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
+
             TagBuilder select = new TagBuilder("select");
             TagBuilder input = new TagBuilder("input");
             TagBuilder addon = new TagBuilder("span");
@@ -46,16 +51,12 @@ namespace MvcTemplate.Components.Extensions.Html
             icon.AddCssClass("fa fa-flag");
 
             addon.InnerHtml = icon.ToString();
-            Dictionary<String, String> languages = new Dictionary<String, String>()
-            {
-                { "en-GB", "English" },
-                { "lt-LT", "Lietuvių" }
-            };
-            foreach (KeyValuePair<String, String> language in languages)
+            foreach (Language language in languages)
             {
                 TagBuilder option = new TagBuilder("option");
-                option.MergeAttribute("value", language.Key);
-                option.InnerHtml = language.Value;
+                option.MergeAttribute("value", language.Abbrevation);
+                option.InnerHtml = language.Name;
+
                 select.InnerHtml += option.ToString();
             }
 

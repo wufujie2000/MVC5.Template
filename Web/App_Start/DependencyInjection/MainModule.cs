@@ -26,6 +26,10 @@ namespace MvcTemplate.Web.DependencyInjection
 
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
             Bind<IRoleProvider>().ToConstant(CreateRoleProvider());
+
+            String languagesPath = HostingEnvironment.MapPath("~/Languages.xml");
+            Bind<ILanguageProvider>().To<LanguageProvider>().WithConstructorArgument("languagesPath", languagesPath);
+
             String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
             Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
 

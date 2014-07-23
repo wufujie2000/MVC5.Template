@@ -343,8 +343,8 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         private void TearDownData()
         {
-            context.Set<Account>().RemoveRange(context.Set<Account>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>());
+            context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
         }
 

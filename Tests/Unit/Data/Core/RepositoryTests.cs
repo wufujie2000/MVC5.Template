@@ -233,7 +233,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         private void TearDownData()
         {
-            context.Set<TestModel>().RemoveRange(context.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
             context.SaveChanges();
         }
 

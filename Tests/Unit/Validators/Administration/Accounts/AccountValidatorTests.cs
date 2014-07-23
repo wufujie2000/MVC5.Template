@@ -8,7 +8,6 @@ using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -383,8 +382,8 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
         private void TearDownData()
         {
-            context.Set<Account>().RemoveRange(context.Set<Account>().Where(person => person.Id.StartsWith(ObjectFactory.TestId)));
-            context.Set<Role>().RemoveRange(context.Set<Role>().Where(role => role.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>());
+            context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
         }
 

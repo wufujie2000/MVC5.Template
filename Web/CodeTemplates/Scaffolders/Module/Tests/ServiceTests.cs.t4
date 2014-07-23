@@ -131,7 +131,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         private void TearDownData()
         {
-            context.Set<<#= Model.Model #>>().RemoveRange(context.Set<<#= Model.Model #>>().Where(model => model.Id == <#= Model.ModelName #>.Id));
+            context.Set<<#= Model.Model #>>().RemoveRange(context.Set<<#= Model.Model #>>());
             context.SaveChanges();
         }
 

@@ -211,11 +211,11 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         private void TearDownData()
         {
-            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>().Where(model => model.Id.StartsWith(ObjectFactory.TestId)));
-            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>().Where(account => account.Id.StartsWith(ObjectFactory.TestId)));
+            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
+            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>());
             loggerContext.Set<Log>().RemoveRange(loggerContext.Set<Log>());
-            dataContext.SaveChanges();
             loggerContext.SaveChanges();
+            dataContext.SaveChanges();
         }
 
         #endregion

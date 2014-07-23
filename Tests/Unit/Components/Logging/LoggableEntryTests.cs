@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
         private void TearDownData()
         {
-            context.Set<Role>().RemoveRange(context.Set<Role>().Where(item => item.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
         }
 

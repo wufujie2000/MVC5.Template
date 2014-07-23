@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         private void TearDownData()
         {
-            context.Set<Account>().RemoveRange(context.Set<Account>().Where(acc => acc.Id.StartsWith(ObjectFactory.TestId)));
+            context.Set<Account>().RemoveRange(context.Set<Account>());
             context.Set<Log>().RemoveRange(context.Set<Log>());
             context.SaveChanges();
         }

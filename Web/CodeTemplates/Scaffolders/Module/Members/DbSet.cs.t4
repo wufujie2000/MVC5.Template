@@ -2,6 +2,6 @@
 <#@ Output Extension="cs" #>
 #region <#= Model.Area #>
 
-private DbSet<<#= Model.Model #>> <#= Model.Models #> { get; set; }
+protected DbSet<<#= Model.Model #>> <#= Model.Models #> { get; set; }
 
 #endregion

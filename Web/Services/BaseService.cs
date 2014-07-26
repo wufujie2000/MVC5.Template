@@ -3,7 +3,7 @@ using System;
 
 namespace MvcTemplate.Services
 {
-    public abstract class BaseService
+    public abstract class BaseService : IService
     {
         private Boolean disposed;
 

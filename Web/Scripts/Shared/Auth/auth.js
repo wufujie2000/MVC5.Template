@@ -10,13 +10,14 @@
     $('#TempLanguage').hide();
 
     $(document).on("change", "#Language", function (e) {
-        if (e.val == defaultLanguage)
+        if (e.val == defaultLanguage) {
             document.location = '/Auth/Login';
-        else
+        } else {
             document.location = '/' + e.val + '/Auth/Login';
+        }
     });
 
     function formatSelection(selection) {
-        return "<img src='../../Images/Flags/" + selection.id + ".gif' /> " + selection.text;
+        return "<img src='../../Images/Flags/" + selection.id + ".gif' alt='' /> " + selection.text;
     }
 }());

@@ -75,8 +75,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
                 + "<i class=\"fa fa-flag\"></i> {0} <span class=\"caret\"></span></a>"
                 + "<ul class=\"dropdown-menu\" role=\"menu\"><li>"
-                + "<a href=\"{1}\"><img src='/Images/Flags/en.gif' /> English</a></li><li>"
-                + "<a href=\"{2}\"><img src='/Images/Flags/lt.gif' /> Lietuvių</a></li></ul>",
+                + "<a href=\"{1}\"><img src='/Images/Flags/en.gif' alt='' /> English</a></li><li>"
+                + "<a href=\"{2}\"><img src='/Images/Flags/lt.gif' alt='' /> Lietuvių</a></li></ul>",
                 ResourceProvider.GetActionTitle("Language"),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en", controller = controller, area = area, Param1 = "Value1" })),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt", controller = controller, area = area, Param1 = "Value1" })));
@@ -97,8 +97,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
                 + "<i class=\"fa fa-flag\"></i> {0} <span class=\"caret\"></span></a>"
                 + "<ul class=\"dropdown-menu\" role=\"menu\"><li>"
-                + "<a href=\"{1}\"><img src='/TestDomain/Images/Flags/en.gif' /> English</a></li><li>"
-                + "<a href=\"{2}\"><img src='/TestDomain/Images/Flags/lt.gif' /> Lietuvių</a></li></ul>",
+                + "<a href=\"{1}\"><img src='/TestDomain/Images/Flags/en.gif' alt='' /> English</a></li><li>"
+                + "<a href=\"{2}\"><img src='/TestDomain/Images/Flags/lt.gif' alt='' /> Lietuvių</a></li></ul>",
                 ResourceProvider.GetActionTitle("Language"),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en", controller = controller, area = area, Param1 = "Value1" })),
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt", controller = controller, area = area, Param1 = "Value1" })));

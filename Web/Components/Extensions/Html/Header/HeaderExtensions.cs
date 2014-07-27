@@ -60,7 +60,7 @@ namespace MvcTemplate.Components.Extensions.Html
                             html.ViewContext.RequestContext.RouteData.Values["action"].ToString(),
                             html.ViewContext.RequestContext.RouteData.Values)
                         .ToString(),
-                    String.Format("<img src='{0}{1}.gif' />", flagImagesPath, language.Abbrevation),
+                    String.Format("<img src='{0}{1}.gif' alt='' />", flagImagesPath, language.Abbrevation),
                     language.Name);
 
                 languageList.InnerHtml += languageItem.ToString();

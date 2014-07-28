@@ -34,21 +34,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: RegisterArea(AreaRegistrationContext context)
 
         [Test]
-        public void RegisterArea_RegistersAdministrationRoute()
-        {
-            areaRegistration.RegisterArea(registrationContext);
-            Route actual = registrationContext.Routes["Administration"] as Route;
-
-            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
-            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.AreEqual("Administration", actual.Defaults["area"]);
-            Assert.AreEqual("en", actual.Constraints["language"]);
-            Assert.AreEqual("en", actual.Defaults["language"]);
-            Assert.AreEqual("Index", actual.Defaults["action"]);
-        }
-
-        [Test]
         public void RegisterArea_RegistersAdministrationMultilingualRoute()
         {
             areaRegistration.RegisterArea(registrationContext);
@@ -56,10 +41,52 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{language}/Administration/{controller}/{action}/{id}", actual.Url);
-            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.AreEqual("(?!Index).*", actual.Constraints["action"]);
             Assert.AreEqual("Administration", actual.Defaults["area"]);
             Assert.AreEqual("lt", actual.Constraints["language"]);
+        }
+
+        [Test]
+        public void RegisterArea_RegistersAdministrationMultilingualIndexRoute()
+        {
+            areaRegistration.RegisterArea(registrationContext);
+            Route actual = registrationContext.Routes["AdministrationMultilingualIndex"] as Route;
+
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("{language}/Administration/{controller}/{action}", actual.Url);
+            Assert.AreEqual("Administration", actual.Defaults["area"]);
+            Assert.AreEqual("Index", actual.Constraints["action"]);
+            Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
+        }
+
+        [Test]
+        public void RegisterArea_RegistersAdministrationRoute()
+        {
+            areaRegistration.RegisterArea(registrationContext);
+            Route actual = registrationContext.Routes["Administration"] as Route;
+
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("Administration/{controller}/{action}/{id}", actual.Url);
+            Assert.AreEqual("(?!Index).*", actual.Constraints["action"]);
+            Assert.AreEqual("Administration", actual.Defaults["area"]);
+            Assert.AreEqual("en", actual.Constraints["language"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
+        }
+
+        [Test]
+        public void RegisterArea_RegistersAdministrationIndexRoute()
+        {
+            areaRegistration.RegisterArea(registrationContext);
+            Route actual = registrationContext.Routes["AdministrationIndex"] as Route;
+
+            CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("Administration/{controller}/{action}", actual.Url);
+            Assert.AreEqual("Administration", actual.Defaults["area"]);
+            Assert.AreEqual("Index", actual.Constraints["action"]);
+            Assert.AreEqual("en", actual.Constraints["language"]);
+            Assert.AreEqual("Index", actual.Defaults["action"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
         }
 
         #endregion

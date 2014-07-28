@@ -19,16 +19,32 @@ namespace MvcTemplate.Controllers.Administration
                 .MapRoute(
                     "AdministrationMultilingual",
                     "{language}/Administration/{controller}/{action}/{id}",
-                    new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { area = "Administration" },
+                    new { language = "lt", action = "(?!Index).*" },
+                    new[] { "MvcTemplate.Controllers.Administration" });
+
+            context
+                .MapRoute(
+                    "AdministrationMultilingualIndex",
+                    "{language}/Administration/{controller}/{action}",
+                    new { area = "Administration", action = "Index" },
+                    new { language = "lt", action = "Index" },
                     new[] { "MvcTemplate.Controllers.Administration" });
 
             context
                 .MapRoute(
                     "Administration",
                     "Administration/{controller}/{action}/{id}",
-                    new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", area = "Administration" },
+                    new { language = "en", action = "(?!Index).*" },
+                    new[] { "MvcTemplate.Controllers.Administration" });
+
+            context
+                .MapRoute(
+                    "AdministrationIndex",
+                    "Administration/{controller}/{action}",
+                    new { language = "en", area = "Administration", action = "Index"},
+                    new { language = "en", action = "Index" },
                     new[] { "MvcTemplate.Controllers.Administration" });
         }
     }

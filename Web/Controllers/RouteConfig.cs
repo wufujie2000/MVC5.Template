@@ -12,16 +12,16 @@ namespace MvcTemplate.Controllers
             routes
                 .MapRoute(
                     "DefaultMultilingual",
-                    "{language}/{controller}/{action}/{id}",
-                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    "{language}/{controller}/{action}",
+                    new { controller = "Home", action = "Index" },
                     new { language = "lt" },
                     new[] { "MvcTemplate.Controllers.Home" });
 
             routes
                 .MapRoute(
                     "Default",
-                    "{controller}/{action}/{id}",
-                    new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
+                    "{controller}/{action}",
+                    new { language = "en", controller = "Home", action = "Index" },
                     new { language = "en" },
                     new[] { "MvcTemplate.Controllers.Home" });
         }

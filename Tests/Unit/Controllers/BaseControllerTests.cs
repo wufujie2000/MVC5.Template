@@ -122,10 +122,26 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
+        #region Method: RedirectToNotFound()
+
+        [Test]
+        public void RedirectToNotFound_RedirectsToNotFound()
+        {
+            baseController.RouteData.Values["language"] = "lt";
+            RouteValueDictionary actual = baseController.BaseRedirectToNotFound().RouteValues;
+
+            Assert.AreEqual("lt", actual["language"]);
+            Assert.AreEqual(String.Empty, actual["area"]);
+            Assert.AreEqual("Home", actual["controller"]);
+            Assert.AreEqual("NotFound", actual["action"]);
+        }
+
+        #endregion
+
         #region Method: RedirectToUnauthorized()
 
         [Test]
-        public void RedirectsToUnauthorized_RedirectsToHomeUnauthorized()
+        public void RedirectsToUnauthorized_RedirectsToUnauthorized()
         {
             baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.BaseRedirectToUnauthorized().RouteValues;
@@ -148,7 +164,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(false);
             RedirectToRouteResult actual = baseController.BaseRedirectIfAuthorized("Action");
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -331,6 +347,29 @@ namespace MvcTemplate.Tests.Unit.Controllers
             IEnumerable<Alert> actual = baseController.Session["Alerts"] as IEnumerable<Alert>;
 
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: NotEmptyView(Object model)
+
+        [Test]
+        public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
+        {
+            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
+            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToNotFound").Returns(expected);
+            ActionResult actual = baseController.BaseNotEmptyView(null);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
+        {
+            Object expected = new Object();
+            ViewResult actual = baseController.BaseNotEmptyView(expected) as ViewResult;
+
+            Assert.AreSame(expected, actual.Model);
         }
 
         #endregion

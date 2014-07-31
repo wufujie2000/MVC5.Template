@@ -34,6 +34,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             return base.RedirectToDefault();
         }
+        public RedirectToRouteResult BaseRedirectToNotFound()
+        {
+            return base.RedirectToNotFound();
+        }
         public RedirectToRouteResult BaseRedirectToUnauthorized()
         {
             return base.RedirectToUnauthorized();
@@ -67,6 +71,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void BaseOnActionExecuted(ActionExecutedContext context)
         {
             base.OnActionExecuted(context);
+        }
+
+        public ActionResult BaseNotEmptyView(Object model)
+        {
+            return base.NotEmptyView(model);
         }
     }
 }

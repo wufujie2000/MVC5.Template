@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             serviceMock.Setup(mock => mock.GetView<AccountView>(account.Id)).Returns(account);
 
-            Object actual = controller.Details(account.Id).Model;
+            Object actual = (controller.Details(account.Id) as ViewResult).Model;
             AccountView expected = account;
 
             Assert.AreSame(expected, actual);
@@ -74,7 +74,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             serviceMock.Setup(mock => mock.GetView<AccountEditView>(account.Id)).Returns(accountEdit);
 
-            Object actual = controller.Edit(account.Id).Model;
+            Object actual = (controller.Edit(account.Id) as ViewResult).Model;
             AccountEditView expected = accountEdit;
 
             Assert.AreSame(expected, actual);

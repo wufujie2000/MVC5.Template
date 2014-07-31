@@ -47,6 +47,10 @@ namespace MvcTemplate.Controllers
         {
             return RedirectToAction(String.Empty, String.Empty, new { area = String.Empty, language = RouteData.Values["language"] });
         }
+        protected virtual RedirectToRouteResult RedirectToNotFound()
+        {
+            return RedirectToAction("NotFound", "Home", new { area = String.Empty, language = RouteData.Values["language"] });
+        }
         protected virtual RedirectToRouteResult RedirectToUnauthorized()
         {
             return RedirectToAction("Unauthorized", "Home", new { area = String.Empty, language = RouteData.Values["language"] });
@@ -107,6 +111,14 @@ namespace MvcTemplate.Controllers
             AlertsContainer current = Session["Alerts"] as AlertsContainer;
             if (current != Alerts)
                 current.Merge(Alerts);
+        }
+
+        protected virtual ActionResult NotEmptyView(Object model)
+        {
+            if (model == null)
+                return RedirectToNotFound();
+
+            return View(model);
         }
     }
 }

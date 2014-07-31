@@ -136,7 +136,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
 
-            Object actual = controller.Details(role.Id).Model;
+            Object actual = (controller.Details(role.Id) as ViewResult).Model;
             RoleView expected = role;
 
             Assert.AreSame(expected, actual);
@@ -151,7 +151,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
 
-            Object actual = controller.Edit(role.Id).Model;
+            Object actual = (controller.Edit(role.Id) as ViewResult).Model;
             RoleView expected = role;
 
             Assert.AreSame(expected, actual);
@@ -218,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             serviceMock.Setup(mock => mock.GetView(role.Id)).Returns(role);
 
-            Object actual = controller.Delete(role.Id).Model;
+            Object actual = (controller.Delete(role.Id) as ViewResult).Model;
             RoleView expected = role;
 
             Assert.AreSame(expected, actual);

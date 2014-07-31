@@ -44,15 +44,15 @@ namespace MvcTemplate.Controllers.Administration
         }
 
         [HttpGet]
-        public ViewResult Details(String id)
+        public ActionResult Details(String id)
         {
-            return View(Service.GetView(id));
+            return NotEmptyView(Service.GetView(id));
         }
 
         [HttpGet]
-        public ViewResult Edit(String id)
+        public ActionResult Edit(String id)
         {
-            return View(Service.GetView(id));
+            return NotEmptyView(Service.GetView(id));
         }
 
         [HttpPost]
@@ -71,9 +71,9 @@ namespace MvcTemplate.Controllers.Administration
         }
 
         [HttpGet]
-        public ViewResult Delete(String id)
+        public ActionResult Delete(String id)
         {
-            return View(Service.GetView(id));
+            return NotEmptyView(Service.GetView(id));
         }
 
         [HttpPost]

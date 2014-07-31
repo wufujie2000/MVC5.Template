@@ -116,7 +116,7 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             serviceMock.Setup(mock => mock.GetView(<#= Model.ModelName #>.Id)).Returns(<#= Model.ModelName #>);
 
-            Object actual = controller.Details(<#= Model.ModelName #>.Id).Model;
+            Object actual = (controller.Details(<#= Model.ModelName #>.Id) as ViewResult).Model;
             <#= Model.View #> expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
@@ -131,7 +131,7 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             serviceMock.Setup(mock => mock.GetView(<#= Model.ModelName #>.Id)).Returns(<#= Model.ModelName #>);
 
-            Object actual = controller.Edit(<#= Model.ModelName #>.Id).Model;
+            Object actual = (controller.Edit(<#= Model.ModelName #>.Id) as ViewResult).Model;
             <#= Model.View #> expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
@@ -186,7 +186,7 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             serviceMock.Setup(mock => mock.GetView(<#= Model.ModelName #>.Id)).Returns(<#= Model.ModelName #>);
 
-            Object actual = controller.Delete(<#= Model.ModelName #>.Id).Model;
+            Object actual = (controller.Delete(<#= Model.ModelName #>.Id) as ViewResult).Model;
             <#= Model.View #> expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);

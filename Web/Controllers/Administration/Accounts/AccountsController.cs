@@ -20,15 +20,15 @@ namespace MvcTemplate.Controllers.Administration
         }
 
         [HttpGet]
-        public ViewResult Details(String id)
+        public ActionResult Details(String id)
         {
-            return View(Service.GetView<AccountView>(id));
+            return NotEmptyView(Service.GetView<AccountView>(id));
         }
 
         [HttpGet]
-        public ViewResult Edit(String id)
+        public ActionResult Edit(String id)
         {
-            return View(Service.GetView<AccountEditView>(id));
+            return NotEmptyView(Service.GetView<AccountEditView>(id));
         }
 
         [HttpPost]

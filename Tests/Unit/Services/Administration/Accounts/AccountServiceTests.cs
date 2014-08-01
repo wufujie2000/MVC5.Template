@@ -267,18 +267,6 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Login(String username)
 
         [Test]
-        public void Login_CreatesCookieForAMonth()
-        {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
-            service.Login(account.Username);
-
-            DateTime actual = HttpContext.Current.Response.Cookies[0].Expires.Date;
-            DateTime expected = DateTime.Now.AddMonths(1).Date;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         public void Login_CreatesPersistentCookie()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
@@ -287,15 +275,6 @@ namespace MvcTemplate.Tests.Unit.Services
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.IsTrue(ticket.IsPersistent);
-        }
-
-        [Test]
-        public void Login_CreatesCookieWithoutClientSideAccess()
-        {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
-            service.Login(account.Username);
-
-            Assert.IsTrue(HttpContext.Current.Response.Cookies[0].HttpOnly);
         }
 
         [Test]

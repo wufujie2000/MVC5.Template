@@ -76,7 +76,7 @@ namespace MvcTemplate.Services
 
         public void Login(String username)
         {
-            CreateCookieFor(GetAccountId(username));
+            FormsAuthentication.SetAuthCookie(GetAccountId(username), true);
         }
         public void Logout()
         {
@@ -89,17 +89,6 @@ namespace MvcTemplate.Services
                 .Repository<Account>()
                 .First(acc => acc.Username.ToUpper() == username.ToUpper())
                 .Id;
-        }
-        private void CreateCookieFor(String accountId)
-        {
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, accountId, DateTime.Now, DateTime.Now.AddMonths(1), true, accountId);
-            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
-            {
-                Expires = ticket.Expiration,
-                HttpOnly = true
-            };
-
-            HttpContext.Current.Response.Cookies.Add(cookie);
         }
     }
 }

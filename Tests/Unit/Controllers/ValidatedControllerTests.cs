@@ -1,7 +1,7 @@
-﻿using Moq;
-using MvcTemplate.Services;
+﻿using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 using System.Web.Mvc;
 
@@ -11,17 +11,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
     public class ValidatedControllerTests
     {
         private ValidatedControllerStub controller;
-        private Mock<IValidator> validatorMock;
+        private IValidator validator;
 
         [SetUp]
         public void SetUp()
         {
-            IService service = new Mock<IService>().Object;
-            validatorMock = new Mock<IValidator>();
-            validatorMock.SetupAllProperties();
-
-            controller = new ValidatedControllerStub(service, validatorMock.Object);
-            controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
+            validator = Substitute.For<IValidator>();
+            IService service = Substitute.For<IService>();
+            controller = new ValidatedControllerStub(service, validator);
+            controller.ControllerContext = Substitute.For<ControllerContext>();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
@@ -36,11 +34,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ValidatedController_SetsValidator()
         {
-            IService service = new Mock<IService>().Object;
-            controller = new ValidatedControllerStub(service, validatorMock.Object);
-
             IValidator actual = controller.BaseValidator;
-            IValidator expected = validatorMock.Object;
+            IValidator expected = validator;
 
             Assert.AreSame(expected, actual);
         }
@@ -48,10 +43,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ServicedController_SetsModelState()
         {
-            IService service = new Mock<IService>().Object;
-            controller = new ValidatedControllerStub(service, validatorMock.Object);
-
-            ModelStateDictionary expected = validatorMock.Object.ModelState;
+            ModelStateDictionary expected = validator.ModelState;
             ModelStateDictionary actual = controller.ModelState;
 
             Assert.AreSame(expected, actual);
@@ -64,12 +56,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Dispose_DisposesValidator()
         {
-            Mock<IService> serviceMock = new Mock<IService>();
-            ServicedControllerStub disposableController = new ServicedControllerStub(serviceMock.Object);
+            controller.Dispose();
 
-            disposableController.Dispose();
-
-            serviceMock.Verify(mock => mock.Dispose(), Times.Once());
+            validator.Received().Dispose();
         }
 
         [Test]

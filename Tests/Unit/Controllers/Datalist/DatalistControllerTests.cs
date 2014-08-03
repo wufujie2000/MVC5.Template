@@ -1,5 +1,4 @@
 ﻿using Datalist;
-using Moq;
 using MvcTemplate.Components.Datalists;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Controllers.Datalist;
@@ -7,6 +6,7 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
     [TestFixture]
     public class DatalistControllerTests
     {
-        private Mock<DatalistController> controllerMock;
-        private Mock<AbstractDatalist> datalistMock;
         private DatalistController controller;
         private AbstractDatalist datalist;
         private DatalistFilter filter;
@@ -27,11 +25,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [SetUp]
         public void SetUp()
         {
-            controllerMock = new Mock<DatalistController>(new UnitOfWork(new TestingContext())) { CallBase = true };
+            controller = new DatalistController(new UnitOfWork(new TestingContext()));
             HttpContext.Current = new HttpMock().HttpContext;
-            datalistMock = new Mock<AbstractDatalist>();
-            controller = controllerMock.Object;
-            datalist = datalistMock.Object;
+            datalist = Substitute.For<AbstractDatalist>();
             filter = new DatalistFilter();
         }
 
@@ -69,10 +65,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [Test]
         public void GetData_ReturnsPublicJsonData()
         {
-            datalistMock.Setup(mock => mock.GetData()).Returns(new DatalistData());
+            datalist.GetData().Returns(new DatalistData());
             JsonResult jsonResult = controller.GetData(datalist, filter);
 
-            DatalistData expected = datalistMock.Object.GetData();
+            DatalistData expected = datalist.GetData();
             Object actual = jsonResult.Data;
 
             Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
@@ -86,13 +82,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [Test]
         public void Roles_GetsRolesData()
         {
-            controllerMock
-                .Setup(mock => mock.GetData(It.IsAny<BaseDatalist<Role, RoleView>>(), filter, null))
-                .Returns(new JsonResult());
+            controller = Substitute.For<DatalistController>(Substitute.For<IUnitOfWork>());
+            controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
 
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
 
-            JsonResult expected = controllerMock.Object.GetData(null, filter, null);
+            JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);
 
             Assert.AreEqual(expected, actual);

@@ -1,6 +1,6 @@
-﻿using Moq;
-using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Services;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace MvcTemplate.Tests.Unit.Services
@@ -8,14 +8,14 @@ namespace MvcTemplate.Tests.Unit.Services
     [TestFixture]
     public class BaseServiceTests
     {
-        private Mock<IUnitOfWork> unitOfWorkMock;
+        private IUnitOfWork unitOfWork;
         private BaseService service;
 
         [SetUp]
         public void SetUp()
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-            service = new Mock<BaseService>(unitOfWorkMock.Object) { CallBase = true }.Object;
+            unitOfWork = Substitute.For<IUnitOfWork>();
+            service = Substitute.ForPartsOf<BaseService>(unitOfWork);
         }
 
         [TearDown]
@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             service.Dispose();
 
-            unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
+            unitOfWork.Received().Dispose();
         }
 
         [Test]

@@ -1,8 +1,8 @@
-﻿using Moq;
-using MvcTemplate.Components.Mvc;
+﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -67,10 +67,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyAuthorizedMenus()
         {
-            Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<IEnumerable<AccountPrivilege>>(),
-                null, "Home", "Index")).Returns(true);
-            RoleFactory.Provider = roleProviderMock.Object;
+            RoleFactory.Provider = Substitute.For<IRoleProvider>();
+            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+                null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = TreeToEnumerable(provider.GetMenus()).GetEnumerator();
@@ -88,10 +87,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_DoesnNotAuthorizeMenusWithoutAction()
         {
-            Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<IEnumerable<AccountPrivilege>>(),
-                "Administration", "Roles", "Index")).Returns(true);
-            RoleFactory.Provider = roleProviderMock.Object;
+            RoleFactory.Provider = Substitute.For<IRoleProvider>();
+            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+                "Administration", "Roles", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap)).Skip(1).Take(2).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = TreeToEnumerable(provider.GetMenus()).GetEnumerator();
@@ -153,10 +151,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_RemovesMenusWithoutActionAndSubmenus()
         {
-            Mock<IRoleProvider> roleProviderMock = new Mock<IRoleProvider>();
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(It.IsAny<IEnumerable<AccountPrivilege>>(),
-                null, "Home", "Index")).Returns(true);
-            RoleFactory.Provider = roleProviderMock.Object;
+            RoleFactory.Provider = Substitute.For<IRoleProvider>();
+            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+                null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = TreeToEnumerable(provider.GetMenus()).GetEnumerator();

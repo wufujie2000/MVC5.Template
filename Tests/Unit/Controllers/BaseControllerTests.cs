@@ -1,9 +1,8 @@
-﻿using Moq;
-using Moq.Protected;
-using MvcTemplate.Components.Alerts;
+﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,28 +16,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class BaseControllerTests
     {
-        private Mock<BaseControllerStub> controllerMock;
-        private Mock<IRoleProvider> roleProviderMock;
         private BaseControllerStub baseController;
-        private HttpMock httpMock;
         private String accountId;
 
         [SetUp]
         public void SetUp()
         {
-            httpMock = new HttpMock();
-            controllerMock = new Mock<BaseControllerStub>() { CallBase = true };
-            RequestContext requestContext = httpMock.HttpContext.Request.RequestContext;
-
+            HttpMock httpMock = new HttpMock();
+            RoleFactory.Provider = Substitute.For<IRoleProvider>();
             accountId = httpMock.HttpContextBase.User.Identity.Name;
-            controllerMock.Object.Url = new UrlHelper(requestContext);
-            controllerMock.Object.ControllerContext = new ControllerContext();
-            controllerMock.Object.ControllerContext.Controller = controllerMock.Object;
-            controllerMock.Object.ControllerContext.HttpContext = httpMock.HttpContextBase;
-            controllerMock.Object.ControllerContext.RouteData = httpMock.HttpContextBase.Request.RequestContext.RouteData;
-
-            roleProviderMock = new Mock<IRoleProvider>(MockBehavior.Strict);
-            baseController = controllerMock.Object;
+            baseController = Substitute.ForPartsOf<BaseControllerStub>();
+            baseController.Url = new UrlHelper(httpMock.HttpContext.Request.RequestContext);
+            baseController.ControllerContext = new ControllerContext(
+                httpMock.HttpContextBase,
+                httpMock.HttpContextBase.Request.RequestContext.RouteData,
+                baseController);
         }
 
         [TearDown]
@@ -66,9 +58,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BaseController_SetsRoleProviderFromFactory()
         {
-            RoleFactory.Provider = roleProviderMock.Object;
-            baseController = new BaseControllerStub();
-
             IRoleProvider actual = baseController.BaseRoleProvider;
             IRoleProvider expected = RoleFactory.Provider;
 
@@ -88,9 +77,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToDefaultIfUrlIsNotLocal()
         {
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
-            RedirectToRouteResult actual = baseController.BaseRedirectToLocal("http://www.test.com") as RedirectToRouteResult;
+            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+
+            RedirectToRouteResult actual = baseController.RedirectToLocal("http://www.test.com") as RedirectToRouteResult;
+            RedirectToRouteResult expected = baseController.RedirectToDefault();
 
             Assert.AreEqual(expected, actual);
         }
@@ -98,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToLocalIfUrlIsLocal()
         {
-            String actual = (baseController.BaseRedirectToLocal("/Home/Index") as RedirectResult).Url;
+            String actual = (baseController.RedirectToLocal("/Home/Index") as RedirectResult).Url;
             String expected = "/Home/Index";
 
             Assert.AreEqual(expected, actual);
@@ -112,7 +103,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectToDefault_RedirectsToDefault()
         {
             baseController.RouteData.Values["language"] = "lt";
-            RouteValueDictionary actual = baseController.BaseRedirectToDefault().RouteValues;
+            RouteValueDictionary actual = baseController.RedirectToDefault().RouteValues;
 
             Assert.AreEqual(String.Empty, actual["controller"]);
             Assert.AreEqual(String.Empty, actual["action"]);
@@ -128,7 +119,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectToNotFound_RedirectsToNotFound()
         {
             baseController.RouteData.Values["language"] = "lt";
-            RouteValueDictionary actual = baseController.BaseRedirectToNotFound().RouteValues;
+            RouteValueDictionary actual = baseController.RedirectToNotFound().RouteValues;
 
             Assert.AreEqual("lt", actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
@@ -144,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectsToUnauthorized_RedirectsToUnauthorized()
         {
             baseController.RouteData.Values["language"] = "lt";
-            RouteValueDictionary actual = baseController.BaseRedirectToUnauthorized().RouteValues;
+            RouteValueDictionary actual = baseController.RedirectToUnauthorized().RouteValues;
 
             Assert.AreEqual("lt", actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
@@ -159,10 +150,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
         {
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(false);
-            RedirectToRouteResult actual = baseController.BaseRedirectIfAuthorized("Action");
+            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+            baseController.IsAuthorizedFor("Action").Returns(false);
+
+            RedirectToRouteResult actual = baseController.RedirectIfAuthorized("Action");
+            RedirectToRouteResult expected = baseController.RedirectToDefault();
 
             Assert.AreSame(expected, actual);
         }
@@ -170,13 +163,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectIfAuthorized_RedirectsToActionIfAuthorized()
         {
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Action").Returns(true);
+            baseController.IsAuthorizedFor("Action").Returns(true);
 
-            RouteValueDictionary actual = baseController.BaseRedirectIfAuthorized("Action").RouteValues;
             RouteValueDictionary expected = baseController.BaseRedirectToAction("Action").RouteValues;
+            RouteValueDictionary actual = baseController.RedirectIfAuthorized("Action").RouteValues;
 
-            Assert.AreEqual(expected["language"], actual["language"]);
             Assert.AreEqual(expected["controller"], actual["controller"]);
+            Assert.AreEqual(expected["language"], actual["language"]);
             Assert.AreEqual(expected["action"], actual["action"]);
             Assert.AreEqual(expected["area"], actual["area"]);
         }
@@ -188,21 +181,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void IsAuthorizedFor_ReturnsTrueThenAuthorized()
         {
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Area", "Controller", "Action").Returns(true);
+            baseController.IsAuthorizedFor("Area", "Controller", "Action").Returns(true);
             baseController.RouteData.Values["controller"] = "Controller";
             baseController.RouteData.Values["area"] = "Area";
 
-            Assert.IsTrue(baseController.BaseIsAuthorizedFor("Action"));
+            Assert.IsTrue(baseController.IsAuthorizedFor("Action"));
         }
 
         [Test]
         public void IsAuthorizedFor_ReturnsFalseThenNotAuthorized()
         {
-            controllerMock.Protected().Setup<Boolean>("IsAuthorizedFor", "Area", "Controller", "Action").Returns(false);
+            baseController.IsAuthorizedFor("Area", "Controller", "Action").Returns(false);
             baseController.RouteData.Values["controller"] = "Controller";
             baseController.RouteData.Values["area"] = "Area";
 
-            Assert.IsFalse(baseController.BaseIsAuthorizedFor("Action"));
+            Assert.IsFalse(baseController.IsAuthorizedFor("Action"));
         }
 
         #endregion
@@ -214,16 +207,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             baseController.BaseRoleProvider = null;
 
-            Assert.IsTrue(baseController.BaseIsAuthorizedFor(null, null, null));
+            Assert.IsTrue(baseController.IsAuthorizedFor(null, null, null));
         }
 
         [Test]
         public void IsAuthorizedFor_ReturnsRoleProviderResult()
         {
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "AR", "CO", "AC")).Returns(true);
-            baseController.BaseRoleProvider = roleProviderMock.Object;
+            RoleFactory.Provider.IsAuthorizedFor(accountId, "AR", "CO", "AC").Returns(true);
 
-            Assert.IsTrue(baseController.BaseIsAuthorizedFor("AR", "CO", "AC"));
+            Assert.IsTrue(baseController.IsAuthorizedFor("AR", "CO", "AC"));
         }
 
         #endregion
@@ -251,9 +243,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToNullThenNotLoggedIn()
         {
-            Mock<ActionDescriptor> describtorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtorMock.Object);
-            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
+            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtor);
+            baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(false);
 
             baseController.BaseOnAuthorization(filterContext);
 
@@ -263,21 +255,22 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToRedirectToUnauthorizedIfNotAuthorized()
         {
-            Mock<ActionDescriptor> describtorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtorMock.Object);
-            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtor);
+            baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
 
             String controller = baseController.RouteData.Values["controller"] as String;
             String action = baseController.RouteData.Values["action"] as String;
             String area = baseController.RouteData.Values["area"] as String;
 
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToUnauthorized").Returns(expected);
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, area, controller, action)).Returns(false);
-            baseController.BaseRoleProvider = roleProviderMock.Object;
+            baseController.RedirectToUnauthorized().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
+            baseController.When(control => control.RedirectToUnauthorized()).DoNotCallBase();
+
             baseController.BaseOnAuthorization(filterContext);
 
             RedirectToRouteResult actual = filterContext.Result as RedirectToRouteResult;
+            RedirectToRouteResult expected = baseController.RedirectToUnauthorized();
 
             Assert.AreEqual(expected, actual);
         }
@@ -285,16 +278,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToNullThenAuthorized()
         {
-            Mock<ActionDescriptor> describtorMock = new Mock<ActionDescriptor>() { CallBase = true };
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtorMock.Object);
-            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
+            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtor);
+            baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
 
             filterContext.RouteData.Values["controller"] = "Controller";
             filterContext.RouteData.Values["action"] = "Action";
             filterContext.RouteData.Values["area"] = "Area";
 
-            roleProviderMock.Setup(mock => mock.IsAuthorizedFor(accountId, "Area", "Controller", "Action")).Returns(true);
-            baseController.BaseRoleProvider = roleProviderMock.Object;
+            RoleFactory.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(true);
             baseController.BaseOnAuthorization(filterContext);
 
             Assert.IsNull(filterContext.Result);
@@ -356,9 +348,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
         {
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToNotFound").Returns(expected);
-            ActionResult actual = baseController.BaseNotEmptyView(null);
+            baseController.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            baseController.When(control => control.RedirectToNotFound()).DoNotCallBase();
+
+            RedirectToRouteResult expected = baseController.RedirectToNotFound();
+            ActionResult actual = baseController.NotEmptyView(null);
 
             Assert.AreSame(expected, actual);
         }
@@ -367,7 +361,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
         {
             Object expected = new Object();
-            ViewResult actual = baseController.BaseNotEmptyView(expected) as ViewResult;
+            ViewResult actual = baseController.NotEmptyView(expected) as ViewResult;
 
             Assert.AreSame(expected, actual.Model);
         }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper.QueryableExtensions;
-using Moq;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -53,16 +53,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Expression_IsContextSetsExpression()
         {
-            Mock<DbSet<TestModel>> setMock = new Mock<DbSet<TestModel>>();
-            setMock.As<IQueryable>()
-                .Setup(mock => mock.Expression)
-                .Returns(Expression.Add(Expression.Constant(0), Expression.Constant(0)));
+            DbSet<TestModel> databaseSet = Substitute.For<DbSet<TestModel>, IQueryable>();
+            (databaseSet as IQueryable).Expression.Returns(Expression.Add(Expression.Constant(0), Expression.Constant(0)));
 
-            Mock<AContext> contextMock = new Mock<AContext>();
-            contextMock.Setup(mock => mock.Set<TestModel>()).Returns(setMock.Object);
-            repository = new Repository<TestModel>(contextMock.Object);
+            AContext context = Substitute.For<AContext>();
+            context.Set<TestModel>().Returns(databaseSet);
+            repository = new Repository<TestModel>(context);
 
-            Expression expected = (contextMock.Object.Set<TestModel>() as IQueryable).Expression;
+            Expression expected = (context.Set<TestModel>() as IQueryable).Expression;
             Expression actual = (repository as IQueryable).Expression;
 
             Assert.AreSame(expected, actual);

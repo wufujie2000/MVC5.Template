@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -95,10 +96,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthLanguageSelect_OnSingleLanguageReturnsEmptyHtml()
         {
-            LanguageProviderMock providerMock = new LanguageProviderMock();
             List<Language> languages = new List<Language>() { new Language() };
-            providerMock.Mock.Setup(mock => mock.Languages).Returns(languages);
-            LocalizationManager.Provider = providerMock.Provider;
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider.Languages.Returns(languages);
 
             String actual = html.AuthLanguageSelect().ToString();
             String expected = String.Empty;

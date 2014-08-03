@@ -1,5 +1,5 @@
-﻿using Moq;
-using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Security;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace MvcTemplate.Tests.Unit.Security
@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void Provider_GetsAndSetsProviderInstance()
         {
-            IRoleProvider expected = new Mock<IRoleProvider>().Object;
+            IRoleProvider expected = Substitute.For<IRoleProvider>();
             RoleFactory.Provider = expected;
 
             IRoleProvider actual = RoleFactory.Provider;

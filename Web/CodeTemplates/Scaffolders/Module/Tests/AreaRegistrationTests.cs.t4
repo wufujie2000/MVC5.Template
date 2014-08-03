@@ -1,10 +1,11 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
-using MvcTemplate.Controllers.House;
+using <#= Model.ControllerNamespace #>;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+
 namespace <#= Model.ControllerTestNamespace #>
 {
     [TestFixture]

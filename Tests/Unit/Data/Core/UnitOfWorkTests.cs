@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Moq;
 using MvcTemplate.Components.Logging;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            Account expected = ObjectFactory.CreateAccount();
+            Account expected = ObjectFactory.CreateAccount(2);
             unitOfWork.Repository<Account>().Insert(expected);
             unitOfWork.Commit();
 
@@ -106,34 +106,31 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_LogsEntities()
         {
-            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
-            IEntityLogger logger = loggerMock.Object;
-
+            IEntityLogger logger = Substitute.For<IEntityLogger>();
             unitOfWork = new UnitOfWork(context, logger);
             unitOfWork.Commit();
 
-            loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
-            loggerMock.Verify(mock => mock.Save(), Times.Once());
+            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry>>());
+            logger.Received().Save();
         }
 
         [Test]
         public void Commit_DoesNotSaveLogsOnFailedCommit()
         {
-            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
-            IEntityLogger logger = loggerMock.Object;
-
+            IEntityLogger logger = Substitute.For<IEntityLogger>();
             unitOfWork = new UnitOfWork(context, logger);
-            unitOfWork.Repository<Account>().Insert(new Account());
+
             try
             {
+                unitOfWork.Repository<Account>().Insert(new Account());
                 unitOfWork.Commit();
             }
             catch
             {
             }
 
-            loggerMock.Verify(mock => mock.Log(It.IsAny<IEnumerable<DbEntityEntry>>()), Times.Once());
-            loggerMock.Verify(mock => mock.Save(), Times.Never());
+            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry>>());
+            logger.DidNotReceive().Save();
         }
 
         #endregion
@@ -143,12 +140,23 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Dispose_DiposesLogger()
         {
-            Mock<IEntityLogger> loggerMock = new Mock<IEntityLogger>();
-            UnitOfWork disposableUnitOfWork = new UnitOfWork(new TestingContext(), loggerMock.Object);
+            IEntityLogger logger = Substitute.For<IEntityLogger>();
+            UnitOfWork unitOfWork = new UnitOfWork(new TestingContext(), logger);
 
-            disposableUnitOfWork.Dispose();
+            unitOfWork.Dispose();
 
-            loggerMock.Verify(mock => mock.Dispose(), Times.Once());
+            logger.Received().Dispose();
+        }
+
+        [Test]
+        public void Dispose_DiposesContext()
+        {
+            AContext context = Substitute.For<AContext>();
+            UnitOfWork unitOfWork = new UnitOfWork(context);
+
+            unitOfWork.Dispose();
+
+            context.Received().Dispose();
         }
 
         [Test]

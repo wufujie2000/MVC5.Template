@@ -1,6 +1,6 @@
-﻿using Moq;
-using MvcTemplate.Components.Logging;
+﻿using MvcTemplate.Components.Logging;
 using MvcTemplate.Components.Mvc;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
@@ -10,16 +10,16 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class ExceptionFilterTests
     {
-        private Mock<ILogger> loggerMock;
         private ExceptionFilter filter;
         private Exception exception;
+        private ILogger logger;
 
         [SetUp]
         public void SetUp()
         {
             exception = GenerateException();
-            loggerMock = new Mock<ILogger>();
-            filter = new ExceptionFilter(loggerMock.Object);
+            logger = Substitute.For<ILogger>();
+            filter = new ExceptionFilter(logger);
         }
 
         #region Method: OnException(ExceptionContext filterContext)
@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 exception.GetType(), exception.Message, Environment.NewLine,
                 exception.StackTrace);
 
-            loggerMock.Verify(mock => mock.Log(expectedMessage), Times.Once());
+            logger.Received().Log(expectedMessage);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 Environment.NewLine,
                 exceptionContext.Exception.InnerException.StackTrace);
 
-            loggerMock.Verify(mock => mock.Log(expectedMessage), Times.Once());
+            logger.Received().Log(expectedMessage);
         }
 
         #endregion

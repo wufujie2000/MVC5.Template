@@ -1,6 +1,6 @@
-﻿using Moq;
-using MvcTemplate.Services;
+﻿using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System.Web.Mvc;
 
@@ -15,12 +15,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            Mock<IService> serviceMock = new Mock<IService>();
-            serviceMock.SetupAllProperties();
-            service = serviceMock.Object;
+            service = Substitute.For<IService>();
 
             controller = new ServicedControllerStub(service);
-            controller.ControllerContext = new Mock<ControllerContext>() { CallBase = true }.Object;
+            controller.ControllerContext = Substitute.For<ControllerContext>();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
 
@@ -44,12 +42,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Dispose_DisposesService()
         {
-            Mock<IService> serviceMock = new Mock<IService>();
-            ServicedControllerStub disposableController = new ServicedControllerStub(serviceMock.Object);
+            controller.Dispose();
 
-            disposableController.Dispose();
-
-            serviceMock.Verify(mock => mock.Dispose(), Times.Once());
+            service.Received().Dispose();
         }
 
         [Test]

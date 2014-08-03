@@ -1,6 +1,6 @@
-﻿using Moq;
-using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.IO;
@@ -12,7 +12,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
     public class JavascriptExtensionsTests
     {
         private String testFilePath;
-        private HttpMock httpMock;
         private HtmlHelper html;
 
         [SetUp]
@@ -22,9 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
             if (!File.Exists(testFilePath))
                 File.WriteAllText("JavascriptExtensionsTests.txt", String.Empty);
 
-            HtmlMock htmlMock = new HtmlMock();
-            httpMock = htmlMock.HttpMock;
-            html = htmlMock.Html;
+            html = new HtmlMock().Html;
         }
 
         #region Extension method: RenderControllerScripts(this HtmlHelper html)
@@ -32,9 +29,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithArea()
         {
-            httpMock.HttpServerMock
-                .Setup(mock => mock.MapPath("/Scripts/Shared/Area/Controller/controller.js"))
-                .Returns(testFilePath);
+            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Area/Controller/controller.js").Returns(testFilePath);
 
             String expected = "<script src=\"/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -45,12 +40,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithAreaOnSpecificDomain()
         {
-            httpMock.HttpRequestMock
-                .Setup(mock => mock.ApplicationPath)
-                .Returns("/TestDomain");
-            httpMock.HttpServerMock
-                .Setup(mock => mock.MapPath("/TestDomain/Scripts/Shared/Area/Controller/controller.js"))
-                .Returns(testFilePath);
+            html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
+            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Area/Controller/controller.js").Returns(testFilePath);
 
             String expected = "<script src=\"/TestDomain/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -62,9 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         public void RenderControllerScripts_RendersControllerScriptsWithoutArea()
         {
             html.ViewContext.RouteData.Values["Area"] = null;
-            httpMock.HttpServerMock
-                .Setup(mock => mock.MapPath("/Scripts/Shared/Controller/controller.js"))
-                .Returns(testFilePath);
+            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Controller/controller.js").Returns(testFilePath);
 
             String expected = "<script src=\"/Scripts/Shared/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -76,12 +65,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         public void RenderControllerScripts_RendersControllerScriptsWithoutAreaOnSpecificDomain()
         {
             html.ViewContext.RouteData.Values["Area"] = null;
-            httpMock.HttpRequestMock
-                .Setup(mock => mock.ApplicationPath)
-                .Returns("/TestDomain");
-            httpMock.HttpServerMock
-                .Setup(mock => mock.MapPath("/TestDomain/Scripts/Shared/Controller/controller.js"))
-                .Returns(testFilePath);
+            html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
+            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Controller/controller.js").Returns(testFilePath);
 
             String expected = "<script src=\"/TestDomain/Scripts/Shared/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -92,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_DoesNotRendersNotExistingScripts()
         {
-            httpMock.HttpServerMock.Setup(mock => mock.MapPath(It.IsAny<String>())).Returns(String.Empty);
+            html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns(String.Empty);
 
             String actual = html.RenderControllerScripts().ToString();
             String expected = String.Empty;

@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,23 +12,7 @@ namespace MvcTemplate.Tests.Helpers
 {
     public class HttpMock
     {
-        public Mock<HttpRequestWrapper> HttpRequestMock
-        {
-            get;
-            private set;
-        }
-
-        public Mock<HttpServerUtilityBase> HttpServerMock
-        {
-            get;
-            private set;
-        }
         public HttpContextBase HttpContextBase
-        {
-            get;
-            private set;
-        }
-        public Mock<IIdentity> IdentityMock
         {
             get;
             private set;
@@ -59,34 +43,31 @@ namespace MvcTemplate.Tests.Helpers
         public HttpMock()
         {
             HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/", String.Empty);
-            Mock<HttpBrowserCapabilities> browserMock = new Mock<HttpBrowserCapabilities>() { CallBase = true };
-            browserMock.SetupGet(mock => mock[It.IsAny<String>()]).Returns("true");
-            request.Browser = browserMock.Object;
+            HttpBrowserCapabilities browser = Substitute.ForPartsOf<HttpBrowserCapabilities>();
+            browser[Arg.Any<String>()].Returns("true");
+            request.Browser = browser;
 
             HttpResponse response = new HttpResponse(new StringWriter());
-            HttpRequestMock = new Mock<HttpRequestWrapper>(request) { CallBase = true };
-            HttpRequestMock.Setup(mock => mock.QueryString).Returns(new NameValueCollection());
-            HttpRequestMock.Object.QueryString.Add("Param1", "Value1");
+            HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
+            httpRequestBase.QueryString.Returns(new NameValueCollection());
+            httpRequestBase.QueryString.Add("Param1", "Value1");
             HttpContext = new HttpContext(request, response);
 
-            HttpServerMock = new Mock<HttpServerUtilityBase>();
+            HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
+            HttpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
+            HttpContextBase.Response.Returns(new HttpResponseWrapper(response));
+            HttpContextBase.Session.Returns(new HttpSessionStub());
+            HttpContextBase.Request.Returns(httpRequestBase);
 
-            Mock<HttpContextWrapper> httpContextBaseMock = new Mock<HttpContextWrapper>(HttpContext) { CallBase = true };
-            httpContextBaseMock.Setup(mock => mock.Response).Returns(new HttpResponseWrapper(response));
-            httpContextBaseMock.Setup(mock => mock.Request).Returns(HttpRequestMock.Object);
-            httpContextBaseMock.Setup(mock => mock.Session).Returns(new HttpSessionStub());
-            httpContextBaseMock.Setup(mock => mock.Server).Returns(HttpServerMock.Object);
-            HttpContextBase = httpContextBaseMock.Object;
+            IIdentity identity = Substitute.For<IIdentity>();
+            identity.Name.Returns(ObjectFactory.TestId + "1");
+            identity.IsAuthenticated.Returns(true);
 
-            IdentityMock = new Mock<IIdentity>();
-            IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
-            IdentityMock.Setup(mock => mock.Name).Returns(ObjectFactory.TestId + "1");
+            IPrincipal user = Substitute.For<IPrincipal>();
+            user.Identity.Returns(identity);
 
-            Mock<IPrincipal> principalMock = new Mock<IPrincipal>();
-            principalMock.Setup<IIdentity>(mock => mock.Identity).Returns(IdentityMock.Object);
-
-            httpContextBaseMock.Setup(mock => mock.User).Returns(principalMock.Object);
-            HttpContext.User = principalMock.Object;
+            HttpContextBase.User.Returns(user);
+            HttpContext.User = user;
 
             request.RequestContext.RouteData.Values["controller"] = "Controller";
             request.RequestContext.RouteData.Values["action"] = "Action";
@@ -114,29 +95,6 @@ namespace MvcTemplate.Tests.Helpers
             {
                 objects[name] = value;
             }
-        }
-
-        public override void Add(String name, Object value)
-        {
-            objects.Add(name, value);
-            base.Add(name, value);
-        }
-
-        public override void Remove(String name)
-        {
-            objects.Remove(name);
-            base.Remove(name);
-        }
-
-        public override void Clear()
-        {
-            objects.Clear();
-            base.Clear();
-        }
-
-        public override void RemoveAll()
-        {
-            Clear();
         }
     }
 }

@@ -3,6 +3,7 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -28,9 +29,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             context.Set<Account>().Add(account);
             context.SaveChanges();
 
-            HttpMock httpMock = new HttpMock();
-            HttpContext.Current = httpMock.HttpContext;
-            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(account.Id);
+            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current.User.Identity.Name.Returns(account.Id);
         }
 
         [TearDown]

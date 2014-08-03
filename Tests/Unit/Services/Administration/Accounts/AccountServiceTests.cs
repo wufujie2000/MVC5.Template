@@ -1,12 +1,12 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Moq;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,9 +19,7 @@ namespace MvcTemplate.Tests.Unit.Services
     [TestFixture]
     public class AccountServiceTests
     {
-        private Mock<IHasher> hasherMock;
         private AccountService service;
-        private HttpMock httpMock;
         private String accountId;
         private Context context;
         private IHasher hasher;
@@ -29,14 +27,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [SetUp]
         public void SetUp()
         {
-            httpMock = new HttpMock();
             context = new TestingContext();
-            HttpContext.Current = httpMock.HttpContext;
-            hasherMock = new Mock<IHasher>(MockBehavior.Strict);
-            hasherMock.Setup(mock => mock.HashPassword(It.IsAny<String>())).Returns("Hashed");
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
-            service = new AccountService(new UnitOfWork(context), hasherMock.Object);
-            hasher = hasherMock.Object;
+            hasher = Substitute.For<IHasher>();
+            HttpContext.Current = new HttpMock().HttpContext;
+            hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
+
+            service = new AccountService(new UnitOfWork(context), hasher);
 
             TearDownData();
             SetUpData();
@@ -55,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void IsLoggedIn_ReturnsTrueThenAccountIsAuthenticated()
         {
-            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(true);
+            HttpContext.Current.User.Identity.IsAuthenticated.Returns(true);
 
             Assert.IsTrue(service.IsLoggedIn());
         }
@@ -63,7 +60,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void IsLoggedIn_ReturnsFalseThenAccountIsNotAuthenticated()
         {
-            httpMock.IdentityMock.Setup(mock => mock.IsAuthenticated).Returns(false);
+            HttpContext.Current.User.Identity.IsAuthenticated.Returns(false);
 
             Assert.IsFalse(service.IsLoggedIn());
         }

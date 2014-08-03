@@ -26,38 +26,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
             }
         }
 
-        public ActionResult BaseRedirectToLocal(String url)
-        {
-            return base.RedirectToLocal(url);
-        }
-        public RedirectToRouteResult BaseRedirectToDefault()
-        {
-            return base.RedirectToDefault();
-        }
-        public RedirectToRouteResult BaseRedirectToNotFound()
-        {
-            return base.RedirectToNotFound();
-        }
-        public RedirectToRouteResult BaseRedirectToUnauthorized()
-        {
-            return base.RedirectToUnauthorized();
-        }
-        public RedirectToRouteResult BaseRedirectIfAuthorized(String action)
-        {
-            return base.RedirectIfAuthorized(action);
-        }
         public RedirectToRouteResult BaseRedirectToAction(String action)
         {
             return base.RedirectToAction(action);
-        }
-
-        public Boolean BaseIsAuthorizedFor(String action)
-        {
-            return base.IsAuthorizedFor(action);
-        }
-        public Boolean BaseIsAuthorizedFor(String area, String controller, String action)
-        {
-            return base.IsAuthorizedFor(area, controller, action);
         }
 
         public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
@@ -71,11 +42,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void BaseOnActionExecuted(ActionExecutedContext context)
         {
             base.OnActionExecuted(context);
-        }
-
-        public ActionResult BaseNotEmptyView(Object model)
-        {
-            return base.NotEmptyView(model);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Moq;
 using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
@@ -8,6 +7,7 @@ using MvcTemplate.Resources;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -150,12 +150,11 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetView_SeedsPrivilegesTree()
         {
-            Mock<RoleService> serviceMock = new Mock<RoleService>(new UnitOfWork(context)) { CallBase = true };
-            service = serviceMock.Object;
+            service = Substitute.For<RoleService>(new UnitOfWork(context));
 
             RoleView roleView = service.GetView(role.Id);
 
-            serviceMock.Verify(mock => mock.SeedPrivilegesTree(roleView), Times.Once());
+            service.Received().SeedPrivilegesTree(roleView);
         }
 
         #endregion

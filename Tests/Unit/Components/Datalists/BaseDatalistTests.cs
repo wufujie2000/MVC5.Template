@@ -1,14 +1,13 @@
 ﻿using Datalist;
-using Moq;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects.Views;
+using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -19,18 +18,18 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
     public class BaseDatalistTests
     {
         private BaseDatalistStub<Role, RoleView> datalist;
-        private Mock<IUnitOfWork> unitOfWorkMock;
+        private IUnitOfWork unitOfWork;
 
         [SetUp]
         public void SetUp()
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
+            unitOfWork = Substitute.For<IUnitOfWork>();
             HttpContext.Current = new HttpMock().HttpContext;
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
-            datalist = new BaseDatalistStub<Role, RoleView>(unitOfWorkMock.Object);
+            datalist = new BaseDatalistStub<Role, RoleView>(unitOfWork);
 
-            unitOfWorkMock
-                .Setup(mock => mock.Repository<Role>().ProjectTo<RoleView>())
+            unitOfWork
+                .Repository<Role>().ProjectTo<RoleView>()
                 .Returns(Enumerable.Empty<RoleView>().AsQueryable());
         }
 
@@ -93,8 +92,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsUnitOfWork()
         {
-            IUnitOfWork actual = new BaseDatalistStub<Role, RoleView>(unitOfWorkMock.Object).BaseUnitOfWork;
-            IUnitOfWork expected = unitOfWorkMock.Object;
+            IUnitOfWork actual = new BaseDatalistStub<Role, RoleView>(unitOfWork).BaseUnitOfWork;
+            IUnitOfWork expected = unitOfWork;
 
             Assert.AreEqual(expected, actual);
         }
@@ -295,7 +294,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_GetsModelsProjectedToViews()
         {
-            IQueryable<RoleView> expected = unitOfWorkMock.Object.Repository<Role>().ProjectTo<RoleView>();
+            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().ProjectTo<RoleView>();
             IQueryable<RoleView> actual = datalist.BaseGetModels();
 
             CollectionAssert.AreEqual(expected, actual);

@@ -1,9 +1,9 @@
-﻿using Moq;
-using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -788,11 +788,10 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void Dispose_DisposesUnitOfWork()
         {
-            Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
-            RoleProvider roleProvider = new RoleProvider(Assembly.GetExecutingAssembly(), unitOfWorkMock.Object);
-            roleProvider.Dispose();
+            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
+            new RoleProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
 
-            unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
+            unitOfWork.Received().Dispose();
         }
 
         [Test]

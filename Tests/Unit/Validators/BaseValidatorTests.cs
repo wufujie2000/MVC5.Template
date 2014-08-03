@@ -1,6 +1,6 @@
-﻿using Moq;
-using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace MvcTemplate.Tests.Unit.Services
@@ -8,14 +8,14 @@ namespace MvcTemplate.Tests.Unit.Services
     [TestFixture]
     public class BaseValidatorTests
     {
-        private Mock<IUnitOfWork> unitOfWorkMock;
+        private IUnitOfWork unitOfWorkMock;
         private BaseValidator validator;
 
         [SetUp]
         public void SetUp()
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
-            validator = new Mock<BaseValidator>(unitOfWorkMock.Object) { CallBase = true }.Object;
+            unitOfWorkMock = Substitute.For<IUnitOfWork>();
+            validator = Substitute.ForPartsOf<BaseValidator>(unitOfWorkMock);
         }
 
         [TearDown]
@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             validator.Dispose();
 
-            unitOfWorkMock.Verify(mock => mock.Dispose(), Times.Once());
+            unitOfWorkMock.Received().Dispose();
         }
 
         [Test]

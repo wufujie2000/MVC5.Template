@@ -2,6 +2,7 @@
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class HeaderExtensionsTests
     {
-        private HttpMock httpMock;
         private HtmlHelper html;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
-            HtmlMock htmlMock = new HtmlMock();
-            httpMock = htmlMock.HttpMock;
-            html = htmlMock.Html;
+            html = new HtmlMock().Html;
         }
 
         [TestFixtureTearDown]
@@ -52,10 +50,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LanguageLink_OnSingleLanguageReturnsEmptyHtml()
         {
-            LanguageProviderMock providerMock = new LanguageProviderMock();
             List<Language> languages = new List<Language>() { new Language() };
-            providerMock.Mock.Setup(mock => mock.Languages).Returns(languages);
-            LocalizationManager.Provider = providerMock.Provider;
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider.Languages.Returns(languages);
 
             String actual = html.LanguageLink().ToString();
             String expected = String.Empty;
@@ -87,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LanguageLink_FormsLanguageLinkOnSpecificDomain()
         {
-            httpMock.HttpRequestMock.Setup(mock => mock.ApplicationPath).Returns("/TestDomain");
+            html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
             RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
             String controller = routeValues["controller"].ToString();
             String action = routeValues["action"].ToString();

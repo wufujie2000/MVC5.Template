@@ -1,11 +1,11 @@
-﻿using Moq;
-using MvcTemplate.Components.Alerts;
+﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Controllers.Profile;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -16,9 +16,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
     [TestFixture]
     public class ProfileControllerTests
     {
-        private Mock<IAccountValidator> validatorMock;
-        private Mock<IAccountService> serviceMock;
         private ProfileController controller;
+        private IAccountValidator validator;
+        private IAccountService service;
         private ProfileEditView profile;
         private AccountView account;
         private String accountId;
@@ -26,16 +26,13 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [SetUp]
         public void SetUp()
         {
-            validatorMock = new Mock<IAccountValidator>(MockBehavior.Strict);
-            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
-            validatorMock.SetupAllProperties();
-            serviceMock.SetupAllProperties();
+            validator = Substitute.For<IAccountValidator>();
+            service = Substitute.For<IAccountService>();
 
             profile = new ProfileEditView();
             account = new AccountView();
 
-            controller = new ProfileController(
-                serviceMock.Object, validatorMock.Object);
+            controller = new ProfileController(service, validator);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
             accountId = controller.ControllerContext.HttpContext.User.Identity.Name;
@@ -46,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -56,10 +53,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_ReturnsCurrentProfileEditView()
         {
-            serviceMock.Setup(mock => mock.GetView<ProfileEditView>(accountId)).Returns(new ProfileEditView());
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            service.GetView<ProfileEditView>(accountId).Returns(new ProfileEditView());
+            service.AccountExists(accountId).Returns(true);
 
-            ProfileEditView expected = serviceMock.Object.GetView<ProfileEditView>(accountId);
+            ProfileEditView expected = service.GetView<ProfileEditView>(accountId);
             Object actual = (controller.Edit() as ViewResult).Model;
 
             Assert.AreSame(expected, actual);
@@ -72,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -82,21 +79,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_EditsProfileIfCanEdit()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(profile));
+            service.AccountExists(accountId).Returns(true);
+            validator.CanEdit(profile).Returns(true);
 
             controller.Edit(profile);
 
-            serviceMock.Verify(mock => mock.Edit(profile), Times.Once());
+            service.Received().Edit(profile);
         }
 
         [Test]
         public void Edit_AddsProfileUpdatedMessage()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanEdit(profile)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(profile));
+            service.AccountExists(accountId).Returns(true);
+            validator.CanEdit(profile).Returns(true);
 
             controller.Edit(profile);
 
@@ -110,21 +105,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Edit_DoesNotEditProfileIfCanNotEdit()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanEdit(profile)).Returns(false);
-            serviceMock.Setup(mock => mock.Edit(profile));
+            service.AccountExists(accountId).Returns(true);
+            validator.CanEdit(profile).Returns(false);
 
             controller.Edit(profile);
 
-            serviceMock.Verify(mock => mock.Edit(profile), Times.Never());
+            service.DidNotReceive().Edit(profile);
         }
 
         [Test]
         public void Edit_ReturnsSameModel()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanEdit(profile)).Returns(false);
-            serviceMock.Setup(mock => mock.Edit(profile));
+            service.AccountExists(accountId).Returns(true);
+            validator.CanEdit(profile).Returns(false);
 
             Assert.AreSame(profile, (controller.Edit(profile) as ViewResult).Model);
         }
@@ -136,7 +129,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Delete_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
 
@@ -147,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Delete_AddsDeleteDisclaimerMessage()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            service.AccountExists(accountId).Returns(true);
             controller.Delete();
 
             Alert actual = controller.Alerts.First();
@@ -160,7 +153,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void Delete_ReturnsNullModel()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            service.AccountExists(accountId).Returns(true);
 
             Assert.IsNull((controller.Delete() as ViewResult).Model);
         }
@@ -172,7 +165,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -182,8 +175,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanDelete(account)).Returns(false);
+            service.AccountExists(accountId).Returns(true);
+            validator.CanDelete(account).Returns(false);
             controller.DeleteConfirmed(account);
 
             Alert actual = controller.Alerts.First();
@@ -196,8 +189,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanDelete(account)).Returns(false);
+            service.AccountExists(accountId).Returns(true);
+            validator.CanDelete(account).Returns(false);
 
             Assert.IsNull((controller.DeleteConfirmed(account) as ViewResult).Model);
         }
@@ -205,20 +198,18 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_DeletesProfileIfCanDelete()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-            validatorMock.Setup(mock => mock.CanDelete(account)).Returns(true);
-            serviceMock.Setup(mock => mock.Delete(accountId));
+            service.AccountExists(accountId).Returns(true);
+            validator.CanDelete(account).Returns(true);
             controller.DeleteConfirmed(account);
 
-            serviceMock.Verify(mock => mock.Delete(accountId), Times.Once());
+            service.Received().Delete(accountId);
         }
 
         [Test]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
-            serviceMock.Setup(mock => mock.Delete(accountId));
-            validatorMock.Setup(mock => mock.CanDelete(account)).Returns(true);
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
+            validator.CanDelete(account).Returns(true);
+            service.AccountExists(accountId).Returns(true);
             RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);

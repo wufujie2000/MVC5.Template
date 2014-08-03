@@ -1,5 +1,5 @@
-﻿using Moq;
-using MvcTemplate.Components.Mvc;
+﻿using MvcTemplate.Components.Mvc;
+using NSubstitute;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -7,11 +7,6 @@ namespace MvcTemplate.Tests.Helpers
 {
     public class LanguageProviderMock
     {
-        public Mock<ILanguageProvider> Mock
-        {
-            get;
-            private set;
-        }
         public ILanguageProvider Provider
         {
             get;
@@ -20,8 +15,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public LanguageProviderMock()
         {
-            Mock = new Mock<ILanguageProvider>();
-            Provider = Mock.Object;
+            Provider = Substitute.For<ILanguageProvider>();
             SetUpMock();
         }
 
@@ -44,10 +38,10 @@ namespace MvcTemplate.Tests.Helpers
                 Name = "Lietuvių"
             });
 
-            Mock.SetupGet(mock => mock.DefaultLanguage).Returns(languages[0]);
-            Mock.SetupGet(mock => mock["en"]).Returns(languages[0]);
-            Mock.SetupGet(mock => mock["lt"]).Returns(languages[1]);
-            Mock.Setup(mock => mock.Languages).Returns(languages);
+            Provider.DefaultLanguage.Returns(languages[0]);
+            Provider.Languages.Returns(languages);
+            Provider["en"].Returns(languages[0]);
+            Provider["lt"].Returns(languages[1]);
         }
     }
 }

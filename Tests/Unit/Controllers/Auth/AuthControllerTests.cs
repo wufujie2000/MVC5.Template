@@ -1,12 +1,11 @@
-﻿using Moq;
-using Moq.Protected;
-using MvcTemplate.Components.Alerts;
+﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Controllers.Auth;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -18,28 +17,24 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
     [TestFixture]
     public class AuthControllerTests : AControllerTests
     {
-        private Mock<IAccountValidator> validatorMock;
-        private Mock<AuthController> controllerMock;
-        private Mock<IAccountService> serviceMock;
         private AccountLoginView accountLogin;
+        private IAccountValidator validator;
         private AuthController controller;
+        private IAccountService service;
         private AccountView account;
 
         [SetUp]
         public void SetUp()
         {
-            validatorMock = new Mock<IAccountValidator>(MockBehavior.Strict);
-            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
-            validatorMock.SetupAllProperties();
-            serviceMock.SetupAllProperties();
+            validator = Substitute.For<IAccountValidator>();
+            service = Substitute.For<IAccountService>();
 
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = ObjectFactory.CreateAccountView();
 
-            controllerMock = new Mock<AuthController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
-            controllerMock.Object.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
-            controllerMock.Object.ControllerContext = new ControllerContext();
-            controller = controllerMock.Object;
+            controller = Substitute.ForPartsOf<AuthController>(service, validator);
+            controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
+            controller.ControllerContext = new ControllerContext();
         }
 
         #region Method: Register()
@@ -47,10 +42,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RedirectsToDefaultlIfAlreadyLoggedIn()
         {
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            service.IsLoggedIn().Returns(true);
 
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
+            RedirectToRouteResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register();
 
             Assert.AreSame(expected, actual);
@@ -59,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_ReturnsNullModelIfNotLoggedIn()
         {
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            service.IsLoggedIn().Returns(false);
 
             Assert.IsNull((controller.Register() as ViewResult).Model);
         }
@@ -77,10 +73,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
         {
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            service.IsLoggedIn().Returns(true);
 
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectToDefault").Returns(expected);
+            RedirectToRouteResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register(null);
 
             Assert.AreSame(expected, actual);
@@ -89,8 +86,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_ReturnsSameModelIfCanNotRegister()
         {
-            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(false);
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            validator.CanRegister(account).Returns(false);
+            service.IsLoggedIn().Returns(false);
 
             Object actual = (controller.Register(account) as ViewResult).Model;
             AccountView expected = account;
@@ -101,21 +98,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RegistersAccount()
         {
-            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
-            serviceMock.Setup(mock => mock.Register(account));
+            validator.CanRegister(account).Returns(true);
+            service.IsLoggedIn().Returns(false);
 
             controller.Register(account);
 
-            serviceMock.Verify(mock => mock.Register(account), Times.Once());
+            service.Received().Register(account);
         }
 
         [Test]
         public void Register_AddsSuccessfulRegistrationMessage()
         {
-            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
-            serviceMock.Setup(mock => mock.Register(account));
+            validator.CanRegister(account).Returns(true);
+            service.IsLoggedIn().Returns(false);
 
             controller.Register(account);
 
@@ -129,9 +124,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RedirectsToLoginAfterSuccessfulRegistration()
         {
-            validatorMock.Setup(mock => mock.CanRegister(account)).Returns(true);
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
-            serviceMock.Setup(mock => mock.Register(account));
+            validator.CanRegister(account).Returns(true);
+            service.IsLoggedIn().Returns(false);
 
             RouteValueDictionary actual = (controller.Register(account) as RedirectToRouteResult).RouteValues;
 
@@ -148,10 +142,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(true);
+            service.IsLoggedIn().Returns(true);
 
             ActionResult expected = new RedirectResult("/Home/Index");
-            controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
+            controller.RedirectToLocal("/Home/Index").Returns(expected);
             ActionResult actual = controller.Login("/Home/Index");
 
             Assert.AreEqual(expected, actual);
@@ -160,7 +154,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_ReturnsNullModelIfNotLoggedIn()
         {
-            serviceMock.Setup(mock => mock.IsLoggedIn()).Returns(false);
+            service.IsLoggedIn().Returns(false);
 
             Assert.IsNull((controller.Login("/") as ViewResult).Model);
         }
@@ -172,7 +166,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_ReturnsNullModelIfCanNotLogin()
         {
-            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(false);
+            validator.CanLogin(accountLogin).Returns(false);
 
             Assert.IsNull((controller.Login(accountLogin, null) as ViewResult).Model);
         }
@@ -180,22 +174,20 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_LogsInAccount()
         {
-            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
-            serviceMock.Setup(mock => mock.Login(accountLogin.Username));
+            validator.CanLogin(accountLogin).Returns(true);
 
             controller.Login(accountLogin, null);
 
-            serviceMock.Verify(mock => mock.Login(accountLogin.Username), Times.Once());
+            service.Received().Login(accountLogin.Username);
         }
 
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            validatorMock.Setup(mock => mock.CanLogin(accountLogin)).Returns(true);
-            serviceMock.Setup(mock => mock.Login(account.Username));
+            validator.CanLogin(accountLogin).Returns(true);
 
             ActionResult expected = new RedirectResult("/Home/Index");
-            controllerMock.Protected().Setup<ActionResult>("RedirectToLocal", "/Home/Index").Returns(expected);
+            controller.RedirectToLocal("/Home/Index").Returns(expected);
             ActionResult actual = controller.Login(accountLogin, "/Home/Index");
 
             Assert.AreEqual(expected, actual);
@@ -208,18 +200,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Logout_LogsOut()
         {
-            serviceMock.Setup(mock => mock.Logout());
-
             controller.Logout();
 
-            serviceMock.Verify(mock => mock.Logout(), Times.Once());
+            service.Received().Logout();
         }
 
         [Test]
         public void Logout_RedirectsToLogin()
         {
-            serviceMock.Setup(mock => mock.Logout());
-
             Object actual = controller.Logout().RouteValues["action"];
             Object expected = "Login";
 

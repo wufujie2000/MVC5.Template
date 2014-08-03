@@ -1,11 +1,12 @@
-﻿using Moq;
-using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -16,18 +17,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class WidgetBoxExtensionsTests
     {
-        private Mock<IRoleProvider> roleProviderMock;
         private HtmlHelper html;
 
         [SetUp]
         public void SetUp()
         {
-            roleProviderMock = new Mock<IRoleProvider>();
             HtmlMock htmlMock = new HtmlMock();
             html = htmlMock.Html;
 
             HttpContext.Current = htmlMock.HttpMock.HttpContext;
-            RoleFactory.Provider = roleProviderMock.Object;
+            RoleFactory.Provider = Substitute.For<IRoleProvider>();
         }
 
         [TearDown]
@@ -71,13 +70,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TableWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            roleProviderMock
-                .Setup(mock => mock
-                    .IsAuthorizedFor(
-                       It.IsAny<String>(),
-                       It.IsAny<String>(),
-                       It.IsAny<String>(),
-                       It.IsIn<String>("Details", "Delete")))
+            RoleFactory
+                .Provider
+                .IsAuthorizedFor(
+                       Arg.Any<String>(),
+                       Arg.Any<String>(),
+                       Arg.Any<String>(),
+                       Arg.Is<String>(value => new[] { "Details", "Delete" }.Contains(value)))
                 .Returns(true);
 
             StringBuilder expected = new StringBuilder();
@@ -127,12 +126,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            roleProviderMock
-                .Setup(mock => mock.IsAuthorizedFor(
-                    It.IsAny<String>(),
-                    It.IsAny<String>(),
-                    It.IsAny<String>(),
-                    It.IsIn<String>("Create", "Edit")))
+            RoleFactory
+                .Provider
+                .IsAuthorizedFor(
+                    Arg.Any<String>(),
+                    Arg.Any<String>(),
+                    Arg.Any<String>(),
+                    Arg.Is<String>(value => new[] { "Create", "Edit" }.Contains(value)))
                 .Returns(true);
 
             StringBuilder expected = new StringBuilder();

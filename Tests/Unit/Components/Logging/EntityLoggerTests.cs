@@ -4,6 +4,7 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Data.Entity;
@@ -36,9 +37,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             dataContext.Set<Account>().Add(account);
             dataContext.SaveChanges();
 
-            HttpMock httpMock = new HttpMock();
-            HttpContext.Current = httpMock.HttpContext;
-            httpMock.IdentityMock.Setup(mock => mock.Name).Returns(account.Id);
+            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current.User.Identity.Name.Returns(account.Id);
 
             TestModel model = ObjectFactory.CreateTestModel();
             dataContext.Set<TestModel>().Add(model);

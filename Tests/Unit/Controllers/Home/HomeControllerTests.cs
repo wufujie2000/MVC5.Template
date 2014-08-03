@@ -1,9 +1,9 @@
-﻿using Moq;
-using MvcTemplate.Components.Alerts;
+﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Controllers.Home;
 using MvcTemplate.Resources.Shared;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -15,8 +15,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
     [TestFixture]
     public class HomeControllerTests
     {
-        private Mock<IAccountService> serviceMock;
         private HomeController controller;
+        private IAccountService service;
         private String accountId;
 
         [SetUp]
@@ -24,13 +24,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         {
             HttpMock httpMock = new HttpMock();
             HttpContext.Current = httpMock.HttpContext;
+            service = Substitute.For<IAccountService>();
             accountId = HttpContext.Current.User.Identity.Name;
-            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
+            service.AccountExists(accountId).Returns(true);
 
-            serviceMock.SetupAllProperties();
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(true);
-
-            controller = new HomeController(serviceMock.Object);
+            controller = new HomeController(service);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = httpMock.HttpContextBase;
         }
@@ -46,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void Index_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -66,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void Error_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.Error() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -98,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void NotFound_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.NotFound() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -130,7 +128,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            serviceMock.Setup(mock => mock.AccountExists(accountId)).Returns(false);
+            service.AccountExists(accountId).Returns(false);
             RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
 
             Assert.AreEqual("Logout", actual.RouteValues["action"]);

@@ -36,26 +36,26 @@ namespace MvcTemplate.Controllers
             RoleProvider = RoleFactory.Provider;
         }
 
-        protected virtual ActionResult RedirectToLocal(String url)
+        public virtual ActionResult RedirectToLocal(String url)
         {
             if (!Url.IsLocalUrl(url))
                 return RedirectToDefault();
 
             return Redirect(url);
         }
-        protected virtual RedirectToRouteResult RedirectToDefault()
+        public virtual RedirectToRouteResult RedirectToDefault()
         {
             return RedirectToAction(String.Empty, String.Empty, new { area = String.Empty, language = RouteData.Values["language"] });
         }
-        protected virtual RedirectToRouteResult RedirectToNotFound()
+        public virtual RedirectToRouteResult RedirectToNotFound()
         {
             return RedirectToAction("NotFound", "Home", new { area = String.Empty, language = RouteData.Values["language"] });
         }
-        protected virtual RedirectToRouteResult RedirectToUnauthorized()
+        public virtual RedirectToRouteResult RedirectToUnauthorized()
         {
             return RedirectToAction("Unauthorized", "Home", new { area = String.Empty, language = RouteData.Values["language"] });
         }
-        protected virtual RedirectToRouteResult RedirectIfAuthorized(String action)
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String action)
         {
             if (!IsAuthorizedFor(action))
                 return RedirectToDefault();
@@ -63,14 +63,14 @@ namespace MvcTemplate.Controllers
             return RedirectToAction(action);
         }
 
-        protected virtual Boolean IsAuthorizedFor(String action)
+        public virtual Boolean IsAuthorizedFor(String action)
         {
             String area = (String)RouteData.Values["area"];
             String controller = (String)RouteData.Values["controller"];
 
             return IsAuthorizedFor(area, controller, action);
         }
-        protected virtual Boolean IsAuthorizedFor(String area, String controller, String action)
+        public virtual Boolean IsAuthorizedFor(String area, String controller, String action)
         {
             if (RoleProvider == null) return true;
 
@@ -113,7 +113,7 @@ namespace MvcTemplate.Controllers
                 current.Merge(Alerts);
         }
 
-        protected virtual ActionResult NotEmptyView(Object model)
+        public virtual ActionResult NotEmptyView(Object model)
         {
             if (model == null)
                 return RedirectToNotFound();

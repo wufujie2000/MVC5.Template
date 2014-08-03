@@ -1,5 +1,5 @@
-﻿using Moq;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 
@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [SetUp]
         public void SetUp()
         {
-            model = new Mock<BaseModel>().Object;
+            model = Substitute.For<BaseModel>();
         }
 
         #region Constructor: BaseModel()
@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseModel_SetsEntityDateToNow()
         {
-            Int64 actual = new Mock<BaseModel>().Object.EntityDate.Ticks;
+            Int64 actual = Substitute.For<BaseModel>().EntityDate.Ticks;
             Int64 expected = DateTime.Now.Ticks;
 
             Assert.AreEqual(expected, actual, 10000000);
@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseModel_TruncatesMicrosecondsFromEntityDate()
         {
-            DateTime actual = new Mock<BaseModel>().Object.EntityDate;
+            DateTime actual = Substitute.For<BaseModel>().EntityDate;
             DateTime expected = new DateTime(actual.Year, actual.Month, actual.Day, actual.Hour, actual.Minute, actual.Second, actual.Millisecond);
 
             Assert.AreEqual(expected, actual);
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseModel_KeepsCurrentDateKind()
         {
-            DateTimeKind actual = new Mock<BaseModel>().Object.EntityDate.Kind;
+            DateTimeKind actual = Substitute.For<BaseModel>().EntityDate.Kind;
             DateTimeKind expected = DateTime.Now.Kind;
 
             Assert.AreEqual(expected, actual);

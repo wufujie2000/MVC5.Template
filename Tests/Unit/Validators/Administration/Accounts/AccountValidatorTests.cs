@@ -1,11 +1,11 @@
-﻿using Moq;
-using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Web;
@@ -17,17 +17,17 @@ namespace MvcTemplate.Tests.Unit.Validators
     public class AccountValidatorTests
     {
         private AccountValidator validator;
-        private Mock<IHasher> hasherMock;
+        private IHasher hasher;
         private Context context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            hasherMock = new Mock<IHasher>();
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(true);
+            hasher = Substitute.For<IHasher>();
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
-            validator = new AccountValidator(new UnitOfWork(context), hasherMock.Object);
+            validator = new AccountValidator(new UnitOfWork(context), hasher);
             validator.ModelState = new ModelStateDictionary();
             HttpContext.Current = new HttpMock().HttpContext;
 
@@ -77,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
 
             Assert.IsFalse(validator.CanLogin(account));
@@ -86,7 +86,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
             account.Password += "Incorrect";
             validator.CanLogin(account);
@@ -191,7 +191,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Password += "1";
 
@@ -201,7 +201,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Password += "1";
             validator.CanEdit(profile);
@@ -340,7 +340,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountView profile = ObjectFactory.CreateAccountView();
             profile.Password += "1";
 
@@ -350,7 +350,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
         {
-            hasherMock.Setup(mock => mock.Verify(It.IsAny<String>(), It.IsAny<String>())).Returns(false);
+            hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountView profile = ObjectFactory.CreateAccountView();
             profile.Password += "1";
             validator.CanDelete(profile);

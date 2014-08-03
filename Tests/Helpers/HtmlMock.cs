@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -21,20 +21,19 @@ namespace MvcTemplate.Tests.Helpers
         public HtmlMock()
         {
             HttpMock = new HttpMock();
-            Mock<ControllerContext> controllerContextMock = new Mock<ControllerContext>(
+            ControllerContext controllerContext = new ControllerContext(
                 HttpMock.HttpContextBase,
                 HttpMock.HttpContextBase.Request.RequestContext.RouteData,
-                new Mock<ControllerBase>() { CallBase = true }.Object);
+                Substitute.For<ControllerBase>());
 
-            TempDataDictionary tempDataDictionary = new TempDataDictionary();
-            Mock<ViewContext> viewContextMock = new Mock<ViewContext>(controllerContextMock.Object, new Mock<IView>().Object,
-                new ViewDataDictionary(), tempDataDictionary, new StringWriter()) { CallBase = true };
-            viewContextMock.Object.ClientValidationEnabled = true;
+            ViewContext viewContext = new ViewContext(controllerContext, Substitute.For<IView>(),
+                new ViewDataDictionary(), new TempDataDictionary(), new StringWriter());
+            viewContext.ClientValidationEnabled = true;
 
-            Mock<IViewDataContainer> viewDataContainerMock = new Mock<IViewDataContainer>() { CallBase = true };
-            viewDataContainerMock.Setup(mock => mock.ViewData).Returns(viewContextMock.Object.ViewData);
+            IViewDataContainer viewDataContainer = Substitute.For<IViewDataContainer>();
+            viewDataContainer.ViewData = viewContext.ViewData;
 
-            Html = new HtmlHelper(viewContextMock.Object, viewDataContainerMock.Object, RouteTable.Routes);
+            Html = new HtmlHelper(viewContext, viewDataContainer, RouteTable.Routes);
         }
     }
 

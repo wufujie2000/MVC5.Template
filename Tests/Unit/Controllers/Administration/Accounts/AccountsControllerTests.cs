@@ -1,9 +1,8 @@
-using Moq;
-using Moq.Protected;
 using MvcTemplate.Controllers.Administration;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -15,25 +14,22 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
     [TestFixture]
     public class AccountsControllerTests
     {
-        private Mock<IAccountValidator> validatorMock;
-        private Mock<IAccountService> serviceMock;
         private AccountsController controller;
         private AccountEditView accountEdit;
+        private IAccountValidator validator;
+        private IAccountService service;
         private AccountView account;
 
         [SetUp]
         public void SetUp()
         {
-            validatorMock = new Mock<IAccountValidator>(MockBehavior.Strict);
-            serviceMock = new Mock<IAccountService>(MockBehavior.Strict);
-            validatorMock.SetupAllProperties();
-            serviceMock.SetupAllProperties();
+            validator = Substitute.For<IAccountValidator>();
+            service = Substitute.For<IAccountService>();
 
             accountEdit = new AccountEditView();
             account = new AccountView();
 
-            controller = new AccountsController(
-                serviceMock.Object, validatorMock.Object);
+            controller = Substitute.ForPartsOf<AccountsController>(service, validator);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }
@@ -44,7 +40,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Index_ReturnsModelsView()
         {
             IQueryable<AccountView> expected = new[] { account }.AsQueryable();
-            serviceMock.Setup(mock => mock.GetViews()).Returns(expected);
+            service.GetViews().Returns(expected);
+
             Object actual = controller.Index().Model;
 
             Assert.AreSame(expected, actual);
@@ -57,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsAccountView()
         {
-            serviceMock.Setup(mock => mock.GetView<AccountView>(account.Id)).Returns(account);
+            service.GetView<AccountView>(account.Id).Returns(account);
 
             Object actual = (controller.Details(account.Id) as ViewResult).Model;
             AccountView expected = account;
@@ -72,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsAccountView()
         {
-            serviceMock.Setup(mock => mock.GetView<AccountEditView>(account.Id)).Returns(accountEdit);
+            service.GetView<AccountEditView>(account.Id).Returns(accountEdit);
 
             Object actual = (controller.Edit(account.Id) as ViewResult).Model;
             AccountEditView expected = accountEdit;
@@ -87,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(false);
+            validator.CanEdit(accountEdit).Returns(false);
 
             Object actual = (controller.Edit(accountEdit) as ViewResult).Model;
             AccountEditView expected = accountEdit;
@@ -98,24 +95,21 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_EditsAccountView()
         {
-            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(accountEdit));
+            validator.CanEdit(accountEdit).Returns(true);
 
             controller.Edit(accountEdit);
 
-            serviceMock.Verify(mock => mock.Edit(accountEdit), Times.Once());
+            service.Received().Edit(accountEdit);
         }
 
         [Test]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
-            validatorMock.Setup(mock => mock.CanEdit(accountEdit)).Returns(true);
-            serviceMock.Setup(mock => mock.Edit(accountEdit));
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            validator.CanEdit(accountEdit).Returns(true);
 
-            RedirectToRouteResult expected = new RedirectToRouteResult(new RouteValueDictionary());
-            Mock<AccountsController> controllerMock = new Mock<AccountsController>(serviceMock.Object, validatorMock.Object) { CallBase = true };
-            controllerMock.Protected().Setup<RedirectToRouteResult>("RedirectIfAuthorized", "Index").Returns(expected);
-            RedirectToRouteResult actual = controllerMock.Object.Edit(accountEdit) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controller.Edit(accountEdit) as RedirectToRouteResult;
+            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
 
             Assert.AreSame(expected, actual);
         }

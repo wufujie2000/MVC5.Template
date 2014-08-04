@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
             if (!File.Exists(testFilePath))
                 File.WriteAllText("JavascriptExtensionsTests.txt", String.Empty);
 
-            html = new HtmlMock().Html;
+            html = HtmlHelperFactory.CreateHtmlHelper();
         }
 
         #region Extension method: RenderControllerScripts(this HtmlHelper html)

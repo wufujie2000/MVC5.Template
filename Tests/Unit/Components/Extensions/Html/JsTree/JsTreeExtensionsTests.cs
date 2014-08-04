@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             model.JsTree.Nodes[0].Nodes.Add(new JsTreeNode("1", "Test1"));
             model.JsTree.Nodes[0].Nodes.Add(new JsTreeNode("2", "Test2"));
 
-            html = new HtmlMock<JsTreeView>(model).Html;
+            html = HtmlHelperFactory.CreateHtmlHelper(model);
         }
 
         #region Extension method: JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)

@@ -172,7 +172,7 @@
     <Compile Include="Unit\Data\Core\RepositoryTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />
-    <Compile Include="Helpers\HtmlMock.cs" />
+    <Compile Include="Helpers\HtmlHelperFactory.cs" />
     <Compile Include="Helpers\HttpMock.cs" />
     <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\ProviderModel.cs" />

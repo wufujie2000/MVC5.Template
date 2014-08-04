@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUp()
         {
             model = new BootstrapModel();
-            html = new HtmlMock<BootstrapModel>(model).Html;
+            html = HtmlHelperFactory.CreateHtmlHelper(model);
             expression = (expModel) => expModel.Relation.Required;
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
         }

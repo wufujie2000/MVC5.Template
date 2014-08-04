@@ -22,10 +22,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            HtmlMock htmlMock = new HtmlMock();
-            html = htmlMock.Html;
-
-            HttpContext.Current = htmlMock.HttpMock.HttpContext;
+            html = HtmlHelperFactory.CreateHtmlHelper();
+            HttpContext.Current = new HttpMock().HttpContext;
             RoleFactory.Provider = Substitute.For<IRoleProvider>();
         }
 

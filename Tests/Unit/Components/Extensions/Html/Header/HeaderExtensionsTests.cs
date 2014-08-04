@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUpFixture()
         {
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
-            html = new HtmlMock().Html;
+            html = HtmlHelperFactory.CreateHtmlHelper();
         }
 
         [TestFixtureTearDown]

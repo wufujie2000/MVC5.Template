@@ -105,6 +105,19 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Details(String id)
 
         [Test]
+        public void Details_OnNotFoundModelRedirectsToNotFound()
+        {
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            service.GetView(String.Empty).Returns((<#= Model.View #>)null);
+
+            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object actual = controller.Details(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
         public void Details_Returns<#= Model.View #>()
         {
             service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
@@ -118,6 +131,19 @@ namespace <#= Model.ControllerTestNamespace #>
         #endregion
 
         #region Method: Edit(String id)
+
+        [Test]
+        public void Edit_OnNotFoundModelRedirectsToNotFound()
+        {
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            service.GetView(String.Empty).Returns((<#= Model.View #>)null);
+
+            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object actual = controller.Edit(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
 
         [Test]
         public void Edit_Returns<#= Model.View #>()
@@ -170,6 +196,19 @@ namespace <#= Model.ControllerTestNamespace #>
         #endregion
 
         #region Method: Delete(String id)
+
+        [Test]
+        public void Delete_OnNotFoundModelRedirectsToNotFound()
+        {
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            service.GetView(String.Empty).Returns((<#= Model.View #>)null);
+
+            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object actual = controller.Delete(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
 
         [Test]
         public void Delete_Returns<#= Model.View #>()

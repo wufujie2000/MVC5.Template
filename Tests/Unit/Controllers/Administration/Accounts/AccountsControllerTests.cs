@@ -52,6 +52,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Details(String id)
 
         [Test]
+        public void Details_OnNotFoundModelRedirectsToNotFound()
+        {
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            service.GetView<AccountView>(String.Empty).Returns((AccountView)null);
+
+            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object actual = controller.Details(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
         public void Details_ReturnsAccountView()
         {
             service.GetView<AccountView>(account.Id).Returns(account);
@@ -65,6 +78,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #endregion
 
         #region Method: Edit(String id)
+
+        [Test]
+        public void Edit_OnNotFoundModelRedirectsToNotFound()
+        {
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            service.GetView<AccountView>(String.Empty).Returns((AccountView)null);
+
+            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object actual = controller.Edit(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
 
         [Test]
         public void Edit_ReturnsAccountView()

@@ -77,8 +77,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToDefaultIfUrlIsNotLocal()
         {
-            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult actual = baseController.RedirectToLocal("http://www.test.com") as RedirectToRouteResult;
             RedirectToRouteResult expected = baseController.RedirectToDefault();
@@ -150,9 +150,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
         {
-            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
             baseController.IsAuthorizedFor("Action").Returns(false);
+            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+            baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult actual = baseController.RedirectIfAuthorized("Action");
             RedirectToRouteResult expected = baseController.RedirectToDefault();
@@ -263,9 +263,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
             String action = baseController.RouteData.Values["action"] as String;
             String area = baseController.RouteData.Values["area"] as String;
 
-            baseController.RedirectToUnauthorized().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
             baseController.When(control => control.RedirectToUnauthorized()).DoNotCallBase();
+            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
+            baseController.RedirectToUnauthorized().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             baseController.BaseOnAuthorization(filterContext);
 
@@ -348,8 +348,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
         {
-            baseController.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             baseController.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            baseController.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult expected = baseController.RedirectToNotFound();
             ActionResult actual = baseController.NotEmptyView(null);

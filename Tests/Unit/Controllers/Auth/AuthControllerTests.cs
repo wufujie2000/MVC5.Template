@@ -42,9 +42,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_RedirectsToDefaultlIfAlreadyLoggedIn()
         {
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
             service.IsLoggedIn().Returns(true);
+            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register();
@@ -73,9 +73,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Register_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
         {
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
             service.IsLoggedIn().Returns(true);
+            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register(null);

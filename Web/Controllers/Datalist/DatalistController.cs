@@ -14,6 +14,7 @@ namespace MvcTemplate.Controllers.Datalist
     public class DatalistController : BaseController
     {
         private IUnitOfWork unitOfWork;
+        private Boolean disposed;
 
         public DatalistController(IUnitOfWork unitOfWork)
         {
@@ -32,6 +33,17 @@ namespace MvcTemplate.Controllers.Datalist
         public JsonResult Role(DatalistFilter filter)
         {
             return GetData(new BaseDatalist<Role, RoleView>(unitOfWork), filter);
+        }
+
+        protected override void Dispose(Boolean disposing)
+        {
+            if (disposed) return;
+
+            unitOfWork.Dispose();
+            unitOfWork = null;
+            disposed = true;
+
+            base.Dispose(disposing);
         }
     }
 }

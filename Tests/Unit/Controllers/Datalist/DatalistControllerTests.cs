@@ -4,7 +4,6 @@ using MvcTemplate.Components.Mvc;
 using MvcTemplate.Controllers.Datalist;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
-using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
@@ -20,12 +19,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
     {
         private DatalistController controller;
         private AbstractDatalist datalist;
+        private IUnitOfWork unitOfWork;
         private DatalistFilter filter;
 
         [SetUp]
         public void SetUp()
         {
-            controller = new DatalistController(new UnitOfWork(new TestingContext()));
+            unitOfWork = Substitute.For<IUnitOfWork>();
+            controller = Substitute.ForPartsOf<DatalistController>(unitOfWork);
             HttpContext.Current = new HttpMock().HttpContext;
             datalist = Substitute.For<AbstractDatalist>();
             filter = new DatalistFilter();
@@ -47,6 +48,17 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
 
             DatalistFilter actual = datalist.CurrentFilter;
             DatalistFilter expected = filter;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetData_SetsEmptyAdditionalFilters()
+        {
+            controller.GetData(datalist, filter, null);
+
+            Int32 actual = filter.AdditionalFilters.Count;
+            Int32 expected = 0;
 
             Assert.AreEqual(expected, actual);
         }
@@ -82,15 +94,33 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [Test]
         public void Roles_GetsRolesData()
         {
-            controller = Substitute.For<DatalistController>(Substitute.For<IUnitOfWork>());
+            controller.When(control => control.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
-
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
 
             JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);
 
             Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Dispose()
+
+        [Test]
+        public void Dispose_DisposesUnitOfWork()
+        {
+            controller.Dispose();
+
+            unitOfWork.Received().Dispose();
+        }
+
+        [Test]
+        public void Dispose_CanBeCalledMultipleTimes()
+        {
+            controller.Dispose();
+            controller.Dispose();
         }
 
         #endregion

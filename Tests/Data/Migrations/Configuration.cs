@@ -12,7 +12,6 @@ namespace MvcTemplate.Tests.Data.Migrations
         public Configuration()
         {
             MigrationsDirectory = "Data\\Migrations";
-            AutomaticMigrationsEnabled = true;
             ContextKey = "MvcTemplate.Tests.Data";
         }
 

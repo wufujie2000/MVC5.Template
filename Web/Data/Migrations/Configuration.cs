@@ -15,7 +15,6 @@ namespace MvcTemplate.Data.Migrations
 
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
             ContextKey = "MvcTemplate.Data";
         }
 

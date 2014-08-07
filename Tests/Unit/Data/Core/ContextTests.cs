@@ -14,7 +14,10 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         {
             Context context = new Context();
 
-            Assert.AreSame(context.Repository<Account>(), context.Repository<Account>());
+            IRepository<Account> expected = context.Repository<Account>();
+            IRepository<Account> actual = context.Repository<Account>();
+
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

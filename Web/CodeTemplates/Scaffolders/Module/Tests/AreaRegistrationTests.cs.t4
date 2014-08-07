@@ -21,6 +21,8 @@ namespace <#= Model.ControllerTestNamespace #>
             routeCollection = new RouteCollection();
             areaRegistration = new <#= Model.AreaRegistration #>();
             registrationContext = new AreaRegistrationContext(areaRegistration.AreaName, routeCollection);
+
+            areaRegistration.RegisterArea(registrationContext);
         }
 
         #region Property: AreaName
@@ -38,7 +40,6 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void RegisterArea_Registers<#= Model.Area #>Route()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["<#= Model.Area #>"] as Route;
 
             CollectionAssert.AreEqual(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
@@ -53,7 +54,6 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void RegisterArea_Registers<#= Model.Area #>MultilingualRoute()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["<#= Model.Area #>Multilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);

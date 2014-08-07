@@ -38,9 +38,10 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Index_ReturnsModelsView()
         {
-            IQueryable<<#= Model.View #>> expected = new[] { <#= Model.ModelName #> }.AsQueryable();
-            service.GetViews().Returns(expected);
+            service.GetViews().Returns(new[] { <#= Model.ModelName #> }.AsQueryable());
+
             Object actual = controller.Index().Model;
+            Object expected = service.GetViews();
 
             Assert.AreSame(expected, actual);
         }
@@ -73,7 +74,7 @@ namespace <#= Model.ControllerTestNamespace #>
             validator.CanCreate(<#= Model.ModelName #>).Returns(false);
 
             Object actual = (controller.Create(<#= Model.ModelName #>) as ViewResult).Model;
-            <#= Model.View #> expected = <#= Model.ModelName #>;
+            Object expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
         }
@@ -94,8 +95,8 @@ namespace <#= Model.ControllerTestNamespace #>
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(<#= Model.ModelName #>).Returns(true);
 
-            RedirectToRouteResult actual = controller.Create(<#= Model.ModelName #>) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Create(<#= Model.ModelName #>);
 
             Assert.AreSame(expected, actual);
         }
@@ -108,10 +109,10 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Details_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details(String.Empty);
 
             Assert.AreSame(expected, actual);
@@ -123,7 +124,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Details(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            <#= Model.View #> expected = <#= Model.ModelName #>;
+            Object expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
         }
@@ -136,11 +137,11 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Edit_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
-            Object actual = controller.Edit(String.Empty);
+            ActionResult expected = controller.RedirectToNotFound();
+            ActionResult actual = controller.Edit(String.Empty);
 
             Assert.AreSame(expected, actual);
         }
@@ -151,7 +152,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Edit(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            <#= Model.View #> expected = <#= Model.ModelName #>;
+            Object expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
         }
@@ -166,7 +167,7 @@ namespace <#= Model.ControllerTestNamespace #>
             validator.CanEdit(<#= Model.ModelName #>).Returns(false);
 
             Object actual = (controller.Edit(<#= Model.ModelName #>) as ViewResult).Model;
-            <#= Model.View #> expected = <#= Model.ModelName #>;
+            Object expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
         }
@@ -187,8 +188,8 @@ namespace <#= Model.ControllerTestNamespace #>
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(<#= Model.ModelName #>).Returns(true);
 
-            RedirectToRouteResult actual = controller.Edit(<#= Model.ModelName #>) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Edit(<#= Model.ModelName #>);
 
             Assert.AreSame(expected, actual);
         }
@@ -201,11 +202,11 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Delete_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
-            Object actual = controller.Delete(String.Empty);
+            ActionResult expected = controller.RedirectToNotFound();
+            ActionResult actual = controller.Delete(String.Empty);
 
             Assert.AreSame(expected, actual);
         }
@@ -216,7 +217,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Delete(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            <#= Model.View #> expected = <#= Model.ModelName #>;
+            Object expected = <#= Model.ModelName #>;
 
             Assert.AreSame(expected, actual);
         }
@@ -238,8 +239,8 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id) as RedirectToRouteResult;
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
 
             Assert.AreSame(expected, actual);
         }

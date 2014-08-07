@@ -39,10 +39,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsModelsView()
         {
-            IQueryable<AccountView> expected = new[] { account }.AsQueryable();
-            service.GetViews().Returns(expected);
+            service.GetViews().Returns(new[] { account }.AsQueryable());
 
             Object actual = controller.Index().Model;
+            Object expected = service.GetViews();
 
             Assert.AreSame(expected, actual);
         }
@@ -54,11 +54,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_OnNotFoundModelRedirectsToNotFound()
         {
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             service.GetView<AccountView>(String.Empty).Returns((AccountView)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details(String.Empty);
 
             Assert.AreSame(expected, actual);
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.GetView<AccountView>(account.Id).Returns(account);
 
             Object actual = (controller.Details(account.Id) as ViewResult).Model;
-            AccountView expected = account;
+            Object expected = account;
 
             Assert.AreSame(expected, actual);
         }
@@ -82,11 +82,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_OnNotFoundModelRedirectsToNotFound()
         {
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             service.GetView<AccountView>(String.Empty).Returns((AccountView)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object expected = controller.RedirectToNotFound();
             Object actual = controller.Edit(String.Empty);
 
             Assert.AreSame(expected, actual);
@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.GetView<AccountEditView>(account.Id).Returns(accountEdit);
 
             Object actual = (controller.Edit(account.Id) as ViewResult).Model;
-            AccountEditView expected = accountEdit;
+            Object expected = accountEdit;
 
             Assert.AreSame(expected, actual);
         }
@@ -113,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             validator.CanEdit(accountEdit).Returns(false);
 
             Object actual = (controller.Edit(accountEdit) as ViewResult).Model;
-            AccountEditView expected = accountEdit;
+            Object expected = accountEdit;
 
             Assert.AreSame(expected, actual);
         }
@@ -134,8 +134,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(accountEdit).Returns(true);
 
-            RedirectToRouteResult actual = controller.Edit(accountEdit) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Edit(accountEdit);
 
             Assert.AreSame(expected, actual);
         }

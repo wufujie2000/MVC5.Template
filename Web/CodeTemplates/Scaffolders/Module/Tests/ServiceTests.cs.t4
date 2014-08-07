@@ -59,8 +59,9 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetView_GetsViewById()
         {
-            <#= Model.Model #> modelInDatabase = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id);
-            <#= Model.View #> expected = Mapper.Map<<#= Model.Model #>, <#= Model.View #>>(modelInDatabase);
+            <#= Model.Model #> model = context.Set<<#= Model.Model #>>().SingleOrDefault();
+
+            <#= Model.View #> expected = Mapper.Map<<#= Model.Model #>, <#= Model.View #>>(model);
             <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
 
             TestHelper.PropertyWiseEquals(expected, actual);
@@ -78,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.View #> expected = new <#= Model.View #>();
             service.Create(expected);
 
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == expected.Id);
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.Inconclusive("Not all properties tested");
@@ -96,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Edit(expected);
 
             context = new TestingContext();
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == expected.Id);
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.Inconclusive("Not all properties tested");
@@ -109,13 +110,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_Deletes<#= Model.Model #>()
         {
-            if (context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id) == null)
+            if (context.Set<<#= Model.Model #>>().SingleOrDefault() == null)
                 Assert.Inconclusive();
 
             service.Delete(<#= Model.ModelName #>.Id);
             context = new TestingContext();
 
-            Assert.IsNull(context.Set<<#= Model.Model #>>().SingleOrDefault(model => model.Id == <#= Model.ModelName #>.Id));
+            Assert.IsNull(context.Set<<#= Model.Model #>>().SingleOrDefault());
         }
 
         #endregion

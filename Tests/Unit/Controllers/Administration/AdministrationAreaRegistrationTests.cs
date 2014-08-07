@@ -19,6 +19,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             routeCollection = new RouteCollection();
             areaRegistration = new AdministrationAreaRegistration();
             registrationContext = new AreaRegistrationContext(areaRegistration.AreaName, routeCollection);
+
+            areaRegistration.RegisterArea(registrationContext);
         }
 
         #region Property: AreaName
@@ -36,7 +38,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void RegisterArea_RegistersAdministrationMultilingualRoute()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
@@ -49,7 +50,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void RegisterArea_RegistersAdministrationMultilingualIndexRoute()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["AdministrationMultilingualIndex"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
@@ -63,7 +63,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void RegisterArea_RegistersAdministrationRoute()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["Administration"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
@@ -77,7 +76,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void RegisterArea_RegistersAdministrationIndexRoute()
         {
-            areaRegistration.RegisterArea(registrationContext);
             Route actual = registrationContext.Routes["AdministrationIndex"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);

@@ -45,16 +45,19 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         public void Index_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
         public void Index_ReturnsViewWithNullModel()
         {
-            Assert.IsNull((controller.Index() as ViewResult).Model);
+            Object model = (controller.Index() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -65,10 +68,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         public void Error_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.Error() as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -86,7 +90,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void Error_ReturnsViewWithNullModell()
         {
-            Assert.IsNull((controller.Error() as ViewResult).Model);
+            Object model = (controller.Error() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -97,10 +103,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         public void NotFound_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.NotFound() as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -118,7 +125,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void NotFound_ReturnsViewWithNullModel()
         {
-            Assert.IsNull((controller.NotFound() as ViewResult).Model);
+            Object model = (controller.NotFound() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -129,10 +138,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -150,7 +160,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         [Test]
         public void Unauthorized_ReturnsViewWithNullModel()
         {
-            Assert.IsNull((controller.Unauthorized() as ViewResult).Model);
+            Object model = (controller.Unauthorized() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion

@@ -5,7 +5,6 @@ using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Web;
 using System.Web.Mvc;
@@ -77,13 +76,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToDefaultIfUrlIsNotLocal()
         {
-            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+            baseController.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult actual = baseController.RedirectToLocal("http://www.test.com") as RedirectToRouteResult;
-            RedirectToRouteResult expected = baseController.RedirectToDefault();
+            ActionResult actual = baseController.RedirectToLocal("http://www.test.com");
+            ActionResult expected = baseController.RedirectToDefault();
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -102,13 +101,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToDefault_RedirectsToDefault()
         {
-            baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.RedirectToDefault().RouteValues;
 
+            Assert.AreEqual(baseController.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual(String.Empty, actual["controller"]);
             Assert.AreEqual(String.Empty, actual["action"]);
             Assert.AreEqual(String.Empty, actual["area"]);
-            Assert.AreEqual("lt", actual["language"]);
         }
 
         #endregion
@@ -118,10 +116,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToNotFound_RedirectsToNotFound()
         {
-            baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.RedirectToNotFound().RouteValues;
 
-            Assert.AreEqual("lt", actual["language"]);
+            Assert.AreEqual(baseController.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Home", actual["controller"]);
             Assert.AreEqual("NotFound", actual["action"]);
@@ -134,13 +131,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectsToUnauthorized_RedirectsToUnauthorized()
         {
-            baseController.RouteData.Values["language"] = "lt";
             RouteValueDictionary actual = baseController.RedirectToUnauthorized().RouteValues;
 
-            Assert.AreEqual("lt", actual["language"]);
+            Assert.AreEqual(baseController.RouteData.Values["language"], actual["language"]);
+            Assert.AreEqual("Unauthorized", actual["action"]);
             Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Home", actual["controller"]);
-            Assert.AreEqual("Unauthorized", actual["action"]);
         }
 
         #endregion
@@ -151,7 +147,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
         {
             baseController.IsAuthorizedFor("Action").Returns(false);
-            baseController.When(control => control.RedirectToDefault()).DoNotCallBase();
+            baseController.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             baseController.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             RedirectToRouteResult actual = baseController.RedirectIfAuthorized("Action");
@@ -226,10 +222,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
         {
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
-
             baseController.RouteData.Values["language"] = "lt";
-            baseController.BaseBeginExecuteCore((asyncResult) => { }, null);
 
+            baseController.BaseBeginExecuteCore((asyncResult) => { }, null);
             CultureInfo expected = new CultureInfo("lt-LT");
 
             Assert.AreEqual(expected, CultureInfo.CurrentCulture);
@@ -255,22 +250,20 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToRedirectToUnauthorizedIfNotAuthorized()
         {
-            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtor);
+            baseController.When(sub => sub.RedirectToUnauthorized()).DoNotCallBase();
             baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
-
-            String controller = baseController.RouteData.Values["controller"] as String;
-            String action = baseController.RouteData.Values["action"] as String;
-            String area = baseController.RouteData.Values["area"] as String;
-
-            baseController.When(control => control.RedirectToUnauthorized()).DoNotCallBase();
-            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
             baseController.RedirectToUnauthorized().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            baseController.BaseOnAuthorization(filterContext);
+            String area = baseController.RouteData.Values["area"] as String;
+            String action = baseController.RouteData.Values["action"] as String;
+            String controller = baseController.RouteData.Values["controller"] as String;
+            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
+            AuthorizationContext context = new AuthorizationContext(baseController.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
 
-            RedirectToRouteResult actual = filterContext.Result as RedirectToRouteResult;
-            RedirectToRouteResult expected = baseController.RedirectToUnauthorized();
+            baseController.BaseOnAuthorization(context);
+
+            ActionResult expected = baseController.RedirectToUnauthorized();
+            ActionResult actual = context.Result;
 
             Assert.AreEqual(expected, actual);
         }
@@ -278,18 +271,16 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnAuthorization_SetsResultToNullThenAuthorized()
         {
-            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
-            AuthorizationContext filterContext = new AuthorizationContext(baseController.ControllerContext, describtor);
-            baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
-
-            filterContext.RouteData.Values["controller"] = "Controller";
-            filterContext.RouteData.Values["action"] = "Action";
-            filterContext.RouteData.Values["area"] = "Area";
-
+            AuthorizationContext context = new AuthorizationContext(baseController.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
             RoleFactory.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(true);
-            baseController.BaseOnAuthorization(filterContext);
+            baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
+            context.RouteData.Values["controller"] = "Controller";
+            context.RouteData.Values["action"] = "Action";
+            context.RouteData.Values["area"] = "Area";
 
-            Assert.IsNull(filterContext.Result);
+            baseController.BaseOnAuthorization(context);
+
+            Assert.IsNull(context.Result);
         }
 
         #endregion
@@ -299,10 +290,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void OnActionExecuted_SetsAlertsToSessionThenAlertsInSessionAreNull()
         {
+            baseController.Session["Alerts"] = null;
             baseController.BaseOnActionExecuted(new ActionExecutedContext());
 
-            AlertsContainer expected = baseController.Alerts;
             Object actual = baseController.Session["Alerts"];
+            Object expected = baseController.Alerts;
 
             Assert.AreSame(expected, actual);
         }
@@ -311,34 +303,40 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void OnActionExecuted_MergesAlertsToSession()
         {
             HttpContextBase context = baseController.HttpContext;
-            Object expected = baseController.Alerts;
-            baseController.Alerts.AddError("First");
 
-            baseController.BaseOnActionExecuted(new ActionExecutedContext());
-            AlertsContainer newContainer = new AlertsContainer();
-            newContainer.AddError("Second");
+            BaseControllerStub firstController = new BaseControllerStub();
+            firstController.ControllerContext = new ControllerContext();
+            firstController.ControllerContext.HttpContext = context;
+            firstController.Alerts.AddError("ErrorTest1");
 
-            baseController = new BaseControllerStub();
-            baseController.ControllerContext = new ControllerContext();
-            baseController.ControllerContext.HttpContext = context;
+            BaseControllerStub secondController = new BaseControllerStub();
+            secondController.ControllerContext = new ControllerContext();
+            secondController.ControllerContext.HttpContext = context;
+            secondController.Alerts.AddError("ErrorTest2");
 
-            baseController.BaseOnActionExecuted(new ActionExecutedContext());
-            Object actual = baseController.Session["Alerts"];
+            firstController.BaseOnActionExecuted(new ActionExecutedContext());
+            secondController.BaseOnActionExecuted(new ActionExecutedContext());
 
-            Assert.AreSame(expected, actual);
+            AlertsContainer actual = baseController.Session["Alerts"] as AlertsContainer;
+            AlertsContainer expected = new AlertsContainer();
+            expected.AddError("ErrorTest1");
+            expected.AddError("ErrorTest2");
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         [Test]
         public void OnActionExecuted_DoesNotMergeSameContainers()
         {
-            baseController.Alerts.AddError("First");
-            IEnumerable<Alert> expected = baseController.Alerts;
-
+            baseController.Alerts.AddError("ErrorTest");
             baseController.BaseOnActionExecuted(new ActionExecutedContext());
             baseController.BaseOnActionExecuted(new ActionExecutedContext());
-            IEnumerable<Alert> actual = baseController.Session["Alerts"] as IEnumerable<Alert>;
 
-            CollectionAssert.AreEqual(expected, actual);
+            AlertsContainer actual = baseController.Session["Alerts"] as AlertsContainer;
+            AlertsContainer expected = new AlertsContainer();
+            expected.AddError("ErrorTest");
+
+            TestHelper.PropertyWiseEquals(expected, actual);
         }
 
         #endregion
@@ -348,10 +346,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
         {
-            baseController.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            baseController.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             baseController.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = baseController.RedirectToNotFound();
+            ActionResult expected = baseController.RedirectToNotFound();
             ActionResult actual = baseController.NotEmptyView(null);
 
             Assert.AreSame(expected, actual);
@@ -361,9 +359,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
         {
             Object expected = new Object();
-            ViewResult actual = baseController.NotEmptyView(expected) as ViewResult;
+            Object actual = (baseController.NotEmptyView(expected) as ViewResult).Model;
 
-            Assert.AreSame(expected, actual.Model);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

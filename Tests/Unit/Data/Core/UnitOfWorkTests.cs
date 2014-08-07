@@ -35,7 +35,10 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Repository_UsesContextsRepository()
         {
-            Assert.AreSame(context.Repository<Account>(), unitOfWork.Repository<Account>());
+            IRepository<Account> actual = unitOfWork.Repository<Account>();
+            IRepository<Account> expected = context.Repository<Account>();
+
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -46,6 +49,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         public void ToModel_ConvertsViewToModel()
         {
             AccountView view = ObjectFactory.CreateAccountView();
+
             Account expected = Mapper.Map<AccountView, Account>(view);
             Account actual = unitOfWork.ToModel<AccountView, Account>(view);
 
@@ -63,8 +67,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            AccountView expected = Mapper.Map<Account, AccountView>(model);
             AccountView actual = unitOfWork.ToView<Account, AccountView>(model);
+            AccountView expected = Mapper.Map<Account, AccountView>(model);
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }

@@ -44,10 +44,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -56,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             service.GetView<ProfileEditView>(accountId).Returns(new ProfileEditView());
             service.AccountExists(accountId).Returns(true);
 
-            ProfileEditView expected = service.GetView<ProfileEditView>(accountId);
+            Object expected = service.GetView<ProfileEditView>(accountId);
             Object actual = (controller.Edit() as ViewResult).Model;
 
             Assert.AreSame(expected, actual);
@@ -70,10 +71,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -94,7 +96,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             validator.CanEdit(profile).Returns(true);
 
             controller.Edit(profile);
-
             Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
@@ -141,8 +142,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         public void Delete_AddsDeleteDisclaimerMessage()
         {
             service.AccountExists(accountId).Returns(true);
-            controller.Delete();
 
+            controller.Delete();
             Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
@@ -155,7 +156,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         {
             service.AccountExists(accountId).Returns(true);
 
-            Assert.IsNull((controller.Delete() as ViewResult).Model);
+            Object model = (controller.Delete() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -166,10 +169,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(accountId).Returns(false);
+
             RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         [Test]
@@ -177,8 +181,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         {
             service.AccountExists(accountId).Returns(true);
             validator.CanDelete(account).Returns(false);
-            controller.DeleteConfirmed(account);
 
+            controller.DeleteConfirmed(account);
             Alert actual = controller.Alerts.First();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
@@ -192,7 +196,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
             service.AccountExists(accountId).Returns(true);
             validator.CanDelete(account).Returns(false);
 
-            Assert.IsNull((controller.DeleteConfirmed(account) as ViewResult).Model);
+            Object model = (controller.DeleteConfirmed(account) as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         [Test]
@@ -200,6 +206,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         {
             service.AccountExists(accountId).Returns(true);
             validator.CanDelete(account).Returns(true);
+
             controller.DeleteConfirmed(account);
 
             service.Received().Delete(accountId);
@@ -208,12 +215,13 @@ namespace MvcTemplate.Tests.Unit.Controllers.Profile
         [Test]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
-            validator.CanDelete(account).Returns(true);
             service.AccountExists(accountId).Returns(true);
+            validator.CanDelete(account).Returns(true);
+
             RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
 
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
+            Assert.AreEqual("Logout", actual.RouteValues["action"]);
         }
 
         #endregion

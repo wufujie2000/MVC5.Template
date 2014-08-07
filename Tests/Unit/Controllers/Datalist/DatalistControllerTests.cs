@@ -78,13 +78,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         public void GetData_ReturnsPublicJsonData()
         {
             datalist.GetData().Returns(new DatalistData());
-            JsonResult jsonResult = controller.GetData(datalist, filter);
 
-            DatalistData expected = datalist.GetData();
-            Object actual = jsonResult.Data;
+            JsonResult actual = controller.GetData(datalist, filter);
+            DatalistData expectedData = datalist.GetData();
 
-            Assert.AreEqual(JsonRequestBehavior.AllowGet, jsonResult.JsonRequestBehavior);
-            Assert.AreSame(expected, actual);
+            Assert.AreEqual(JsonRequestBehavior.AllowGet, actual.JsonRequestBehavior);
+            Assert.AreSame(expectedData, actual.Data);
         }
 
         #endregion
@@ -94,7 +93,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Datalist
         [Test]
         public void Roles_GetsRolesData()
         {
-            controller.When(control => control.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
+            controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
             LocalizationManager.Provider = new LanguageProviderMock().Provider;
 

@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         [Test]
         public void RolesTable_HasSysAdminRole()
         {
-            Assert.IsNotNull(context.Set<Role>().SingleOrDefault(role => role.Name == "Sys_Admin"));
+            Assert.IsNotNull(context.Set<Role>().SingleOrDefault());
         }
 
         #endregion
@@ -105,10 +105,13 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         [Test]
         public void RolesPrivilegesTable_HasAllPrivilegesForAdminRole()
         {
-            IEnumerable<String> expected = context.Set<Privilege>()
+            IEnumerable<String> expected = context
+                .Set<Privilege>()
                 .Select(privilege => privilege.Id);
-            IEnumerable<String> actual = context.Set<Role>()
-                .Single(role => role.Name == "Sys_Admin").RolePrivileges
+            IEnumerable<String> actual = context
+                .Set<Role>()
+                .Single(role => role.Name == "Sys_Admin")
+                .RolePrivileges
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId);
 
             CollectionAssert.AreEquivalent(expected, actual);

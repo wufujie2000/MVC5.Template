@@ -43,10 +43,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         public void Register_RedirectsToDefaultlIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
-            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToDefault();
+            ActionResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register();
 
             Assert.AreSame(expected, actual);
@@ -57,7 +57,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         {
             service.IsLoggedIn().Returns(false);
 
-            Assert.IsNull((controller.Register() as ViewResult).Model);
+            Object model = (controller.Register() as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -74,10 +76,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         public void Register_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
-            controller.When(control => control.RedirectToDefault()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToDefault();
+            ActionResult expected = controller.RedirectToDefault();
             ActionResult actual = controller.Register(null);
 
             Assert.AreSame(expected, actual);
@@ -90,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
             service.IsLoggedIn().Returns(false);
 
             Object actual = (controller.Register(account) as ViewResult).Model;
-            AccountView expected = account;
+            Object expected = account;
 
             Assert.AreSame(expected, actual);
         }
@@ -142,10 +144,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
             service.IsLoggedIn().Returns(true);
 
-            ActionResult expected = new RedirectResult("/Home/Index");
-            controller.RedirectToLocal("/Home/Index").Returns(expected);
+            ActionResult expected = controller.RedirectToLocal("/Home/Index");
             ActionResult actual = controller.Login("/Home/Index");
 
             Assert.AreEqual(expected, actual);
@@ -156,7 +158,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         {
             service.IsLoggedIn().Returns(false);
 
-            Assert.IsNull((controller.Login("/") as ViewResult).Model);
+            Object model = (controller.Login("/") as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         #endregion
@@ -168,7 +172,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         {
             validator.CanLogin(accountLogin).Returns(false);
 
-            Assert.IsNull((controller.Login(accountLogin, null) as ViewResult).Model);
+            Object model = (controller.Login(accountLogin, null) as ViewResult).Model;
+
+            Assert.IsNull(model);
         }
 
         [Test]
@@ -184,11 +190,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
             validator.CanLogin(accountLogin).Returns(true);
 
-            ActionResult expected = new RedirectResult("/Home/Index");
-            controller.RedirectToLocal("/Home/Index").Returns(expected);
             ActionResult actual = controller.Login(accountLogin, "/Home/Index");
+            ActionResult expected = controller.RedirectToLocal("/Home/Index");
 
             Assert.AreEqual(expected, actual);
         }

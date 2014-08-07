@@ -20,11 +20,12 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapAccounts_MapsAccountToAccountView()
         {
-            Account expected = ObjectFactory.CreateAccount();
-            expected.Role = ObjectFactory.CreateRole();
-            expected.RoleId = expected.Role.Id;
+            Account model = ObjectFactory.CreateAccount();
+            model.Role = ObjectFactory.CreateRole();
+            model.RoleId = model.Role.Id;
 
-            AccountView actual = Mapper.Map<Account, AccountView>(expected);
+            AccountView actual = Mapper.Map<Account, AccountView>(model);
+            Account expected = model;
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Role.Name, actual.RoleName);
@@ -53,11 +54,12 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapAccounts_MapsAccountToAccountEditView()
         {
-            Account expected = ObjectFactory.CreateAccount();
-            expected.Role = ObjectFactory.CreateRole();
-            expected.RoleId = expected.Role.Id;
+            Account model = ObjectFactory.CreateAccount();
+            model.Role = ObjectFactory.CreateRole();
+            model.RoleId = model.Role.Id;
 
-            AccountEditView actual = Mapper.Map<Account, AccountEditView>(expected);
+            AccountEditView actual = Mapper.Map<Account, AccountEditView>(model);
+            Account expected = model;
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Role.Name, actual.RoleName);
@@ -70,11 +72,12 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapAccounts_MapsAccountEditViewToAccount()
         {
-            AccountEditView expected = ObjectFactory.CreateAccountEditView();
-            expected.RoleName = "Not used property";
-            expected.RoleId = expected.Id;
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
+            view.RoleName = "Not used property";
+            view.RoleId = view.Id;
 
-            Account actual = Mapper.Map<AccountEditView, Account>(expected);
+            Account actual = Mapper.Map<AccountEditView, Account>(view);
+            AccountEditView expected = view;
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -95,8 +98,8 @@ namespace MvcTemplate.Tests.Data.Mapping
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.Password);
             Assert.IsNull(actual.NewPassword);
+            Assert.IsNull(actual.Password);
         }
 
         [Test]
@@ -145,13 +148,14 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRolePrivilegeToRolePrivilegeView()
         {
-            RolePrivilege expected = ObjectFactory.CreateRolePrivilege();
-            expected.Privilege = ObjectFactory.CreatePrivilege();
-            expected.PrivilegeId = expected.Privilege.Id;
-            expected.Role = ObjectFactory.CreateRole();
-            expected.RoleId = expected.Role.Id;
+            RolePrivilege model = ObjectFactory.CreateRolePrivilege();
+            model.Privilege = ObjectFactory.CreatePrivilege();
+            model.Role = ObjectFactory.CreateRole();
+            model.PrivilegeId = model.Privilege.Id;
+            model.RoleId = model.Role.Id;
 
-            RolePrivilegeView actual = Mapper.Map<RolePrivilege, RolePrivilegeView>(expected);
+            RolePrivilegeView actual = Mapper.Map<RolePrivilege, RolePrivilegeView>(model);
+            RolePrivilege expected = model;
 
             Assert.AreEqual(expected.Privilege.EntityDate, actual.Privilege.EntityDate);
             Assert.AreEqual(expected.Privilege.Controller, actual.Privilege.Controller);
@@ -167,11 +171,12 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapRoles_MapsRolePrivilegeViewToRolePrivilege()
         {
-            RolePrivilegeView expected = ObjectFactory.CreateRolePrivilegeView();
-            expected.Privilege = ObjectFactory.CreatePrivilegeView();
-            expected.PrivilegeId = expected.Privilege.Id;
+            RolePrivilegeView view = ObjectFactory.CreateRolePrivilegeView();
+            view.Privilege = ObjectFactory.CreatePrivilegeView();
+            view.PrivilegeId = view.Privilege.Id;
 
-            RolePrivilege actual = Mapper.Map<RolePrivilegeView, RolePrivilege>(expected);
+            RolePrivilege actual = Mapper.Map<RolePrivilegeView, RolePrivilege>(view);
+            RolePrivilegeView expected = view;
 
             Assert.AreEqual(expected.Privilege.EntityDate, actual.Privilege.EntityDate);
             Assert.AreEqual(expected.Privilege.Controller, actual.Privilege.Controller);

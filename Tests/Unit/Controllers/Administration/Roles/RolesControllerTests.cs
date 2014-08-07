@@ -36,10 +36,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsModelsView()
         {
-            IQueryable<RoleView> expected = new[] { role }.AsQueryable();
-            service.GetViews().Returns(expected);
+            service.GetViews().Returns(new[] { role }.AsQueryable());
 
             Object actual = controller.Index().Model;
+            Object expected = service.GetViews();
 
             Assert.AreSame(expected, actual);
         }
@@ -60,9 +60,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_SeedsPrivilegesTree()
         {
-            controller.Create();
+            RoleView role = (controller.Create() as ViewResult).Model as RoleView;
 
-            service.SeedPrivilegesTree(role);
+            service.Received().SeedPrivilegesTree(role);
         }
 
         #endregion
@@ -90,7 +90,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             validator.CanCreate(role).Returns(false);
 
-            Assert.AreSame(role, (controller.Create(role) as ViewResult).Model);
+            Object actual = (controller.Create(role) as ViewResult).Model;
+            Object expected = role;
+
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -109,8 +112,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(role).Returns(true);
 
-            RedirectToRouteResult actual = controller.Create(role) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Create(role);
 
             Assert.AreSame(expected, actual);
         }
@@ -123,10 +126,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Details_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
+            Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details(String.Empty);
 
             Assert.AreSame(expected, actual);
@@ -138,7 +141,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.GetView(role.Id).Returns(role);
 
             Object actual = (controller.Details(role.Id) as ViewResult).Model;
-            RoleView expected = role;
+            Object expected = role;
 
             Assert.AreSame(expected, actual);
         }
@@ -151,11 +154,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Edit_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
-            Object actual = controller.Edit(String.Empty);
+            ActionResult expected = controller.RedirectToNotFound();
+            ActionResult actual = controller.Edit(String.Empty);
 
             Assert.AreSame(expected, actual);
         }
@@ -166,7 +169,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.GetView(role.Id).Returns(role);
 
             Object actual = (controller.Edit(role.Id) as ViewResult).Model;
-            RoleView expected = role;
+            Object expected = role;
 
             Assert.AreSame(expected, actual);
         }
@@ -191,7 +194,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             validator.CanEdit(role).Returns(false);
 
             Object actual = (controller.Edit(role) as ViewResult).Model;
-            RoleView expected = role;
+            Object expected = role;
 
             Assert.AreSame(expected, actual);
         }
@@ -212,8 +215,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(role).Returns(true);
 
-            RedirectToRouteResult actual = controller.Edit(role) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Edit(role);
 
             Assert.AreSame(expected, actual);
         }
@@ -226,11 +229,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Delete_OnNotFoundModelRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
-            controller.When(control => control.RedirectToNotFound()).DoNotCallBase();
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult expected = controller.RedirectToNotFound();
-            Object actual = controller.Delete(String.Empty);
+            ActionResult expected = controller.RedirectToNotFound();
+            ActionResult actual = controller.Delete(String.Empty);
 
             Assert.AreSame(expected, actual);
         }
@@ -241,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.GetView(role.Id).Returns(role);
 
             Object actual = (controller.Delete(role.Id) as ViewResult).Model;
-            RoleView expected = role;
+            Object expected = role;
 
             Assert.AreSame(expected, actual);
         }
@@ -263,8 +266,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult actual = controller.DeleteConfirmed(role.Id) as RedirectToRouteResult;
-            RedirectToRouteResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.DeleteConfirmed(role.Id);
 
             Assert.AreSame(expected, actual);
         }

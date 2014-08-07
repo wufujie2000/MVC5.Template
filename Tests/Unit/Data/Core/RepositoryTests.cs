@@ -90,10 +90,10 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().Add(testModel);
             context.SaveChanges();
 
-            TestModel expected = context.Set<TestModel>().SingleOrDefault(model => model.Id == testModel.Id);
+            TestModel expected = context.Set<TestModel>().SingleOrDefault();
             TestModel actual = repository.GetById(testModel.Id);
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -126,11 +126,11 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Insert_InsertsModel()
         {
-            TestModel expected = ObjectFactory.CreateTestModel();
-            repository.Insert(expected);
+            repository.Insert(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id);
+            TestModel actual = context.Set<TestModel>().SingleOrDefault();
+            TestModel expected = repository.SingleOrDefault();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -150,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id);
+            TestModel actual = context.Set<TestModel>().SingleOrDefault();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -168,7 +168,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id);
+            TestModel actual = context.Set<TestModel>().SingleOrDefault();
 
             TestHelper.PropertyWiseEquals(expected, actual);
         }
@@ -196,7 +196,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault(model => model.Id == expected.Id);
+            TestModel actual = context.Set<TestModel>().SingleOrDefault();
 
             Assert.IsNull(actual);
         }

@@ -44,17 +44,11 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsAlert()
         {
-            Alert expected = new Alert()
-            {
-                Message = "TestMessage",
-                Type = AlertTypes.Success,
-                FadeoutAfter = 10000000000
-            };
+            Alert expected = new Alert();
 
             container.Add(expected);
-            Alert actual = container.First();
 
-            Assert.AreSame(expected, actual);
+            Assert.AreSame(expected, container.First());
         }
 
         #endregion

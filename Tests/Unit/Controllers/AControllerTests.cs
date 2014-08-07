@@ -10,18 +10,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
     {
         protected void ProtectsFromOverpostingId(Controller controller, String postMethod)
         {
-            MethodInfo createMethod = controller
+            MethodInfo methodInfo = controller
                 .GetType()
                 .GetMethods()
                 .First(method =>
                     method.Name == postMethod &&
                     method.GetCustomAttribute<HttpPostAttribute>() != null);
 
-            CustomAttributeData customParameterAttribute = createMethod.GetParameters().First().CustomAttributes.First();
+            CustomAttributeData actual = methodInfo.GetParameters().First().CustomAttributes.First();
 
-            Assert.AreEqual(typeof(BindAttribute), customParameterAttribute.AttributeType);
-            Assert.AreEqual("Exclude", customParameterAttribute.NamedArguments.First().MemberName);
-            Assert.AreEqual("Id", customParameterAttribute.NamedArguments.First().TypedValue.Value);
+            Assert.AreEqual(typeof(BindAttribute), actual.AttributeType);
+            Assert.AreEqual("Exclude", actual.NamedArguments.First().MemberName);
+            Assert.AreEqual("Id", actual.NamedArguments.First().TypedValue.Value);
         }
     }
 }

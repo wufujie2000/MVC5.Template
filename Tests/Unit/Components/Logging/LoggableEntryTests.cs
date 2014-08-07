@@ -27,7 +27,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             SetUpData();
 
             context = new TestingContext();
-            entry = context.Entry(context.Set<Role>().SingleOrDefault(role => role.Id == model.Id));
+            entry = context.Entry(context.Set<Role>().SingleOrDefault());
             entry.State = EntityState.Modified;
         }
 

@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{B201B326-86EB-4ABD-AEBB-0DDE4C4A5366}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Web", "Web\MvcTemplate.Web.csproj", "{B201B326-86EB-4ABD-AEBB-0DDE4C4A5366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Web\Components\Components.csproj", "{4D89DE56-C68C-4D17-8424-866D96F2E000}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Components", "Web\Components\MvcTemplate.Components.csproj", "{4D89DE56-C68C-4D17-8424-866D96F2E000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Web\Controllers\Controllers.csproj", "{8531B9AE-C8C5-4B73-A0CE-B9CDFAD69074}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Controllers", "Web\Controllers\MvcTemplate.Controllers.csproj", "{8531B9AE-C8C5-4B73-A0CE-B9CDFAD69074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Web\Data\Data.csproj", "{4EC117AB-87FF-4360-BD49-8E29D2D71D89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Data", "Web\Data\MvcTemplate.Data.csproj", "{4EC117AB-87FF-4360-BD49-8E29D2D71D89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Objects", "Web\Objects\Objects.csproj", "{8A9DC311-3844-4024-A193-8F89B60D1FD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Objects", "Web\Objects\MvcTemplate.Objects.csproj", "{8A9DC311-3844-4024-A193-8F89B60D1FD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Web\Resources\Resources.csproj", "{0BC1938B-B09C-4951-9CCB-13EE2C61D65C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Resources", "Web\Resources\MvcTemplate.Resources.csproj", "{0BC1938B-B09C-4951-9CCB-13EE2C61D65C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{BE2D3CAD-747C-4CC3-850B-883420C40EC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Tests", "Tests\MvcTemplate.Tests.csproj", "{BE2D3CAD-747C-4CC3-850B-883420C40EC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Web\Services\Services.csproj", "{4AD95521-F99C-4054-A2AD-1FAE1DABD72E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Services", "Web\Services\MvcTemplate.Services.csproj", "{4AD95521-F99C-4054-A2AD-1FAE1DABD72E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE044586-DDE2-46D0-B612-F92C4DD72A3D}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate", "MvcTemplate\MvcTemplate.csproj", "{DDC2AAD3-EEBD-456F-A0ED-EA3900478B45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators", "Web\Validators\Validators.csproj", "{02D12B45-AB59-4AC0-8B43-607E4DC282E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Validators", "Web\Validators\MvcTemplate.Validators.csproj", "{02D12B45-AB59-4AC0-8B43-607E4DC282E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

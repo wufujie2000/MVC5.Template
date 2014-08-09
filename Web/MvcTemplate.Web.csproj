@@ -247,33 +247,33 @@
       <Project>{ddc2aad3-eebd-456f-a0ed-ea3900478b45}</Project>
       <Name>MvcTemplate</Name>
     </ProjectReference>
-    <ProjectReference Include="Components\Components.csproj">
+    <ProjectReference Include="Components\MvcTemplate.Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
-      <Name>Components</Name>
+      <Name>MvcTemplate.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="Controllers\Controllers.csproj">
+    <ProjectReference Include="Controllers\MvcTemplate.Controllers.csproj">
       <Project>{8531b9ae-c8c5-4b73-a0ce-b9cdfad69074}</Project>
-      <Name>Controllers</Name>
+      <Name>MvcTemplate.Controllers</Name>
     </ProjectReference>
-    <ProjectReference Include="Data\Data.csproj">
+    <ProjectReference Include="Data\MvcTemplate.Data.csproj">
       <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
-      <Name>Data</Name>
+      <Name>MvcTemplate.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="Objects\Objects.csproj">
+    <ProjectReference Include="Objects\MvcTemplate.Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
-      <Name>Objects</Name>
+      <Name>MvcTemplate.Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="Resources\Resources.csproj">
+    <ProjectReference Include="Resources\MvcTemplate.Resources.csproj">
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
-      <Name>Resources</Name>
+      <Name>MvcTemplate.Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="Services\Services.csproj">
+    <ProjectReference Include="Services\MvcTemplate.Services.csproj">
       <Project>{4ad95521-f99c-4054-a2ad-1fae1dabd72e}</Project>
-      <Name>Services</Name>
+      <Name>MvcTemplate.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="Validators\Validators.csproj">
+    <ProjectReference Include="Validators\MvcTemplate.Validators.csproj">
       <Project>{02d12b45-ab59-4ac0-8b43-607e4dc282e6}</Project>
-      <Name>Validators</Name>
+      <Name>MvcTemplate.Validators</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

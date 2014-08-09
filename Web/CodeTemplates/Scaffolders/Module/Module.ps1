@@ -7,13 +7,13 @@ param(
     [Switch]$Delete = $false
 )
 
-$DataProject = "Data"
-$TestsProject = "Tests"
-$RazorViewProject = "Web"
-$ObjectsProject = "Objects"
-$ServiceProject = "Services"
-$ValidatorProject = "Validators"
-$ControllerProject = "Controllers"
+$DataProject = "MvcTemplate.Data"
+$TestsProject = "MvcTemplate.Tests"
+$RazorViewProject = "MvcTemplate.Web"
+$ObjectsProject = "MvcTemplate.Objects"
+$ServiceProject = "MvcTemplate.Services"
+$ValidatorProject = "MvcTemplate.Validators"
+$ControllerProject = "MvcTemplate.Controllers"
 
 $ElementArea = $Controller
 $ElementPath = $Controller

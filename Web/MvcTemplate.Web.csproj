@@ -126,6 +126,7 @@
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
     <Content Include="Scripts\Datalist\datalist.min.js" />
+    <None Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Languages.xml" />
   </ItemGroup>

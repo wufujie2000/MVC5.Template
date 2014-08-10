@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         [Test]
         public void RolesTable_HasSysAdminRole()
         {
-            Assert.IsNotNull(context.Set<Role>().SingleOrDefault());
+            Assert.IsNotNull(context.Set<Role>().SingleOrDefault(role => role.Name == "Sys_Admin"));
         }
 
         #endregion

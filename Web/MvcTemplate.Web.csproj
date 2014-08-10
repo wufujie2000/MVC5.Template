@@ -125,7 +125,9 @@
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
-    <Content Include="Scripts\Datalist\datalist.min.js" />
+    <Content Include="Scripts\Datalist\datalist.min.js">
+      <DependentUpon>datalist.js</DependentUpon>
+    </Content>
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Languages.xml" />
@@ -192,32 +194,52 @@
     <Content Include="Images\Select2\select2x2.png" />
     <Content Include="Images\Shared\menu-active.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.min.js">
+      <DependentUpon>bootstrap.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.en-GB.js" />
     <Content Include="Scripts\Globalize\Cultures\globalize.culture.lt-LT.js" />
     <Content Include="Scripts\Globalize\globalize.js" />
-    <Content Include="Scripts\Globalize\globalize.min.js" />
+    <Content Include="Scripts\Globalize\globalize.min.js">
+      <DependentUpon>globalize.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.en-GB.js" />
     <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.lt-LT.js" />
     <Content Include="Scripts\GridMvc\gridmvc.js" />
-    <Content Include="Scripts\GridMvc\gridmvc.min.js" />
+    <Content Include="Scripts\GridMvc\gridmvc.min.js">
+      <DependentUpon>gridmvc.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\jquery-2.1.1.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.min.js">
+      <DependentUpon>jquery-2.1.1.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.min.js">
+      <DependentUpon>jquery-ui-1.10.4.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
     <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.min.js">
+      <DependentUpon>jquery-2.1.1.nicescroll.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.min.js">
+      <DependentUpon>jquery-2.1.1.validate.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.min.js">
+      <DependentUpon>jquery-2.1.1.validate.unobtrusive.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JsTree\jstree.js" />
-    <Content Include="Scripts\JsTree\jstree.min.js" />
+    <Content Include="Scripts\JsTree\jstree.min.js">
+      <DependentUpon>jstree.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Shared\Auth\auth.js" />
     <Content Include="Scripts\Select2\select2.js" />
-    <Content Include="Scripts\Select2\select2.min.js" />
+    <Content Include="Scripts\Select2\select2.min.js">
+      <DependentUpon>select2.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Shared\site.js" />
     <Content Include="Scripts\Shared\sidebar.js" />
     <Content Include="Views\Home\Index.cshtml" />

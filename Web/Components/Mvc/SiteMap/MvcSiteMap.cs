@@ -1,6 +1,6 @@
 ﻿namespace MvcTemplate.Components.Mvc
 {
-    public class MvcSiteMapFactory
+    public class MvcSiteMap
     {
         public static IMvcSiteMapProvider Provider
         {

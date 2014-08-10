@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void SetUp()
         {
             HttpMock httpMock = new HttpMock();
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
+            Authorization.Provider = Substitute.For<IAuthProvider>();
             accountId = httpMock.HttpContextBase.User.Identity.Name;
             baseController = Substitute.ForPartsOf<BaseControllerStub>();
             baseController.Url = new UrlHelper(httpMock.HttpContext.Request.RequestContext);
@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void TearDown()
         {
             LocalizationManager.Provider = null;
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
         }
 
         #region Property: CurrentAccountId
@@ -55,10 +55,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Constructor: BaseController()
 
         [Test]
-        public void BaseController_SetsRoleProviderFromFactory()
+        public void BaseController_SetsAuthProviderFromFactory()
         {
-            IRoleProvider actual = baseController.BaseRoleProvider;
-            IRoleProvider expected = RoleFactory.Provider;
+            IAuthProvider actual = baseController.BaseAuthProvider;
+            IAuthProvider expected = Authorization.Provider;
 
             Assert.AreEqual(expected, actual);
         }
@@ -199,17 +199,17 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: IsAuthorizedFor(String area, String controller, String action)
 
         [Test]
-        public void IsAuthorizedFor_OnNullRoleProviderReturnsTrue()
+        public void IsAuthorizedFor_OnNullAuthProviderReturnsTrue()
         {
-            baseController.BaseRoleProvider = null;
+            baseController.BaseAuthProvider = null;
 
             Assert.IsTrue(baseController.IsAuthorizedFor(null, null, null));
         }
 
         [Test]
-        public void IsAuthorizedFor_ReturnsRoleProviderResult()
+        public void IsAuthorizedFor_ReturnsAuthProviderResult()
         {
-            RoleFactory.Provider.IsAuthorizedFor(accountId, "AR", "CO", "AC").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(accountId, "AR", "CO", "AC").Returns(true);
 
             Assert.IsTrue(baseController.IsAuthorizedFor("AR", "CO", "AC"));
         }
@@ -257,7 +257,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             String area = baseController.RouteData.Values["area"] as String;
             String action = baseController.RouteData.Values["action"] as String;
             String controller = baseController.RouteData.Values["controller"] as String;
-            RoleFactory.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
+            Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(false);
             AuthorizationContext context = new AuthorizationContext(baseController.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
 
             baseController.BaseOnAuthorization(context);
@@ -272,7 +272,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void OnAuthorization_SetsResultToNullThenAuthorized()
         {
             AuthorizationContext context = new AuthorizationContext(baseController.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
-            RoleFactory.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(true);
             baseController.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
             context.RouteData.Values["controller"] = "Controller";
             context.RouteData.Values["action"] = "Action";

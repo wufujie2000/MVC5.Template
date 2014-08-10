@@ -80,7 +80,7 @@
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapFactory.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMap.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumb.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumbNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapMenuNode.cs" />
@@ -108,8 +108,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authorization\AccountPrivilege.cs" />
     <Compile Include="Security\Authorization\AllowUnauthorizedAttribute.cs" />
-    <Compile Include="Security\Authorization\IRoleProvider.cs" />
-    <Compile Include="Security\Authorization\RoleFactory.cs" />
+    <Compile Include="Security\Authorization\IAuthorizationProvider.cs" />
+    <Compile Include="Security\Authorization\Authorization.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Alerts\Alert.cs" />
     <Compile Include="Alerts\AlertTypes.cs" />

@@ -41,14 +41,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [TearDown]
         public void TearDown()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
             HttpContext.Current = null;
         }
 
         #region Method: GetMenus()
 
         [Test]
-        public void GetMenus_OnNullRoleProviderReturnsAllMenus()
+        public void GetMenus_OnNullAuthProviderReturnsAllMenus()
         {
             IEnumerator<MvcSiteMapNode> expected = parser.GetMenuNodes(siteMap).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = provider.GetMenus().GetEnumerator();
@@ -67,8 +67,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyAuthorizedMenus()
         {
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
-            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
                 null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();
@@ -87,8 +87,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_DoesnNotAuthorizeMenusWithoutAction()
         {
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
-            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
                 "Administration", "Roles", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap)).Skip(1).Take(2).GetEnumerator();
@@ -151,8 +151,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_RemovesMenusWithoutActionAndSubmenus()
         {
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
-            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
+            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<IEnumerable<AccountPrivilege>>(),
                 null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();

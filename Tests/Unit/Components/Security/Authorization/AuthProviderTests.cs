@@ -13,16 +13,16 @@ using System.Reflection;
 namespace MvcTemplate.Tests.Unit.Security
 {
     [TestFixture]
-    public class RoleProviderTests
+    public class AuthProviderTests
     {
-        private RoleProvider provider;
+        private AuthProvider provider;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            provider = new RoleProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
+            provider = new AuthProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
 
             TearDownData();
         }
@@ -789,7 +789,7 @@ namespace MvcTemplate.Tests.Unit.Security
         public void Dispose_DisposesUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            new RoleProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
+            new AuthProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
 
             unitOfWork.Received().Dispose();
         }

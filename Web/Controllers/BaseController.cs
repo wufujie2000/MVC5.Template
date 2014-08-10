@@ -12,7 +12,7 @@ namespace MvcTemplate.Controllers
     [Authorize]
     public abstract class BaseController : Controller
     {
-        protected IRoleProvider RoleProvider
+        protected IAuthProvider AuthProvider
         {
             get;
             set;
@@ -33,7 +33,7 @@ namespace MvcTemplate.Controllers
         public BaseController()
         {
             Alerts = new AlertsContainer();
-            RoleProvider = RoleFactory.Provider;
+            AuthProvider = Authorization.Provider;
         }
 
         public virtual ActionResult RedirectToLocal(String url)
@@ -72,9 +72,9 @@ namespace MvcTemplate.Controllers
         }
         public virtual Boolean IsAuthorizedFor(String area, String controller, String action)
         {
-            if (RoleProvider == null) return true;
+            if (AuthProvider == null) return true;
 
-            return RoleProvider.IsAuthorizedFor(CurrentAccountId, area, controller, action);
+            return AuthProvider.IsAuthorizedFor(CurrentAccountId, area, controller, action);
         }
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)

@@ -25,7 +25,7 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IExceptionFilter>().To<ExceptionFilter>();
 
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
-            Bind<IRoleProvider>().ToConstant(CreateRoleProvider());
+            Bind<IAuthProvider>().ToConstant(CreateAuthorizationProvider());
 
             String languagesPath = HostingEnvironment.MapPath("~/Languages.xml");
             Bind<ILanguageProvider>().To<LanguageProvider>().WithConstructorArgument("languagesPath", languagesPath);
@@ -41,12 +41,12 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IAccountValidator>().To<AccountValidator>();
         }
 
-        private IRoleProvider CreateRoleProvider()
+        private IAuthProvider CreateAuthorizationProvider()
         {
             Assembly controllersAssembly = typeof(BaseController).Assembly;
             IUnitOfWork unitOfWork = Kernel.GetService(typeof(IUnitOfWork)) as IUnitOfWork;
 
-            return new RoleProvider(controllersAssembly, unitOfWork);
+            return new AuthProvider(controllersAssembly, unitOfWork);
         }
     }
 }

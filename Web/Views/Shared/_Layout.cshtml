@@ -15,14 +15,14 @@
 </head>
 <body>
     @Html.Partial("_Header")
-    @Html.Partial("_Sidebar", MvcSiteMapFactory.Provider.GetMenus())
+    @Html.Partial("_Sidebar", MvcSiteMap.Provider.GetMenus())
     @Html.Partial("_Datalist")
     <div id="ContentContainer" class="clear">
         <div id="ContentHeader">
             <h1>@ResourceProvider.GetCurrentContentTitle()</h1>
         </div>
         <div id="ContentBreadcrumb">
-            @Html.Partial("_Breadcrumb", MvcSiteMapFactory.Provider.GetBreadcrumb())
+            @Html.Partial("_Breadcrumb", MvcSiteMap.Provider.GetBreadcrumb())
         </div>
         <div id="Content">
             @Html.Partial("_Alerts")

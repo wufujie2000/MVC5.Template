@@ -1,8 +1,8 @@
 ﻿namespace MvcTemplate.Components.Security
 {
-    public sealed class RoleFactory
+    public sealed class Authorization
     {
-        public static IRoleProvider Provider
+        public static IAuthProvider Provider
         {
             get;
             set;

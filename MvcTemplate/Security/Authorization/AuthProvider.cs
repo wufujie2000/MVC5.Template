@@ -8,14 +8,14 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Security
 {
-    public class RoleProvider : IRoleProvider, IDisposable
+    public class AuthProvider : IAuthProvider, IDisposable
     {
         private IEnumerable<Type> controllerTypes;
         private IUnitOfWork unitOfWork;
         private Type controllerType;
         private Boolean disposed;
 
-        public RoleProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
+        public AuthProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
         {
             controllerType = typeof(Controller);
             this.controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));

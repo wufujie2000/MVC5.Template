@@ -51,10 +51,10 @@ namespace MvcTemplate.Components.Mvc
 
         public MvcSiteMapMenuCollection GetMenus()
         {
-            if (RoleFactory.Provider == null)
+            if (Authorization.Provider == null)
                 return GetAuthorizedMenus(allMenus, Enumerable.Empty<AccountPrivilege>());
 
-            return GetAuthorizedMenus(allMenus, RoleFactory.Provider.GetAccountPrivileges(CurrentAccountId));
+            return GetAuthorizedMenus(allMenus, Authorization.Provider.GetAccountPrivileges(CurrentAccountId));
         }
         public MvcSiteMapBreadcrumb GetBreadcrumb()
         {
@@ -131,9 +131,9 @@ namespace MvcTemplate.Components.Mvc
         private Boolean IsAuthorizedToView(MvcSiteMapNode menu, IEnumerable<AccountPrivilege> privileges)
         {
             if (menu.Action == null) return true;
-            if (RoleFactory.Provider == null) return true;
+            if (Authorization.Provider == null) return true;
 
-            return RoleFactory.Provider.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
+            return Authorization.Provider.IsAuthorizedFor(privileges, menu.Area, menu.Controller, menu.Action);
         }
         private Boolean IsEmpty(MvcSiteMapMenuNode menu)
         {

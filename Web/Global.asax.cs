@@ -36,7 +36,7 @@ namespace MvcTemplate.Web
             RegisterDataTypeValidator();
             RegisterLanguageProvider();
             RegisterSiteMapProvider();
-            RegisterRoleProvider();
+            RegisterAuthProvider();
             RegisterModelBinders();
             RegisterViewEngine();
             RegisterAdapters();
@@ -64,11 +64,11 @@ namespace MvcTemplate.Web
         }
         private void RegisterSiteMapProvider()
         {
-            MvcSiteMapFactory.Provider = DependencyResolver.Current.GetService<IMvcSiteMapProvider>();
+            MvcSiteMap.Provider = DependencyResolver.Current.GetService<IMvcSiteMapProvider>();
         }
-        private void RegisterRoleProvider()
+        private void RegisterAuthProvider()
         {
-            RoleFactory.Provider = DependencyResolver.Current.GetService<IRoleProvider>();
+            Authorization.Provider = DependencyResolver.Current.GetService<IAuthProvider>();
         }
         private void RegisterModelBinders()
         {

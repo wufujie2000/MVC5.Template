@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MvcTemplate.Components.Security
 {
-    public interface IRoleProvider
+    public interface IAuthProvider
     {
         IEnumerable<AccountPrivilege> GetAccountPrivileges(String accountId);
 

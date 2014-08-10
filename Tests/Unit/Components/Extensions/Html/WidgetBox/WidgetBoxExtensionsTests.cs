@@ -24,13 +24,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
             HttpContext.Current = new HttpMock().HttpContext;
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
+            Authorization.Provider = Substitute.For<IAuthProvider>();
         }
 
         [TearDown]
         public void TearDown()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TableWidgetBox_FormsWidgetBoxWithButtons()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
 
             StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
@@ -68,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void TableWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            RoleFactory
+            Authorization
                 .Provider
                 .IsAuthorizedFor(
                        Arg.Any<String>(),
@@ -108,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsWidgetBoxWithButtons()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
 
             StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
@@ -124,7 +124,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
         {
-            RoleFactory
+            Authorization
                 .Provider
                 .IsAuthorizedFor(
                     Arg.Any<String>(),

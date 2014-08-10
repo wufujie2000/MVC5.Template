@@ -26,12 +26,12 @@ namespace MvcTemplate.Components.Extensions.Html
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
-            IRoleProvider roleProvider = RoleFactory.Provider;
+            IAuthProvider authProvider = Authorization.Provider;
             String buttons = String.Empty;
 
             foreach (LinkAction action in actions)
             {
-                if (roleProvider != null && !roleProvider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
+                if (authProvider != null && !authProvider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");

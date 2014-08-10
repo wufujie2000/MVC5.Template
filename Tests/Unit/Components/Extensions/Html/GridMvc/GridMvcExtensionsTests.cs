@@ -33,14 +33,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columnCollection = SubstituteIGridCollumnCollection<DateTime?>(column);
 
             HttpContext.Current = new HttpMock().HttpContext;
-            RoleFactory.Provider = Substitute.For<IRoleProvider>();
-            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
+            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -49,15 +49,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
         {
-            RoleFactory.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
 
             Assert.IsNull(columnCollection.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
-        public void AddActionLink_AddsActionLinkOnNullRoleProvider()
+        public void AddActionLink_AddsActionLinkOnNullAuthProvider()
         {
-            RoleFactory.Provider = null;
+            Authorization.Provider = null;
 
             Assert.IsNotNull(columnCollection.AddActionLink(LinkAction.Edit));
         }

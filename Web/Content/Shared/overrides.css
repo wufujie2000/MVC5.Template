@@ -98,6 +98,10 @@
 .select2-container.select2-dropdown-open .select2-choice .select2-arrow b {
   background-position: -18px 4px;
 }
+.select2-chosen img,
+.select2-result-label img {
+  padding-bottom: 2px;
+}
 .select2-drop,
 .select2-drop-active,
 .select2-container-active .select2-choice {

@@ -1,4 +1,4 @@
-#Header {
+﻿#Header {
   box-shadow: 0 0 1px 0 inset;
   min-height: 80px;
 }
@@ -33,4 +33,7 @@
   border-top-left-radius: 0;
   text-align: left;
   margin-top: 0;
+}
+#HeaderNavigation > .btn .dropdown-menu img {
+  padding-bottom: 2px;
 }

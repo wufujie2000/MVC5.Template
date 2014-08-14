@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
@@ -22,6 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
+            LocalizationManager.Provider = new LanguageProviderMock().Provider;
             htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
         }
 
@@ -92,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String actual = html.FormSubmit().ToString();
             String expected = String.Format(
-                "<input class=\"btn btn-success\" type=\"submit\" value=\"{0}\" />",
+                "<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />",
                 MvcTemplate.Resources.Shared.Resources.Submit);
 
             Assert.AreEqual(expected, actual);
@@ -105,7 +107,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void Submit_FormsSubmitHtml()
         {
-            String expected = "<input class=\"btn btn-success\" type=\"submit\" value=\"Value\" />";
+            String expected = "<input class=\"btn btn-primary\" type=\"submit\" value=\"Value\" />";
             String actual = html.Submit("Value").ToString();
 
             Assert.AreEqual(expected, actual);

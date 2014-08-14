@@ -16,7 +16,7 @@ namespace MvcTemplate.Components.Extensions.Html
             scriptPath = controller;
             if (routeValues["Area"] != null)
                 scriptPath = String.Format("{0}/{1}", routeValues["Area"], scriptPath);
-            
+
             String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
             if (!appPath.EndsWith("/")) appPath += "/";
 

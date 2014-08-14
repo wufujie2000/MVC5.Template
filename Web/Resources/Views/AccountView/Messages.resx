@@ -124,6 +124,6 @@
     <value>Profile updated successfully</value>
   </data>
   <data name="SuccesfulRegistration" xml:space="preserve">
-    <value>Your account has been created, you can now log in</value>
+    <value>Your account has been created</value>
   </data>
 </root>

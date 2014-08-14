@@ -94,7 +94,7 @@
   "Less": {
     "CompileOnBuild": false,
     "CompileOnSave": true,
-    "EnableChainCompilation": false,
+    "EnableChainCompilation": true,
     "GenerateSourceMaps": false,
     "MinifyInPlace": false,
     "OutputDirectory": "",

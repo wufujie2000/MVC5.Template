@@ -7,19 +7,21 @@
 
     @Styles.Render("~/Content/Bootstrap/Bundle")
     @Styles.Render("~/Content/FontAwesome/Bundle")
-    @Styles.Render("~/Content/Select2/Bundle")
-    @Styles.Render("~/Content/Auth/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
+    @Styles.Render("~/Content/Auth/Bundle")
 </head>
-<body>
-    <div id="AuthContainer">
-        <div id="AuthContent">
-            @RenderBody()
-        </div>
+<body class="public">
+    <div class="content-container">
+        <div class="title">@ResourceProvider.GetCurrentContentTitle()</div>
+        <div class="separator"></div>
+
+        @RenderBody()
+
+        <div class="separator"></div>
     </div>
 
     @Scripts.Render("~/Scripts/JQuery/Bundle")
-    @Scripts.Render("~/Scripts/Select2/Bundle")
+    @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/Shared/Bundle")
     @Html.RenderControllerScripts()
 </body>

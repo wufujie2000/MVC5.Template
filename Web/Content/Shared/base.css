@@ -15,11 +15,22 @@
   outline: none !important;
 }
 body {
-  background-color: #31353c;
   font-family: 'PT Sans', consolas;
-  color: #555555;
   overflow-x: hidden;
   overflow-y: auto;
+}
+body.private {
+  background-image: url(../../../Images/Shared/background.png);
+  background-color: #31353c;
+  color: #555555;
+}
+body.public {
+  background-image: url(../../../Images/Shared/content-background.png);
+  background-color: #f2f2f2;
+}
+.separator {
+  border-bottom: 2px solid #F5F5F5;
+  border-top: 2px solid #DDDDDD;
 }
 .clear {
   zoom: 1;

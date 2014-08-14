@@ -3,24 +3,23 @@
     MvcSiteMapBreadcrumbNode current = Model.LastOrDefault();
 }
 
-@foreach (MvcSiteMapBreadcrumbNode node in Model)
-{
-    String nodeClass = node == current ? "current" : String.Empty;
-    if (node.Action != null && node != current)
+<div class="content-breadcrumb">
+    @foreach (MvcSiteMapBreadcrumbNode node in Model)
     {
-        <a href="@Url.Action(node.Action, node.Controller, new { area = node.Area })" class="@nodeClass">
-            <i class="@node.IconClass"></i>@node.Title
-        </a>
-    }
-    else
-    {
-        <a class="@nodeClass">
-            <i class="@node.IconClass"></i>@node.Title
-        </a>
-    }
+        String nodeClass = node == current ? "current" : String.Empty;
+        if (node.Action != null && node != current)
+        {
+            <a href="@Url.Action(node.Action, node.Controller, new { area = node.Area })" class="@nodeClass">
+                <i class="@node.IconClass"></i>@node.Title
+            </a>
+            <span class="fa fa-angle-right"></span>
+        }
 
-    if (node != current)
-    {
-        <span class="fa fa-angle-right"></span>
+        if (node == current)
+        {
+            <a class="@nodeClass">
+                <i class="@node.IconClass"></i>@node.Title
+            </a>
+        }
     }
-}
+</div>

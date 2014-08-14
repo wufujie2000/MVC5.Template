@@ -1,29 +1,34 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-#ContentContainer {
+body.public .content-container {
+    margin: 50px auto;
+    width: 330px;
+
+    .title {
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
+        color: rgba(0, 0, 0, 0.2);
+        text-align: right;
+        font-weight: 600;
+        font-size: 36px;
+    }
+
+    .separator {
+        margin-bottom: 20px;
+    }
+}
+
+.content-container {
+    background-image: @content-background-image;
     background-color: @content-background-color;
     border-radius: 8px 0 0 8px;
     margin-left: 200px;
     margin-top: -40px;
-    min-height: 800px;
+    min-height: 860px;
+    padding-top: 10px;
 }
 
-#ContentHeader {
-    border-top-left-radius: 8px;
-
-    h1 {
-        color: @content-color;
-        padding: 10px 15px;
-        font-size: 24px;
-        margin: 0;
-    }
-}
-
-#ContentBreadcrumb {
-    background-color: darken(@content-background-color, 3%);
-    border-bottom: @content-border;
-    border-top: @content-border;
+.content-breadcrumb {
     padding-left: 10px;
 
     > a {
@@ -46,7 +51,7 @@
     }
 }
 
-#Content {
+.content {
     padding: 15px;
     float: left;
     width: 100%;
@@ -82,7 +87,7 @@
 }
 
 @media (max-width: 767px) {
-    #ContentContainer {
+    .content-container {
         margin-left: 45px;
     }
 }

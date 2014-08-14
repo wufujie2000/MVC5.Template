@@ -1,10 +1,7 @@
-// Dropdown closure
+// Header dropdown closure
 (function () {
-    $(document).on('mouseleave', '.dropdown', function () {
+    $(document).on('mouseleave', '.header-navigation .dropdown', function () {
         $(this).removeClass('open');
-    });
-    $(document).on('mouseleave', '.dropdown-menu', function () {
-        $(this).parent().removeClass('open');
     });
 }());
 

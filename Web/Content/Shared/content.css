@@ -1,41 +1,45 @@
-﻿#ContentContainer {
+﻿body.public .content-container {
+  margin: 50px auto;
+  width: 330px;
+}
+body.public .content-container .title {
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.2);
+  text-align: right;
+  font-weight: 600;
+  font-size: 36px;
+}
+body.public .content-container .separator {
+  margin-bottom: 20px;
+}
+.content-container {
+  background-image: url(../../../Images/Shared/content-background.png);
   background-color: #f2f2f2;
   border-radius: 8px 0 0 8px;
   margin-left: 200px;
   margin-top: -40px;
-  min-height: 800px;
+  min-height: 860px;
+  padding-top: 10px;
 }
-#ContentHeader {
-  border-top-left-radius: 8px;
-}
-#ContentHeader h1 {
-  color: #555555;
-  padding: 10px 15px;
-  font-size: 24px;
-  margin: 0;
-}
-#ContentBreadcrumb {
-  background-color: #eaeaea;
-  border-bottom: 1px solid #cdcdcd;
-  border-top: 1px solid #cdcdcd;
+.content-breadcrumb {
   padding-left: 10px;
 }
-#ContentBreadcrumb > a {
+.content-breadcrumb > a {
   color: #555555;
   display: inline-block;
   padding: 8px 5px;
   font-size: 11px;
 }
-#ContentBreadcrumb > a i {
+.content-breadcrumb > a i {
   padding-right: 5px;
 }
-#ContentBreadcrumb span {
+.content-breadcrumb span {
   font-size: 11px;
 }
-#ContentBreadcrumb .current {
+.content-breadcrumb .current {
   font-weight: bold;
 }
-#Content {
+.content {
   padding: 15px;
   float: left;
   width: 100%;
@@ -65,7 +69,7 @@
   height: 34px;
 }
 @media (max-width: 767px) {
-  #ContentContainer {
+  .content-container {
     margin-left: 45px;
   }
 }

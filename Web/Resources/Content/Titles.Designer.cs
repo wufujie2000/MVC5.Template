@@ -160,6 +160,15 @@ namespace MvcTemplate.Resources.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string AuthRegister {
+            get {
+                return ResourceManager.GetString("AuthRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to System error.
         /// </summary>
         public static string HomeError {

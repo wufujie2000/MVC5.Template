@@ -122,6 +122,8 @@
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
     <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Images\Datalist\loading.gif" />
+    <Content Include="Images\Shared\background.png" />
+    <Content Include="Images\Shared\content-background.png" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
@@ -142,7 +144,6 @@
     <Content Include="Content\GridMvc\gridmvc.css" />
     <Content Include="Content\JQueryUI\jquery-ui-1.10.4.custom.css" />
     <Content Include="Content\JsTree\jstree.css" />
-    <Content Include="Content\Select2\select2.css" />
     <Content Include="Content\Shared\alert.css">
       <DependentUpon>alert.less</DependentUpon>
     </Content>
@@ -189,9 +190,6 @@
     <Content Include="Images\JsTree\32px.png" />
     <Content Include="Images\JsTree\40px.png" />
     <Content Include="Images\JsTree\throbber.gif" />
-    <Content Include="Images\Select2\select2-spinner.gif" />
-    <Content Include="Images\Select2\select2.png" />
-    <Content Include="Images\Select2\select2x2.png" />
     <Content Include="Images\Shared\menu-active.png" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js">
@@ -235,16 +233,11 @@
     <Content Include="Scripts\JsTree\jstree.min.js">
       <DependentUpon>jstree.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Shared\Auth\auth.js" />
-    <Content Include="Scripts\Select2\select2.js" />
-    <Content Include="Scripts\Select2\select2.min.js">
-      <DependentUpon>select2.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Shared\site.js" />
     <Content Include="Scripts\Shared\sidebar.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_PrivateLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Web.config">
@@ -301,7 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Login.cshtml" />
-    <Content Include="Views\Auth\_Layout.cshtml" />
+    <Content Include="Views\Shared\_PublicLayout.cshtml" />
     <Content Include="Views\Auth\_ViewStart.cshtml" />
     <Content Include="Views\Administration\Roles\Create.cshtml" />
     <Content Include="Views\Administration\Roles\Delete.cshtml" />

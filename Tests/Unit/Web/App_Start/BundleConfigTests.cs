@@ -20,7 +20,6 @@ namespace MvcTemplate.Tests.Unit.Web.App_Start
                 "~/Scripts/JQueryUI/Bundle",
                 "~/Scripts/Globalize/Bundle",
                 "~/Scripts/GridMvc/Bundle",
-                "~/Scripts/Select2/Bundle",
                 "~/Scripts/JsTree/Bundle",
                 "~/Scripts/Datalist/Bundle",
                 "~/Scripts/Shared/Bundle"
@@ -42,7 +41,6 @@ namespace MvcTemplate.Tests.Unit.Web.App_Start
                 "~/Content/JQueryUI/Bundle",
                 "~/Content/FontAwesome/Bundle",
                 "~/Content/GridMvc/Bundle",
-                "~/Content/Select2/Bundle",
                 "~/Content/JsTree/Bundle",
                 "~/Content/Datalist/Bundle",
                 "~/Content/Auth/Bundle",

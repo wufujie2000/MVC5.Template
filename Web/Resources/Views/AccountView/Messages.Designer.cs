@@ -79,7 +79,7 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your account has been created, you can now log in.
+        ///   Looks up a localized string similar to Your account has been created.
         /// </summary>
         public static string SuccesfulRegistration {
             get {

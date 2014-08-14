@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
@@ -18,6 +19,35 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             CreateLanguagesXml("Languages.xml");
             provider = new LanguageProvider("Languages.xml");
         }
+
+        #region Property: CurrentLanguage
+
+        [Test]
+        public void CurrentLanguage_GetsCurrentLangauge()
+        {
+            Thread.CurrentThread.CurrentUICulture = provider["en"].Culture;
+            Thread.CurrentThread.CurrentCulture = provider["en"].Culture;
+
+            Language actual = provider.CurrentLanguage;
+            Language expected = provider["en"];
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void CurrentLanguage_SetsCurrentLanguage()
+        {
+            provider.CurrentLanguage = provider.Languages.Last();
+
+            CultureInfo expectedCulture = provider.Languages.Last().Culture;
+            CultureInfo actualUICulture = CultureInfo.CurrentUICulture;
+            CultureInfo actualCulture = CultureInfo.CurrentCulture;
+
+            Assert.AreSame(expectedCulture, actualUICulture);
+            Assert.AreSame(expectedCulture, actualCulture);
+        }
+
+        #endregion
 
         #region Constructor: LanguageProvider(String languagesPath)
 

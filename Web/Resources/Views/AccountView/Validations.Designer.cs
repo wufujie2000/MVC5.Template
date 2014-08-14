@@ -79,7 +79,7 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The username or password you entered is incorrect..
+        ///   Looks up a localized string similar to The username or password is incorrect..
         /// </summary>
         public static string IncorrectUsernameOrPassword {
             get {

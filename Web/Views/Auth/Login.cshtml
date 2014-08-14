@@ -5,27 +5,31 @@
     @Html.Partial("_AuthAlerts")
 
     @Html.AntiForgeryToken()
-    using (Html.InputGroup())
-    {
-        @Html.AuthUsernameFor(model => model.Username)
-    }
-    using (Html.InputGroup())
-    {
-        @Html.AuthPasswordFor(model => model.Password)
-    }
-    using (Html.InputGroup())
-    {
-        @Html.AuthLanguageSelect()
-    }
-    using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
-    {
-        <div class="left-panel">
-            @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount, "Register")
-        </div>
+
+    <div class="auth-content">
+        @using (Html.InputGroup())
+        {
+            @Html.AuthUsernameFor(model => model.Username)
+        }
+
+        @using (Html.InputGroup())
+        {
+            @Html.AuthPasswordFor(model => model.Password)
+        }
+
+        @using (Html.InputGroup())
+        {
+            @Html.AuthLanguageSelect()
+        }
+        @*using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
+        {
+            <div class="left-panel">
+                @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount, "Register")
+            </div>
+
+        }*@
+    </div>
+    <div class="actions">
         @Html.Submit(MvcTemplate.Resources.Shared.Resources.Login)
-    }
-    <script>
-        var defaultLanguage = '@LocalizationManager.Provider.DefaultLanguage.Abbrevation';
-        var currentLanguage = '@Request.RequestContext.RouteData.Values["language"]';
-    </script>
+    </div>
 }

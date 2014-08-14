@@ -32,9 +32,9 @@ table .action-link-cell {
   border-left: none;
 }
 table .action-link-container {
+  -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
   border-radius: 4px;
   padding-top: 1.5px;
@@ -44,14 +44,14 @@ table .action-link-container {
   width: 20px;
 }
 table .action-link-container:hover {
+  -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
-  -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  -webkit-transform: scale(1.2);
   -moz-transform: scale(1.2);
   -ms-transform: scale(1.2);
   -o-transform: scale(1.2);
-  -webkit-transform: scale(1.2);
   transform: scale(1.2);
 }
 table .action-link-container a {
@@ -77,7 +77,7 @@ table .delete-action-link {
   background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover > td {
-  background-color: #1aaef3;
+  background-color: #396b86;
   background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
   background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
   background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);

@@ -21,11 +21,25 @@
 }
 
 body {
-    background-color: @background-color;
     font-family: @font-family;
-    color: @content-color;
     overflow-x: hidden;
     overflow-y: auto;
+
+    &.private {
+        background-image: @background-image;
+        background-color: @background-color;
+        color: @content-color;
+    }
+
+    &.public {
+        background-image: @content-background-image;
+        background-color: @content-background-color;
+    }
+}
+
+.separator {
+    border-bottom: 2px solid #F5F5F5;
+    border-top: 2px solid #DDDDDD;
 }
 
 .clear {

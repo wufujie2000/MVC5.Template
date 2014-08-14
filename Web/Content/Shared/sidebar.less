@@ -1,12 +1,12 @@
 ﻿@import "../mixins";
 @import "../theme";
 
-#Sidebar {
+.sidebar {
     width: 200px;
     float: left;
 }
 
-#SidebarSearch {
+.sidebar-search {
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
     margin: 10px;
 
@@ -22,7 +22,7 @@
     }
 }
 
-#SidebarNavigation {
+.sidebar-navigation {
     padding: 0;
 
     a {
@@ -57,23 +57,24 @@
             z-index: 2;
             padding: 0;
 
+            li {
+                background-image: @background-image;
+            }
+
             a {
-                background-color: lighten(@background-color, 10%);
+                background-color: rgba(0, 0, 0, 0.15);
                 padding: 10px 0 10px 25px;
             }
 
             ul a {
-                background-color: lighten(@background-color, 20%);
+                background-color: rgba(0, 0, 0, 0.3);
                 padding: 10px 0 10px 35px;
             }
         }
     }
 
     .arrow {
-        -webkit-transition: transform 0.4s ease-out 0.1s;
-        -moz-transition: transform 0.4s ease-out 0.1s;
-        -o-transition: transform 0.4s ease-out 0.1s;
-        transition: transform 0.4s ease-out 0.1s;
+        .transition(transform 0.4s ease-out 0.1s);
         margin: 6px 15px 5px 5px;
         font-size: 10px;
         float: right;
@@ -81,11 +82,7 @@
 
     .opening > a > .arrow,
     .open > a > .arrow {
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        transform: rotate(90deg);
+        .transform(rotate(90deg));
     }
 
     li:not(.open):not(.closing) > ul {
@@ -94,15 +91,15 @@
 }
 
 @media (max-width: 767px) {
-    #Sidebar {
+    .sidebar {
         width: 45px;
     }
 
-    #SidebarSearch {
+    .sidebar-search {
         display: none;
     }
 
-    #SidebarNavigation {
+    .sidebar-navigation {
         > .has-active > a {
             .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
             background-position: right center;
@@ -121,7 +118,6 @@
 
         > li {
             .active > a {
-                background-color: lighten(@background-color, 10%);
                 background-image: none;
                 color: @color;
 
@@ -151,7 +147,6 @@
                     left: 100px;
 
                     .active > a {
-                        background-color: lighten(@background-color, 20%);
                         background-image: none;
                     }
 

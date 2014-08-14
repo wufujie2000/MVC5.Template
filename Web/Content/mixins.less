@@ -20,17 +20,24 @@
 }
 
 .transition-duration(@durasion) {
+    -webkit-transition-duration: @durasion;
     -moz-transition-duration: @durasion;
     -o-transition-duration: @durasion;
-    -webkit-transition-duration: @durasion;
     transition-duration: @durasion;
 }
 
+.transition(@declaration) {
+    -webkit-transition: @declaration;
+    -moz-transition: @declaration;
+    -o-transition: @declaration;
+    transition: @declaration;
+}
+
 .transform(@transformation) {
+    -webkit-transform: @transformation;
     -moz-transform: @transformation;
     -ms-transform: @transformation;
     -o-transform: @transformation;
-    -webkit-transform: @transformation;
     transform: @transformation;
 }
 

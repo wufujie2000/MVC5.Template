@@ -1,10 +1,10 @@
 ﻿@model MvcSiteMapMenuCollection
 
-<div id="Sidebar">
-    <div id="SidebarSearch">
+<div class="sidebar">
+    <div class="sidebar-search">
         @Html.TextBox("SearchInput", null, new { placeholder = MvcTemplate.Resources.Shared.Resources.Search + "..." })
     </div>
-    <ul id="SidebarNavigation">
+    <ul class="sidebar-navigation">
         @Html.DisplayForModel()
     </ul>
 </div>

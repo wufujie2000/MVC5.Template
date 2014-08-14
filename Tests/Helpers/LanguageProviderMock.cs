@@ -2,6 +2,7 @@
 using NSubstitute;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 
 namespace MvcTemplate.Tests.Helpers
 {
@@ -21,23 +22,30 @@ namespace MvcTemplate.Tests.Helpers
 
         private void SetUpMock()
         {
-            List<Language> languages = new List<Language>();
-            languages.Add(new Language()
+            List<Language> languages = new List<Language>()
             {
-                Culture = new CultureInfo("en-GB"),
-                Abbrevation = "en",
-                IsDefault = true,
-                Name = "English"
-            });
+                new Language()
+                {
+                    Culture = new CultureInfo("en-GB"),
+                    Abbrevation = "en",
+                    IsDefault = true,
+                    Name = "English"
+                },
+                new Language()
+                {
+                    Culture = new CultureInfo("lt-LT"),
+                    Abbrevation = "lt",
+                    IsDefault = false,
+                    Name = "Lietuvių"
+                }
+            };
 
-            languages.Add(new Language()
+            Provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do((value) =>
             {
-                Culture = new CultureInfo("lt-LT"),
-                Abbrevation = "lt",
-                IsDefault = false,
-                Name = "Lietuvių"
+                Thread.CurrentThread.CurrentCulture = value.Arg<Language>().Culture;
+                Thread.CurrentThread.CurrentUICulture = value.Arg<Language>().Culture;
             });
-
+            Provider.CurrentLanguage.Returns(languages[0]);
             Provider.DefaultLanguage.Returns(languages[0]);
             Provider.Languages.Returns(languages);
             Provider["en"].Returns(languages[0]);

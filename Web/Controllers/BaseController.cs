@@ -80,9 +80,7 @@ namespace MvcTemplate.Controllers
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
         {
             String abbrevation = Request.RequestContext.RouteData.Values["language"].ToString();
-            CultureInfo culture = LocalizationManager.Provider[abbrevation].Culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-            Thread.CurrentThread.CurrentCulture = culture;
+            LocalizationManager.Provider.CurrentLanguage = LocalizationManager.Provider[abbrevation];
 
             return base.BeginExecuteCore(callback, state);
         }

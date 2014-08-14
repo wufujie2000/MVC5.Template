@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Components.Mvc
@@ -14,6 +15,18 @@ namespace MvcTemplate.Components.Mvc
         {
             get;
             private set;
+        }
+        public Language CurrentLanguage
+        {
+            get
+            {
+                return Languages.Single(language => language.Culture == CultureInfo.CurrentCulture);
+            }
+            set
+            {
+                Thread.CurrentThread.CurrentCulture = value.Culture;
+                Thread.CurrentThread.CurrentUICulture = value.Culture;
+            }
         }
         public IEnumerable<Language> Languages
         {

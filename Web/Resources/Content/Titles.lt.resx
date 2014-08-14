@@ -150,6 +150,9 @@
   <data name="AuthLogin" xml:space="preserve">
     <value>Prisijungti</value>
   </data>
+  <data name="AuthRegister" xml:space="preserve">
+    <value>Registracija</value>
+  </data>
   <data name="HomeError" xml:space="preserve">
     <value>Sisteminė klaida</value>
   </data>

@@ -1,5 +1,7 @@
-﻿using MvcTemplate.Resources;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Resources;
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -43,7 +45,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             TagBuilder submit = new TagBuilder("input");
             submit.MergeAttribute("type", "submit");
-            submit.AddCssClass("btn btn-success");
+            submit.AddCssClass("btn btn-primary");
             submit.MergeAttribute("value", value);
 
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
@@ -88,6 +90,47 @@ namespace MvcTemplate.Components.Extensions.Html
         public static MvcHtmlString FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
             return new MvcHtmlString(WrapWith(html.ValidationMessageFor(expression), ValidationClass));
+        }
+
+        internal static TagBuilder FormLanguagesDropdownMenu(HtmlHelper html)
+        {
+            String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
+            NameValueCollection query = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
+            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
+            TagBuilder dropdownMenu = new TagBuilder("ul");
+            dropdownMenu.MergeAttribute("role", "menu");
+            dropdownMenu.AddCssClass("dropdown-menu");
+            AddQueryValues(query, routeValues);
+            if (!appPath.EndsWith("/"))
+                appPath += "/";
+
+            foreach (Language language in LocalizationManager.Provider.Languages)
+            {
+                routeValues["language"] = language.Abbrevation;
+                TagBuilder languageItem = new TagBuilder("li");
+                languageItem.InnerHtml = String.Format(
+                    html.ActionLink("{0} {1}", routeValues["action"].ToString(), routeValues).ToString(),
+                    String.Format("<img src=\"{0}Images/Flags/{1}.gif\" alt=\"\" />", appPath, language.Abbrevation),
+                    language.Name);
+
+                dropdownMenu.InnerHtml += languageItem.ToString();
+            }
+
+            routeValues["language"] = LocalizationManager.Provider.CurrentLanguage.Abbrevation;
+            RemoveQueryValues(query, routeValues);
+
+            return dropdownMenu;
+        }
+
+        private static void AddQueryValues(NameValueCollection query, RouteValueDictionary routeValues)
+        {
+            foreach (String parameter in query)
+                routeValues[parameter] = query[parameter];
+        }
+        private static void RemoveQueryValues(NameValueCollection query, RouteValueDictionary routeValues)
+        {
+            foreach (String parameter in query)
+                routeValues.Remove(parameter);
         }
 
         private static String WrapWith(MvcHtmlString content, String cssClass)

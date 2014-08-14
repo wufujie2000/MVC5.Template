@@ -5,23 +5,29 @@
     @Html.Partial("_AuthAlerts")
 
     @Html.AntiForgeryToken()
-    using (Html.InputGroup())
-    {
-        @Html.AuthUsernameFor(model => model.Username)
-    }
-    using (Html.InputGroup())
-    {
-        @Html.AuthPasswordFor(model => model.Password)
-    }
-    using (Html.InputGroup())
-    {
-        @Html.AuthEmailFor(model => model.Email)
-    }
-    using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
-    {
-        <div class="left-panel grey">
-            @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.Login, "Login")
-        </div>
+
+    <div class="auth-content">
+        @using (Html.InputGroup())
+        {
+            @Html.AuthUsernameFor(model => model.Username, autocomplete: false)
+        }
+        @using (Html.InputGroup())
+        {
+            @Html.AuthPasswordFor(model => model.Password, autocomplete: false)
+        }
+        @using (Html.InputGroup())
+        {
+            @Html.AuthEmailFor(model => model.Email)
+        }
+        @*using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
+        {
+            <div class="left-panel grey">
+                @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.Login, "Login")
+            </div>
+            @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
+        }*@
+    </div>
+    <div class="actions">
         @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
-    }
+    </div>
 }

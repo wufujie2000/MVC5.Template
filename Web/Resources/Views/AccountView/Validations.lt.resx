@@ -124,7 +124,7 @@
     <value>Neteisingas slaptažodis.</value>
   </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
-    <value>Įvestas netinkamas naudotojo vardas arba slaptažodis.</value>
+    <value>Naudotojo vardas arba slaptažodis yra neteisingas.</value>
   </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
     <value>Vartotojo vardas jau užimtas.</value>

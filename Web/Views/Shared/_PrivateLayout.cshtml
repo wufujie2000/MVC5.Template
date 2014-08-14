@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html lang="@CultureInfo.CurrentCulture.TwoLetterISOLanguageName">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>@ResourceProvider.GetCurrentContentTitle()</title>
 
@@ -13,18 +13,18 @@
     @Styles.Render("~/Content/Datalist/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
 </head>
-<body>
+<body class="private">
     @Html.Partial("_Header")
     @Html.Partial("_Sidebar", MvcSiteMap.Provider.GetMenus())
     @Html.Partial("_Datalist")
-    <div id="ContentContainer" class="clear">
-        <div id="ContentHeader">
-            <h1>@ResourceProvider.GetCurrentContentTitle()</h1>
-        </div>
-        <div id="ContentBreadcrumb">
-            @Html.Partial("_Breadcrumb", MvcSiteMap.Provider.GetBreadcrumb())
-        </div>
-        <div id="Content">
+    <div class="content-container clear">
+        <div class="separator"></div>
+
+        @Html.Partial("_Breadcrumb", MvcSiteMap.Provider.GetBreadcrumb())
+
+        <div class="separator"></div>
+
+        <div class="content">
             @Html.Partial("_Alerts")
             @RenderBody()
         </div>

@@ -124,7 +124,7 @@
     <value>Password is incorrect.</value>
   </data>
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
-    <value>The username or password you entered is incorrect.</value>
+    <value>The username or password is incorrect.</value>
   </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
     <value>Username is already taken.</value>

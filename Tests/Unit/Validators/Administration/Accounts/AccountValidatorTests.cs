@@ -35,6 +35,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             SetUpData();
         }
 
+        [TearDown]
         public void TearDown()
         {
             context.Dispose();

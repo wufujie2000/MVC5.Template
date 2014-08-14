@@ -11,15 +11,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
     [TestFixture]
     public class JavascriptExtensionsTests
     {
-        private String testFilePath;
+        private String filePath;
         private HtmlHelper html;
 
         [SetUp]
         public void SetUp()
         {
-            testFilePath = "JavascriptExtensionsTests.txt";
-            if (!File.Exists(testFilePath))
-                File.WriteAllText("JavascriptExtensionsTests.txt", String.Empty);
+            filePath = "JavascriptExtensionsTests.txt";
+            File.WriteAllText(filePath, String.Empty);
 
             html = HtmlHelperFactory.CreateHtmlHelper();
         }
@@ -29,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithArea()
         {
-            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Area/Controller/controller.js").Returns(testFilePath);
+            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Area/Controller/controller.js").Returns(filePath);
 
             String expected = "<script src=\"/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -40,9 +39,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithAreaOnSpecificDomain()
         {
+            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Area/Controller/controller.js").Returns(filePath);
             html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
-            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Area/Controller/controller.js").Returns(testFilePath);
-
+            
             String expected = "<script src=\"/TestDomain/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
 
@@ -52,8 +51,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithoutArea()
         {
+            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Controller/controller.js").Returns(filePath);
             html.ViewContext.RouteData.Values["Area"] = null;
-            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Controller/controller.js").Returns(testFilePath);
 
             String expected = "<script src=\"/Scripts/Shared/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
@@ -64,9 +63,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithoutAreaOnSpecificDomain()
         {
-            html.ViewContext.RouteData.Values["Area"] = null;
+            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Controller/controller.js").Returns(filePath);
             html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
-            html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Controller/controller.js").Returns(testFilePath);
+            html.ViewContext.RouteData.Values["Area"] = null;
 
             String expected = "<script src=\"/TestDomain/Scripts/Shared/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();

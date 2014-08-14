@@ -128,13 +128,5 @@ namespace MvcTemplate.Tests.Helpers
                 Text = "Text" + instanceNumber.ToString()
             };
         }
-        public static TestView CreateTestView(Int32 instanceNumber = 1)
-        {
-            return new TestView()
-            {
-                Id = TestId + instanceNumber.ToString(),
-                Text = "Text" + instanceNumber.ToString()
-            };
-        }
     }
 }

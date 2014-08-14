@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Web.Optimization;
 
-namespace MvcTemplate.Tests.Unit.Web.App_Start
+namespace MvcTemplate.Tests.Unit.Web
 {
     [TestFixture]
     public class BundleConfigTests

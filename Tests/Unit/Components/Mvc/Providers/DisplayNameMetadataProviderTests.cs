@@ -4,7 +4,7 @@ using MvcTemplate.Resources;
 using NUnit.Framework;
 using System;
 
-namespace MvcTemplate.Tests.Components.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class DisplayNameMetadataProviderTests

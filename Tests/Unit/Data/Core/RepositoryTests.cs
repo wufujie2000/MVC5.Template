@@ -208,6 +208,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void GetEnumerator_ReturnsContextsSetEnumerator()
         {
+            repository.Insert(ObjectFactory.CreateTestModel());
+            context.SaveChanges();
+
             IEnumerator<TestModel> expected = (context.Set<TestModel>() as IEnumerable<TestModel>).GetEnumerator();
             IEnumerator<TestModel> actual = repository.GetEnumerator();
 
@@ -218,6 +221,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void GetEnumerator_ReturnsSameEnumerator()
         {
+            repository.Insert(ObjectFactory.CreateTestModel());
+            context.SaveChanges();
+
             IEnumerator expected = (context.Set<TestModel>() as IEnumerable).GetEnumerator();
             IEnumerator actual = (repository as IEnumerable).GetEnumerator();
 

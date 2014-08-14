@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MvcTemplate.Tests.Resources.Tests
+namespace MvcTemplate.Tests.Unit.Resources.Tests
 {
     public class NoResourcesModel
     {

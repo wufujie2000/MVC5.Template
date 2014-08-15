@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Security;
-using MvcTemplate.Resources.Shared;
 using MvcTemplate.Services;
 using System.Web.Mvc;
 
@@ -23,24 +22,16 @@ namespace MvcTemplate.Controllers.Home
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Error()
         {
-            if (!Service.AccountExists(CurrentAccountId))
-                return LogOut();
-
-            Alerts.AddError(Messages.SystemError);
-
             return View();
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult NotFound()
         {
-            if (!Service.AccountExists(CurrentAccountId))
-                return LogOut();
-
-            Alerts.AddError(Messages.PageNotFound);
-
             return View();
         }
 
@@ -49,8 +40,6 @@ namespace MvcTemplate.Controllers.Home
         {
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
-
-            Alerts.AddError(Messages.Unauthorized);
 
             return View();
         }

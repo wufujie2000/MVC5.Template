@@ -70,7 +70,7 @@ namespace MvcTemplate.Resources.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your request resulted in an unexpected system failure, please contact system administration.
+        ///   Looks up a localized string similar to Your request resulted in an unexpected system failure.
         /// </summary>
         public static string SystemError {
             get {

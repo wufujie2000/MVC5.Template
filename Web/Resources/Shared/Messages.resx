@@ -121,7 +121,7 @@
     <value>The page you are looking for does not exist</value>
   </data>
   <data name="SystemError" xml:space="preserve">
-    <value>Your request resulted in an unexpected system failure, please contact system administration</value>
+    <value>Your request resulted in an unexpected system failure</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>You are unauthorized to view this page</value>

@@ -1,5 +1,8 @@
 ﻿@model AccountLoginView
 
+<div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
+<div class="separator"></div>
+
 @using (Html.BeginForm())
 {
     @Html.Partial("_AuthAlerts")
@@ -33,3 +36,5 @@
         @Html.Submit(MvcTemplate.Resources.Shared.Resources.Login)
     </div>
 }
+
+<div class="separator"></div>

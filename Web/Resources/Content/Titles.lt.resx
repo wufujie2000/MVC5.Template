@@ -154,16 +154,16 @@
     <value>Registracija</value>
   </data>
   <data name="HomeError" xml:space="preserve">
-    <value>Sisteminė klaida</value>
+    <value>Klaida</value>
   </data>
   <data name="HomeIndex" xml:space="preserve">
     <value>Pradžia</value>
   </data>
   <data name="HomeNotFound" xml:space="preserve">
-    <value>Puslapis nerastas</value>
+    <value>Nerasta</value>
   </data>
   <data name="HomeUnauthorized" xml:space="preserve">
-    <value>Prieiga uždrausta</value>
+    <value>Uždrausta</value>
   </data>
   <data name="ProfileDelete" xml:space="preserve">
     <value>Paskyros trynimas</value>

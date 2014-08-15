@@ -63,30 +63,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         #endregion
 
         #region Method: Error()
-
-        [Test]
-        public void Error_RedirectsToLogoutIfAccountDoesNotExist()
-        {
-            service.AccountExists(accountId).Returns(false);
-
-            RedirectToRouteResult actual = controller.Error() as RedirectToRouteResult;
-
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-        }
-
-        [Test]
-        public void Error_AddsSystemErrorMessage()
-        {
-            controller.Error();
-
-            Alert actual = controller.Alerts.First();
-
-            Assert.AreEqual(Messages.SystemError, actual.Message);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
-            Assert.AreEqual(0, actual.FadeoutAfter);
-        }
-
+        
         [Test]
         public void Error_ReturnsViewWithNullModell()
         {
@@ -98,30 +75,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         #endregion
 
         #region Method: NotFound()
-
-        [Test]
-        public void NotFound_RedirectsToLogoutIfAccountDoesNotExist()
-        {
-            service.AccountExists(accountId).Returns(false);
-
-            RedirectToRouteResult actual = controller.NotFound() as RedirectToRouteResult;
-
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-        }
-
-        [Test]
-        public void NotFound_AddsPageNotFoundMessage()
-        {
-            controller.NotFound();
-
-            Alert actual = controller.Alerts.First();
-
-            Assert.AreEqual(Messages.PageNotFound, actual.Message);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
-            Assert.AreEqual(0, actual.FadeoutAfter);
-        }
-
+        
         [Test]
         public void NotFound_ReturnsViewWithNullModel()
         {
@@ -143,18 +97,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
 
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
-        }
-
-        [Test]
-        public void Unauthorized_AddsUnauthorizedMessage()
-        {
-            controller.Unauthorized();
-
-            Alert actual = controller.Alerts.First();
-
-            Assert.AreEqual(Messages.Unauthorized, actual.Message);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
-            Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
         [Test]

@@ -154,13 +154,13 @@
     <value>Register</value>
   </data>
   <data name="HomeError" xml:space="preserve">
-    <value>System error</value>
+    <value>Error</value>
   </data>
   <data name="HomeIndex" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="HomeNotFound" xml:space="preserve">
-    <value>Not found</value>
+    <value>Not Found</value>
   </data>
   <data name="HomeUnauthorized" xml:space="preserve">
     <value>Unauthorized</value>

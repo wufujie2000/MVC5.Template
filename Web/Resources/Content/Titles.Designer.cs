@@ -169,7 +169,7 @@ namespace MvcTemplate.Resources.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to System error.
+        ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string HomeError {
             get {
@@ -187,7 +187,7 @@ namespace MvcTemplate.Resources.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not found.
+        ///   Looks up a localized string similar to Not Found.
         /// </summary>
         public static string HomeNotFound {
             get {

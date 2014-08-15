@@ -1,1 +1,14 @@
-﻿
+﻿@{
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
+<div class="separator"></div>
+<div class="error text">
+    <span class="fa fa-search"></span>
+</div>
+<div class="separator"></div>
+<div class="describtion text">@MvcTemplate.Resources.Shared.Messages.PageNotFound</div>
+<div class="public-actions">
+    <a class="btn btn-primary" href="/">@MvcTemplate.Resources.Content.Titles.HomeIndex</a>
+</div>

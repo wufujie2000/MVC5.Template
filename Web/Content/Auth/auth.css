@@ -1,33 +1,27 @@
-﻿.alerts .alert div {
+﻿.alert div {
   text-align: center;
-  margin-bottom: 20px;
-}
-.alerts .alert:last-child {
-  margin-bottom: 20px;
 }
 form {
   margin-top: 20px;
-  width: 100%;
 }
 form .auth-content {
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px inset, rgba(255, 255, 255, 0.4) 0 1px 0;
-  background: #FFFFFF;
+  background-color: #FFFFFF;
   border-radius: 4px;
-  list-style: none;
-  padding: 0;
+  margin: 20px 0;
 }
 form .auth-content .input-group {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  position: relative;
   padding: 4px 12px;
-  display: block;
   width: 100%;
 }
 form .auth-content .input-group .fa {
   position: absolute;
-  left: 14px;
   top: 12px;
+}
+form .auth-content .input-group .fa.fa-user {
+  left: 14px;
 }
 form .auth-content .input-group .fa.fa-lock {
   left: 15px;
@@ -40,27 +34,29 @@ form .auth-content .input-group img {
   margin-right: 5px;
 }
 form .auth-content .input-group input {
-  background: #FFFFFF;
+  border-style: none;
   padding-left: 25px;
   height: 30px;
-  border: none;
   width: 100%;
 }
-form .auth-content .input-group input:-webkit-autofill {
-  box-shadow: 0 0 0 50px #FFFFFF inset;
+form .auth-content .input-group input:-webkit-autofill,
+form .auth-content .input-group input:-webkit-autofill:focus {
+  box-shadow: 0 50px #FFFFFF inset;
 }
-form .auth-content .input-group input.input-validation-error:focus {
+form .auth-content .input-group input:focus {
   box-shadow: none;
 }
 form .auth-content .input-group .dropdown-menu {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
+  border-top-style: none;
   margin-top: 0;
   right: 16px;
   left: 16px;
 }
 form .auth-content .language-container {
-  padding: 5px 0 9px 25px;
+  padding: 5px 0 0 25px;
+  text-align: left;
   cursor: pointer;
   height: 30px;
 }
@@ -68,20 +64,13 @@ form .auth-content .language-container .caret {
   margin-top: 8px;
   float: right;
 }
-form .auth-content div:first-child {
-  border-top: 0;
-}
 form .auth-content div:last-child {
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-bottom-style: none;
 }
-form .actions {
-  padding-top: 20px;
-}
-form .actions .btn {
+form .btn {
   margin-bottom: 20px;
   border-radius: 6px;
-  padding: 11px 19px;
-  font-size: 18px;
+  font-size: 1.3em;
+  padding: 10px;
   width: 100%;
 }

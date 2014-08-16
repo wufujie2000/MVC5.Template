@@ -144,8 +144,8 @@
     <Content Include="Content\GridMvc\gridmvc.css" />
     <Content Include="Content\JQueryUI\jquery-ui-1.10.4.custom.css" />
     <Content Include="Content\JsTree\jstree.css" />
-    <Content Include="Content\Shared\alert.css">
-      <DependentUpon>alert.less</DependentUpon>
+    <Content Include="Content\Shared\alerts.css">
+      <DependentUpon>alerts.less</DependentUpon>
     </Content>
     <Content Include="Content\Shared\base.css">
       <DependentUpon>base.less</DependentUpon>
@@ -318,7 +318,7 @@
     <Content Include="Content\theme.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Shared\alert.less" />
+    <Content Include="Content\Shared\alerts.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\base.less" />

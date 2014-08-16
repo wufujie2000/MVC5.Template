@@ -1,17 +1,16 @@
-﻿.alerts .alert {
-  padding: 8px 15px;
+﻿.alert {
   margin-bottom: 3px;
-  width: 100%;
+  padding: 8px 15px;
 }
-.alerts .alert div {
+.alert div {
   vertical-align: middle;
   text-align: justify;
   display: table-cell;
 }
-.alerts .alert .alert-text {
+.alert .alert-text {
   padding-right: 10px;
   width: 100%;
 }
-.alerts .alert:last-child {
+.alert:last-child {
   margin-bottom: 10px;
 }

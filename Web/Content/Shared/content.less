@@ -2,32 +2,31 @@
 @import "../theme";
 
 body.public .content-container {
+    text-align: center;
     margin: 50px auto;
     width: 330px;
 
     .text {
         text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
         color: rgba(0, 0, 0, 0.2);
-        text-align: center;
     }
 
     .title {
+        font-weight: bold;
         text-align: right;
-        font-weight: 600;
         font-size: 2.5em;
     }
 
     .error {
-        font-weight: bold;
         font-size: 10em;
+        margin: 20px;
     }
 
     .describtion {
         font-size: 1.2em;
     }
 
-    .public-actions {
-        text-align: center;
+    .public-action {
         margin-top: 10px;
     }
 }
@@ -48,16 +47,11 @@ body.public .content-container {
     > a {
         color: @content-color;
         display: inline-block;
-        padding: 8px 5px;
-        font-size: 11px;
+        padding: 8px;
 
         i {
             padding-right: 5px;
         }
-    }
-
-    span {
-        font-size: 11px;
     }
 
     .current {
@@ -72,10 +66,7 @@ body.public .content-container {
 }
 
 .control-label {
-    color: @content-color;
-    text-align: right;
-    padding: 6px 15px;
-    margin: 0;
+    padding: 8px 15px 0;
 
     .required {
         color: @validation-color;
@@ -86,7 +77,7 @@ body.public .content-container {
     border-color: @validation-color;
 
     &:focus {
-        .box-shadow(lighten(@validation-color, 30%));
+        .box-shadow(lighten(@validation-color, 40%));
         border-color: @validation-color;
     }
 }
@@ -95,8 +86,7 @@ body.public .content-container {
     color: @validation-color;
     vertical-align: middle;
     display: inline-table;
-    padding-top: 10px;
-    text-align: left;
+    padding-top: 11px;
     height: 34px;
 }
 

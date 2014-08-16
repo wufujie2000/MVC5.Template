@@ -10,16 +10,12 @@
 .pagination > .active > span:focus {
     .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
     color: @active-color;
-    cursor: pointer;
-    z-index: 2;
 }
 
 .btn-primary {
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
     .linear-gradient-background(center top, #84b2ca, #67a0be, #67a0be);
-    background-repeat: repeat-x;
     border: 1px solid #5997B8;
-    color: @active-color;
 
     &:hover {
         .linear-gradient-background(center top, #75a9c4, #5997b8, #5997b8);

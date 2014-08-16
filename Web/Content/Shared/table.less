@@ -3,7 +3,7 @@
 
 table {
     thead {
-        .linear-gradient-background(bottom, @gradient-middle-color 0, @gradient-to-color 100%, #ffffff);
+        .linear-gradient-background(bottom, @gradient-middle-color 0, @gradient-to-color 100%, @active-color);
     }
 
     tbody tr {
@@ -65,15 +65,15 @@ table {
     }
 
     .details-action-link {
-        background-color: @details-action-color;
+        background-color: @details-color;
     }
 
     .edit-action-link {
-        background-color: @edit-action-color;
+        background-color: @edit-color;
     }
 
     .delete-action-link {
-        background-color: @delete-action-color;
+        background-color: @delete-color;
     }
 }
 

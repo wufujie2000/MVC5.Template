@@ -3,10 +3,12 @@
 }
 
 <div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
+
 <div class="separator"></div>
-<div class="error text"><span class="fa fa-ban"></span></div>
+
+<div class="error text fa fa-ban"></div>
+
 <div class="separator"></div>
+
 <div class="describtion text">@MvcTemplate.Resources.Shared.Messages.SystemError</div>
-<div class="public-actions">
-    <a class="btn btn-primary" href="/">@MvcTemplate.Resources.Content.Titles.HomeIndex</a>
-</div>
+<a class="btn btn-primary public-action" href="/">@MvcTemplate.Resources.Content.Titles.HomeIndex</a>

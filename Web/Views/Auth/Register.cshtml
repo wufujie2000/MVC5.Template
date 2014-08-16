@@ -22,17 +22,9 @@
         {
             @Html.AuthEmailFor(model => model.Email)
         }
-        @*using (new FormWrapper(Html.ViewContext.Writer, "auth-form-actions"))
-        {
-            <div class="left-panel grey">
-                @Html.ActionLink(MvcTemplate.Resources.Views.AccountView.Texts.Login, "Login")
-            </div>
-            @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
-        }*@
     </div>
-    <div class="actions">
-        @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
-    </div>
+    
+    @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
 }
 
 <div class="separator"></div>

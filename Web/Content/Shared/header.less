@@ -2,7 +2,6 @@
 @import "../theme";
 
 .header {
-    box-shadow: 0 0 1px 0 inset;
     min-height: 80px;
 }
 
@@ -10,12 +9,11 @@
     float: right;
 
     > .btn {
-        border: none;
         padding: 0;
 
         > a {
-            text-shadow: 0 0 #ffffff;
-            padding: 9px 10px 11px;
+            text-shadow: 0 0 @color;
+            padding: 10px 10px 9px;
             display: block;
             color: @color;
 
@@ -33,11 +31,10 @@
         .dropdown-menu {
             border-top-right-radius: 0;
             border-top-left-radius: 0;
-            text-align: left;
             margin-top: 0;
 
             img {
-                padding-bottom: 2px;
+                padding-bottom: 3px;
             }
         }
     }

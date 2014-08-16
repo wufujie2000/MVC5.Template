@@ -10,7 +10,6 @@
 
 .widget-title {
     border-bottom: @content-border;
-    color: @content-color;
     height: 35px;
 
     .widget-title-icon {
@@ -20,9 +19,8 @@
     }
 
     h5 {
-        padding: 11px 11px 10px;
+        padding: 10px 11px 9px;
         font-weight: bold;
-        font-size: 12px;
         float: left;
         margin: 0;
     }
@@ -32,10 +30,10 @@
 
         .btn {
             border-left: @content-border;
+            border-top-style: none;
             color: @content-color;
             padding: 9px 10px 8px;
             border-radius: 0;
-            border-top: none;
             font-size: 12px;
 
             &:hover {
@@ -87,10 +85,6 @@
         .control-label {
             text-align: left;
         }
-
-        .form-actions input {
-            float: none;
-        }
     }
 }
 
@@ -103,11 +97,6 @@
         .control-validation {
             text-align: center;
         }
-
-        .field-validation-error {
-            text-align: center;
-            padding-top: 12px;
-        }
     }
 }
 
@@ -115,7 +104,6 @@
     .widget-content {
         .field-validation-error {
             padding-top: 7px;
-            text-align: left;
         }
 
         .control-validation {

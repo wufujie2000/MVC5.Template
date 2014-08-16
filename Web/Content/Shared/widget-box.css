@@ -6,7 +6,6 @@
 }
 .widget-title {
   border-bottom: 1px solid #cdcdcd;
-  color: #555555;
   height: 35px;
 }
 .widget-title .widget-title-icon {
@@ -15,9 +14,8 @@
   float: left;
 }
 .widget-title h5 {
-  padding: 11px 11px 10px;
+  padding: 10px 11px 9px;
   font-weight: bold;
-  font-size: 12px;
   float: left;
   margin: 0;
 }
@@ -26,10 +24,10 @@
 }
 .widget-title .widget-title-buttons .btn {
   border-left: 1px solid #cdcdcd;
+  border-top-style: none;
   color: #555555;
   padding: 9px 10px 8px;
   border-radius: 0;
-  border-top: none;
   font-size: 12px;
 }
 .widget-title .widget-title-buttons .btn:hover {
@@ -72,9 +70,6 @@
   .widget-content .control-label {
     text-align: left;
   }
-  .widget-content .form-actions input {
-    float: none;
-  }
 }
 @media (min-width: 992px) {
   .widget-content .control-label {
@@ -83,15 +78,10 @@
   .widget-content .control-validation {
     text-align: center;
   }
-  .widget-content .field-validation-error {
-    text-align: center;
-    padding-top: 12px;
-  }
 }
 @media (min-width: 1200px) {
   .widget-content .field-validation-error {
     padding-top: 7px;
-    text-align: left;
   }
   .widget-content .control-validation {
     text-align: left;

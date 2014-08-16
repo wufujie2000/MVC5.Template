@@ -1,26 +1,25 @@
-body.public .content-container {
+﻿body.public .content-container {
+  text-align: center;
   margin: 50px auto;
   width: 330px;
 }
 body.public .content-container .text {
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
   color: rgba(0, 0, 0, 0.2);
-  text-align: center;
 }
 body.public .content-container .title {
+  font-weight: bold;
   text-align: right;
-  font-weight: 600;
   font-size: 2.5em;
 }
 body.public .content-container .error {
-  font-weight: bold;
   font-size: 10em;
+  margin: 20px;
 }
 body.public .content-container .describtion {
   font-size: 1.2em;
 }
-body.public .content-container .public-actions {
-  text-align: center;
+body.public .content-container .public-action {
   margin-top: 10px;
 }
 .content-container {
@@ -38,14 +37,10 @@ body.public .content-container .public-actions {
 .content-breadcrumb > a {
   color: #555555;
   display: inline-block;
-  padding: 8px 5px;
-  font-size: 11px;
+  padding: 8px;
 }
 .content-breadcrumb > a i {
   padding-right: 5px;
-}
-.content-breadcrumb span {
-  font-size: 11px;
 }
 .content-breadcrumb .current {
   font-weight: bold;
@@ -56,10 +51,7 @@ body.public .content-container .public-actions {
   width: 100%;
 }
 .control-label {
-  color: #555555;
-  text-align: right;
-  padding: 6px 15px;
-  margin: 0;
+  padding: 8px 15px 0;
 }
 .control-label .required {
   color: #d11919;
@@ -68,15 +60,14 @@ body.public .content-container .public-actions {
   border-color: #d11919;
 }
 .input-validation-error:focus {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #f29191;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #f7bfbf;
   border-color: #d11919;
 }
 .field-validation-error {
   color: #d11919;
   vertical-align: middle;
   display: inline-table;
-  padding-top: 10px;
-  text-align: left;
+  padding-top: 11px;
   height: 34px;
 }
 @media (max-width: 767px) {
@@ -84,4 +75,3 @@ body.public .content-container .public-actions {
     margin-left: 45px;
   }
 }
-/*# sourceMappingURL=content.css.map */

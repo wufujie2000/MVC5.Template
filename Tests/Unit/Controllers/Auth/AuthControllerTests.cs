@@ -168,6 +168,18 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
         #region Method: Login(AccountLoginView account, String returnUrl)
 
         [Test]
+        public void Login_OnPostRedirectsToUrlIfAlreadyLoggedIn()
+        {
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
+            service.IsLoggedIn().Returns(true);
+
+            ActionResult expected = controller.RedirectToLocal("/Home/Index");
+            ActionResult actual = controller.Login(null, "/Home/Index");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Login_ReturnsNullModelIfCanNotLogin()
         {
             validator.CanLogin(accountLogin).Returns(false);

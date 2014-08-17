@@ -54,6 +54,9 @@ namespace MvcTemplate.Controllers.Auth
         [ValidateAntiForgeryToken]
         public ActionResult Login(AccountLoginView account, String returnUrl)
         {
+            if (Service.IsLoggedIn())
+                return RedirectToLocal(returnUrl);
+
             if (!Validator.CanLogin(account))
                 return View();
 

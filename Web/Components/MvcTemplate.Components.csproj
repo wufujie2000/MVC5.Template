@@ -68,6 +68,8 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LoggableEntry.cs" />
     <Compile Include="Logging\LoggableEntryProperty.cs" />
+    <Compile Include="Mail\IMailClient.cs" />
+    <Compile Include="Mail\SmtpMailClient.cs" />
     <Compile Include="Mvc\Adapters\EmailAddressAdapter.cs" />
     <Compile Include="Mvc\Adapters\StringLengthAttributeAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />

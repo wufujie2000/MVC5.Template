@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
@@ -49,6 +50,12 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         public void Load_BindsIEntityLogger()
         {
             AssertBind<IEntityLogger, EntityLogger>();
+        }
+
+        [Test]
+        public void Load_BindsIMailClientToSmtpMailClient()
+        {
+            AssertBind<IMailClient, SmtpMailClient>();
         }
 
         [Test]

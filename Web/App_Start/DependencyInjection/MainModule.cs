@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
@@ -21,6 +22,8 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<AContext>().To<Context>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IEntityLogger>().To<EntityLogger>();
+
+            Bind<IMailClient>().To<SmtpMailClient>();
 
             Bind<IExceptionFilter>().To<ExceptionFilter>();
 

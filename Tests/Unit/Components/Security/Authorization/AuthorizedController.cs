@@ -1,7 +1,7 @@
 ﻿using MvcTemplate.Components.Security;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Components.Security.Authorization
+namespace MvcTemplate.Tests.Unit.Components.Security
 {
     [Authorize]
     public class AuthorizedController : Controller

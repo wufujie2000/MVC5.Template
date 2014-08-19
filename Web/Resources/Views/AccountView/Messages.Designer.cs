@@ -79,11 +79,47 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To recover your account details, simply follow this &lt;a href=&quot;{0}&quot;&gt;link&lt;/a&gt;..
+        /// </summary>
+        public static string RecoveryEmailBody {
+            get {
+                return ResourceManager.GetString("RecoveryEmailBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account recovery.
+        /// </summary>
+        public static string RecoveryEmailSubject {
+            get {
+                return ResourceManager.GetString("RecoveryEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account recovery information was send to your email.
+        /// </summary>
+        public static string RecoveryInformation {
+            get {
+                return ResourceManager.GetString("RecoveryInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your account has been created.
         /// </summary>
         public static string SuccesfulRegistration {
             get {
                 return ResourceManager.GetString("SuccesfulRegistration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your account password has been changed successfully.
+        /// </summary>
+        public static string SuccesfulReset {
+            get {
+                return ResourceManager.GetString("SuccesfulReset", resourceCulture);
             }
         }
     }

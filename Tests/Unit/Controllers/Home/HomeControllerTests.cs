@@ -63,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         #endregion
 
         #region Method: Error()
-        
+
         [Test]
         public void Error_ReturnsViewWithNullModell()
         {
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Home
         #endregion
 
         #region Method: NotFound()
-        
+
         [Test]
         public void NotFound_ReturnsViewWithNullModel()
         {

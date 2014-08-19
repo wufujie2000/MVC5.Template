@@ -42,6 +42,56 @@ namespace MvcTemplate.Controllers.Auth
         }
 
         [HttpGet]
+        public ActionResult Recover()
+        {
+            if (Service.IsLoggedIn())
+                return RedirectToDefault();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Recover(AccountRecoveryView account)
+        {
+            if (Service.IsLoggedIn())
+                return RedirectToDefault();
+
+            if (!Validator.CanRecover(account))
+                return View(account);
+
+            Service.Recover(account);
+            Alerts.Add(AlertTypes.Info, Messages.RecoveryInformation, 0);
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public ActionResult Reset(String token)
+        {
+            if (Service.IsLoggedIn())
+                return RedirectToDefault();
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reset(AccountResetView account)
+        {
+            if (Service.IsLoggedIn())
+                return RedirectToDefault();
+
+            if (!Validator.CanReset(account))
+                return RedirectToAction("Recover");
+
+            Service.Reset(account);
+            Alerts.Add(AlertTypes.Success, Messages.SuccesfulReset);
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
         public ActionResult Login(String returnUrl)
         {
             if (Service.IsLoggedIn())

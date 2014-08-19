@@ -5,7 +5,7 @@ using NUnit.Framework;
 using System;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Components.Mvc.Attributes
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
     public class AjaxOnlyAttributeTests

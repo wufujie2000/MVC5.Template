@@ -16,6 +16,8 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Username = c.String(nullable: false, maxLength: 128),
                         Passhash = c.String(nullable: false),
                         Email = c.String(nullable: false),
+                        RecoveryToken = c.String(maxLength: 128),
+                        RecoveryTokenExpirationDate = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
                         EntityDate = c.DateTime(nullable: false),
                     })

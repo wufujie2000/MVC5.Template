@@ -148,10 +148,16 @@
     <value>Rolės</value>
   </data>
   <data name="AuthLogin" xml:space="preserve">
-    <value>Prisijungti</value>
+    <value>Prisijungimas</value>
+  </data>
+  <data name="AuthRecover" xml:space="preserve">
+    <value>Atkūrimas</value>
   </data>
   <data name="AuthRegister" xml:space="preserve">
     <value>Registracija</value>
+  </data>
+  <data name="AuthReset" xml:space="preserve">
+    <value>Atkūrimas</value>
   </data>
   <data name="HomeError" xml:space="preserve">
     <value>Klaida</value>
@@ -167,9 +173,6 @@
   </data>
   <data name="ProfileDelete" xml:space="preserve">
     <value>Paskyros trynimas</value>
-  </data>
-  <data name="ProfileDetails" xml:space="preserve">
-    <value>Paskyros detalizacija</value>
   </data>
   <data name="ProfileEdit" xml:space="preserve">
     <value>Paskyros redagavimas</value>

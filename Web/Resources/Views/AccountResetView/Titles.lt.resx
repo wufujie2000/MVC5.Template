@@ -117,25 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ProfileDeleteDisclaimer" xml:space="preserve">
-    <value>You are about to delete your profile, all your personal information will be deleted</value>
-  </data>
-  <data name="ProfileUpdated" xml:space="preserve">
-    <value>Profile updated successfully</value>
-  </data>
-  <data name="RecoveryEmailBody" xml:space="preserve">
-    <value>To recover your account details, simply follow this &lt;a href="{0}"&gt;link&lt;/a&gt;.</value>
-  </data>
-  <data name="RecoveryEmailSubject" xml:space="preserve">
-    <value>Account recovery</value>
-  </data>
-  <data name="RecoveryInformation" xml:space="preserve">
-    <value>Account recovery information was send to your email</value>
-  </data>
-  <data name="SuccesfulRegistration" xml:space="preserve">
-    <value>Your account has been created</value>
-  </data>
-  <data name="SuccesfulReset" xml:space="preserve">
-    <value>Your account password has been changed successfully</value>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Naujas slaptažodis</value>
   </data>
 </root>

@@ -37,6 +37,7 @@ namespace MvcTemplate.Components.Mail
             MailMessage email = new MailMessage(sender, to, subject, body);
             email.SubjectEncoding = Encoding.UTF8;
             email.BodyEncoding = Encoding.UTF8;
+            email.IsBodyHtml = true;
 
             return email;
         }

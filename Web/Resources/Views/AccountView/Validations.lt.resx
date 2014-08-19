@@ -126,6 +126,9 @@
   <data name="IncorrectUsernameOrPassword" xml:space="preserve">
     <value>Naudotojo vardas arba slaptažodis yra neteisingas.</value>
   </data>
+  <data name="RecoveryTokenExpired" xml:space="preserve">
+    <value>Atkūrimo galiojimo laikas yra pasibaigęs.</value>
+  </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
     <value>Vartotojo vardas jau užimtas.</value>
   </data>

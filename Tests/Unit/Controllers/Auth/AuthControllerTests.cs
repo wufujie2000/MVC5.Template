@@ -17,6 +17,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
     [TestFixture]
     public class AuthControllerTests : AControllerTests
     {
+        private AccountRecoveryView accountRecovery;
+        private AccountResetView accountReset;
         private AccountLoginView accountLogin;
         private IAccountValidator validator;
         private AuthController controller;
@@ -29,6 +31,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
 
+            accountRecovery = ObjectFactory.CreateAccountRecoveryView();
+            accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = ObjectFactory.CreateAccountView();
 
@@ -130,6 +134,197 @@ namespace MvcTemplate.Tests.Unit.Controllers.Auth
             service.IsLoggedIn().Returns(false);
 
             RouteValueDictionary actual = (controller.Register(account) as RedirectToRouteResult).RouteValues;
+
+            Assert.AreEqual("Login", actual["action"]);
+            Assert.IsNull(actual["controller"]);
+            Assert.IsNull(actual["language"]);
+            Assert.IsNull(actual["area"]);
+        }
+
+        #endregion
+
+        #region Method: Recover()
+
+        [Test]
+        public void Recover_RedirectsToDefaultlIfAlreadyLoggedIn()
+        {
+            service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            ActionResult expected = controller.RedirectToDefault();
+            ActionResult actual = controller.Recover();
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Recover_ReturnsNullModelIfNotLoggedIn()
+        {
+            service.IsLoggedIn().Returns(false);
+
+            Object model = (controller.Recover() as ViewResult).Model;
+
+            Assert.IsNull(model);
+        }
+
+        #endregion
+
+        #region Method: Recover(AccountRecoveryView account)
+
+        [Test]
+        public void Recover_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        {
+            service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            ActionResult expected = controller.RedirectToDefault();
+            ActionResult actual = controller.Recover(null);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Recover_ReturnsSameModelIfCanNotRecover()
+        {
+            validator.CanRecover(accountRecovery).Returns(false);
+            service.IsLoggedIn().Returns(false);
+
+            Object actual = (controller.Recover(accountRecovery) as ViewResult).Model;
+            Object expected = accountRecovery;
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Recover_RecoversAccount()
+        {
+            validator.CanRecover(accountRecovery).Returns(true);
+
+            controller.Recover(accountRecovery);
+
+            service.Received().Recover(accountRecovery);
+        }
+
+        [Test]
+        public void Recover_AddsRecoveryInformationMessage()
+        {
+            validator.CanRecover(accountRecovery).Returns(true);
+            service.IsLoggedIn().Returns(false);
+
+            controller.Recover(accountRecovery);
+
+            Alert actual = controller.Alerts.First();
+
+            Assert.AreEqual(Messages.RecoveryInformation, actual.Message);
+            Assert.AreEqual(AlertTypes.Info, actual.Type);
+            Assert.AreEqual(0, actual.FadeoutAfter);
+        }
+
+        [Test]
+        public void Recover_RedirectsToLoginAfterSuccessfulRecovery()
+        {
+            validator.CanRecover(accountRecovery).Returns(true);
+            service.IsLoggedIn().Returns(false);
+
+            RouteValueDictionary actual = (controller.Recover(accountRecovery) as RedirectToRouteResult).RouteValues;
+
+            Assert.AreEqual("Login", actual["action"]);
+            Assert.IsNull(actual["controller"]);
+            Assert.IsNull(actual["language"]);
+            Assert.IsNull(actual["area"]);
+        }
+
+        #endregion
+
+        #region Method: Reset()
+
+        [Test]
+        public void Reset_RedirectsToDefaultlIfAlreadyLoggedIn()
+        {
+            service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            ActionResult expected = controller.RedirectToDefault();
+            ActionResult actual = controller.Reset(String.Empty);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Reset_ReturnsNullModelIfNotLoggedIn()
+        {
+            service.IsLoggedIn().Returns(false);
+
+            Object model = (controller.Reset(String.Empty) as ViewResult).Model;
+
+            Assert.IsNull(model);
+        }
+
+        #endregion
+
+        #region Method: Reset(AccountResetView account)
+
+        [Test]
+        public void Reset_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        {
+            service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            ActionResult expected = controller.RedirectToDefault();
+            ActionResult actual = controller.Reset(accountReset);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Reset_RedirectsToRecoverIfCanNotReset()
+        {
+            service.IsLoggedIn().Returns(false);
+            validator.CanReset(accountReset).Returns(false);
+
+            Object actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues["action"];
+            Object expected = "Recover";
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Reset_ResetsAccount()
+        {
+            service.IsLoggedIn().Returns(false);
+            validator.CanReset(accountReset).Returns(true);
+
+            controller.Reset(accountReset);
+
+            service.Received().Reset(accountReset);
+        }
+
+        [Test]
+        public void Reset_AddsSuccessfulResetMessage()
+        {
+            service.IsLoggedIn().Returns(false);
+            validator.CanReset(accountReset).Returns(true);
+
+            controller.Reset(accountReset);
+
+            Alert actual = controller.Alerts.First();
+
+            Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
+            Assert.AreEqual(Messages.SuccesfulReset, actual.Message);
+            Assert.AreEqual(AlertTypes.Success, actual.Type);
+        }
+
+        [Test]
+        public void Reset_AfterSuccesfulResetRedirectsToLogin()
+        {
+            service.IsLoggedIn().Returns(false);
+            validator.CanReset(accountReset).Returns(true);
+
+            RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
 
             Assert.AreEqual("Login", actual["action"]);
             Assert.IsNull(actual["controller"]);

@@ -8,7 +8,6 @@ namespace MvcTemplate.Objects
     {
         [ReadOnly(true)]
         public String Username { get; set; }
-        public String Email { get; set; }
 
         public String RoleId { get; set; }
         public String RoleName { get; set; }

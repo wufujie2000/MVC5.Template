@@ -1,4 +1,4 @@
-﻿@model AccountView
+﻿@model AccountRecoveryView
 
 <div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
 <div class="separator"></div>
@@ -12,19 +12,11 @@
     <div class="auth-content">
         @using (Html.InputGroup())
         {
-            @Html.AuthUsernameFor(model => model.Username, autocomplete: false)
-        }
-        @using (Html.InputGroup())
-        {
-            @Html.AuthPasswordFor(model => model.Password, autocomplete: false)
-        }
-        @using (Html.InputGroup())
-        {
             @Html.AuthEmailFor(model => model.Email)
         }
     </div>
 
-    @Html.Submit(MvcTemplate.Resources.Shared.Resources.Register)
+    @Html.Submit(MvcTemplate.Resources.Shared.Resources.Recover)
 }
 
 <div class="separator"></div>

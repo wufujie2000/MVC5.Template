@@ -12,6 +12,8 @@ namespace MvcTemplate.Services
         IEnumerable<AccountView> GetViews();
         TView GetView<TView>(String id) where TView : BaseView;
 
+        void Recover(AccountRecoveryView view);
+        void Reset(AccountResetView view);
         void Register(AccountView view);
         void Edit(ProfileEditView view);
         void Edit(AccountEditView view);

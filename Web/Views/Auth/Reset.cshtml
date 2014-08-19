@@ -1,0 +1,22 @@
+﻿@model AccountResetView
+
+<div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
+<div class="separator"></div>
+
+@using (Html.BeginForm())
+{
+    @Html.Partial("_AuthAlerts")
+
+    @Html.AntiForgeryToken()
+
+    <div class="auth-content">
+        @using (Html.InputGroup())
+        {
+            @Html.AuthPasswordFor(model => model.NewPassword, autocomplete: false)
+        }
+    </div>
+
+    @Html.Submit(MvcTemplate.Resources.Shared.Resources.Submit)
+}
+
+<div class="separator"></div>

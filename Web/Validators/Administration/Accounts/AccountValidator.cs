@@ -19,6 +19,20 @@ namespace MvcTemplate.Validators
             this.hasher = hasher;
         }
 
+        public Boolean CanRecover(AccountRecoveryView view)
+        {
+            Boolean isValid = RecoveryEmailExists(view.Email);
+            isValid &= ModelState.IsValid;
+
+            return isValid;
+        }
+        public Boolean CanReset(AccountResetView view)
+        {
+            Boolean isValid = IsValidResetToken(view.Token);
+            isValid &= ModelState.IsValid;
+
+            return isValid;
+        }
         public Boolean CanLogin(AccountLoginView view)
         {
             Boolean isValid = IsAuthenticated(view.Username, view.Password);
@@ -110,6 +124,26 @@ namespace MvcTemplate.Validators
                 ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 
             return isCorrectPassword;
+        }
+
+        private Boolean RecoveryEmailExists(String email)
+        {
+            return UnitOfWork
+                .Repository<Account>()
+                .Any(account => account.Email.ToUpper() == email.ToUpper());
+        }
+        private Boolean IsValidResetToken(String token)
+        {
+            Boolean isValid = UnitOfWork
+                .Repository<Account>()
+                .Any(account =>
+                    account.RecoveryToken == token &&
+                    account.RecoveryTokenExpirationDate > DateTime.Now);
+
+            if (!isValid)
+                ModelState.AddModelError(String.Empty, Validations.RecoveryTokenExpired);
+
+            return isValid;
         }
     }
 }

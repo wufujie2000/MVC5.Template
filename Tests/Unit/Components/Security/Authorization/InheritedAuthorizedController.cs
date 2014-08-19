@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Components.Security.Authorization
+namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class InheritedAuthorizedController : AuthorizedController
     {

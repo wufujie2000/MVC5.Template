@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         {
             html.ViewContext.HttpContext.Server.MapPath("/TestDomain/Scripts/Shared/Area/Controller/controller.js").Returns(filePath);
             html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
-            
+
             String expected = "<script src=\"/TestDomain/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
 

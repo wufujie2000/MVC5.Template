@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
@@ -17,8 +18,8 @@ namespace MvcTemplate.Tests.Unit.Validators
     public class AccountValidatorTests
     {
         private AccountValidator validator;
-        private IHasher hasher;
         private Context context;
+        private IHasher hasher;
 
         [SetUp]
         public void SetUp()
@@ -42,6 +43,76 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.Dispose();
             HttpContext.Current = null;
         }
+
+        #region Method: CanRecover(AccountRecoveryView view)
+
+        [Test]
+        public void CanRecover_CanNotRecoverAccountWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(validator.CanRecover(new AccountRecoveryView()));
+        }
+
+        [Test]
+        public void CanRecover_CanNotRecoverAccountWithNotExistingEmail()
+        {
+            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            account.Email = null;
+
+            Assert.IsFalse(validator.CanRecover(account));
+        }
+
+        [Test]
+        public void CanRecover_CanRecoverValidAccount()
+        {
+            Assert.IsTrue(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
+        }
+
+        #endregion
+
+        #region Method: CanReset(AccountResetView view)
+
+        [Test]
+        public void CanReset_CanNotResetAccountWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(validator.CanReset(new AccountResetView()));
+        }
+
+        [Test]
+        public void CanReset_CanNotResetAccountWithExpiredToken()
+        {
+            Account account = context.Set<Account>().Single();
+            account.RecoveryTokenExpirationDate = DateTime.Now;
+            context.SaveChanges();
+
+            Assert.IsFalse(validator.CanReset(ObjectFactory.CreateAccountResetView()));
+        }
+
+        [Test]
+        public void CanReset_AddsErorrMessageThenCanNotResetAccountWithExpiredToken()
+        {
+            Account account = context.Set<Account>().Single();
+            account.RecoveryTokenExpirationDate = DateTime.Now;
+            context.SaveChanges();
+
+            validator.CanReset(ObjectFactory.CreateAccountResetView());
+
+            String actual = validator.ModelState[String.Empty].Errors[0].ErrorMessage;
+            String expected = Validations.RecoveryTokenExpired;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void CanReset_CanResetValidAccount()
+        {
+            Assert.IsTrue(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
+        }
+
+        #endregion
 
         #region Method: CanLogin(AccountLoginView view)
 

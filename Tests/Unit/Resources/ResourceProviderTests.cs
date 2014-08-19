@@ -6,7 +6,7 @@ using System;
 using System.Web;
 using System.Web.Routing;
 
-namespace MvcTemplate.Tests.Unit.Resources.Tests
+namespace MvcTemplate.Tests.Unit.Resources
 {
     [TestFixture]
     public class ResourceProviderTests

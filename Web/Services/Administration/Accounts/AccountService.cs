@@ -1,21 +1,27 @@
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 
 namespace MvcTemplate.Services
 {
     public class AccountService : BaseService, IAccountService
     {
+        private IMailClient mailClient;
         private IHasher hasher;
 
-        public AccountService(IUnitOfWork unitOfWork, IHasher hasher)
+        public AccountService(IUnitOfWork unitOfWork, IMailClient mailClient, IHasher hasher)
             : base(unitOfWork)
         {
+            this.mailClient = mailClient;
             this.hasher = hasher;
         }
 
@@ -40,6 +46,37 @@ namespace MvcTemplate.Services
             return UnitOfWork.Repository<Account>().GetById<TView>(id);
         }
 
+        public void Recover(AccountRecoveryView view)
+        {
+            Account account = UnitOfWork
+                .Repository<Account>()
+                .Single(acc => acc.Email.ToUpper() == view.Email.ToUpper());
+
+            account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
+            account.RecoveryToken = Guid.NewGuid().ToString();
+
+            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Commit();
+
+            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            String url = String.Format("{0}://{1}{2}",
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.Url.Authority,
+                urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }));
+            String recoveryEmailBody = String.Format(Messages.RecoveryEmailBody, url);
+
+            mailClient.Send(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
+        }
+        public void Reset(AccountResetView view)
+        {
+            Account account = UnitOfWork.Repository<Account>().Single(acc => acc.RecoveryToken == view.Token);
+            account.Passhash = hasher.HashPassword(view.NewPassword);
+            account.RecoveryTokenExpirationDate = null;
+            account.RecoveryToken = null;
+
+            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Commit();
+        }
         public void Register(AccountView view)
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);

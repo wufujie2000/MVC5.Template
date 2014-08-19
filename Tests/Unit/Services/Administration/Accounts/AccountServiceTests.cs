@@ -1,8 +1,10 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
+using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
@@ -12,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
 
 namespace MvcTemplate.Tests.Unit.Services
@@ -20,6 +23,7 @@ namespace MvcTemplate.Tests.Unit.Services
     public class AccountServiceTests
     {
         private AccountService service;
+        private IMailClient mailClient;
         private String accountId;
         private Context context;
         private IHasher hasher;
@@ -29,11 +33,12 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
+            mailClient = Substitute.For<IMailClient>();
             HttpContext.Current = new HttpMock().HttpContext;
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
-            service = new AccountService(new UnitOfWork(context), hasher);
+            service = new AccountService(new UnitOfWork(context), mailClient, hasher);
 
             TearDownData();
             SetUpData();
@@ -115,6 +120,65 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
+        #region Method: Recover(AccountRecoveryView view)
+
+        [Test]
+        public void Recover_UpdatesAccountRecoveryInformation()
+        {
+            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            String oldToken = context.Set<Account>().Single().RecoveryToken;
+            account.Email = account.Email.ToLower();
+
+            service.Recover(account);
+
+            Account actual = context.Set<Account>().Single();
+
+            Assert.AreEqual(actual.RecoveryTokenExpirationDate.Value.Ticks, DateTime.Now.AddMinutes(30).Ticks, 10000000);
+            Assert.AreNotEqual(oldToken, actual.RecoveryToken);
+            Assert.IsNotNull(actual.RecoveryToken);
+        }
+
+        [Test]
+        public void Recover_SendsRecoveryInformation()
+        {
+            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            Account recoveredAccount = context.Set<Account>().Single();
+
+            service.Recover(account);
+
+            String expectedEmail = account.Email;
+            String expectedEmailSubject = Messages.RecoveryEmailSubject;
+            String expectedEmailBody = String.Format(Messages.RecoveryEmailBody,
+                String.Format("{0}://{1}{2}",
+                    HttpContext.Current.Request.Url.Scheme,
+                    HttpContext.Current.Request.Url.Authority,
+                    urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken })));
+
+            mailClient.Received().Send(expectedEmail, expectedEmailSubject, expectedEmailBody);
+        }
+
+        #endregion
+
+        #region Method: Reset(AccountResetView view)
+
+        [Test]
+        public void Reset_ResetsAccount()
+        {
+            AccountResetView accountReset = ObjectFactory.CreateAccountResetView();
+            hasher.HashPassword(accountReset.NewPassword).Returns("Reset");
+
+            service.Reset(accountReset);
+
+            Account actual = context.Set<Account>().Single();
+
+            Assert.IsNull(actual.RecoveryTokenExpirationDate);
+            Assert.AreEqual("Reset", actual.Passhash);
+            Assert.IsNull(actual.RecoveryToken);
+        }
+
+        #endregion
+
         #region Method: Register(AccountView view)
 
         [Test]
@@ -130,8 +194,10 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.IsNull(actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.RecoveryToken);
             Assert.IsNull(actual.RoleId);
         }
 
@@ -149,7 +215,9 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault();
 
+            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(hasher.HashPassword(profile.NewPassword), actual.Passhash);
+            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
@@ -201,7 +269,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
         }
 
@@ -227,20 +294,6 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Edit(account);
 
             String actual = context.Set<Account>().SingleOrDefault().Passhash;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void Edit_DoesNotEditAccountsEmail()
-        {
-            AccountEditView account = service.GetView<AccountEditView>(accountId);
-            String expected = account.Email;
-
-            account.Email = "Edit_DoesNotEditAccountsEmail@tests.com";
-            service.Edit(account);
-
-            String actual = context.Set<Account>().SingleOrDefault().Email;
 
             Assert.AreEqual(expected, actual);
         }

@@ -123,7 +123,19 @@
   <data name="ProfileUpdated" xml:space="preserve">
     <value>Paskyra atnaujinta sėkmingai</value>
   </data>
+  <data name="RecoveryEmailBody" xml:space="preserve">
+    <value> Norėdami atkurti savo paskyrą, spauskite &lt;a href="{0}"&gt;čia&lt;/a&gt;.</value>
+  </data>
+  <data name="RecoveryEmailSubject" xml:space="preserve">
+    <value>Paskyros atkūrimas</value>
+  </data>
+  <data name="RecoveryInformation" xml:space="preserve">
+    <value>Paskyros atkūrimo informacija išsiūsta į jūsų elektroninį paštą</value>
+  </data>
   <data name="SuccesfulRegistration" xml:space="preserve">
     <value>Jūsų paskyra sukurta sėkmingai</value>
+  </data>
+  <data name="SuccesfulReset" xml:space="preserve">
+    <value>Jūsų paskyros slaptažodis pakeistas sėkmingai</value>
   </data>
 </root>

@@ -133,6 +133,7 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Languages.xml" />
+    <Content Include="Views\Auth\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Auth\auth.css">
@@ -451,6 +452,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\Members\DbSet.cs.t4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Auth\Recover.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

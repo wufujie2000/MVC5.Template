@@ -160,11 +160,29 @@ namespace MvcTemplate.Resources.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recover.
+        /// </summary>
+        public static string AuthRecover {
+            get {
+                return ResourceManager.GetString("AuthRecover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string AuthRegister {
             get {
                 return ResourceManager.GetString("AuthRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string AuthReset {
+            get {
+                return ResourceManager.GetString("AuthReset", resourceCulture);
             }
         }
         

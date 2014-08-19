@@ -88,6 +88,15 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recovery token is already expired..
+        /// </summary>
+        public static string RecoveryTokenExpired {
+            get {
+                return ResourceManager.GetString("RecoveryTokenExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username is already taken..
         /// </summary>
         public static string UsernameIsAlreadyTaken {

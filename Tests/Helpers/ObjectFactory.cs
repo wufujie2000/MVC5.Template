@@ -22,7 +22,10 @@ namespace MvcTemplate.Tests.Helpers
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
-                Email = TestId + instanceNumber.ToString() + "@tests.com"
+                Email = TestId + instanceNumber.ToString() + "@tests.com",
+
+                RecoveryToken = TestId + instanceNumber.ToString(),
+                RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5)
             };
         }
         public static AccountView CreateAccountView(Int32 instanceNumber = 1)
@@ -52,7 +55,6 @@ namespace MvcTemplate.Tests.Helpers
             {
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
                 RoleName = "Name" + TestId + instanceNumber.ToString(),
                 RoleId = TestId + instanceNumber.ToString(),
             };
@@ -64,6 +66,24 @@ namespace MvcTemplate.Tests.Helpers
                 Id = TestId + instanceNumber.ToString(),
                 Username = "Username" + TestId + instanceNumber.ToString(),
                 Password = "Password1"
+            };
+        }
+        public static AccountRecoveryView CreateAccountRecoveryView(Int32 instanceNumber = 1)
+        {
+            return new AccountRecoveryView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+                Email = TestId + instanceNumber.ToString() + "@tests.com"
+            };
+        }
+        public static AccountResetView CreateAccountResetView(Int32 instanceNumber = 1)
+        {
+            return new AccountResetView()
+            {
+                Id = TestId + instanceNumber.ToString(),
+
+                Token = TestId + instanceNumber.ToString(),
+                NewPassword = "NewPassword1"
             };
         }
 

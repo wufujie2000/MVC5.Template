@@ -65,7 +65,6 @@ namespace MvcTemplate.Tests.Data.Mapping
             Assert.AreEqual(expected.Role.Name, actual.RoleName);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
         }
 
@@ -82,7 +81,6 @@ namespace MvcTemplate.Tests.Data.Mapping
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNull(actual.Passhash);
             Assert.IsNull(actual.Role);

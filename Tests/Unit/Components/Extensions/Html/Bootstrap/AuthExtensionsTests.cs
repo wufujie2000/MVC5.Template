@@ -151,11 +151,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<ul class=\"dropdown-menu\" role=\"menu\">" +
                     "<li>" +
                         "<a href=\"{0}\">" +
-                        "<img src=\"/TestDomain/Images/Flags/en.gif\" alt=\"\" /> English</a>" +
+                        "<img src=\"/TestDomain/Images/Flags/en.gif\" alt=\"\" />English</a>" +
                     "</li>" +
                     "<li>" +
                         "<a href=\"{1}\">" +
-                        "<img src=\"/TestDomain/Images/Flags/lt.gif\" alt=\"\" /> Lietuvių</a>" +
+                        "<img src=\"/TestDomain/Images/Flags/lt.gif\" alt=\"\" />Lietuvių</a>" +
                     "</li>" +
                 "</ul>",
                 HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en", controller = controller, area = area, Param1 = "Value1" })),

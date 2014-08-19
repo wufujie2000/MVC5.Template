@@ -32,5 +32,6 @@
   margin-top: 0;
 }
 .header-navigation > .btn .dropdown-menu img {
-  padding-bottom: 3px;
+  margin-bottom: 3px;
+  margin-right: 5px;
 }

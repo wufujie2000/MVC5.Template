@@ -109,7 +109,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 routeValues["language"] = language.Abbrevation;
                 TagBuilder languageItem = new TagBuilder("li");
                 languageItem.InnerHtml = String.Format(
-                    html.ActionLink("{0} {1}", routeValues["action"].ToString(), routeValues).ToString(),
+                    html.ActionLink("{0}{1}", routeValues["action"].ToString(), routeValues).ToString(),
                     String.Format("<img src=\"{0}Images/Flags/{1}.gif\" alt=\"\" />", appPath, language.Abbrevation),
                     language.Name);
 

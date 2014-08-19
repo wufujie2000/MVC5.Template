@@ -37,7 +37,7 @@ namespace MvcTemplate.Components.Extensions.Html
             icon.AddCssClass("fa fa-flag");
             span.AddCssClass("caret");
 
-            action.InnerHtml = String.Format("{0} {1} {2}", icon, ResourceProvider.GetActionTitle("Language"), span);
+            action.InnerHtml = String.Format("{0}{1}{2}", icon, ResourceProvider.GetActionTitle("Language"), span);
 
             return new MvcHtmlString(String.Format("{0}{1}", action, dropdown));
         }

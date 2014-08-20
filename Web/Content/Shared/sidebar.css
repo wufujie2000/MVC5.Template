@@ -57,7 +57,7 @@
   padding: 0;
 }
 .sidebar-navigation li ul li {
-  background-image: url(../../../Images/Shared/background.png);
+  background-image: url(../../Images/Shared/background.png);
 }
 .sidebar-navigation li ul a {
   background-color: rgba(0, 0, 0, 0.15);

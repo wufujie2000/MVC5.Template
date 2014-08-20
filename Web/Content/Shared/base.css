@@ -21,11 +21,11 @@ body {
   overflow-y: auto;
 }
 body.private {
-  background-image: url(../../../Images/Shared/background.png);
+  background-image: url(../../Images/Shared/background.png);
   background-color: #31353c;
 }
 body.public {
-  background-image: url(../../../Images/Shared/content-background.png);
+  background-image: url(../../Images/Shared/content-background.png);
   background-color: #f2f2f2;
 }
 .separator {

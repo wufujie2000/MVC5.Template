@@ -21,25 +21,6 @@ namespace MvcTemplate.Tests.Unit.Objects
             HttpContext.Current = null;
         }
 
-        #region Constructor: Log()
-
-        [Test]
-        public void Log_SetsAccountId()
-        {
-            String expected = HttpContext.Current.User.Identity.Name;
-            String actual = new Log().AccountId;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void Log_LeavesNullMessage()
-        {
-            Assert.IsNull(new Log().Message);
-        }
-
-        #endregion
-
         #region Constructor: Log(String message)
 
         [Test]

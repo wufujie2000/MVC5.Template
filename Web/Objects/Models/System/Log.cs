@@ -13,11 +13,10 @@ namespace MvcTemplate.Objects
 
         public Log()
         {
-            AccountId = HttpContext.Current.User.Identity.Name;
         }
         public Log(String message)
-            : this()
         {
+            AccountId = HttpContext.Current.User.Identity.Name;
             Message = message;
         }
     }

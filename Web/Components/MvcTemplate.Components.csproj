@@ -67,7 +67,7 @@
     <Compile Include="Logging\IEntityLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Logging\LoggableEntry.cs" />
-    <Compile Include="Logging\LoggableEntryProperty.cs" />
+    <Compile Include="Logging\LoggablePropertyEntry.cs" />
     <Compile Include="Mail\IMailClient.cs" />
     <Compile Include="Mail\SmtpMailClient.cs" />
     <Compile Include="Mvc\Adapters\EmailAddressAdapter.cs" />

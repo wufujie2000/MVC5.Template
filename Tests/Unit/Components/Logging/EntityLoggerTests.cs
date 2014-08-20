@@ -9,7 +9,6 @@ using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
 using System.Web;
 
 namespace MvcTemplate.Tests.Unit.Components.Logging
@@ -107,7 +106,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Save();
 
             String actual = loggerContext.Set<Log>().First().Message;
-            String expected = FormExpectedMessage(entry);
+            String expected = new LoggableEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -176,21 +175,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Save();
 
             Assert.AreEqual(1, loggerContext.Set<Log>().Count());
-        }
-
-        private String FormExpectedMessage(DbEntityEntry entry)
-        {
-            LoggableEntry loggableEntry = new LoggableEntry(entry);
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.AppendFormat("{0} {1}:{2}",
-                loggableEntry.EntityType.Name,
-                loggableEntry.State.ToString().ToLower(),
-                Environment.NewLine);
-
-            foreach (LoggableEntryProperty property in loggableEntry.Properties)
-                messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
-
-            return messageBuilder.ToString();
         }
 
         private void TearDownData()

@@ -4,11 +4,11 @@ using System.Data.Entity.Infrastructure;
 
 namespace MvcTemplate.Components.Logging
 {
-    public class LoggableEntryProperty
+    public class LoggablePropertyEntry
     {
-        private String name;
-        private Object currentValue;
         private Object originalValue;
+        private Object currentValue;
+        private String name;
 
         public Boolean IsModified
         {
@@ -16,7 +16,7 @@ namespace MvcTemplate.Components.Logging
             private set;
         }
 
-        public LoggableEntryProperty(DbPropertyEntry entry)
+        public LoggablePropertyEntry(DbPropertyEntry entry)
         {
             currentValue = entry.EntityEntry.State == EntityState.Deleted ? entry.OriginalValue : entry.CurrentValue;
             originalValue = entry.EntityEntry.State == EntityState.Added ? entry.CurrentValue : entry.OriginalValue;

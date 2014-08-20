@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
 
 namespace MvcTemplate.Tests.Unit.Components.Logging
 {
@@ -37,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             context.Dispose();
         }
 
-        #region LoggableEntry(DbEntityEntry entry)
+        #region Constructor: LoggableEntry(DbEntityEntry entry)
 
         [Test]
         public void LoggableEntry_SetsEntityBaseTypeThenEntityIsProxied()
@@ -90,12 +91,25 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void LoggableEntry_CreatesProperties()
         {
-            IEnumerable<LoggableEntryProperty> actual = new LoggableEntry(entry).Properties;
-            List<LoggableEntryProperty> expected = new List<LoggableEntryProperty>();
+            IEnumerable<LoggablePropertyEntry> actual = new LoggableEntry(entry).Properties;
+            List<LoggablePropertyEntry> expected = new List<LoggablePropertyEntry>();
             foreach (String name in entry.CurrentValues.PropertyNames)
-                expected.Add(new LoggableEntryProperty(entry.Property(name)));
+                expected.Add(new LoggablePropertyEntry(entry.Property(name)));
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: ToString()
+
+        [Test]
+        public void ToString_FormsEntryRepresentation()
+        {
+            String actual = new LoggableEntry(entry).ToString();
+            String expected = FormExpectedMessage(entry);
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -112,6 +126,21 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         {
             context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
+        }
+
+        private String FormExpectedMessage(DbEntityEntry entry)
+        {
+            LoggableEntry loggableEntry = new LoggableEntry(entry);
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.AppendFormat("{0} {1}:{2}",
+                loggableEntry.EntityType.Name,
+                loggableEntry.State.ToString().ToLower(),
+                Environment.NewLine);
+
+            foreach (LoggablePropertyEntry property in loggableEntry.Properties)
+                messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
+
+            return messageBuilder.ToString();
         }
 
         #endregion

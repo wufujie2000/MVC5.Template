@@ -9,7 +9,7 @@ using System.Data.Entity.Infrastructure;
 namespace MvcTemplate.Tests.Unit.Components.Logging
 {
     [TestFixture]
-    public class LoggableEntryPropertyTests
+    public class LoggablePropertyEntryTests
     {
         private DbPropertyEntry entry;
 
@@ -25,44 +25,44 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             }
         }
 
-        #region Constructor: LoggableEntryProperty(DbPropertyEntry entry)
+        #region Constructor: LoggablePropertyEntry(DbPropertyEntry entry)
 
         [Test]
-        public void LoggableEntryProperty_IsNotModifiedIfPropertyIsNotModified()
+        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsNotModified()
         {
             entry.IsModified = false;
 
-            Assert.IsFalse(new LoggableEntryProperty(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
         }
 
         [Test]
-        public void LoggableEntryProperty_IsNotModifiedIfPropertyIsNotModifiedAndHasDifferentValues()
+        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsNotModifiedAndHasDifferentValues()
         {
             entry.OriginalValue = "Original";
             entry.CurrentValue = "Current";
             entry.IsModified = false;
 
-            Assert.IsFalse(new LoggableEntryProperty(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
         }
 
         [Test]
-        public void LoggableEntryProperty_IsNotModifiedIfPropertyIsModifiedAndHasSameValues()
+        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsModifiedAndHasSameValues()
         {
             entry.OriginalValue = "Original";
             entry.CurrentValue = "Original";
             entry.IsModified = true;
 
-            Assert.IsFalse(new LoggableEntryProperty(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
         }
 
         [Test]
-        public void LoggableEntryProperty_IsModifiedIfPropertyIsModifiedAndHasDifferentValues()
+        public void LoggablePropertyEntry_IsModifiedIfPropertyIsModifiedAndHasDifferentValues()
         {
             entry.OriginalValue = "Original";
             entry.CurrentValue = "Current";
             entry.IsModified = true;
 
-            Assert.IsTrue(new LoggableEntryProperty(entry).IsModified);
+            Assert.IsTrue(new LoggablePropertyEntry(entry).IsModified);
         }
 
         #endregion
@@ -76,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = true;
 
             String expected = String.Format("{0}: {1} => {2}", entry.Name, entry.OriginalValue, "{null}");
-            String actual = new LoggableEntryProperty(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = true;
 
             String expected = String.Format("{0}: {1} => {2}", entry.Name, "{null}", entry.CurrentValue);
-            String actual = new LoggableEntryProperty(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = false;
 
             String expected = String.Format("{0}: {1}", entry.Name, entry.OriginalValue);
-            String actual = new LoggableEntryProperty(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -112,7 +112,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = false;
 
             String expected = String.Format("{0}: {1}", entry.Name, "{null}");
-            String actual = new LoggableEntryProperty(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
         }

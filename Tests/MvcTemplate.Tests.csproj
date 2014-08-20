@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\Page\JavascriptExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Logging\LoggablePropertyEntryTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EmailAddressAdapterTests.cs" />
@@ -167,7 +168,6 @@
     <Compile Include="Unit\Controllers\SecurityTests.cs" />
     <Compile Include="Unit\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Unit\Components\Logging\EntityLoggerTests.cs" />
-    <Compile Include="Unit\Components\Logging\LoggableEntryPropertyTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggableEntryTests.cs" />
     <Compile Include="Unit\Data\Core\RepositoryTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />

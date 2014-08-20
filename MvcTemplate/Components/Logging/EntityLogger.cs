@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Text;
 
 namespace MvcTemplate.Components.Logging
 {
@@ -26,12 +25,12 @@ namespace MvcTemplate.Components.Logging
                 {
                     case EntityState.Added:
                     case EntityState.Deleted:
-                        context.Set<Log>().Add(new Log(Format(new LoggableEntry(entry))));
+                        context.Set<Log>().Add(new Log(new LoggableEntry(entry).ToString()));
                         break;
                     case EntityState.Modified:
                         LoggableEntry loggableEntry = new LoggableEntry(entry);
                         if (loggableEntry.HasChanges)
-                            context.Set<Log>().Add(new Log(Format(loggableEntry)));
+                            context.Set<Log>().Add(new Log(loggableEntry.ToString()));
                         break;
                 }
             }
@@ -39,20 +38,6 @@ namespace MvcTemplate.Components.Logging
         public virtual void Save()
         {
             context.SaveChanges();
-        }
-
-        private String Format(LoggableEntry entry)
-        {
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.AppendFormat("{0} {1}:{2}",
-                entry.EntityType.Name,
-                entry.State.ToString().ToLower(),
-                Environment.NewLine);
-
-            foreach (LoggableEntryProperty property in entry.Properties)
-                messageBuilder.AppendFormat("    {0}{1}", property, Environment.NewLine);
-
-            return messageBuilder.ToString();
         }
 
         public void Dispose()

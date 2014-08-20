@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Text;
 
 namespace MvcTemplate.Components.Logging
 {
@@ -24,7 +25,7 @@ namespace MvcTemplate.Components.Logging
             private set;
         }
 
-        public IEnumerable<LoggableEntryProperty> Properties
+        public IEnumerable<LoggablePropertyEntry> Properties
         {
             get;
             private set;
@@ -32,20 +33,26 @@ namespace MvcTemplate.Components.Logging
 
         public LoggableEntry(DbEntityEntry entry)
         {
-            List<LoggableEntryProperty> properties = new List<LoggableEntryProperty>();
             IEnumerable<String> propertyNames = entry.State == EntityState.Deleted
                 ? entry.GetDatabaseValues().PropertyNames
                 : entry.CurrentValues.PropertyNames;
 
-            foreach (String name in propertyNames)
-                properties.Add(new LoggableEntryProperty(entry.Property(name)));
-
-            State = entry.State;
-            Properties = properties;
-            HasChanges = properties.Any(property => property.IsModified);
             EntityType = entry.Entity.GetType();
-            if (EntityType.Namespace == "System.Data.Entity.DynamicProxies")
-                EntityType = EntityType.BaseType;
+            if (EntityType.Namespace == "System.Data.Entity.DynamicProxies") EntityType = EntityType.BaseType;
+            Properties = propertyNames.Select(name => new LoggablePropertyEntry(entry.Property(name)));
+            HasChanges = Properties.Any(property => property.IsModified);
+            State = entry.State;
+        }
+
+        public override String ToString()
+        {
+            StringBuilder entry = new StringBuilder();
+            entry.AppendFormat("{0} {1}:{2}", EntityType.Name, State.ToString().ToLower(), Environment.NewLine);
+
+            foreach (LoggablePropertyEntry property in Properties)
+                entry.AppendFormat("    {0}{1}", property, Environment.NewLine);
+
+            return entry.ToString();
         }
     }
 }

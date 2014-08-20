@@ -16,6 +16,9 @@
 .header-navigation > .btn > a .fa {
   margin-right: 5px;
 }
+.header-navigation > .btn > a .caret {
+  margin-left: 5px;
+}
 .header-navigation > .btn.open > a,
 .header-navigation > .btn:hover > a {
   background-color: #396b86;

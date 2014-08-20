@@ -35,6 +35,7 @@ namespace MvcTemplate.Tests.Unit.Services
             hasher = Substitute.For<IHasher>();
             mailClient = Substitute.For<IMailClient>();
             HttpContext.Current = new HttpMock().HttpContext;
+            Authorization.Provider = Substitute.For<IAuthProvider>();
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
@@ -47,6 +48,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [TearDown]
         public void TearDown()
         {
+            Authorization.Provider = null;
             HttpContext.Current = null;
             service.Dispose();
             context.Dispose();
@@ -296,6 +298,16 @@ namespace MvcTemplate.Tests.Unit.Services
             String actual = context.Set<Account>().SingleOrDefault().Passhash;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Edit_RefreshesAuthProvider()
+        {
+            AccountEditView account = service.GetView<AccountEditView>(accountId);
+
+            service.Edit(account);
+
+            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

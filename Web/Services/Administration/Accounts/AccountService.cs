@@ -6,7 +6,6 @@ using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -104,6 +103,8 @@ namespace MvcTemplate.Services
 
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
+
+            Authorization.Provider.Refresh();
         }
         public void Delete(String id)
         {

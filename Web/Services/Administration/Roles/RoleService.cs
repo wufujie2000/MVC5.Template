@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -86,12 +87,16 @@ namespace MvcTemplate.Services
             DeleteRolePrivileges(view);
             CreateRolePrivileges(view);
             UnitOfWork.Commit();
+
+            Authorization.Provider.Refresh();
         }
         public void Delete(String id)
         {
             RemoveRoleFromAccounts(id);
             UnitOfWork.Repository<Role>().Delete(id);
             UnitOfWork.Commit();
+
+            Authorization.Provider.Refresh();
         }
 
         private void CreateRole(RoleView view)

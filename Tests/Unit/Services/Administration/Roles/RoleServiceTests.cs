@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -27,6 +28,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             service = new RoleService(new UnitOfWork(context));
+            Authorization.Provider = Substitute.For<IAuthProvider>();
 
             TearDownData();
             SetUpData();
@@ -35,6 +37,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [TearDown]
         public void TearDown()
         {
+            Authorization.Provider = null;
             context.Dispose();
             service.Dispose();
         }
@@ -224,6 +227,14 @@ namespace MvcTemplate.Tests.Unit.Services
             CollectionAssert.AreEquivalent(expected, actual);
         }
 
+        [Test]
+        public void Edit_RefreshesAuthProvider()
+        {
+            service.Edit(service.GetView(role.Id));
+
+            Authorization.Provider.Received().Refresh();
+        }
+
         #endregion
 
         #region Method: Delete(String id)
@@ -249,6 +260,14 @@ namespace MvcTemplate.Tests.Unit.Services
             context = new TestingContext();
 
             Assert.IsNull(context.Set<Role>().SingleOrDefault());
+        }
+
+        [Test]
+        public void Delete_RefreshesAuthProvider()
+        {
+            service.Delete(role.Id);
+
+            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

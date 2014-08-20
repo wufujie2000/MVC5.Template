@@ -10,32 +10,19 @@ namespace MvcTemplate.Components.Security
 {
     public class AuthProvider : IAuthProvider, IDisposable
     {
-        private IEnumerable<Type> controllerTypes;
+        private Dictionary<String, IEnumerable<Privilege>> cache;
+        private IEnumerable<Type> controllers;
         private IUnitOfWork unitOfWork;
         private Type controllerType;
         private Boolean disposed;
 
         public AuthProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
         {
-            controllerType = typeof(Controller);
-            this.controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));
             this.unitOfWork = unitOfWork;
-        }
+            controllerType = typeof(Controller);
+            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));
 
-        public virtual IEnumerable<AccountPrivilege> GetAccountPrivileges(String accountId)
-        {
-            return unitOfWork.Repository<Account>()
-                .Where(account => account.Id == accountId)
-                .SelectMany(account => account.Role.RolePrivileges)
-                .Select(rolePrivilege => new AccountPrivilege()
-                {
-                    AccountId = accountId,
-
-                    Area = rolePrivilege.Privilege.Area,
-                    Controller = rolePrivilege.Privilege.Controller,
-                    Action = rolePrivilege.Privilege.Action
-                })
-                .ToList();
+            Refresh();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -43,29 +30,37 @@ namespace MvcTemplate.Components.Security
             if (AllowsUnauthorized(area, controller, action))
                 return true;
 
-             return unitOfWork
-                .Repository<Account>()
-                .Any(account =>
-                    account.Id == accountId &&
-                    account.Role.RolePrivileges.Any(rolePrivilege =>
-                        rolePrivilege.Privilege.Area == area &&
-                        rolePrivilege.Privilege.Controller == controller &&
-                        rolePrivilege.Privilege.Action == action));
-        }
-        public virtual Boolean IsAuthorizedFor(IEnumerable<AccountPrivilege> privileges, String area, String controller, String action)
-        {
-            if (AllowsUnauthorized(area, controller, action))
-                return true;
+            if (!cache.ContainsKey(accountId ?? String.Empty))
+                return false;
 
-            return privileges.Any(privilege =>
-                privilege.Area == area &&
-                privilege.Controller == controller &&
-                privilege.Action == action);
+            return cache[accountId]
+                .Any(privilege =>
+                    privilege.Area == area &&
+                    privilege.Action == action &&
+                    privilege.Controller == controller);
+        }
+
+        public virtual void Refresh()
+        {
+            cache = unitOfWork
+                .Repository<Account>()
+                .Where(account => account.RoleId != null)
+                .Select(account => new
+                {
+                    Id = account.Id,
+                    Privileges = account
+                        .Role
+                        .RolePrivileges
+                        .Select(rolePrivilege => rolePrivilege.Privilege)
+                })
+                .ToDictionary(
+                    account => account.Id,
+                    account => account.Privileges);
         }
 
         private Boolean AllowsUnauthorized(String area, String controller, String action)
         {
-            Type authorizedControllerType = GetController(area, controller);
+            Type authorizedControllerType = GetControllerType(area, controller);
             MethodInfo actionInfo = GetAction(authorizedControllerType, action);
 
             if (actionInfo.IsDefined(typeof(AuthorizeAttribute), false)) return false;
@@ -83,9 +78,9 @@ namespace MvcTemplate.Components.Security
 
             return true;
         }
-        private Type GetController(String area, String controller)
+        private Type GetControllerType(String area, String controller)
         {
-            return controllerTypes.First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
+            return controllers.First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
         }
         private MethodInfo GetAction(Type controller, String action)
         {

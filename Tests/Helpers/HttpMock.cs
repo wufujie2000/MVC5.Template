@@ -27,6 +27,22 @@ namespace MvcTemplate.Tests.Helpers
         {
             RouteTable.Routes
                 .MapRoute(
+                    "AdministrationMultilingual",
+                    "{language}/Administration/{controller}/{action}/{id}",
+                    new { area = "Administration", action = "Index", id = UrlParameter.Optional },
+                    new { language = "lt" },
+                    new[] { "MvcTemplate.Controllers.Administration" });
+
+            RouteTable.Routes
+                .MapRoute(
+                    "Administration",
+                    "Administration/{controller}/{action}/{id}",
+                    new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
+                    new { language = "en" },
+                    new[] { "MvcTemplate.Controllers.Administration" });
+
+            RouteTable.Routes
+                .MapRoute(
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },

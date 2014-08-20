@@ -1,5 +1,4 @@
 ﻿using Datalist;
-using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -11,6 +10,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
@@ -25,7 +25,6 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             HttpContext.Current = new HttpMock().HttpContext;
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
             datalist = new BaseDatalistStub<Role, RoleView>(unitOfWork);
 
             unitOfWork
@@ -36,7 +35,6 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [TearDown]
         public void TearDown()
         {
-            LocalizationManager.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -52,35 +50,14 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         [Test]
-        public void BaseDatalist_FormsDefaultDatalistUrl()
+        public void BaseDatalist_SetsDatalistUrl()
         {
-            HttpRequest request = HttpContext.Current.Request;
             datalist = new BaseDatalistStub<Role, RoleView>();
+            HttpRequest request = HttpContext.Current.Request;
+            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
 
+            String expected = urlHelper.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = String.Empty }, request.Url.Scheme);
             String actual = datalist.DatalistUrl;
-            String expected = String.Format("{0}://{1}/{2}/{3}",
-                request.Url.Scheme,
-                request.Url.Authority,
-                AbstractDatalist.Prefix,
-                typeof(Role).Name);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void BaseDatalist_FormsLocalizedDatalistUrl()
-        {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["language"] = "lt";
-            HttpRequest request = HttpContext.Current.Request;
-            datalist = new BaseDatalistStub<Role, RoleView>();
-
-            String actual = new BaseDatalistStub<Role, RoleView>().DatalistUrl;
-            String expected = String.Format("{0}://{1}/{2}/{3}/{4}",
-                request.Url.Scheme,
-                request.Url.Authority,
-                request.RequestContext.RouteData.Values["language"],
-                AbstractDatalist.Prefix,
-                typeof(Role).Name);
 
             Assert.AreEqual(expected, actual);
         }

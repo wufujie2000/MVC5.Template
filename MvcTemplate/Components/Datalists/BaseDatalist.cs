@@ -1,5 +1,4 @@
 ﻿using Datalist;
-using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -7,6 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Datalists
 {
@@ -22,22 +22,11 @@ namespace MvcTemplate.Components.Datalists
 
         public BaseDatalist()
         {
-            String applicationPath = HttpContext.Current.Request.ApplicationPath ?? "/";
-            if (!applicationPath.EndsWith("/"))
-                applicationPath += "/";
-
-            String language = (String)HttpContext.Current.Request.RequestContext.RouteData.Values["language"];
-            String defaultLanguage = LocalizationManager.Provider.DefaultLanguage.Abbrevation;
-            language = language == defaultLanguage ? String.Empty : language + "/";
-
+            HttpRequest request = HttpContext.Current.Request;
+            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
+            
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
-            DatalistUrl = String.Format("{0}://{1}{2}{3}{4}/{5}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                applicationPath,
-                language,
-                AbstractDatalist.Prefix,
-                typeof(TModel).Name);
+            DatalistUrl = urlHelper.Action(typeof(TModel).Name, AbstractDatalist.Prefix, new { area = String.Empty }, request.Url.Scheme);
         }
         public BaseDatalist(IUnitOfWork unitOfWork)
             : this()

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Text;
-using System.Web;
 
 namespace MvcTemplate.Components.Logging
 {
@@ -21,20 +20,18 @@ namespace MvcTemplate.Components.Logging
 
         public virtual void Log(IEnumerable<DbEntityEntry> entries)
         {
-            String accountId = HttpContext.Current.User.Identity.Name;
-
             foreach (DbEntityEntry entry in entries)
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
                     case EntityState.Deleted:
-                        context.Set<Log>().Add(new Log(accountId, Format(new LoggableEntry(entry))));
+                        context.Set<Log>().Add(new Log(Format(new LoggableEntry(entry))));
                         break;
                     case EntityState.Modified:
                         LoggableEntry loggableEntry = new LoggableEntry(entry);
                         if (loggableEntry.HasChanges)
-                            context.Set<Log>().Add(new Log(accountId, Format(loggableEntry)));
+                            context.Set<Log>().Add(new Log(Format(loggableEntry)));
                         break;
                 }
             }

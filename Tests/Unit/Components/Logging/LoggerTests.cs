@@ -3,7 +3,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
-using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -20,6 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [SetUp]
         public void SetUp()
         {
+            HttpContext.Current = new HttpMock().HttpContext;
             context = new TestingContext();
             logger = new Logger(context);
 
@@ -28,9 +28,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             Account account = ObjectFactory.CreateAccount();
             context.Set<Account>().Add(account);
             context.SaveChanges();
-
-            HttpContext.Current = new HttpMock().HttpContext;
-            HttpContext.Current.User.Identity.Name.Returns(account.Id);
         }
 
         [TearDown]
@@ -41,21 +38,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         #region Method: Log(String message)
-
-        [Test]
-        public void Log_LogsCurrentAccountId()
-        {
-            if (context.Set<Log>().Count() > 0)
-                Assert.Inconclusive();
-
-            logger.Log("Message");
-
-            String expected = HttpContext.Current.User.Identity.Name;
-            Log actualLog = context.Set<Log>().First();
-
-            Assert.AreEqual(1, context.Set<Log>().Count());
-            Assert.AreEqual(expected, actualLog.AccountId);
-        }
 
         [Test]
         public void Log_LogsMessage()

@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using System;
-using System.Web;
 
 namespace MvcTemplate.Components.Logging
 {
@@ -17,8 +16,7 @@ namespace MvcTemplate.Components.Logging
 
         public virtual void Log(String message)
         {
-            String accountId = HttpContext.Current.User.Identity.Name;
-            context.Set<Log>().Add(new Log(accountId, message));
+            context.Set<Log>().Add(new Log(message));
             context.SaveChanges();
         }
 

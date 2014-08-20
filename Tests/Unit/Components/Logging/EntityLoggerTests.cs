@@ -4,7 +4,6 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
-using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Data.Entity;
@@ -27,18 +26,16 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [SetUp]
         public void SetUp()
         {
+            dataContext = new TestingContext();
             loggerContext = new TestingContext();
             logger = new EntityLogger(loggerContext);
-            dataContext = new TestingContext();
+            HttpContext.Current = new HttpMock().HttpContext;
 
             TearDownData();
 
             Account account = ObjectFactory.CreateAccount();
             dataContext.Set<Account>().Add(account);
             dataContext.SaveChanges();
-
-            HttpContext.Current = new HttpMock().HttpContext;
-            HttpContext.Current.User.Identity.Name.Returns(account.Id);
 
             TestModel model = ObjectFactory.CreateTestModel();
             dataContext.Set<TestModel>().Add(model);
@@ -100,19 +97,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Save();
 
             Assert.IsFalse(loggerContext.Set<Log>().Any());
-        }
-
-        [Test]
-        public void Log_LogsCurrentAccountId()
-        {
-            entry.State = EntityState.Added;
-            logger.Log(new[] { entry });
-            logger.Save();
-
-            String actual = loggerContext.Set<Log>().First().AccountId;
-            String expected = HttpContext.Current.User.Identity.Name;
-
-            Assert.AreEqual(expected, actual);
         }
 
         [Test]

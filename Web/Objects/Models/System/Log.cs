@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace MvcTemplate.Objects
 {
@@ -12,10 +13,11 @@ namespace MvcTemplate.Objects
 
         public Log()
         {
+            AccountId = HttpContext.Current.User.Identity.Name;
         }
-        public Log(String accountId, String message)
+        public Log(String message)
+            : this()
         {
-            AccountId = accountId;
             Message = message;
         }
     }

@@ -121,7 +121,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
     <Content Include="Content\Datalist\datalist.css" />
+    <Content Include="Content\JQueryUI\jquery-ui-1.11.1.css" />
     <Content Include="Images\Datalist\loading.gif" />
+    <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.png" />
     <Content Include="Images\Shared\content-background.png" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
@@ -143,7 +145,6 @@
     <Content Include="Content\FontAwesome\font-awesome.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\GridMvc\gridmvc.css" />
-    <Content Include="Content\JQueryUI\jquery-ui-1.10.4.custom.css" />
     <Content Include="Content\JsTree\jstree.css" />
     <Content Include="Content\Shared\alerts.css">
       <DependentUpon>alerts.less</DependentUpon>
@@ -173,7 +174,6 @@
     <Content Include="Global.asax" />
     <Content Include="Images\Flags\en.gif" />
     <Content Include="Images\Flags\lt.gif" />
-    <Content Include="Images\JQueryUI\animated-overlay.gif" />
     <Content Include="Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\JQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -187,7 +187,6 @@
     <Content Include="Images\JQueryUI\ui-icons_454545_256x240.png" />
     <Content Include="Images\JQueryUI\ui-icons_888888_256x240.png" />
     <Content Include="Images\JQueryUI\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\JsTree\32px.png" />
     <Content Include="Images\JsTree\40px.png" />
     <Content Include="Images\JsTree\throbber.gif" />
@@ -212,9 +211,9 @@
     <Content Include="Scripts\JQuery\jquery-2.1.1.min.js">
       <DependentUpon>jquery-2.1.1.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui-1.10.4.min.js">
-      <DependentUpon>jquery-ui-1.10.4.js</DependentUpon>
+    <Content Include="Scripts\JQueryUI\jquery-ui-1.11.1.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui-1.11.1.min.js">
+      <DependentUpon>jquery-ui-1.11.1.js</DependentUpon>
     </Content>
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />

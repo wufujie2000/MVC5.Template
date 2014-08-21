@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false, maxLength: 128),
                         Passhash = c.String(nullable: false),
-                        Email = c.String(nullable: false),
+                        Email = c.String(nullable: false, maxLength: 256),
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
@@ -24,6 +24,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.Username, unique: true)
+                .Index(t => t.Email, unique: true)
                 .Index(t => t.RoleId);
             
             CreateTable(
@@ -96,6 +97,7 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.Roles", new[] { "Name" });
             DropIndex("dbo.Accounts", new[] { "RoleId" });
+            DropIndex("dbo.Accounts", new[] { "Email" });
             DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.TestModels");
             DropTable("dbo.Logs");

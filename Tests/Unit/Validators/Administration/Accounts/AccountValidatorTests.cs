@@ -8,9 +8,9 @@ using MvcTemplate.Validators;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
@@ -287,10 +287,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
-            Account takenAccount = ObjectFactory.CreateAccount();
-            takenAccount.Username += "1";
-            takenAccount.Id += "1";
-
+            Account takenAccount = ObjectFactory.CreateAccount(2);
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
@@ -303,10 +300,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenUsername()
         {
-            Account takenAccount = ObjectFactory.CreateAccount();
-            takenAccount.Username += "1";
-            takenAccount.Id += "1";
-
+            Account takenAccount = ObjectFactory.CreateAccount(2);
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
@@ -341,14 +335,12 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount();
-            takenEmailAccount.Username += "1";
-            takenEmailAccount.Id += "1";
-
+            Account takenEmailAccount = ObjectFactory.CreateAccount(2);
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Email = takenEmailAccount.Email;
 
             Assert.IsFalse(validator.CanEdit(profile));
         }
@@ -356,14 +348,12 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount();
-            takenEmailAccount.Username += "1";
-            takenEmailAccount.Id += "1";
-
+            Account takenEmailAccount = ObjectFactory.CreateAccount(2);
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            profile.Email = takenEmailAccount.Email;
             validator.CanEdit(profile);
 
             String expected = Validations.EmailIsAlreadyUsed;

@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Controllers.Datalist
+namespace MvcTemplate.Controllers
 {
     [AllowUnauthorized]
     public class DatalistController : BaseController

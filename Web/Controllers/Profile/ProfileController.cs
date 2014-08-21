@@ -6,7 +6,7 @@ using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Controllers.Profile
+namespace MvcTemplate.Controllers
 {
     [AllowUnauthorized]
     public class ProfileController : ValidatedController<IAccountService, IAccountValidator>

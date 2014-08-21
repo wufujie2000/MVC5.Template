@@ -1,7 +1,7 @@
 ﻿using Datalist;
 using MvcTemplate.Components.Datalists;
 using MvcTemplate.Components.Mvc;
-using MvcTemplate.Controllers.Datalist;
+using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Helpers;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Controllers.Datalist
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class DatalistControllerTests

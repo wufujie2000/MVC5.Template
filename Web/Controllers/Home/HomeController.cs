@@ -2,7 +2,7 @@
 using MvcTemplate.Services;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Controllers.Home
+namespace MvcTemplate.Controllers
 {
     [AllowUnauthorized]
     public class HomeController : ServicedController<IAccountService>

@@ -15,16 +15,18 @@ namespace MvcTemplate.Controllers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}",
                     new { controller = "Home", action = "Index" },
-                    new { language = "lt", area = String.Empty },
-                    new[] { "MvcTemplate.Controllers.Home" });
+                    new { language = "lt" },
+                    new[] { "MvcTemplate.Controllers" })
+                .DataTokens["UseNamespaceFallback"] = false;
 
             routes
                 .MapRoute(
                     "Default",
                     "{controller}/{action}",
                     new { language = "en", controller = "Home", action = "Index" },
-                    new { language = "en", area = String.Empty },
-                    new[] { "MvcTemplate.Controllers.Home" });
+                    new { language = "en" },
+                    new[] { "MvcTemplate.Controllers" })
+                .DataTokens["UseNamespaceFallback"] = false;
         }
     }
 }

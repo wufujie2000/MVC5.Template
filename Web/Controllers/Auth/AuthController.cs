@@ -6,7 +6,7 @@ using MvcTemplate.Validators;
 using System;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Controllers.Auth
+namespace MvcTemplate.Controllers
 {
     [AllowAnonymous]
     public class AuthController : ValidatedController<IAccountService, IAccountValidator>

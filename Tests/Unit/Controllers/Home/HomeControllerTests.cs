@@ -1,16 +1,13 @@
-﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Controllers.Home;
-using MvcTemplate.Resources.Shared;
+﻿using MvcTemplate.Controllers;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Controllers.Home
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class HomeControllerTests

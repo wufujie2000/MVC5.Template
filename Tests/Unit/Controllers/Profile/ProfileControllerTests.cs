@@ -1,5 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Controllers.Profile;
+using MvcTemplate.Controllers;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Controllers.Profile
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class ProfileControllerTests

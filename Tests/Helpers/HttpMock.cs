@@ -31,7 +31,8 @@ namespace MvcTemplate.Tests.Helpers
                     "{language}/{area}/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt", area = "Administration" },
-                    new[] { "MvcTemplate.Controllers.Administration" });
+                    new[] { "MvcTemplate.Controllers.Administration" })
+                .DataTokens["UseNamespaceFallback"] = false;
 
             RouteTable.Routes
                 .MapRoute(
@@ -39,21 +40,26 @@ namespace MvcTemplate.Tests.Helpers
                     "{area}/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "en", area = "Administration" },
-                    new[] { "MvcTemplate.Controllers.Administration" });
+                    new[] { "MvcTemplate.Controllers.Administration" })
+                .DataTokens["UseNamespaceFallback"] = false;
 
             RouteTable.Routes
                 .MapRoute(
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt", area = String.Empty });
+                    new { language = "lt" },
+                    new[] { "MvcTemplate.Controllers" })
+                .DataTokens["UseNamespaceFallback"] = false;
 
             RouteTable.Routes
                 .MapRoute(
                     "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en", area = String.Empty });
+                    new { language = "en" },
+                    new[] { "MvcTemplate.Controllers" })
+                .DataTokens["UseNamespaceFallback"] = false;
         }
 
         public HttpMock()

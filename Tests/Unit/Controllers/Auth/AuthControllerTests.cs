@@ -1,5 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Controllers.Auth;
+using MvcTemplate.Controllers;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MvcTemplate.Tests.Unit.Controllers.Auth
+namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class AuthControllerTests : AControllerTests

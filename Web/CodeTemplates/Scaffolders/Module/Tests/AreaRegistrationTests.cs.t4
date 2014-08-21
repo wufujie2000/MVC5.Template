@@ -43,12 +43,13 @@ namespace <#= Model.ControllerTestNamespace #>
             Route actual = registrationContext.Routes["<#= Model.Area #>"] as Route;
 
             CollectionAssert.AreEqual(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.AreEqual("<#= Model.Area #>/{controller}/{action}/{id}", actual.Url);
+            Assert.AreEqual("{area}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
+            Assert.AreEqual("<#= Model.Area #>", actual.Constraints["area"]);
             Assert.AreEqual("en", actual.Constraints["language"]);
-            Assert.AreEqual("en", actual.Defaults["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
+            Assert.AreEqual("en", actual.Defaults["language"]);
         }
 
         [Test]
@@ -57,8 +58,9 @@ namespace <#= Model.ControllerTestNamespace #>
             Route actual = registrationContext.Routes["<#= Model.Area #>Multilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.AreEqual("{language}/<#= Model.Area #>/{controller}/{action}/{id}", actual.Url);
+            Assert.AreEqual("{language}/{area}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.AreEqual("<#= Model.Area #>", actual.Constraints["area"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
             Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);

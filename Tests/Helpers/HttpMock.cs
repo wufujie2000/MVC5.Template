@@ -86,10 +86,10 @@ namespace MvcTemplate.Tests.Helpers
             HttpContextBase.User.Returns(user);
             HttpContext.User = user;
 
-            request.RequestContext.RouteData.Values["controller"] = "Controller";
-            request.RequestContext.RouteData.Values["action"] = "Action";
+            request.RequestContext.RouteData.Values["area"] = "Administration";
+            request.RequestContext.RouteData.Values["controller"] = "Accounts";
+            request.RequestContext.RouteData.Values["action"] = "Details";
             request.RequestContext.RouteData.Values["language"] = "en";
-            request.RequestContext.RouteData.Values["area"] = "Area";
         }
     }
 

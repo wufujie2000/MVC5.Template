@@ -94,23 +94,23 @@ namespace MvcTemplate.Components.Extensions.Html
 
         internal static TagBuilder FormLanguagesDropdownMenu(HtmlHelper html)
         {
-            String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
             NameValueCollection query = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
+            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             TagBuilder dropdownMenu = new TagBuilder("ul");
             dropdownMenu.MergeAttribute("role", "menu");
             dropdownMenu.AddCssClass("dropdown-menu");
             AddQueryValues(query, routeValues);
-            if (!appPath.EndsWith("/"))
-                appPath += "/";
 
             foreach (Language language in LocalizationManager.Provider.Languages)
             {
+                String imageSrc = urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation));
                 routeValues["language"] = language.Abbrevation;
                 TagBuilder languageItem = new TagBuilder("li");
+
                 languageItem.InnerHtml = String.Format(
                     html.ActionLink("{0}{1}", routeValues["action"].ToString(), routeValues).ToString(),
-                    String.Format("<img src=\"{0}Images/Flags/{1}.gif\" alt=\"\" />", appPath, language.Abbrevation),
+                    String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc),
                     language.Name);
 
                 dropdownMenu.InnerHtml += languageItem.ToString();

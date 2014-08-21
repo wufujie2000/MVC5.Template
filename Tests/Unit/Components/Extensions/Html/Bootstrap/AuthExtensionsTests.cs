@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -133,33 +132,33 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AuthLanguageSelect_FormsLanguageSelectGroupElements()
         {
             RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
-            html.ViewContext.HttpContext.Request.ApplicationPath.Returns("/TestDomain");
-            String controller = routeValues["controller"].ToString();
+            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             String action = routeValues["action"].ToString();
-            String area = routeValues["area"].ToString();
 
             String actual = html.AuthLanguageSelect().ToString();
             String expected = String.Format(
                 "<span class=\"fa fa-flag\"></span>" +
                 "<div class=\"language-container dropdown-toggle\" data-toggle=\"dropdown\">" +
                     "<span class=\"current-language\">" +
-                        "<img alt=\"\" src=\"/TestDomain/Images/Flags/en.gif\" />" +
+                        "<img alt=\"\" src=\"{0}\" />" +
                         "English" +
                     "</span>" +
                     "<span class=\"caret\"></span>" +
                 "</div>" +
                 "<ul class=\"dropdown-menu\" role=\"menu\">" +
                     "<li>" +
-                        "<a href=\"{0}\">" +
-                        "<img src=\"/TestDomain/Images/Flags/en.gif\" alt=\"\" />English</a>" +
+                        "<a href=\"{2}\">" +
+                        "<img src=\"{0}\" alt=\"\" />English</a>" +
                     "</li>" +
                     "<li>" +
-                        "<a href=\"{1}\">" +
-                        "<img src=\"/TestDomain/Images/Flags/lt.gif\" alt=\"\" />Lietuvių</a>" +
+                        "<a href=\"{3}\">" +
+                        "<img src=\"{1}\" alt=\"\" />Lietuvių</a>" +
                     "</li>" +
                 "</ul>",
-                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "en", controller = controller, area = area, Param1 = "Value1" })),
-                HttpUtility.HtmlEncode(new UrlHelper(html.ViewContext.RequestContext).Action(action, new { language = "lt", controller = controller, area = area, Param1 = "Value1" })));
+                urlHelper.Content("~/Images/Flags/en.gif"),
+                urlHelper.Content("~/Images/Flags/lt.gif"),
+                urlHelper.Action(action, new { language = "en", Param1 = "Value1" }),
+                urlHelper.Action(action, new { language = "lt", Param1 = "Value1" }));
 
             Assert.AreEqual(expected, actual);
         }

@@ -31,10 +31,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentFormTitle_GetsTitle()
         {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Roles";
-
-            String expected = MvcTemplate.Resources.Form.Titles.AdministrationRoles;
+            String expected = MvcTemplate.Resources.Form.Titles.AdministrationAccounts;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -43,8 +40,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentFormTitle_GetsTitleWithoutArea()
         {
-            routeValues["area"] = null;
             routeValues["controller"] = "Profile";
+            routeValues["area"] = null;
 
             String expected = MvcTemplate.Resources.Form.Titles.Profile;
             String actual = ResourceProvider.GetCurrentFormTitle();
@@ -55,6 +52,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentFormTitle_OnFormNotFoundReturnsNull()
         {
+            routeValues["controller"] = "Controller";
+
             Assert.IsNull(ResourceProvider.GetCurrentFormTitle());
         }
 
@@ -65,11 +64,9 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentTableTitle_GetsTitle()
         {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Roles";
             routeValues["action"] = "Index";
 
-            String expected = MvcTemplate.Resources.Table.Titles.AdministrationRolesIndex;
+            String expected = MvcTemplate.Resources.Table.Titles.AdministrationAccountsIndex;
             String actual = ResourceProvider.GetCurrentTableTitle();
 
             Assert.AreEqual(expected, actual);
@@ -95,11 +92,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentContentTitle_GetsTitle()
         {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Roles";
-            routeValues["action"] = "Edit";
-
-            String expected = MvcTemplate.Resources.Content.Titles.AdministrationRolesEdit;
+            String expected = MvcTemplate.Resources.Content.Titles.AdministrationAccountsDetails;
             String actual = ResourceProvider.GetCurrentContentTitle();
 
             Assert.AreEqual(expected, actual);
@@ -108,9 +101,9 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentContentTitle_GetsTitleWithoutArea()
         {
-            routeValues["area"] = null;
             routeValues["controller"] = "Profile";
             routeValues["action"] = "Delete";
+            routeValues["area"] = null;
 
             String expected = MvcTemplate.Resources.Content.Titles.ProfileDelete;
             String actual = ResourceProvider.GetCurrentContentTitle();
@@ -121,6 +114,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentContentTitle_OnContentNotFoundReturnsNull()
         {
+            routeValues["area"] = null;
+
             Assert.IsNull(ResourceProvider.GetCurrentContentTitle());
         }
 
@@ -226,8 +221,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetMenuTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
             String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
+            String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
 
             Assert.AreEqual(expected, actual);
         }
@@ -235,8 +230,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
         {
-            String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
             String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
+            String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
 
             Assert.AreEqual(expected, actual);
         }
@@ -262,8 +257,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Username);
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.AreEqual(expected, actual);
         }
@@ -297,8 +292,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "Username");
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.AreEqual(expected, actual);
         }
@@ -306,8 +301,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountUsername");
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.AreEqual(expected, actual);
         }
@@ -315,8 +310,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitleFromMultipleRelations()
         {
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountRoleAccountUsername");
+            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.AreEqual(expected, actual);
         }

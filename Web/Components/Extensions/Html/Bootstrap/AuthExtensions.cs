@@ -2,7 +2,6 @@
 using MvcTemplate.Resources;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
@@ -41,21 +40,20 @@ namespace MvcTemplate.Components.Extensions.Html
             IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
             if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
 
-            String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
-            Object currentLanguage = html.ViewContext.RequestContext.RouteData.Values["language"];
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdownMenu(html);
+            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             TagBuilder languageContainer = new TagBuilder("div");
-            TagBuilder currentLangImg = new TagBuilder("img");
             TagBuilder currentLang = new TagBuilder("span");
+            TagBuilder languageImg = new TagBuilder("img");
             TagBuilder caret = new TagBuilder("span");
             TagBuilder addon = CreateAddon("fa-flag");
 
             caret.AddCssClass("caret");
-            if (!appPath.EndsWith("/")) appPath += "/";
             currentLang.AddCssClass("current-language");
-            currentLangImg.MergeAttribute("alt", String.Empty);
-            currentLangImg.MergeAttribute("src", String.Format("{0}Images/Flags/{1}.gif", appPath, currentLanguage));
-            currentLang.InnerHtml = currentLangImg.ToString(TagRenderMode.SelfClosing) + LocalizationManager.Provider.CurrentLanguage.Name;
+            languageImg.MergeAttribute("alt", String.Empty);
+
+            languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", LocalizationManager.Provider.CurrentLanguage.Abbrevation)));
+            currentLang.InnerHtml = languageImg.ToString(TagRenderMode.SelfClosing) + LocalizationManager.Provider.CurrentLanguage.Name;
 
             languageContainer.InnerHtml += currentLang.ToString() + caret.ToString();
             languageContainer.AddCssClass("language-container dropdown-toggle");

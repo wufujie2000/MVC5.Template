@@ -10,17 +10,14 @@ namespace MvcTemplate.Components.Extensions.Html
         public static MvcHtmlString RenderControllerScripts(this HtmlHelper html)
         {
             RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
+            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             String controller = routeValues["controller"].ToString();
-            String scriptPath = String.Empty;
+            String scriptDir = controller;
 
-            scriptPath = controller;
             if (routeValues["Area"] != null)
-                scriptPath = String.Format("{0}/{1}", routeValues["Area"], scriptPath);
+                scriptDir = String.Format("{0}/{1}", routeValues["Area"], scriptDir);
 
-            String appPath = html.ViewContext.RequestContext.HttpContext.Request.ApplicationPath ?? "/";
-            if (!appPath.EndsWith("/")) appPath += "/";
-
-            String virtualPath = String.Format("{0}Scripts/Shared/{1}/{2}.js", appPath, scriptPath, controller.ToLower());
+            String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", scriptDir, controller.ToLower()));
             String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);
 
             if (!File.Exists(physicalPath))

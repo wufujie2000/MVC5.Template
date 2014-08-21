@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
@@ -14,7 +15,7 @@ namespace MvcTemplate.Controllers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}",
                     new { controller = "Home", action = "Index" },
-                    new { language = "lt" },
+                    new { language = "lt", area = String.Empty },
                     new[] { "MvcTemplate.Controllers.Home" });
 
             routes
@@ -22,7 +23,7 @@ namespace MvcTemplate.Controllers
                     "Default",
                     "{controller}/{action}",
                     new { language = "en", controller = "Home", action = "Index" },
-                    new { language = "en" },
+                    new { language = "en", area = String.Empty },
                     new[] { "MvcTemplate.Controllers.Home" });
         }
     }

@@ -28,17 +28,17 @@ namespace MvcTemplate.Tests.Helpers
             RouteTable.Routes
                 .MapRoute(
                     "AdministrationMultilingual",
-                    "{language}/Administration/{controller}/{action}/{id}",
+                    "{language}/{area}/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", area = "Administration" },
                     new[] { "MvcTemplate.Controllers.Administration" });
 
             RouteTable.Routes
                 .MapRoute(
                     "Administration",
-                    "Administration/{controller}/{action}/{id}",
+                    "{area}/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", area = "Administration" },
                     new[] { "MvcTemplate.Controllers.Administration" });
 
             RouteTable.Routes
@@ -46,14 +46,14 @@ namespace MvcTemplate.Tests.Helpers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" });
+                    new { language = "lt", area = String.Empty });
 
             RouteTable.Routes
                 .MapRoute(
                     "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" });
+                    new { language = "en", area = String.Empty });
         }
 
         public HttpMock()

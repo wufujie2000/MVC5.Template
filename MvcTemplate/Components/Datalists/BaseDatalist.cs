@@ -24,7 +24,7 @@ namespace MvcTemplate.Components.Datalists
         {
             HttpRequest request = HttpContext.Current.Request;
             UrlHelper urlHelper = new UrlHelper(request.RequestContext);
-            
+
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
             DatalistUrl = urlHelper.Action(typeof(TModel).Name, AbstractDatalist.Prefix, new { area = String.Empty }, request.Url.Scheme);
         }

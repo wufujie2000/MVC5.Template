@@ -60,13 +60,14 @@ namespace MvcTemplate.Tests.Helpers
         {
             HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/", String.Empty);
             HttpBrowserCapabilities browser = Substitute.ForPartsOf<HttpBrowserCapabilities>();
+            HttpResponse response = new HttpResponse(new StringWriter());
             browser[Arg.Any<String>()].Returns("true");
             request.Browser = browser;
 
-            HttpResponse response = new HttpResponse(new StringWriter());
             HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
             httpRequestBase.QueryString.Returns(new NameValueCollection());
             httpRequestBase.QueryString.Add("Param1", "Value1");
+            httpRequestBase.ApplicationPath.Returns("/Domain");
             HttpContext = new HttpContext(request, response);
 
             HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
@@ -76,7 +77,7 @@ namespace MvcTemplate.Tests.Helpers
             HttpContextBase.Request.Returns(httpRequestBase);
 
             IIdentity identity = Substitute.For<IIdentity>();
-            identity.Name.Returns(ObjectFactory.TestId + "1");
+            identity.Name.Returns(ObjectFactory.TestId + 1);
             identity.IsAuthenticated.Returns(true);
 
             IPrincipal user = Substitute.For<IPrincipal>();

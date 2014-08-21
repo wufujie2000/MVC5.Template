@@ -28,9 +28,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithArea()
         {
-            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Area/Controller/controller.js").Returns(filePath);
+            html.ViewContext.HttpContext.Server.MapPath("/Domain/Scripts/Shared/Area/Controller/controller.js").Returns(filePath);
 
-            String expected = "<script src=\"/Scripts/Shared/Area/Controller/controller.js\"></script>";
+            String expected = "<script src=\"/Domain/Scripts/Shared/Area/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
 
             Assert.AreEqual(expected, actual);
@@ -51,10 +51,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithoutArea()
         {
-            html.ViewContext.HttpContext.Server.MapPath("/Scripts/Shared/Controller/controller.js").Returns(filePath);
+            html.ViewContext.HttpContext.Server.MapPath("/Domain/Scripts/Shared/Controller/controller.js").Returns(filePath);
             html.ViewContext.RouteData.Values["Area"] = null;
 
-            String expected = "<script src=\"/Scripts/Shared/Controller/controller.js\"></script>";
+            String expected = "<script src=\"/Domain/Scripts/Shared/Controller/controller.js\"></script>";
             String actual = html.RenderControllerScripts().ToString();
 
             Assert.AreEqual(expected, actual);

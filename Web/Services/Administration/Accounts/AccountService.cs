@@ -49,7 +49,7 @@ namespace MvcTemplate.Services
         {
             Account account = UnitOfWork
                 .Repository<Account>()
-                .Single(acc => acc.Email.ToUpper() == view.Email.ToUpper());
+                .Single(acc => acc.Email.ToLower() == view.Email.ToLower());
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();
@@ -80,6 +80,8 @@ namespace MvcTemplate.Services
         {
             Account account = UnitOfWork.ToModel<AccountView, Account>(view);
             account.Passhash = hasher.HashPassword(view.Password);
+            account.Email = account.Email.ToLower();
+            view.Email = account.Email;
 
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
@@ -87,8 +89,9 @@ namespace MvcTemplate.Services
         public void Edit(ProfileEditView view)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
+            account.Email = view.Email.ToLower();
             account.Username = view.Username;
-            account.Email = view.Email;
+            view.Email = account.Email;
 
             if (!String.IsNullOrWhiteSpace(view.NewPassword))
                 account.Passhash = hasher.HashPassword(view.NewPassword);
@@ -125,7 +128,7 @@ namespace MvcTemplate.Services
         {
             return UnitOfWork
                 .Repository<Account>()
-                .First(acc => acc.Username.ToUpper() == username.ToUpper())
+                .First(acc => acc.Username.ToLower() == username.ToLower())
                 .Id;
         }
     }

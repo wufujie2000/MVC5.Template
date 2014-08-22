@@ -35,7 +35,7 @@ namespace MvcTemplate.Validators
                 .Repository<Role>()
                 .Any(role =>
                     role.Id != view.Id &&
-                    role.Name.ToUpper() == view.Name.ToUpper());
+                    role.Name.ToLower() == view.Name.ToLower());
 
             if (!isUnique)
                 ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyTaken);

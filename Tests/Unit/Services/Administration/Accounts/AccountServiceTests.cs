@@ -203,6 +203,22 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.IsNull(actual.RoleId);
         }
 
+        [Test]
+        public void Register_LowersEmailValue()
+        {
+            AccountView view = ObjectFactory.CreateAccountView();
+            String expected = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
+            TearDownData();
+
+            service.Register(view);
+
+            Account model = context.Set<Account>().SingleOrDefault();
+
+            Assert.AreEqual(expected, model.Email);
+            Assert.AreEqual(expected, view.Email);
+        }
+
         #endregion
 
         #region Method: Edit(ProfileEditView view)
@@ -223,6 +239,21 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
+        }
+
+        [Test]
+        public void Edit_LowersEmailValue()
+        {
+            ProfileEditView view = ObjectFactory.CreateProfileEditView();
+            String expected = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
+
+            service.Edit(view);
+
+            Account model = context.Set<Account>().SingleOrDefault();
+
+            Assert.AreEqual(expected, model.Email);
+            Assert.AreEqual(expected, view.Email);
         }
 
         [Test]

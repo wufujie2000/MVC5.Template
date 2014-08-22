@@ -72,7 +72,7 @@ namespace MvcTemplate.Validators
                 .Repository<Account>()
                 .Any(account =>
                     account.Id != accountId &&
-                    account.Username.ToUpper() == username.ToUpper());
+                    account.Username.ToLower() == username.ToLower());
 
             if (!isUnique)
                 ModelState.AddModelError<AccountView>(model => model.Username, Validations.UsernameIsAlreadyTaken);
@@ -85,7 +85,7 @@ namespace MvcTemplate.Validators
                 .Repository<Account>()
                 .Any(account =>
                     account.Id != accountId &&
-                    account.Email.ToUpper() == email.ToUpper());
+                    account.Email.ToLower() == email.ToLower());
 
             if (!isUnique)
                 ModelState.AddModelError<AccountView>(model => model.Email, Validations.EmailIsAlreadyUsed);
@@ -97,7 +97,7 @@ namespace MvcTemplate.Validators
         {
             String passhash = UnitOfWork
                 .Repository<Account>()
-                .Where(acc => acc.Username.ToUpper() == username.ToUpper())
+                .Where(acc => acc.Username.ToLower() == username.ToLower())
                 .Select(acc => acc.Passhash)
                 .SingleOrDefault();
 
@@ -130,7 +130,7 @@ namespace MvcTemplate.Validators
         {
             return UnitOfWork
                 .Repository<Account>()
-                .Any(account => account.Email.ToUpper() == email.ToUpper());
+                .Any(account => account.Email.ToLower() == email.ToLower());
         }
         private Boolean IsValidResetToken(String token)
         {

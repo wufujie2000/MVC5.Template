@@ -1,6 +1,6 @@
-﻿using System;
+﻿using MvcTemplate.Components.Logging;
+using System;
 using System.Web.Mvc;
-using MvcTemplate.Components.Logging;
 
 namespace MvcTemplate.Components.Mvc
 {

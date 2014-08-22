@@ -2,11 +2,9 @@
 using MvcTemplate.Resources;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using System.Web.Routing;
 
 namespace MvcTemplate.Components.Extensions.Html
 {

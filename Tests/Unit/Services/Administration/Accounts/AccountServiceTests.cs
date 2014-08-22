@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Services
             hasher = Substitute.For<IHasher>();
             mailClient = Substitute.For<IMailClient>();
             HttpContext.Current = new HttpMock().HttpContext;
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
@@ -332,7 +332,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Test]
-        public void Edit_RefreshesAuthProvider()
+        public void Edit_RefreshesAuthorizationProvider()
         {
             AccountEditView account = service.GetView<AccountEditView>(accountId);
 

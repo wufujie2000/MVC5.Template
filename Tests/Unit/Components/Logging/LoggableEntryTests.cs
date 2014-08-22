@@ -66,10 +66,12 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Test]
-        public void LoggableEntry_SetsEntityState()
+        public void LoggableEntry_SetsState()
         {
-            EntityState expected = entry.State = EntityState.Deleted;
-            EntityState actual = new LoggableEntry(entry).State;
+            entry.State = EntityState.Deleted;
+
+            String expected = entry.State.ToString().ToLower();
+            String actual = new LoggableEntry(entry).State;
 
             Assert.AreEqual(expected, actual);
         }
@@ -91,10 +93,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void LoggableEntry_CreatesProperties()
         {
+            IEnumerable<String> properties = entry.CurrentValues.PropertyNames;
+
+            IEnumerable<LoggablePropertyEntry> expected = properties.Select(name => new LoggablePropertyEntry(entry.Property(name)));
             IEnumerable<LoggablePropertyEntry> actual = new LoggableEntry(entry).Properties;
-            List<LoggablePropertyEntry> expected = new List<LoggablePropertyEntry>();
-            foreach (String name in entry.CurrentValues.PropertyNames)
-                expected.Add(new LoggablePropertyEntry(entry.Property(name)));
 
             TestHelper.EnumPropertyWiseEquals(expected, actual);
         }
@@ -134,7 +136,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.AppendFormat("{0} {1}:{2}",
                 loggableEntry.EntityType.Name,
-                loggableEntry.State.ToString().ToLower(),
+                loggableEntry.State,
                 Environment.NewLine);
 
             foreach (LoggablePropertyEntry property in loggableEntry.Properties)

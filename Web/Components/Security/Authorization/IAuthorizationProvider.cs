@@ -2,7 +2,7 @@
 
 namespace MvcTemplate.Components.Security
 {
-    public interface IAuthProvider
+    public interface IAuthorizationProvider
     {
         Boolean IsAuthorizedFor(String accountId, String area, String controller, String action);
 

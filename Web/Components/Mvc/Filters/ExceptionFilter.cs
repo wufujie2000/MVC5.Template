@@ -20,7 +20,9 @@ namespace MvcTemplate.Components.Mvc
                 exception = exception.InnerException;
 
             String message = String.Format("{0}: {1}{2}{3}",
-                    exception.GetType(), exception.Message, Environment.NewLine,
+                    exception.GetType(),
+                    exception.Message,
+                    Environment.NewLine,
                     exception.StackTrace);
 
             logger.Log(message);

@@ -24,12 +24,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html = HtmlHelperFactory.CreateHtmlHelper(model);
         }
 
-        #region Extension method: JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
+        #region Extension method: JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
 
         [Test]
-        public void JsTreeViewFor_FormsJsTreeViewFor()
+        public void JsTreeFor_FormsJsTreeFor()
         {
-            String actual = html.JsTreeViewFor(model => model.JsTree).ToString();
+            String actual = html.JsTreeFor(model => model.JsTree).ToString();
             String expected =
                 "<span class=\"js-tree-view-ids\">" +
                     "<input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"1\" />" +

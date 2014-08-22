@@ -18,7 +18,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Profile");
 
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", new { controller = "Profile", area = String.Empty }).ToString(), icon,  span));
+            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", "Profile", new { area = String.Empty }, null).ToString(), icon,  span));
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
@@ -47,7 +47,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
 
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", new { controller = "Auth", area = String.Empty }).ToString(), icon, span));
+            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", "Auth", new { area = String.Empty }, null).ToString(), icon, span));
         }
     }
 }

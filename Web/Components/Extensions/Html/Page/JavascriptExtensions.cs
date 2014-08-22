@@ -19,9 +19,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", scriptDir, controller.ToLower()));
             String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);
-
-            if (!File.Exists(physicalPath))
-                return new MvcHtmlString(String.Empty);
+            if (!File.Exists(physicalPath)) return new MvcHtmlString(String.Empty);
 
             TagBuilder script = new TagBuilder("script");
             script.MergeAttribute("src", virtualPath);

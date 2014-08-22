@@ -36,7 +36,7 @@ namespace MvcTemplate.Web
             RegisterDataTypeValidator();
             RegisterLanguageProvider();
             RegisterSiteMapProvider();
-            RegisterAuthProvider();
+            RegisterAuthorization();
             RegisterModelBinders();
             RegisterViewEngine();
             RegisterAdapters();
@@ -66,9 +66,9 @@ namespace MvcTemplate.Web
         {
             MvcSiteMap.Provider = DependencyResolver.Current.GetService<IMvcSiteMapProvider>();
         }
-        private void RegisterAuthProvider()
+        private void RegisterAuthorization()
         {
-            Authorization.Provider = DependencyResolver.Current.GetService<IAuthProvider>();
+            Authorization.Provider = DependencyResolver.Current.GetService<IAuthorizationProvider>();
         }
         private void RegisterModelBinders()
         {

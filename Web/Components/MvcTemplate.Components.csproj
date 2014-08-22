@@ -87,7 +87,7 @@
     <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumbNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapMenuNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapMenuCollection.cs" />
+    <Compile Include="Mvc\SiteMap\MvcSiteMapMenus.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />

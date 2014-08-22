@@ -48,9 +48,9 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder caret = new TagBuilder("span");
             TagBuilder addon = CreateAddon("fa-flag");
 
-            caret.AddCssClass("caret");
-            currentLang.AddCssClass("current-language");
             languageImg.MergeAttribute("alt", String.Empty);
+            currentLang.AddCssClass("current-language");
+            caret.AddCssClass("caret");
 
             languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", LocalizationManager.Provider.CurrentLanguage.Abbrevation)));
             currentLang.InnerHtml = languageImg.ToString(TagRenderMode.SelfClosing) + LocalizationManager.Provider.CurrentLanguage.Name;
@@ -71,10 +71,11 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         private static RouteValueDictionary CreateAttributesFor<TModel>(Expression<Func<TModel, String>> expression, Boolean autocomplete)
         {
-            String placeholder = ResourceProvider.GetPropertyTitle(expression);
-            RouteValueDictionary attributes = new RouteValueDictionary();
-            attributes.Add("autocomplete", autocomplete ? "on" : "off");
-            attributes.Add("placeholder", placeholder);
+            RouteValueDictionary attributes = new RouteValueDictionary(new
+            {
+                placeholder = ResourceProvider.GetPropertyTitle(expression),
+                autocomplete = autocomplete ? "on" : "off"
+            });
 
             return attributes;
         }

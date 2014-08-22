@@ -12,16 +12,16 @@ using System.Reflection;
 namespace MvcTemplate.Tests.Unit.Security
 {
     [TestFixture]
-    public class AuthProviderTests
+    public class AuthorizationProviderTests
     {
-        private AuthProvider provider;
+        private AuthorizationProvider provider;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            provider = new AuthProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
+            provider = new AuthorizationProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
 
             TearDownData();
         }
@@ -473,7 +473,7 @@ namespace MvcTemplate.Tests.Unit.Security
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             unitOfWork.Repository<Account>().Returns(new Repository<Account>(context));
 
-            new AuthProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
+            new AuthorizationProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
 
             unitOfWork.Received().Dispose();
         }

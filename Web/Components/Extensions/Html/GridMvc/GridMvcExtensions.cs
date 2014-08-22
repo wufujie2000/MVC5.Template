@@ -36,7 +36,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : ILinkableView
         {
-            if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+            if (Authorization.Provider!= null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
 
             IGridColumn<T> gridColumn = column
@@ -47,6 +47,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Css("action-link-cell");
 
             AddLinkHtml(gridColumn, action);
+
             return gridColumn;
         }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
@@ -131,12 +132,13 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         private static String GetLink<T>(T model, LinkAction action, String iconClass) where T : ILinkableView
         {
+            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
             TagBuilder actionContainer = new TagBuilder("div");
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
             actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLower()));
-            actionTag.MergeAttribute("href", new UrlHelper(HttpContext.Current.Request.RequestContext).Action(action.ToString(), new { id = model.Id }));
+            actionTag.MergeAttribute("href", urlHelper.Action(action.ToString(), new { id = model.Id }));
             icon.AddCssClass(iconClass);
 
             actionTag.InnerHtml = icon.ToString();

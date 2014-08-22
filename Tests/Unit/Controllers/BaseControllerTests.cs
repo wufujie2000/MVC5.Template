@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void SetUp()
         {
             HttpMock httpMock = new HttpMock();
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             accountId = httpMock.HttpContextBase.User.Identity.Name;
             baseController = Substitute.ForPartsOf<BaseControllerStub>();
             baseController.Url = new UrlHelper(httpMock.HttpContext.Request.RequestContext);
@@ -55,16 +55,16 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Constructor: BaseController()
 
         [Test]
-        public void BaseController_SetsAuthProviderFromFactory()
+        public void BaseController_SetsAuthorizationProviderFromFactory()
         {
-            IAuthProvider actual = baseController.BaseAuthProvider;
-            IAuthProvider expected = Authorization.Provider;
+            IAuthorizationProvider actual = baseController.BaseAuthorizationProvider;
+            IAuthorizationProvider expected = Authorization.Provider;
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void BaseController_CreatessEmptyAlertsContainer()
+        public void BaseController_CreatesEmptyAlertsContainer()
         {
             CollectionAssert.IsEmpty(baseController.Alerts);
         }
@@ -199,15 +199,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: IsAuthorizedFor(String area, String controller, String action)
 
         [Test]
-        public void IsAuthorizedFor_OnNullAuthProviderReturnsTrue()
+        public void IsAuthorizedFor_OnNullAuthorizationProviderReturnsTrue()
         {
-            baseController.BaseAuthProvider = null;
+            baseController.BaseAuthorizationProvider = null;
 
             Assert.IsTrue(baseController.IsAuthorizedFor(null, null, null));
         }
 
         [Test]
-        public void IsAuthorizedFor_ReturnsAuthProviderResult()
+        public void IsAuthorizedFor_ReturnsAuthorizationProviderResult()
         {
             Authorization.Provider.IsAuthorizedFor(accountId, "AR", "CO", "AC").Returns(true);
 

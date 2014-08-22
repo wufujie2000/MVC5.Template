@@ -9,15 +9,15 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class JsTreeExtensions
     {
-        public static MvcHtmlString JsTreeViewFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
+        public static MvcHtmlString JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
         {
-            return JsTreeViewFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(expression), "SelectedIds"),
+            return JsTreeFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(expression), "SelectedIds"),
                 ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model as JsTree);
         }
 
-        private static MvcHtmlString JsTreeViewFor(String name, JsTree tree)
+        private static MvcHtmlString JsTreeFor(String name, JsTree jsTree)
         {
-            return new MvcHtmlString(FormIdSpan(name, tree.SelectedIds) + FormTreeView(name, tree.Nodes));
+            return new MvcHtmlString(FormIdSpan(name, jsTree.SelectedIds) + FormTree(name, jsTree.Nodes));
         }
         private static String FormIdSpan(String name, IList<String> selectedIds)
         {
@@ -39,22 +39,22 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return idSpan.ToString();
         }
-        private static String FormTreeView(String name, IEnumerable<JsTreeNode> treeNodes)
+        private static String FormTree(String name, IEnumerable<JsTreeNode> nodes)
         {
-            TagBuilder treeView = new TagBuilder("div");
-            treeView.MergeAttribute("for", name);
-            treeView.AddCssClass("js-tree-view");
+            TagBuilder tree = new TagBuilder("div");
+            tree.MergeAttribute("for", name);
+            tree.AddCssClass("js-tree-view");
 
-            AddNodes(treeView, treeNodes);
+            AddNodes(tree, nodes);
 
-            return treeView.ToString();
+            return tree.ToString();
         }
         private static void AddNodes(TagBuilder root, IEnumerable<JsTreeNode> nodes)
         {
             if (nodes.Count() == 0) return;
 
-            TagBuilder branch = new TagBuilder("ul");
             StringBuilder leafBuilder = new StringBuilder();
+            TagBuilder branch = new TagBuilder("ul");
 
             foreach (JsTreeNode treeNode in nodes)
             {

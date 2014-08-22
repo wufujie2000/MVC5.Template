@@ -14,15 +14,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 return base.CurrentAccountId;
             }
         }
-        public IAuthProvider BaseAuthProvider
+        public IAuthorizationProvider BaseAuthorizationProvider
         {
             get
             {
-                return AuthProvider;
+                return AuthorizationProvider;
             }
             set
             {
-                AuthProvider = value;
+                AuthorizationProvider = value;
             }
         }
 

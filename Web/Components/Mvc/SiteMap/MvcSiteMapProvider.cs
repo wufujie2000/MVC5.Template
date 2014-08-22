@@ -49,7 +49,7 @@ namespace MvcTemplate.Components.Mvc
             allMenus = parser.GetMenuNodes(siteMap);
         }
 
-        public MvcSiteMapMenuCollection GetMenus()
+        public MvcSiteMapMenus GetMenus()
         {
             return GetAuthorizedMenus(allMenus);
         }
@@ -82,9 +82,9 @@ namespace MvcTemplate.Components.Mvc
             return list;
         }
 
-        private MvcSiteMapMenuCollection GetAuthorizedMenus(IEnumerable<MvcSiteMapNode> menus)
+        private MvcSiteMapMenus GetAuthorizedMenus(IEnumerable<MvcSiteMapNode> menus)
         {
-            MvcSiteMapMenuCollection authorizedMenus = new MvcSiteMapMenuCollection();
+            MvcSiteMapMenus authorizedMenus = new MvcSiteMapMenus();
             foreach (MvcSiteMapNode menu in menus)
                 if (IsAuthorizedToView(menu))
                 {

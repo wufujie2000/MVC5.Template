@@ -9,12 +9,12 @@ namespace MvcTemplate.Components.Logging
 {
     public class LoggableEntry
     {
-        public Type EntityType
+        public String State
         {
             get;
             private set;
         }
-        public EntityState State
+        public Type EntityType
         {
             get;
             private set;
@@ -41,13 +41,13 @@ namespace MvcTemplate.Components.Logging
             if (EntityType.Namespace == "System.Data.Entity.DynamicProxies") EntityType = EntityType.BaseType;
             Properties = propertyNames.Select(name => new LoggablePropertyEntry(entry.Property(name)));
             HasChanges = Properties.Any(property => property.IsModified);
-            State = entry.State;
+            State = entry.State.ToString().ToLower();
         }
 
         public override String ToString()
         {
             StringBuilder entry = new StringBuilder();
-            entry.AppendFormat("{0} {1}:{2}", EntityType.Name, State.ToString().ToLower(), Environment.NewLine);
+            entry.AppendFormat("{0} {1}:{2}", EntityType.Name, State, Environment.NewLine);
 
             foreach (LoggablePropertyEntry property in Properties)
                 entry.AppendFormat("    {0}{1}", property, Environment.NewLine);

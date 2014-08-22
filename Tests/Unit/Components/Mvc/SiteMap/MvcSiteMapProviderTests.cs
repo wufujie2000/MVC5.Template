@@ -48,7 +48,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetMenus()
 
         [Test]
-        public void GetMenus_OnNullAuthProviderReturnsAllMenus()
+        public void GetMenus_OnNullAuthorizationProviderReturnsAllMenus()
         {
             IEnumerator<MvcSiteMapNode> expected = parser.GetMenuNodes(siteMap).GetEnumerator();
             IEnumerator<MvcSiteMapMenuNode> actual = provider.GetMenus().GetEnumerator();
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyAuthorizedMenus()
         {
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(HttpContext.Current.User.Identity.Name, null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();
@@ -86,7 +86,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_DoesnNotAuthorizeMenusWithoutAction()
         {
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), "Administration", "Roles", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap)).Skip(1).Take(2).GetEnumerator();
@@ -149,7 +149,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_RemovesMenusWithoutActionAndSubmenus()
         {
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(HttpContext.Current.User.Identity.Name, null, "Home", "Index").Returns(true);
 
             IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index")).GetEnumerator();

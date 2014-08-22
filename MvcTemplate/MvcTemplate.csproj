@@ -57,7 +57,7 @@
     <Compile Include="Components\Logging\Logger.cs" />
     <Compile Include="Components\Logging\EntityLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\Authorization\AuthProvider.cs" />
+    <Compile Include="Security\Authorization\AuthorizationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Web\Components\MvcTemplate.Components.csproj">

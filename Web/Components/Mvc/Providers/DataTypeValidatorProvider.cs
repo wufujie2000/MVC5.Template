@@ -39,6 +39,7 @@ namespace MvcTemplate.Components.Mvc
         private Boolean IsDateTimeType(Type type, ModelMetadata metadata)
         {
             if (type != typeof(DateTime)) return false;
+
             return !String.Equals(metadata.DataTypeName, "Time", StringComparison.OrdinalIgnoreCase);
         }
         private Boolean IsNumericType(Type type)

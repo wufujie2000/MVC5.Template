@@ -15,10 +15,10 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class BootstrapExtensions
     {
-        public const String LabelClass = "control-label col-sm-12 col-md-3 col-lg-2";
-        public const String ContentClass = "control-content col-sm-12 col-md-9 col-lg-5";
-        public const String FormActionsClass = "form-actions col-sm-12 col-md-12 col-lg-7";
         public const String ValidationClass = "control-validation col-sm-12 col-md-12 col-lg-5";
+        public const String FormActionsClass = "form-actions col-sm-12 col-md-12 col-lg-7";
+        public const String ContentClass = "control-content col-sm-12 col-md-9 col-lg-5";
+        public const String LabelClass = "control-label col-sm-12 col-md-3 col-lg-2";
 
         public static FormGroup FormGroup(this HtmlHelper html)
         {
@@ -95,12 +95,11 @@ namespace MvcTemplate.Components.Extensions.Html
         internal static TagBuilder FormLanguagesDropdownMenu(HtmlHelper html)
         {
             NameValueCollection query = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
+            RouteValueDictionary routeValues = MergeQuery(html.ViewContext.RouteData.Values, query);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             TagBuilder dropdownMenu = new TagBuilder("ul");
             dropdownMenu.MergeAttribute("role", "menu");
             dropdownMenu.AddCssClass("dropdown-menu");
-            AddQueryValues(query, routeValues);
 
             foreach (Language language in LocalizationManager.Provider.Languages)
             {
@@ -116,21 +115,16 @@ namespace MvcTemplate.Components.Extensions.Html
                 dropdownMenu.InnerHtml += languageItem.ToString();
             }
 
-            routeValues["language"] = LocalizationManager.Provider.CurrentLanguage.Abbrevation;
-            RemoveQueryValues(query, routeValues);
-
             return dropdownMenu;
         }
 
-        private static void AddQueryValues(NameValueCollection query, RouteValueDictionary routeValues)
+        private static RouteValueDictionary MergeQuery(RouteValueDictionary routeValues, NameValueCollection query)
         {
+            RouteValueDictionary mergedValues = new RouteValueDictionary(routeValues);
             foreach (String parameter in query)
-                routeValues[parameter] = query[parameter];
-        }
-        private static void RemoveQueryValues(NameValueCollection query, RouteValueDictionary routeValues)
-        {
-            foreach (String parameter in query)
-                routeValues.Remove(parameter);
+                mergedValues[parameter] = query[parameter];
+
+            return mergedValues;
         }
 
         private static String WrapWith(MvcHtmlString content, String cssClass)
@@ -144,8 +138,7 @@ namespace MvcTemplate.Components.Extensions.Html
         private static Boolean IsRequired<TModel, TProperty>(this Expression<Func<TModel, TProperty>> expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null)
-                throw new InvalidOperationException("Expression must be a member expression");
+            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
 
             return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
         }
@@ -162,8 +155,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (attributes.ContainsKey("readonly")) return;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null)
-                throw new InvalidOperationException("Expression must be a member expression");
+            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
 
             ReadOnlyAttribute readOnly = memberExpression.Member.GetCustomAttribute<ReadOnlyAttribute>();
             if (readOnly != null && readOnly.IsReadOnly)

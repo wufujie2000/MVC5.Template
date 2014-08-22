@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columnCollection = SubstituteIGridCollumnCollection<DateTime?>(column);
 
             HttpContext.Current = new HttpMock().HttpContext;
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
 
@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_AddsActionLinkOnNullAuthProvider()
+        public void AddActionLink_AddsActionLinkOnNullAuthorizationProvider()
         {
             Authorization.Provider = null;
 

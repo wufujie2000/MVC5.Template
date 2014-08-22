@@ -14,6 +14,6 @@ namespace MvcTemplate.Components.Mvc
         public String Controller { get; set; }
 
         public MvcSiteMapMenuNode Parent { get; set; }
-        public MvcSiteMapMenuCollection Submenus { get; set; }
+        public MvcSiteMapMenus Submenus { get; set; }
     }
 }

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Security
 {
-    public class AuthProvider : IAuthProvider, IDisposable
+    public class AuthorizationProvider : IAuthorizationProvider, IDisposable
     {
         private Dictionary<String, IEnumerable<Privilege>> cache;
         private IEnumerable<Type> controllers;
@@ -16,7 +16,7 @@ namespace MvcTemplate.Components.Security
         private Type controllerType;
         private Boolean disposed;
 
-        public AuthProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
+        public AuthorizationProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             controllerType = typeof(Controller);

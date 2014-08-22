@@ -2,7 +2,7 @@
 {
     public interface IMvcSiteMapProvider
     {
-        MvcSiteMapMenuCollection GetMenus();
+        MvcSiteMapMenus GetMenus();
         MvcSiteMapBreadcrumb GetBreadcrumb();
     }
 }

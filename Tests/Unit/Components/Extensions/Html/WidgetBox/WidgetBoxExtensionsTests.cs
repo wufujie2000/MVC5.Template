@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
             HttpContext.Current = new HttpMock().HttpContext;
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
         }
 
         [TearDown]

@@ -65,16 +65,16 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         }
 
         [Test]
-        public void Load_BindsIAuthProvider()
+        public void Load_BindsIAuthorizationProvider()
         {
-            AssertBind<IAuthProvider, AuthProvider>();
+            AssertBind<IAuthorizationProvider, AuthorizationProvider>();
         }
 
         [Test]
-        public void Load_BindsIAuthProviderToConstant()
+        public void Load_BindsIAuthorizationProviderToConstant()
         {
-            IAuthProvider expected = kernel.Get<IAuthProvider>();
-            IAuthProvider actual = kernel.Get<IAuthProvider>();
+            IAuthorizationProvider expected = kernel.Get<IAuthorizationProvider>();
+            IAuthorizationProvider actual = kernel.Get<IAuthorizationProvider>();
 
             Assert.AreSame(expected, actual);
         }

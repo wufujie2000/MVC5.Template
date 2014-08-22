@@ -420,7 +420,7 @@
     <Content Include="Mvc.sitemap" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapMenuCollection.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MvcSiteMapMenus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />

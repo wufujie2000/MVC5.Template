@@ -6,10 +6,10 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public class WidgetBox : IDisposable
     {
-        private Boolean disposed;
-        private TextWriter writer;
-        private TagBuilder widgetBox;
         private TagBuilder widgetContent;
+        private TagBuilder widgetBox;
+        private TextWriter writer;
+        private Boolean disposed;
 
         public WidgetBox(TextWriter writer, String iconClass, String title, String buttons)
         {
@@ -35,7 +35,7 @@ namespace MvcTemplate.Components.Extensions.Html
             widgetTitle.InnerHtml = String.Format("{0}{1}{2}", titleIconSpan, titleHeader, titleButtons);
 
             writer.Write(widgetBox.ToString(TagRenderMode.StartTag));
-            writer.Write(widgetTitle.ToString());
+            writer.Write(widgetTitle.ToString(TagRenderMode.Normal));
             writer.Write(widgetContent.ToString(TagRenderMode.StartTag));
         }
 

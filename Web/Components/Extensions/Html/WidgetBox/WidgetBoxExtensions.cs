@@ -26,12 +26,11 @@ namespace MvcTemplate.Components.Extensions.Html
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
-            IAuthProvider authProvider = Authorization.Provider;
             String buttons = String.Empty;
 
             foreach (LinkAction action in actions)
             {
-                if (authProvider != null && !authProvider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
+                if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
                     continue;
 
                 TagBuilder icon = new TagBuilder("i");
@@ -55,14 +54,15 @@ namespace MvcTemplate.Components.Extensions.Html
                 span.InnerHtml = ResourceProvider.GetActionTitle(action.ToString());
 
                 String button = String.Format(
-                    html.ActionLink(
+                    html
+                        .ActionLink(
                             "{0}{1}",
                             action.ToString(),
                             new { id = html.ViewContext.RouteData.Values["id"] },
                             new { @class = "btn" })
                         .ToString(),
-                    icon.ToString(),
-                    span.ToString());
+                    icon,
+                    span);
 
                 buttons += button;
             }

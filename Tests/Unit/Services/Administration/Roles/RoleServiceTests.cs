@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             service = new RoleService(new UnitOfWork(context));
-            Authorization.Provider = Substitute.For<IAuthProvider>();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
             TearDownData();
             SetUpData();
@@ -228,7 +228,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Test]
-        public void Edit_RefreshesAuthProvider()
+        public void Edit_RefreshesAuthorizationProvider()
         {
             service.Edit(service.GetView(role.Id));
 
@@ -263,7 +263,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Test]
-        public void Delete_RefreshesAuthProvider()
+        public void Delete_RefreshesAuthorizationProvider()
         {
             service.Delete(role.Id);
 

@@ -44,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Register()
 
         [Test]
-        public void Register_RedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Register_RedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -77,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Register_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Register_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -146,7 +146,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Recover()
 
         [Test]
-        public void Recover_RedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Recover_RedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -173,7 +173,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Recover(AccountRecoveryView account)
 
         [Test]
-        public void Recover_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Recover_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -238,10 +238,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Reset()
+        #region Method: Reset(String token)
 
         [Test]
-        public void Reset_RedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Reset_RedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -254,9 +254,22 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Reset_ReturnsNullModelIfNotLoggedIn()
+        public void Reset_RedirectsToRecoverIfCanNotReset()
         {
             service.IsLoggedIn().Returns(false);
+            validator.CanReset(Arg.Any<AccountResetView>()).Returns(false);
+
+            Object actual = (controller.Reset("Token") as RedirectToRouteResult).RouteValues["action"];
+            Object expected = "Recover";
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void Reset_ReturnsNullModelIfCanReset()
+        {
+            service.IsLoggedIn().Returns(false);
+            validator.CanReset(Arg.Any<AccountResetView>()).Returns(true);
 
             Object model = (controller.Reset(String.Empty) as ViewResult).Model;
 
@@ -268,7 +281,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Reset(AccountResetView account)
 
         [Test]
-        public void Reset_OnPostRedirectsToDefaultlIfAlreadyLoggedIn()
+        public void Reset_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
@@ -281,7 +294,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Reset_RedirectsToRecoverIfCanNotReset()
+        public void Reset_OnPostRedirectsToRecoverIfCanNotReset()
         {
             service.IsLoggedIn().Returns(false);
             validator.CanReset(accountReset).Returns(false);

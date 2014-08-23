@@ -81,17 +81,9 @@ namespace MvcTemplate.Web
         }
         private void RegisterAdapters()
         {
-            DataAnnotationsModelValidatorProvider.RegisterAdapter(
-                typeof(RequiredAttribute),
-                typeof(RequiredAdapter));
-
-            DataAnnotationsModelValidatorProvider.RegisterAdapter(
-                typeof(EmailAddressAttribute),
-                typeof(EmailAddressAdapter));
-
-            DataAnnotationsModelValidatorProvider.RegisterAdapter(
-                typeof(StringLengthAttribute),
-                typeof(StringLengthAdapter));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(RequiredAttribute), typeof(RequiredAdapter));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(EmailAddressAttribute), typeof(EmailAddressAdapter));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(StringLengthAttribute), typeof(StringLengthAdapter));
         }
         private void RegisterFilters()
         {

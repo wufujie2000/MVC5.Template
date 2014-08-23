@@ -28,22 +28,26 @@ namespace MvcTemplate.Data.Migrations
         }
         private void SeedAllPrivileges()
         {
-            List<Privilege> privileges = new List<Privilege>();
+            List<Privilege> allPrivileges = new List<Privilege>()
+            {
+                new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Index" },
+                new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Create" },
+                new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Details" },
+                new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Edit" },
 
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Index" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Create" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Details" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Accounts", Action = "Edit" });
+                new Privilege() { Area = "Administration", Controller = "Roles", Action = "Index" },
+                new Privilege() { Area = "Administration", Controller = "Roles", Action = "Create" },
+                new Privilege() { Area = "Administration", Controller = "Roles", Action = "Details" },
+                new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" },
+                new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" }
+            };
 
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Index" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Create" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Details" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Edit" });
-            privileges.Add(new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" });
-
-            IEnumerable<Privilege> existingPrivileges = unitOfWork.Repository<Privilege>().ToList();
-            foreach (Privilege privilege in privileges)
-                if (!existingPrivileges.Any(priv => priv.Area == priv.Area && priv.Controller == priv.Controller && priv.Action == priv.Action))
+            IEnumerable<Privilege> privileges = unitOfWork.Repository<Privilege>().ToList();
+            foreach (Privilege privilege in allPrivileges)
+                if (!privileges.Any(priv =>
+                        priv.Area == priv.Area &&
+                        priv.Action == priv.Action &&
+                        priv.Controller == priv.Controller))
                     unitOfWork.Repository<Privilege>().Insert(privilege);
 
             unitOfWork.Commit();

@@ -28,7 +28,6 @@ namespace MvcTemplate.Controllers
             if (disposed) return;
 
             Validator.Dispose();
-
             disposed = true;
 
             base.Dispose(disposing);

@@ -24,7 +24,6 @@ namespace MvcTemplate.Controllers
             if (disposed) return;
 
             Service.Dispose();
-
             disposed = true;
 
             base.Dispose(disposing);

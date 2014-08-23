@@ -143,19 +143,17 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Recover_SendsRecoveryInformation()
         {
-            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            HttpRequest request = HttpContext.Current.Request;
             Account recoveredAccount = context.Set<Account>().Single();
+            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
+            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
 
             service.Recover(account);
 
             String expectedEmail = account.Email;
             String expectedEmailSubject = Messages.RecoveryEmailSubject;
-            String expectedEmailBody = String.Format(Messages.RecoveryEmailBody,
-                String.Format("{0}://{1}{2}",
-                    HttpContext.Current.Request.Url.Scheme,
-                    HttpContext.Current.Request.Url.Authority,
-                    urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken })));
+            String recoveryUrl = urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, request.Url.Scheme);
+            String expectedEmailBody = String.Format(Messages.RecoveryEmailBody, recoveryUrl);
 
             mailClient.Received().Send(expectedEmail, expectedEmailSubject, expectedEmailBody);
         }

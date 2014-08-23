@@ -57,11 +57,9 @@ namespace MvcTemplate.Services
             UnitOfWork.Repository<Account>().Update(account);
             UnitOfWork.Commit();
 
-            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            String url = String.Format("{0}://{1}{2}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }));
+            HttpRequest request = HttpContext.Current.Request;
+            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
+            String url = urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }, request.Url.Scheme);
             String recoveryEmailBody = String.Format(Messages.RecoveryEmailBody, url);
 
             mailClient.Send(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
@@ -128,8 +126,9 @@ namespace MvcTemplate.Services
         {
             return UnitOfWork
                 .Repository<Account>()
-                .First(acc => acc.Username.ToLower() == username.ToLower())
-                .Id;
+                .Where(account => account.Username.ToLower() == username.ToLower())
+                .Select(account => account.Id)
+                .Single();
         }
     }
 }

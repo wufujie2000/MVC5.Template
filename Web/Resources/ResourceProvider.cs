@@ -45,16 +45,19 @@ namespace MvcTemplate.Resources
         public static String GetCurrentFormTitle()
         {
             String key = String.Format("{0}{1}", CurrentArea, CurrentController);
+
             return GetResourceFrom("MvcTemplate.Resources.Form.Titles", key);
         }
         public static String GetCurrentTableTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
+
             return GetResourceFrom("MvcTemplate.Resources.Table.Titles", key);
         }
         public static String GetCurrentContentTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
+
             return GetResourceFrom("MvcTemplate.Resources.Content.Titles", key);
         }
 
@@ -81,6 +84,7 @@ namespace MvcTemplate.Resources
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);
+
             return GetResourceFrom("MvcTemplate.Resources.SiteMap.Titles", key);
         }
 
@@ -110,9 +114,9 @@ namespace MvcTemplate.Resources
                 {
                     String joinedView = String.Concat(camelCasedProperties.Skip(skippedProperties).Take(viewSize)) + "View";
                     String joinedProperty = String.Concat(camelCasedProperties.Skip(viewSize + skippedProperties));
-                    String joinedbaseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", joinedView);
+                    String joinedBaseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", joinedView);
 
-                    title = GetResourceFrom(joinedbaseName, joinedProperty);
+                    title = GetResourceFrom(joinedBaseName, joinedProperty);
                     if (title != null) return title;
                 }
             }

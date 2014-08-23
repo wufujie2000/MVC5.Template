@@ -105,8 +105,7 @@ namespace MvcTemplate.Controllers
             }
 
             AlertsContainer current = Session["Alerts"] as AlertsContainer;
-            if (current != Alerts)
-                current.Merge(Alerts);
+            if (current != Alerts) current.Merge(Alerts);
         }
 
         public virtual ActionResult NotEmptyView(Object model)

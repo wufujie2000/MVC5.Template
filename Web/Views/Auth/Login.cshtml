@@ -13,12 +13,10 @@
         {
             @Html.AuthUsernameFor(model => model.Username)
         }
-
         @using (Html.InputGroup())
         {
             @Html.AuthPasswordFor(model => model.Password)
         }
-
         @using (Html.InputGroup())
         {
             @Html.AuthLanguageSelect()

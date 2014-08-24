@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .To<<#= Model.View #>>()
                 .OrderByDescending(view => view.EntityDate);
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.View #> expected = Mapper.Map<<#= Model.Model #>, <#= Model.View #>>(model);
             <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion

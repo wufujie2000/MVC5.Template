@@ -42,11 +42,11 @@ namespace MvcTemplate.Components.Mvc
             }
         }
 
-        public MvcSiteMapProvider(String siteMapPath, IMvcSiteMapParser parser)
+        public MvcSiteMapProvider(String path, IMvcSiteMapParser parser)
         {
-            XElement siteMap = XElement.Load(siteMapPath);
-            allNodes = TreeToEnumerable(parser.GetAllNodes(siteMap));
+            XElement siteMap = XElement.Load(path);
             allMenus = parser.GetMenuNodes(siteMap);
+            allNodes = TreeToEnumerable(parser.GetAllNodes(siteMap));
         }
 
         public MvcSiteMapMenus GetMenus()

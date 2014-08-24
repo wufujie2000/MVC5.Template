@@ -31,10 +31,10 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IAuthorizationProvider>().ToConstant(CreateAuthorizationProvider());
 
             String languagesPath = HostingEnvironment.MapPath("~/Languages.xml");
-            Bind<ILanguageProvider>().To<LanguageProvider>().WithConstructorArgument("languagesPath", languagesPath);
+            Bind<ILanguageProvider>().To<LanguageProvider>().WithConstructorArgument("path", languagesPath);
 
             String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
-            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("siteMapPath", siteMapPath);
+            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("path", siteMapPath);
 
             Bind<IHasher>().To<BCrypter>();
             Bind<IRoleService>().To<RoleService>();

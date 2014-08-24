@@ -168,12 +168,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Create_CreatesRole()
         {
-            TearDownData();
-
-            RoleView expected = ObjectFactory.CreateRoleView();
+            RoleView expected = ObjectFactory.CreateRoleView(2);
             service.Create(expected);
 
-            Role actual = context.Set<Role>().SingleOrDefault();
+            Role actual = context.Set<Role>().SingleOrDefault(r => r.Id == expected.Id);
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -259,7 +257,7 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Delete(role.Id);
             context = new TestingContext();
 
-            Assert.IsNull(context.Set<Role>().SingleOrDefault());
+            Assert.IsFalse(context.Set<Role>().Any());
         }
 
         [Test]
@@ -320,7 +318,9 @@ namespace MvcTemplate.Tests.Unit.Services
             rootNode.Name = MvcTemplate.Resources.Privilege.Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToArray();
 
-            IEnumerable<Privilege> allPrivileges = context.Set<Privilege>().ToList()
+            IEnumerable<Privilege> allPrivileges = context
+                .Set<Privilege>()
+                .ToList()
                 .Select(privilege => new Privilege
                     {
                         Id = privilege.Id,
@@ -352,26 +352,26 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         private List<JsTreeNode> GetAllBranchNodes(JsTreeNode root)
         {
-            IEnumerable<JsTreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0);
+            List<JsTreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0).ToList();
             foreach (JsTreeNode branch in branches.ToList())
-                branches = branches.Union(GetAllBranchNodes(branch));
+                branches.AddRange(GetAllBranchNodes(branch));
 
             if (root.Nodes.Count > 0)
-                branches = branches.Union(new[] { root });
+                branches.Add(root);
 
-            return branches.ToList();
+            return branches;
         }
         private List<JsTreeNode> GetAllLeafNodes(JsTreeNode root)
         {
-            IEnumerable<JsTreeNode> leafs = root.Nodes.Where(node => node.Nodes.Count == 0);
+            List<JsTreeNode> leafs = root.Nodes.Where(node => node.Nodes.Count == 0).ToList();
             IEnumerable<JsTreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0);
-            foreach (JsTreeNode branch in branches.ToList())
-                leafs = leafs.Union(GetAllLeafNodes(branch));
+            foreach (JsTreeNode branch in branches)
+                leafs.AddRange(GetAllLeafNodes(branch));
 
             if (root.Nodes.Count == 0)
-                leafs = leafs.Union(new[] { root });
+                leafs.Add(root);
 
-            return leafs.ToList();
+            return leafs;
         }
 
         #endregion

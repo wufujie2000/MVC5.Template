@@ -34,10 +34,11 @@ namespace MvcTemplate.Tests.Unit.Services
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
             mailClient = Substitute.For<IMailClient>();
-            HttpContext.Current = new HttpMock().HttpContext;
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
+
+            HttpContext.Current = new HttpMock().HttpContext;
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
             service = new AccountService(new UnitOfWork(context), mailClient, hasher);
 
@@ -184,12 +185,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Register_CreatesAccount()
         {
-            TearDownData();
-
-            AccountView expected = ObjectFactory.CreateAccountView();
+            AccountView expected = ObjectFactory.CreateAccountView(2);
             service.Register(expected);
 
-            Account actual = context.Set<Account>().SingleOrDefault();
+            Account actual = context.Set<Account>().SingleOrDefault(model => model.Id == expected.Id);
 
             Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
@@ -204,14 +203,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Register_LowersEmailValue()
         {
-            AccountView view = ObjectFactory.CreateAccountView();
+            AccountView view = ObjectFactory.CreateAccountView(2);
             String expected = view.Email.ToLower();
             view.Email = view.Email.ToUpper();
-            TearDownData();
 
             service.Register(view);
 
-            Account model = context.Set<Account>().SingleOrDefault();
+            Account model = context.Set<Account>().SingleOrDefault(account => account.Id == view.Id);
 
             Assert.AreEqual(expected, model.Email);
             Assert.AreEqual(expected, view.Email);
@@ -226,6 +224,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             Account expected = context.Set<Account>().SingleOrDefault();
+            profile.Email = "test@tests.com";
             profile.Username += "1";
             service.Edit(profile);
 
@@ -351,7 +350,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(accountId);
 
-            Assert.IsNull(context.Set<Account>().SingleOrDefault());
+            Assert.IsFalse(context.Set<Account>().Any());
         }
 
         #endregion

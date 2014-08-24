@@ -23,7 +23,8 @@ namespace MvcTemplate.Services
             rootNode.Name = Resources.Privilege.Titles.All;
 
             IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
-                .Repository<Privilege>().ToList()
+                .Repository<Privilege>()
+                .ToList()
                 .Select(privilege => new Privilege
                 {
                     Id = privilege.Id,

@@ -214,8 +214,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerator<TestModel> expected = (context.Set<TestModel>() as IEnumerable<TestModel>).GetEnumerator();
             IEnumerator<TestModel> actual = repository.GetEnumerator();
 
-            while (expected.MoveNext() | actual.MoveNext())
-                TestHelper.PropertyWiseEqual(expected.Current, actual.Current);
+            TestHelper.EnumeratorsEqual(expected, actual);
         }
 
         [Test]
@@ -227,8 +226,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerator expected = (context.Set<TestModel>() as IEnumerable).GetEnumerator();
             IEnumerator actual = (repository as IEnumerable).GetEnumerator();
 
-            while (expected.MoveNext() | actual.MoveNext())
-                TestHelper.PropertyWiseEqual(expected.Current, actual.Current);
+            TestHelper.EnumeratorsEqual(expected, actual);
         }
 
         #endregion

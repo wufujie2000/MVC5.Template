@@ -72,8 +72,6 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapAccounts_MapsAccountEditViewToAccount()
         {
             AccountEditView view = ObjectFactory.CreateAccountEditView();
-            view.RoleName = "Not used property";
-            view.RoleId = view.Id;
 
             Account actual = Mapper.Map<AccountEditView, Account>(view);
             AccountEditView expected = view;
@@ -89,8 +87,10 @@ namespace MvcTemplate.Tests.Data.Mapping
         [Test]
         public void MapAccounts_MapsAccountToProfileEditView()
         {
-            Account expected = ObjectFactory.CreateAccount();
-            ProfileEditView actual = Mapper.Map<Account, ProfileEditView>(expected);
+            Account account = ObjectFactory.CreateAccount();
+
+            ProfileEditView actual = Mapper.Map<Account, ProfileEditView>(account);
+            Account expected = account;
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);
             Assert.AreEqual(expected.Username, actual.Username);

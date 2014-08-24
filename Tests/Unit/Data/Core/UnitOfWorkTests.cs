@@ -15,13 +15,15 @@ namespace MvcTemplate.Tests.Unit.Data.Core
     public class UnitOfWorkTests
     {
         private UnitOfWork unitOfWork;
+        private IEntityLogger logger;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            unitOfWork = new UnitOfWork(context);
+            logger = Substitute.For<IEntityLogger>();
+            unitOfWork = new UnitOfWork(context, logger);
         }
 
         [TearDown]
@@ -110,8 +112,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_LogsEntities()
         {
-            IEntityLogger logger = Substitute.For<IEntityLogger>();
-            unitOfWork = new UnitOfWork(context, logger);
             unitOfWork.Commit();
 
             logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry>>());
@@ -121,9 +121,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_DoesNotSaveLogsOnFailedCommit()
         {
-            IEntityLogger logger = Substitute.For<IEntityLogger>();
-            unitOfWork = new UnitOfWork(context, logger);
-
             try
             {
                 unitOfWork.Repository<Account>().Insert(new Account());
@@ -144,9 +141,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Dispose_DiposesLogger()
         {
-            IEntityLogger logger = Substitute.For<IEntityLogger>();
-            UnitOfWork unitOfWork = new UnitOfWork(new TestingContext(), logger);
-
             unitOfWork.Dispose();
 
             logger.Received().Dispose();

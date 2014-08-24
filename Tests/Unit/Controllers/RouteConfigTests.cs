@@ -33,6 +33,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Route actual = routes["DefaultMultilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual(false, actual.DataTokens["UseNamespaceFallback"]);
             Assert.AreEqual("{language}/{controller}/{action}", actual.Url);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
             Assert.AreEqual("lt", actual.Constraints["language"]);
@@ -50,6 +51,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Route actual = routes["Default"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual(false, actual.DataTokens["UseNamespaceFallback"]);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
             Assert.AreEqual("en", actual.Constraints["language"]);
             Assert.AreEqual("{controller}/{action}", actual.Url);

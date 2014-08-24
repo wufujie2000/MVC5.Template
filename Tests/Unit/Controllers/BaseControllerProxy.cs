@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class BaseControllerStub : BaseController
+    public class BaseControllerProxy : BaseController
     {
         public String BaseCurrentAccountId
         {

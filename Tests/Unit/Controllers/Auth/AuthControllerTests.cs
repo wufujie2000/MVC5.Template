@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
-            account = ObjectFactory.CreateAccountView();
+            account = new AccountView();
 
             controller = Substitute.ForPartsOf<AuthController>(service, validator);
             controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
@@ -120,7 +120,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controller.Register(account);
 
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.SuccesfulRegistration, actual.Message);
@@ -215,7 +215,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controller.Recover(accountRecovery);
 
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.RecoveryInformation, actual.Message);
             Assert.AreEqual(AlertTypes.Info, actual.Type);
@@ -324,7 +324,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controller.Reset(accountReset);
 
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.SuccesfulReset, actual.Message);

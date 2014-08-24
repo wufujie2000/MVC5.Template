@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Roles(DatalistFilter filter)
+        #region Method: Role(DatalistFilter filter)
 
         [Test]
         public void Roles_GetsRolesData()

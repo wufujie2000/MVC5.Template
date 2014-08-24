@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class ValidatedControllerTests
     {
-        private ValidatedControllerStub controller;
+        private ValidatedControllerProxy controller;
         private IValidator validator;
 
         [SetUp]
@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             validator = Substitute.For<IValidator>();
             IService service = Substitute.For<IService>();
-            controller = new ValidatedControllerStub(service, validator);
+            controller = new ValidatedControllerProxy(service, validator);
             controller.ControllerContext = Substitute.For<ControllerContext>();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }

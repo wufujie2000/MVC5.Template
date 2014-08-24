@@ -96,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanEdit(profile).Returns(true);
 
             controller.Edit(profile);
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.AccountExists(accountId).Returns(true);
 
             controller.Delete();
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
@@ -183,7 +183,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanDelete(account).Returns(false);
 
             controller.DeleteConfirmed(account);
-            Alert actual = controller.Alerts.First();
+            Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);

@@ -17,11 +17,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
                     method.Name == postMethod &&
                     method.GetCustomAttribute<HttpPostAttribute>() != null);
 
-            CustomAttributeData actual = methodInfo.GetParameters().First().CustomAttributes.First();
+            CustomAttributeData actual = methodInfo.GetParameters().Single().CustomAttributes.Single();
 
             Assert.AreEqual(typeof(BindAttribute), actual.AttributeType);
-            Assert.AreEqual("Exclude", actual.NamedArguments.First().MemberName);
-            Assert.AreEqual("Id", actual.NamedArguments.First().TypedValue.Value);
+            Assert.AreEqual("Exclude", actual.NamedArguments.Single().MemberName);
+            Assert.AreEqual("Id", actual.NamedArguments.Single().TypedValue.Value);
         }
     }
 }

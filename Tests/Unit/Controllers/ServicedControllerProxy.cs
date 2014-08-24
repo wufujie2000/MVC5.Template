@@ -3,7 +3,7 @@ using MvcTemplate.Services;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class ServicedControllerStub : ServicedController<IService>
+    public class ServicedControllerProxy : ServicedController<IService>
     {
         public IService BaseService
         {
@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             }
         }
 
-        public ServicedControllerStub(IService service)
+        public ServicedControllerProxy(IService service)
             : base(service)
         {
         }

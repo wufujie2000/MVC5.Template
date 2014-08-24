@@ -9,15 +9,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class ServicedControllerTests
     {
-        private ServicedControllerStub controller;
+        private ServicedControllerProxy controller;
         private IService service;
 
         [SetUp]
         public void SetUp()
         {
             service = Substitute.For<IService>();
-
-            controller = new ServicedControllerStub(service);
+            controller = new ServicedControllerProxy(service);
             controller.ControllerContext = Substitute.For<ControllerContext>();
             controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
         }
@@ -27,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ServicedController_SetsService()
         {
-            controller = new ServicedControllerStub(service);
+            controller = new ServicedControllerProxy(service);
 
             IService actual = controller.BaseService;
             IService expected = service;

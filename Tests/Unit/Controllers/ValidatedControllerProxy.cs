@@ -4,7 +4,7 @@ using MvcTemplate.Validators;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class ValidatedControllerStub : ValidatedController<IService, IValidator>
+    public class ValidatedControllerProxy : ValidatedController<IService, IValidator>
     {
         public IValidator BaseValidator
         {
@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             }
         }
 
-        public ValidatedControllerStub(IService service, IValidator validator)
+        public ValidatedControllerProxy(IService service, IValidator validator)
             : base(service, validator)
         {
         }

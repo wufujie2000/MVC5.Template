@@ -64,8 +64,8 @@ namespace MvcTemplate.Tests.Unit.Validators
             roleView.Id += "OtherIdValue";
             validator.CanCreate(roleView);
 
-            String expected = Validations.RoleNameIsAlreadyTaken;
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
+            String expected = Validations.RoleNameIsAlreadyTaken;
 
             Assert.AreEqual(expected, actual);
         }
@@ -106,8 +106,8 @@ namespace MvcTemplate.Tests.Unit.Validators
             roleView.Id += "OtherIdValue";
             validator.CanEdit(roleView);
 
-            String expected = Validations.RoleNameIsAlreadyTaken;
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
+            String expected = Validations.RoleNameIsAlreadyTaken;
 
             Assert.AreEqual(expected, actual);
         }

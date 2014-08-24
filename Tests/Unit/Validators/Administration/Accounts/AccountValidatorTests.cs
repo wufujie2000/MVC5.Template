@@ -356,8 +356,8 @@ namespace MvcTemplate.Tests.Unit.Validators
             profile.Email = takenEmailAccount.Email;
             validator.CanEdit(profile);
 
-            String expected = Validations.EmailIsAlreadyUsed;
             String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
+            String expected = Validations.EmailIsAlreadyUsed;
 
             Assert.AreEqual(expected, actual);
         }

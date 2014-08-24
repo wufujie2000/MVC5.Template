@@ -6,21 +6,17 @@ using System.Threading;
 
 namespace MvcTemplate.Tests.Helpers
 {
-    public class LanguageProviderMock
+    public class LanguageProviderFactory
     {
-        public ILanguageProvider Provider
+        public static ILanguageProvider CreateProvider()
         {
-            get;
-            private set;
+            ILanguageProvider provider = Substitute.For<ILanguageProvider>();
+            SetUpSubstitute(provider);
+
+            return provider;
         }
 
-        public LanguageProviderMock()
-        {
-            Provider = Substitute.For<ILanguageProvider>();
-            SetUpMock();
-        }
-
-        private void SetUpMock()
+        private static void SetUpSubstitute(ILanguageProvider provider)
         {
             List<Language> languages = new List<Language>()
             {
@@ -40,16 +36,16 @@ namespace MvcTemplate.Tests.Helpers
                 }
             };
 
-            Provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do((value) =>
+            provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do((value) =>
             {
                 Thread.CurrentThread.CurrentCulture = value.Arg<Language>().Culture;
                 Thread.CurrentThread.CurrentUICulture = value.Arg<Language>().Culture;
             });
-            Provider.CurrentLanguage.Returns(languages[0]);
-            Provider.DefaultLanguage.Returns(languages[0]);
-            Provider.Languages.Returns(languages);
-            Provider["en"].Returns(languages[0]);
-            Provider["lt"].Returns(languages[1]);
+            provider.CurrentLanguage.Returns(languages[0]);
+            provider.DefaultLanguage.Returns(languages[0]);
+            provider.Languages.Returns(languages);
+            provider["en"].Returns(languages[0]);
+            provider["lt"].Returns(languages[1]);
         }
     }
 }

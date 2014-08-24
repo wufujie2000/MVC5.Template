@@ -12,7 +12,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [HttpPost]
-        public ActionResult NotAttributedNonGetAction()
+        public ActionResult NotAttributedPostAction()
         {
             return View();
         }
@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
         [HttpPost]
         [Authorize]
-        public ActionResult AuthorizeNonGetAction()
+        public ActionResult AuthorizePostAction()
         {
             return View();
         }
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult AllowAnonymousNonGetAction()
+        public ActionResult AllowAnonymousPostAction()
         {
             return View();
         }
@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
         [HttpPost]
         [AllowUnauthorized]
-        public ActionResult AllowUnauthorizedNonGetAction()
+        public ActionResult AllowUnauthorizedPostAction()
         {
             return View();
         }

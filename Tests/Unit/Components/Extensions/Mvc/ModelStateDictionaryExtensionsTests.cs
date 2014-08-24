@@ -23,12 +23,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
 
         [Test]
-        public void AddModelError_AddsModelErrorMessageWithKey()
+        public void AddModelError_AddsModelErrorKey()
         {
             modelState.AddModelError(expression, "Test error");
 
             String expected = ExpressionHelper.GetExpressionText(expression);
-            String actual = modelState.First().Key;
+            String actual = modelState.Single().Key;
 
             Assert.AreEqual(expected, actual);
         }
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         {
             String expected = "Test error";
             modelState.AddModelError(expression, expected);
-            String actual = modelState.First().Value.Errors.First().ErrorMessage;
+            String actual = modelState.Single().Value.Errors.Single().ErrorMessage;
 
             Assert.AreEqual(expected, actual);
         }
@@ -48,12 +48,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
 
         [Test]
-        public void AddModelError_AddsModelExceptionWithKey()
+        public void AddModelError_AddsModelExceptionKey()
         {
             modelState.AddModelError(expression, new Exception());
 
             String expected = ExpressionHelper.GetExpressionText(expression);
-            String actual = modelState.First().Key;
+            String actual = modelState.Single().Key;
 
             Assert.AreEqual(expected, actual);
         }
@@ -63,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         {
             Exception expected = new Exception();
             modelState.AddModelError(expression, expected);
-            Exception actual = modelState.First().Value.Errors.First().Exception;
+            Exception actual = modelState.Single().Value.Errors.Single().Exception;
 
             Assert.AreEqual(expected, actual);
         }

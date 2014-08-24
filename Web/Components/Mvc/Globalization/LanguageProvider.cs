@@ -36,9 +36,9 @@ namespace MvcTemplate.Components.Mvc
             }
         }
 
-        public LanguageProvider(String languagesPath)
+        public LanguageProvider(String path)
         {
-            XElement languagesXml = XElement.Load(languagesPath);
+            XElement languagesXml = XElement.Load(path);
             languages = new Dictionary<String, Language>();
 
             foreach (XElement languageNode in languagesXml.Elements("Language"))

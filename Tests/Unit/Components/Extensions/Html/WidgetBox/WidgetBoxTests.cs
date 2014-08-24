@@ -8,14 +8,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class WidgetBoxTests
     {
-        #region Constructor: WidgetBox(TextWriter writer, String iconClass, String title, String buttons)
+        #region Constructor: WidgetBox(TextWriter textWriter, String iconClass, String title, String buttons)
 
         [Test]
         public void WidgetBox_WritesWidgetBox()
         {
             StringWriter writer = new StringWriter();
-            using (new WidgetBox(writer, "Icon", "Title", "Buttons"))
-                writer.Write("Test");
+            using (new WidgetBox(writer, "Icon", "Title", "Buttons")) writer.Write("Test");
 
             String actual = writer.GetStringBuilder().ToString();
             String expected = GetExpectedWidgetBoxHtml();
@@ -30,12 +29,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void Dispose_ClosesWidgetDivs()
         {
-            StringWriter textWriter = new StringWriter();
-            WidgetBox widgetBox = new WidgetBox(textWriter, "Icon", "Title", "Buttons");
-            textWriter.Write("Test");
-            widgetBox.Dispose();
+            StringWriter writer = new StringWriter();
+            using (new WidgetBox(writer, "Icon", "Title", "Buttons")) writer.Write("Test");
 
-            String actual = textWriter.GetStringBuilder().ToString();
+            String actual = writer.GetStringBuilder().ToString();
             String expected = GetExpectedWidgetBoxHtml();
 
             Assert.AreEqual(expected, actual);
@@ -44,13 +41,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void Dispose_CanBeCalledMultipleTimes()
         {
-            StringWriter textWriter = new StringWriter();
-            WidgetBox widgetBox = new WidgetBox(textWriter, "Icon", "Title", "Buttons");
-            textWriter.Write("Test");
+            StringWriter writer = new StringWriter();
+            WidgetBox widgetBox = new WidgetBox(writer, "Icon", "Title", "Buttons");
+            writer.Write("Test");
             widgetBox.Dispose();
             widgetBox.Dispose();
 
-            String actual = textWriter.GetStringBuilder().ToString();
+            String actual = writer.GetStringBuilder().ToString();
             String expected = GetExpectedWidgetBoxHtml();
 
             Assert.AreEqual(expected, actual);

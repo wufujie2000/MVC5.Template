@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using NUnit.Framework;
+using System.Collections;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -31,7 +32,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Date");
 
-            CollectionAssert.AreEqual(new[] { typeof(DateValidator) }, provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType()));
+            IEnumerable actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
+            IEnumerable expected = new[] { typeof(DateValidator) };
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -39,7 +43,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Numeric");
 
-            CollectionAssert.AreEqual(new[] { typeof(NumberValidator) }, provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType()));
+            IEnumerable actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
+            IEnumerable expected = new[] { typeof(NumberValidator) };
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

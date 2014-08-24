@@ -133,7 +133,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .To<RoleView>()
                 .OrderByDescending(account => account.EntityDate);
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -148,7 +148,7 @@ namespace MvcTemplate.Tests.Unit.Services
             RoleView expected = Mapper.Map<Role, RoleView>(model);
             RoleView actual = service.GetView(role.Id);
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         [Test]

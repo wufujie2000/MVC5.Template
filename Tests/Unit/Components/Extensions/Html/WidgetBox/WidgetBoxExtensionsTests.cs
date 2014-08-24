@@ -37,12 +37,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: TableWidgetBox(this HtmlHelper html, params LinkAction[] actions)
 
         [Test]
-        public void TableWidgetBox_FormsWidgetBox()
+        public void TableWidgetBox_FormsTableWidgetBox()
         {
             StringBuilder expected = new StringBuilder();
-            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
-
             StringBuilder actual = new StringBuilder();
+
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox().Dispose();
 
@@ -50,15 +50,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void TableWidgetBox_FormsWidgetBoxWithButtons()
+        public void TableWidgetBox_FormsTableWidgetBoxWithButtons()
         {
+            StringBuilder expected = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             Authorization.Provider = null;
 
-            StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
-            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void TableWidgetBox_FormsWidgetBoxWithAuthorizedButtons()
+        public void TableWidgetBox_FormsTableWidgetBoxWithAuthorizedButtons()
         {
             Authorization
                 .Provider
@@ -78,10 +78,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 .Returns(true);
 
             StringBuilder expected = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
+
             String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
-            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -108,13 +109,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsWidgetBoxWithButtons()
         {
+            StringBuilder expected = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
             Authorization.Provider = null;
 
-            StringBuilder expected = new StringBuilder();
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
-            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
 
@@ -134,10 +135,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 .Returns(true);
 
             StringBuilder expected = new StringBuilder();
+            StringBuilder actual = new StringBuilder();
+
             String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Edit);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
-            StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
             html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit).Dispose();
 

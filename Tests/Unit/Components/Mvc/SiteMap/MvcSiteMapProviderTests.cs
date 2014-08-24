@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System.Web.Routing;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
@@ -17,6 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class MvcSiteMapProviderTests
     {
+        private RouteValueDictionary routeValues;
         private MvcSiteMapProvider provider;
         private MvcSiteMapParser parser;
         private String siteMapPath;
@@ -34,8 +36,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [SetUp]
         public void SetUp()
         {
-            provider = new MvcSiteMapProvider(siteMapPath, parser);
             HttpContext.Current = new HttpMock().HttpContext;
+            provider = new MvcSiteMapProvider(siteMapPath, parser);
+            routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
         }
 
         [TearDown]
@@ -107,20 +110,19 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_SetsMenuToActiveIfItBelongsToCurrentAreaAndController()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Home";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "Index";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = null;
+            routeValues["controller"] = "Home";
+            routeValues["action"] = "Index";
+            routeValues["area"] = null;
 
-            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").First();
+            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").Single();
             IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus().Where(menu => menu.IsActive));
-            MvcSiteMapMenuNode actual = actualMenus.First();
+            MvcSiteMapMenuNode actual = actualMenus.Single();
 
             Assert.AreEqual(ResourceProvider.GetSiteMapTitle(expected.Area, expected.Controller, expected.Action), actual.Title);
             Assert.AreEqual(expected.IconClass, actual.IconClass);
             Assert.AreEqual(expected.Controller, actual.Controller);
             Assert.AreEqual(expected.Action, actual.Action);
             Assert.AreEqual(expected.Area, actual.Area);
-            Assert.AreEqual(1, actualMenus.Count());
             Assert.IsFalse(actual.HasActiveSubMenu);
             Assert.IsTrue(actual.IsActive);
         }
@@ -128,20 +130,19 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_SetsHasActiveSubmenuIfAnyOfItsSubmenusAreActiveOrHasActiveSubmenus()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = "Administration";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Roles";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "Index";
+            routeValues["area"] = "Administration";
+            routeValues["controller"] = "Roles";
+            routeValues["action"] = "Index";
 
-            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Area == "Administration" && menu.Action == null).First();
+            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Area == "Administration" && menu.Action == null).Single();
             IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus()).Where(menu => menu.HasActiveSubMenu);
-            MvcSiteMapMenuNode actual = actualMenus.First();
+            MvcSiteMapMenuNode actual = actualMenus.Single();
 
             Assert.AreEqual(ResourceProvider.GetSiteMapTitle(expected.Area, expected.Controller, expected.Action), actual.Title);
             Assert.AreEqual(expected.IconClass, actual.IconClass);
             Assert.AreEqual(expected.Controller, actual.Controller);
             Assert.AreEqual(expected.Action, actual.Action);
             Assert.AreEqual(expected.Area, actual.Area);
-            Assert.AreEqual(1, actualMenus.Count());
             Assert.IsTrue(actual.HasActiveSubMenu);
             Assert.IsFalse(actual.IsActive);
         }
@@ -185,27 +186,27 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetBreadcrumb_FormsBreadcrumbForCurrentAction()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = "Administration";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Roles";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "Index";
+            routeValues["area"] = "Administration";
+            routeValues["controller"] = "Roles";
+            routeValues["action"] = "Index";
 
             List<MvcSiteMapNode> nodes = parser.GetAllNodes(siteMap).ToList();
             MvcSiteMapBreadcrumb expected = CreateBreadcrumb(nodes[1], nodes[1].Children.First());
             MvcSiteMapBreadcrumb actual = provider.GetBreadcrumb();
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         [Test]
         public void GetBreadcrumb_SetsBreadcrumbTitlesToCurrentCultureOnes()
         {
-            HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] = "Home";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["action"] = "Index";
-            HttpContext.Current.Request.RequestContext.RouteData.Values["area"] = null;
+            routeValues["controller"] = "Home";
+            routeValues["action"] = "Index";
+            routeValues["area"] = null;
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
             String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
-            String actual = provider.GetBreadcrumb().First().Title;
+            String actual = provider.GetBreadcrumb().Single().Title;
 
             Assert.AreEqual(expected, actual);
         }

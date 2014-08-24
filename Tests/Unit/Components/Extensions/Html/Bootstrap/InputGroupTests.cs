@@ -14,11 +14,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void InputGroup_WritesInputGroup()
         {
-            StringWriter textWriter = new StringWriter(new StringBuilder());
-            using (new InputGroup(textWriter)) textWriter.Write("Content");
+            StringWriter writer = new StringWriter(new StringBuilder());
+            using (new InputGroup(writer)) writer.Write("Content");
 
             String expected = "<div class=\"input-group\">Content</div>";
-            String actual = textWriter.GetStringBuilder().ToString();
+            String actual = writer.GetStringBuilder().ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -30,14 +30,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void Dispose_CanBeDisposedMultipleTimes()
         {
-            StringWriter textWriter = new StringWriter(new StringBuilder());
-            InputGroup formActions = new InputGroup(textWriter);
-            textWriter.Write("Content");
+            StringWriter writer = new StringWriter(new StringBuilder());
+            InputGroup formActions = new InputGroup(writer);
+            writer.Write("Content");
             formActions.Dispose();
             formActions.Dispose();
 
             String expected = "<div class=\"input-group\">Content</div>";
-            String actual = textWriter.GetStringBuilder().ToString();
+            String actual = writer.GetStringBuilder().ToString();
 
             Assert.AreEqual(expected, actual);
         }

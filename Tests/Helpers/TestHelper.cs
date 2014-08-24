@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +11,7 @@ namespace MvcTemplate.Tests.Helpers
     {
         private static Type StringType = typeof(String);
 
-        public static void PropertyWiseEquals<T>(T expected, T actual)
+        public static void PropertyWiseEqual<T>(T expected, T actual)
         {
             if (Object.Equals(expected, actual)) return;
             if (expected == null || actual == null)
@@ -32,16 +33,21 @@ namespace MvcTemplate.Tests.Helpers
                     prop.PropertyType == StringType);
 
             foreach (PropertyInfo property in validProperties)
-                PropertyWiseEquals(property.GetValue(expected), property.GetValue(actual));
+                PropertyWiseEqual(property.GetValue(expected), property.GetValue(actual));
         }
-
-        public static void EnumPropertyWiseEquals<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        public static void EnumPropertyWiseEqual<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             IEnumerator<T> expectedEnumerator = expected.GetEnumerator();
             IEnumerator<T> actualEnumerator = actual.GetEnumerator();
 
             while (expectedEnumerator.MoveNext() | actualEnumerator.MoveNext())
-                PropertyWiseEquals(expectedEnumerator.Current, actualEnumerator.Current);
+                PropertyWiseEqual(expectedEnumerator.Current, actualEnumerator.Current);
+        }
+
+        public static void EnumeratorsEqual(IEnumerator expected, IEnumerator actual)
+        {
+            while (expected.MoveNext() | actual.MoveNext())
+                Assert.AreSame(expected.Current, actual.Current);
         }
     }
 }

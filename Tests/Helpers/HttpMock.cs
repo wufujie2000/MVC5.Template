@@ -64,17 +64,17 @@ namespace MvcTemplate.Tests.Helpers
 
         public HttpMock()
         {
-            HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/", String.Empty);
+            HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/Domain/", String.Empty);
             HttpBrowserCapabilities browser = Substitute.ForPartsOf<HttpBrowserCapabilities>();
             HttpResponse response = new HttpResponse(new StringWriter());
+            HttpContext = new HttpContext(request, response);
             browser[Arg.Any<String>()].Returns("true");
             request.Browser = browser;
 
             HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
             httpRequestBase.QueryString.Returns(new NameValueCollection());
-            httpRequestBase.QueryString.Add("Param1", "Value1");
             httpRequestBase.ApplicationPath.Returns("/Domain");
-            HttpContext = new HttpContext(request, response);
+            httpRequestBase.QueryString.Add("p", "1");
 
             HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
             HttpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());

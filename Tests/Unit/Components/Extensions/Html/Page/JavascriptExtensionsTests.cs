@@ -6,20 +6,20 @@ using System;
 using System.IO;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
+namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
     public class JavascriptExtensionsTests
     {
         private UrlHelper urlHelper;
-        private String filePath;
         private HtmlHelper html;
+        private String path;
 
         [SetUp]
         public void SetUp()
         {
-            filePath = "JavascriptExtensionsTests.txt";
-            File.WriteAllText(filePath, String.Empty);
+            path = "JavascriptExtensionsTests.txt";
+            File.WriteAllText(path, String.Empty);
 
             html = HtmlHelperFactory.CreateHtmlHelper();
             urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         public void RenderControllerScripts_RendersControllerScriptsWithArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/Administration/Accounts/accounts.js");
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(filePath);
+            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
 
             String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
             String actual = html.RenderControllerScripts().ToString();
@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Page
         public void RenderControllerScripts_RendersControllerScriptsWithoutArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/Accounts/accounts.js");
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(filePath);
+            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 
             String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);

@@ -11,7 +11,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [HttpPost]
-        public ActionResult NonGetAction()
+        public ActionResult PostAction()
         {
             return View();
         }

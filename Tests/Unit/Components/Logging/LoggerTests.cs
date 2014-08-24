@@ -24,10 +24,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger = new Logger(context);
 
             TearDownData();
-
-            Account account = ObjectFactory.CreateAccount();
-            context.Set<Account>().Add(account);
-            context.SaveChanges();
         }
 
         [TearDown]
@@ -45,13 +41,13 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             if (context.Set<Log>().Count() > 0)
                 Assert.Inconclusive();
 
-            String expected = new String('L', 10000);
-            logger.Log(expected);
+            logger.Log(new String('L', 10000));
 
-            Log actualLog = context.Set<Log>().First();
+            String actual = context.Set<Log>().Single().Message;
+            String expected = new String('L', 10000);
 
             Assert.AreEqual(1, context.Set<Log>().Count());
-            Assert.AreEqual(expected, actualLog.Message);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -71,7 +67,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         private void TearDownData()
         {
-            context.Set<Account>().RemoveRange(context.Set<Account>());
             context.Set<Log>().RemoveRange(context.Set<Log>());
             context.SaveChanges();
         }

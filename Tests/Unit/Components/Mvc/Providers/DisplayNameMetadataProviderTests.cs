@@ -15,11 +15,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetMetadataForProperty_SetsDisplayProperty()
         {
             DisplayNameMetadataProvider provider = new DisplayNameMetadataProvider();
-            Type containerType = typeof(RoleView);
-            String propertyName = "Name";
 
-            String expected = ResourceProvider.GetPropertyTitle(containerType, propertyName);
-            String actual = provider.GetMetadataForProperty(null, containerType, propertyName).DisplayName;
+            String actual = provider.GetMetadataForProperty(null, typeof(RoleView), "Name").DisplayName;
+            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
 
             Assert.AreEqual(expected, actual);
         }

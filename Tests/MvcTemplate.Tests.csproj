@@ -112,7 +112,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data\Mapping\TestObjectMapper.cs" />
-    <Compile Include="Helpers\LanguageProviderMock.cs" />
+    <Compile Include="Helpers\LanguageProviderFactory.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
@@ -121,7 +121,7 @@
       <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Views\AllTypesView.cs" />
-    <Compile Include="Unit\Components\Extensions\Page\JavascriptExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\Page\JavascriptExtensionsTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggablePropertyEntryTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />
@@ -151,13 +151,13 @@
     <Compile Include="Unit\Components\Extensions\Mvc\ModelStateView.cs" />
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerStub.cs" />
-    <Compile Include="Unit\Components\Datalists\BaseDatalistStub.cs" />
+    <Compile Include="Unit\Components\Datalists\BaseDatalistProxy.cs" />
     <Compile Include="Unit\Controllers\ServicedControllerStub.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RoleServiceTests.cs" />
-    <Compile Include="Unit\Components\Security\Authorization\AuthProviderTests.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\AuthorizationProviderTests.cs" />
     <Compile Include="Unit\Controllers\Auth\AuthControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreaRegistrationTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Roles\RolesControllerTests.cs" />

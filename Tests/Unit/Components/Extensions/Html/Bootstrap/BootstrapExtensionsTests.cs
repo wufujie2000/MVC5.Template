@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
             htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
         }
 
@@ -87,12 +87,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: FormSubmit(this HtmlHelper html)
+        #region Extension method: Submit(this HtmlHelper html)
 
         [Test]
-        public void FormSubmit_FormsFormSubmitHtml()
+        public void FormSubmit_FormsSubmit()
         {
-            String actual = html.FormSubmit().ToString();
+            String actual = html.Submit().ToString();
             String expected = String.Format(
                 "<input class=\"btn btn-primary\" type=\"submit\" value=\"{0}\" />",
                 MvcTemplate.Resources.Shared.Resources.Submit);
@@ -102,13 +102,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: Submit(this HtmlHelper html, String value)
+        #region Extension method: SubmitFor(this HtmlHelper html, String value)
 
         [Test]
-        public void Submit_FormsSubmitHtml()
+        public void Submit_FormsSubmitForValue()
         {
             String expected = "<input class=\"btn btn-primary\" type=\"submit\" value=\"Value\" />";
-            String actual = html.Submit("Value").ToString();
+            String actual = html.SubmitFor("Value").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -120,9 +120,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormLabelFor_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() =>
-                html.FormLabelFor(exp => exp.Method()),
-                "Expression must be a member expression");
+            Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.Method()));
         }
 
         [Test]
@@ -147,7 +145,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
 
             String actual = html.FormLabelFor(expression).ToString();
-            String expected = String.Format("<label class=\"{0}\" for=\"{1}\"></label>",
+            String expected = String.Format(
+                "<label class=\"{0}\" for=\"{1}\"></label>",
                 BootstrapExtensions.LabelClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
@@ -159,7 +158,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
 
         [Test]
-        public void FormTextBoxFor_FormsTextBox()
+        public void FormTextBoxFor_FormsNotAutocompletableTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
 
@@ -251,9 +250,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() =>
-                html.FormTextBoxFor(exp => exp.Method()),
-                "Expression must be a member expression");
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.Method()));
         }
 
         [Test]

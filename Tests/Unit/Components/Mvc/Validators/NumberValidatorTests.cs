@@ -11,8 +11,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class NumberValidatorTests
     {
-        private ModelMetadata metadata;
         private NumberValidator validator;
+        private ModelMetadata metadata;
 
         [SetUp]
         public void SetUp()
@@ -34,29 +34,18 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetClientValidationRules()
 
         [Test]
-        public void GetClientValidationRules_HasNumberValidationType()
+        public void GetClientValidationRules_ReturnsDateValidationRule()
         {
-            Assert.AreEqual("number", validator.GetClientValidationRules().First().ValidationType);
-        }
+            ModelClientValidationRule actual = validator.GetClientValidationRules().Single();
+            ModelClientValidationRule expected = new ModelClientValidationRule
+            {
+                ValidationType = "number",
+                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, metadata.GetDisplayName())
+            };
 
-        [Test]
-        public void GetClientValidationRules_SetsValidationMessages()
-        {
-            Assert.AreEqual(
-                String.Format(Validations.FieldMustBeNumeric, metadata.GetDisplayName()),
-                validator.GetClientValidationRules().First().ErrorMessage);
-        }
-
-        [Test]
-        public void GetClientValidationRules_DoesNotHaveValidationParameters()
-        {
-            CollectionAssert.IsEmpty(validator.GetClientValidationRules().First().ValidationParameters);
-        }
-
-        [Test]
-        public void GetClientValidationRules_ReturnsOnlyOneRule()
-        {
-            Assert.AreEqual(1, validator.GetClientValidationRules().Count());
+            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
+            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
+            CollectionAssert.IsEmpty(actual.ValidationParameters);
         }
 
         #endregion

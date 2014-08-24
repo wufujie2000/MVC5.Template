@@ -11,8 +11,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class DateValidatorTests
     {
-        private ModelMetadata metadata;
         private DateValidator validator;
+        private ModelMetadata metadata;
 
         [SetUp]
         public void SetUp()
@@ -34,29 +34,18 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetClientValidationRules()
 
         [Test]
-        public void GetClientValidationRules_HasDateValidationType()
+        public void GetClientValidationRules_ReturnsDateValidationRule()
         {
-            Assert.AreEqual("date", validator.GetClientValidationRules().First().ValidationType);
-        }
+            ModelClientValidationRule actual = validator.GetClientValidationRules().Single();
+            ModelClientValidationRule expected = new ModelClientValidationRule
+            {
+                ValidationType = "date",
+                ErrorMessage = String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName())
+            };
 
-        [Test]
-        public void GetClientValidationRules_SetsValidationMessages()
-        {
-            Assert.AreEqual(
-                String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName()),
-                validator.GetClientValidationRules().First().ErrorMessage);
-        }
-
-        [Test]
-        public void GetClientValidationRules_DoesNotHaveValidationParameters()
-        {
-            CollectionAssert.IsEmpty(validator.GetClientValidationRules().First().ValidationParameters);
-        }
-
-        [Test]
-        public void GetClientValidationRules_ReturnsOnlyOneRule()
-        {
-            Assert.AreEqual(1, validator.GetClientValidationRules().Count());
+            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
+            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
+            CollectionAssert.IsEmpty(actual.ValidationParameters);
         }
 
         #endregion

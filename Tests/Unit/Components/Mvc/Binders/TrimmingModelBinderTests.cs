@@ -21,7 +21,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             controllerContext = new ControllerContext();
             bindingContext = new ModelBindingContext();
             binder = new TrimmingModelBinder();
-
             bindingContext.ModelName = "Text";
         }
 
@@ -32,9 +31,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
 
-            Object actual = binder.BindModel(controllerContext, bindingContext);
-
-            Assert.IsNull(actual);
+            Assert.IsNull(binder.BindModel(controllerContext, bindingContext));
         }
 
         [Test]
@@ -43,9 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             nameValueCollection.Add("Text", null);
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
 
-            Object actual = binder.BindModel(controllerContext, bindingContext);
-
-            Assert.IsNull(actual);
+            Assert.IsNull(binder.BindModel(controllerContext, bindingContext));
         }
 
         [Test]
@@ -54,8 +49,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             nameValueCollection.Add("Text", "  Trimmed text  ");
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
 
-            String expected = "Trimmed text";
             Object actual = binder.BindModel(controllerContext, bindingContext);
+            Object expected = "Trimmed text";
 
             Assert.AreEqual(expected, actual);
         }

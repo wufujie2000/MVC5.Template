@@ -40,7 +40,7 @@ namespace MvcTemplate.Components.Extensions.Html
             IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
             if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
 
-            TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdownMenu(html);
+            TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             TagBuilder languageContainer = new TagBuilder("div");
             TagBuilder currentLang = new TagBuilder("span");

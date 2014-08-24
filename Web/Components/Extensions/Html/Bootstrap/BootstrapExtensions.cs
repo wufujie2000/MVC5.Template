@@ -37,11 +37,11 @@ namespace MvcTemplate.Components.Extensions.Html
             return new FormWrapper(html.ViewContext.Writer, ContentClass);
         }
 
-        public static MvcHtmlString FormSubmit(this HtmlHelper html)
+        public static MvcHtmlString Submit(this HtmlHelper html)
         {
-            return html.Submit(Resources.Shared.Resources.Submit);
+            return html.SubmitFor(Resources.Shared.Resources.Submit);
         }
-        public static MvcHtmlString Submit(this HtmlHelper html, String value)
+        public static MvcHtmlString SubmitFor(this HtmlHelper html, String value)
         {
             TagBuilder submit = new TagBuilder("input");
             submit.MergeAttribute("type", "submit");
@@ -92,14 +92,14 @@ namespace MvcTemplate.Components.Extensions.Html
             return new MvcHtmlString(WrapWith(html.ValidationMessageFor(expression), ValidationClass));
         }
 
-        internal static TagBuilder FormLanguagesDropdownMenu(HtmlHelper html)
+        internal static TagBuilder FormLanguagesDropdown(HtmlHelper html)
         {
             NameValueCollection query = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
             RouteValueDictionary routeValues = MergeQuery(html.ViewContext.RouteData.Values, query);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            TagBuilder dropdownMenu = new TagBuilder("ul");
-            dropdownMenu.MergeAttribute("role", "menu");
-            dropdownMenu.AddCssClass("dropdown-menu");
+            TagBuilder dropdown = new TagBuilder("ul");
+            dropdown.MergeAttribute("role", "menu");
+            dropdown.AddCssClass("dropdown-menu");
 
             foreach (Language language in LocalizationManager.Provider.Languages)
             {
@@ -112,10 +112,10 @@ namespace MvcTemplate.Components.Extensions.Html
                     String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc),
                     language.Name);
 
-                dropdownMenu.InnerHtml += languageItem.ToString();
+                dropdown.InnerHtml += languageItem.ToString();
             }
 
-            return dropdownMenu;
+            return dropdown;
         }
 
         private static RouteValueDictionary MergeQuery(RouteValueDictionary routeValues, NameValueCollection query)

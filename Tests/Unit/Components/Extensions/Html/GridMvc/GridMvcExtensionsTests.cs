@@ -21,18 +21,21 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class GridMvcExtensionsTests
     {
-        private IGridColumnCollection<AllTypesView> columnCollection;
-        private IGridHtmlOptions<AllTypesView> htmlOptions;
+        private IGridColumnCollection<AllTypesView> columns;
+        private IGridHtmlOptions<AllTypesView> options;
         private IGridColumn<AllTypesView> column;
+        private UrlHelper urlHelper;
 
         [SetUp]
         public void SetUp()
         {
-            column = SubstituteIGridcolumn();
-            htmlOptions = SubstituteIGridHtmlOptions();
-            columnCollection = SubstituteIGridCollumnCollection<DateTime?>(column);
+            column = SubstituteColumn();
+            options = SubstituteOptions();
+            columns = SubstituteColumns<DateTime?>(column);
 
             HttpContext.Current = new HttpMock().HttpContext;
+            urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
@@ -47,33 +50,33 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
 
         [Test]
-        public void AddActionLink_ReturnsNullOnUnauthorizedActionLink()
+        public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
         {
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
 
-            Assert.IsNull(columnCollection.AddActionLink(LinkAction.Edit));
+            Assert.IsNull(columns.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
-        public void AddActionLink_AddsActionLinkOnNullAuthorizationProvider()
+        public void AddActionLink_OnNullAuthorizationProviderAddsActionLink()
         {
             Authorization.Provider = null;
 
-            Assert.IsNotNull(columnCollection.AddActionLink(LinkAction.Edit));
+            Assert.IsNotNull(columns.AddActionLink(LinkAction.Edit));
         }
 
         [Test]
         public void AddActionLink_AddsGridColumn()
         {
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
-            columnCollection.Received().Add();
+            columns.Received().Add();
         }
 
         [Test]
         public void AddActionLink_SetsGridColumnWidthTo25()
         {
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
             column.Received().SetWidth(25);
         }
@@ -81,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
             column.Received().Encoded(false);
         }
@@ -89,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_DoesNotSanitizeGridColumn()
         {
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
             column.Received().Sanitized(false);
         }
@@ -97,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_SetsCssOnGridColumn()
         {
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
             column.Received().Css("action-link-cell");
         }
@@ -114,7 +117,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     action != LinkAction.Delete);
 
             foreach (LinkAction action in notSupportedActions)
-                columnCollection.AddActionLink(action);
+                columns.AddActionLink(action);
 
             column.DidNotReceive().RenderValueAs(Arg.Any<Func<AllTypesView, String>>());
         }
@@ -131,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     action == LinkAction.Delete);
 
             foreach (LinkAction action in supportedActions)
-                columnCollection.AddActionLink(action);
+                columns.AddActionLink(action);
 
             column.Received(supportedActions.Count()).RenderValueAs(Arg.Any<Func<AllTypesView, String>>());
         }
@@ -139,17 +142,24 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_RendersDetailsLinkAction()
         {
-            AllTypesView view = new AllTypesView();
             Func<AllTypesView, String> detailsFunc = null;
-            column.RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
+            AllTypesView view = new AllTypesView();
+
+            column
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
                 .AndDoes((info) => { detailsFunc = info.Arg<Func<AllTypesView, String>>(); });
 
-            columnCollection.AddActionLink(LinkAction.Details);
+            columns.AddActionLink(LinkAction.Details);
 
             String actual = detailsFunc.Invoke(view);
-            String expected = String.Format("<div class=\"action-link-container details-action-link\"><a href=\"{0}\"><i class=\"fa fa-info\"></i></a></div>",
-                new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Details", new { id = view.Id }));
+            String expected = String.Format(
+                "<div class=\"action-link-container details-action-link\">" +
+                    "<a href=\"{0}\">" +
+                        "<i class=\"fa fa-info\"></i>" +
+                    "</a>" +
+                "</div>",
+                urlHelper.Action("Details", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
         }
@@ -157,17 +167,24 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_RendersEditLinkAction()
         {
-            AllTypesView view = new AllTypesView();
             Func<AllTypesView, String> editFunc = null;
-            column.RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
+            AllTypesView view = new AllTypesView();
+
+            column
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
                 .AndDoes((info) => { editFunc = info.Arg<Func<AllTypesView, String>>(); });
 
-            columnCollection.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink(LinkAction.Edit);
 
             String actual = editFunc.Invoke(view);
-            String expected = String.Format("<div class=\"action-link-container edit-action-link\"><a href=\"{0}\"><i class=\"fa fa-pencil\"></i></a></div>",
-                new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Edit", new { id = view.Id }));
+            String expected = String.Format(
+                "<div class=\"action-link-container edit-action-link\">" +
+                    "<a href=\"{0}\">" +
+                        "<i class=\"fa fa-pencil\"></i>" +
+                    "</a>" +
+                "</div>",
+                urlHelper.Action("Edit", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
         }
@@ -175,17 +192,24 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_RendersDeleteLinkAction()
         {
-            AllTypesView view = new AllTypesView();
             Func<AllTypesView, String> deleteFunc = null;
-            column.RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
+            AllTypesView view = new AllTypesView();
+
+            column
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
                 .AndDoes((info) => { deleteFunc = info.Arg<Func<AllTypesView, String>>(); });
 
-            columnCollection.AddActionLink(LinkAction.Delete);
+            columns.AddActionLink(LinkAction.Delete);
 
             String actual = deleteFunc.Invoke(view);
-            String expected = String.Format("<div class=\"action-link-container delete-action-link\"><a href=\"{0}\"><i class=\"fa fa-times\"></i></a></div>",
-                new UrlHelper(HttpContext.Current.Request.RequestContext).Action("Delete", new { id = view.Id }));
+            String expected = String.Format(
+                "<div class=\"action-link-container delete-action-link\">" +
+                    "<a href=\"{0}\">" +
+                        "<i class=\"fa fa-times\"></i>" +
+                    "</a>" +
+                "</div>",
+                urlHelper.Action("Delete", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
         }
@@ -198,9 +222,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddDateProperty_AddsGridColumn()
         {
             Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.EntityDate;
-            columnCollection.AddDateProperty<AllTypesView>(propertyFunc);
 
-            columnCollection.Received().Add<DateTime?>(propertyFunc);
+            columns.AddDateProperty<AllTypesView>(propertyFunc);
+
+            columns.Received().Add<DateTime?>(propertyFunc);
         }
 
         [Test]
@@ -208,7 +233,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
 
-            columnCollection.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
 
             column.Received().Titled(expected);
         }
@@ -216,7 +241,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnCss()
         {
-            columnCollection.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
 
             column.Received().Css("date-cell");
         }
@@ -226,7 +251,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
-            columnCollection.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
 
             column.Received().Format(expected);
         }
@@ -239,9 +264,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddProperty_AddsGridColumn()
         {
             Expression<Func<AllTypesView, String>> propertyFunc = (model) => model.Id;
-            columnCollection.AddProperty(propertyFunc);
 
-            columnCollection.Received().Add<String>(propertyFunc);
+            columns.AddProperty(propertyFunc);
+
+            columns.Received().Add<String>(propertyFunc);
         }
 
         [Test]
@@ -249,7 +275,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
 
-            columnCollection.AddProperty(model => model.EntityDate);
+            columns.AddProperty(model => model.EntityDate);
 
             column.Received().Titled(expected);
         }
@@ -423,72 +449,72 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void ApplyAttributes_SetsEmptyText()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound);
+            options.Received().EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound);
         }
 
         [Test]
         public void ApplyAttributes_SetsLanguage()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().SetLanguage(CultureInfo.CurrentCulture.Name);
+            options.Received().SetLanguage(CultureInfo.CurrentCulture.Name);
         }
 
         [Test]
         public void ApplyAttributes_SetsName()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().Named(typeof(AllTypesView).Name);
+            options.Received().Named(typeof(AllTypesView).Name);
         }
 
         [Test]
         public void ApplyAttributes_EnablesMultipleFilters()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().WithMultipleFilters();
+            options.Received().WithMultipleFilters();
         }
 
         [Test]
         public void ApplyAttributes_DisablesRowSelection()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().Selectable(false);
+            options.Received().Selectable(false);
         }
 
         [Test]
         public void ApplyAttributes_SetsPaging()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().WithPaging(20);
+            options.Received().WithPaging(20);
         }
 
         [Test]
         public void ApplyAttributes_EnablesFiltering()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().Filterable();
+            options.Received().Filterable();
         }
 
         [Test]
         public void ApplyAttributes_EnablesSorting()
         {
-            htmlOptions.ApplyAttributes();
+            options.ApplyAttributes();
 
-            htmlOptions.Received().Sortable();
+            options.Received().Sortable();
         }
 
         #endregion
 
         #region Test helpers
 
-        private IGridColumn<AllTypesView> SubstituteIGridcolumn()
+        private IGridColumn<AllTypesView> SubstituteColumn()
         {
             IGridColumn<AllTypesView> column = Substitute.For<IGridColumn<AllTypesView>>();
             column.RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column);
@@ -501,7 +527,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             return column;
         }
-        private IGridHtmlOptions<AllTypesView> SubstituteIGridHtmlOptions()
+        private IGridHtmlOptions<AllTypesView> SubstituteOptions()
         {
             IGridHtmlOptions<AllTypesView> options = Substitute.For<IGridHtmlOptions<AllTypesView>>();
             options.SetLanguage(Arg.Any<String>()).Returns(options);
@@ -515,7 +541,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             return options;
         }
-        private IGridColumnCollection<AllTypesView> SubstituteIGridCollumnCollection<TProperty>(IGridColumn<AllTypesView> gridColumn)
+        private IGridColumnCollection<AllTypesView> SubstituteColumns<TProperty>(IGridColumn<AllTypesView> gridColumn)
         {
             IGridColumnCollection<AllTypesView> collection = Substitute.For<IGridColumnCollection<AllTypesView>>();
             collection.Add<TProperty>(Arg.Any<Expression<Func<AllTypesView, TProperty>>>()).Returns(gridColumn);
@@ -526,8 +552,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)
         {
-            columnCollection = SubstituteIGridCollumnCollection<TProperty>(column);
-            columnCollection.AddProperty(property);
+            columns = SubstituteColumns<TProperty>(column);
+            columns.AddProperty(property);
 
             column.Received().Css(expected);
         }

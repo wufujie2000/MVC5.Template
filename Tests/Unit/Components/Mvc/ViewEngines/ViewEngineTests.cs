@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
             String[] actual = viewEngine.AreaViewLocationFormats;
 
-            Assert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
             String[] actual = viewEngine.AreaMasterLocationFormats;
 
-            Assert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String[] expected = new[] { "~/Views/{2}/{1}/{0}.cshtml" };
             String[] actual = viewEngine.AreaPartialViewLocationFormats;
 
-            CollectionAssert.AreEquivalent(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

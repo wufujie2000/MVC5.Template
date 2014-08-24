@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -22,10 +21,10 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
-            IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
-            if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
+            if (LocalizationManager.Provider.Languages.Count() < 2)
+                return new MvcHtmlString(String.Empty);
 
-            TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdownMenu(html);
+            TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
             TagBuilder span = new TagBuilder("span");
             TagBuilder action = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
@@ -41,13 +40,14 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString LogoutLink(this HtmlHelper html)
         {
+            MvcHtmlString actionLink = html.ActionLink("{0}{1}", "Logout", "Auth", new { area = String.Empty }, null);
             TagBuilder span = new TagBuilder("span");
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-share");
 
             span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
 
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Logout", "Auth", new { area = String.Empty }, null).ToString(), icon, span));
+            return new MvcHtmlString(String.Format(actionLink.ToString(), icon, span));
         }
     }
 }

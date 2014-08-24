@@ -4,7 +4,6 @@ using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -24,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
             expression = (expModel) => expModel.Relation.Required;
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
         }
 
         [TearDown]
@@ -36,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression, Boolean autocomplete = true)
 
         [Test]
-        public void AuthUsernameFor_FormsUsernameGroupElements()
+        public void AuthUsernameFor_FormsAutocompletableUsernameInput()
         {
             String actual = html.AuthUsernameFor(expression).ToString();
             String expected = String.Format(
@@ -50,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AuthUsernameFor_FormsUsernameGroupElementsWithAutocompleteOff()
+        public void AuthUsernameFor_FormsNotAutocompletableUsernameInput()
         {
             String actual = html.AuthUsernameFor(expression, autocomplete: false).ToString();
             String expected = String.Format(
@@ -68,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression, Boolean autocomplete = true)
 
         [Test]
-        public void AuthPasswordFor_FormsPasswordGroupElements()
+        public void AuthPasswordFor_FormsAutocompletablePasswordInput()
         {
             String actual = html.AuthPasswordFor(expression).ToString();
             String expected = String.Format(
@@ -81,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AuthPasswordFor_FormsPasswordGroupElementsWithAutocompleteOff()
+        public void AuthPasswordFor_FormsNotAutocompletablePasswordInput()
         {
             String actual = html.AuthPasswordFor(expression, autocomplete: false).ToString();
             String expected = String.Format(
@@ -98,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
 
         [Test]
-        public void AuthEmailFor_FormsEmailGroupElements()
+        public void AuthEmailFor_FormsNotAutocompletableEmailInput()
         {
             String actual = html.AuthEmailFor(expression).ToString();
             String expected = String.Format(
@@ -118,9 +117,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthLanguageSelect_OnSingleLanguageReturnsEmptyHtml()
         {
-            List<Language> languages = new List<Language>() { new Language() };
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
-            LocalizationManager.Provider.Languages.Returns(languages);
+            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            LocalizationManager.Provider.Languages.Returns(new[] { new Language() });
 
             String actual = html.AuthLanguageSelect().ToString();
             String expected = String.Empty;
@@ -129,7 +127,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AuthLanguageSelect_FormsLanguageSelectGroupElements()
+        public void AuthLanguageSelect_FormsLanguageSelectInput()
         {
             RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -157,8 +155,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</ul>",
                 urlHelper.Content("~/Images/Flags/en.gif"),
                 urlHelper.Content("~/Images/Flags/lt.gif"),
-                urlHelper.Action(action, new { language = "en", Param1 = "Value1" }),
-                urlHelper.Action(action, new { language = "lt", Param1 = "Value1" }));
+                urlHelper.Action(action, new { language = "en", p = "1" }),
+                urlHelper.Action(action, new { language = "lt", p = "1" }));
 
             Assert.AreEqual(expected, actual);
         }

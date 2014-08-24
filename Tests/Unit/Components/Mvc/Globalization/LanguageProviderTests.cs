@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Property: CurrentLanguage
 
         [Test]
-        public void CurrentLanguage_GetsCurrentLangauge()
+        public void CurrentLanguage_GetsCurrentLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = provider["en"].Culture;
             Thread.CurrentThread.CurrentCulture = provider["en"].Culture;
@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Constructor: LanguageProvider(String languagesPath)
+        #region Constructor: LanguageProvider(String path)
 
         [Test]
         public void LanguageProvider_LoadsAllLanguages()
@@ -101,18 +101,18 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         private void CreateLanguagesXml(String languagesPath)
         {
             XElement languages = new XElement("Languages");
-            XElement englishDefault = new XElement("Language");
-            englishDefault.SetAttributeValue("name", "English");
-            englishDefault.SetAttributeValue("culture", "en-GB");
-            englishDefault.SetAttributeValue("abbrevation", "en");
-            englishDefault.SetAttributeValue("is-default", "true");
+            XElement english = new XElement("Language");
+            english.SetAttributeValue("name", "English");
+            english.SetAttributeValue("culture", "en-GB");
+            english.SetAttributeValue("abbrevation", "en");
+            english.SetAttributeValue("is-default", "true");
 
             XElement lithuanian = new XElement("Language");
             lithuanian.SetAttributeValue("name", "Lietuvių");
             lithuanian.SetAttributeValue("culture", "lt-LT");
             lithuanian.SetAttributeValue("abbrevation", "lt");
 
-            languages.Add(englishDefault);
+            languages.Add(english);
             languages.Add(lithuanian);
 
             languages.Save(languagesPath);

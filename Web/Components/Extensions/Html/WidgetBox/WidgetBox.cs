@@ -11,7 +11,7 @@ namespace MvcTemplate.Components.Extensions.Html
         private TextWriter writer;
         private Boolean disposed;
 
-        public WidgetBox(TextWriter writer, String iconClass, String title, String buttons)
+        public WidgetBox(TextWriter textWriter, String iconClass, String title, String buttons)
         {
             TagBuilder titleIconSpan = new TagBuilder("span");
             TagBuilder titleButtons = new TagBuilder("div");
@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder titleIcon = new TagBuilder("i");
             widgetContent = new TagBuilder("div");
             widgetBox = new TagBuilder("div");
-            this.writer = writer;
+            writer = textWriter;
 
             titleButtons.AddCssClass("widget-title-buttons");
             titleIconSpan.AddCssClass("widget-title-icon");

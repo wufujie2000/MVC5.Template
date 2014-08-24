@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
 
         [Test]
-        public void IsValidForRequest_IsFalseIfNormalRequest()
+        public void IsValidForRequest_ReturnsFalseForNormalRequest()
         {
             ControllerContext context = new ControllerContext();
             context.HttpContext = new HttpMock().HttpContextBase;
@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void IsValidForRequest_IsTrueIfAjaxRequest()
+        public void IsValidForRequest_ReturnsTrueForAjaxRequest()
         {
             ControllerContext context = new ControllerContext();
             context.HttpContext = new HttpMock().HttpContextBase;

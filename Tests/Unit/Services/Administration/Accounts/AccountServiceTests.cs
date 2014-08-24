@@ -102,7 +102,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .To<AccountView>()
                 .OrderByDescending(account => account.EntityDate);
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -117,7 +117,7 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView expected = Mapper.Map<Account, AccountView>(account);
             AccountView actual = service.GetView<AccountView>(accountId);
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion

@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
 
             JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);

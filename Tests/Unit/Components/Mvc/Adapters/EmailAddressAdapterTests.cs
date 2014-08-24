@@ -1,6 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Objects;
 using MvcTemplate.Resources.Shared;
-using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new EmailAddressAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(TestView), "Text");
+                .GetMetadataForProperty(null, typeof(AccountView), "Email");
             adapter = new EmailAddressAdapter(metadata, new ControllerContext(), attribute);
         }
 
@@ -30,7 +30,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void EmailAddressAdapter_SetsErrorMessage()
         {
-            Assert.AreEqual(attribute.ErrorMessage, Validations.FieldIsNotValidEmail);
+            String expected = Validations.FieldIsNotValidEmail;
+            String actual = attribute.ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -40,11 +43,15 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetClientValidationRules_ReturnsEmailValidationRule()
         {
-            ModelClientValidationRule expected = adapter.GetClientValidationRules().First();
-            String expectedErrorMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName());
+            ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
+            ModelClientValidationRule expected = new ModelClientValidationRule()
+            {
+                ErrorMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName()),
+                ValidationType = "email"
+            };
 
-            Assert.AreEqual(expectedErrorMessage, expected.ErrorMessage);
-            Assert.AreEqual("email", expected.ValidationType);
+            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
+            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
         }
 
         #endregion

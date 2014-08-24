@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
-    public class BaseDatalistStub<TModel, TView> : BaseDatalist<TModel, TView>
+    public class BaseDatalistProxy<TModel, TView> : BaseDatalist<TModel, TView>
         where TModel : BaseModel
         where TView : BaseView
     {
@@ -19,10 +19,11 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             }
         }
 
-        public BaseDatalistStub() : base()
+        public BaseDatalistProxy()
+            : base()
         {
         }
-        public BaseDatalistStub(IUnitOfWork unitOfWork)
+        public BaseDatalistProxy(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
         }

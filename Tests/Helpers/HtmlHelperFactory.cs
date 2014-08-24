@@ -1,5 +1,7 @@
 ﻿using NSubstitute;
+using System;
 using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -9,16 +11,11 @@ namespace MvcTemplate.Tests.Helpers
     {
         public static HtmlHelper CreateHtmlHelper()
         {
-            ControllerContext controllerContext = CreateControllerContext();
-            ViewContext viewContext = CreateViewContext(controllerContext);
-            IViewDataContainer viewDataContainer = CreateViewDataContainer(viewContext);
-
-            return new HtmlHelper(viewContext, viewDataContainer, RouteTable.Routes);
+            return CreateHtmlHelper<Object>(null);
         }
         public static HtmlHelper<T> CreateHtmlHelper<T>(T model)
         {
-            ControllerContext controllerContext = CreateControllerContext();
-            ViewContext viewContext = CreateViewContext(controllerContext);
+            ViewContext viewContext = CreateViewContext(CreateControllerContext());
             IViewDataContainer viewDataContainer = CreateViewDataContainer(viewContext);
 
             HtmlHelper<T> html = new HtmlHelper<T>(viewContext, viewDataContainer, RouteTable.Routes);
@@ -29,15 +26,19 @@ namespace MvcTemplate.Tests.Helpers
 
         private static ControllerContext CreateControllerContext()
         {
-            HttpMock http = new HttpMock();
+            HttpContextBase http = new HttpMock().HttpContextBase;
 
-            return new ControllerContext(http.HttpContextBase, http.HttpContextBase.Request.RequestContext.RouteData,
-                Substitute.For<ControllerBase>());
+            return new ControllerContext(http, http.Request.RequestContext.RouteData, Substitute.For<ControllerBase>());
         }
         private static ViewContext CreateViewContext(ControllerContext controllerContext)
         {
-            ViewContext viewContext = new ViewContext(controllerContext, Substitute.For<IView>(),
-                new ViewDataDictionary(), new TempDataDictionary(), new StringWriter());
+            ViewContext viewContext = new ViewContext(
+                controllerContext,
+                Substitute.For<IView>(),
+                new ViewDataDictionary(),
+                new TempDataDictionary(),
+                new StringWriter());
+
             viewContext.ClientValidationEnabled = true;
 
             return viewContext;

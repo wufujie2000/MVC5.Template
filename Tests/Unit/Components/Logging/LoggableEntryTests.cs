@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             IEnumerable<LoggablePropertyEntry> expected = properties.Select(name => new LoggablePropertyEntry(entry.Property(name)));
             IEnumerable<LoggablePropertyEntry> actual = new LoggableEntry(entry).Properties;
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -126,6 +126,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
         private void TearDownData()
         {
+            context.Set<Account>().RemoveRange(context.Set<Account>());
             context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
         }

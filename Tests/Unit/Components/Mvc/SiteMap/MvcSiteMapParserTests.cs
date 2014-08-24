@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 },
             };
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         [Test]
@@ -81,10 +81,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 }
             };
 
-            TestHelper.EnumPropertyWiseEquals(expected, actual);
-            TestHelper.PropertyWiseEquals(expected.First(), actual.First());
-            TestHelper.EnumPropertyWiseEquals(expected.First().Children, actual.First().Children);
-            Assert.IsFalse(actual.First().Children.Any(submenu => submenu.Parent != actual.First()));
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            TestHelper.EnumPropertyWiseEqual(expected.Single().Children, actual.Single().Children);
+            Assert.IsFalse(actual.Single().Children.Any(submenu => submenu.Parent != actual.Single()));
         }
 
         #endregion

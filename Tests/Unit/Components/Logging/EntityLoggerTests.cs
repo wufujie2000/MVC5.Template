@@ -32,10 +32,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
             TearDownData();
 
-            Account account = ObjectFactory.CreateAccount();
-            dataContext.Set<Account>().Add(account);
-            dataContext.SaveChanges();
-
             TestModel model = ObjectFactory.CreateTestModel();
             dataContext.Set<TestModel>().Add(model);
             entry = dataContext.Entry(model);
@@ -105,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            String actual = loggerContext.Set<Log>().First().Message;
+            String actual = loggerContext.Set<Log>().Single().Message;
             String expected = new LoggableEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
@@ -134,7 +130,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
+            Int32 actual = loggerContext.Set<Log>().Count();
+            Int32 expected = 1;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -148,7 +147,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Save();
             logger.Save();
 
-            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
+            Int32 actual = loggerContext.Set<Log>().Count();
+            Int32 expected = 1;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -174,13 +176,15 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.AreEqual(1, loggerContext.Set<Log>().Count());
+            Int32 actual = loggerContext.Set<Log>().Count();
+            Int32 expected = 1;
+
+            Assert.AreEqual(expected, actual);
         }
 
         private void TearDownData()
         {
             dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
-            dataContext.Set<Account>().RemoveRange(dataContext.Set<Account>());
             loggerContext.Set<Log>().RemoveRange(loggerContext.Set<Log>());
             loggerContext.SaveChanges();
             dataContext.SaveChanges();

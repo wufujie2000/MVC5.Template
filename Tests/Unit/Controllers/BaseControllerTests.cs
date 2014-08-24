@@ -221,7 +221,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
         {
-            LocalizationManager.Provider = new LanguageProviderMock().Provider;
+            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
             baseController.RouteData.Values["language"] = "lt";
 
             baseController.BaseBeginExecuteCore((asyncResult) => { }, null);
@@ -322,7 +322,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             expected.AddError("ErrorTest1");
             expected.AddError("ErrorTest2");
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         [Test]
@@ -336,7 +336,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             AlertsContainer expected = new AlertsContainer();
             expected.AddError("ErrorTest");
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion

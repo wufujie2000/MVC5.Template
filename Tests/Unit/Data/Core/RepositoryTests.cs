@@ -132,7 +132,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel actual = context.Set<TestModel>().SingleOrDefault();
             TestModel expected = repository.SingleOrDefault();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -152,7 +152,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             TestModel actual = context.Set<TestModel>().SingleOrDefault();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             TestModel actual = context.Set<TestModel>().SingleOrDefault();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerator<TestModel> actual = repository.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
-                TestHelper.PropertyWiseEquals(expected.Current, actual.Current);
+                TestHelper.PropertyWiseEqual(expected.Current, actual.Current);
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerator actual = (repository as IEnumerable).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
-                TestHelper.PropertyWiseEquals(expected.Current, actual.Current);
+                TestHelper.PropertyWiseEqual(expected.Current, actual.Current);
         }
 
         #endregion

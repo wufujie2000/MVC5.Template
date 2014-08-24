@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             Account expected = Mapper.Map<AccountView, Account>(view);
             Account actual = unitOfWork.ToModel<AccountView, Account>(view);
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             AccountView actual = unitOfWork.ToView<Account, AccountView>(model);
             AccountView expected = Mapper.Map<Account, AccountView>(model);
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Repository<Account>().Delete(expected.Id);
             unitOfWork.Commit();
 
-            TestHelper.PropertyWiseEquals(expected, actual);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         [Test]

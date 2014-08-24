@@ -5,7 +5,9 @@ using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -300,39 +302,22 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             HttpContextBase context = controller.HttpContext;
 
-            BaseControllerProxy firstController = new BaseControllerProxy();
-            firstController.ControllerContext = new ControllerContext();
-            firstController.ControllerContext.HttpContext = context;
-            firstController.Alerts.AddError("ErrorTest1");
+            BaseControllerProxy mergedController = new BaseControllerProxy();
+            mergedController.ControllerContext = new ControllerContext();
+            mergedController.ControllerContext.HttpContext = context;
+            mergedController.Alerts.AddError("ErrorTest2");
+            
+            IEnumerable<Alert> controllerAlerts = controller.Alerts;
+            IEnumerable<Alert> mergedAlerts = mergedController.Alerts;
 
-            BaseControllerProxy secondController = new BaseControllerProxy();
-            secondController.ControllerContext = new ControllerContext();
-            secondController.ControllerContext.HttpContext = context;
-            secondController.Alerts.AddError("ErrorTest2");
-
-            firstController.BaseOnActionExecuted(new ActionExecutedContext());
-            secondController.BaseOnActionExecuted(new ActionExecutedContext());
-
-            AlertsContainer actual = controller.Session["Alerts"] as AlertsContainer;
-            AlertsContainer expected = new AlertsContainer();
-            expected.AddError("ErrorTest1");
-            expected.AddError("ErrorTest2");
-
-            TestHelper.PropertyWiseEqual(expected, actual);
-        }
-
-        [Test]
-        public void OnActionExecuted_DoesNotMergeSameContainers()
-        {
-            controller.Alerts.AddError("ErrorTest");
+            controller.Alerts.AddError("ErrorTest1");
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            mergedController.BaseOnActionExecuted(new ActionExecutedContext());
 
-            AlertsContainer actual = controller.Session["Alerts"] as AlertsContainer;
-            AlertsContainer expected = new AlertsContainer();
-            expected.AddError("ErrorTest");
+            IEnumerable<Alert> actual = controller.Session["Alerts"] as AlertsContainer;
+            IEnumerable<Alert> expected = controllerAlerts.Union(mergedAlerts);
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

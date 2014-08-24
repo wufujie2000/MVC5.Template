@@ -98,14 +98,11 @@ namespace MvcTemplate.Controllers
         {
             base.OnActionExecuted(context);
 
-            if (Session["Alerts"] == null)
-            {
-                Session["Alerts"] = Alerts;
-                return;
-            }
-
             AlertsContainer current = Session["Alerts"] as AlertsContainer;
-            if (current != Alerts) current.Merge(Alerts);
+            if (current == null)
+                Session["Alerts"] = Alerts;
+            else
+                current.Merge(Alerts);
         }
 
         public virtual ActionResult NotEmptyView(Object model)

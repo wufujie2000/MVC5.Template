@@ -43,8 +43,7 @@ namespace MvcTemplate.Components.Alerts
 
         public void Merge(AlertsContainer alerts)
         {
-            if (alerts == this)
-                throw new Exception("Alerts can not be merged to itself");
+            if (alerts == this) return;
 
             foreach (Alert alert in alerts)
                 Add(alert);

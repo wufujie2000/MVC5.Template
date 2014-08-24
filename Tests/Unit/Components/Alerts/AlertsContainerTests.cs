@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -137,9 +136,17 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         }
 
         [Test]
-        public void Merge_OnSelfMergeThrows()
+        public void Merge_OnMergeWithIselfStaysTheSame()
         {
-            Assert.Throws<Exception>(() => alerts.Merge(alerts));
+            alerts.Add(new Alert());
+            IEnumerable alertsList = alerts.ToList();
+
+            alerts.Merge(alerts);
+
+            IEnumerable expected = alertsList;
+            IEnumerable actual = alerts;
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

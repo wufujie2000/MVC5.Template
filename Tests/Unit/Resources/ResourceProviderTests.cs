@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Helpers;
+using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
 using System.Web;
@@ -121,25 +122,6 @@ namespace MvcTemplate.Tests.Unit.Resources
 
         #endregion
 
-        #region Static method: GetActionTitle(String action)
-
-        [Test]
-        public void GetActionTitle_GetsTitle()
-        {
-            String expected = MvcTemplate.Resources.Action.Titles.Create;
-            String actual = ResourceProvider.GetActionTitle("Create");
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetActionTitle_OnActionNotFoundReturnsNull()
-        {
-            Assert.IsNull(ResourceProvider.GetActionTitle("Test"));
-        }
-
-        #endregion
-
         #region Static method: GetDatalistTitle<TModel>()
 
         [Test]
@@ -155,6 +137,25 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetDatalistTitle_OnTypeNotFoundReturnsNull()
         {
             Assert.IsNull(ResourceProvider.GetDatalistTitle<Object>());
+        }
+
+        #endregion
+
+        #region Static method: GetActionTitle(String action)
+
+        [Test]
+        public void GetActionTitle_GetsTitle()
+        {
+            String expected = MvcTemplate.Resources.Action.Titles.Create;
+            String actual = ResourceProvider.GetActionTitle("Create");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetActionTitle_OnActionNotFoundReturnsNull()
+        {
+            Assert.IsNull(ResourceProvider.GetActionTitle(null));
         }
 
         #endregion
@@ -249,9 +250,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() =>
-                ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(profile => profile.Method()),
-                "Expression must be a member expression");
+            Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.Method()));
         }
 
         [Test]
@@ -265,7 +264,7 @@ namespace MvcTemplate.Tests.Unit.Resources
 
         [Test]
         [Ignore]
-        public void GetPropertyTitle_GetsTitleFromFromExpressionRelation()
+        public void GetPropertyTitle_GetsTitleFromExpressionRelation()
         {
             String expected = "Expected";
             String actual = "Actual";
@@ -282,7 +281,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnTypeFromExpressionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle<NoResourcesModel, String>(model => model.Title));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<TestView, String>(model => model.Text));
         }
 
         #endregion
@@ -325,7 +324,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnTypeNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(NoResourcesModel), "Title"));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle(typeof(TestView), "Title"));
         }
 
         #endregion

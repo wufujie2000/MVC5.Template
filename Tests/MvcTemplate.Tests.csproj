@@ -203,7 +203,6 @@
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
-    <Compile Include="Unit\Resources\NoResourcesModel.cs" />
     <Compile Include="Unit\Resources\ResourceProviderTests.cs" />
     <Compile Include="Unit\Validators\Administration\Accounts\AccountValidatorTests.cs" />
     <Compile Include="Unit\Validators\Administration\Roles\RoleValidatorTests.cs" />

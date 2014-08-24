@@ -11,7 +11,7 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
-        private static IEnumerable<String> resourceFullNames;
+        private static IEnumerable<String> resources;
         private static Assembly executingAssembly;
 
         private static String CurrentArea
@@ -39,62 +39,62 @@ namespace MvcTemplate.Resources
         static ResourceProvider()
         {
             executingAssembly = Assembly.GetExecutingAssembly();
-            resourceFullNames = executingAssembly.DefinedTypes.Select(type => type.FullName);
+            resources = executingAssembly.DefinedTypes.Select(type => type.FullName);
         }
 
         public static String GetCurrentFormTitle()
         {
             String key = String.Format("{0}{1}", CurrentArea, CurrentController);
 
-            return GetResourceFrom("MvcTemplate.Resources.Form.Titles", key);
+            return GetResource("MvcTemplate.Resources.Form.Titles", key);
         }
         public static String GetCurrentTableTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
 
-            return GetResourceFrom("MvcTemplate.Resources.Table.Titles", key);
+            return GetResource("MvcTemplate.Resources.Table.Titles", key);
         }
         public static String GetCurrentContentTitle()
         {
             String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
 
-            return GetResourceFrom("MvcTemplate.Resources.Content.Titles", key);
+            return GetResource("MvcTemplate.Resources.Content.Titles", key);
         }
 
-        public static String GetActionTitle(String action)
-        {
-            return GetResourceFrom("MvcTemplate.Resources.Action.Titles", action);
-        }
         public static String GetDatalistTitle<TModel>()
         {
-            return GetResourceFrom("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
+            return GetResource("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
+        }
+        public static String GetActionTitle(String action)
+        {
+            return GetResource("MvcTemplate.Resources.Action.Titles", action);
         }
         public static String GetPrivilegeAreaTitle(String area)
         {
-            return GetResourceFrom("MvcTemplate.Resources.Privilege.Area.Titles", area);
+            return GetResource("MvcTemplate.Resources.Privilege.Area.Titles", area);
         }
         public static String GetPrivilegeActionTitle(String action)
         {
-            return GetResourceFrom("MvcTemplate.Resources.Privilege.Action.Titles", action);
+            return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", action);
         }
         public static String GetPrivilegeControllerTitle(String controller)
         {
-            return GetResourceFrom("MvcTemplate.Resources.Privilege.Controller.Titles", controller);
+            return GetResource("MvcTemplate.Resources.Privilege.Controller.Titles", controller);
         }
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);
 
-            return GetResourceFrom("MvcTemplate.Resources.SiteMap.Titles", key);
+            return GetResource("MvcTemplate.Resources.SiteMap.Titles", key);
         }
 
         public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
         {
-            MemberExpression memberExpression = property.Body as MemberExpression;
-            if (memberExpression == null)
+            MemberExpression expression = property.Body as MemberExpression;
+            if (expression == null)
                 throw new InvalidOperationException("Expression must be a member expression");
 
-            return GetPropertyTitle(memberExpression.Member.ReflectedType, memberExpression.Member.Name);
+            return GetPropertyTitle(expression.Member.ReflectedType, expression.Member.Name);
         }
         public static String GetPropertyTitle(Type view, String property)
         {
@@ -104,7 +104,7 @@ namespace MvcTemplate.Resources
         private static String GetPropertyTitle(String view, String property)
         {
             String baseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", view);
-            String title = GetResourceFrom(baseName, property);
+            String title = GetResource(baseName, property);
             if (title != null) return title;
 
             String[] camelCasedProperties = SplitCamelCase(property);
@@ -116,7 +116,7 @@ namespace MvcTemplate.Resources
                     String joinedProperty = String.Concat(camelCasedProperties.Skip(viewSize + skippedProperties));
                     String joinedBaseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", joinedView);
 
-                    title = GetResourceFrom(joinedBaseName, joinedProperty);
+                    title = GetResource(joinedBaseName, joinedProperty);
                     if (title != null) return title;
                 }
             }
@@ -128,9 +128,9 @@ namespace MvcTemplate.Resources
         {
             return Regex.Split(value, @"(?<!^)(?=[A-Z])");
         }
-        private static String GetResourceFrom(String baseName, String key)
+        private static String GetResource(String baseName, String key)
         {
-            if (resourceFullNames.Any(typeFullName => typeFullName == baseName))
+            if (resources.Any(resourceName => resourceName == baseName))
                 return new ResourceManager(baseName, executingAssembly).GetString(key ?? String.Empty);
 
             return null;

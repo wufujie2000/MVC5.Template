@@ -6,5 +6,10 @@ namespace MvcTemplate.Tests.Objects
     public class TestView : BaseView
     {
         public String Text { get; set; }
+
+        public String Method()
+        {
+            return String.Empty;
+        }
     }
 }

@@ -27,9 +27,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
             BundleCollection bundles = new BundleCollection();
             BundleConfig.RegisterBundles(bundles);
+            Type expected = typeof(ScriptBundle);
 
-            foreach (String expectedPath in expectedBundles)
-                Assert.IsInstanceOf(typeof(ScriptBundle), bundles.GetBundleFor(expectedPath));
+            foreach (String path in expectedBundles)
+                Assert.IsInstanceOf(expected, bundles.GetBundleFor(path));
         }
 
         [Test]
@@ -49,9 +50,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
             BundleCollection bundles = new BundleCollection();
             BundleConfig.RegisterBundles(bundles);
+            Type expected = typeof(StyleBundle);
 
-            foreach (String expectedPath in expectedBundles)
-                Assert.IsInstanceOf(typeof(StyleBundle), bundles.GetBundleFor(expectedPath));
+            foreach (String path in expectedBundles)
+                Assert.IsInstanceOf(expected, bundles.GetBundleFor(path));
         }
 
         #endregion

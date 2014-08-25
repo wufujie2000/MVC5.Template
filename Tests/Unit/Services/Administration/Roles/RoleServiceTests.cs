@@ -104,7 +104,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void SeedPrivilegesTree_SeedsBranchesWithoutId()
         {
-            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.Single();
             IEnumerable<JsTreeNode> branches = GetAllBranchNodes(rootNode);
 
             Assert.IsFalse(branches.Any(branch => branch.Id != null));
@@ -113,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void SeedPrivilegesTree_SeedsLeafsWithId()
         {
-            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.First();
+            JsTreeNode rootNode = service.GetView(role.Id).PrivilegesTree.Nodes.Single();
             IEnumerable<JsTreeNode> leafs = GetAllLeafNodes(rootNode);
 
             Assert.IsFalse(leafs.Any(leaf => leaf.Id == null));

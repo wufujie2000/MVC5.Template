@@ -105,11 +105,11 @@ namespace MvcTemplate.Validators
         }
         private Boolean IsCorrectPassword(String password, String passhash)
         {
-            Boolean passwordCorrect = passhash != null && hasher.Verify(password, passhash);
-            if (!passwordCorrect)
+            Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
+            if (!isCorrect)
                 ModelState.AddModelError(String.Empty, Validations.IncorrectUsernameOrPassword);
 
-            return passwordCorrect;
+            return isCorrect;
         }
         private Boolean IsCorrectPassword(String password)
         {
@@ -117,13 +117,13 @@ namespace MvcTemplate.Validators
                 .Repository<Account>()
                 .Where(account => account.Id == HttpContext.Current.User.Identity.Name)
                 .Select(account => account.Passhash)
-                .First();
+                .Single();
 
-            Boolean isCorrectPassword = passhash != null && hasher.Verify(password, passhash);
-            if (!isCorrectPassword)
+            Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
+            if (!isCorrect)
                 ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 
-            return isCorrectPassword;
+            return isCorrect;
         }
 
         private Boolean RecoveryEmailExists(String email)

@@ -56,7 +56,7 @@ namespace MvcTemplate.Components.Mvc
         public MvcSiteMapBreadcrumb GetBreadcrumb()
         {
             MvcSiteMapBreadcrumb breadcrumb = new MvcSiteMapBreadcrumb();
-            MvcSiteMapNode currentNode = allNodes.FirstOrDefault(node =>
+            MvcSiteMapNode currentNode = allNodes.SingleOrDefault(node =>
                 node.Controller == CurrentController &&
                 node.Action == CurrentAction &&
                 node.Area == CurrentArea);

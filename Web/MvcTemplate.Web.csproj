@@ -134,7 +134,7 @@
     </Content>
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
-    <Content Include="Languages.xml" />
+    <Content Include="Globalization.xml" />
     <Content Include="Views\Auth\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>

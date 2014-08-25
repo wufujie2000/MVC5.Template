@@ -23,13 +23,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
             expression = (expModel) => expModel.Relation.Required;
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
         }
 
         [TearDown]
         public void TearDown()
         {
-            LocalizationManager.Provider = null;
+            GlobalizationManager.Provider = null;
         }
 
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression, Boolean autocomplete = true)
@@ -117,8 +117,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthLanguageSelect_OnSingleLanguageReturnsEmptyHtml()
         {
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
-            LocalizationManager.Provider.Languages.Returns(new[] { new Language() });
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
+            GlobalizationManager.Provider.Languages.Returns(new[] { new Language() });
 
             String actual = html.AuthLanguageSelect().ToString();
             String expected = String.Empty;

@@ -9,15 +9,15 @@ using System.Xml.Linq;
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
-    public class LanguageProviderTests
+    public class GlobalizationProviderTests
     {
-        private LanguageProvider provider;
+        private GlobalizationProvider provider;
 
         [SetUp]
         public void SetUp()
         {
-            CreateLanguagesXml("Languages.xml");
-            provider = new LanguageProvider("Languages.xml");
+            CreateGlobalizationXml("Globalization.xml");
+            provider = new GlobalizationProvider("Globalization.xml");
         }
 
         #region Property: CurrentLanguage
@@ -49,10 +49,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Constructor: LanguageProvider(String path)
+        #region Constructor: GlobalizationProvider(String path)
 
         [Test]
-        public void LanguageProvider_LoadsAllLanguages()
+        public void GlobalizationProvider_LoadsAllLanguages()
         {
             Language enLanguage = provider.Languages.First();
             Language ltLanguage = provider.Languages.Last();
@@ -69,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void LanguageProvider_SetsDefaultLanguage()
+        public void GlobalizationProvider_SetsDefaultLanguage()
         {
             Language actual = provider.DefaultLanguage;
 
@@ -98,9 +98,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Test helpers
 
-        private void CreateLanguagesXml(String languagesPath)
+        private void CreateGlobalizationXml(String path)
         {
-            XElement languages = new XElement("Languages");
+            XElement globalization = new XElement("Globalization");
             XElement english = new XElement("Language");
             english.SetAttributeValue("name", "English");
             english.SetAttributeValue("culture", "en-GB");
@@ -112,10 +112,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             lithuanian.SetAttributeValue("culture", "lt-LT");
             lithuanian.SetAttributeValue("abbrevation", "lt");
 
-            languages.Add(english);
-            languages.Add(lithuanian);
+            globalization.Add(english);
+            globalization.Add(lithuanian);
 
-            languages.Save(languagesPath);
+            globalization.Save(path);
         }
 
         #endregion

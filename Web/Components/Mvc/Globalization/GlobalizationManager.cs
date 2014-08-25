@@ -1,8 +1,8 @@
 ﻿namespace MvcTemplate.Components.Mvc
 {
-    public class LocalizationManager
+    public class GlobalizationManager
     {
-        public static ILanguageProvider Provider
+        public static IGlobalizationProvider Provider
         {
             get;
             set;

@@ -112,7 +112,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data\Mapping\TestObjectMapper.cs" />
-    <Compile Include="Helpers\LanguageProviderFactory.cs" />
+    <Compile Include="Helpers\GlobalizationProviderFactory.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
@@ -130,7 +130,7 @@
     <Compile Include="Unit\Components\Mvc\Attributes\AjaxOnlyAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Binders\TrimmingModelBinderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Filters\ExceptionFilterTests.cs" />
-    <Compile Include="Unit\Components\Mvc\Globalization\LanguageProviderTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Globalization\GlobalizationProviderTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\InheritedAuthorizedController.cs" />

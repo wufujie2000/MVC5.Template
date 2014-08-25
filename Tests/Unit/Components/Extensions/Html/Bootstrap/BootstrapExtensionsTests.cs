@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
             htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
         }
 

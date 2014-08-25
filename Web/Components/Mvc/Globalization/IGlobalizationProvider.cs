@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MvcTemplate.Components.Mvc
 {
-    public interface ILanguageProvider
+    public interface IGlobalizationProvider
     {
         Language DefaultLanguage { get; }
         Language CurrentLanguage { get; set; }

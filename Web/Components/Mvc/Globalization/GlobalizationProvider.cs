@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace MvcTemplate.Components.Mvc
 {
-    public class LanguageProvider : ILanguageProvider
+    public class GlobalizationProvider : IGlobalizationProvider
     {
         private Dictionary<String, Language> languages;
 
@@ -36,7 +36,7 @@ namespace MvcTemplate.Components.Mvc
             }
         }
 
-        public LanguageProvider(String path)
+        public GlobalizationProvider(String path)
         {
             XElement languagesXml = XElement.Load(path);
             languages = new Dictionary<String, Language>();

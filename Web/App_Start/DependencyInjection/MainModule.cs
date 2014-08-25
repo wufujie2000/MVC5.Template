@@ -30,8 +30,8 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
             Bind<IAuthorizationProvider>().ToConstant(CreateAuthorizationProvider());
 
-            String languagesPath = HostingEnvironment.MapPath("~/Languages.xml");
-            Bind<ILanguageProvider>().To<LanguageProvider>().WithConstructorArgument("path", languagesPath);
+            String globalizationPath = HostingEnvironment.MapPath("~/Globalization.xml");
+            Bind<IGlobalizationProvider>().To<GlobalizationProvider>().WithConstructorArgument("path", globalizationPath);
 
             String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
             Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("path", siteMapPath);

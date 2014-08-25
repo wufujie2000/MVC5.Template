@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [TearDown]
         public void TearDown()
         {
-            LocalizationManager.Provider = null;
+            GlobalizationManager.Provider = null;
             Authorization.Provider = null;
         }
 
@@ -223,7 +223,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
         {
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
             controller.RouteData.Values["language"] = "lt";
 
             controller.BaseBeginExecuteCore((asyncResult) => { }, null);

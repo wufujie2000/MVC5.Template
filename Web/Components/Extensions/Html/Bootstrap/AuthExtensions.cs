@@ -37,7 +37,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
         {
-            IEnumerable<Language> languages = LocalizationManager.Provider.Languages;
+            IEnumerable<Language> languages = GlobalizationManager.Provider.Languages;
             if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
@@ -52,8 +52,8 @@ namespace MvcTemplate.Components.Extensions.Html
             currentLang.AddCssClass("current-language");
             caret.AddCssClass("caret");
 
-            languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", LocalizationManager.Provider.CurrentLanguage.Abbrevation)));
-            currentLang.InnerHtml = languageImg.ToString(TagRenderMode.SelfClosing) + LocalizationManager.Provider.CurrentLanguage.Name;
+            languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Provider.CurrentLanguage.Abbrevation)));
+            currentLang.InnerHtml = languageImg.ToString(TagRenderMode.SelfClosing) + GlobalizationManager.Provider.CurrentLanguage.Name;
 
             languageContainer.InnerHtml += currentLang.ToString() + caret.ToString();
             languageContainer.AddCssClass("language-container dropdown-toggle");

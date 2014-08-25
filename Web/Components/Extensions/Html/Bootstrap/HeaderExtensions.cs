@@ -21,7 +21,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
-            if (LocalizationManager.Provider.Languages.Count() < 2)
+            if (GlobalizationManager.Provider.Languages.Count() < 2)
                 return new MvcHtmlString(String.Empty);
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);

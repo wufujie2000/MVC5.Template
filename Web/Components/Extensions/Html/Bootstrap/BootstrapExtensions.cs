@@ -101,7 +101,7 @@ namespace MvcTemplate.Components.Extensions.Html
             dropdown.MergeAttribute("role", "menu");
             dropdown.AddCssClass("dropdown-menu");
 
-            foreach (Language language in LocalizationManager.Provider.Languages)
+            foreach (Language language in GlobalizationManager.Provider.Languages)
             {
                 String imageSrc = urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation));
                 routeValues["language"] = language.Abbrevation;

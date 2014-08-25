@@ -31,10 +31,10 @@ namespace MvcTemplate.Web
 
         public void Application_Start()
         {
+            RegisterCurrentDependencyResolver();
+            RegisterGlobalizationProvider();
             RegisterModelMetadataProvider();
-            RegisterDependencyResolver();
             RegisterDataTypeValidator();
-            RegisterLanguageProvider();
             RegisterSiteMapProvider();
             RegisterAuthorization();
             RegisterModelBinders();
@@ -45,22 +45,22 @@ namespace MvcTemplate.Web
             RegisterRoutes();
         }
 
+        private void RegisterCurrentDependencyResolver()
+        {
+            DependencyResolver.SetResolver(new NinjectResolver(new MainModule()));
+        }
+        private void RegisterGlobalizationProvider()
+        {
+            GlobalizationManager.Provider = DependencyResolver.Current.GetService<IGlobalizationProvider>();
+        }
         private void RegisterModelMetadataProvider()
         {
             ModelMetadataProviders.Current = new DisplayNameMetadataProvider();
-        }
-        private void RegisterDependencyResolver()
-        {
-            DependencyResolver.SetResolver(new NinjectResolver(new MainModule()));
         }
         private void RegisterDataTypeValidator()
         {
             ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
-        }
-        private void RegisterLanguageProvider()
-        {
-            LocalizationManager.Provider = DependencyResolver.Current.GetService<ILanguageProvider>();
         }
         private void RegisterSiteMapProvider()
         {

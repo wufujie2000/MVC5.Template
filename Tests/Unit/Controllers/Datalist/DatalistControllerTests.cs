@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [TearDown]
         public void TearDown()
         {
-            LocalizationManager.Provider = null;
+            GlobalizationManager.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
 
             JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);

@@ -87,9 +87,9 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [Test]
         [Ignore]
-        public void Load_BindsILanguageProvider()
+        public void Load_BindsIGlobalizationProvider()
         {
-            AssertBind<ILanguageProvider, LanguageProvider>();
+            AssertBind<IGlobalizationProvider, GlobalizationProvider>();
         }
 
         [Test]

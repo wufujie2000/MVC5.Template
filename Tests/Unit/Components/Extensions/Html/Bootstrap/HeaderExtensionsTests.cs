@@ -21,13 +21,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
             urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
         }
 
         [TestFixtureTearDown]
         public void TearDownFixture()
         {
-            LocalizationManager.Provider = null;
+            GlobalizationManager.Provider = null;
         }
 
         #region Extension method: ProfileLink(this HtmlHelper html)
@@ -51,8 +51,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LanguageLink_OnSingleLanguageReturnsEmpty()
         {
-            LocalizationManager.Provider = LanguageProviderFactory.CreateProvider();
-            LocalizationManager.Provider.Languages.Returns(new[] { new Language() });
+            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
+            GlobalizationManager.Provider.Languages.Returns(new[] { new Language() });
 
             String actual = html.LanguageLink().ToString();
             String expected = String.Empty;

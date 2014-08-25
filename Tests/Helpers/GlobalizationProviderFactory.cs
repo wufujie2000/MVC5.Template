@@ -6,17 +6,17 @@ using System.Threading;
 
 namespace MvcTemplate.Tests.Helpers
 {
-    public class LanguageProviderFactory
+    public class GlobalizationProviderFactory
     {
-        public static ILanguageProvider CreateProvider()
+        public static IGlobalizationProvider CreateProvider()
         {
-            ILanguageProvider provider = Substitute.For<ILanguageProvider>();
+            IGlobalizationProvider provider = Substitute.For<IGlobalizationProvider>();
             SetUpSubstitute(provider);
 
             return provider;
         }
 
-        private static void SetUpSubstitute(ILanguageProvider provider)
+        private static void SetUpSubstitute(IGlobalizationProvider provider)
         {
             List<Language> languages = new List<Language>()
             {
@@ -38,8 +38,8 @@ namespace MvcTemplate.Tests.Helpers
 
             provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do((value) =>
             {
-                Thread.CurrentThread.CurrentCulture = value.Arg<Language>().Culture;
                 Thread.CurrentThread.CurrentUICulture = value.Arg<Language>().Culture;
+                Thread.CurrentThread.CurrentCulture = value.Arg<Language>().Culture;
             });
             provider.CurrentLanguage.Returns(languages[0]);
             provider.DefaultLanguage.Returns(languages[0]);

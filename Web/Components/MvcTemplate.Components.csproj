@@ -75,10 +75,10 @@
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
     <Compile Include="Mvc\Filters\ExceptionFilter.cs" />
-    <Compile Include="Mvc\Globalization\ILanguageProvider.cs" />
+    <Compile Include="Mvc\Globalization\IGlobalizationProvider.cs" />
     <Compile Include="Mvc\Globalization\Language.cs" />
-    <Compile Include="Mvc\Globalization\LanguageProvider.cs" />
-    <Compile Include="Mvc\Globalization\LocalizationManager.cs" />
+    <Compile Include="Mvc\Globalization\GlobalizationProvider.cs" />
+    <Compile Include="Mvc\Globalization\GlobalizationManager.cs" />
     <Compile Include="Mvc\Providers\DisplayNameMetadataProvider.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />

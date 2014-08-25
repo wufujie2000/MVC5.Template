@@ -105,7 +105,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             RouteValueDictionary actual = controller.RedirectToDefault().RouteValues;
 
-            Assert.AreEqual(controller.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual(String.Empty, actual["controller"]);
             Assert.AreEqual(String.Empty, actual["action"]);
             Assert.AreEqual(String.Empty, actual["area"]);
@@ -120,7 +119,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             RouteValueDictionary actual = controller.RedirectToNotFound().RouteValues;
 
-            Assert.AreEqual(controller.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Home", actual["controller"]);
             Assert.AreEqual("NotFound", actual["action"]);
@@ -135,7 +133,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             RouteValueDictionary actual = controller.RedirectToUnauthorized().RouteValues;
 
-            Assert.AreEqual(controller.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual("Unauthorized", actual["action"]);
             Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Home", actual["controller"]);

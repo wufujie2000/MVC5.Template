@@ -69,13 +69,23 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(label.ToString());
         }
-        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format = null, Object htmlAttributes = null)
+        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            RouteValueDictionary attributes = AddClass(htmlAttributes, "form-control");
-            if (!attributes.ContainsKey("autocomplete")) attributes.Add("autocomplete", "off");
-            AddExpressionAttributes(attributes, expression);
+            return html.FormTextBoxFor(expression, null, null);
+        }
+        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format)
+        {
+            return html.FormTextBoxFor(expression, format, null);
+        }
+        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+        {
+            return html.FormTextBoxFor(expression, null, htmlAttributes);
+        }
+        public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format, Object htmlAttributes)
+        {
+            RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control");
 
-            return new MvcHtmlString(WrapWith(html.TextBoxFor(expression, format, attributes), ContentClass));
+            return Wrap(html.TextBoxFor(expression, format, attributes), ContentClass);
         }
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
@@ -85,11 +95,11 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
-            return new MvcHtmlString(WrapWith(html.PasswordFor(expression, AddClass(null, "form-control")), ContentClass));
+            return Wrap(html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" }), ContentClass);
         }
         public static MvcHtmlString FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
-            return new MvcHtmlString(WrapWith(html.ValidationMessageFor(expression), ValidationClass));
+            return Wrap(html.ValidationMessageFor(expression), ValidationClass);
         }
 
         internal static TagBuilder FormLanguagesDropdown(HtmlHelper html)
@@ -126,40 +136,38 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return mergedValues;
         }
-
-        private static String WrapWith(MvcHtmlString content, String cssClass)
-        {
-            TagBuilder wrapper = new TagBuilder("div");
-            wrapper.InnerHtml = content.ToString();
-            wrapper.AddCssClass(cssClass.Trim());
-
-            return wrapper.ToString();
-        }
-        private static Boolean IsRequired<TModel, TProperty>(this Expression<Func<TModel, TProperty>> expression)
+        
+        private static Boolean IsRequired(this LambdaExpression expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
 
             return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
         }
+        private static MvcHtmlString Wrap(MvcHtmlString content, String cssClass)
+        {
+            TagBuilder wrapper = new TagBuilder("div");
+            wrapper.InnerHtml = content.ToString();
+            wrapper.AddCssClass(cssClass.Trim());
 
-        private static RouteValueDictionary AddClass(Object attributes, String value)
+            return new MvcHtmlString(wrapper.ToString());
+        }
+
+        private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
             RouteValueDictionary htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
-            htmlAttributes["class"] = String.Format("{0} {1}", htmlAttributes["class"], value).Trim();
-
-            return htmlAttributes;
-        }
-        private static void AddExpressionAttributes<TModel, TValue>(RouteValueDictionary attributes, Expression<Func<TModel, TValue>> expression)
-        {
-            if (attributes.ContainsKey("readonly")) return;
+            htmlAttributes["class"] = String.Format("{0} {1}", cssClass, htmlAttributes["class"]).Trim();
+            if (!htmlAttributes.ContainsKey("autocomplete")) htmlAttributes.Add("autocomplete", "off");
+            if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
 
             ReadOnlyAttribute readOnly = memberExpression.Member.GetCustomAttribute<ReadOnlyAttribute>();
             if (readOnly != null && readOnly.IsReadOnly)
-                attributes.Add("readonly", "readonly");
+                htmlAttributes.Add("readonly", "readonly");
+
+            return htmlAttributes;
         }
     }
 }

@@ -11,4 +11,4 @@
 <div class="separator"></div>
 
 <div class="describtion text">@MvcTemplate.Resources.Shared.Messages.PageNotFound</div>
-<a class="btn btn-primary public-action" href="/">@MvcTemplate.Resources.Content.Titles.HomeIndex</a>
+@Html.ActionLink(MvcTemplate.Resources.Content.Titles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })

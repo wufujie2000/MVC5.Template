@@ -240,8 +240,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_NullifiesDeletedRoleInAccounts()
         {
-            if (!context.Set<Account>().Any(account => account.RoleId == role.Id))
-                Assert.Inconclusive();
+            Assert.IsTrue(context.Set<Account>().Any(account => account.RoleId == role.Id));
 
             service.Delete(role.Id);
 
@@ -251,11 +250,9 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_DeletesRole()
         {
-            if (context.Set<Role>().SingleOrDefault() == null)
-                Assert.Inconclusive();
+            Assert.IsTrue(context.Set<Role>().Any(model => model.Id == model.Id));
 
             service.Delete(role.Id);
-            context = new TestingContext();
 
             Assert.IsFalse(context.Set<Role>().Any());
         }

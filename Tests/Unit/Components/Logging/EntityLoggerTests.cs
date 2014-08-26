@@ -16,8 +16,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
     [TestFixture]
     public class EntityLoggerTests
     {
-        private AContext loggerContext;
         private AContext dataContext;
+        private AContext context;
 
         private EntityLogger logger;
         private DbEntityEntry entry;
@@ -26,8 +26,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         public void SetUp()
         {
             dataContext = new TestingContext();
-            loggerContext = new TestingContext();
-            logger = new EntityLogger(loggerContext);
+            context = new TestingContext();
+            logger = new EntityLogger(context);
             HttpContext.Current = new HttpMock().HttpContext;
 
             TearDownData();
@@ -42,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         public void TearDown()
         {
             dataContext.Dispose();
-            loggerContext.Dispose();
+            context.Dispose();
             HttpContext.Current = null;
         }
 
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         {
             entry.State = EntityState.Modified;
 
-            Assert.IsFalse(loggerContext.Set<Log>().Any());
+            Assert.IsFalse(context.Set<Log>().Any());
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.IsFalse(loggerContext.Set<Log>().Any());
+            Assert.IsFalse(context.Set<Log>().Any());
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            String actual = loggerContext.Set<Log>().Single().Message;
+            String actual = context.Set<Log>().Single().Message;
             String expected = new LoggableEntry(entry).ToString();
 
             Assert.AreEqual(expected, actual);
@@ -113,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
 
-            Assert.IsFalse(loggerContext.Set<Log>().Any());
+            Assert.IsFalse(context.Set<Log>().Any());
         }
 
         #endregion
@@ -123,34 +123,22 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void Save_SavesLogs()
         {
-            if (loggerContext.Set<Log>().Count() > 0)
-                Assert.Inconclusive();
-
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
             logger.Save();
 
-            Int32 actual = loggerContext.Set<Log>().Count();
-            Int32 expected = 1;
-
-            Assert.AreEqual(expected, actual);
+            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
         }
 
         [Test]
         public void Save_ClearsLogMessagesBuffer()
         {
-            if (loggerContext.Set<Log>().Count() > 0)
-                Assert.Inconclusive();
-
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
             logger.Save();
             logger.Save();
 
-            Int32 actual = loggerContext.Set<Log>().Count();
-            Int32 expected = 1;
-
-            Assert.AreEqual(expected, actual);
+            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
         }
 
         #endregion
@@ -170,23 +158,17 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         private void Logs(DbEntityEntry entry)
         {
-            if (loggerContext.Set<Log>().Count() > 0)
-                Assert.Inconclusive();
-
             logger.Log(new[] { entry });
             logger.Save();
 
-            Int32 actual = loggerContext.Set<Log>().Count();
-            Int32 expected = 1;
-
-            Assert.AreEqual(expected, actual);
+            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
         }
 
         private void TearDownData()
         {
             dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
-            loggerContext.Set<Log>().RemoveRange(loggerContext.Set<Log>());
-            loggerContext.SaveChanges();
+            context.Set<Log>().RemoveRange(context.Set<Log>());
+            context.SaveChanges();
             dataContext.SaveChanges();
         }
 

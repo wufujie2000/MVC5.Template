@@ -250,7 +250,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.Method()));
+            Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.ToString()));
         }
 
         [Test]

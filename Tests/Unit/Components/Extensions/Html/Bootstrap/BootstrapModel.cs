@@ -22,11 +22,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         public BootstrapModel Relation { get; set; }
 
-        public String Method()
-        {
-            return String.Empty;
-        }
-
         public BootstrapModel()
         {
             NotRequired = "NotRequired";

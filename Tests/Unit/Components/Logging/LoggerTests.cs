@@ -38,9 +38,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void Log_LogsMessage()
         {
-            if (context.Set<Log>().Count() > 0)
-                Assert.Inconclusive();
-
             logger.Log(new String('L', 10000));
 
             String actual = context.Set<Log>().Single().Message;

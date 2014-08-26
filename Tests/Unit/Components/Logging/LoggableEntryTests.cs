@@ -43,12 +43,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void LoggableEntry_SetsEntityBaseTypeThenEntityIsProxied()
         {
-            if (entry.Entity.GetType().Namespace != "System.Data.Entity.DynamicProxies")
-                Assert.Inconclusive();
-
             Type actual = new LoggableEntry(entry).EntityType;
             Type expected = model.GetType();
 
+            Assert.AreEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
             Assert.AreEqual(expected, actual);
         }
 
@@ -56,12 +54,11 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         public void LoggableEntry_SetsEntityTypeThenEntityIsNotProxied()
         {
             entry = context.Entry(context.Set<Role>().Add(new Role()));
-            if (entry.Entity.GetType().Namespace == "System.Data.Entity.DynamicProxies")
-                Assert.Inconclusive();
 
             Type actual = new LoggableEntry(entry).EntityType;
             Type expected = model.GetType();
 
+            Assert.AreNotEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
             Assert.AreEqual(expected, actual);
         }
 

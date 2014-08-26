@@ -452,8 +452,6 @@ namespace MvcTemplate.Tests.Unit.Security
         public void Refresh_RefreshesPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetAction");
-            if (!provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetAction"))
-                Assert.Inconclusive();
 
             TearDownData();
             provider.Refresh();
@@ -487,14 +485,6 @@ namespace MvcTemplate.Tests.Unit.Security
 
         #region Test helpers
 
-        private Account CreateAccount()
-        {
-            Account account = ObjectFactory.CreateAccount();
-            context.Set<Account>().Add(account);
-            context.SaveChanges();
-
-            return account;
-        }
         private Account CreateAccountWithPrivilegeFor(String area, String controller, String action)
         {
             Account account = ObjectFactory.CreateAccount();

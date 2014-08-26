@@ -120,7 +120,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormLabelFor_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.Method()));
+            Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.ToString()));
         }
 
         [Test]
@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.Method()));
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString()));
         }
 
         [Test]
@@ -260,7 +260,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.Method(), (String)null));
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString(), (String)null));
         }
 
         [Test]
@@ -414,7 +414,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Attributes_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.Method(), (Object)null));
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString(), (Object)null));
         }
 
         [Test]
@@ -550,7 +550,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_Attributes_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.Method(), null, null));
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString(), null, null));
         }
 
         [Test]

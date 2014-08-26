@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Validators
     public class RoleValidatorTests
     {
         private RoleValidator validator;
-        private Context context;
+        private TestingContext context;
         private Role role;
 
         [SetUp]

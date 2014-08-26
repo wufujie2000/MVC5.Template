@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Validators
     public class AccountValidatorTests
     {
         private AccountValidator validator;
-        private Context context;
+        private TestingContext context;
         private IHasher hasher;
 
         [SetUp]

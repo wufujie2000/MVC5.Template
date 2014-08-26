@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
     [TestFixture]
     public class InitialDataTests
     {
-        private AContext context;
+        private Context context;
 
         [SetUp]
         public void SetUp()

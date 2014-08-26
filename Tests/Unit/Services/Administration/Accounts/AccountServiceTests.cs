@@ -22,10 +22,10 @@ namespace MvcTemplate.Tests.Unit.Services
     [TestFixture]
     public class AccountServiceTests
     {
+        private TestingContext context;
         private AccountService service;
         private IMailClient mailClient;
         private String accountId;
-        private Context context;
         private IHasher hasher;
 
         [SetUp]
@@ -293,7 +293,6 @@ namespace MvcTemplate.Tests.Unit.Services
             expected.RoleId = role.Id;
             service.Edit(expected);
 
-            context = new TestingContext();
             Account actual = context.Set<Account>().SingleOrDefault();
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);

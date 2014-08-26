@@ -19,8 +19,8 @@ namespace MvcTemplate.Tests.Unit.Services
     [TestFixture]
     public class RoleServiceTests
     {
+        private TestingContext context;
         private RoleService service;
-        private Context context;
         private Role role;
 
         [SetUp]
@@ -205,7 +205,6 @@ namespace MvcTemplate.Tests.Unit.Services
             expected.Name += "EditedName";
             service.Edit(expected);
 
-            context = new TestingContext();
             Role actual = context.Set<Role>().SingleOrDefault();
 
             Assert.AreEqual(expected.EntityDate, actual.EntityDate);

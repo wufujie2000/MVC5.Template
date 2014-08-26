@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Security
     public class AuthorizationProviderTests
     {
         private AuthorizationProvider provider;
-        private AContext context;
+        private TestingContext context;
 
         [SetUp]
         public void SetUp()

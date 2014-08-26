@@ -25,8 +25,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [SetUp]
         public void SetUp()
         {
-            dataContext = new TestingContext();
             context = new TestingContext();
+            dataContext = new TestingContext();
             logger = new EntityLogger(context);
             HttpContext.Current = new HttpMock().HttpContext;
 

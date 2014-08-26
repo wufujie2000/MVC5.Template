@@ -26,8 +26,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
-            IEnumerable<MvcSiteMapNode> actualNodes = parser.GetAllNodes(siteMap);
+            IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetAllNodes(siteMap));
+            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap());
 
+            IEnumerable<MvcSiteMapNode> expectedParents = expected.Select(node => node.Parent);
+            IEnumerable<MvcSiteMapNode> actualParents = actual.Select(node => node.Parent);
+
+            TestHelper.EnumPropertyWiseEqual(expectedParents, actualParents);
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         #endregion
@@ -37,53 +43,16 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyMenus()
         {
+            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap()).Where(node => node.IsMenu == true);
             IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap));
-            IEnumerable<MvcSiteMapNode> expected = new List<MvcSiteMapNode>()
-            {
-                new MvcSiteMapNode()
-                {
-                    IconClass = "fa fa-users",
-                    Area = "Administration"
-                },
-                new MvcSiteMapNode()
-                {
-                    IconClass = "fa fa-file-o",
-                    Area = "Administration",
-                    Controller = "Accounts",
-                    Action = "Create"
-                },
-            };
+            expected.Last().Parent = expected.First();
+            expected.First().Parent = null;
 
+            IEnumerable<MvcSiteMapNode> expectedParents = expected.Select(node => node.Parent);
+            IEnumerable<MvcSiteMapNode> actualParents = actual.Select(node => node.Parent);
+
+            TestHelper.EnumPropertyWiseEqual(expectedParents, actualParents);
             TestHelper.EnumPropertyWiseEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetMenus_ReplacesNonMenuNodesWithItsChildMenus()
-        {
-            IEnumerable<MvcSiteMapNode> actual = parser.GetMenuNodes(siteMap);
-            IEnumerable<MvcSiteMapNode> expected = new List<MvcSiteMapNode>()
-            {
-                new MvcSiteMapNode()
-                {
-                    IconClass = "fa fa-users",
-                    Area = "Administration",
-
-                    Children = new List<MvcSiteMapNode>()
-                    {
-                        new MvcSiteMapNode()
-                        {
-                            IconClass = "fa fa-file-o",
-                            Area = "Administration",
-                            Controller = "Accounts",
-                            Action = "Create"
-                        }
-                    }
-                }
-            };
-
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
-            TestHelper.EnumPropertyWiseEqual(expected.Single().Children, actual.Single().Children);
-            Assert.IsFalse(actual.Single().Children.Any(submenu => submenu.Parent != actual.Single()));
         }
 
         #endregion
@@ -102,6 +71,78 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             homeNode.Add(administrationNode);
             administrationNode.Add(accountsNode);
             accountsNode.Add(accountsCreateNode);
+
+            return siteMap;
+        }
+        private IEnumerable<MvcSiteMapNode> GetSiteMap()
+        {
+            List<MvcSiteMapNode> siteMap = new List<MvcSiteMapNode>()
+            {
+                new MvcSiteMapNode()
+                {
+                    IconClass = "fa fa-home",
+
+                    Controller = "Home",
+                    Action = "Index",
+
+                    Children = new List<MvcSiteMapNode>()
+                    {
+                        new MvcSiteMapNode()
+                        {
+                            IconClass = "fa fa-users",
+                            IsMenu = true,
+
+                            Area = "Administration",
+
+                            Children = new List<MvcSiteMapNode>()
+                            {
+                                new MvcSiteMapNode()
+                                {
+                                    IconClass = "fa fa-user",
+                                    IsMenu = false,
+
+                                    Area = "Administration",
+                                    Controller = "Accounts",
+                                    Action = "Index",
+
+                                    Children = new List<MvcSiteMapNode>()
+                                    {
+                                        new MvcSiteMapNode()
+                                        {
+                                            IconClass = "fa fa-file-o",
+                                            IsMenu = true,
+
+                                            Area = "Administration",
+                                            Controller = "Accounts",
+                                            Action = "Create",
+
+                                            Children = new List<MvcSiteMapNode>()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            foreach (MvcSiteMapNode level1Node in siteMap)
+            {
+                foreach (MvcSiteMapNode level2Node in level1Node.Children)
+                {
+                    level2Node.Parent = level1Node;
+
+                    foreach (MvcSiteMapNode level3Node in level2Node.Children)
+                    {
+                        level3Node.Parent = level2Node;
+
+                        foreach (MvcSiteMapNode level4Node in level3Node.Children)
+                        {
+                            level4Node.Parent = level3Node;
+                        }
+                    }
+                }
+            }
 
             return siteMap;
         }

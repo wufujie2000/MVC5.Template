@@ -59,11 +59,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             while (expected.MoveNext() | actual.MoveNext())
             {
                 String expectedTitle = ResourceProvider.GetSiteMapTitle(actual.Current.Area, actual.Current.Controller, actual.Current.Action);
-                Assert.AreEqual(expectedTitle, actual.Current.Title);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
+
                 Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
+                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
                 Assert.AreEqual(expected.Current.Action, actual.Current.Action);
                 Assert.AreEqual(expected.Current.Area, actual.Current.Area);
+                Assert.AreEqual(expectedTitle, actual.Current.Title);
             }
         }
 
@@ -115,8 +116,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["area"] = null;
 
             MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").Single();
-            IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus().Where(menu => menu.IsActive));
-            MvcSiteMapMenuNode actual = actualMenus.Single();
+            MvcSiteMapMenuNode actual = TreeToEnumerable(provider.GetMenus().Where(menu => menu.IsActive)).Single();
 
             Assert.AreEqual(ResourceProvider.GetSiteMapTitle(expected.Area, expected.Controller, expected.Action), actual.Title);
             Assert.AreEqual(expected.IconClass, actual.IconClass);
@@ -191,6 +191,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["action"] = "Index";
 
             List<MvcSiteMapNode> nodes = parser.GetAllNodes(siteMap).ToList();
+
             MvcSiteMapBreadcrumb expected = CreateBreadcrumb(nodes[1], nodes[1].Children.First());
             MvcSiteMapBreadcrumb actual = provider.GetBreadcrumb();
 
@@ -200,10 +201,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetBreadcrumb_SetsBreadcrumbTitlesToCurrentCultureOnes()
         {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             routeValues["controller"] = "Home";
             routeValues["action"] = "Index";
             routeValues["area"] = null;
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
             String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
             String actual = provider.GetBreadcrumb().Single().Title;

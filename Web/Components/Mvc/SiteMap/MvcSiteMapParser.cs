@@ -49,6 +49,7 @@ namespace MvcTemplate.Components.Mvc
                     menuNode.Area = node.Area;
 
                     menuNode.IconClass = node.IconClass;
+                    menuNode.IsMenu = node.IsMenu;
                     menuNode.Parent = parent;
 
                     menus.Add(menuNode);

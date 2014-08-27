@@ -1,7 +1,6 @@
 ﻿@{
     IEnumerable<String> errorMessages = ViewData.ModelState.SelectMany(state => state.Value.Errors).Select(error => error.ErrorMessage);
-    AlertsContainer alerts = Session["Alerts"] as AlertsContainer;
-    Session["Alerts"] = null;
+    AlertsContainer alerts = TempData["Alerts"] as AlertsContainer;
 }
 
 <div class="alerts">

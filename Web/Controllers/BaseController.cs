@@ -98,9 +98,9 @@ namespace MvcTemplate.Controllers
         {
             base.OnActionExecuted(context);
 
-            AlertsContainer current = Session["Alerts"] as AlertsContainer;
+            AlertsContainer current = TempData["Alerts"] as AlertsContainer;
             if (current == null)
-                Session["Alerts"] = Alerts;
+                TempData["Alerts"] = Alerts;
             else
                 current.Merge(Alerts);
         }

@@ -283,25 +283,26 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: OnActionExecuted(ActionExecutedContext context)
 
         [Test]
-        public void OnActionExecuted_SetsAlertsToSessionThenAlertsInSessionAreNull()
+        public void OnActionExecuted_SetsAlertsToTempDataThenAlertsInTempDataAreNull()
         {
-            controller.Session["Alerts"] = null;
+            controller.TempData["Alerts"] = null;
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
-            Object actual = controller.Session["Alerts"];
+            Object actual = controller.TempData["Alerts"];
             Object expected = controller.Alerts;
 
             Assert.AreSame(expected, actual);
         }
 
         [Test]
-        public void OnActionExecuted_MergesAlertsToSession()
+        public void OnActionExecuted_MergesAlertsToTempData()
         {
             HttpContextBase context = controller.HttpContext;
 
             BaseControllerProxy mergedController = new BaseControllerProxy();
             mergedController.ControllerContext = new ControllerContext();
             mergedController.ControllerContext.HttpContext = context;
+            mergedController.TempData = controller.TempData;
             mergedController.Alerts.AddError("ErrorTest2");
             
             IEnumerable<Alert> controllerAlerts = controller.Alerts;
@@ -311,7 +312,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             mergedController.BaseOnActionExecuted(new ActionExecutedContext());
 
-            IEnumerable<Alert> actual = controller.Session["Alerts"] as AlertsContainer;
+            IEnumerable<Alert> actual = controller.TempData["Alerts"] as AlertsContainer;
             IEnumerable<Alert> expected = controllerAlerts.Union(mergedAlerts);
 
             CollectionAssert.AreEqual(expected, actual);

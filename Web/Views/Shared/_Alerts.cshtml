@@ -1,6 +1,5 @@
 ﻿@{
-    AlertsContainer alerts = Session["Alerts"] as AlertsContainer;
-    Session["Alerts"] = null;
+    AlertsContainer alerts = TempData["Alerts"] as AlertsContainer;
 }
 
 <div class="alerts">

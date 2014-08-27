@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Security.Principal;
@@ -79,7 +78,6 @@ namespace MvcTemplate.Tests.Helpers
             HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
             HttpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
             HttpContextBase.Response.Returns(new HttpResponseWrapper(response));
-            HttpContextBase.Session.Returns(new HttpSessionStub());
             HttpContextBase.Request.Returns(httpRequestBase);
 
             IIdentity identity = Substitute.For<IIdentity>();
@@ -96,28 +94,6 @@ namespace MvcTemplate.Tests.Helpers
             request.RequestContext.RouteData.Values["controller"] = "Accounts";
             request.RequestContext.RouteData.Values["action"] = "Details";
             request.RequestContext.RouteData.Values["language"] = "en";
-        }
-    }
-
-    public class HttpSessionStub : HttpSessionStateBase
-    {
-        private Dictionary<String, Object> objects;
-
-        public HttpSessionStub()
-        {
-            objects = new Dictionary<String, Object>();
-        }
-
-        public override Object this[String name]
-        {
-            get
-            {
-                return (objects.ContainsKey(name)) ? objects[name] : null;
-            }
-            set
-            {
-                objects[name] = value;
-            }
         }
     }
 }

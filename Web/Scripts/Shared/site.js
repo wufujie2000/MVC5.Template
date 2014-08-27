@@ -199,3 +199,8 @@
         cursorborder: "none"
     });
 }());
+
+// Bootstrap binding
+(function () {
+    $('[rel=tooltip]').tooltip();
+}());

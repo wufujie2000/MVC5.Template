@@ -27,3 +27,27 @@
 }
 
 <div class="separator"></div>
+<div class="auth-actions">
+    @Html.ActionLink(
+        " ",
+        "Login",
+        null,
+        new
+        {
+            @class = "text fa fa-key",
+            rel = "tooltip",
+            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.Login
+        }
+    )
+    @Html.ActionLink(
+        " ",
+        "Recover",
+        null,
+        new
+        {
+            @class = "text fa fa-unlock-alt",
+            rel = "tooltip",
+            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.LostPassword
+        }
+    )
+</div>

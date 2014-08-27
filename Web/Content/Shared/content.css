@@ -3,23 +3,23 @@
   margin: 50px auto;
   width: 330px;
 }
-body.public .content-container .text {
+body.public .text {
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.6), 0 0 1px rgba(0, 0, 0, 0.3);
   color: rgba(0, 0, 0, 0.2);
 }
-body.public .content-container .title {
+body.public .title {
   font-weight: bold;
   text-align: right;
   font-size: 2.5em;
 }
-body.public .content-container .error {
+body.public .error {
   font-size: 10em;
   margin: 20px;
 }
-body.public .content-container .describtion {
+body.public .describtion {
   font-size: 1.2em;
 }
-body.public .content-container .public-action {
+body.public .public-action {
   margin-top: 10px;
 }
 .content-container {

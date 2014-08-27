@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Data.Core;
 using System;
 using System.Web.Mvc;
 
@@ -13,6 +14,11 @@ namespace MvcTemplate.Validators
             get;
             set;
         }
+        public AlertsContainer Alerts
+        {
+            get;
+            set;
+        }
         protected IUnitOfWork UnitOfWork
         {
             get;
@@ -21,6 +27,7 @@ namespace MvcTemplate.Validators
 
         public BaseValidator(IUnitOfWork unitOfWork)
         {
+            Alerts = new AlertsContainer();
             UnitOfWork = unitOfWork;
         }
 

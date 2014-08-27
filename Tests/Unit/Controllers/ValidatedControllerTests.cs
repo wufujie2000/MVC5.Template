@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Services;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Services;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
 using NSubstitute;
@@ -41,10 +42,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void ServicedController_SetsModelState()
+        public void ValidatedController_SetsValidatorAlerts()
         {
-            ModelStateDictionary expected = validator.ModelState;
-            ModelStateDictionary actual = controller.ModelState;
+            AlertsContainer expected = controller.Alerts;
+            AlertsContainer actual = validator.Alerts;
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void ValidatedController_SetsModelState()
+        {
+            ModelStateDictionary expected = controller.ModelState;
+            ModelStateDictionary actual = validator.ModelState;
 
             Assert.AreSame(expected, actual);
         }

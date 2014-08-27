@@ -20,6 +20,7 @@ namespace MvcTemplate.Controllers
             : base(service)
         {
             Validator = validator;
+            Validator.Alerts = Alerts;
             Validator.ModelState = ModelState;
         }
 

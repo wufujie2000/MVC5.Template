@@ -279,14 +279,15 @@ namespace MvcTemplate.Tests.Unit.Services
             role.RolePrivileges = new List<RolePrivilege>();
 
             Int32 privNumber = 1;
-            IEnumerable<String> controllers = new[] { "Accounts", "Roles" };
+            IEnumerable<String> controllers = new[] { "Accounts", "Roles", "Users" };
             IEnumerable<String> actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
             foreach (String controller in controllers)
                 foreach (String action in actions)
                 {
                     RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
-                    rolePrivilege.Privilege = new Privilege() { Area = "Administration", Controller = controller, Action = action };
+                    rolePrivilege.Privilege = new Privilege() { Controller = controller, Action = action };
+                    rolePrivilege.Privilege.Area = controller != "Users" ? "Administration" : null;
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;
                     rolePrivilege.PrivilegeId = rolePrivilege.Id;
                     rolePrivilege.RoleId = role.Id;

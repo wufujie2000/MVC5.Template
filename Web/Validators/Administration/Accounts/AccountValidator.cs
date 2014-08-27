@@ -141,7 +141,7 @@ namespace MvcTemplate.Validators
                     account.RecoveryTokenExpirationDate > DateTime.Now);
 
             if (!isValid)
-                ModelState.AddModelError(String.Empty, Validations.RecoveryTokenExpired);
+                Alerts.AddError(Validations.RecoveryTokenExpired);
 
             return isValid;
         }

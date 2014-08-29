@@ -119,7 +119,7 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .Single();
 
-            Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
+            Boolean isCorrect = hasher.Verify(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 

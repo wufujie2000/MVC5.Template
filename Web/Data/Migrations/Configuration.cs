@@ -11,7 +11,7 @@ namespace MvcTemplate.Data.Migrations
     [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
     {
-        private UnitOfWork unitOfWork;
+        private Context context;
 
         public Configuration()
         {
@@ -20,7 +20,7 @@ namespace MvcTemplate.Data.Migrations
 
         protected override void Seed(Context context)
         {
-            unitOfWork = new UnitOfWork(context);
+            this.context = context;
 
             SeedAllPrivileges();
             SeedAdministratorRole();
@@ -42,39 +42,39 @@ namespace MvcTemplate.Data.Migrations
                 new Privilege() { Area = "Administration", Controller = "Roles", Action = "Delete" }
             };
 
-            IEnumerable<Privilege> privileges = unitOfWork.Repository<Privilege>().ToList();
+            IEnumerable<Privilege> privileges = context.Set<Privilege>().ToList();
             foreach (Privilege privilege in allPrivileges)
                 if (!privileges.Any(priv =>
                         priv.Area == priv.Area &&
                         priv.Action == priv.Action &&
                         priv.Controller == priv.Controller))
-                    unitOfWork.Repository<Privilege>().Insert(privilege);
+                    context.Set<Privilege>().Add(privilege);
 
-            unitOfWork.Commit();
+            context.SaveChanges();
         }
         private void SeedAdministratorRole()
         {
-            if (!unitOfWork.Repository<Role>().Any(role => role.Name == "Sys_Admin"))
+            if (!context.Set<Role>().Any(role => role.Name == "Sys_Admin"))
             {
-                unitOfWork.Repository<Role>().Insert(new Role() { Name = "Sys_Admin" });
-                unitOfWork.Commit();
+                context.Set<Role>().Add(new Role() { Name = "Sys_Admin" });
+                context.SaveChanges();
             }
 
-            String adminRoleId = unitOfWork.Repository<Role>().First(role => role.Name == "Sys_Admin").Id;
-            IEnumerable<RolePrivilege> adminPrivileges = unitOfWork
-                .Repository<RolePrivilege>()
+            String adminRoleId = context.Set<Role>().First(role => role.Name == "Sys_Admin").Id;
+            IEnumerable<RolePrivilege> adminPrivileges = context
+                .Set<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
                 .ToList();
 
-            foreach (Privilege privilege in unitOfWork.Repository<Privilege>())
+            foreach (Privilege privilege in context.Set<Privilege>())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
-                    unitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
+                    context.Set<RolePrivilege>().Add(new RolePrivilege()
                     {
                         RoleId = adminRoleId,
                         PrivilegeId = privilege.Id
                     });
 
-            unitOfWork.Commit();
+            context.SaveChanges();
         }
         private void SeedAccounts()
         {
@@ -85,7 +85,7 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
-                    RoleId = unitOfWork.Repository<Role>().First(p => p.Name == "Sys_Admin").Id
+                    RoleId = context.Set<Role>().First(p => p.Name == "Sys_Admin").Id
                 },
                 new Account()
                 {
@@ -96,15 +96,15 @@ namespace MvcTemplate.Data.Migrations
             };
 
             foreach (Account account in accounts)
-                if (!unitOfWork.Repository<Account>().Any(acc => acc.Username == account.Username))
-                    unitOfWork.Repository<Account>().Insert(account);
+                if (!context.Set<Account>().Any(acc => acc.Username == account.Username))
+                    context.Set<Account>().Add(account);
 
-            unitOfWork.Commit();
+            context.SaveChanges();
         }
 
         public void Dispose()
         {
-            unitOfWork.Dispose();
+            context.Dispose();
         }
     }
 }

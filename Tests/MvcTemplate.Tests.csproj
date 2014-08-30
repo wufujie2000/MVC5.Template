@@ -156,6 +156,7 @@
     <Compile Include="Unit\Controllers\ServicedControllerProxy.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
+    <Compile Include="Unit\Resources\ResourcesTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RoleServiceTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AuthorizationProviderTests.cs" />

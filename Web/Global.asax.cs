@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -43,6 +44,27 @@ namespace MvcTemplate.Web
             RegisterFilters();
             RegisterBundles();
             RegisterRoutes();
+        }
+        public void Application_Error()
+        {
+            if (!ErrorHandlingEnabled()) return;
+
+            RouteValueDictionary routeValues = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
+            HttpException httpException = Server.GetLastError() as HttpException;
+            UrlHelper urlHelper = new UrlHelper(Request.RequestContext);
+            Exception exception = Server.GetLastError();
+
+            routeValues["area"] = String.Empty;
+            routeValues["controller"] = "Home";
+            routeValues["action"] = "Error";
+            Server.ClearError();
+
+            if (httpException != null)
+                if (httpException.GetHttpCode() == 404)
+                    routeValues["action"] = "NotFound";
+
+            Response.TrySkipIisCustomErrors = true;
+            Response.Redirect(urlHelper.RouteUrl(routeValues));
         }
 
         private void RegisterCurrentDependencyResolver()
@@ -97,6 +119,17 @@ namespace MvcTemplate.Web
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+
+        private Boolean ErrorHandlingEnabled()
+        {
+            CustomErrorsSection customErrors = (CustomErrorsSection)WebConfigurationManager.GetSection("system.web/customErrors");
+            if (customErrors == null) return false;
+
+            if (customErrors.Mode == CustomErrorsMode.RemoteOnly && !Request.IsLocal) return true;
+            if (customErrors.Mode == CustomErrorsMode.On) return true;
+
+            return false;
         }
     }
 }

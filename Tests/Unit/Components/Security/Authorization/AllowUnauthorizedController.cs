@@ -19,14 +19,14 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [HttpGet]
-        [Authorize]
+        [GlobalizedAuthorize]
         public ActionResult AuthorizeGetAction()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [GlobalizedAuthorize]
         public ActionResult AuthorizePostAction()
         {
             return View();

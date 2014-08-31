@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using MvcTemplate.Components.Security;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
@@ -17,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [HttpGet]
-        [Authorize]
+        [GlobalizedAuthorize]
         public override ActionResult AllowAnonymousGetAction()
         {
             return base.AllowAnonymousGetAction();

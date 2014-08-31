@@ -134,6 +134,8 @@
     <Compile Include="Unit\Components\Mvc\Globalization\GlobalizationProviderTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\GlobalizedAuthorizeAttributeTestsProxy.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\GlobalizedAuthorizeAttributeTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\InheritedAuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\InheritedAllowUnauthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AllowUnauthorizedController.cs" />

@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    [Authorize]
+    [GlobalizedAuthorize]
     public class AuthorizedController : Controller
     {
         [HttpGet]
@@ -19,14 +19,14 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [HttpGet]
-        [Authorize]
+        [GlobalizedAuthorize]
         public ActionResult AuthorizeGetAction()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [GlobalizedAuthorize]
         public ActionResult AuthorizePostAction()
         {
             return View();

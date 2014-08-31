@@ -58,6 +58,7 @@
     <Compile Include="Components\Logging\Logger.cs" />
     <Compile Include="Components\Logging\EntityLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Authorization\GlobalizedAuthorizeAttribute.cs" />
     <Compile Include="Security\Authorization\AuthorizationProvider.cs" />
   </ItemGroup>
   <ItemGroup>

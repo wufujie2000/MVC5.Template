@@ -7,7 +7,7 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
 {
-    [Authorize]
+    [GlobalizedAuthorize]
     public abstract class BaseController : Controller
     {
         protected IAuthorizationProvider AuthorizationProvider

@@ -1,61 +1,125 @@
 ﻿using MvcTemplate.Components.Security;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
     [GlobalizedAuthorize]
+    [ExcludeFromCodeCoverage]
     public class AuthorizedController : Controller
     {
         [HttpGet]
-        public ActionResult NotAttributedGetAction()
+        public ViewResult NotAttributedGetAction()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult NotAttributedPostAction()
+        public ViewResult NotAttributedPostAction()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [ActionName("NotAttributedGetActionName")]
+        public ViewResult NotAttributedGetActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("NotAttributedPostActionName")]
+        public ViewResult NotAttributedPostActionWithActionName()
         {
             return View();
         }
 
         [HttpGet]
         [GlobalizedAuthorize]
-        public ActionResult AuthorizeGetAction()
+        public ViewResult AuthorizeGetAction()
         {
             return View();
         }
 
         [HttpPost]
         [GlobalizedAuthorize]
-        public ActionResult AuthorizePostAction()
+        public ViewResult AuthorizePostAction()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [GlobalizedAuthorize]
+        [ActionName("AuthorizeGetActionName")]
+        public ViewResult AuthorizeGetActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [GlobalizedAuthorize]
+        [ActionName("AuthorizePostActionName")]
+        public ViewResult AuthorizePostActionWithActionName()
         {
             return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public virtual ActionResult AllowAnonymousGetAction()
+        public virtual ViewResult AllowAnonymousGetAction()
         {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult AllowAnonymousPostAction()
+        public ViewResult AllowAnonymousPostAction()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [ActionName("AllowAnonymousGetActionName")]
+        public ViewResult AllowAnonymousGetActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ActionName("AllowAnonymousPostActionName")]
+        public ViewResult AllowAnonymousPostActionWithActionName()
         {
             return View();
         }
 
         [HttpGet]
         [AllowUnauthorized]
-        public ActionResult AllowUnauthorizedGetAction()
+        public ViewResult AllowUnauthorizedGetAction()
         {
             return View();
         }
 
         [HttpPost]
         [AllowUnauthorized]
-        public ActionResult AllowUnauthorizedPostAction()
+        public ViewResult AllowUnauthorizedPostAction()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowUnauthorized]
+        [ActionName("AllowUnauthorizedGetActionName")]
+        public ViewResult AllowUnauthorizedGetActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowUnauthorized]
+        [ActionName("AllowUnauthorizedPostActionName")]
+        public ViewResult AllowUnauthorizedPostActionWithActionName()
         {
             return View();
         }

@@ -1,23 +1,39 @@
-﻿using System.Web.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
+    [ExcludeFromCodeCoverage]
     public class InheritedAuthorizedController : AuthorizedController
     {
         [HttpGet]
-        public ActionResult GetAction()
+        public ViewResult GetAction()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult PostAction()
+        public ViewResult PostAction()
         {
             return View();
         }
 
         [HttpGet]
-        public override ActionResult AllowAnonymousGetAction()
+        [ActionName("GetActionName")]
+        public ViewResult GetActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("PostActionName")]
+        public ViewResult PostActionWithActionName()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public override ViewResult AllowAnonymousGetAction()
         {
  	        return base.AllowAnonymousGetAction();
         }

@@ -50,6 +50,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "NotAttributedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "NotAttributedPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnNotAttributedController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "NotAttributed", "AuthorizeGetAction"));
@@ -61,6 +73,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnNotAttributedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "NotAttributed", "AuthorizeGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnNotAttributedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeGetActionName"));
         }
 
         [Test]
@@ -78,6 +104,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnNotAttributedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "NotAttributed", "AuthorizePostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnNotAttributedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizePostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizePostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnNotAttributedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowAnonymousGetAction"));
@@ -90,6 +130,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowAnonymousGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowAnonymousPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnNotAttributedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowUnauthorizedGetAction"));
@@ -99,6 +151,18 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnNotAttributedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowUnauthorizedPostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowUnauthorizedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnNotAttributedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "NotAttributed", "AllowUnauthorizedPostActionName"));
         }
 
         #endregion
@@ -120,6 +184,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesNotAttributedGetActionNameOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "NotAttributedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedGetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedGetActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesNotAttributedPostActionOnAuthorizedController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "NotAttributedPostAction"));
@@ -131,6 +209,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedPostAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedPostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesNotAttributedPostActionNameOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "NotAttributedPostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedPostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedPostActionName"));
         }
 
         [Test]
@@ -148,6 +240,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "AuthorizeGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionOnAuthorizedController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "AuthorizePostAction"));
@@ -159,6 +265,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizePostAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizePostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "Authorized", "AuthorizePostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizePostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizePostActionName"));
         }
 
         [Test]
@@ -174,6 +294,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowAnonymousGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowAnonymousPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAuthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowUnauthorizedGetAction"));
@@ -183,6 +315,18 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAuthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowUnauthorizedPostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowUnauthorizedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAuthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "Authorized", "AllowUnauthorizedPostActionName"));
         }
 
         #endregion
@@ -202,6 +346,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "NotAttributedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "NotAttributedPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowAnonymousController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AuthorizeGetAction"));
@@ -213,6 +369,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeGetAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AuthorizeGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAllowAnonymousController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeGetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeGetActionName"));
         }
 
         [Test]
@@ -230,6 +400,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAllowAnonymousController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AuthorizePostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAllowAnonymousController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizePostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizePostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowAnonymousController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowAnonymousGetAction"));
@@ -242,6 +426,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowAnonymousGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowAnonymousPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowAnonymousController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowUnauthorizedGetAction"));
@@ -251,6 +447,18 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAllowAnonymousController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowUnauthorizedPostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowUnauthorizedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowAnonymous", "AllowUnauthorizedPostActionName"));
         }
 
         #endregion
@@ -270,6 +478,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "NotAttributedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "NotAttributedPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AuthorizeGetAction"));
@@ -281,6 +501,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeGetAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeGetAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AuthorizeGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAllowUnauthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeGetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeGetActionName"));
         }
 
         [Test]
@@ -298,6 +532,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AuthorizePostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAllowUnauthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizePostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizePostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowUnauthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowAnonymousGetAction"));
@@ -310,6 +558,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowAnonymousGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowAnonymousPostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowUnauthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowUnauthorizedGetAction"));
@@ -319,6 +579,18 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAllowUnauthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowUnauthorizedPostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowUnauthorizedGetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "AllowUnauthorized", "AllowUnauthorizedPostActionName"));
         }
 
         #endregion
@@ -340,6 +612,20 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_NotAuthorizesGetActionNameOnInheritedAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "InheritedAuthorized", "GetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "GetActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "GetActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesPostActionOnInheritedAuthorizedController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "InheritedAuthorized", "PostAction"));
@@ -351,6 +637,20 @@ namespace MvcTemplate.Tests.Unit.Security
             Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "PostAction");
 
             Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "PostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_NotAuthorizesPostActionNameOnInheritedAuthorizedController()
+        {
+            Assert.IsFalse(provider.IsAuthorizedFor(null, null, "InheritedAuthorized", "PostActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAuthorizedController()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "PostActionName");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "PostActionName"));
         }
 
         [Test]
@@ -384,6 +684,18 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "InheritedAllowAnonymous", "GetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAllowAnonymousController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "InheritedAllowAnonymous", "PostActionName"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAllowAnonymousController()
         {
             Assert.IsFalse(provider.IsAuthorizedFor(null, null, "InheritedAllowAnonymous", "AllowAnonymousGetAction"));
@@ -411,6 +723,18 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_AuthorizesPostActionOnInheritedAllowUnauthorizedController()
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, null, "InheritedAllowUnauthorized", "PostAction"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "InheritedAllowUnauthorized", "GetActionName"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAllowUnauthorizedController()
+        {
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, "InheritedAllowUnauthorized", "PostActionName"));
         }
 
         [Test]

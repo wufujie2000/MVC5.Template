@@ -84,7 +84,12 @@ namespace MvcTemplate.Components.Security
         }
         private MethodInfo GetAction(Type controller, String action)
         {
-            IEnumerable<MethodInfo> actionMethods = controller.GetMethods().Where(method => method.Name == action);
+            IEnumerable<MethodInfo> actionMethods = controller
+                .GetMethods()
+                .Where(method => (method.GetCustomAttribute<ActionNameAttribute>() != null &&
+                    method.GetCustomAttribute<ActionNameAttribute>().Name == action) ||
+                    method.Name == action);
+
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;

@@ -123,7 +123,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
     <Content Include="Content\Datalist\datalist.css" />
-    <Content Include="Content\JQueryUI\jquery-ui-1.11.1.css" />
+    <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.png" />
@@ -209,27 +209,27 @@
     <Content Include="Scripts\GridMvc\gridmvc.min.js">
       <DependentUpon>gridmvc.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQuery\jquery-2.1.1.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.min.js">
-      <DependentUpon>jquery-2.1.1.js</DependentUpon>
+    <Content Include="Scripts\JQuery\jquery.js" />
+    <Content Include="Scripts\JQuery\jquery.min.js">
+      <DependentUpon>jquery.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQueryUI\jquery-ui-1.11.1.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui-1.11.1.min.js">
-      <DependentUpon>jquery-ui-1.11.1.js</DependentUpon>
+    <Content Include="Scripts\JQueryUI\jquery-ui.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui.min.js">
+      <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.nicescroll.min.js">
-      <DependentUpon>jquery-2.1.1.nicescroll.js</DependentUpon>
+    <Content Include="Scripts\JQuery\jquery.nicescroll.js" />
+    <Content Include="Scripts\JQuery\jquery.nicescroll.min.js">
+      <DependentUpon>jquery.nicescroll.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.min.js">
-      <DependentUpon>jquery-2.1.1.validate.js</DependentUpon>
+    <Content Include="Scripts\JQuery\jquery.validate.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.min.js">
+      <DependentUpon>jquery.validate.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery-2.1.1.validate.unobtrusive.min.js">
-      <DependentUpon>jquery-2.1.1.validate.unobtrusive.js</DependentUpon>
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.min.js">
+      <DependentUpon>jquery.validate.unobtrusive.js</DependentUpon>
     </Content>
     <Content Include="Scripts\JsTree\jstree.js" />
     <Content Include="Scripts\JsTree\jstree.min.js">

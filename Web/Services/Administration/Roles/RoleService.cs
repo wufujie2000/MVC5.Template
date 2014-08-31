@@ -22,27 +22,15 @@ namespace MvcTemplate.Services
             view.PrivilegesTree.Nodes.Add(rootNode);
             rootNode.Name = Resources.Privilege.Titles.All;
 
-            IEnumerable<IGrouping<String, Privilege>> allPrivileges = UnitOfWork
-                .Repository<Privilege>()
-                .ToList()
-                .Select(privilege => new Privilege
-                {
-                    Id = privilege.Id,
-                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
-                })
-                .GroupBy(privilege => privilege.Area)
-                .OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller);
-
-            foreach (IGrouping<String, Privilege> areaPrivilege in allPrivileges)
+            IEnumerable<Privilege> privileges = GetAllPrivileges();
+            foreach (IGrouping<String, Privilege> area in privileges.GroupBy(privilege => privilege.Area))
             {
-                JsTreeNode areaNode = new JsTreeNode(areaPrivilege.Key);
-                foreach (IGrouping<String, Privilege> controllerPrivilege in areaPrivilege.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
+                JsTreeNode areaNode = new JsTreeNode(area.Key);
+                foreach (IGrouping<String, Privilege> controller in area.GroupBy(privilege => privilege.Controller).OrderBy(privilege => privilege.Key))
                 {
-                    JsTreeNode controllerNode = new JsTreeNode(controllerPrivilege.Key);
-                    foreach (IGrouping<String, Privilege> actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
-                        controllerNode.Nodes.Add(new JsTreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
+                    JsTreeNode controllerNode = new JsTreeNode(controller.Key);
+                    foreach (IGrouping<String, Privilege> action in controller.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
+                        controllerNode.Nodes.Add(new JsTreeNode(action.First().Id, action.Key));
 
                     if (areaNode.Name == null)
                         rootNode.Nodes.Add(controllerNode);
@@ -98,6 +86,21 @@ namespace MvcTemplate.Services
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
+        }
+
+        private IEnumerable<Privilege> GetAllPrivileges()
+        {
+            return UnitOfWork
+                .Repository<Privilege>()
+                .ToList()
+                .Select(privilege => new Privilege
+                {
+                    Id = privilege.Id,
+                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                })
+                .OrderBy(privilege => privilege.Area ?? privilege.Controller);
         }
 
         private void CreateRole(RoleView view)

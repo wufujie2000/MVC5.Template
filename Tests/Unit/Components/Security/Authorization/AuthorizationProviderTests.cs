@@ -763,6 +763,14 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Test]
+        public void IsAuthorizedFor_IgnoresCase()
+        {
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "notattributed", "AUTHORIZEGETACTION"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_OnNotExistingActionThrows()
         {
             Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, null, "NotAttributed", "Test"));

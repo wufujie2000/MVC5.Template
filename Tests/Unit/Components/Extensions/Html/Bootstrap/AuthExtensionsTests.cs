@@ -155,8 +155,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</ul>",
                 urlHelper.Content("~/Images/Flags/en.gif"),
                 urlHelper.Content("~/Images/Flags/lt.gif"),
-                urlHelper.Action(action, new { language = "en", p = "1" }),
-                urlHelper.Action(action, new { language = "lt", p = "1" }));
+                urlHelper.Action(action, new { area = routeValues["area"], language = "en", p = "1" }),
+                urlHelper.Action(action, new { area = routeValues["area"], language = "lt", p = "1" }));
 
             Assert.AreEqual(expected, actual);
         }

@@ -35,9 +35,9 @@ namespace MvcTemplate.Components.Security
 
             return cache[accountId]
                 .Any(privilege =>
-                    privilege.Area == area &&
-                    privilege.Action == action &&
-                    privilege.Controller == controller);
+                    String.Compare(privilege.Area, area, true) == 0 &&
+                    String.Compare(privilege.Action, action, true) == 0 &&
+                    String.Compare(privilege.Controller, controller, true) == 0);
         }
 
         public virtual void Refresh()
@@ -80,15 +80,17 @@ namespace MvcTemplate.Components.Security
         }
         private Type GetControllerType(String area, String controller)
         {
-            return controllers.First(type => type.FullName.EndsWith(area + "." + controller + "Controller"));
+            String fullNameEnding = (area + "." + controller + "Controller").ToLowerInvariant();
+
+            return controllers.First(type => type.FullName.ToLowerInvariant().EndsWith(fullNameEnding));
         }
         private MethodInfo GetAction(Type controller, String action)
         {
             IEnumerable<MethodInfo> actionMethods = controller
                 .GetMethods()
                 .Where(method => (method.GetCustomAttribute<ActionNameAttribute>() != null &&
-                    method.GetCustomAttribute<ActionNameAttribute>().Name == action) ||
-                    method.Name == action);
+                    method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()) ||
+                    method.Name.ToLowerInvariant() == action.ToLowerInvariant());
 
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)

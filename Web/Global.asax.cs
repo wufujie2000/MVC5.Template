@@ -118,6 +118,7 @@ namespace MvcTemplate.Web
         private void RegisterRoutes()
         {
             AreaRegistration.RegisterAllAreas();
+            RouteTable.Routes.LowercaseUrls = true;
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 

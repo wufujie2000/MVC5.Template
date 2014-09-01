@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithArea()
         {
-            String scriptSrc = urlHelper.Content("~/Scripts/Shared/Administration/Accounts/accounts.js");
+            String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
 
             String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
@@ -42,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void RenderControllerScripts_RendersControllerScriptsWithoutArea()
         {
-            String scriptSrc = urlHelper.Content("~/Scripts/Shared/Accounts/accounts.js");
+            String scriptSrc = urlHelper.Content("~/Scripts/Shared/accounts/accounts.js");
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 

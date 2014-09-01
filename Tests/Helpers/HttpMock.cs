@@ -24,23 +24,29 @@ namespace MvcTemplate.Tests.Helpers
         }
         static HttpMock()
         {
-            RouteTable.Routes
+            RouteValueDictionary dataTokens = RouteTable.Routes
                 .MapRoute(
                     "AdministrationMultilingual",
                     "{language}/{area}/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt", area = "Administration" },
                     new[] { "MvcTemplate.Controllers.Administration" })
-                .DataTokens["UseNamespaceFallback"] = false;
+                .DataTokens;
 
-            RouteTable.Routes
+            dataTokens["UseNamespaceFallback"] = false;
+            dataTokens["area"] = "Administration";
+
+            dataTokens = RouteTable.Routes
                 .MapRoute(
                     "Administration",
                     "{area}/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
                     new { language = "en", area = "Administration" },
                     new[] { "MvcTemplate.Controllers.Administration" })
-                .DataTokens["UseNamespaceFallback"] = false;
+                .DataTokens;
+
+            dataTokens["UseNamespaceFallback"] = false;
+            dataTokens["area"] = "Administration";
 
             RouteTable.Routes
                 .MapRoute(
@@ -59,6 +65,8 @@ namespace MvcTemplate.Tests.Helpers
                     new { language = "en" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
+
+            RouteTable.Routes.LowercaseUrls = true;
         }
 
         public HttpMock()
@@ -72,7 +80,7 @@ namespace MvcTemplate.Tests.Helpers
 
             HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
             httpRequestBase.QueryString.Returns(new NameValueCollection());
-            httpRequestBase.ApplicationPath.Returns("/Domain");
+            httpRequestBase.ApplicationPath.Returns("/domain");
             httpRequestBase.QueryString.Add("p", "1");
 
             HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
@@ -90,9 +98,9 @@ namespace MvcTemplate.Tests.Helpers
             HttpContextBase.User.Returns(user);
             HttpContext.User = user;
 
-            request.RequestContext.RouteData.Values["area"] = "Administration";
-            request.RequestContext.RouteData.Values["controller"] = "Accounts";
-            request.RequestContext.RouteData.Values["action"] = "Details";
+            request.RequestContext.RouteData.Values["area"] = "administration";
+            request.RequestContext.RouteData.Values["controller"] = "accounts";
+            request.RequestContext.RouteData.Values["action"] = "details";
             request.RequestContext.RouteData.Values["language"] = "en";
         }
     }

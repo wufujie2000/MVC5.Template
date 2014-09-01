@@ -111,8 +111,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_SetsMenuToActiveIfItBelongsToCurrentAreaAndController()
         {
-            routeValues["controller"] = "Home";
-            routeValues["action"] = "Index";
+            routeValues["controller"] = "home";
+            routeValues["action"] = "index";
             routeValues["area"] = null;
 
             MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").Single();
@@ -130,9 +130,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_SetsHasActiveSubmenuIfAnyOfItsSubmenusAreActiveOrHasActiveSubmenus()
         {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Roles";
-            routeValues["action"] = "Index";
+            routeValues["area"] = "administration";
+            routeValues["controller"] = "roles";
+            routeValues["action"] = "index";
 
             MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Area == "Administration" && menu.Action == null).Single();
             IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus()).Where(menu => menu.HasActiveSubMenu);
@@ -186,9 +186,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetBreadcrumb_FormsBreadcrumbForCurrentAction()
         {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Roles";
-            routeValues["action"] = "Index";
+            routeValues["area"] = "administration";
+            routeValues["controller"] = "roles";
+            routeValues["action"] = "index";
 
             List<MvcSiteMapNode> nodes = parser.GetAllNodes(siteMap).ToList();
 
@@ -202,8 +202,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetBreadcrumb_SetsBreadcrumbTitlesToCurrentCultureOnes()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            routeValues["controller"] = "Home";
-            routeValues["action"] = "Index";
+            routeValues["controller"] = "home";
+            routeValues["action"] = "index";
             routeValues["area"] = null;
 
             String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;

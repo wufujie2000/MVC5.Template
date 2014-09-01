@@ -45,8 +45,9 @@ namespace <#= Model.ControllerTestNamespace #>
             CollectionAssert.AreEqual(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual("{area}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Constraints["area"]);
+            Assert.AreEqual("<#= Model.Area #>", actual.DataTokens["area"]);
+            Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
             Assert.AreEqual("en", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
             Assert.AreEqual("en", actual.Defaults["language"]);
@@ -61,6 +62,7 @@ namespace <#= Model.ControllerTestNamespace #>
             Assert.AreEqual("{language}/{area}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Constraints["area"]);
+            Assert.AreEqual("<#= Model.Area #>", actual.DataTokens["area"]);
             Assert.AreEqual("<#= Model.Area #>", actual.Defaults["area"]);
             Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);

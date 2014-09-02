@@ -21,10 +21,7 @@ namespace MvcTemplate.Validators
 
         public Boolean CanRecover(AccountRecoveryView view)
         {
-            Boolean isValid = RecoveryEmailExists(view.Email);
-            isValid &= ModelState.IsValid;
-
-            return isValid;
+            return ModelState.IsValid;
         }
         public Boolean CanReset(AccountResetView view)
         {
@@ -126,12 +123,6 @@ namespace MvcTemplate.Validators
             return isCorrect;
         }
 
-        private Boolean RecoveryEmailExists(String email)
-        {
-            return UnitOfWork
-                .Repository<Account>()
-                .Any(account => account.Email.ToLower() == email.ToLower());
-        }
         private Boolean IsValidResetToken(String token)
         {
             Boolean isValid = UnitOfWork

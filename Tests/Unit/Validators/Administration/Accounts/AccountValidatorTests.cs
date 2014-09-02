@@ -55,15 +55,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanRecover_CanNotRecoverAccountWithNotExistingEmail()
-        {
-            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
-            account.Email = null;
-
-            Assert.IsFalse(validator.CanRecover(account));
-        }
-
-        [Test]
         public void CanRecover_CanRecoverValidAccount()
         {
             Assert.IsTrue(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));

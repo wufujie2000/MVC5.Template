@@ -47,9 +47,8 @@ namespace MvcTemplate.Services
 
         public void Recover(AccountRecoveryView view)
         {
-            Account account = UnitOfWork
-                .Repository<Account>()
-                .Single(acc => acc.Email.ToLower() == view.Email.ToLower());
+            Account account = UnitOfWork.Repository<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
+            if (account == null) return;
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();

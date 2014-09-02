@@ -126,6 +126,17 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Recover(AccountRecoveryView view)
 
         [Test]
+        public void Recover_DoesNotSendRecoveryInformation()
+        {
+            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            account.Email = "not@existing.email";
+
+            service.Recover(account);
+
+            mailClient.DidNotReceive().Send(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
+        }
+
+        [Test]
         public void Recover_UpdatesAccountRecoveryInformation()
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();

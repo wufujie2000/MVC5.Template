@@ -1,4 +1,5 @@
-packages/
+/TestResults
+/packages
 bin
 obj
 *.user

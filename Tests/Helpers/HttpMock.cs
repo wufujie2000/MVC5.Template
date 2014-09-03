@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using System;
-using System.Collections.Specialized;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Principal;
 using System.Web;
@@ -71,17 +72,16 @@ namespace MvcTemplate.Tests.Helpers
 
         public HttpMock()
         {
-            HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19174/Domain/", String.Empty);
-            HttpBrowserCapabilities browser = Substitute.ForPartsOf<HttpBrowserCapabilities>();
+            HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19175/domain/", "p=1");
+            Hashtable browserCapabilities = new Hashtable() { { "cookies", "true" } };
+            HttpBrowserCapabilities browser = new HttpBrowserCapabilities();
             HttpResponse response = new HttpResponse(new StringWriter());
             HttpContext = new HttpContext(request, response);
-            browser[Arg.Any<String>()].Returns("true");
+            browser.Capabilities = browserCapabilities;
             request.Browser = browser;
 
             HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
-            httpRequestBase.QueryString.Returns(new NameValueCollection());
             httpRequestBase.ApplicationPath.Returns("/domain");
-            httpRequestBase.QueryString.Add("p", "1");
 
             HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
             HttpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());

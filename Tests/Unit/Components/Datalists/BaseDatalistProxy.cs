@@ -20,7 +20,6 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         public BaseDatalistProxy()
-            : base()
         {
         }
         public BaseDatalistProxy(IUnitOfWork unitOfWork)

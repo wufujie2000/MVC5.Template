@@ -33,11 +33,11 @@ namespace MvcTemplate.Tests.Unit.Resources
                     resourceKeys = resourceKeys.Union(set.Cast<DictionaryEntry>().Select(resource => resource.Key.ToString()));
                     resourceKeys = resourceKeys.Distinct();
                 }
-                
+
                 foreach (Language language in languages)
                 {
                     ResourceSet set = manager.GetResourceSet(language.Culture, true, true);
-                    
+
                     foreach (String key in resourceKeys)
                         Assert.IsNotNullOrEmpty(
                             set.GetString(key),

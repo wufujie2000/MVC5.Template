@@ -249,7 +249,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_DeletesRole()
         {
-            Assert.IsTrue(context.Set<Role>().Any(model => model.Id == model.Id));
+            Assert.IsTrue(context.Set<Role>().Any(model => model.Id == role.Id));
 
             service.Delete(role.Id);
 
@@ -347,7 +347,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             return expectedTree;
         }
-        private List<JsTreeNode> GetAllBranchNodes(JsTreeNode root)
+        private IEnumerable<JsTreeNode> GetAllBranchNodes(JsTreeNode root)
         {
             List<JsTreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0).ToList();
             foreach (JsTreeNode branch in branches.ToList())
@@ -358,7 +358,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             return branches;
         }
-        private List<JsTreeNode> GetAllLeafNodes(JsTreeNode root)
+        private IEnumerable<JsTreeNode> GetAllLeafNodes(JsTreeNode root)
         {
             List<JsTreeNode> leafs = root.Nodes.Where(node => node.Nodes.Count == 0).ToList();
             IEnumerable<JsTreeNode> branches = root.Nodes.Where(node => node.Nodes.Count > 0);

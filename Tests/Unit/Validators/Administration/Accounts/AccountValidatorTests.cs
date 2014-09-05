@@ -214,7 +214,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
         {
-            AccountView account = ObjectFactory.CreateAccountView(1);
+            AccountView account = ObjectFactory.CreateAccountView();
             account.Id += "DifferentValue";
 
             Assert.IsFalse(validator.CanRegister(account));

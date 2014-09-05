@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Helpers
                 }
             };
 
-            provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do((value) =>
+            provider.When(language => language.CurrentLanguage = Arg.Any<Language>()).Do(value =>
             {
                 Thread.CurrentThread.CurrentUICulture = value.Arg<Language>().Culture;
                 Thread.CurrentThread.CurrentCulture = value.Arg<Language>().Culture;

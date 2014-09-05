@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
             Alert actual = alerts.Single();
             Alert expected = alert;
 
-            Assert.AreSame(alert, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

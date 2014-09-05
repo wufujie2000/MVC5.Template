@@ -244,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
 
-            String actual = html.FormTextBoxFor(expression, (String)null).ToString();
+            String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"text\" value=\"{3}\" />" +
@@ -260,7 +260,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString(), (String)null));
+            Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.ToString(), null));
         }
 
         [Test]
@@ -268,7 +268,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
 
-            String actual = html.FormTextBoxFor(expression, (String)null).ToString();
+            String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"text\" value=\"{3}\" />" +
@@ -286,7 +286,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
 
-            String actual = html.FormTextBoxFor(expression, (String)null).ToString();
+            String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"text\" value=\"{3}\" />" +
@@ -304,7 +304,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
 
-            String actual = html.FormTextBoxFor(expression, (String)null).ToString();
+            String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" readonly=\"readonly\" type=\"text\" value=\"{3}\" />" +
@@ -657,7 +657,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 
-            String actual = actual = html.FormPasswordFor(expression).ToString();
+            String actual = html.FormPasswordFor(expression).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<input autocomplete=\"off\" class=\"form-control\" id=\"{1}\" name=\"{2}\" type=\"password\" />" +
@@ -678,7 +678,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 
-            String actual = actual = html.FormValidationFor(expression).ToString();
+            String actual = html.FormValidationFor(expression).ToString();
             String expected = String.Format(
                 "<div class=\"{0}\">" +
                     "<span class=\"field-validation-valid\" id=\"{1}_validationMessage\"></span>" +

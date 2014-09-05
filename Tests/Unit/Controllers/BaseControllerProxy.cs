@@ -11,7 +11,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             get
             {
-                return base.CurrentAccountId;
+                return CurrentAccountId;
             }
         }
         public IAuthorizationProvider BaseAuthorizationProvider
@@ -28,20 +28,20 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         public RedirectToRouteResult BaseRedirectToAction(String action)
         {
-            return base.RedirectToAction(action);
+            return RedirectToAction(action);
         }
 
         public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
         {
-            return base.BeginExecuteCore(callback, state);
+            return BeginExecuteCore(callback, state);
         }
         public void BaseOnAuthorization(AuthorizationContext filterContext)
         {
-            base.OnAuthorization(filterContext);
+            OnAuthorization(filterContext);
         }
         public void BaseOnActionExecuted(ActionExecutedContext context)
         {
-            base.OnActionExecuted(context);
+            OnActionExecuted(context);
         }
     }
 }

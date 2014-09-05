@@ -223,7 +223,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
             controller.RouteData.Values["language"] = "lt";
 
-            controller.BaseBeginExecuteCore((asyncResult) => { }, null);
+            controller.BaseBeginExecuteCore(asyncResult => { }, null);
             CultureInfo expected = new CultureInfo("lt-LT");
 
             Assert.AreEqual(expected, CultureInfo.CurrentCulture);
@@ -304,7 +304,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             mergedController.ControllerContext.HttpContext = context;
             mergedController.TempData = controller.TempData;
             mergedController.Alerts.AddError("ErrorTest2");
-            
+
             IEnumerable<Alert> controllerAlerts = controller.Alerts;
             IEnumerable<Alert> mergedAlerts = mergedController.Alerts;
 

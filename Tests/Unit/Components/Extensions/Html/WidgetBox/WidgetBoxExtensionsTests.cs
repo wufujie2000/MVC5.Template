@@ -56,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringBuilder actual = new StringBuilder();
             Authorization.Provider = null;
 
-            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            String buttons = FormTitleButtons(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
             html.ViewContext.Writer = new StringWriter(actual);
@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringBuilder expected = new StringBuilder();
             StringBuilder actual = new StringBuilder();
 
-            String buttons = FormTitleButtons(html, LinkAction.Details, LinkAction.Delete);
+            String buttons = FormTitleButtons(LinkAction.Details, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), buttons).Dispose();
 
             html.ViewContext.Writer = new StringWriter(actual);
@@ -113,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringBuilder actual = new StringBuilder();
             Authorization.Provider = null;
 
-            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            String buttons = FormTitleButtons(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
             html.ViewContext.Writer = new StringWriter(actual);
@@ -137,7 +137,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringBuilder expected = new StringBuilder();
             StringBuilder actual = new StringBuilder();
 
-            String buttons = FormTitleButtons(html, LinkAction.Create, LinkAction.Edit);
+            String buttons = FormTitleButtons(LinkAction.Create, LinkAction.Edit);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
             html.ViewContext.Writer = new StringWriter(actual);
@@ -150,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Test helpers
 
-        private String FormTitleButtons(HtmlHelper html, params LinkAction[] actions)
+        private String FormTitleButtons(params LinkAction[] actions)
         {
             String buttons = String.Empty;
             foreach (LinkAction action in actions)
@@ -182,8 +182,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                             new { id = html.ViewContext.RouteData.Values["id"] },
                             new { @class = "btn" })
                         .ToString(),
-                    icon.ToString(),
-                    span.ToString());
+                    icon,
+                    span);
 
                 buttons += button;
             }

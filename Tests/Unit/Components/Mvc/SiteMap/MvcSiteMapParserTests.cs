@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyMenus()
         {
-            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap()).Where(node => node.IsMenu == true);
+            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap()).Where(node => node.IsMenu);
             IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap));
             expected.Last().Parent = expected.First();
             expected.First().Parent = null;
@@ -61,22 +61,22 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private XElement CreateSiteMap()
         {
-            XElement siteMap = new XElement("SiteMap");
+            XElement map = new XElement("SiteMap");
             XElement homeNode = CreateSiteMapNode(false, "fa fa-home", null, "Home", "Index");
             XElement administrationNode = CreateSiteMapNode(true, "fa fa-users", "Administration", null, null);
             XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
             XElement accountsCreateNode = CreateSiteMapNode(true, "fa fa-file-o", "Administration", "Accounts", "Create");
 
-            siteMap.Add(homeNode);
+            map.Add(homeNode);
             homeNode.Add(administrationNode);
             administrationNode.Add(accountsNode);
             accountsNode.Add(accountsCreateNode);
 
-            return siteMap;
+            return map;
         }
         private IEnumerable<MvcSiteMapNode> GetSiteMap()
         {
-            List<MvcSiteMapNode> siteMap = new List<MvcSiteMapNode>()
+            List<MvcSiteMapNode> map = new List<MvcSiteMapNode>()
             {
                 new MvcSiteMapNode()
                 {
@@ -126,7 +126,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 }
             };
 
-            foreach (MvcSiteMapNode level1Node in siteMap)
+            foreach (MvcSiteMapNode level1Node in map)
             {
                 foreach (MvcSiteMapNode level2Node in level1Node.Children)
                 {
@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 }
             }
 
-            return siteMap;
+            return map;
         }
         private XElement CreateSiteMapNode(Boolean isMenu, String icon, String area, String controller, String action)
         {

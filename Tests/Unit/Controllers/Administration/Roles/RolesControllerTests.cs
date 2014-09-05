@@ -60,9 +60,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Create_SeedsPrivilegesTree()
         {
-            RoleView role = (controller.Create() as ViewResult).Model as RoleView;
+            RoleView view = controller.Create().Model as RoleView;
 
-            service.Received().SeedPrivilegesTree(role);
+            service.Received().SeedPrivilegesTree(view);
         }
 
         #endregion

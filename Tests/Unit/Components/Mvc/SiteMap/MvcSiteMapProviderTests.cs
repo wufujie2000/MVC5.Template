@@ -115,7 +115,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["action"] = "index";
             routeValues["area"] = null;
 
-            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Controller == "Home" && menu.Action == "Index").Single();
+            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Single(menu => menu.Controller == "Home" && menu.Action == "Index");
             MvcSiteMapMenuNode actual = TreeToEnumerable(provider.GetMenus().Where(menu => menu.IsActive)).Single();
 
             Assert.AreEqual(ResourceProvider.GetSiteMapTitle(expected.Area, expected.Controller, expected.Action), actual.Title);
@@ -134,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["controller"] = "roles";
             routeValues["action"] = "index";
 
-            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Where(menu => menu.Area == "Administration" && menu.Action == null).Single();
+            MvcSiteMapNode expected = parser.GetMenuNodes(siteMap).Single(menu => menu.Area == "Administration" && menu.Action == null);
             IEnumerable<MvcSiteMapMenuNode> actualMenus = TreeToEnumerable(provider.GetMenus()).Where(menu => menu.HasActiveSubMenu);
             MvcSiteMapMenuNode actual = actualMenus.Single();
 
@@ -218,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private XElement CreateSiteMap()
         {
-            XElement siteMap = new XElement("SiteMap");
+            XElement map = new XElement("SiteMap");
             XElement homeNode = CreateSiteMapNode(true, "fa fa-home", null, "Home", "Index");
             XElement administrationNode = CreateSiteMapNode(true, "fa fa-users", "Administration", null, null);
 
@@ -226,13 +226,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
             XElement accountsCreateNode = CreateSiteMapNode(true, "fa fa-file-o", "Administration", "Accounts", "Create");
 
-            siteMap.Add(homeNode);
-            siteMap.Add(administrationNode);
+            map.Add(homeNode);
+            map.Add(administrationNode);
             administrationNode.Add(rolesNode);
             administrationNode.Add(accountsNode);
             accountsNode.Add(accountsCreateNode);
 
-            return siteMap;
+            return map;
         }
         private XElement CreateSiteMapNode(Boolean isMenu, String icon, String area, String controller, String action)
         {

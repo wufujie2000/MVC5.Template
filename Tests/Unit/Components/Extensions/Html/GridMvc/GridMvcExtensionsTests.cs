@@ -8,7 +8,6 @@ using MvcTemplate.Tests.Objects.Views;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -148,7 +147,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column
                 .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
-                .AndDoes((info) => { detailsFunc = info.Arg<Func<AllTypesView, String>>(); });
+                .AndDoes(info =>
+                {
+                    detailsFunc = info.Arg<Func<AllTypesView, String>>();
+                });
 
             columns.AddActionLink(LinkAction.Details);
 
@@ -173,7 +175,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column
                 .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
-                .AndDoes((info) => { editFunc = info.Arg<Func<AllTypesView, String>>(); });
+                .AndDoes(info =>
+                {
+                    editFunc = info.Arg<Func<AllTypesView, String>>();
+                });
 
             columns.AddActionLink(LinkAction.Edit);
 
@@ -198,7 +203,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column
                 .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
                 .Returns(column)
-                .AndDoes((info) => { deleteFunc = info.Arg<Func<AllTypesView, String>>(); });
+                .AndDoes(info =>
+                {
+                    deleteFunc = info.Arg<Func<AllTypesView, String>>();
+                });
 
             columns.AddActionLink(LinkAction.Delete);
 
@@ -223,9 +231,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.EntityDate;
 
-            columns.AddDateProperty<AllTypesView>(propertyFunc);
+            columns.AddDateProperty(propertyFunc);
 
-            columns.Received().Add<DateTime?>(propertyFunc);
+            columns.Received().Add(propertyFunc);
         }
 
         [Test]
@@ -233,7 +241,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
 
-            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty(model => model.EntityDate);
 
             column.Received().Titled(expected);
         }
@@ -241,7 +249,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnCss()
         {
-            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty(model => model.EntityDate);
 
             column.Received().Css("date-cell");
         }
@@ -251,7 +259,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
 
-            columns.AddDateProperty<AllTypesView>(model => model.EntityDate);
+            columns.AddDateProperty(model => model.EntityDate);
 
             column.Received().Format(expected);
         }
@@ -267,7 +275,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             columns.AddProperty(propertyFunc);
 
-            columns.Received().Add<String>(propertyFunc);
+            columns.Received().Add(propertyFunc);
         }
 
         [Test]
@@ -544,7 +552,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private IGridColumnCollection<AllTypesView> SubstituteColumns<TProperty>(IGridColumn<AllTypesView> gridColumn)
         {
             IGridColumnCollection<AllTypesView> collection = Substitute.For<IGridColumnCollection<AllTypesView>>();
-            collection.Add<TProperty>(Arg.Any<Expression<Func<AllTypesView, TProperty>>>()).Returns(gridColumn);
+            collection.Add(Arg.Any<Expression<Func<AllTypesView, TProperty>>>()).Returns(gridColumn);
             collection.Add().Returns(gridColumn);
 
             return collection;

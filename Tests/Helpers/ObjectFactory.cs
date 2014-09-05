@@ -19,12 +19,12 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new Account()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
+                Email = TestId + instanceNumber + "@tests.com",
 
-                RecoveryToken = TestId + instanceNumber.ToString(),
+                RecoveryToken = TestId + instanceNumber,
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5)
             };
         }
@@ -32,9 +32,9 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new AccountView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
+                Email = TestId + instanceNumber + "@tests.com",
                 Password = "Password1"
             };
         }
@@ -42,9 +42,9 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new ProfileEditView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com",
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
+                Email = TestId + instanceNumber + "@tests.com",
                 NewPassword = "NewPassword1",
                 Password = "Password1"
             };
@@ -53,18 +53,18 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new AccountEditView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
-                RoleName = "Name" + TestId + instanceNumber.ToString(),
-                RoleId = TestId + instanceNumber.ToString(),
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
+                RoleName = "Name" + TestId + instanceNumber,
+                RoleId = TestId + instanceNumber,
             };
         }
         public static AccountLoginView CreateAccountLoginView(Int32 instanceNumber = 1)
         {
             return new AccountLoginView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Username = "Username" + TestId + instanceNumber.ToString(),
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
                 Password = "Password1"
             };
         }
@@ -72,17 +72,17 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new AccountRecoveryView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Email = TestId + instanceNumber.ToString() + "@tests.com"
+                Id = TestId + instanceNumber,
+                Email = TestId + instanceNumber + "@tests.com"
             };
         }
         public static AccountResetView CreateAccountResetView(Int32 instanceNumber = 1)
         {
             return new AccountResetView()
             {
-                Id = TestId + instanceNumber.ToString(),
+                Id = TestId + instanceNumber,
 
-                Token = TestId + instanceNumber.ToString(),
+                Token = TestId + instanceNumber,
                 NewPassword = "NewPassword1"
             };
         }
@@ -91,16 +91,16 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new Role()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + TestId + instanceNumber.ToString()
+                Id = TestId + instanceNumber,
+                Name = "Name" + TestId + instanceNumber
             };
         }
         public static RoleView CreateRoleView(Int32 instanceNumber = 1)
         {
             return new RoleView()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Name = "Name" + TestId + instanceNumber.ToString()
+                Id = TestId + instanceNumber,
+                Name = "Name" + TestId + instanceNumber
             };
         }
 
@@ -108,14 +108,14 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new RolePrivilege()
             {
-                Id = TestId + instanceNumber.ToString()
+                Id = TestId + instanceNumber
             };
         }
         public static RolePrivilegeView CreateRolePrivilegeView(Int32 instanceNumber = 1)
         {
             return new RolePrivilegeView()
             {
-                Id = TestId + instanceNumber.ToString()
+                Id = TestId + instanceNumber
             };
         }
 
@@ -123,17 +123,17 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new Privilege()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Area = "Area" + instanceNumber.ToString(),
-                Action = "Action" + instanceNumber.ToString(),
-                Controller = "Controller" + instanceNumber.ToString()
+                Id = TestId + instanceNumber,
+                Area = "Area" + instanceNumber,
+                Action = "Action" + instanceNumber,
+                Controller = "Controller" + instanceNumber
             };
         }
         public static PrivilegeView CreatePrivilegeView(Int32 instanceNumber = 1)
         {
             return new PrivilegeView()
             {
-                Id = TestId + instanceNumber.ToString(),
+                Id = TestId + instanceNumber,
                 Controller = "Controller",
                 Action = "Action",
                 Area = "Area"
@@ -144,8 +144,8 @@ namespace MvcTemplate.Tests.Helpers
         {
             return new TestModel()
             {
-                Id = TestId + instanceNumber.ToString(),
-                Text = "Text" + instanceNumber.ToString()
+                Id = TestId + instanceNumber,
+                Text = "Text" + instanceNumber
             };
         }
     }

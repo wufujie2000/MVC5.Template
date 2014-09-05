@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterBundles_RegistersScriptBundles()
         {
-            String[] expectedBundles = new[]
+            String[] expectedBundles =
             {
                 "~/Scripts/JQuery/Bundle",
                 "~/Scripts/Bootstrap/Bundle",
@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterBundles_RegistersStyleBundles()
         {
-            String[] expectedBundles = new[]
+            String[] expectedBundles =
             {
                 "~/Content/Bootstrap/Bundle",
                 "~/Content/JQueryUI/Bundle",

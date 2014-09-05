@@ -64,9 +64,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             {
                 return new Exception(((Object)null).ToString());
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                return exception;
+                return ex;
             }
         }
 

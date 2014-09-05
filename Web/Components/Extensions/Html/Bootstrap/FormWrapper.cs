@@ -6,8 +6,8 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public class FormWrapper : IDisposable
     {
-        protected TagBuilder wrapper;
-        protected TextWriter writer;
+        private TagBuilder wrapper;
+        private TextWriter writer;
         private Boolean disposed;
 
         public FormWrapper(TextWriter writer, String cssClass)

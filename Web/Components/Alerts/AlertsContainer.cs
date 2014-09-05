@@ -7,16 +7,16 @@ namespace MvcTemplate.Components.Alerts
     public class AlertsContainer : IEnumerable<Alert>
     {
         public const UInt32 DefaultFadeout = 4000;
-        private List<Alert> alerts;
+        private List<Alert> container;
 
         public AlertsContainer()
         {
-            alerts = new List<Alert>();
+            container = new List<Alert>();
         }
 
         public void Add(Alert alert)
         {
-            alerts.Add(alert);
+            container.Add(alert);
         }
         public void Add(AlertTypes type, String message)
         {
@@ -51,7 +51,7 @@ namespace MvcTemplate.Components.Alerts
 
         public IEnumerator<Alert> GetEnumerator()
         {
-            return alerts.GetEnumerator();
+            return container.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {

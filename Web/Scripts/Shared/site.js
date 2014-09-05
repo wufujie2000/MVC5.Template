@@ -162,7 +162,7 @@
         treeView.element.show();
     });
 
-    $(document).on('submit', 'form', function (e) {
+    $(document).on('submit', 'form', function () {
         $(this).find('.js-tree-view').each(function () {
             var treeView = $(this).jstree();
             var treeIdSpan = $(this).prev('.js-tree-view-ids');

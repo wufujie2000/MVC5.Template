@@ -134,7 +134,7 @@ namespace MvcTemplate.Components.Mvc
         }
         private Boolean IsEmpty(MvcSiteMapMenuNode menu)
         {
-            return menu.Action == null && menu.Submenus.Count() == 0;
+            return menu.Action == null && !menu.Submenus.Any();
         }
     }
 }

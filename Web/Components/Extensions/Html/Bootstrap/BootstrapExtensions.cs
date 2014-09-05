@@ -136,7 +136,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return mergedValues;
         }
-        
+
         private static Boolean IsRequired(this LambdaExpression expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;

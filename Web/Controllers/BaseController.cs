@@ -3,7 +3,6 @@ using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using System;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
 {
@@ -28,7 +27,7 @@ namespace MvcTemplate.Controllers
             private set;
         }
 
-        public BaseController()
+        protected BaseController()
         {
             Alerts = new AlertsContainer();
             AuthorizationProvider = Authorization.Provider;

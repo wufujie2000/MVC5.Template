@@ -13,7 +13,7 @@ namespace MvcTemplate.Services
             private set;
         }
 
-        public BaseService(IUnitOfWork unitOfWork)
+        protected BaseService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

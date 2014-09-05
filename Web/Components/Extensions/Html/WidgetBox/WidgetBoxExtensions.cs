@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -21,7 +22,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new WidgetBox(html.ViewContext.Writer, iconClass, title, FormTitleButtons(html, actions));
         }
-        private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
+        private static String FormTitleButtons(HtmlHelper html, IEnumerable<LinkAction> actions)
         {
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;

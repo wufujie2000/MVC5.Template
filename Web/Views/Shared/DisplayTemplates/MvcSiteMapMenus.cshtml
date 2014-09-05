@@ -15,7 +15,7 @@
             <span>@node.Title</span>
             @Html.Raw(menuAddOn)
         </a>
-        @if (node.Submenus.Count > 0)
+        @if (node.Submenus.Any())
         {
             <ul>
                 @Html.DisplayFor(model => node.Submenus)

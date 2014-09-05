@@ -55,7 +55,7 @@
 
 // Clicking
 (function () {
-    $(document).on('click', '.submenu > a', function (e) {
+    $(document).on('click', '.submenu > a', function () {
         if ($(window).width() > 767)
             toggleSubmenu($(this));
         else

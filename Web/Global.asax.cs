@@ -52,7 +52,6 @@ namespace MvcTemplate.Web
             RouteValueDictionary routeValues = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
             HttpException httpException = Server.GetLastError() as HttpException;
             UrlHelper urlHelper = new UrlHelper(Request.RequestContext);
-            Exception exception = Server.GetLastError();
 
             routeValues["area"] = String.Empty;
             routeValues["controller"] = "Home";

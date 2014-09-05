@@ -19,7 +19,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new MvcHtmlString(FormIdSpan(name, jsTree.SelectedIds) + FormTree(name, jsTree.Nodes));
         }
-        private static String FormIdSpan(String name, IList<String> selectedIds)
+        private static String FormIdSpan(String name, IEnumerable<String> selectedIds)
         {
             TagBuilder idSpan = new TagBuilder("span");
             idSpan.AddCssClass("js-tree-view-ids");
@@ -51,7 +51,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         private static void AddNodes(TagBuilder root, IEnumerable<JsTreeNode> nodes)
         {
-            if (nodes.Count() == 0) return;
+            if (!nodes.Any()) return;
 
             StringBuilder leafBuilder = new StringBuilder();
             TagBuilder branch = new TagBuilder("ul");

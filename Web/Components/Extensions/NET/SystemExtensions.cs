@@ -24,7 +24,7 @@ namespace MvcTemplate.Components.Extensions.Net
         }
         public static String[] Split(this String str, Char separator, Int32 count)
         {
-            return str.Split(new Char[] { separator }, count);
+            return str.Split(new[] { separator }, count);
         }
         public static String[] Split(this String str, String separator, Int32 count)
         {
@@ -32,19 +32,19 @@ namespace MvcTemplate.Components.Extensions.Net
         }
         public static String[] Split(this String str, Char separator, StringSplitOptions options)
         {
-            return str.Split(new Char[] { separator }, options);
+            return str.Split(new[] { separator }, options);
         }
         public static String[] Split(this String str, String separator, StringSplitOptions options)
         {
-            return str.Split(new String[] { separator }, options);
+            return str.Split(new[] { separator }, options);
         }
         public static String[] Split(this String str, Char separator, Int32 count, StringSplitOptions options)
         {
-            return str.Split(new Char[] { separator }, count, options);
+            return str.Split(new[] { separator }, count, options);
         }
         public static String[] Split(this String str, String separator, Int32 count, StringSplitOptions options)
         {
-            return str.Split(new String[] { separator }, count, options);
+            return str.Split(new[] { separator }, count, options);
         }
 
         #endregion

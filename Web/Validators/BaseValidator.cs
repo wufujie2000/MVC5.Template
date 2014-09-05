@@ -25,7 +25,7 @@ namespace MvcTemplate.Validators
             private set;
         }
 
-        public BaseValidator(IUnitOfWork unitOfWork)
+        protected BaseValidator(IUnitOfWork unitOfWork)
         {
             Alerts = new AlertsContainer();
             UnitOfWork = unitOfWork;

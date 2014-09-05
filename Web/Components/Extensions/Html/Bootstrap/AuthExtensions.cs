@@ -55,8 +55,8 @@ namespace MvcTemplate.Components.Extensions.Html
             languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Provider.CurrentLanguage.Abbrevation)));
             currentLang.InnerHtml = languageImg.ToString(TagRenderMode.SelfClosing) + GlobalizationManager.Provider.CurrentLanguage.Name;
 
-            languageContainer.InnerHtml += currentLang.ToString() + caret.ToString();
             languageContainer.AddCssClass("language-container dropdown-toggle");
+            languageContainer.InnerHtml += currentLang + caret.ToString();
             languageContainer.MergeAttribute("data-toggle", "dropdown");
 
             return new MvcHtmlString(String.Format("{0}{1}{2}", addon, languageContainer, dropdown));

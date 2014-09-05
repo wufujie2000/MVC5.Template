@@ -130,7 +130,7 @@ namespace MvcTemplate.Resources
         }
         private static String GetResource(String baseName, String key)
         {
-            if (!resources.Any(resourceName => resourceName == baseName)) return null;
+            if (resources.All(resourceName => resourceName != baseName)) return null;
             
             ResourceManager manager =new ResourceManager(baseName, executingAssembly);
             manager.IgnoreCase = true;

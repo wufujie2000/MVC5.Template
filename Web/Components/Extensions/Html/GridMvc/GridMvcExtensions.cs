@@ -103,18 +103,18 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        private static void AddLinkHtml<T>(IGridColumn<T> gridColumn, LinkAction action) where T : ILinkableView
+        private static void AddLinkHtml<T>(IColumn<T> column, LinkAction action) where T : ILinkableView
         {
             switch (action)
             {
                 case LinkAction.Details:
-                    gridColumn.RenderValueAs(GetDetailsLink);
+                    column.RenderValueAs(GetDetailsLink);
                     break;
                 case LinkAction.Edit:
-                    gridColumn.RenderValueAs(GetEditLink);
+                    column.RenderValueAs(GetEditLink);
                     break;
                 case LinkAction.Delete:
-                    gridColumn.RenderValueAs(GetDeleteLink);
+                    column.RenderValueAs(GetDeleteLink);
                     break;
             }
         }

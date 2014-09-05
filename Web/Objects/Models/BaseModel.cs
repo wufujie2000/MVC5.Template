@@ -28,7 +28,7 @@ namespace MvcTemplate.Objects
             private set;
         }
 
-        public BaseModel()
+        protected BaseModel()
         {
             DateTime now = DateTime.Now;
             EntityDate = new DateTime(now.Ticks / 100000 * 100000, now.Kind);

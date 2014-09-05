@@ -45,9 +45,9 @@ namespace MvcTemplate.Data.Migrations
             IEnumerable<Privilege> privileges = context.Set<Privilege>().ToList();
             foreach (Privilege privilege in allPrivileges)
                 if (!privileges.Any(priv =>
-                        priv.Area == priv.Area &&
-                        priv.Action == priv.Action &&
-                        priv.Controller == priv.Controller))
+                        privilege.Area == priv.Area &&
+                        privilege.Action == priv.Action &&
+                        privilege.Controller == priv.Controller))
                     context.Set<Privilege>().Add(privilege);
 
             context.SaveChanges();

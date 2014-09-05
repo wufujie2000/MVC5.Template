@@ -10,7 +10,21 @@ MVC5 project starter template. This template is currently in development, use it
   - If you are using VS2012, change T4Scaffolding.Core package version to 1.0.0.
   - If you are using VS2013, download [Windows Management Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=40855). Which is needed for VS2013 scaffolding to work.
 
-# Frameworks
+# Features
+- [Model-View-ViewModel](http://en.wikipedia.org/wiki/Model_View_ViewModel) architectural design.
+- Latest technologies and frameworks.
+- Lowercase or normal ASP.NET urls.
+- Protection from CSRF, XSS, etc.
+- Custom membership provders.
+- Basic module scaffolding.
+- Easy project renaming.
+- Dependency injection.
+- Custom error pages.
+- Globalization.
+- Site map.
+- Tests.
+
+# Frameworks used
 - [ASP.NET MVC 5](http://www.asp.net/mvc/) - main framework.
 - [Bootstrap](http://getbootstrap.com/) - design.
 - [JQuery](http://jquery.com/) - client side javascript.

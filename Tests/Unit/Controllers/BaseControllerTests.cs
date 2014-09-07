@@ -73,6 +73,31 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
+        #region Method: NotEmptyView(Object model)
+
+        [Test]
+        public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
+        {
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
+            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            ActionResult expected = controller.RedirectToNotFound();
+            ActionResult actual = controller.NotEmptyView(null);
+
+            Assert.AreSame(expected, actual);
+        }
+
+        [Test]
+        public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
+        {
+            Object expected = new Object();
+            Object actual = (controller.NotEmptyView(expected) as ViewResult).Model;
+
+            Assert.AreSame(expected, actual);
+        }
+
+        #endregion
+
         #region Method: RedirectToLocal(String url)
 
         [Test]
@@ -316,31 +341,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             IEnumerable<Alert> expected = controllerAlerts.Union(mergedAlerts);
 
             CollectionAssert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Method: NotEmptyView(Object model)
-
-        [Test]
-        public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.NotEmptyView(null);
-
-            Assert.AreSame(expected, actual);
-        }
-
-        [Test]
-        public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
-        {
-            Object expected = new Object();
-            Object actual = (controller.NotEmptyView(expected) as ViewResult).Model;
-
-            Assert.AreSame(expected, actual);
         }
 
         #endregion

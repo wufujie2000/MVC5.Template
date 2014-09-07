@@ -33,6 +33,13 @@ namespace MvcTemplate.Controllers
             AuthorizationProvider = Authorization.Provider;
         }
 
+        public virtual ActionResult NotEmptyView(Object model)
+        {
+            if (model == null)
+                return RedirectToNotFound();
+
+            return View(model);
+        }
         public virtual ActionResult RedirectToLocal(String url)
         {
             if (!Url.IsLocalUrl(url))
@@ -102,14 +109,6 @@ namespace MvcTemplate.Controllers
                 TempData["Alerts"] = Alerts;
             else
                 current.Merge(Alerts);
-        }
-
-        public virtual ActionResult NotEmptyView(Object model)
-        {
-            if (model == null)
-                return RedirectToNotFound();
-
-            return View(model);
         }
     }
 }

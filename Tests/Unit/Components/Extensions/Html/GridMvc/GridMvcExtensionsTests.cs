@@ -73,11 +73,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_SetsGridColumnWidthTo25()
+        public void AddActionLink_SetsGridColumnWidthTo20()
         {
             columns.AddActionLink(LinkAction.Edit);
 
-            column.Received().SetWidth(25);
+            column.Received().SetWidth(20);
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddActionLink(LinkAction.Edit);
 
-            column.Received().Css("action-link-cell");
+            column.Received().Css("action-cell");
         }
 
         [Test]
@@ -156,11 +156,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             String actual = detailsFunc.Invoke(view);
             String expected = String.Format(
-                "<div class=\"action-link-container details-action-link\">" +
-                    "<a href=\"{0}\">" +
-                        "<i class=\"fa fa-info\"></i>" +
-                    "</a>" +
-                "</div>",
+                "<a class=\"details-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-info\"></i>" +
+                "</a>",
                 urlHelper.Action("Details", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
@@ -184,11 +182,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             String actual = editFunc.Invoke(view);
             String expected = String.Format(
-                "<div class=\"action-link-container edit-action-link\">" +
-                    "<a href=\"{0}\">" +
-                        "<i class=\"fa fa-pencil\"></i>" +
-                    "</a>" +
-                "</div>",
+                "<a class=\"edit-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-pencil\"></i>" +
+                "</a>",
                 urlHelper.Action("Edit", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
@@ -212,11 +208,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             String actual = deleteFunc.Invoke(view);
             String expected = String.Format(
-                "<div class=\"action-link-container delete-action-link\">" +
-                    "<a href=\"{0}\">" +
-                        "<i class=\"fa fa-times\"></i>" +
-                    "</a>" +
-                "</div>",
+                "<a class=\"delete-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-times\"></i>" +
+                "</a>",
                 urlHelper.Action("Delete", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);

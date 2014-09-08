@@ -41,10 +41,10 @@ namespace MvcTemplate.Components.Extensions.Html
 
             IGridColumn<T> gridColumn = column
                 .Add()
-                .SetWidth(25)
+                .SetWidth(20)
                 .Encoded(false)
                 .Sanitized(false)
-                .Css("action-link-cell");
+                .Css("action-cell");
 
             AddLinkHtml(gridColumn, action);
 
@@ -133,18 +133,16 @@ namespace MvcTemplate.Components.Extensions.Html
         private static String GetLink<T>(T model, LinkAction action, String iconClass) where T : ILinkableView
         {
             UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            TagBuilder actionContainer = new TagBuilder("div");
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionContainer.AddCssClass(String.Format("action-link-container {0}-action-link", action.ToString().ToLower()));
             actionTag.MergeAttribute("href", urlHelper.Action(action.ToString(), new { id = model.Id }));
+            actionTag.AddCssClass(String.Format("{0}-action", action.ToString().ToLower()));
             icon.AddCssClass(iconClass);
 
             actionTag.InnerHtml = icon.ToString();
-            actionContainer.InnerHtml = actionTag.ToString();
 
-            return actionContainer.ToString();
+            return actionTag.ToString();
         }
     }
 }

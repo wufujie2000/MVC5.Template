@@ -7,7 +7,7 @@ table {
     }
 
     tbody tr {
-        .action-link-cell {
+        .grid-cell {
             vertical-align: middle;
         }
     }
@@ -37,43 +37,41 @@ table {
         }
     }
 
-    .action-link-cell {
-        border-left: none;
-    }
-
-    .action-link-container {
-        .transition-duration(0.3s);
-        border-radius: 4px;
-        padding-top: 1.5px;
+    .action-cell {
         text-align: center;
-        font-size: 11px;
-        height: 20px;
-        width: 20px;
+        border-left: none;
 
-        &:hover {
-            .transition-duration(0.3s);
-            .transform(scale(1.2));
+        &+.action-cell {
+            padding-left: 0;
+        }
+
+        .details-action {
+            background-color: @details-color;
+        }
+
+        .edit-action {
+            background-color: @edit-color;
+        }
+
+        .delete-action {
+            background-color: @delete-color;
         }
 
         a {
-            vertical-align: middle;
+            .transition-duration(0.3s);
             display: inline-block;
             color: @active-color;
-            height: 100%;
-            width: 100%;
+            border-radius: 4px;
+            line-height: 1.7;
+            font-size: 11px;
+            height: 20px;
+            width: 20px;
+
+            &:hover {
+                .transition-duration(0.3s);
+                .transform(scale(1.2));
+            }
         }
-    }
-
-    .details-action-link {
-        background-color: @details-color;
-    }
-
-    .edit-action-link {
-        background-color: @edit-color;
-    }
-
-    .delete-action-link {
-        background-color: @delete-color;
     }
 }
 

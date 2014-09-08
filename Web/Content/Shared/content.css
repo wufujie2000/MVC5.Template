@@ -23,7 +23,7 @@ body.public .public-action {
   margin-top: 10px;
 }
 .content-container {
-  background-image: url(../../Images/Shared/content-background.png);
+  background-image: url("../../Images/Shared/content-background.png");
   background-color: #f2f2f2;
   border-radius: 8px 0 0 8px;
   margin-left: 200px;

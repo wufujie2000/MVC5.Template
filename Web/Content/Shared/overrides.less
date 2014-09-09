@@ -97,20 +97,27 @@ table.grid-table .grid-filter {
     padding: 0;
 }
 
-.grid-dropdown-inner  {
+.grid-dropdown-inner {
     padding: 0 5px 10px;
+
+    .form-group {
+        border-bottom: @form-group-border-bottom;
+        border-top: @form-group-border-top;
+        padding: 10px;
+        margin: 0;
+    }
 }
 
-table.grid-table .grid-filter-datepicker,
-table.grid-table .grid-filter-buttons {
+.grid-filter-datepicker,
+.grid-filter-buttons {
     padding: 10px 10px 0;
 }
 
-table.grid-table .grid-popup-additional {
+.grid-popup-additional {
     padding: 0 10px;
 }
 
-table.grid-table .grid-filter-clear {
+.grid-filter-clear {
     margin-top: 10px;
 }
 
@@ -118,6 +125,7 @@ table.grid-table .grid-filter-clear {
     display: none;
 }
 
+.grid-empty-text,
 .grid-filter-type,
 .grid-filter-input {
     text-align: center;
@@ -126,10 +134,6 @@ table.grid-table .grid-filter-clear {
 .grid-apply,
 .grid-filter-clear {
     width: 100%;
-}
-
-.grid-empty-text {
-    text-align: center;
 }
 
 .grid-footer {

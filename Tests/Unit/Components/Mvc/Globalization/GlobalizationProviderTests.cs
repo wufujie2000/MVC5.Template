@@ -26,7 +26,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void CurrentLanguage_GetsCurrentLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = provider["en"].Culture;
-            Thread.CurrentThread.CurrentCulture = provider["en"].Culture;
 
             Language actual = provider.CurrentLanguage;
             Language expected = provider["en"];

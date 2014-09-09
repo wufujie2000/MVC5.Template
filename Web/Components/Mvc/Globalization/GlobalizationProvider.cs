@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Mvc
         {
             get
             {
-                return Languages.Single(language => language.Culture == CultureInfo.CurrentCulture);
+                return Languages.Single(language => language.Culture == CultureInfo.CurrentUICulture);
             }
             set
             {

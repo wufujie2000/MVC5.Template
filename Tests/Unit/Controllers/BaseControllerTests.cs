@@ -6,7 +6,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -243,16 +242,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: BeginExecuteCore(AsyncCallback callback, Object state)
 
         [Test]
-        public void BeginExecuteCore_SetsThreadCultureFromRequestsRouteValues()
+        public void BeginExecuteCore_SetsLangaugeFromRequestsRouteValues()
         {
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
+            GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider["en"];
             controller.RouteData.Values["language"] = "lt";
 
             controller.BaseBeginExecuteCore(asyncResult => { }, null);
-            CultureInfo expected = new CultureInfo("lt-LT");
 
-            Assert.AreEqual(expected, CultureInfo.CurrentCulture);
-            Assert.AreEqual(expected, CultureInfo.CurrentUICulture);
+            Language actual = GlobalizationManager.Provider.CurrentLanguage;
+            Language expected = GlobalizationManager.Provider["lt"];
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

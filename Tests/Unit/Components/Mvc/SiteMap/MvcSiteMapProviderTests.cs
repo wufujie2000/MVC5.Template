@@ -169,7 +169,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void GetMenus_SetsMenuTitlesToCurrentCultureOnes()
+        public void GetMenus_SetsMenuTitlesToCurrentUICultureOnes()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
@@ -199,7 +199,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void GetBreadcrumb_SetsBreadcrumbTitlesToCurrentCultureOnes()
+        public void GetBreadcrumb_SetsBreadcrumbTitlesToCurrentUICultureOnes()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             routeValues["controller"] = "home";

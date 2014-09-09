@@ -54,7 +54,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return column
                 .AddProperty(property)
-                .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern));
+                .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
         }
         public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
         {
@@ -68,7 +68,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return options
                 .EmptyText(Resources.Table.Resources.NoDataFound)
-                .SetLanguage(CultureInfo.CurrentCulture.Name)
+                .SetLanguage(CultureInfo.CurrentUICulture.Name)
                 .Named(typeof(T).Name)
                 .WithMultipleFilters()
                 .Selectable(false)

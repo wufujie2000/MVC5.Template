@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -251,7 +252,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_FormatsGridColumn()
         {
-            String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
 
             columns.AddDateProperty(model => model.EntityDate);
 
@@ -459,9 +461,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void ApplyAttributes_SetsLanguage()
         {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+
             options.ApplyAttributes();
 
-            options.Received().SetLanguage(CultureInfo.CurrentCulture.Name);
+            options.Received().SetLanguage(CultureInfo.CurrentUICulture.Name);
         }
 
         [Test]

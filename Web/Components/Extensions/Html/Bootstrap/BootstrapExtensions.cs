@@ -89,7 +89,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern);
+            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
 
             return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
         }

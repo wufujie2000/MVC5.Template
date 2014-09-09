@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
@@ -633,6 +634,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormDatePickerFor_FormsDatePicker()
         {
             Expression<Func<BootstrapModel, DateTime>> expression = (exp) => exp.Relation.Date;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
             String actual = html.FormDatePickerFor(expression).ToString();
             String expected = String.Format(
@@ -642,7 +644,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                String.Format(String.Format("{{0:{0}}}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern),
+                String.Format(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern),
                 model.Relation.Date));
 
             Assert.AreEqual(expected, actual);

@@ -140,15 +140,19 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Recover_UpdatesAccountRecoveryInformation()
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
-            String oldToken = context.Set<Account>().Single().RecoveryToken;
+            Account expected = context.Set<Account>().AsNoTracking().Single();
+            String oldToken = expected.RecoveryToken;
             account.Email = account.Email.ToLower();
 
             service.Recover(account);
 
             Account actual = context.Set<Account>().Single();
+            expected.RecoveryTokenExpirationDate = actual.RecoveryTokenExpirationDate;
+            expected.RecoveryToken = actual.RecoveryToken;
 
             Assert.AreEqual(actual.RecoveryTokenExpirationDate.Value.Ticks, DateTime.Now.AddMinutes(30).Ticks, 10000000);
             Assert.AreNotEqual(oldToken, actual.RecoveryToken);
+            TestHelper.PropertyWiseEqual(expected, actual);
             Assert.IsNotNull(actual.RecoveryToken);
         }
 
@@ -156,6 +160,7 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Recover_SendsRecoveryInformation()
         {
             HttpRequest request = HttpContext.Current.Request;
+            String scheme = HttpContext.Current.Request.Url.Scheme;
             Account recoveredAccount = context.Set<Account>().Single();
             UrlHelper urlHelper = new UrlHelper(request.RequestContext);
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
@@ -164,7 +169,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             String expectedEmail = account.Email;
             String expectedEmailSubject = Messages.RecoveryEmailSubject;
-            String recoveryUrl = urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, request.Url.Scheme);
+            String recoveryUrl = urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, scheme);
             String expectedEmailBody = String.Format(Messages.RecoveryEmailBody, recoveryUrl);
 
             mailClient.Received().Send(expectedEmail, expectedEmailSubject, expectedEmailBody);
@@ -178,15 +183,17 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Reset_ResetsAccount()
         {
             AccountResetView accountReset = ObjectFactory.CreateAccountResetView();
+            Account expected = context.Set<Account>().AsNoTracking().Single();
             hasher.HashPassword(accountReset.NewPassword).Returns("Reset");
 
             service.Reset(accountReset);
 
             Account actual = context.Set<Account>().Single();
+            expected.RecoveryTokenExpirationDate = null;
+            expected.RecoveryToken = null;
+            expected.Passhash = "Reset";
 
-            Assert.IsNull(actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual("Reset", actual.Passhash);
-            Assert.IsNull(actual.RecoveryToken);
+            TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion

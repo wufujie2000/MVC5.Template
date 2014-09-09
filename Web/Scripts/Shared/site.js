@@ -130,7 +130,7 @@
     }
 
     $(window).resize(function () {
-        $(".grid-dropdown.opened").hide().removeClass("opened");
+        $(".grid-dropdown").hide().removeClass("opened");
     });
 }());
 

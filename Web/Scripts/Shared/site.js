@@ -34,6 +34,7 @@
 
     $.validator.methods.number = function (value, element) {
         var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
+
         return this.optional(element) || pattern.test(value);
     };
 }());

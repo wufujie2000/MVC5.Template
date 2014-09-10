@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public String Required { get; set; }
         public String NotRequired { get; set; }
         public Decimal Number { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public String NotReadOnly { get; set; }
 
@@ -34,8 +34,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             Relation = new BootstrapModel(true)
             {
+                Date = new DateTime(2011, 01, 01, 1, 1, 1),
                 NotRequired = "NotRequiredRelation",
-                Date = new DateTime(2011, 01, 01),
                 Required = "RequiredRelation",
                 NotReadOnly = "NotRelation",
                 ReadOnlyFalse = "FRelation",

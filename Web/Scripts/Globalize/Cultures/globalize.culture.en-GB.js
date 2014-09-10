@@ -26,7 +26,8 @@ Globalize.addCultureInfo( "en-GB", "default", {
 		standard: {
 			firstDay: 1,
 			patterns: {
-				d: "dd/MM/yyyy",
+			    d: "dd/MM/yyyy",
+			    dt: "dd/MM/yyyy HH:mm",
 				D: "dd MMMM yyyy",
 				t: "HH:mm",
 				T: "HH:mm:ss",

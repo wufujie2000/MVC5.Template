@@ -44,6 +44,10 @@
     $(".datepicker").each(function () {
         $(this).datepicker();
     });
+
+    $(".datetimepicker").each(function () {
+        $(this).datetimepicker();
+    });
 }());
 
 // GridMvc binding

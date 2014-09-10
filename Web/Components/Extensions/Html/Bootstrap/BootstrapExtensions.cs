@@ -93,6 +93,15 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
         }
+        public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        {
+            String format = String.Format(
+                "{{0:{0} {1}}}",
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
+
+            return html.FormTextBoxFor(expression, format, new { @class = "datetimepicker" });
+        }
         public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
             return Wrap(html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" }), ContentClass);

@@ -54,7 +54,8 @@ Globalize.addCultureInfo( "lt-LT", "default", {
 			AM: null,
 			PM: null,
 			patterns: {
-				d: "yyyy.MM.dd",
+			    d: "yyyy.MM.dd",
+			    dt: "yyyy.MM.dd HH:mm",
 				D: "yyyy 'm.' MMMM d 'd.'",
 				t: "HH:mm",
 				T: "HH:mm:ss",

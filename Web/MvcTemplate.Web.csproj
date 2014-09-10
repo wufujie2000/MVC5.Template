@@ -219,6 +219,10 @@
     <Content Include="Scripts\JQueryUI\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.min.js">
+      <DependentUpon>jquery-ui.timepicker-addon.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\datepicker.culture.lt-LT.js" />
     <Content Include="Scripts\JQuery\jquery.nicescroll.js" />

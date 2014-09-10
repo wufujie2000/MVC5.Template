@@ -27,9 +27,10 @@
     z-index: 1;
 }
 
-/* JQueryUI Datepicker */
+/* JQuery-UI Datepicker */
 .ui-datepicker {
     border-radius: 5px;
+    font-size: 1em;
     padding: 0;
 
     .ui-datepicker-header {
@@ -56,10 +57,10 @@
     }
 
     table {
-        margin-bottom: 2px;
+        margin: 0;
 
         th {
-            font-size: 8px;
+            font-size: 10px;
             border: none;
         }
 
@@ -80,6 +81,36 @@
                 color: @active-color;
                 cursor: pointer;
             }
+        }
+    }
+
+    .ui-timepicker-div {
+        text-align: center;
+        padding: 0 10px;
+
+        dl {
+            margin: 0;
+        }
+
+        .ui_tpicker_time {
+            margin-bottom: 5px;
+        }
+
+        .ui_tpicker_time_label,
+        .ui_tpicker_hour_label,
+        .ui_tpicker_minute_label,
+        .ui_tpicker_second_label,
+        .ui_tpicker_millisec_label,
+        .ui_tpicker_timezone_label {
+            display: none;
+        }
+
+        .ui_tpicker_hour,
+        .ui_tpicker_minute,
+        .ui_tpicker_second,
+        .ui_tpicker_millisec,
+        .ui_tpicker_timezone {
+            margin-bottom: 10px;
         }
     }
 }

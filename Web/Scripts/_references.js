@@ -7,6 +7,7 @@
 /// <reference path="jquery/jquery.validate.js" />
 /// <reference path="jquery/jquery.validate.unobtrusive.js" />
 /// <reference path="jqueryui/jquery-ui.js" />
+/// <reference path="jqueryui/jquery-ui.timepicker-addon.js" />
 /// <reference path="jstree/jstree.js" />
 /// <reference path="shared/sidebar.js" />
 /// <reference path="shared/site.js" />

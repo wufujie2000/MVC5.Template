@@ -60,6 +60,14 @@ namespace MvcTemplate.Components.Extensions.Html
                 .AddProperty(property)
                 .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
         }
+        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+        {
+            return column
+                .AddProperty(property)
+                .Format(String.Format("{{0:{0} {1}}}",
+                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
+                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern));
+        }
         public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
         {
             return column

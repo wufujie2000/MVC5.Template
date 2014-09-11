@@ -95,8 +95,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            String format = String.Format(
-                "{{0:{0} {1}}}",
+            String format = String.Format("{{0:{0} {1}}}",
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
 

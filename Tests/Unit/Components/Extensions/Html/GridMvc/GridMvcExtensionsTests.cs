@@ -282,6 +282,51 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+
+        [Test]
+        public void AddDateTimeProperty_AddsGridColumn()
+        {
+            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.EntityDate;
+
+            columns.AddDateTimeProperty(propertyFunc);
+
+            columns.Received().Add(propertyFunc);
+        }
+
+        [Test]
+        public void AddDateTimeProperty_SetsGridColumnTitle()
+        {
+            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
+
+            columns.AddDateTimeProperty(model => model.EntityDate);
+
+            column.Received().Titled(expected);
+        }
+
+        [Test]
+        public void AddDateTimeProperty_SetsGridColumnCss()
+        {
+            columns.AddDateTimeProperty(model => model.EntityDate);
+
+            column.Received().Css("date-cell");
+        }
+
+        [Test]
+        public void AddDateTimeProperty_FormatsGridColumn()
+        {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            String expected = String.Format("{{0:{0} {1}}}",
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
+
+            columns.AddDateTimeProperty(model => model.EntityDate);
+
+            column.Received().Format(expected);
+        }
+
+        #endregion
+
         #region Extension method: AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
 
         [Test]

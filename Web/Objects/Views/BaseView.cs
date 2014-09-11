@@ -1,13 +1,13 @@
-﻿using MvcTemplate.Components.Extensions.Html;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Objects
 {
-    public abstract class BaseView : ILinkableView
+    public abstract class BaseView
     {
         private String id;
 
+        [Key]
         [Required]
         public String Id
         {

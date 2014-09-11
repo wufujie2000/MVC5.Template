@@ -3,10 +3,14 @@ using GridMvc.Html;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace MvcTemplate.Components.Extensions.Html
 {
@@ -34,7 +38,7 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : ILinkableView
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action)
         {
             if (Authorization.Provider!= null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
@@ -46,7 +50,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Sanitized(false)
                 .Css("action-cell");
 
-            AddLinkHtml(gridColumn, action);
+            AddLinkAction(gridColumn, action);
 
             return gridColumn;
         }
@@ -64,7 +68,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Titled(ResourceProvider.GetPropertyTitle(property));
         }
 
-        public static IGridHtmlOptions<T> ApplyAttributes<T>(this IGridHtmlOptions<T> options) where T : class
+        public static IGridHtmlOptions<T> ApplyAttributes<T>(this IGridHtmlOptions<T> options)
         {
             return options
                 .EmptyText(Resources.Table.Resources.NoDataFound)
@@ -103,7 +107,7 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        private static void AddLinkHtml<T>(IColumn<T> column, LinkAction action) where T : ILinkableView
+        private static void AddLinkAction<T>(IColumn<T> column, LinkAction action)
         {
             switch (action)
             {
@@ -118,31 +122,47 @@ namespace MvcTemplate.Components.Extensions.Html
                     break;
             }
         }
-        private static String GetDetailsLink<T>(T model) where T : ILinkableView
+        private static String GetDetailsLink<T>(T model)
         {
             return GetLink(model, LinkAction.Details, "fa fa-info");
         }
-        private static String GetEditLink<T>(T model) where T : ILinkableView
+        private static String GetEditLink<T>(T model)
         {
             return GetLink(model, LinkAction.Edit, "fa fa-pencil");
         }
-        private static String GetDeleteLink<T>(T model) where T : ILinkableView
+        private static String GetDeleteLink<T>(T model)
         {
             return GetLink(model, LinkAction.Delete, "fa fa-times");
         }
-        private static String GetLink<T>(T model, LinkAction action, String iconClass) where T : ILinkableView
+        private static String GetLink<T>(T model, LinkAction action, String iconClass)
         {
-            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionTag.MergeAttribute("href", urlHelper.Action(action.ToString(), new { id = model.Id }));
+            actionTag.MergeAttribute("href", url.Action(action.ToString(), GetRouteValuesFor(model)));
             actionTag.AddCssClass(String.Format("{0}-action", action.ToString().ToLower()));
             icon.AddCssClass(iconClass);
 
             actionTag.InnerHtml = icon.ToString();
 
             return actionTag.ToString();
+        }
+
+        private static RouteValueDictionary GetRouteValuesFor<T>(T model)
+        {
+            PropertyInfo keyProperty = typeof(T)
+                .GetProperties()
+                .FirstOrDefault(property => property.GetCustomAttribute<KeyAttribute>() != null);
+
+            if (keyProperty == null)
+                throw new Exception(String.Format("{0} type does not have key property.", typeof(T).Name));
+
+            String key = Char.ToLower(keyProperty.Name[0]) + keyProperty.Name.Substring(1);
+            RouteValueDictionary routeValues = new RouteValueDictionary();
+            routeValues.Add(key, keyProperty.GetValue(model));
+
+            return routeValues;
         }
     }
 }

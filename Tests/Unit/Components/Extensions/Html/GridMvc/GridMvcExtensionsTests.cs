@@ -29,9 +29,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [SetUp]
         public void SetUp()
         {
-            column = SubstituteColumn();
-            options = SubstituteOptions();
-            columns = SubstituteColumns<DateTime?>(column);
+            column = SubstituteColumn<AllTypesView>();
+            options = SubstituteOptions<AllTypesView>();
+            columns = SubstituteColumns<AllTypesView, DateTime?>(column);
 
             HttpContext.Current = new HttpMock().HttpContext;
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             HttpContext.Current = null;
         }
 
-        #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action) where T : BaseView
+        #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action)
 
         [Test]
         public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
@@ -215,6 +215,26 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 urlHelper.Action("Delete", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AddActionLink_OnModelWihoutKeyPropertyThrows()
+        {
+            Func<Object, String> deleteFunc = null;
+            IGridColumn<Object> objectColumn = SubstituteColumn<Object>();
+            IGridColumnCollection<Object> objectColumns = SubstituteColumns<Object, String>(objectColumn);
+
+            objectColumn
+                .RenderValueAs(Arg.Any<Func<Object, String>>())
+                .Returns(objectColumn)
+                .AndDoes(info =>
+                {
+                    deleteFunc = info.Arg<Func<Object, String>>();
+                });
+
+            objectColumns.AddActionLink(LinkAction.Delete);
+
+            Assert.Throws<Exception>(() => deleteFunc.Invoke(new Object()));
         }
 
         #endregion
@@ -448,7 +468,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: ApplyAttributes<T>(this IGridHtmlOptions<T> options) where T : class
+        #region Extension method: ApplyAttributes<T>(this IGridHtmlOptions<T> options)
 
         [Test]
         public void ApplyAttributes_SetsEmptyText()
@@ -520,10 +540,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Test helpers
 
-        private IGridColumn<AllTypesView> SubstituteColumn()
+        private IGridColumn<TModel> SubstituteColumn<TModel>()
         {
-            IGridColumn<AllTypesView> column = Substitute.For<IGridColumn<AllTypesView>>();
-            column.RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column);
+            IGridColumn<TModel> column = Substitute.For<IGridColumn<TModel>>();
+            column.RenderValueAs(Arg.Any<Func<TModel, String>>()).Returns(column);
             column.Sanitized(Arg.Any<Boolean>()).Returns(column);
             column.Encoded(Arg.Any<Boolean>()).Returns(column);
             column.SetWidth(Arg.Any<Int32>()).Returns(column);
@@ -533,9 +553,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             return column;
         }
-        private IGridHtmlOptions<AllTypesView> SubstituteOptions()
+        private IGridHtmlOptions<TModel> SubstituteOptions<TModel>()
         {
-            IGridHtmlOptions<AllTypesView> options = Substitute.For<IGridHtmlOptions<AllTypesView>>();
+            IGridHtmlOptions<TModel> options = Substitute.For<IGridHtmlOptions<TModel>>();
             options.SetLanguage(Arg.Any<String>()).Returns(options);
             options.WithPaging(Arg.Any<Int32>()).Returns(options);
             options.EmptyText(Arg.Any<String>()).Returns(options);
@@ -547,10 +567,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             return options;
         }
-        private IGridColumnCollection<AllTypesView> SubstituteColumns<TProperty>(IGridColumn<AllTypesView> gridColumn)
+        private IGridColumnCollection<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> gridColumn)
         {
-            IGridColumnCollection<AllTypesView> collection = Substitute.For<IGridColumnCollection<AllTypesView>>();
-            collection.Add(Arg.Any<Expression<Func<AllTypesView, TProperty>>>()).Returns(gridColumn);
+            IGridColumnCollection<TModel> collection = Substitute.For<IGridColumnCollection<TModel>>();
+            collection.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(gridColumn);
             collection.Add().Returns(gridColumn);
 
             return collection;
@@ -558,7 +578,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)
         {
-            columns = SubstituteColumns<TProperty>(column);
+            columns = SubstituteColumns<AllTypesView, TProperty>(column);
             columns.AddProperty(property);
 
             column.Received().Css(expected);

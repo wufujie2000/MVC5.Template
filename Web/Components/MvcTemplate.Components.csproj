@@ -62,7 +62,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\Html\ILinkableView.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTree.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\Html\Page\JavascriptExtensions.cs" />

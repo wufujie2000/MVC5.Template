@@ -1,6 +1,3 @@
-# MVC.Template
-MVC5 project starter template. This template is currently in development, use it at your own risk.
-
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
 2. Open the project and run "update-database" command on "Data" project.

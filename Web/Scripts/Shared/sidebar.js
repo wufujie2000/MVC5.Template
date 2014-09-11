@@ -8,9 +8,9 @@
         var menus = $('.sidebar-navigation li');
         menus.each(function (index, element) {
             var liElement = $(element);
-            if (liElement.text().toLowerCase().contains(searchString))
+            if (liElement.text().toLowerCase().indexOf(searchString) >= 0)
                 if (liElement.hasClass('submenu')) {
-                    if (liElement.find('li:not(.submenu)').text().toLowerCase().contains(searchString))
+                    if (liElement.find('li:not(.submenu)').text().toLowerCase().indexOf(searchString) >= 0)
                         liElement.show(500);
                     else
                         liElement.hide(500);

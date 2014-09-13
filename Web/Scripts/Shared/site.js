@@ -41,13 +41,8 @@
 
 // Datepicker binding
 (function () {
-    $(".datepicker").each(function () {
-        $(this).datepicker();
-    });
-
-    $(".datetimepicker").each(function () {
-        $(this).datetimepicker();
-    });
+    $(".datepicker").datepicker();
+    $(".datetimepicker").datetimepicker();
 }());
 
 // GridMvc binding
@@ -176,9 +171,7 @@
 
 // Datalist binding
 (function () {
-    $('.datalist-input').each(function () {
-        $(this).datalist();
-    });
+    $('.datalist-input').datalist();
 }());
 
 // NiceScroll binding

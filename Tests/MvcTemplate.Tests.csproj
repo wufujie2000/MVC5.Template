@@ -124,7 +124,7 @@
       <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\Views\AllTypesView.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Page\JavascriptExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggablePropertyEntryTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />

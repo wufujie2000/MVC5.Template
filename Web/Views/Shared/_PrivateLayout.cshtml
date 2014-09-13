@@ -12,6 +12,7 @@
     @Styles.Render("~/Content/JsTree/Bundle")
     @Styles.Render("~/Content/Datalist/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
+    @Html.RenderControllerStyle()
 </head>
 <body class="private">
     @Html.Partial("_Header")
@@ -45,6 +46,6 @@
     <script src="~/Scripts/GridMvc/Cultures/gridmvc.culture.@(UICulture).js"></script>
 
     @Scripts.Render("~/Scripts/Shared/Bundle")
-    @Html.RenderControllerScripts()
+    @Html.RenderControllerScript()
 </body>
 </html>

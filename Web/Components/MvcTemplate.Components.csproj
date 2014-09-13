@@ -64,7 +64,7 @@
   <ItemGroup>
     <Compile Include="Extensions\Html\JsTree\JsTree.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
-    <Compile Include="Extensions\Html\Page\JavascriptExtensions.cs" />
+    <Compile Include="Extensions\Html\Page\ContentExtensions.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Logging\IEntityLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />

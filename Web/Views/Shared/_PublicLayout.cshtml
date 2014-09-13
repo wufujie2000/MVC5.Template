@@ -9,6 +9,7 @@
     @Styles.Render("~/Content/FontAwesome/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
     @Styles.Render("~/Content/Auth/Bundle")
+    @Html.RenderControllerStyle()
 </head>
 <body class="public">
     <div class="content-container">
@@ -18,6 +19,6 @@
     @Scripts.Render("~/Scripts/JQuery/Bundle")
     @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/Shared/Bundle")
-    @Html.RenderControllerScripts()
+    @Html.RenderControllerScript()
 </body>
 </html>

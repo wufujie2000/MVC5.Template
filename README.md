@@ -1,3 +1,7 @@
+As the name implies, it's a project starter template for ASP.NET MVC based solutions.
+
+This project will use the latest technologies and will try to incorporate the best ASP.NET MVC practices.
+
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
 2. Open the project and run "update-database" command on "Data" project.
@@ -13,7 +17,7 @@
 - Lowercase or normal ASP.NET urls.
 - Protection from CSRF, XSS, etc.
 - Custom membership provders.
-- Basic module scaffolding.
+- [Basic module scaffolding](https://github.com/NonFactors/MVC.Template/wiki/Scaffolding).
 - Easy project renaming.
 - Dependency injection.
 - Custom error pages.

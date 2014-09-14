@@ -120,8 +120,30 @@
     width: 100%;
 }
 
-table.grid-table .grid-filter {
-    margin-top: 5px;
+table.grid-table {
+    .grid-filter {
+        margin-top: 5px;
+    }
+    
+    .grid-header {
+        a {
+            color: @content-color;
+        }
+
+        .sorted-asc .grid-sort-arrow:after {
+            font-family: 'Glyphicons Halflings';
+            margin-left: 3px;
+            content: "\e155";
+            font-size: 9px;
+        }
+
+        .sorted-desc .grid-sort-arrow:after {
+            font-family: 'Glyphicons Halflings';
+            margin-left: 3px;
+            content: "\e156";
+            font-size: 9px;
+        }
+    }
 }
 
 .grid-dropdown {

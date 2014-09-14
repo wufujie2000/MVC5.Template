@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.2
+ * Datalist 3.1.3
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -135,8 +135,10 @@
 }
 
     .datalist-table thead > tr > th > .datalist-sort-arrow {
+        display: inline-block;
         margin-left: 2px;
         font-size: 11px;
+        min-width: 11px;
     }
 
     .datalist-table thead > tr > th,

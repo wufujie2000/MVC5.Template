@@ -122,7 +122,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormLabelFor_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType()));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression");
+            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormTextBoxFor_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.GetType()));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression");
+            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
         }
 
         [Test]
@@ -264,7 +264,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormTextBoxFor_Format_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.GetType(), null));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression");
+            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
         }
 
         [Test]
@@ -419,7 +419,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormTextBoxFor_Attributes_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.GetType(), (Object)null));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression");
+            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
         }
 
         [Test]
@@ -556,7 +556,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormTextBoxFor_Format_Attributes_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormTextBoxFor(expression => expression.GetType(), null, null));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression");
+            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
         }
 
         [Test]

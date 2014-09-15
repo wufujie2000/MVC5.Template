@@ -235,7 +235,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             objectColumns.AddActionLink(LinkAction.Delete);
 
             Exception expected = Assert.Throws<Exception>(() => deleteFunc.Invoke(new Object()));
-            Assert.AreEqual(expected.Message, "Object type does not have key property.");
+            Assert.AreEqual(expected.Message, "Object type does not have a key property.");
         }
 
         #endregion

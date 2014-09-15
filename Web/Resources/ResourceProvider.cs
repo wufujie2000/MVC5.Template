@@ -91,8 +91,7 @@ namespace MvcTemplate.Resources
         public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
         {
             MemberExpression expression = property.Body as MemberExpression;
-            if (expression == null)
-                throw new InvalidOperationException("Expression must be a member expression");
+            if (expression == null) throw new InvalidOperationException("Expression must be a member expression.");
 
             return GetPropertyTitle(expression.Member.ReflectedType, expression.Member.Name);
         }
@@ -131,8 +130,8 @@ namespace MvcTemplate.Resources
         private static String GetResource(String baseName, String key)
         {
             if (resources.All(resourceName => resourceName != baseName)) return null;
-            
-            ResourceManager manager =new ResourceManager(baseName, executingAssembly);
+
+            ResourceManager manager = new ResourceManager(baseName, executingAssembly);
             manager.IgnoreCase = true;
 
             return manager.GetString(key ?? String.Empty);

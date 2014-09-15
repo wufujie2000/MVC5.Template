@@ -97,7 +97,7 @@ namespace MvcTemplate.Components.Security
                 return getAction;
 
             if (!actionMethods.Any())
-                throw new Exception(String.Format("'{0}' does not have '{1}' action", controller.Name, action));
+                throw new Exception(String.Format("'{0}' does not have '{1}' action.", controller.Name, action));
 
             return actionMethods.First();
         }

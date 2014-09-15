@@ -148,7 +148,7 @@ namespace MvcTemplate.Components.Extensions.Html
         private static Boolean IsRequired(this LambdaExpression expression)
         {
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
+            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression.");
 
             return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
         }
@@ -169,7 +169,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression");
+            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression.");
 
             ReadOnlyAttribute readOnly = memberExpression.Member.GetCustomAttribute<ReadOnlyAttribute>();
             if (readOnly != null && readOnly.IsReadOnly)

@@ -164,7 +164,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .FirstOrDefault(property => property.GetCustomAttribute<KeyAttribute>() != null);
 
             if (keyProperty == null)
-                throw new Exception(String.Format("{0} type does not have key property.", typeof(T).Name));
+                throw new Exception(String.Format("{0} type does not have a key property.", typeof(T).Name));
 
             String key = Char.ToLower(keyProperty.Name[0]) + keyProperty.Name.Substring(1);
             RouteValueDictionary routeValues = new RouteValueDictionary();

@@ -774,7 +774,7 @@ namespace MvcTemplate.Tests.Unit.Security
         public void IsAuthorizedFor_OnNotExistingActionThrows()
         {
             Exception expected = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, "Security", "NotAttributed", "Test"));
-            Assert.AreEqual(expected.Message, "'NotAttributedController' does not have 'Test' action");
+            Assert.AreEqual(expected.Message, "'NotAttributedController' does not have 'Test' action.");
         }
 
         #endregion

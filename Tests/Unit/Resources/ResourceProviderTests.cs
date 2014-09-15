@@ -250,7 +250,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnNotMemberExpressionThrows()
         {
-            Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.ToString()));
+            Exception expected = Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.ToString()));
+            Assert.AreEqual(expected.Message, "Expression must be a member expression");
         }
 
         [Test]

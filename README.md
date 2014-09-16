@@ -16,7 +16,7 @@ This project will use the latest technologies and will try to incorporate the be
 - Latest technologies and frameworks.
 - Lowercase or normal ASP.NET urls.
 - Protection from CSRF, XSS, etc.
-- Custom membership provders.
+- Custom membership providers.
 - [Basic module scaffolding](https://github.com/NonFactors/MVC.Template/wiki/Scaffolding).
 - Easy project renaming.
 - Dependency injection.

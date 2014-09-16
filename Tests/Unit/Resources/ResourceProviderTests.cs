@@ -74,10 +74,9 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Test]
-        [Ignore]
+        [Ignore("There is no controller without area, which uses table in one of it's actions.")]
         public void GetCurrentTableTitle_GetsTitleWithoutArea()
         {
-            Assert.Inconclusive("No table without area");
         }
 
         [Test]
@@ -264,11 +263,10 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Test]
-        [Ignore]
         public void GetPropertyTitle_GetsTitleFromExpressionRelation()
         {
-            String expected = "Expected";
-            String actual = "Actual";
+            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.RoleName);
+            String expected = MvcTemplate.Resources.Views.RoleView.Titles.Name;
 
             Assert.AreEqual(expected, actual);
         }

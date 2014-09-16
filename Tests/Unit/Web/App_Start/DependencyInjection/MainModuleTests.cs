@@ -86,14 +86,14 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Can not test globalization provider because it uses virtual server path.")]
         public void Load_BindsIGlobalizationProvider()
         {
             AssertBind<IGlobalizationProvider, GlobalizationProvider>();
         }
 
         [Test]
-        [Ignore]
+        [Ignore("Can not test mvc site map provider because it uses virtual server path.")]
         public void Load_BindsIMvcSiteMapProvider()
         {
             AssertBind<IMvcSiteMapProvider, MvcSiteMapProvider>();

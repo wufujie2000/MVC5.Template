@@ -25,44 +25,42 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             }
         }
 
-        #region Constructor: LoggablePropertyEntry(DbPropertyEntry entry)
+        #region Constructor: LoggablePropertyEntry(DbPropertyEntry entry, Object originalValue)
 
         [Test]
-        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsNotModified()
+        public void LoggablePropertyEntry_IsNotModified()
         {
+            entry.CurrentValue = "Original";
             entry.IsModified = false;
 
-            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry, "Original").IsModified);
         }
 
         [Test]
-        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsNotModifiedAndHasDifferentValues()
+        public void LoggablePropertyEntry_IsNotModifiedWithDifferentValues()
         {
-            entry.OriginalValue = "Original";
             entry.CurrentValue = "Current";
             entry.IsModified = false;
 
-            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry, "Original").IsModified);
         }
 
         [Test]
-        public void LoggablePropertyEntry_IsNotModifiedIfPropertyIsModifiedAndHasSameValues()
+        public void LoggablePropertyEntry_IsNotModifiedWithSameValues()
         {
-            entry.OriginalValue = "Original";
             entry.CurrentValue = "Original";
             entry.IsModified = true;
 
-            Assert.IsFalse(new LoggablePropertyEntry(entry).IsModified);
+            Assert.IsFalse(new LoggablePropertyEntry(entry, "Original").IsModified);
         }
 
         [Test]
-        public void LoggablePropertyEntry_IsModifiedIfPropertyIsModifiedAndHasDifferentValues()
+        public void LoggablePropertyEntry_IsModifiedWithDifferentValues()
         {
-            entry.OriginalValue = "Original";
             entry.CurrentValue = "Current";
             entry.IsModified = true;
 
-            Assert.IsTrue(new LoggablePropertyEntry(entry).IsModified);
+            Assert.IsTrue(new LoggablePropertyEntry(entry, "Original").IsModified);
         }
 
         #endregion
@@ -72,11 +70,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void ToString_FormatsModifiedWithCurrentValueNull()
         {
-            entry.OriginalValue = "Original";
             entry.IsModified = true;
 
-            String expected = String.Format("{0}: {1} => {2}", entry.Name, entry.OriginalValue, "{null}");
-            String actual = new LoggablePropertyEntry(entry).ToString();
+            String expected = String.Format("{0}: {1} => {2}", entry.Name, "Original", "{null}");
+            String actual = new LoggablePropertyEntry(entry, "Original").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -88,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = true;
 
             String expected = String.Format("{0}: {1} => {2}", entry.Name, "{null}", entry.CurrentValue);
-            String actual = new LoggablePropertyEntry(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry, null).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -96,11 +93,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void ToString_FormatsNotModified()
         {
-            entry.OriginalValue = "Original";
             entry.IsModified = false;
 
-            String expected = String.Format("{0}: {1}", entry.Name, entry.OriginalValue);
-            String actual = new LoggablePropertyEntry(entry).ToString();
+            String expected = String.Format("{0}: {1}", entry.Name, "Original");
+            String actual = new LoggablePropertyEntry(entry, "Original").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -112,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.IsModified = false;
 
             String expected = String.Format("{0}: {1}", entry.Name, "{null}");
-            String actual = new LoggablePropertyEntry(entry).ToString();
+            String actual = new LoggablePropertyEntry(entry, null).ToString();
 
             Assert.AreEqual(expected, actual);
         }

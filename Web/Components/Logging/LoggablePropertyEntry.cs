@@ -8,7 +8,7 @@ namespace MvcTemplate.Components.Logging
     {
         private Object originalValue;
         private Object currentValue;
-        private String name;
+        private String propertyName;
 
         public Boolean IsModified
         {
@@ -16,20 +16,20 @@ namespace MvcTemplate.Components.Logging
             private set;
         }
 
-        public LoggablePropertyEntry(DbPropertyEntry entry)
+        public LoggablePropertyEntry(DbPropertyEntry entry, Object originalValue)
         {
-            currentValue = entry.EntityEntry.State == EntityState.Deleted ? entry.OriginalValue : entry.CurrentValue;
-            originalValue = entry.EntityEntry.State == EntityState.Added ? entry.CurrentValue : entry.OriginalValue;
-            IsModified = entry.IsModified && !Object.Equals(originalValue, currentValue);
-            name = entry.Name;
+            IsModified = entry.IsModified && !Object.Equals(originalValue, entry.CurrentValue);
+            this.currentValue = entry.CurrentValue;
+            this.originalValue = originalValue;
+            this.propertyName = entry.Name;
         }
 
         public override String ToString()
         {
             if (IsModified)
-                return String.Format("{0}: {1} => {2}", name, originalValue ?? "{null}", currentValue ?? "{null}");
+                return String.Format("{0}: {1} => {2}", propertyName, originalValue ?? "{null}", currentValue ?? "{null}");
 
-            return String.Format("{0}: {1}", name, originalValue ?? "{null}");
+            return String.Format("{0}: {1}", propertyName, originalValue ?? "{null}");
         }
     }
 }

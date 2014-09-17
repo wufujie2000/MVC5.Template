@@ -33,13 +33,14 @@ namespace MvcTemplate.Components.Logging
 
         public LoggableEntry(DbEntityEntry entry)
         {
-            IEnumerable<String> propertyNames = entry.State == EntityState.Deleted
-                ? entry.GetDatabaseValues().PropertyNames
-                : entry.CurrentValues.PropertyNames;
+            DbPropertyValues originalValues =
+                (entry.State == EntityState.Modified || entry.State == EntityState.Deleted)
+                    ? entry.GetDatabaseValues()
+                    : entry.CurrentValues;
 
             EntityType = entry.Entity.GetType();
+            Properties = originalValues.PropertyNames.Select(name => new LoggablePropertyEntry(entry.Property(name), originalValues[name]));
             if (EntityType.Namespace == "System.Data.Entity.DynamicProxies") EntityType = EntityType.BaseType;
-            Properties = propertyNames.Select(name => new LoggablePropertyEntry(entry.Property(name)));
             HasChanges = Properties.Any(property => property.IsModified);
             State = entry.State.ToString().ToLower();
         }

@@ -82,6 +82,20 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Test]
+        public void LoggableEntry_HasChangesIfAnyAttachedPropertyIsModified()
+        {
+            context.Dispose();
+            context = new TestingContext();
+
+            model.Name += "1";
+            context.Set<Role>().Attach(model);
+            entry = context.Entry<Role>(model);
+            entry.State = EntityState.Modified;
+
+            Assert.IsTrue(new LoggableEntry(entry).HasChanges);
+        }
+
+        [Test]
         public void LoggableEntry_DoNoHaveChangesIfPropertiesAreNotModified()
         {
             Assert.IsFalse(new LoggableEntry(entry).HasChanges);
@@ -90,9 +104,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void LoggableEntry_CreatesProperties()
         {
-            IEnumerable<String> properties = entry.CurrentValues.PropertyNames;
+            DbPropertyValues originalValues = entry.GetDatabaseValues();
+            IEnumerable<String> properties = originalValues.PropertyNames;
 
-            IEnumerable<LoggablePropertyEntry> expected = properties.Select(name => new LoggablePropertyEntry(entry.Property(name)));
+            IEnumerable<LoggablePropertyEntry> expected = properties.Select(name => new LoggablePropertyEntry(entry.Property(name), originalValues[name]));
             IEnumerable<LoggablePropertyEntry> actual = new LoggableEntry(entry).Properties;
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);

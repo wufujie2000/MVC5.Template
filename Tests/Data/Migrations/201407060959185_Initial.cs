@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(),
                         RoleId = c.String(maxLength: 128),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 128),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .Index(t => t.Name, unique: true);
@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         RoleId = c.String(nullable: false, maxLength: 128),
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Area = c.String(),
                         Controller = c.String(nullable: false),
                         Action = c.String(nullable: false),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         AccountId = c.String(),
                         Message = c.String(nullable: false),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -82,7 +82,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Text = c.String(),
-                        EntityDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             

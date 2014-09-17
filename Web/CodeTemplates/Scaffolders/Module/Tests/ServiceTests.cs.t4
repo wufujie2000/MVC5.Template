@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<<#= Model.Model #>>()
                 .Project()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(view => view.EntityDate);
+                .OrderByDescending(view => view.CreationDate);
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
@@ -81,7 +81,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
 
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.Inconclusive("Not all properties tested");
         }
 
@@ -99,7 +99,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context = new TestingContext();
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
 
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.Inconclusive("Not all properties tested");
         }
 

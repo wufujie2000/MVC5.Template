@@ -48,7 +48,7 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Repository<Role>()
                 .ProjectTo<RoleView>()
-                .OrderByDescending(view => view.EntityDate);
+                .OrderByDescending(view => view.CreationDate);
         }
         public RoleView GetView(String id)
         {

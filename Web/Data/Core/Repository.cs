@@ -72,7 +72,7 @@ namespace MvcTemplate.Data.Core
 
             DbEntityEntry<TModel> entry = context.Entry(attachedModel);
             entry.State = EntityState.Modified;
-            entry.Property(property => property.EntityDate).IsModified = false;
+            entry.Property(property => property.CreationDate).IsModified = false;
         }
         public void Delete(String id)
         {

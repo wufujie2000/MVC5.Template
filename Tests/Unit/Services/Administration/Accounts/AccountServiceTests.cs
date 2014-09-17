@@ -101,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<Account>()
                 .Project()
                 .To<AccountView>()
-                .OrderByDescending(account => account.EntityDate);
+                .OrderByDescending(account => account.CreationDate);
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
@@ -209,7 +209,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().SingleOrDefault(model => model.Id == expected.Id);
 
             Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.IsNull(actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(expected.Email, actual.Email);
@@ -251,7 +251,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(hasher.HashPassword(profile.NewPassword), actual.Passhash);
             Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.Email, actual.Email);
         }
@@ -313,7 +313,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Account actual = context.Set<Account>().SingleOrDefault();
 
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Id, actual.Id);

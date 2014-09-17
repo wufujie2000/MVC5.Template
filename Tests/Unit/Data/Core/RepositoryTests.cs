@@ -174,12 +174,12 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         }
 
         [Test]
-        public void Update_DoesNotModifyEntityDate()
+        public void Update_DoesNotModifyCreationDate()
         {
             TestModel model = ObjectFactory.CreateTestModel();
             repository.Update(model);
 
-            Assert.IsFalse(context.Entry(model).Property(prop => prop.EntityDate).IsModified);
+            Assert.IsFalse(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
         }
 
         #endregion

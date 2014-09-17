@@ -38,7 +38,7 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Repository<Account>()
                 .ProjectTo<AccountView>()
-                .OrderByDescending(view => view.EntityDate);
+                .OrderByDescending(view => view.CreationDate);
         }
         public TView GetView<TView>(String id) where TView : BaseView
         {

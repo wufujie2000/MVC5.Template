@@ -22,7 +22,7 @@ namespace MvcTemplate.Objects
         }
 
         [Required]
-        public DateTime EntityDate
+        public DateTime CreationDate
         {
             get;
             private set;
@@ -31,7 +31,7 @@ namespace MvcTemplate.Objects
         protected BaseModel()
         {
             DateTime now = DateTime.Now;
-            EntityDate = new DateTime(now.Ticks / 100000 * 100000, now.Kind);
+            CreationDate = new DateTime(now.Ticks / 100000 * 100000, now.Kind);
         }
     }
 }

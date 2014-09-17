@@ -245,7 +245,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.EntityDate;
+            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.CreationDate;
 
             columns.AddDateProperty(propertyFunc);
 
@@ -255,9 +255,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
+            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
-            columns.AddDateProperty(model => model.EntityDate);
+            columns.AddDateProperty(model => model.CreationDate);
 
             column.Received().Titled(expected);
         }
@@ -265,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnCss()
         {
-            columns.AddDateProperty(model => model.EntityDate);
+            columns.AddDateProperty(model => model.CreationDate);
 
             column.Received().Css("date-cell");
         }
@@ -276,7 +276,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
 
-            columns.AddDateProperty(model => model.EntityDate);
+            columns.AddDateProperty(model => model.CreationDate);
 
             column.Received().Format(expected);
         }
@@ -288,7 +288,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.EntityDate;
+            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.CreationDate;
 
             columns.AddDateTimeProperty(propertyFunc);
 
@@ -298,9 +298,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
+            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
-            columns.AddDateTimeProperty(model => model.EntityDate);
+            columns.AddDateTimeProperty(model => model.CreationDate);
 
             column.Received().Titled(expected);
         }
@@ -308,7 +308,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_SetsGridColumnCss()
         {
-            columns.AddDateTimeProperty(model => model.EntityDate);
+            columns.AddDateTimeProperty(model => model.CreationDate);
 
             column.Received().Css("date-cell");
         }
@@ -321,7 +321,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
 
-            columns.AddDateTimeProperty(model => model.EntityDate);
+            columns.AddDateTimeProperty(model => model.CreationDate);
 
             column.Received().Format(expected);
         }
@@ -343,9 +343,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.EntityDate);
+            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
-            columns.AddProperty(model => model.EntityDate);
+            columns.AddProperty(model => model.CreationDate);
 
             column.Received().Titled(expected);
         }

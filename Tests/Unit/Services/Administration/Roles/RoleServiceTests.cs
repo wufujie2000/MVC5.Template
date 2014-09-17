@@ -131,7 +131,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<Role>()
                 .Project()
                 .To<RoleView>()
-                .OrderByDescending(account => account.EntityDate);
+                .OrderByDescending(account => account.CreationDate);
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
@@ -173,7 +173,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Role actual = context.Set<Role>().SingleOrDefault(r => r.Id == expected.Id);
 
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Name, actual.Name);
         }
 
@@ -207,7 +207,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Role actual = context.Set<Role>().SingleOrDefault();
 
-            Assert.AreEqual(expected.EntityDate, actual.EntityDate);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Name, actual.Name);
         }
 

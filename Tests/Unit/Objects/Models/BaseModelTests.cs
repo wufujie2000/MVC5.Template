@@ -19,18 +19,18 @@ namespace MvcTemplate.Tests.Unit.Objects
         #region Constructor: BaseModel()
 
         [Test]
-        public void BaseModel_SetsEntityDateToNow()
+        public void BaseModel_SetsCreationDateToNow()
         {
-            Int64 actual = Substitute.For<BaseModel>().EntityDate.Ticks;
+            Int64 actual = Substitute.For<BaseModel>().CreationDate.Ticks;
             Int64 expected = DateTime.Now.Ticks;
 
             Assert.AreEqual(expected, actual, 10000000);
         }
 
         [Test]
-        public void BaseModel_TruncatesMicrosecondsFromEntityDate()
+        public void BaseModel_TruncatesMicrosecondsFromCreationDate()
         {
-            DateTime actual = Substitute.For<BaseModel>().EntityDate;
+            DateTime actual = Substitute.For<BaseModel>().CreationDate;
             DateTime expected = new DateTime(actual.Year, actual.Month, actual.Day, actual.Hour, actual.Minute, actual.Second, actual.Millisecond);
 
             Assert.AreEqual(expected, actual);
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseModel_KeepsCurrentDateKind()
         {
-            DateTimeKind actual = Substitute.For<BaseModel>().EntityDate.Kind;
+            DateTimeKind actual = Substitute.For<BaseModel>().CreationDate.Kind;
             DateTimeKind expected = DateTime.Now.Kind;
 
             Assert.AreEqual(expected, actual);

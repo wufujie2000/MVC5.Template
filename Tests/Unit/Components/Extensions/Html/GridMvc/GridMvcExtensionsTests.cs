@@ -106,7 +106,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_DoesNotRenderValueAsOnGridColumn()
+        public void AddActionLink_DoesNotRenderValueForUnsupportedLinkActions()
         {
             IEnumerable<LinkAction> notSupportedActions = Enum
                 .GetValues(typeof(LinkAction))

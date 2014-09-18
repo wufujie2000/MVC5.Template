@@ -52,6 +52,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging\AuditLogger.cs" />
+    <Compile Include="Logging\IAuditLogger.cs" />
+    <Compile Include="Logging\LoggableEntity.cs" />
+    <Compile Include="Logging\LoggableProperty.cs" />
     <Compile Include="Mapping\ObjectMapper.cs" />
     <Compile Include="Core\Context.cs" />
     <Compile Include="Core\AContext.cs" />

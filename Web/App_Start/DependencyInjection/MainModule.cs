@@ -4,6 +4,7 @@ using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
+using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using Ninject.Modules;
@@ -21,7 +22,7 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<ILogger>().To<Logger>();
             Bind<AContext>().To<Context>();
             Bind<IUnitOfWork>().To<UnitOfWork>();
-            Bind<IEntityLogger>().To<EntityLogger>();
+            Bind<IAuditLogger>().To<AuditLogger>();
 
             Bind<IMailClient>().To<SmtpMailClient>();
 

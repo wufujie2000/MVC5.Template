@@ -21,10 +21,23 @@ namespace MvcTemplate.Tests.Unit.Objects
             HttpContext.Current = null;
         }
 
+        #region Constructor: Log()
+
+        [Test]
+        public void Log_CreatesEmptyInstance()
+        {
+            Log actual = new Log();
+
+            Assert.IsNull(actual.AccountId);
+            Assert.IsNull(actual.Message);
+        }
+
+        #endregion
+
         #region Constructor: Log(String message)
 
         [Test]
-        public void Log_Message_SetsAccountId()
+        public void Log_SetsAccountId()
         {
             String expected = HttpContext.Current.User.Identity.Name;
             String actual = new Log(null).AccountId;
@@ -33,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         }
 
         [Test]
-        public void Log_Message_SetsMessage()
+        public void Log_SetsMessage()
         {
             String actual = new Log("Message").Message;
             String expected = "Message";

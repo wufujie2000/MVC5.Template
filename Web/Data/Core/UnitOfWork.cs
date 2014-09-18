@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MvcTemplate.Components.Logging;
+using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using System;
 
@@ -7,11 +7,11 @@ namespace MvcTemplate.Data.Core
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IEntityLogger logger;
+        private IAuditLogger logger;
         private AContext context;
         private Boolean disposed;
 
-        public UnitOfWork(AContext context, IEntityLogger logger = null)
+        public UnitOfWork(AContext context, IAuditLogger logger = null)
         {
             this.context = context;
             this.logger = logger;
@@ -45,7 +45,7 @@ namespace MvcTemplate.Data.Core
         public void Commit()
         {
             if (logger != null)
-                logger.Log(context.ChangeTracker.Entries());
+                logger.Log(context.ChangeTracker.Entries<BaseModel>());
 
             context.SaveChanges();
 

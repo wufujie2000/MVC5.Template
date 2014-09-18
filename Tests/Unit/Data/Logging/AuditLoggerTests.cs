@@ -1,52 +1,53 @@
-﻿using MvcTemplate.Components.Logging;
-using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 
-namespace MvcTemplate.Tests.Unit.Components.Logging
+namespace MvcTemplate.Tests.Unit.Data.Logging
 {
     [TestFixture]
-    public class EntityLoggerTests
+    public class AuditLoggerTests
     {
         private AContext dataContext;
         private AContext context;
 
-        private EntityLogger logger;
-        private DbEntityEntry entry;
+        private DbEntityEntry<BaseModel> entry;
+        private AuditLogger logger;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
+            logger = new AuditLogger(context);
             dataContext = new TestingContext();
-            logger = new EntityLogger(context);
             HttpContext.Current = new HttpMock().HttpContext;
+            TestModel model = ObjectFactory.CreateTestModel();
 
             TearDownData();
 
-            TestModel model = ObjectFactory.CreateTestModel();
             dataContext.Set<TestModel>().Add(model);
-            entry = dataContext.Entry(model);
+            entry = dataContext.Entry<BaseModel>(model);
             dataContext.SaveChanges();
         }
 
         [TearDown]
         public void TearDown()
         {
+            HttpContext.Current = null;
             dataContext.Dispose();
             context.Dispose();
-            HttpContext.Current = null;
         }
 
-        #region Method: Log(IEnumerable<DbEntityEntry> entries)
+        #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
 
         [Test]
         public void Log_LogsAddedEntities()
@@ -70,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         {
             entry.State = EntityState.Modified;
 
-            Assert.IsFalse(context.Set<Log>().Any());
+            Assert.IsFalse(context.Set<AuditLog>().Any());
         }
 
         [Test]
@@ -82,29 +83,24 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Test]
-        public void Log_DoesNotLogUnsupportedStates()
+        public void Log_DoesNotLogUnsupportedEntityStates()
         {
-            entry.State = EntityState.Detached;
-            logger.Log(new[] { entry });
+            IEnumerable<EntityState> unsupportedStates = Enum
+                .GetValues(typeof(EntityState))
+                .Cast<EntityState>()
+                .Where(state =>
+                    state != EntityState.Added &&
+                    state != EntityState.Modified &&
+                    state != EntityState.Deleted);
 
-            entry.State = EntityState.Unchanged;
-            logger.Log(new[] { entry });
-            logger.Save();
+            foreach (EntityState usupportedState in unsupportedStates)
+            {
+                entry.State = usupportedState;
+                logger.Log(new[] { entry });
+                logger.Save();
+            }
 
-            Assert.IsFalse(context.Set<Log>().Any());
-        }
-
-        [Test]
-        public void Log_LogsFormattedMessage()
-        {
-            entry.State = EntityState.Added;
-            logger.Log(new[] { entry });
-            logger.Save();
-
-            String actual = context.Set<Log>().Single().Message;
-            String expected = new LoggableEntry(entry).ToString();
-
-            Assert.AreEqual(expected, actual);
+            Assert.IsFalse(context.Set<AuditLog>().Any());
         }
 
         [Test]
@@ -113,7 +109,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
 
-            Assert.IsFalse(context.Set<Log>().Any());
+            Assert.IsFalse(context.Set<AuditLog>().Any());
         }
 
         #endregion
@@ -127,7 +123,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
+            Assert.IsNotNull(context.Set<AuditLog>().SingleOrDefault());
         }
 
         [Test]
@@ -138,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Save();
             logger.Save();
 
-            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
+            Assert.IsNotNull(context.Set<AuditLog>().SingleOrDefault());
         }
 
         #endregion
@@ -156,20 +152,27 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         #region Test helpers
 
-        private void Logs(DbEntityEntry entry)
+        private void Logs(DbEntityEntry<BaseModel> entry)
         {
+            LoggableEntity entity = new LoggableEntity(entry);
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.IsNotNull(context.Set<Log>().SingleOrDefault());
+            AuditLog expected = new AuditLog(entity.Name, entity.Id, entity.ToString());
+            AuditLog actual = context.Set<AuditLog>().Single();
+
+            Assert.AreEqual(expected.AccountId, actual.AccountId);
+            Assert.AreEqual(expected.EntityName, actual.EntityName);
+            Assert.AreEqual(expected.EntityId, actual.EntityId);
+            Assert.AreEqual(expected.Changes, actual.Changes);
         }
 
         private void TearDownData()
         {
             dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
-            context.Set<Log>().RemoveRange(context.Set<Log>());
-            context.SaveChanges();
+            context.Set<AuditLog>().RemoveRange(context.Set<AuditLog>());
             dataContext.SaveChanges();
+            context.SaveChanges();
         }
 
         #endregion

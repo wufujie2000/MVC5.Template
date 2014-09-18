@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
-namespace MvcTemplate.Components.Logging
+namespace MvcTemplate.Data.Logging
 {
-    public class LoggablePropertyEntry
+    public class LoggableProperty
     {
         private Object originalValue;
         private Object currentValue;
@@ -16,7 +15,7 @@ namespace MvcTemplate.Components.Logging
             private set;
         }
 
-        public LoggablePropertyEntry(DbPropertyEntry entry, Object originalValue)
+        public LoggableProperty(DbPropertyEntry entry, Object originalValue)
         {
             IsModified = entry.IsModified && !Object.Equals(originalValue, entry.CurrentValue);
             this.currentValue = entry.CurrentValue;

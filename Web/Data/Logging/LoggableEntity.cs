@@ -1,20 +1,26 @@
-﻿using System;
+﻿using MvcTemplate.Objects;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 
-namespace MvcTemplate.Components.Logging
+namespace MvcTemplate.Data.Logging
 {
-    public class LoggableEntry
+    public class LoggableEntity
     {
-        public String State
+        public String Id
         {
             get;
             private set;
         }
-        public Type EntityType
+        public String Name
+        {
+            get;
+            private set;
+        }
+        public String Action
         {
             get;
             private set;
@@ -25,32 +31,34 @@ namespace MvcTemplate.Components.Logging
             private set;
         }
 
-        public IEnumerable<LoggablePropertyEntry> Properties
+        public IEnumerable<LoggableProperty> Properties
         {
             get;
             private set;
         }
 
-        public LoggableEntry(DbEntityEntry entry)
+        public LoggableEntity(DbEntityEntry<BaseModel> entry)
         {
             DbPropertyValues originalValues =
                 (entry.State == EntityState.Modified || entry.State == EntityState.Deleted)
                     ? entry.GetDatabaseValues()
                     : entry.CurrentValues;
 
-            EntityType = entry.Entity.GetType();
-            Properties = originalValues.PropertyNames.Select(name => new LoggablePropertyEntry(entry.Property(name), originalValues[name]));
-            if (EntityType.Namespace == "System.Data.Entity.DynamicProxies") EntityType = EntityType.BaseType;
+            Type entityType = entry.Entity.GetType();
+            if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
+            Properties = originalValues.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), originalValues[name]));
             HasChanges = Properties.Any(property => property.IsModified);
-            State = entry.State.ToString().ToLower();
+            Action = entry.State.ToString().ToLower();
+            Name = entityType.Name;
+            Id = entry.Entity.Id;
         }
 
         public override String ToString()
         {
             StringBuilder entry = new StringBuilder();
-            entry.AppendFormat("{0} {1}:{2}", EntityType.Name, State, Environment.NewLine);
+            entry.AppendFormat("{0} {1}:{2}", Name, Action, Environment.NewLine);
 
-            foreach (LoggablePropertyEntry property in Properties)
+            foreach (LoggableProperty property in Properties)
                 entry.AppendFormat("    {0}{1}", property, Environment.NewLine);
 
             return entry.ToString();

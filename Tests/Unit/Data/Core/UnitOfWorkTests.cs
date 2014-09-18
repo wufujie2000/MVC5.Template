@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using MvcTemplate.Components.Logging;
 using MvcTemplate.Data.Core;
+using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
@@ -15,14 +15,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
     public class UnitOfWorkTests
     {
         private UnitOfWork unitOfWork;
-        private IEntityLogger logger;
+        private IAuditLogger logger;
         private AContext context;
 
         [SetUp]
         public void SetUp()
         {
             context = new TestingContext();
-            logger = Substitute.For<IEntityLogger>();
+            logger = Substitute.For<IAuditLogger>();
             unitOfWork = new UnitOfWork(context, logger);
         }
 
@@ -114,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         {
             unitOfWork.Commit();
 
-            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry>>());
+            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry<BaseModel>>>());
             logger.Received().Save();
         }
 
@@ -130,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             {
             }
 
-            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry>>());
+            logger.Received().Log(Arg.Any<IEnumerable<DbEntityEntry<BaseModel>>>());
             logger.DidNotReceive().Save();
         }
 

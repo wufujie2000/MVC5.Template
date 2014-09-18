@@ -5,32 +5,34 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
-namespace MvcTemplate.Components.Logging
+namespace MvcTemplate.Data.Logging
 {
-    public class EntityLogger : IEntityLogger
+    public class AuditLogger : IAuditLogger
     {
         private AContext context;
         private Boolean disposed;
 
-        public EntityLogger(AContext context)
+        public AuditLogger(AContext context)
         {
             this.context = context;
         }
 
-        public virtual void Log(IEnumerable<DbEntityEntry> entries)
+        public virtual void Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
         {
-            foreach (DbEntityEntry entry in entries)
+            foreach (DbEntityEntry<BaseModel> entry in entries)
             {
+                LoggableEntity entity;
                 switch (entry.State)
                 {
                     case EntityState.Added:
                     case EntityState.Deleted:
-                        context.Set<Log>().Add(new Log(new LoggableEntry(entry).ToString()));
+                        entity = new LoggableEntity(entry);
+                        context.Set<AuditLog>().Add(new AuditLog(entity.Name, entity.Id, entity.ToString()));
                         break;
                     case EntityState.Modified:
-                        LoggableEntry loggableEntry = new LoggableEntry(entry);
-                        if (loggableEntry.HasChanges)
-                            context.Set<Log>().Add(new Log(loggableEntry.ToString()));
+                        entity = new LoggableEntity(entry);
+                        if (entity.HasChanges)
+                            context.Set<AuditLog>().Add(new AuditLog(entity.Name, entity.Id, entity.ToString()));
                         break;
                 }
             }

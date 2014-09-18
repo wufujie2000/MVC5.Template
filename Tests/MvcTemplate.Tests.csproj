@@ -115,17 +115,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data\Mapping\TestObjectMapper.cs" />
-    <Compile Include="Helpers\GlobalizationProviderFactory.cs" />
-    <Compile Include="Helpers\ObjectFactory.cs" />
-    <Compile Include="Data\Migrations\Configuration.cs" />
-    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Data\Migrations\201407060959185_Initial.cs" />
     <Compile Include="Data\Migrations\201407060959185_Initial.Designer.cs">
       <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GlobalizationProviderFactory.cs" />
+    <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Logging\LoggablePropertyEntryTests.cs" />
+    <Compile Include="Unit\Data\Logging\LoggablePropertyTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EmailAddressAdapterTests.cs" />
@@ -160,6 +160,7 @@
     <Compile Include="Unit\Controllers\ServicedControllerProxy.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
+    <Compile Include="Unit\Objects\Models\System\AuditLogTests.cs" />
     <Compile Include="Unit\Resources\ResourcesTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RoleServiceTests.cs" />
@@ -173,8 +174,8 @@
     <Compile Include="Unit\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="Unit\Controllers\SecurityTests.cs" />
     <Compile Include="Unit\Controllers\ServicedControllerTests.cs" />
-    <Compile Include="Unit\Components\Logging\EntityLoggerTests.cs" />
-    <Compile Include="Unit\Components\Logging\LoggableEntryTests.cs" />
+    <Compile Include="Unit\Data\Logging\AuditLoggerTests.cs" />
+    <Compile Include="Unit\Data\Logging\LoggableEntityTests.cs" />
     <Compile Include="Unit\Data\Core\RepositoryTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />

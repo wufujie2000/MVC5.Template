@@ -66,15 +66,32 @@ namespace MvcTemplate.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
+                "dbo.AuditLogs",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 128),
+                        AccountId = c.String(maxLength: 128),
+                        EntityName = c.String(nullable: false, maxLength: 128),
+                        EntityId = c.String(nullable: false, maxLength: 128),
+                        Changes = c.String(nullable: false),
+                        CreationDate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id, clustered: false)
+                .Index(t => t.AccountId)
+                .Index(t => t.EntityName)
+                .Index(t => t.EntityId);
+            
+            CreateTable(
                 "dbo.Logs",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        AccountId = c.String(),
+                        AccountId = c.String(maxLength: 128),
                         Message = c.String(nullable: false),
                         CreationDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id, clustered: false)
+                .Index(t => t.AccountId);
             
         }
         
@@ -83,6 +100,10 @@ namespace MvcTemplate.Data.Migrations
             DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
+            DropIndex("dbo.Logs", new[] { "AccountId" });
+            DropIndex("dbo.AuditLogs", new[] { "EntityId" });
+            DropIndex("dbo.AuditLogs", new[] { "EntityName" });
+            DropIndex("dbo.AuditLogs", new[] { "AccountId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.Roles", new[] { "Name" });
@@ -90,6 +111,7 @@ namespace MvcTemplate.Data.Migrations
             DropIndex("dbo.Accounts", new[] { "Email" });
             DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.Logs");
+            DropTable("dbo.AuditLogs");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");
             DropTable("dbo.Roles");

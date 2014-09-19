@@ -17,17 +17,19 @@ namespace MvcTemplate.Web
 {
     public class MvcApplication : HttpApplication
     {
+        private static String version;
         public static String Version
         {
-            get;
-            private set;
-        }
+            get
+            {
+                if (version != null) return version;
 
-        public MvcApplication()
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Version = versionInfo.FileVersion;
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+                version = versionInfo.FileVersion;
+
+                return version;
+            }
         }
 
         public void Application_Start()
@@ -43,7 +45,8 @@ namespace MvcTemplate.Web
             RegisterAdapters();
             RegisterFilters();
             RegisterBundles();
-            RegisterRoutes();
+            RegisterAreas();
+            RegisterRoute();
         }
         public void Application_Error()
         {
@@ -66,57 +69,60 @@ namespace MvcTemplate.Web
             Response.Redirect(urlHelper.RouteUrl(routeValues));
         }
 
-        private void RegisterCurrentDependencyResolver()
+        public virtual void RegisterCurrentDependencyResolver()
         {
             DependencyResolver.SetResolver(new NinjectResolver(new MainModule()));
         }
-        private void RegisterGlobalizationProvider()
+        public virtual void RegisterGlobalizationProvider()
         {
             GlobalizationManager.Provider = DependencyResolver.Current.GetService<IGlobalizationProvider>();
         }
-        private void RegisterModelMetadataProvider()
+        public virtual void RegisterModelMetadataProvider()
         {
             ModelMetadataProviders.Current = new DisplayNameMetadataProvider();
         }
-        private void RegisterDataTypeValidator()
+        public virtual void RegisterDataTypeValidator()
         {
-            ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.Single(x => x is ClientDataTypeModelValidatorProvider));
+            ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.SingleOrDefault(x => x is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
         }
-        private void RegisterSiteMapProvider()
+        public virtual void RegisterSiteMapProvider()
         {
             MvcSiteMap.Provider = DependencyResolver.Current.GetService<IMvcSiteMapProvider>();
         }
-        private void RegisterAuthorization()
+        public virtual void RegisterAuthorization()
         {
             Authorization.Provider = DependencyResolver.Current.GetService<IAuthorizationProvider>();
         }
-        private void RegisterModelBinders()
+        public virtual void RegisterModelBinders()
         {
             ModelBinders.Binders.Add(typeof(String), new TrimmingModelBinder());
         }
-        private void RegisterViewEngine()
+        public virtual void RegisterViewEngine()
         {
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new ViewEngine());
         }
-        private void RegisterAdapters()
+        public virtual void RegisterAdapters()
         {
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(RequiredAttribute), typeof(RequiredAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(EmailAddressAttribute), typeof(EmailAddressAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(StringLengthAttribute), typeof(StringLengthAdapter));
         }
-        private void RegisterFilters()
+        public virtual void RegisterFilters()
         {
             GlobalFilters.Filters.Add(DependencyResolver.Current.GetService<IExceptionFilter>());
         }
-        private void RegisterBundles()
+        public virtual void RegisterBundles()
         {
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        private void RegisterRoutes()
+        public virtual void RegisterAreas()
         {
             AreaRegistration.RegisterAllAreas();
+        }
+        public virtual void RegisterRoute()
+        {
             RouteTable.Routes.LowercaseUrls = true;
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

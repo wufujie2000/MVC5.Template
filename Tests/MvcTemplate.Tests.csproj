@@ -125,6 +125,7 @@
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Adapters\AdaptersModel.cs" />
     <Compile Include="Unit\Data\Logging\LoggablePropertyTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />

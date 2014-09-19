@@ -16,9 +16,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [SetUp]
         public void SetUp()
         {
-            metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(TestView), "Text");
-
+            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(TestView), "Id");
         }
 
         #region Constructor: StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)

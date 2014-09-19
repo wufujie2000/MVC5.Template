@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new RequiredAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(TestView), "Text");
+                .GetMetadataForProperty(null, typeof(TestView), "Id");
             new RequiredAdapter(metadata, new ControllerContext(), attribute);
         }
 

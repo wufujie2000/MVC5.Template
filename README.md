@@ -4,8 +4,9 @@ This project will use the latest technologies and will try to incorporate the be
 
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
-2. Open the project and run "update-database" command on "Data" project.
-3. Install necessary VS extensions if you don't have them already:
+2. Build project(might need to build twice) or restore NuGet packages.
+3. Open "Package Manager Console" and run "update-database" command on "Data" project.
+4. Install necessary VS extensions if you don't have them already:
   - NUnit Tests Adapter.
   - Web Essentials 201X.
   - If you are using VS2012, change T4Scaffolding.Core package version to 1.0.0.

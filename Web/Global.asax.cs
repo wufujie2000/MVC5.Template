@@ -124,7 +124,7 @@ namespace MvcTemplate.Web
         public virtual void RegisterRoute()
         {
             RouteTable.Routes.LowercaseUrls = true;
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DependencyResolver.Current.GetService<IRouteConfig>().RegisterRoutes(RouteTable.Routes);
         }
 
         private Boolean ErrorHandlingEnabled()

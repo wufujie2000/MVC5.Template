@@ -26,6 +26,7 @@ namespace MvcTemplate.Web.DependencyInjection
 
             Bind<IMailClient>().To<SmtpMailClient>();
 
+            Bind<IRouteConfig>().To<RouteConfig>();
             Bind<IExceptionFilter>().To<ExceptionFilter>();
 
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();

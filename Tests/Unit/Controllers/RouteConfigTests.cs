@@ -9,13 +9,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class RouteConfigTests
     {
-        #region Static method: RegisterRoutes(RouteCollection routes)
+        private RouteConfig config;
+
+        [SetUp]
+        public void SetUp()
+        {
+            config = new RouteConfig();
+        }
+
+        #region Method: RegisterRoutes(RouteCollection routes)
 
         [Test]
         public void RegisterRoutes_IgnoresAxdRoute()
         {
             RouteCollection routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
+            config.RegisterRoutes(routes);
 
             Route expected = new Route("{resource}.axd/{*pathInfo}", new StopRoutingHandler());
             Route actual = routes.First() as Route;
@@ -28,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RegisterRoutes_RegistersDefaultMultilingualRoute()
         {
             RouteCollection routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
+            config.RegisterRoutes(routes);
 
             Route actual = routes["DefaultMultilingual"] as Route;
 
@@ -46,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RegisterRoutes_RegistersDefaultRoute()
         {
             RouteCollection routes = new RouteCollection();
-            RouteConfig.RegisterRoutes(routes);
+            config.RegisterRoutes(routes);
 
             Route actual = routes["Default"] as Route;
 

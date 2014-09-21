@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers;
 using MvcTemplate.Tests.Unit.Components.Mvc;
 using MvcTemplate.Web;
 using MvcTemplate.Web.DependencyInjection;
@@ -296,15 +297,15 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterAuthorization_RegistersAuthorization()
         {
+            IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
             IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
-            IAuthorizationProvider authorizationProvider = Substitute.For<IAuthorizationProvider>();
-            resolver.GetService<IAuthorizationProvider>().Returns(authorizationProvider);
+            resolver.GetService<IAuthorizationProvider>().Returns(provider);
             DependencyResolver.SetResolver(resolver);
 
             application.RegisterAuthorization();
 
-            IAuthorizationProvider expected = authorizationProvider;
             IAuthorizationProvider actual = Authorization.Provider;
+            IAuthorizationProvider expected = provider;
 
             Assert.AreEqual(expected, actual);
         }
@@ -412,8 +413,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterFilters_RegistersExceptionFilter()
         {
-            IExceptionFilter filter = Substitute.For<IExceptionFilter>();
             IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            IExceptionFilter filter = Substitute.For<IExceptionFilter>();
             resolver.GetService<IExceptionFilter>().Returns(filter);
             DependencyResolver.SetResolver(resolver);
 
@@ -458,15 +459,27 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterRoute_RegistersLowercaseUrls()
         {
+            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
+            resolver.GetService<IRouteConfig>().Returns(routeConfig);
+            DependencyResolver.SetResolver(resolver);
+
             application.RegisterRoute();
 
             Assert.IsTrue(RouteTable.Routes.LowercaseUrls);
         }
 
         [Test]
-        [Ignore("Duplicates RouteConfigTests.")]
         public void RegisterRoute_RegistersRoute()
         {
+            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
+            resolver.GetService<IRouteConfig>().Returns(routeConfig);
+            DependencyResolver.SetResolver(resolver);
+
+            application.RegisterRoute();
+
+            routeConfig.Received().RegisterRoutes(RouteTable.Routes);
         }
 
         #endregion

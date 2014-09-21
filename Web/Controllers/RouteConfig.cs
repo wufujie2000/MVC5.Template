@@ -3,9 +3,9 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
 {
-    public class RouteConfig
+    public class RouteConfig : IRouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 

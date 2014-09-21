@@ -2,6 +2,7 @@
 using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
@@ -57,6 +58,12 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         public void Load_BindsIMailClientToSmtpMailClient()
         {
             AssertBind<IMailClient, SmtpMailClient>();
+        }
+
+        [Test]
+        public void Load_BindsIRouteConfig()
+        {
+            AssertBind<IRouteConfig, RouteConfig>();
         }
 
         [Test]

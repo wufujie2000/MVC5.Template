@@ -115,7 +115,7 @@ namespace MvcTemplate.Web
         }
         public virtual void RegisterBundles()
         {
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            DependencyResolver.Current.GetService<IBundleConfig>().RegisterBundles(BundleTable.Bundles);
         }
         public virtual void RegisterAreas()
         {

@@ -119,6 +119,7 @@
     <Compile Include="App_Start\DependencyInjection\MainModule.cs" />
     <Compile Include="App_Start\DependencyInjection\NinjectResolver.cs" />
     <None Include="CodeTemplates\Scaffolders\Module\Controls\AreaRegistration.cs.t4" />
+    <Compile Include="App_Start\IBundleConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -8,7 +8,15 @@ namespace MvcTemplate.Tests.Unit.Web
     [TestFixture]
     public class BundleConfigTests
     {
-        #region Static method: RegisterBundles(BundleCollection bundles)
+        public BundleConfig config;
+
+        [SetUp]
+        public void SetUp()
+        {
+            config = new BundleConfig();
+        }
+
+        #region Method: RegisterBundles(BundleCollection bundles)
 
         [Test]
         public void RegisterBundles_RegistersScriptBundles()
@@ -26,11 +34,11 @@ namespace MvcTemplate.Tests.Unit.Web
             };
 
             BundleCollection bundles = new BundleCollection();
-            BundleConfig.RegisterBundles(bundles);
-            Type expected = typeof(ScriptBundle);
+            Type scriptBundle = typeof(ScriptBundle);
+            config.RegisterBundles(bundles);
 
             foreach (String path in expectedBundles)
-                Assert.IsInstanceOf(expected, bundles.GetBundleFor(path));
+                Assert.IsInstanceOf(scriptBundle, bundles.GetBundleFor(path));
         }
 
         [Test]
@@ -49,11 +57,10 @@ namespace MvcTemplate.Tests.Unit.Web
             };
 
             BundleCollection bundles = new BundleCollection();
-            BundleConfig.RegisterBundles(bundles);
-            Type expected = typeof(StyleBundle);
+            config.RegisterBundles(bundles);
 
             foreach (String path in expectedBundles)
-                Assert.IsInstanceOf(expected, bundles.GetBundleFor(path));
+                Assert.IsInstanceOf<StyleBundle>(bundles.GetBundleFor(path));
         }
 
         #endregion

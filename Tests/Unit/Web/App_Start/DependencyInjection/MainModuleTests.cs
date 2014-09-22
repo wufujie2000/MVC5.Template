@@ -7,6 +7,7 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
+using MvcTemplate.Web;
 using MvcTemplate.Web.DependencyInjection;
 using Ninject;
 using NUnit.Framework;
@@ -64,6 +65,12 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         public void Load_BindsIRouteConfig()
         {
             AssertBind<IRouteConfig, RouteConfig>();
+        }
+
+        [Test]
+        public void Load_BindsIBundleConfig()
+        {
+            AssertBind<IBundleConfig, BundleConfig>();
         }
 
         [Test]

@@ -431,15 +431,16 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterBundles()
 
         [Test]
-        [Ignore("Duplicates BundleConfigTests.")]
-        public void RegisterBundles_RegistersScriptBundles()
+        public void RegisterBundles_RegistersBundles()
         {
-        }
+            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            IBundleConfig bundleConfig = Substitute.For<IBundleConfig>();
+            resolver.GetService<IBundleConfig>().Returns(bundleConfig);
+            DependencyResolver.SetResolver(resolver);
 
-        [Test]
-        [Ignore("Duplicates BundleConfigTests.")]
-        public void RegisterBundles_RegistersStyleBundles()
-        {
+            application.RegisterBundles();
+
+            bundleConfig.Received().RegisterBundles(BundleTable.Bundles);
         }
 
         #endregion

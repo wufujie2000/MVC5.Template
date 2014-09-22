@@ -2,14 +2,14 @@
 
 namespace MvcTemplate.Web
 {
-    public class BundleConfig
+    public class BundleConfig : IBundleConfig
     {
-        public static void RegisterBundles(BundleCollection bundles)
+        public void RegisterBundles(BundleCollection bundles)
         {
             RegisterScripts(bundles);
             RegisterStyles(bundles);
         }
-        private static void RegisterScripts(BundleCollection bundles)
+        private void RegisterScripts(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").Include("~/Scripts/JQuery/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Bootstrap/Bundle").Include("~/Scripts/Bootstrap/*.js"));
@@ -20,7 +20,7 @@ namespace MvcTemplate.Web
             bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").Include("~/Scripts/Datalist/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Shared/Bundle").Include("~/Scripts/Shared/*.js"));
         }
-        private static void RegisterStyles(BundleCollection bundles)
+        private void RegisterStyles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/JQueryUI/Bundle").Include("~/Content/JQueryUI/*.css"));
             bundles.Add(new StyleBundle("~/Content/Bootstrap/Bundle").Include("~/Content/Bootstrap/*.css"));

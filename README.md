@@ -23,6 +23,7 @@ This project will use the latest technologies and will try to incorporate the be
 - Dependency injection.
 - Custom error pages.
 - Globalization.
+- Audit log.
 - Site map.
 - Tests.
 

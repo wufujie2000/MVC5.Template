@@ -35,7 +35,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.TextBoxFor(expression, attributes)));
         }
-        public static MvcHtmlString AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
+        public static MvcHtmlString AuthLanguageSelect(this HtmlHelper html)
         {
             IEnumerable<Language> languages = GlobalizationManager.Provider.Languages;
             if (languages.Count() < 2) return new MvcHtmlString(String.Empty);

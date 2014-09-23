@@ -145,7 +145,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Role model = context.Set<Role>().SingleOrDefault();
 
-            RoleView expected = Mapper.Map<Role, RoleView>(model);
+            RoleView expected = Mapper.Map<RoleView>(model);
             RoleView actual = service.GetView(role.Id);
 
             TestHelper.PropertyWiseEqual(expected, actual);
@@ -156,9 +156,9 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             service = Substitute.For<RoleService>(new UnitOfWork(context));
 
-            RoleView roleView = service.GetView(role.Id);
+            RoleView view = service.GetView(role.Id);
 
-            service.Received().SeedPrivilegesTree(roleView);
+            service.Received().SeedPrivilegesTree(view);
         }
 
         #endregion

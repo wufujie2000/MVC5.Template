@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Data.Mapping
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            AccountView actual = Mapper.Map<Account, AccountView>(model);
+            AccountView actual = Mapper.Map<AccountView>(model);
             Account expected = model;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapAccounts_MapsAccountViewToAccount()
         {
             AccountView expected = ObjectFactory.CreateAccountView();
-            Account actual = Mapper.Map<AccountView, Account>(expected);
+            Account actual = Mapper.Map<Account>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Data.Mapping
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            AccountEditView actual = Mapper.Map<Account, AccountEditView>(model);
+            AccountEditView actual = Mapper.Map<AccountEditView>(model);
             Account expected = model;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -73,7 +73,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         {
             AccountEditView view = ObjectFactory.CreateAccountEditView();
 
-            Account actual = Mapper.Map<AccountEditView, Account>(view);
+            Account actual = Mapper.Map<Account>(view);
             AccountEditView expected = view;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         {
             Account account = ObjectFactory.CreateAccount();
 
-            ProfileEditView actual = Mapper.Map<Account, ProfileEditView>(account);
+            ProfileEditView actual = Mapper.Map<ProfileEditView>(account);
             Account expected = account;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -104,7 +104,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapAccounts_MapsProfileEditViewToAccount()
         {
             ProfileEditView expected = ObjectFactory.CreateProfileEditView();
-            Account actual = Mapper.Map<ProfileEditView, Account>(expected);
+            Account actual = Mapper.Map<Account>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -123,7 +123,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapRoles_MapsRoleToRoleView()
         {
             Role expected = ObjectFactory.CreateRole();
-            RoleView actual = Mapper.Map<Role, RoleView>(expected);
+            RoleView actual = Mapper.Map<RoleView>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapRoles_MapsRoleViewToRole()
         {
             RoleView expected = ObjectFactory.CreateRoleView();
-            Role actual = Mapper.Map<RoleView, Role>(expected);
+            Role actual = Mapper.Map<Role>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Name, actual.Name);
@@ -152,7 +152,7 @@ namespace MvcTemplate.Tests.Data.Mapping
             model.PrivilegeId = model.Privilege.Id;
             model.RoleId = model.Role.Id;
 
-            RolePrivilegeView actual = Mapper.Map<RolePrivilege, RolePrivilegeView>(model);
+            RolePrivilegeView actual = Mapper.Map<RolePrivilegeView>(model);
             RolePrivilege expected = model;
 
             Assert.AreEqual(expected.Privilege.CreationDate, actual.Privilege.CreationDate);
@@ -173,7 +173,7 @@ namespace MvcTemplate.Tests.Data.Mapping
             view.Privilege = ObjectFactory.CreatePrivilegeView();
             view.PrivilegeId = view.Privilege.Id;
 
-            RolePrivilege actual = Mapper.Map<RolePrivilegeView, RolePrivilege>(view);
+            RolePrivilege actual = Mapper.Map<RolePrivilege>(view);
             RolePrivilegeView expected = view;
 
             Assert.AreEqual(expected.Privilege.CreationDate, actual.Privilege.CreationDate);
@@ -192,7 +192,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapRoles_MapsPrivilegeToPrivilegeView()
         {
             Privilege expected = ObjectFactory.CreatePrivilege();
-            PrivilegeView actual = Mapper.Map<Privilege, PrivilegeView>(expected);
+            PrivilegeView actual = Mapper.Map<PrivilegeView>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Controller, actual.Controller);
@@ -205,7 +205,7 @@ namespace MvcTemplate.Tests.Data.Mapping
         public void MapRoles_MapsPrivilegeViewToPrivilege()
         {
             PrivilegeView expected = ObjectFactory.CreatePrivilegeView();
-            Privilege actual = Mapper.Map<PrivilegeView, Privilege>(expected);
+            Privilege actual = Mapper.Map<Privilege>(expected);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Controller, actual.Controller);

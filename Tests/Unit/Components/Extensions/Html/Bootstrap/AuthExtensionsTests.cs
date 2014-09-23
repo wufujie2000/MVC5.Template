@@ -112,7 +112,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AuthLanguageSelect<TModel>(this HtmlHelper<TModel> html)
+        #region Extension method: AuthLanguageSelect(this HtmlHelper html)
 
         [Test]
         public void AuthLanguageSelect_OnSingleLanguageReturnsEmptyHtml()

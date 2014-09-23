@@ -115,8 +115,8 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Account account = context.Set<Account>().SingleOrDefault();
 
-            AccountView expected = Mapper.Map<Account, AccountView>(account);
             AccountView actual = service.GetView<AccountView>(accountId);
+            AccountView expected = Mapper.Map<AccountView>(account);
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }

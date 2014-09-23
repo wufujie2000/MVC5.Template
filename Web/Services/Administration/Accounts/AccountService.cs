@@ -75,7 +75,7 @@ namespace MvcTemplate.Services
         }
         public void Register(AccountView view)
         {
-            Account account = UnitOfWork.ToModel<AccountView, Account>(view);
+            Account account = UnitOfWork.To<Account>(view);
             account.Passhash = hasher.HashPassword(view.Password);
             account.Email = account.Email.ToLower();
             view.Email = account.Email;

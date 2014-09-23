@@ -45,22 +45,22 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: ToModel<TView, TModel>(TView view)
+        #region Method: To<TModel>(BaseView view)
 
         [Test]
         public void ToModel_ConvertsViewToModel()
         {
             AccountView view = ObjectFactory.CreateAccountView();
 
-            Account expected = Mapper.Map<AccountView, Account>(view);
-            Account actual = unitOfWork.ToModel<AccountView, Account>(view);
+            Account actual = unitOfWork.To<Account>(view);
+            Account expected = Mapper.Map<Account>(view);
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }
 
         #endregion
 
-        #region Method: ToView<TModel, TView>(TModel model)
+        #region Method: To<TView>(BaseModel model)
 
         [Test]
         public void ToView_ConvertsModelToView()
@@ -69,8 +69,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
 
-            AccountView actual = unitOfWork.ToView<Account, AccountView>(model);
-            AccountView expected = Mapper.Map<Account, AccountView>(model);
+            AccountView actual = unitOfWork.To<AccountView>(model);
+            AccountView expected = Mapper.Map<AccountView>(model);
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }

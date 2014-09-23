@@ -17,22 +17,17 @@ namespace MvcTemplate.Data.Core
             this.logger = logger;
         }
 
-        public IRepository<TModel> Repository<TModel>()
-            where TModel : BaseModel
+        public IRepository<TModel> Repository<TModel>() where TModel : BaseModel
         {
             return context.Repository<TModel>();
         }
-        public TModel ToModel<TView, TModel>(TView view)
-            where TView : BaseView
-            where TModel : BaseModel
+        public TModel To<TModel>(BaseView view) where TModel : BaseModel
         {
-            return Mapper.Map<TView, TModel>(view);
+            return Mapper.Map<TModel>(view);
         }
-        public TView ToView<TModel, TView>(TModel model)
-            where TModel : BaseModel
-            where TView : BaseView
+        public TView To<TView>(BaseModel model) where TView : BaseView
         {
-            return Mapper.Map<TModel, TView>(model);
+            return Mapper.Map<TView>(model);
         }
 
         public void Rollback()

@@ -9,56 +9,50 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Tests.Helpers
 {
-    public class HttpMock
+    public class HttpContextFactory
     {
-        public HttpContextBase HttpContextBase
-        {
-            get;
-            private set;
-        }
-
-        public HttpContext HttpContext
-        {
-            get;
-            private set;
-        }
-
-        public HttpMock()
+        public static HttpContext CreateHttpContext()
         {
             HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19175/domain/", "p=1");
             Hashtable browserCapabilities = new Hashtable() { { "cookies", "true" } };
             HttpBrowserCapabilities browser = new HttpBrowserCapabilities();
             HttpResponse response = new HttpResponse(new StringWriter());
-            HttpContext = new HttpContext(request, response);
+            HttpContext httpContext = new HttpContext(request, response);
             browser.Capabilities = browserCapabilities;
             request.Browser = browser;
 
-            HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(request);
-            httpRequestBase.ApplicationPath.Returns("/domain");
-
-            HttpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(HttpContext);
-            HttpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
-            HttpContextBase.Response.Returns(new HttpResponseWrapper(response));
-            HttpContextBase.Request.Returns(httpRequestBase);
+            RouteValueDictionary routeValues = request.RequestContext.RouteData.Values;
+            routeValues["area"] = "administration";
+            routeValues["controller"] = "accounts";
+            routeValues["action"] = "details";
+            routeValues["language"] = "en";
+            MapRoutes();
 
             IIdentity identity = Substitute.For<IIdentity>();
             identity.Name.Returns(ObjectFactory.TestId + 1);
             identity.IsAuthenticated.Returns(true);
 
-            IPrincipal user = Substitute.For<IPrincipal>();
-            user.Identity.Returns(identity);
+            httpContext.User = Substitute.For<IPrincipal>();
+            httpContext.User.Identity.Returns(identity);
 
-            HttpContextBase.User.Returns(user);
-            HttpContext.User = user;
+            return httpContext;
+        }
+        public static HttpContextBase CreateHttpContextBase()
+        {
+            HttpContext httpContext = HttpContextFactory.CreateHttpContext();
 
-            request.RequestContext.RouteData.Values["area"] = "administration";
-            request.RequestContext.RouteData.Values["controller"] = "accounts";
-            request.RequestContext.RouteData.Values["action"] = "details";
-            request.RequestContext.RouteData.Values["language"] = "en";
-            MapRoutes();
+            HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(httpContext.Request);
+            httpRequestBase.ApplicationPath.Returns("/domain");
+
+            HttpContextBase httpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(httpContext);
+            httpContextBase.Response.Returns(new HttpResponseWrapper(httpContext.Response));
+            httpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
+            httpContextBase.Request.Returns(httpRequestBase);
+
+            return httpContextBase;
         }
 
-        private void MapRoutes()
+        private static void MapRoutes()
         {
             RouteTable.Routes.Clear();
 

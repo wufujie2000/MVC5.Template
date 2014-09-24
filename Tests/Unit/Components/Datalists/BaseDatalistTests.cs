@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             datalist = new BaseDatalistProxy<Role, RoleView>();
         }
 

@@ -12,7 +12,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
         }
 
         [TearDown]

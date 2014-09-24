@@ -37,7 +37,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             account = new AccountView();
 
             controller = Substitute.ForPartsOf<AuthController>(service, validator);
-            controller.Url = new UrlHelper(new HttpMock().HttpContext.Request.RequestContext);
             controller.ControllerContext = new ControllerContext();
         }
 
@@ -352,8 +351,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
             service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
 
             ActionResult expected = controller.RedirectToLocal("/Home/Index");
             ActionResult actual = controller.Login("/Home/Index");
@@ -378,8 +378,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Login_OnPostRedirectsToUrlIfAlreadyLoggedIn()
         {
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
             service.IsLoggedIn().Returns(true);
+            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
 
             ActionResult expected = controller.RedirectToLocal("/Home/Index");
             ActionResult actual = controller.Login(null, "/Home/Index");
@@ -401,6 +402,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Login_LogsInAccount()
         {
             validator.CanLogin(accountLogin).Returns(true);
+            controller.When(sub => sub.RedirectToLocal(null)).DoNotCallBase();
+            controller.RedirectToLocal(null).Returns(new RedirectResult("/"));
 
             controller.Login(accountLogin, null);
 
@@ -410,8 +413,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Login_RedirectsToUrlIfCanLogin()
         {
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
             validator.CanLogin(accountLogin).Returns(true);
+            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
+            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
 
             ActionResult actual = controller.Login(accountLogin, "/Home/Index");
             ActionResult expected = controller.RedirectToLocal("/Home/Index");

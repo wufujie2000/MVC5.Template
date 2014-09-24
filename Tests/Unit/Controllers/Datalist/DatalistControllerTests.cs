@@ -27,7 +27,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             controller = Substitute.ForPartsOf<DatalistController>(unitOfWork);
-            HttpContext.Current = new HttpMock().HttpContext;
+
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             datalist = Substitute.For<AbstractDatalist>();
             filter = new DatalistFilter();
         }

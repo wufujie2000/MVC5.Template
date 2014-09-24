@@ -22,15 +22,17 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            HttpMock httpMock = new HttpMock();
+            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            accountId = httpMock.HttpContextBase.User.Identity.Name;
+            accountId = httpContext.User.Identity.Name;
+
             controller = Substitute.ForPartsOf<BaseControllerProxy>();
-            controller.Url = new UrlHelper(httpMock.HttpContext.Request.RequestContext);
-            controller.ControllerContext = new ControllerContext(
-                httpMock.HttpContextBase,
-                httpMock.HttpContextBase.Request.RequestContext.RouteData,
-                controller);
+            controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = httpContext;
+            controller.ControllerContext.Controller = controller;
+            controller.ControllerContext.RouteData =
+                httpContext.Request.RequestContext.RouteData;
+            controller.Url = Substitute.For<UrlHelper>();
         }
 
         [TearDown]
@@ -102,10 +104,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToDefaultIfUrlIsNotLocal()
         {
+            controller.Url.IsLocalUrl("www.test.com").Returns(false);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult actual = controller.RedirectToLocal("http://www.test.com");
+            ActionResult actual = controller.RedirectToLocal("www.test.com");
             ActionResult expected = controller.RedirectToDefault();
 
             Assert.AreSame(expected, actual);
@@ -114,6 +117,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToLocalIfUrlIsLocal()
         {
+            controller.Url.IsLocalUrl("/Home/Index").Returns(true);
+
             String actual = (controller.RedirectToLocal("/Home/Index") as RedirectResult).Url;
             String expected = "/Home/Index";
 
@@ -244,9 +249,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BeginExecuteCore_SetsLangaugeFromRequestsRouteValues()
         {
+            controller.RouteData.Values["language"] = "lt";
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
             GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider["en"];
-            controller.RouteData.Values["language"] = "lt";
 
             controller.BaseBeginExecuteCore(asyncResult => { }, null);
 

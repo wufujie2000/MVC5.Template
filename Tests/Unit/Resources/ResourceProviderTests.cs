@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
         }
 

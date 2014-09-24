@@ -36,9 +36,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpMock().HttpContext;
-            provider = new MvcSiteMapProvider(siteMapPath, parser);
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+
             routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
+            provider = new MvcSiteMapProvider(siteMapPath, parser);
         }
 
         [TearDown]

@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [SetUp]
         public void SetUp()
         {
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             context = new TestingContext();
             logger = new Logger(context);
 

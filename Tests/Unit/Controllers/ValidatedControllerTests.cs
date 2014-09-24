@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             IService service = Substitute.For<IService>();
             controller = new ValidatedControllerProxy(service, validator);
             controller.ControllerContext = Substitute.For<ControllerContext>();
-            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
+            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
         }
 
         [TearDown]

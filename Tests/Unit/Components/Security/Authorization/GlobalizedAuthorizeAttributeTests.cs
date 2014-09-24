@@ -15,11 +15,11 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         public void HandleUnauthorizedRequest_RedirectsToLogin()
         {
             GlobalizedAuthorizeAttributeProxy attribute = new GlobalizedAuthorizeAttributeProxy();
+            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             AuthorizationContext context = new AuthorizationContext();
-            HttpContextBase http = new HttpMock().HttpContextBase;
 
-            context.RouteData = http.Request.RequestContext.RouteData;
-            context.HttpContext = http;
+            context.RouteData = httpContext.Request.RequestContext.RouteData;
+            context.HttpContext = httpContext;
 
             attribute.BaseHandleUnauthorizedRequest(context);
 

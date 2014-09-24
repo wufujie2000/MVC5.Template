@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service = Substitute.For<IService>();
             controller = new ServicedControllerProxy(service);
             controller.ControllerContext = Substitute.For<ControllerContext>();
-            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
+            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
         }
 
         #region Constructor: ServicedController(TService service)

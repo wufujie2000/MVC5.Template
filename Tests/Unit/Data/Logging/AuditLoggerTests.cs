@@ -29,8 +29,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context = new TestingContext();
             logger = new AuditLogger(context);
             dataContext = new TestingContext();
-            HttpContext.Current = new HttpMock().HttpContext;
             TestModel model = ObjectFactory.CreateTestModel();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
             TearDownData();
 

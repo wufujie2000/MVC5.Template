@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Services
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
             service = new AccountService(new UnitOfWork(context), mailClient, hasher);

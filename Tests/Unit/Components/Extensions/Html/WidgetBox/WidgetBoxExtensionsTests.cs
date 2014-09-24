@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUp()
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
         }
 

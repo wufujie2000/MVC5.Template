@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Helpers
 
         private static ControllerContext CreateControllerContext()
         {
-            HttpContextBase http = new HttpMock().HttpContextBase;
+            HttpContextBase http = HttpContextFactory.CreateHttpContextBase();
 
             return new ControllerContext(http, http.Request.RequestContext.RouteData, Substitute.For<ControllerBase>());
         }

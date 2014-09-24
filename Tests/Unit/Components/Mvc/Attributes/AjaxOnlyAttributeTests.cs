@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void IsValidForRequest_ReturnsFalseForNormalRequest()
         {
             ControllerContext context = new ControllerContext();
-            context.HttpContext = new HttpMock().HttpContextBase;
+            context.HttpContext = HttpContextFactory.CreateHttpContextBase();
             context.HttpContext.Request["X-Requested-With"].Returns(String.Empty);
 
             Assert.IsFalse(new AjaxOnlyAttribute().IsValidForRequest(context, null));
@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void IsValidForRequest_ReturnsTrueForAjaxRequest()
         {
             ControllerContext context = new ControllerContext();
-            context.HttpContext = new HttpMock().HttpContextBase;
+            context.HttpContext = HttpContextFactory.CreateHttpContextBase();
             context.HttpContext.Request["X-Requested-With"].Returns("XMLHttpRequest");
 
             Assert.IsTrue(new AjaxOnlyAttribute().IsValidForRequest(context, null));

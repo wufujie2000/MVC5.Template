@@ -28,9 +28,9 @@ namespace MvcTemplate.Tests.Unit.Validators
             hasher = Substitute.For<IHasher>();
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             validator = new AccountValidator(new UnitOfWork(context), hasher);
             validator.ModelState = new ModelStateDictionary();
-            HttpContext.Current = new HttpMock().HttpContext;
 
             TearDownData();
             SetUpData();
@@ -39,9 +39,9 @@ namespace MvcTemplate.Tests.Unit.Validators
         [TearDown]
         public void TearDown()
         {
-            context.Dispose();
-            validator.Dispose();
             HttpContext.Current = null;
+            validator.Dispose();
+            context.Dispose();
         }
 
         #region Method: CanRecover(AccountRecoveryView view)

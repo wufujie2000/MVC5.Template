@@ -14,26 +14,17 @@ namespace MvcTemplate.Tests.Unit.Controllers
     {
         private HomeController controller;
         private IAccountService service;
-        private String accountId;
 
         [SetUp]
         public void SetUp()
         {
-            HttpMock httpMock = new HttpMock();
-            HttpContext.Current = httpMock.HttpContext;
+            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             service = Substitute.For<IAccountService>();
-            accountId = HttpContext.Current.User.Identity.Name;
-            service.AccountExists(accountId).Returns(true);
 
             controller = new HomeController(service);
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpMock.HttpContextBase;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            HttpContext.Current = null;
+            controller.ControllerContext.HttpContext = httpContext;
+            service.AccountExists(httpContext.User.Identity.Name).Returns(true);
         }
 
         #region Method: Index()
@@ -41,7 +32,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Index_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            service.AccountExists(accountId).Returns(false);
+            String currentAccountId = controller.HttpContext.User.Identity.Name;
+            service.AccountExists(currentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
 
@@ -88,7 +80,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            service.AccountExists(accountId).Returns(false);
+            String currentAccountId = controller.HttpContext.User.Identity.Name;
+            service.AccountExists(currentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
 

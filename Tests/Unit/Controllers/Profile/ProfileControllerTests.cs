@@ -9,6 +9,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -26,6 +27,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
+            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
 
@@ -34,8 +36,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controller = new ProfileController(service, validator);
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = new HttpMock().HttpContextBase;
-            accountId = controller.ControllerContext.HttpContext.User.Identity.Name;
+            controller.ControllerContext.HttpContext = httpContext;
+            accountId = httpContext.User.Identity.Name;
         }
 
         #region Method: Edit()

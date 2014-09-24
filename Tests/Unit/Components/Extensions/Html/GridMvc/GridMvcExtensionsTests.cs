@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             options = SubstituteOptions<AllTypesView>();
             columns = SubstituteColumns<AllTypesView, DateTime?>(column);
 
-            HttpContext.Current = new HttpMock().HttpContext;
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();

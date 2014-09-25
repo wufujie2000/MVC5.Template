@@ -127,6 +127,7 @@
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
     <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\JQueryUI\jquery-ui.css" />
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.jpg" />
@@ -137,6 +138,10 @@
     <Content Include="Scripts\Datalist\datalist.min.js">
       <DependentUpon>datalist.js</DependentUpon>
     </Content>
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\FontAwesome\Fonts\FontAwesome.otf" />
     <None Include="Scripts\_references.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Globalization.xml" />
@@ -148,7 +153,6 @@
     </Content>
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\FontAwesome\font-awesome.css" />
-    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\GridMvc\gridmvc.css" />
     <Content Include="Content\JsTree\jstree.css" />
     <Content Include="Content\Shared\alerts.css">
@@ -397,18 +401,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\FontAwesome\Fonts\FontAwesome.otf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\Fonts\PTSans-Bold.woff" />

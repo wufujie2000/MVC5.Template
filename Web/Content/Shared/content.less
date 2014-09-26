@@ -45,19 +45,28 @@ body.public {
 
 .content-breadcrumb {
     padding-left: 10px;
+    font-weight: bold;
 
-    > a {
-        color: @content-color;
+    a {
+        color: @content-link-color;
         display: inline-block;
         padding: 8px;
+
+        &:hover {
+            color: @active-content-link-color;
+        }
 
         i {
             padding-right: 5px;
         }
     }
 
+    span {
+        color: @active-content-link-color;
+    }
+
     .current {
-        font-weight: bold;
+        color: @content-color;
     }
 }
 

@@ -33,17 +33,24 @@ body.public .public-action {
 }
 .content-breadcrumb {
   padding-left: 10px;
+  font-weight: bold;
 }
-.content-breadcrumb > a {
-  color: #555555;
+.content-breadcrumb a {
+  color: #999999;
   display: inline-block;
   padding: 8px;
 }
-.content-breadcrumb > a i {
+.content-breadcrumb a:hover {
+  color: #777777;
+}
+.content-breadcrumb a i {
   padding-right: 5px;
 }
+.content-breadcrumb span {
+  color: #777777;
+}
 .content-breadcrumb .current {
-  font-weight: bold;
+  color: #555555;
 }
 .content {
   padding: 15px;

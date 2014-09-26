@@ -7,14 +7,21 @@
 
 .header-navigation {
     float: right;
+    padding: 0;
 
     > .btn {
+        border: none;
         padding: 0;
+
+
+        &:last-child > a {
+            padding-right: 15px;
+        }
 
         > a {
             text-shadow: 0 0 @color;
-            padding: 10px 10px 9px;
             display: block;
+            padding: 10px;
             color: @color;
 
             .fa {

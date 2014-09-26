@@ -3,14 +3,19 @@
 }
 .header-navigation {
   float: right;
+  padding: 0;
 }
 .header-navigation > .btn {
+  border: none;
   padding: 0;
+}
+.header-navigation > .btn:last-child > a {
+  padding-right: 15px;
 }
 .header-navigation > .btn > a {
   text-shadow: 0 0 #cccccc;
-  padding: 10px 10px 9px;
   display: block;
+  padding: 10px;
   color: #cccccc;
 }
 .header-navigation > .btn > a .fa {

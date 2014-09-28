@@ -18,7 +18,7 @@ namespace MvcTemplate.Components.Mvc
         private IEnumerable<MvcSiteMapNode> GetNodes(XElement siteMap, MvcSiteMapNode parent)
         {
             List<MvcSiteMapNode> nodes = new List<MvcSiteMapNode>();
-            foreach (XElement siteMapNode in siteMap.Elements())
+            foreach (XElement siteMapNode in siteMap.Elements("siteMapNode"))
             {
                 MvcSiteMapNode node = new MvcSiteMapNode();
 

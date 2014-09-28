@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Globalization>
-    <Language name="English" culture="en-GB" abbrevation="en" is-default="true" />
-    <Language name="Lietuvių" culture="lt-LT" abbrevation="lt" />
-</Globalization>
+<globalization>
+    <language name="English" culture="en-GB" abbrevation="en" default="true" />
+    <language name="Lietuvių" culture="lt-LT" abbrevation="lt" />
+</globalization>

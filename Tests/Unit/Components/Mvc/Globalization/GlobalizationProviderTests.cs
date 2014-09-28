@@ -99,14 +99,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private void CreateGlobalizationXml(String path)
         {
-            XElement globalization = new XElement("Globalization");
-            XElement english = new XElement("Language");
+            XElement globalization = new XElement("globalization");
+            XElement english = new XElement("language");
             english.SetAttributeValue("name", "English");
             english.SetAttributeValue("culture", "en-GB");
             english.SetAttributeValue("abbrevation", "en");
-            english.SetAttributeValue("is-default", "true");
+            english.SetAttributeValue("default", "true");
 
-            XElement lithuanian = new XElement("Language");
+            XElement lithuanian = new XElement("language");
             lithuanian.SetAttributeValue("name", "Lietuvių");
             lithuanian.SetAttributeValue("culture", "lt-LT");
             lithuanian.SetAttributeValue("abbrevation", "lt");

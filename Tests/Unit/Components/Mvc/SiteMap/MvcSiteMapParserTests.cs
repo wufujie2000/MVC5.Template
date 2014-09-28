@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private XElement CreateSiteMap()
         {
-            XElement map = new XElement("SiteMap");
+            XElement map = new XElement("siteMap");
             XElement homeNode = CreateSiteMapNode(false, "fa fa-home", null, "Home", "Index");
             XElement administrationNode = CreateSiteMapNode(true, "fa fa-users", "Administration", null, null);
             XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
@@ -148,7 +148,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
         private XElement CreateSiteMapNode(Boolean isMenu, String icon, String area, String controller, String action)
         {
-            XElement siteMapNode = new XElement("SiteMapNode");
+            XElement siteMapNode = new XElement("siteMapNode");
             siteMapNode.SetAttributeValue("controller", controller);
             siteMapNode.SetAttributeValue("action", action);
             siteMapNode.SetAttributeValue("menu", isMenu);

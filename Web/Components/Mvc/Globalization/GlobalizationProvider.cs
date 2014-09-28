@@ -41,11 +41,11 @@ namespace MvcTemplate.Components.Mvc
             XElement languagesXml = XElement.Load(path);
             languages = new Dictionary<String, Language>();
 
-            foreach (XElement languageNode in languagesXml.Elements("Language"))
+            foreach (XElement languageNode in languagesXml.Elements("language"))
             {
                 Language language = new Language();
                 language.Culture = new CultureInfo((String)languageNode.Attribute("culture"));
-                language.IsDefault = (Boolean?)languageNode.Attribute("is-default") == true;
+                language.IsDefault = (Boolean?)languageNode.Attribute("default") == true;
                 language.Abbrevation = (String)languageNode.Attribute("abbrevation");
                 language.Name = (String)languageNode.Attribute("name");
 

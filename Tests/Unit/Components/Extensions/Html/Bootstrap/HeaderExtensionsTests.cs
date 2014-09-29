@@ -13,18 +13,18 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     [TestFixture]
     public class HeaderExtensionsTests
     {
-        private UrlHelper urlHelper;
         private HtmlHelper html;
+        private UrlHelper url;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUpFixture()
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
-            urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            url = new UrlHelper(html.ViewContext.RequestContext);
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
         }
 
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDownFixture()
         {
             GlobalizationManager.Provider = null;
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.ProfileLink().ToString();
             String expected = String.Format(
                 "<a href=\"{0}\"><i class=\"fa fa-user\"></i><span>{1}</span></a>",
-                urlHelper.Action("Edit", "Profile", new { area = String.Empty }),
+                url.Action("Edit", "Profile", new { area = String.Empty }),
                 ResourceProvider.GetActionTitle("Profile"));
 
             Assert.AreEqual(expected, actual);
@@ -80,10 +80,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "</li>" +
                 "</ul>",
                 ResourceProvider.GetActionTitle("Language"),
-                urlHelper.Action(action, new { area = routeValues["area"], language = "en", p = "1" }),
-                urlHelper.Action(action, new { area = routeValues["area"], language = "lt", p = "1" }),
-                urlHelper.Content("~/Images/Flags/en.gif"),
-                urlHelper.Content("~/Images/Flags/lt.gif"));
+                url.Action(action, new { area = routeValues["area"], language = "en", p = "1" }),
+                url.Action(action, new { area = routeValues["area"], language = "lt", p = "1" }),
+                url.Content("~/Images/Flags/en.gif"),
+                url.Content("~/Images/Flags/lt.gif"));
 
             Assert.AreEqual(expected, actual);
         }
@@ -101,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "<i class=\"fa fa-share\"></i>" +
                      "<span>{1}</span>" +
                 "</a>",
-                urlHelper.Action("Logout", "Auth", new { area = String.Empty }),
+                url.Action("Logout", "Auth", new { area = String.Empty }),
                 ResourceProvider.GetActionTitle("Logout"));
 
             Assert.AreEqual(expected, actual);

@@ -45,8 +45,8 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder languageContainer = new TagBuilder("div");
             TagBuilder currentLang = new TagBuilder("span");
             TagBuilder languageImg = new TagBuilder("img");
+            TagBuilder addon = CreateAddon("fa-globe");
             TagBuilder caret = new TagBuilder("span");
-            TagBuilder addon = CreateAddon("fa-flag");
 
             languageImg.MergeAttribute("alt", String.Empty);
             currentLang.AddCssClass("current-language");

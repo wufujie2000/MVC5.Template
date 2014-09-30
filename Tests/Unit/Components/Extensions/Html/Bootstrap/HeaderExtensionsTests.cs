@@ -69,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.LanguageLink().ToString();
             String expected = String.Format(
                 "<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">" +
-                    "<i class=\"fa fa-flag\"></i>{0}<span class=\"caret\"></span>" +
+                    "<i class=\"fa fa-globe\"></i>{0}<span class=\"caret\"></span>" +
                 "</a>" +
                 "<ul class=\"dropdown-menu\" role=\"menu\">" +
                     "<li>" +

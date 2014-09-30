@@ -63,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             XElement map = new XElement("siteMap");
             XElement homeNode = CreateSiteMapNode(false, "fa fa-home", null, "Home", "Index");
-            XElement administrationNode = CreateSiteMapNode(true, "fa fa-users", "Administration", null, null);
+            XElement administrationNode = CreateSiteMapNode(true, "fa fa-gears", "Administration", null, null);
             XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
             XElement accountsCreateNode = CreateSiteMapNode(true, "fa fa-file-o", "Administration", "Accounts", "Create");
 
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                     {
                         new MvcSiteMapNode()
                         {
-                            IconClass = "fa fa-users",
+                            IconClass = "fa fa-gears",
                             IsMenu = true,
 
                             Area = "Administration",

@@ -221,9 +221,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             XElement map = new XElement("siteMap");
             XElement homeNode = CreateSiteMapNode(true, "fa fa-home", null, "Home", "Index");
-            XElement administrationNode = CreateSiteMapNode(true, "fa fa-users", "Administration", null, null);
+            XElement administrationNode = CreateSiteMapNode(true, "fa fa-gears", "Administration", null, null);
 
-            XElement rolesNode = CreateSiteMapNode(true, "fa fa-male", "Administration", "Roles", "Index");
+            XElement rolesNode = CreateSiteMapNode(true, "fa fa-users", "Administration", "Roles", "Index");
             XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
             XElement accountsCreateNode = CreateSiteMapNode(true, "fa fa-file-o", "Administration", "Accounts", "Create");
 

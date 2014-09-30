@@ -31,7 +31,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             action.MergeAttribute("data-toggle", "dropdown");
             action.AddCssClass("dropdown-toggle");
-            icon.AddCssClass("fa fa-flag");
+            icon.AddCssClass("fa fa-globe");
             span.AddCssClass("caret");
 
             action.InnerHtml = String.Format("{0}{1}{2}", icon, ResourceProvider.GetActionTitle("Language"), span);

@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             String actual = html.AuthLanguageSelect().ToString();
             String expected = String.Format(
-                "<span class=\"fa fa-flag\"></span>" +
+                "<span class=\"fa fa-globe\"></span>" +
                 "<div class=\"language-container dropdown-toggle\" data-toggle=\"dropdown\">" +
                     "<span class=\"current-language\">" +
                         "<img alt=\"\" src=\"{0}\" />" +

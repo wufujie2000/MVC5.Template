@@ -3,7 +3,7 @@
     "CssIgnorePatterns": "bootstrap*; reset.css; normalize.css; jquery*; toastr*; foundation*; animate*; inuit*; elements*; ratchet*; hint*; flat-ui*; 960*; skeleton*",
     "EnableMenu": true,
     "EnablePixelPushing": true,
-    "ShowMenu": false
+    "ShowMenu": true
   },
   "CodeGen": {
     "AddTypeScriptReferencePath": true,
@@ -22,12 +22,13 @@
     "OutputDirectory": null,
     "ProcessSourceMapsForEditorEnhancements": true,
     "ShowPreviewPane": true,
-    "StrictMath": false,
     "WrapClosure": true
   },
   "Css": {
     "AdjustRelativePaths": true,
     "AutoMinify": false,
+    "Autoprefix": false,
+    "AutoprefixerBrowsers": null,
     "GzipMinifiedFiles": false,
     "MakeMinified": false,
     "OutputDirectory": null,
@@ -37,13 +38,11 @@
     "ShowUnsupported": true,
     "SyncBase64ImageValues": true,
     "SyncVendorValues": true,
-    "ValidateEmbedImages": false,
+    "ValidateEmbedImages": true,
     "ValidateStarSelector": true,
     "ValidateVendorSpecifics": true,
     "ValidateZeroUnit": true,
-    "ValidationLocation": "Messages",
-    "Autoprefix": false,
-    "AutoprefixerBrowsers": null
+    "ValidationLocation": "Messages"
   },
   "General": {
     "AllMessagesToOutputWindow": false,
@@ -81,7 +80,7 @@
   },
   "JavaScript": {
     "AutoMinify": false,
-    "BlockCommentCompletion": true,
+    "BlockCommentCompletion": false,
     "GenerateSourceMaps": false,
     "GzipMinifiedFiles": false,
     "LintOnBuild": false,
@@ -97,7 +96,7 @@
     "EnableChainCompilation": true,
     "GenerateSourceMaps": false,
     "MinifyInPlace": false,
-    "OutputDirectory": "",
+    "OutputDirectory": null,
     "ProcessSourceMapsForEditorEnhancements": true,
     "ShowPreviewPane": true,
     "StrictMath": false
@@ -105,12 +104,11 @@
   "LiveScript": {
     "CompileOnBuild": false,
     "CompileOnSave": true,
-    "GenerateSourceMaps": true,
+    "GenerateSourceMaps": false,
     "MinifyInPlace": false,
     "OutputDirectory": null,
     "ProcessSourceMapsForEditorEnhancements": true,
     "ShowPreviewPane": true,
-    "StrictMath": false,
     "WrapClosure": true
   },
   "Markdown": {
@@ -133,10 +131,9 @@
     "GenerateSourceMaps": false,
     "MinifyInPlace": false,
     "OutputDirectory": null,
+    "OutputStyle": "Expanded",
     "ProcessSourceMapsForEditorEnhancements": true,
-    "ShowPreviewPane": true,
-    "StrictMath": false,
-    "OutputStyle": "Expanded"
+    "ShowPreviewPane": true
   },
   "Sprite": {
     "CssOutputDirectory": null,
@@ -151,12 +148,11 @@
   "SweetJs": {
     "CompileOnBuild": false,
     "CompileOnSave": true,
-    "GenerateSourceMaps": true,
+    "GenerateSourceMaps": false,
     "MinifyInPlace": false,
     "OutputDirectory": null,
     "ProcessSourceMapsForEditorEnhancements": true,
-    "ShowPreviewPane": true,
-    "StrictMath": false
+    "ShowPreviewPane": true
   },
   "TypeScript": {
     "LintOnBuild": false,

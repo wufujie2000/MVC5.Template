@@ -7,20 +7,20 @@
 
 // Alerts closing & fading
 (function () {
-    $('div.alert').each(function (index, element) {
-        var alertDiv = $(element);
+    $('.alerts div.alert').each(function () {
+        var alert = $(this);
 
-        if (alertDiv.data('fadeout-after') != null && alertDiv.data('fadeout-after') != 0) {
+        if (alert.data('fadeout-after') != null && alert.data('fadeout-after') != 0) {
             setTimeout(function () {
-                alertDiv.fadeTo(300, 0).slideUp(300, function () {
+                alert.fadeTo(300, 0).slideUp(300, function () {
                     $(this).remove();
                 });
-            }, alertDiv.data('fadeout-after'));
+            }, alert.data('fadeout-after'));
         }
     });
 
     $(document).on('click', '.alert a.close', function () {
-        $(this).parent().parent().fadeTo(300, 0).slideUp(300, function () {
+        $(this.parentNode.parentNode).fadeTo(300, 0).slideUp(300, function () {
             $(this).hide();
         });
     });
@@ -41,13 +41,15 @@
 
 // Datepicker binding
 (function () {
-    $(".datepicker").each(function () {
-        $(this).datepicker();
-    });
+    var datePickers = $(".datepicker");
+    for (var i = 0; i < datePickers.length; i++) {
+        $(datePickers[i]).datepicker();
+    }
 
-    $(".datetimepicker").each(function () {
-        $(this).datetimepicker();
-    });
+    var datetimePickers = $(".datetimepicker");
+    for (var i = 0; i < datetimePickers.length; i++) {
+        $(datetimePickers[i]).datetimepicker();
+    }
 }());
 
 // GridMvc binding
@@ -141,8 +143,9 @@
 
 // JsTree binding
 (function () {
-    $('.js-tree-view').each(function () {
-        var treeView = $(this).jstree({
+    var jsTrees = $('.js-tree-view');
+    for (var i = 0; i < jsTrees.length; i++) {
+        var jsTree = $(jsTrees[i]).jstree({
             'plugins': [
                 'checkbox'
             ],
@@ -151,34 +154,40 @@
             }
         }).jstree();
 
-        $(this).prev('.js-tree-view-ids').children().each(function () {
-            treeView.select_node($(this).val(), false, true);
-        });
+        var selectedNodes = jsTree.element.prev('.js-tree-view-ids').children();
+        for (var j = 0; j < selectedNodes.length; j++) {
+            jsTree.select_node(selectedNodes[j].value, false, true);
+        }
 
-        treeView.element.show();
-    });
+        jsTree.element.show();
+    }
 
-    $(document).on('submit', 'form', function () {
-        $(this).find('.js-tree-view').each(function () {
-            var treeView = $(this).jstree();
-            var treeIdSpan = $(this).prev('.js-tree-view-ids');
+    if (jsTrees.length > 0) {
+        $(document).on('submit', 'form', function () {
+            var jsTrees = $(this).find('.js-tree-view');
+            for (var i = 0; i < jsTrees.length; i++) {
+                var jsTree = $(jsTrees[i]).jstree();
+                var treeIdSpan = jsTree.element.prev('.js-tree-view-ids');
 
-            treeIdSpan.empty();
-            $.each(treeView.get_selected(), function () {
-                var node = treeView.get_node(this);
-                if (node.li_attr.id) {
-                    treeIdSpan.append('<input type="hidden" value="' + node.li_attr.id + '" name="' + treeView.element.attr('for') + '" />');
+                treeIdSpan.empty();
+                var selectedNodes = jsTree.get_selected();
+                for (var j = 0; j < selectedNodes.length; j++) {
+                    var node = jsTree.get_node(selectedNodes[j]);
+                    if (node.li_attr.id) {
+                        treeIdSpan.append('<input type="hidden" value="' + node.li_attr.id + '" name="' + jsTree.element.attr('for') + '" />');
+                    }
                 }
-            });
+            }
         });
-    });
+    }
 }());
 
 // Datalist binding
 (function () {
-    $('.datalist-input').each(function () {
-        $(this).datalist();
-    });
+    var datalists = $('.datalist-input');
+    for (var i = 0; i < datalists.length; i++) {
+        $(datalists[i]).datalist();
+    }
 }());
 
 // NiceScroll binding

@@ -1,25 +1,28 @@
 // Search
 (function () {
     $(document).on('keyup', '#SearchInput', function () {
-        var searchString = $(this).val().toLowerCase();
-        if ($('.sidebar').width() < 100)
+        var searchString = this.value.toLowerCase();
+        if ($('.sidebar').width() < 100) {
             searchString = '';
+        }
 
         var menus = $('.sidebar-navigation li');
-        menus.each(function (index, element) {
-            var liElement = $(element);
-            if (liElement.text().toLowerCase().indexOf(searchString) >= 0)
-                if (liElement.hasClass('submenu')) {
-                    if (liElement.find('li:not(.submenu)').text().toLowerCase().indexOf(searchString) >= 0)
-                        liElement.show(500);
-                    else
-                        liElement.hide(500);
+        for (var i = 0; i < menus.length; i++) {
+            var menu = $(menus[i]);
+            if (menu.text().toLowerCase().indexOf(searchString) >= 0) {
+                if (menu.hasClass('submenu')) {
+                    if (menu.find('li:not(.submenu)').text().toLowerCase().indexOf(searchString) >= 0) {
+                        menu.show(500);
+                    } else {
+                        menu.hide(500);
+                    }
+                } else {
+                    menu.show(500);
                 }
-                else
-                    liElement.show(500);
-            else
-                liElement.hide(500);
-        });
+            } else {
+                menu.hide(500);
+            }
+        }
     });
 }());
 

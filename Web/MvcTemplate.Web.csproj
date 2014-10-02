@@ -148,7 +148,7 @@
     <Content Include="Views\Auth\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Auth\auth.css">
+    <Content Include="Content\Shared\Auth\auth.css">
       <DependentUpon>auth.less</DependentUpon>
     </Content>
     <Content Include="Content\Bootstrap\bootstrap.css" />
@@ -355,7 +355,7 @@
     <Content Include="Content\Shared\widget-box.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Auth\auth.less" />
+    <Content Include="Content\Shared\Auth\auth.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\mixins.less" />

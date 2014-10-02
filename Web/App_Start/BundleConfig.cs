@@ -28,7 +28,6 @@ namespace MvcTemplate.Web
             bundles.Add(new StyleBundle("~/Content/GridMvc/Bundle").Include("~/Content/GridMvc/*.css"));
             bundles.Add(new StyleBundle("~/Content/JsTree/Bundle").Include("~/Content/JsTree/*.css"));
             bundles.Add(new StyleBundle("~/Content/Datalist/Bundle").Include("~/Content/Datalist/*.css"));
-            bundles.Add(new StyleBundle("~/Content/Auth/Bundle").Include("~/Content/Auth/*.css"));
             bundles.Add(new StyleBundle("~/Content/Shared/Bundle").Include("~/Content/Shared/*.css"));
         }
     }

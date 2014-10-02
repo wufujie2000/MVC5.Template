@@ -52,7 +52,6 @@ namespace MvcTemplate.Tests.Unit.Web
                 "~/Content/GridMvc/Bundle",
                 "~/Content/JsTree/Bundle",
                 "~/Content/Datalist/Bundle",
-                "~/Content/Auth/Bundle",
                 "~/Content/Shared/Bundle"
             };
 

@@ -68,12 +68,22 @@
 .ui-datepicker table {
   margin: 0;
 }
+.ui-datepicker table tr:first-child td {
+  padding-top: 3px;
+}
+.ui-datepicker table tr:last-child td {
+  padding-bottom: 3px;
+}
 .ui-datepicker table th {
   font-size: 10px;
   border: none;
 }
 .ui-datepicker table td {
+  padding-right: 3px;
   border: none;
+}
+.ui-datepicker table td:first-child {
+  padding-left: 3px;
 }
 .ui-datepicker table td .ui-state-default {
   text-align: center;

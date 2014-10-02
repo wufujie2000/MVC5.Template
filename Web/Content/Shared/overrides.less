@@ -59,13 +59,28 @@
     table {
         margin: 0;
 
+        tr {
+            &:first-child td {
+                padding-top: 3px;
+            }
+            
+            &:last-child td {
+                padding-bottom: 3px;
+            }
+        }
+
         th {
             font-size: 10px;
             border: none;
         }
 
         td {
+            padding-right: 3px;
             border: none;
+
+            &:first-child {
+                padding-left: 3px;
+            }
 
             .ui-state-default {
                 text-align: center;

@@ -1,19 +1,23 @@
-﻿.alert {
-    margin-bottom: 3px;
-    padding: 8px 15px;
+﻿.alerts {
+    padding: 10px 0;
 
-    div {
-	    vertical-align: middle;
-        text-align: justify;
-        display: table-cell;
-    }
+    .alert {
+        padding: 8px 15px;
+        margin: 0;
 
-    .alert-text {
-        padding-right: 10px;
-        width: 100%;
-    }
+        &+ .alert {
+            margin-top: 3px;
+        }
 
-    &:last-child {
-        margin-bottom: 10px;
+        div {
+            vertical-align: middle;
+            text-align: justify;
+            display: table-cell;
+        }
+
+        .alert-text {
+            padding-right: 10px;
+            width: 100%;
+        }
     }
 }

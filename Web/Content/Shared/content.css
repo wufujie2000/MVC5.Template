@@ -53,7 +53,7 @@ body.public .public-action {
   color: #555555;
 }
 .content {
-  padding: 15px;
+  padding: 0 20px 20px;
   float: left;
   width: 100%;
 }

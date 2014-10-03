@@ -5,7 +5,7 @@
     });
 }());
 
-// Alerts closing & fading
+// Alerts fading & closing
 (function () {
     $('.alerts div.alert').each(function () {
         var alert = $(this);
@@ -21,7 +21,7 @@
 
     $(document).on('click', '.alert a.close', function () {
         $(this.parentNode.parentNode).fadeTo(300, 0).slideUp(300, function () {
-            $(this).hide();
+            $(this).remove();
         });
     });
 }());

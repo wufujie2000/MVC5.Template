@@ -403,10 +403,10 @@
     <Content Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Shared\Fonts\PTSans-Bold.woff" />
+    <Content Include="Content\Fonts\PTSans-Bold.woff" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Shared\Fonts\PTSans.woff" />
+    <Content Include="Content\Fonts\PTSans.woff" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Administration\Accounts\Index.cshtml" />

@@ -29,13 +29,13 @@ namespace MvcTemplate.Services
 
         public virtual void Create(<#= Model.View #> view)
         {
-            <#= Model.Model #> model = UnitOfWork.ToModel<<#= Model.View #>, <#= Model.Model #>>(view);
+            <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
             UnitOfWork.Repository<<#= Model.Model #>>().Insert(model);
             UnitOfWork.Commit();
         }
         public virtual void Edit(<#= Model.View #> view)
         {
-            <#= Model.Model #> model = UnitOfWork.ToModel<<#= Model.View #>, <#= Model.Model #>>(view);
+            <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
             UnitOfWork.Repository<<#= Model.Model #>>().Update(model);
             UnitOfWork.Commit();
         }

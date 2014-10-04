@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             <#= Model.Model #> model = context.Set<<#= Model.Model #>>().SingleOrDefault();
 
-            <#= Model.View #> expected = Mapper.Map<<#= Model.Model #>, <#= Model.View #>>(model);
+            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(model);
             <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
 
             TestHelper.PropertyWiseEqual(expected, actual);

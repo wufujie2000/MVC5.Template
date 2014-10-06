@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.1.3
+ * Datalist 3.2.0
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © 2014 NonFactors
@@ -38,7 +38,7 @@
             e.addClass('mvc-datalist');
         },
         _initFilters: function () {
-            for (i = 0; i < this.options.filters.length; i++) {
+            for (var i = 0; i < this.options.filters.length; i++) {
                 this._initFilter($('#' + this.options.filters[i]));
             }
         },
@@ -167,7 +167,7 @@
         },
         _formFiltersQuery: function () {
             var additionaFilter = '';
-            for (i = 0; i < this.options.filters.length; i++) {
+            for (var i = 0; i < this.options.filters.length; i++) {
                 var filter = $('#' + this.options.filters[i]);
                 if (filter.length == 1) {
                     additionaFilter += '&' + this.options.filters[i] + '=' + filter.val();
@@ -277,19 +277,17 @@
         _updateHeader: function (datalist, columns) {
             var that = this;
             var header = '';
-            var columnCount = 0;
-            $.each(columns, function (index, column) {
+
+            for (var i = 0; i < columns.length; i++) {
+                var column = columns[i];
                 header += '<th class="' + (column.CssClass != null ? column.CssClass : '') + '" data-column="' + column.Key + '">' + (column.Header != null ? column.Header : '');
-                if (that.options.sortColumn == column.Key || (that.options.sortColumn == '' && columnCount == 0)) {
-                    header += '<span class="datalist-sort-arrow glyphicon glyphicon-sort-by-attributes' + (that.options.sortOrder == 'Asc' ? '' : '-alt') + '"></span>';
+                if (that.options.sortColumn == column.Key || (that.options.sortColumn == '' && i == 0)) {
+                    header += '<span class="datalist-sort-arrow glyphicon glyphicon-sort-by-attributes' + (that.options.sortOrder == 'Asc' ? '' : '-alt') + '"></span></th>';
                     that.options.sortColumn = column.Key;
                 } else {
-                    header += '<span class="datalist-sort-arrow"></span>';
+                    header += '<span class="datalist-sort-arrow"></span></th>';
                 }
-
-                header += '</th>';
-                columnCount++;
-            });
+            }
 
             datalist.find('.datalist-table-head').html('<tr>' + header + '<th class="datalist-select-header"></th></tr>');
             datalist.find('.datalist-table-head th').click(function () {
@@ -319,9 +317,11 @@
             for (var i = 0; i < data.Rows.length; i++) {
                 var tableRow = '<tr>';
                 var row = data.Rows[i];
-                $.each(data.Columns, function (index, column) {
+
+                for (var j = 0; j < data.Columns.length; j++) {
+                    var column = data.Columns[j];
                     tableRow += '<td class="' + (column.CssClass != null ? column.CssClass : '') + '">' + (row[column.Key] != null ? row[column.Key] : '') + '</td>';
-                });
+                }
 
                 tableRow += '<td class="datalist-select-cell"><div class="datalist-select-container"><i class="glyphicon glyphicon-ok"></i></div></td></tr>';
                 tableData += tableRow;
@@ -329,8 +329,8 @@
 
             datalist.find('.datalist-table-body').html(tableData);
             var selectCells = datalist.find('td.datalist-select-cell');
-            for (var i = 0; i < selectCells.length; i++) {
-                this._bindSelect(datalist, selectCells[i], data.Rows[i]);
+            for (var k = 0; k < selectCells.length; k++) {
+                this._bindSelect(datalist, selectCells[k], data.Rows[k]);
             }
         },
         _updateNavbar: function (datalist, filteredRecords) {
@@ -412,13 +412,18 @@
     };
 
     var datalist = $('#Datalist');
-    datalist.find('.datalist-items-per-page').spinner({ min: 1, max: 99 });
-    datalist.dialog({
-        autoOpen: false,
-        minHeight: 210,
-        height: 'auto',
-        minWidth: 455,
-        width: 'auto',
-        modal: true
+
+    $(function () {
+        datalist.find('.datalist-items-per-page').spinner({ min: 1, max: 99 });
+        datalist.dialog({
+            autoOpen: false,
+            minHeight: 210,
+            height: 'auto',
+            minWidth: 455,
+            width: 'auto',
+            modal: true
+        });
+
+        $('.datalist-input').datalist();
     });
 })(jQuery);

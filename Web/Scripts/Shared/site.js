@@ -182,14 +182,6 @@
     }
 }());
 
-// Datalist binding
-(function () {
-    var datalists = $('.datalist-input');
-    for (var i = 0; i < datalists.length; i++) {
-        $(datalists[i]).datalist();
-    }
-}());
-
 // NiceScroll binding
 (function () {
     $('body').niceScroll({

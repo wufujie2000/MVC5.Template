@@ -7,6 +7,9 @@
   margin-bottom: 20px;
   border-radius: 4px;
 }
+.auth-content div:last-child {
+  border-bottom-style: none;
+}
 .auth-content .input-group {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -60,9 +63,6 @@
 .auth-content .language-container .caret {
   margin-top: 8px;
   float: right;
-}
-.auth-content div:last-child {
-  border-bottom-style: none;
 }
 .btn {
   margin-bottom: 20px;

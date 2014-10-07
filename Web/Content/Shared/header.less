@@ -13,6 +13,11 @@
         border: none;
         padding: 0;
 
+        &.open > a,
+        &:hover > a {
+            .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+            color: @active-color;
+        }
 
         &:last-child > a {
             padding-right: 15px;
@@ -31,12 +36,6 @@
             .caret {
                 margin-left: 5px;
             }
-        }
-
-        &.open > a,
-        &:hover > a {
-            .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
-            color: @active-color;
         }
 
         .dropdown-menu {

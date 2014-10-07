@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Web;
 
-namespace MvcTemplate.Tests.Unit.Objects.Models.System
+namespace MvcTemplate.Tests.Unit.Objects
 {
     [TestFixture]
     public class AuditLogTests

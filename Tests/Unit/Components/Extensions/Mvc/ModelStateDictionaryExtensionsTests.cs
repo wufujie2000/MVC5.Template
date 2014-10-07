@@ -36,9 +36,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Test]
         public void AddModelError_AddsModelErrorMessage()
         {
-            String expected = "Test error";
-            modelState.AddModelError(expression, expected);
+            modelState.AddModelError(expression, "Test error");
+
             String actual = modelState.Single().Value.Errors.Single().ErrorMessage;
+            String expected = "Test error";
 
             Assert.AreEqual(expected, actual);
         }

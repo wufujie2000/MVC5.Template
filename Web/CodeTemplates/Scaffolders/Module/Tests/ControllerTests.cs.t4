@@ -106,7 +106,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Details(String id)
 
         [Test]
-        public void Details_OnNotFoundModelRedirectsToNotFound()
+        public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
@@ -134,7 +134,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Edit(String id)
 
         [Test]
-        public void Edit_OnNotFoundModelRedirectsToNotFound()
+        public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
@@ -199,7 +199,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_OnNotFoundModelRedirectsToNotFound()
+        public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();

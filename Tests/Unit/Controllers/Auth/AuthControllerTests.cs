@@ -352,11 +352,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
-            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
+            controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
+            controller.RedirectToLocal("/").Returns(new RedirectResult("/"));
 
-            ActionResult expected = controller.RedirectToLocal("/Home/Index");
-            ActionResult actual = controller.Login("/Home/Index");
+            ActionResult expected = controller.RedirectToLocal("/");
+            ActionResult actual = controller.Login("/");
 
             Assert.AreEqual(expected, actual);
         }
@@ -379,11 +379,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Login_OnPostRedirectsToUrlIfAlreadyLoggedIn()
         {
             service.IsLoggedIn().Returns(true);
-            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
+            controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
+            controller.RedirectToLocal("/").Returns(new RedirectResult("/"));
 
-            ActionResult expected = controller.RedirectToLocal("/Home/Index");
-            ActionResult actual = controller.Login(null, "/Home/Index");
+            ActionResult expected = controller.RedirectToLocal("/");
+            ActionResult actual = controller.Login(null, "/");
 
             Assert.AreEqual(expected, actual);
         }
@@ -414,11 +414,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Login_RedirectsToUrlIfCanLogin()
         {
             validator.CanLogin(accountLogin).Returns(true);
-            controller.When(sub => sub.RedirectToLocal("/Home/Index")).DoNotCallBase();
-            controller.RedirectToLocal("/Home/Index").Returns(new RedirectResult("/Home/Index"));
+            controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
+            controller.RedirectToLocal("/").Returns(new RedirectResult("/"));
 
-            ActionResult actual = controller.Login(accountLogin, "/Home/Index");
-            ActionResult expected = controller.RedirectToLocal("/Home/Index");
+            ActionResult actual = controller.Login(accountLogin, "/");
+            ActionResult expected = controller.RedirectToLocal("/");
 
             Assert.AreEqual(expected, actual);
         }

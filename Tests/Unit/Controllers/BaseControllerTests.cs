@@ -117,10 +117,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void RedirectToLocal_RedirectsToLocalIfUrlIsLocal()
         {
-            controller.Url.IsLocalUrl("/Home/Index").Returns(true);
+            controller.Url.IsLocalUrl("/").Returns(true);
 
-            String actual = (controller.RedirectToLocal("/Home/Index") as RedirectResult).Url;
-            String expected = "/Home/Index";
+            String actual = (controller.RedirectToLocal("/") as RedirectResult).Url;
+            String expected = "/";
 
             Assert.AreEqual(expected, actual);
         }

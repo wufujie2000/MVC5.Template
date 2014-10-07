@@ -123,7 +123,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.IsNotNull(context.Set<AuditLog>().SingleOrDefault());
+            Assert.IsTrue(context.Set<AuditLog>().Any());
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Save();
             logger.Save();
 
-            Assert.IsNotNull(context.Set<AuditLog>().SingleOrDefault());
+            Assert.IsTrue(context.Set<AuditLog>().Any());
         }
 
         #endregion

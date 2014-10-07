@@ -4,7 +4,7 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 
-namespace MvcTemplate.Tests.Data.Mapping
+namespace MvcTemplate.Tests.Unit.Data.Mapping
 {
     [TestFixture]
     public class ObjectMapperTests

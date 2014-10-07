@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             }
 
             context = new TestingContext();
-            model = context.Set<Role>().SingleOrDefault();
+            model = context.Set<Role>().Single();
             entry = context.Entry<BaseModel>(model);
             entry.State = EntityState.Modified;
         }

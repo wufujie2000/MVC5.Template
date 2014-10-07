@@ -88,8 +88,12 @@ namespace MvcTemplate.Components.Security
         {
             IEnumerable<MethodInfo> actionMethods = controller
                 .GetMethods()
-                .Where(method => (method.GetCustomAttribute<ActionNameAttribute>() != null &&
-                    method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()) ||
+                .Where(method =>
+                    (
+                        method.GetCustomAttribute<ActionNameAttribute>() != null &&
+                        method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()
+                    )
+                    ||
                     method.Name.ToLowerInvariant() == action.ToLowerInvariant());
 
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);

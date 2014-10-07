@@ -123,7 +123,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Details(String id)
 
         [Test]
-        public void Details_OnNotFoundModelRedirectsToNotFound()
+        public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
@@ -151,7 +151,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Edit(String id)
 
         [Test]
-        public void Edit_OnNotFoundModelRedirectsToNotFound()
+        public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
@@ -226,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Delete(String id)
 
         [Test]
-        public void Delete_OnNotFoundModelRedirectsToNotFound()
+        public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView(String.Empty).Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();

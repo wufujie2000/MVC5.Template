@@ -59,9 +59,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetView_GetsViewById()
         {
-            <#= Model.Model #> model = context.Set<<#= Model.Model #>>().SingleOrDefault();
-
-            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(model);
+            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
             <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
 
             TestHelper.PropertyWiseEqual(expected, actual);
@@ -74,12 +72,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Create_Creates<#= Model.Model #>()
         {
-            TearDownData();
-
             <#= Model.View #> expected = new <#= Model.View #>();
             service.Create(expected);
 
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.Inconclusive("Not all properties tested");
@@ -96,8 +92,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Inconclusive("No update made");
             service.Edit(expected);
 
-            context = new TestingContext();
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().SingleOrDefault();
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single();
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.Inconclusive("Not all properties tested");
@@ -110,13 +105,11 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_Deletes<#= Model.Model #>()
         {
-            if (context.Set<<#= Model.Model #>>().SingleOrDefault() == null)
-                Assert.Inconclusive();
+            Assume.That(context.Set<<#= Model.Model #>>().Any());
 
             service.Delete(<#= Model.ModelName #>.Id);
-            context = new TestingContext();
 
-            Assert.IsNull(context.Set<<#= Model.Model #>>().SingleOrDefault());
+            Assert.IsFalse(context.Set<<#= Model.Model #>>().Any());
         }
 
         #endregion

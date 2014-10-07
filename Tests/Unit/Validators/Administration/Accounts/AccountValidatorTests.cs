@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.CanReset(ObjectFactory.CreateAccountResetView());
 
             String expected = Validations.RecoveryTokenExpired;
-            String actual = validator.Alerts.First().Message;
+            String actual = validator.Alerts.Single().Message;
 
             Assert.AreEqual(expected, actual);
         }

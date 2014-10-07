@@ -154,7 +154,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<Role>()
                 .Project()
                 .To<RoleView>()
-                .OrderByDescending(account => account.CreationDate);
+                .OrderByDescending(view => view.CreationDate);
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
@@ -257,7 +257,7 @@ namespace MvcTemplate.Tests.Unit.Services
             roleView.Name += "EditedName";
             service.Edit(roleView);
 
-            Role actual = context.Set<Role>().SingleOrDefault();
+            Role actual = context.Set<Role>().Single();
             RoleView expected = roleView;
 
             Assert.AreEqual(roleView.CreationDate, actual.CreationDate);

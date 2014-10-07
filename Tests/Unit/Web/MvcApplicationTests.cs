@@ -263,10 +263,10 @@ namespace MvcTemplate.Tests.Unit.Web
         {
             application.RegisterDataTypeValidator();
 
-            ModelValidatorProviderCollection actualProviders = ModelValidatorProviders.Providers;
+            ModelValidatorProviderCollection providers = ModelValidatorProviders.Providers;
             Type expectedType = typeof(DataTypeValidatorProvider);
 
-            Assert.IsNotNull(actualProviders.SingleOrDefault(provider => provider.GetType() == expectedType));
+            Assert.IsNotNull(providers.SingleOrDefault(provider => provider.GetType() == expectedType));
         }
 
         #endregion
@@ -420,7 +420,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterFilters();
 
-            Object actual = GlobalFilters.Filters.First().Instance;
+            Object actual = GlobalFilters.Filters.Single().Instance;
             Object expected = filter;
 
             Assert.AreEqual(expected, actual);

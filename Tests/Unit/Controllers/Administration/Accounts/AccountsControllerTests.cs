@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Details(String id)
 
         [Test]
-        public void Details_OnNotFoundModelRedirectsToNotFound()
+        public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             service.GetView<AccountView>(String.Empty).Returns((AccountView)null);
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Edit(String id)
 
         [Test]
-        public void Edit_OnNotFoundModelRedirectsToNotFound()
+        public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             service.GetView<AccountView>(String.Empty).Returns((AccountView)null);

@@ -40,7 +40,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action)
         {
-            if (Authorization.Provider!= null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+            if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
                 return null;
 
             IGridColumn<T> gridColumn = column

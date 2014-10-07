@@ -116,7 +116,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: FormLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
+        #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Test]
         public void FormLabelFor_OnNotMemberExpressionThrows()

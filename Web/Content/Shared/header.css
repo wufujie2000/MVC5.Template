@@ -9,6 +9,16 @@
   border: none;
   padding: 0;
 }
+.header-navigation > .btn.open > a,
+.header-navigation > .btn:hover > a {
+  background-color: #396b86;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  color: #ffffff;
+}
 .header-navigation > .btn:last-child > a {
   padding-right: 15px;
 }
@@ -23,16 +33,6 @@
 }
 .header-navigation > .btn > a .caret {
   margin-left: 5px;
-}
-.header-navigation > .btn.open > a,
-.header-navigation > .btn:hover > a {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  color: #ffffff;
 }
 .header-navigation > .btn .dropdown-menu {
   border-top-right-radius: 0;

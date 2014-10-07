@@ -22,10 +22,9 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [Test]
         public void GetService_GetsService()
         {
-            Object actualInstance = resolver.GetService(typeof(AContext));
-            Type expectedType = typeof(AContext);
+            Object service = resolver.GetService(typeof(AContext));
 
-            Assert.IsInstanceOf(expectedType, actualInstance);
+            Assert.IsInstanceOf<Context>(service);
         }
 
         [Test]
@@ -42,10 +41,9 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         public void GetServices_GetsAllServices()
         {
             IEnumerable<Object> services = resolver.GetServices(typeof(AContext));
-            Type expected = typeof(AContext);
 
-            foreach (Object actual in services)
-                Assert.IsInstanceOf(expected, actual);
+            foreach (Object service in services)
+                Assert.IsInstanceOf<AContext>(service);
         }
 
         [Test]

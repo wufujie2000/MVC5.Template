@@ -34,11 +34,10 @@ namespace MvcTemplate.Tests.Unit.Web
             };
 
             BundleCollection bundles = new BundleCollection();
-            Type scriptBundle = typeof(ScriptBundle);
             config.RegisterBundles(bundles);
 
             foreach (String path in expectedBundles)
-                Assert.IsInstanceOf(scriptBundle, bundles.GetBundleFor(path));
+                Assert.IsInstanceOf<ScriptBundle>(bundles.GetBundleFor(path));
         }
 
         [Test]

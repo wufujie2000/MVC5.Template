@@ -113,7 +113,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetView_GetsViewById()
         {
-            Account account = context.Set<Account>().SingleOrDefault();
+            Account account = context.Set<Account>().Single();
 
             AccountView actual = service.GetView<AccountView>(accountId);
             AccountView expected = Mapper.Map<AccountView>(account);
@@ -206,7 +206,7 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView expected = ObjectFactory.CreateAccountView(2);
             service.Register(expected);
 
-            Account actual = context.Set<Account>().SingleOrDefault(model => model.Id == expected.Id);
+            Account actual = context.Set<Account>().Single(model => model.Id == expected.Id);
 
             Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -227,7 +227,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Register(view);
 
-            Account model = context.Set<Account>().SingleOrDefault(account => account.Id == view.Id);
+            Account model = context.Set<Account>().Single(account => account.Id == view.Id);
 
             Assert.AreEqual(expected, model.Email);
             Assert.AreEqual(expected, view.Email);
@@ -241,12 +241,12 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_EditsProfile()
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            Account expected = context.Set<Account>().SingleOrDefault();
+            Account expected = context.Set<Account>().Single();
             profile.Email = "test@tests.com";
             profile.Username += "1";
             service.Edit(profile);
 
-            Account actual = context.Set<Account>().SingleOrDefault();
+            Account actual = context.Set<Account>().Single();
 
             Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(hasher.HashPassword(profile.NewPassword), actual.Passhash);
@@ -265,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Edit(view);
 
-            Account model = context.Set<Account>().SingleOrDefault();
+            Account model = context.Set<Account>().Single();
 
             Assert.AreEqual(expected, model.Email);
             Assert.AreEqual(expected, view.Email);
@@ -278,7 +278,7 @@ namespace MvcTemplate.Tests.Unit.Services
             profile.NewPassword = null;
             service.Edit(profile);
 
-            Account actual = context.Set<Account>().SingleOrDefault();
+            Account actual = context.Set<Account>().Single();
 
             Assert.IsTrue(hasher.Verify(profile.Password, actual.Passhash));
         }
@@ -290,7 +290,7 @@ namespace MvcTemplate.Tests.Unit.Services
             profile.Username += "New username";
             service.Edit(profile);
 
-            String actual = context.Set<Account>().SingleOrDefault().RoleId;
+            String actual = context.Set<Account>().Single().RoleId;
             String expected = accountId;
 
             Assert.AreEqual(expected, actual);
@@ -311,7 +311,7 @@ namespace MvcTemplate.Tests.Unit.Services
             expected.RoleId = role.Id;
             service.Edit(expected);
 
-            Account actual = context.Set<Account>().SingleOrDefault();
+            Account actual = context.Set<Account>().Single();
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
@@ -327,7 +327,7 @@ namespace MvcTemplate.Tests.Unit.Services
             account.Username += "Edition";
             service.Edit(account);
 
-            String actual = context.Set<Account>().SingleOrDefault().Username;
+            String actual = context.Set<Account>().Single().Username;
 
             Assert.AreEqual(expected, actual);
         }
@@ -335,12 +335,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Edit_DoesNotEditAccountsPassword()
         {
-            String expected = context.Set<Account>().SingleOrDefault().Passhash;
             AccountEditView account = service.GetView<AccountEditView>(accountId);
+            String passhash = context.Set<Account>().Single().Passhash;
             account.Username += "Edition";
             service.Edit(account);
 
-            String actual = context.Set<Account>().SingleOrDefault().Passhash;
+            String actual = context.Set<Account>().Single().Passhash;
+            String expected = passhash;
 
             Assert.AreEqual(expected, actual);
         }
@@ -362,7 +363,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_DeletesAccount()
         {
-            Assert.IsTrue(context.Set<Account>().Any(account => account.Id == accountId));
+            Assume.That(context.Set<Account>().Any(account => account.Id == accountId));
 
             service.Delete(accountId);
 

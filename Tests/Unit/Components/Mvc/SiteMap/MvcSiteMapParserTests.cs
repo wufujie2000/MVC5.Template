@@ -27,7 +27,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
             IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetAllNodes(siteMap));
-            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap());
+            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap());
 
             IEnumerable<MvcSiteMapNode> expectedParents = expected.Select(node => node.Parent);
             IEnumerable<MvcSiteMapNode> actualParents = actual.Select(node => node.Parent);
@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyMenus()
         {
-            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(GetSiteMap()).Where(node => node.IsMenu);
+            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap()).Where(node => node.IsMenu);
             IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap));
             expected.Last().Parent = expected.First();
             expected.First().Parent = null;
@@ -74,7 +74,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             return map;
         }
-        private IEnumerable<MvcSiteMapNode> GetSiteMap()
+        private IEnumerable<MvcSiteMapNode> CreateExpectedSiteMap()
         {
             List<MvcSiteMapNode> map = new List<MvcSiteMapNode>()
             {

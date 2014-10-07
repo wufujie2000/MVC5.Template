@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
@@ -37,8 +36,8 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString AuthLanguageSelect(this HtmlHelper html)
         {
-            IEnumerable<Language> languages = GlobalizationManager.Provider.Languages;
-            if (languages.Count() < 2) return new MvcHtmlString(String.Empty);
+            if (GlobalizationManager.Provider.Languages.Count() < 2)
+                return new MvcHtmlString(String.Empty);
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);

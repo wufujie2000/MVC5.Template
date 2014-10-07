@@ -47,7 +47,7 @@
     }
 
     var datetimePickers = $(".datetimepicker");
-    for (var i = 0; i < datetimePickers.length; i++) {
+    for (i = 0; i < datetimePickers.length; i++) {
         $(datetimePickers[i]).datetimepicker();
     }
 }());

@@ -90,7 +90,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().Add(testModel);
             context.SaveChanges();
 
-            TestModel expected = context.Set<TestModel>().SingleOrDefault();
+            TestModel expected = context.Set<TestModel>().Single();
             TestModel actual = repository.GetById(testModel.Id);
 
             Assert.AreSame(expected, actual);
@@ -129,8 +129,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Insert(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault();
-            TestModel expected = repository.SingleOrDefault();
+            TestModel actual = context.Set<TestModel>().Single();
+            TestModel expected = repository.Single();
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }
@@ -150,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault();
+            TestModel actual = context.Set<TestModel>().Single();
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }
@@ -168,7 +168,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Update(expected);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault();
+            TestModel actual = context.Set<TestModel>().Single();
 
             TestHelper.PropertyWiseEqual(expected, actual);
         }
@@ -196,9 +196,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            TestModel actual = context.Set<TestModel>().SingleOrDefault();
-
-            Assert.IsNull(actual);
+            Assert.IsFalse(context.Set<TestModel>().Any());
         }
 
         #endregion

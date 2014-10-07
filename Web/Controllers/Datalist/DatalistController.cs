@@ -23,8 +23,8 @@ namespace MvcTemplate.Controllers
 
         public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter, Dictionary<String, Object> additionalFilters = null)
         {
-            datalist.CurrentFilter = filter;
             filter.AdditionalFilters = additionalFilters ?? filter.AdditionalFilters;
+            datalist.CurrentFilter = filter;
 
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);
         }

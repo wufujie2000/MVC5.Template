@@ -60,7 +60,7 @@ namespace MvcTemplate.Data.Migrations
                 context.SaveChanges();
             }
 
-            String adminRoleId = context.Set<Role>().First(role => role.Name == "Sys_Admin").Id;
+            String adminRoleId = context.Set<Role>().Single(role => role.Name == "Sys_Admin").Id;
             IEnumerable<RolePrivilege> adminPrivileges = context
                 .Set<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
@@ -85,7 +85,7 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
-                    RoleId = context.Set<Role>().First(p => p.Name == "Sys_Admin").Id
+                    RoleId = context.Set<Role>().Single(role => role.Name == "Sys_Admin").Id
                 },
                 new Account()
                 {

@@ -2,7 +2,7 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
 {
     if ($Delete)
     {
-	    Delete-ProjectItem $Project "$OutputPath.cs"
+        Delete-ProjectItem $Project "$OutputPath.cs"
         Return;
     }
 
@@ -16,28 +16,28 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
         -Template $Template `
         -Model @{ `
             ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
-	        ControllerTestNamespace = $ControllerTestsNamespace; `
+            ControllerTestNamespace = $ControllerTestsNamespace; `
             AreaRegistration = $Area + "AreaRegistration"; `
             ControllerNamespace = $ControllerNamespace; `
 
-		    Controller = $Controller + "Controller"; `
-		    IValidator = "I" + $Model + "Validator"; `
-		    IService = "I" + $Model + "Service"; `
-		    Validator = $Model + "Validator"; `
-		    Service = $Model + "Service"; `
+            Controller = $Controller + "Controller"; `
+            IValidator = "I" + $Model + "Validator"; `
+            IService = "I" + $Model + "Service"; `
+            Validator = $Model + "Validator"; `
+            Service = $Model + "Service"; `
             View = $Model + "View"; `
             Model = $Model; `
             Area = $Area; `
-	    } `
+        } `
         -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `
-	    -Project $Project
+        -Project $Project
 }
 Function Scaffold-AreaRegistration([String]$Template, [String]$Project, [String]$OutputPath)
 {
     if (!$Delete)
     {
-	    $ControllerNamespace = "MvcTemplate.Controllers"
+        $ControllerNamespace = "MvcTemplate.Controllers"
         $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
         If ($Area) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
         If ($Area) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area" }
@@ -46,21 +46,21 @@ Function Scaffold-AreaRegistration([String]$Template, [String]$Project, [String]
             -OutputPath $OutputPath `
             -Template $Template `
             -Model @{ `
-	            ControllerTestNamespace = $ControllerTestsNamespace; `
+                ControllerTestNamespace = $ControllerTestsNamespace; `
                 AreaRegistration = $Area + "AreaRegistration"; `
                 ControllerNamespace = $ControllerNamespace; `
                 Area = $Area; `
-	        } `
+            } `
             -SuccessMessage "Added $Project\{0}." `
             -TemplateFolders $TemplateFolders `
-	        -Project $Project
+            -Project $Project
     }
 }
 Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$OutputPath)
 {
     if ($Delete)
     {
-	    Delete-ProjectItem $Project "$OutputPath.cshtml"
+        Delete-ProjectItem $Project "$OutputPath.cshtml"
         Return;
     }
 
@@ -69,10 +69,10 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         -Template $Template `
         -Model @{ `
             View = $Model + "View"; `
-	    } `
+        } `
         -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `
-	    -Project $Project
+        -Project $Project
 }
 
 Function Scaffold-DbSet([String]$Project, [String]$Context)

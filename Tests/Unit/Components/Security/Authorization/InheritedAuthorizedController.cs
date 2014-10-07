@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         [HttpGet]
         public override ViewResult AllowAnonymousGetAction()
         {
- 	        return base.AllowAnonymousGetAction();
+            return base.AllowAnonymousGetAction();
         }
     }
 }

@@ -51,7 +51,7 @@ namespace MvcTemplate.Components.Extensions.Html
             return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
         }
 
-        public static MvcHtmlString FormLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
+        public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
             if (expression.IsRequired())

@@ -29,8 +29,8 @@ namespace MvcTemplate.Controllers
 
         protected BaseController()
         {
-            Alerts = new AlertsContainer();
             AuthorizationProvider = Authorization.Provider;
+            Alerts = new AlertsContainer();
         }
 
         public virtual ActionResult NotEmptyView(Object model)

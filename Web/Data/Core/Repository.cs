@@ -12,8 +12,8 @@ namespace MvcTemplate.Data.Core
 {
     public class Repository<TModel> : IRepository<TModel> where TModel : BaseModel
     {
-        private AContext context;
         private IDbSet<TModel> repository;
+        private AContext context;
 
         Type IQueryable.ElementType
         {
@@ -39,8 +39,8 @@ namespace MvcTemplate.Data.Core
 
         public Repository(AContext context)
         {
-            this.context = context;
             repository = context.Set<TModel>();
+            this.context = context;
         }
 
         public TModel GetById(String id)

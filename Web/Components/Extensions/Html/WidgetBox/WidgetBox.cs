@@ -17,21 +17,18 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder titleButtons = new TagBuilder("div");
             TagBuilder widgetTitle = new TagBuilder("div");
             TagBuilder titleHeader = new TagBuilder("h5");
-            TagBuilder titleIcon = new TagBuilder("i");
             widgetContent = new TagBuilder("div");
             widgetBox = new TagBuilder("div");
             writer = textWriter;
 
+            titleIconSpan.AddCssClass("widget-title-icon " + iconClass);
             titleButtons.AddCssClass("widget-title-buttons");
-            titleIconSpan.AddCssClass("widget-title-icon");
             widgetContent.AddCssClass("widget-content");
             widgetTitle.AddCssClass("widget-title");
             widgetBox.AddCssClass("widget-box");
-            titleIcon.AddCssClass(iconClass);
             titleButtons.InnerHtml = buttons;
             titleHeader.InnerHtml = title;
 
-            titleIconSpan.InnerHtml = titleIcon.ToString();
             widgetTitle.InnerHtml = String.Format("{0}{1}{2}", titleIconSpan, titleHeader, titleButtons);
 
             writer.Write(widgetBox.ToString(TagRenderMode.StartTag));

@@ -62,9 +62,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             return
                 "<div class=\"widget-box\">" +
                     "<div class=\"widget-title\">" +
-                        "<span class=\"widget-title-icon\">" +
-                            "<i class=\"Icon\"></i>" +
-                        "</span>" +
+                        "<span class=\"widget-title-icon Icon\"></span>" +
                         "<h5>Title</h5>" +
                         "<div class=\"widget-title-buttons\">Buttons</div>" +
                     "</div>" +

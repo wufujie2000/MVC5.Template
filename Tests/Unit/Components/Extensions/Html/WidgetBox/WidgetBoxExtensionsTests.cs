@@ -172,9 +172,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                         break;
                 }
 
-                TagBuilder span = new TagBuilder("span");
-                span.InnerHtml = ResourceProvider.GetActionTitle(action.ToString());
-
                 String button = String.Format(
                     html.ActionLink(
                             "{0}{1}",
@@ -183,7 +180,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                             new { @class = "btn" })
                         .ToString(),
                     icon,
-                    span);
+                    ResourceProvider.GetActionTitle(action.ToString()));
 
                 buttons += button;
             }

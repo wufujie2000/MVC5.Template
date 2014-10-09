@@ -17,18 +17,29 @@ namespace MvcTemplate.Data.Logging
 
         public LoggableProperty(DbPropertyEntry entry, Object originalValue)
         {
-            IsModified = entry.IsModified && !Object.Equals(originalValue, entry.CurrentValue);
-            this.currentValue = entry.CurrentValue;
-            this.originalValue = originalValue;
             this.propertyName = entry.Name;
+            this.originalValue = originalValue;
+            this.currentValue = entry.CurrentValue;
+            IsModified = entry.IsModified && !Object.Equals(originalValue, entry.CurrentValue);
         }
 
         public override String ToString()
         {
             if (IsModified)
-                return String.Format("{0}: {1} => {2}", propertyName, originalValue ?? "{null}", currentValue ?? "{null}");
+                return String.Format("{0}: {1} => {2}", propertyName, Format(originalValue), Format(currentValue));
 
-            return String.Format("{0}: {1}", propertyName, originalValue ?? "{null}");
+            return String.Format("{0}: {1}", propertyName, Format(originalValue));
+        }
+
+        private String Format(Object value)
+        {
+            if (value == null)
+                return "{null}";
+
+            if (typeof(DateTime?).IsAssignableFrom(value.GetType()))
+                return ((DateTime)value).ToString("yyyy-MM-dd hh:mm:ss");
+
+            return value.ToString();
         }
     }
 }

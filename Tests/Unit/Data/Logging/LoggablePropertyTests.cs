@@ -11,7 +11,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     [TestFixture]
     public class LoggablePropertyTests
     {
-        private DbPropertyEntry property;
+        private DbPropertyEntry textProperty;
+        private DbPropertyEntry dateProperty;
 
         [SetUp]
         public void SetUp()
@@ -21,7 +22,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
                 TestModel model = new TestModel();
                 context.Set<TestModel>().Add(model);
                 context.Entry(model).State = EntityState.Modified;
-                property = context.Entry(model).Property(prop => prop.Text);
+                textProperty = context.Entry(model).Property(prop => prop.Text);
+                dateProperty = context.Entry(model).Property(prop => prop.Date);
             }
         }
 
@@ -30,37 +32,37 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void LoggableProperty_IsNotModified()
         {
-            property.CurrentValue = "Original";
-            property.IsModified = false;
+            textProperty.CurrentValue = "Original";
+            textProperty.IsModified = false;
 
-            Assert.IsFalse(new LoggableProperty(property, "Original").IsModified);
+            Assert.IsFalse(new LoggableProperty(textProperty, "Original").IsModified);
         }
 
         [Test]
         public void LoggableProperty_IsNotModifiedWithDifferentValues()
         {
-            property.CurrentValue = "Current";
-            property.IsModified = false;
+            textProperty.CurrentValue = "Current";
+            textProperty.IsModified = false;
 
-            Assert.IsFalse(new LoggableProperty(property, "Original").IsModified);
+            Assert.IsFalse(new LoggableProperty(textProperty, "Original").IsModified);
         }
 
         [Test]
         public void LoggableProperty_IsNotModifiedWithSameValues()
         {
-            property.CurrentValue = "Original";
-            property.IsModified = true;
+            textProperty.CurrentValue = "Original";
+            textProperty.IsModified = true;
 
-            Assert.IsFalse(new LoggableProperty(property, "Original").IsModified);
+            Assert.IsFalse(new LoggableProperty(textProperty, "Original").IsModified);
         }
 
         [Test]
         public void LoggableProperty_IsModifiedWithDifferentValues()
         {
-            property.CurrentValue = "Current";
-            property.IsModified = true;
+            textProperty.CurrentValue = "Current";
+            textProperty.IsModified = true;
 
-            Assert.IsTrue(new LoggableProperty(property, "Original").IsModified);
+            Assert.IsTrue(new LoggableProperty(textProperty, "Original").IsModified);
         }
 
         #endregion
@@ -70,10 +72,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void ToString_FormatsModifiedWithCurrentValueNull()
         {
-            property.IsModified = true;
+            textProperty.CurrentValue = null;
+            textProperty.IsModified = true;
 
-            String expected = String.Format("{0}: {1} => {2}", property.Name, "Original", "{null}");
-            String actual = new LoggableProperty(property, "Original").ToString();
+            String expected = String.Format("{0}: {1} => {2}", textProperty.Name, "Original", "{null}");
+            String actual = new LoggableProperty(textProperty, "Original").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -81,11 +84,23 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void ToString_FormatsModifiedWithOriginalValueNull()
         {
-            property.CurrentValue = "Current";
-            property.IsModified = true;
+            textProperty.CurrentValue = "Current";
+            textProperty.IsModified = true;
 
-            String expected = String.Format("{0}: {1} => {2}", property.Name, "{null}", property.CurrentValue);
-            String actual = new LoggableProperty(property, null).ToString();
+            String expected = String.Format("{0}: {1} => {2}", textProperty.Name, "{null}", textProperty.CurrentValue);
+            String actual = new LoggableProperty(textProperty, null).ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ToString_FormatsModifiedToIsoDateTimeFormat()
+        {
+            dateProperty.CurrentValue = DateTime.MaxValue;
+            dateProperty.IsModified = true;
+
+            String expected = String.Format("{0}: {1} => {2}", dateProperty.Name, "{null}", DateTime.MaxValue.ToString("yyyy-MM-dd hh:mm:ss"));
+            String actual = new LoggableProperty(dateProperty, null).ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -93,10 +108,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void ToString_FormatsNotModified()
         {
-            property.IsModified = false;
+            textProperty.IsModified = false;
 
-            String expected = String.Format("{0}: {1}", property.Name, "Original");
-            String actual = new LoggableProperty(property, "Original").ToString();
+            String expected = String.Format("{0}: {1}", textProperty.Name, "Original");
+            String actual = new LoggableProperty(textProperty, "Original").ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -104,11 +119,23 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void ToString_FormatsNotModifiedWithOriginalValueNull()
         {
-            property.CurrentValue = "Current";
-            property.IsModified = false;
+            textProperty.CurrentValue = "Current";
+            textProperty.IsModified = false;
 
-            String expected = String.Format("{0}: {1}", property.Name, "{null}");
-            String actual = new LoggableProperty(property, null).ToString();
+            String expected = String.Format("{0}: {1}", textProperty.Name, "{null}");
+            String actual = new LoggableProperty(textProperty, null).ToString();
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ToString_FormatsNotModifiedToIsoDateTimeFormat()
+        {
+            dateProperty.CurrentValue = DateTime.MinValue;
+            dateProperty.IsModified = false;
+
+            String expected = String.Format("{0}: {1}", dateProperty.Name, DateTime.MinValue.ToString("yyyy-MM-dd hh:mm:ss"));
+            String actual = new LoggableProperty(dateProperty, null).ToString();
 
             Assert.AreEqual(expected, actual);
         }

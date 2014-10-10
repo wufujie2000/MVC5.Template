@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             dateProperty.IsModified = false;
 
             String expected = String.Format("{0}: {1}", dateProperty.Name, DateTime.MinValue.ToString("yyyy-MM-dd hh:mm:ss"));
-            String actual = new LoggableProperty(dateProperty, null).ToString();
+            String actual = new LoggableProperty(dateProperty, DateTime.MinValue).ToString();
 
             Assert.AreEqual(expected, actual);
         }

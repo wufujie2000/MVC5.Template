@@ -375,6 +375,22 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Test]
+        public void RegisterAdapters_RegistersMinLengthAdapter()
+        {
+            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
+
+            application.RegisterAdapters();
+
+            ModelValidator actual = provider
+                .GetValidators(metadata, new ControllerContext())
+                .SingleOrDefault(validator => validator.GetType() == typeof(MinLengthAdapter));
+
+            Assert.IsNotNull(actual);
+        }
+
+        [Test]
         public void RegisterAdapters_RegistersEmailAddressAdapter()
         {
             DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();

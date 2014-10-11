@@ -132,6 +132,9 @@
   <data name="FieldMustBeNumeric" xml:space="preserve">
     <value>'{0}' field must be numeric.</value>
   </data>
+  <data name="FieldMustBeWithMinLengthOf" xml:space="preserve">
+    <value>'{0}' field must be at least {1} characters long.</value>
+  </data>
   <data name="FieldMustNotExceedLength" xml:space="preserve">
     <value>'{0}' field must not exceed maximum length of {1}.</value>
   </data>

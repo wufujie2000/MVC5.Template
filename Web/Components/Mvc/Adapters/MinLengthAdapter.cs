@@ -10,6 +10,6 @@ namespace MvcTemplate.Components.Mvc
             : base(metadata, context, attribute)
         {
             Attribute.ErrorMessage = Validations.FieldMustBeWithMinLengthOf;
-        } 
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Shared;
-using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [SetUp]
         public void SetUp()
         {
-            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(TestView), "Id");
+            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
         }
 
         #region Constructor: MinLengthAdapter(ModelMetadata metadata, ControllerContext context, MinLengthAttribute attribute)

@@ -138,4 +138,7 @@
   <data name="FieldMustNotExceedLength" xml:space="preserve">
     <value>Laukas '{0}' negali viršyti maksimalaus {1} simbolių ilgio.</value>
   </data>
+  <data name="FiledMustBeGreaterOrEqualTo" xml:space="preserve">
+    <value>Laukas '{0}' turi būti didesnis arba lygus {1}.</value>
+  </data>
 </root>

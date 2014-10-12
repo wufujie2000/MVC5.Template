@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Shared;
-using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -18,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new RequiredAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(TestView), "Id");
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
             new RequiredAdapter(metadata, new ControllerContext(), attribute);
         }
 

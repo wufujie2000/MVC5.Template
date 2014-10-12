@@ -122,5 +122,14 @@ namespace MvcTemplate.Resources.Shared {
                 return ResourceManager.GetString("FieldMustNotExceedLength", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be greater or equal to {1}..
+        /// </summary>
+        public static string FiledMustBeGreaterOrEqualTo {
+            get {
+                return ResourceManager.GetString("FiledMustBeGreaterOrEqualTo", resourceCulture);
+            }
+        }
     }
 }

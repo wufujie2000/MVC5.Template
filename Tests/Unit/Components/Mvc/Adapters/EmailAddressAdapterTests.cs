@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Shared;
-using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +20,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new EmailAddressAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(TestView), "Id");
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "Email");
             adapter = new EmailAddressAdapter(metadata, new ControllerContext(), attribute);
         }
 

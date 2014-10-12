@@ -37,6 +37,13 @@
 
         return this.optional(element) || pattern.test(value);
     };
+
+    $.validator.methods.min = function (value, element, param) {
+        var numValue = Globalize.parseFloat(value);
+        var numParam = parseFloat(param);
+
+        return this.optional(element) || numValue >= numParam;
+    };
 }());
 
 // Datepicker binding

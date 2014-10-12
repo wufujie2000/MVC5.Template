@@ -138,4 +138,7 @@
   <data name="FieldMustNotExceedLength" xml:space="preserve">
     <value>'{0}' field must not exceed maximum length of {1}.</value>
   </data>
+  <data name="FiledMustBeGreaterOrEqualTo" xml:space="preserve">
+    <value>'{0}' field must be greater or equal to {1}.</value>
+  </data>
 </root>

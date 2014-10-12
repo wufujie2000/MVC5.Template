@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcTemplate.Components.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
@@ -7,6 +8,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     {
         [Required]
         public Int32? Required { get; set; }
+
+        [MinValue(128)]
+        public String MinValue { get; set; }
 
         [MinLength(128)]
         public String MinLength { get; set; }

@@ -4,7 +4,7 @@ This project will use the latest technologies and will try to incorporate the be
 
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
-2. Build project(might need to build twice) or restore NuGet packages.
+2. Build project or restore NuGet packages.
 3. Open "Package Manager Console" and run "update-database" command on "Data" project.
 4. Install necessary VS extensions if you don't have them already:
   - NUnit Tests Adapter.

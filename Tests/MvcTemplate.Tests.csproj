@@ -127,7 +127,9 @@
     <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\AdaptersModel.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MinLengthAdapterTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Adapters\MaxValueAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MinValueAdapterTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Attributes\MaxValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\MinValueAttributeTests.cs" />
     <Compile Include="Unit\Data\Logging\LoggablePropertyTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />

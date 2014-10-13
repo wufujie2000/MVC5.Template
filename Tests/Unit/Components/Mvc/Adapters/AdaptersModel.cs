@@ -12,6 +12,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [MinValue(128)]
         public String MinValue { get; set; }
 
+        [MaxValue(128)]
+        public String MaxValue { get; set; }
+
         [MinLength(128)]
         public String MinLength { get; set; }
 

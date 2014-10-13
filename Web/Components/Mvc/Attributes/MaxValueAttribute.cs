@@ -5,28 +5,28 @@ using System.ComponentModel.DataAnnotations;
 namespace MvcTemplate.Components.Mvc
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
-    public class MinValueAttribute : ValidationAttribute
+    public class MaxValueAttribute : ValidationAttribute
     {
-        public Decimal Minimum { get; private set; }
+        public Decimal Maximum { get; private set; }
 
-        public MinValueAttribute(Int32 minimum)
+        public MaxValueAttribute(Int32 maximum)
             : this()
         {
-            Minimum = minimum;
+            Maximum = maximum;
         }
-        public MinValueAttribute(Double minimum)
+        public MaxValueAttribute(Double maximum)
             : this()
         {
-            Minimum = Convert.ToDecimal(minimum);
+            Maximum = Convert.ToDecimal(maximum);
         }
-        private MinValueAttribute()
-            : base(() => Validations.FieldMustBeGreaterOrEqualTo)
+        private MaxValueAttribute()
+            : base(() => Validations.FieldMustBeLessOrEqualTo)
         {
         }
 
         public override String FormatErrorMessage(String name)
         {
-            return String.Format(ErrorMessageString, name, Minimum);
+            return String.Format(ErrorMessageString, name, Maximum);
         }
         public override Boolean IsValid(Object value)
         {
@@ -35,7 +35,7 @@ namespace MvcTemplate.Components.Mvc
 
             try
             {
-                return Convert.ToDecimal(value) >= Minimum;
+                return Convert.ToDecimal(value) <= Maximum;
             }
             catch (Exception)
             {

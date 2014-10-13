@@ -6,22 +6,22 @@ using System;
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     [TestFixture]
-    public class MinValueAttributeTests
+    public class MaxValueAttributeTests
     {
-        private MinValueAttribute attribute;
+        private MaxValueAttribute attribute;
 
         [SetUp]
         public void SetUp()
         {
-            attribute = new MinValueAttribute(12.56);
+            attribute = new MaxValueAttribute(12.56);
         }
 
-        #region Constructor: MinValueAttribute(Int32 minimum)
+        #region Constructor: MaxValueAttribute(Int32 maximum)
 
         [Test]
-        public void MinValueAttribute_SetsMinimumFromInteger()
+        public void MaxValueAttribute_SetsMaximumFromInteger()
         {
-            Decimal actual = new MinValueAttribute(10).Minimum;
+            Decimal actual = new MaxValueAttribute(10).Maximum;
             Decimal expected = 10M;
 
             Assert.AreEqual(expected, actual);
@@ -29,12 +29,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Constructor: MinValueAttribute(Double minimum)
+        #region Constructor: MaxValueAttribute(Double maximum)
 
         [Test]
-        public void MinValueAttribute_SetsMinimumFromDouble()
+        public void MaxValueAttribute_SetsMaximumFromDouble()
         {
-            Decimal actual = attribute.Minimum;
+            Decimal actual = attribute.Maximum;
             Decimal expected = 12.56M;
 
             Assert.AreEqual(expected, actual);
@@ -47,9 +47,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForInteger()
         {
-            MinValueAttribute attribute = new MinValueAttribute(10);
+            MaxValueAttribute attribute = new MaxValueAttribute(10);
 
-            String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
+            String expected = String.Format(Validations.FieldMustBeLessOrEqualTo, "Sum", attribute.Maximum);
             String actual = attribute.FormatErrorMessage("Sum");
 
             Assert.AreEqual(expected, actual);
@@ -58,8 +58,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForDouble()
         {
-            String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
-            String actual = new MinValueAttribute(12.56).FormatErrorMessage("Sum");
+            String expected = String.Format(Validations.FieldMustBeLessOrEqualTo, "Sum", attribute.Maximum);
+            String actual = new MaxValueAttribute(12.56).FormatErrorMessage("Sum");
 
             Assert.AreEqual(expected, actual);
         }
@@ -77,19 +77,19 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void IsValid_IsValidStringValue()
         {
-            Assert.IsTrue(attribute.IsValid("100"));
+            Assert.IsTrue(attribute.IsValid("5"));
         }
 
         [Test]
         public void IsValid_IsNotValidStringValue()
         {
-            Assert.IsFalse(attribute.IsValid("1"));
+            Assert.IsFalse(attribute.IsValid("100"));
         }
 
         [Test]
-        public void IsValid_LowerValueIsNotValid()
+        public void IsValid_GreaterValueIsNotValid()
         {
-            Assert.IsFalse(attribute.IsValid(12.559));
+            Assert.IsFalse(attribute.IsValid(13));
         }
 
         [Test]
@@ -99,9 +99,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void IsValid_GreaterValueIsValid()
+        public void IsValid_LowerValueIsValid()
         {
-            Assert.IsTrue(attribute.IsValid(13));
+            Assert.IsTrue(attribute.IsValid(12.559));
         }
 
         [Test]

@@ -39,10 +39,11 @@
     };
 
     $.validator.methods.min = function (value, element, param) {
-        var numValue = Globalize.parseFloat(value);
-        var numParam = parseFloat(param);
+        return this.optional(element) || Globalize.parseFloat(value) >= parseFloat(param);
+    };
 
-        return this.optional(element) || numValue >= numParam;
+    $.validator.methods.max = function (value, element, param) {
+        return this.optional(element) || Globalize.parseFloat(value) <= parseFloat(param);
     };
 }());
 

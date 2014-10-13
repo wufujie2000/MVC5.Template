@@ -88,11 +88,29 @@ namespace MvcTemplate.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be greater or equal to {1}..
+        /// </summary>
+        public static string FieldMustBeGreaterOrEqualTo {
+            get {
+                return ResourceManager.GetString("FieldMustBeGreaterOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must contain between {2} and {1} symbols..
         /// </summary>
         public static string FieldMustBeInRangeOfLength {
             get {
                 return ResourceManager.GetString("FieldMustBeInRangeOfLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be less or equal to {1}..
+        /// </summary>
+        public static string FieldMustBeLessOrEqualTo {
+            get {
+                return ResourceManager.GetString("FieldMustBeLessOrEqualTo", resourceCulture);
             }
         }
         
@@ -120,15 +138,6 @@ namespace MvcTemplate.Resources.Shared {
         public static string FieldMustNotExceedLength {
             get {
                 return ResourceManager.GetString("FieldMustNotExceedLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; field must be greater or equal to {1}..
-        /// </summary>
-        public static string FiledMustBeGreaterOrEqualTo {
-            get {
-                return ResourceManager.GetString("FiledMustBeGreaterOrEqualTo", resourceCulture);
             }
         }
     }

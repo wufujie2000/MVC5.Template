@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void GetData_SetsAdditionalFilters()
         {
-            Dictionary<String, Object> expected = new Dictionary<String, Object>() { { "Key", "Value" } };
+            Dictionary<String, Object> expected = new Dictionary<String, Object> { { "Key", "Value" } };
             controller.GetData(datalist, filter, expected);
 
             Dictionary<String, Object> actual = filter.AdditionalFilters;

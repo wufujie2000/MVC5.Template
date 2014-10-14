@@ -18,16 +18,16 @@ namespace MvcTemplate.Tests.Helpers
 
         private static void SetUpSubstitute(IGlobalizationProvider provider)
         {
-            List<Language> languages = new List<Language>()
+            List<Language> languages = new List<Language>
             {
-                new Language()
+                new Language
                 {
                     Culture = new CultureInfo("en-GB"),
                     Abbrevation = "en",
                     IsDefault = true,
                     Name = "English"
                 },
-                new Language()
+                new Language
                 {
                     Culture = new CultureInfo("lt-LT"),
                     Abbrevation = "lt",

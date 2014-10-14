@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Helpers
         public static HttpContext CreateHttpContext()
         {
             HttpRequest request = new HttpRequest(String.Empty, "http://localhost:19175/domain/", "p=1");
-            Hashtable browserCapabilities = new Hashtable() { { "cookies", "true" } };
+            Hashtable browserCapabilities = new Hashtable { { "cookies", "true" } };
             HttpBrowserCapabilities browser = new HttpBrowserCapabilities();
             HttpResponse response = new HttpResponse(new StringWriter());
             HttpContext httpContext = new HttpContext(request, response);
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static HttpContextBase CreateHttpContextBase()
         {
-            HttpContext httpContext = HttpContextFactory.CreateHttpContext();
+            HttpContext httpContext = CreateHttpContext();
 
             HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(httpContext.Request);
             httpRequestBase.ApplicationPath.Returns("/domain");

@@ -24,7 +24,7 @@ namespace MvcTemplate.Components.Alerts
         }
         public void Add(AlertTypes type, String message, Decimal fadeoutAfter)
         {
-            Add(new Alert()
+            Add(new Alert
             {
                 Message = message,
                 FadeoutAfter = fadeoutAfter,

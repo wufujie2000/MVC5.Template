@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.Form;
 using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentFormTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.Form.Titles.AdministrationAccounts;
+            String expected = Titles.AdministrationAccounts;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -44,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Resources
             routeValues["controller"] = "Profile";
             routeValues["area"] = null;
 
-            String expected = MvcTemplate.Resources.Form.Titles.Profile;
+            String expected = Titles.Profile;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);

@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Mvc
 
         public DataTypeValidatorProvider()
         {
-            numericTypes = new HashSet<Type>()
+            numericTypes = new HashSet<Type>
             {
               typeof (Byte),
               typeof (SByte),

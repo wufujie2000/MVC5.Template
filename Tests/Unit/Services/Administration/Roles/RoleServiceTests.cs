@@ -5,6 +5,7 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.Privilege;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Helpers;
@@ -345,8 +346,8 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private Role CreateRoleWithPrivileges()
         {
-            String[] actions = new[] { "Edit", "Delete" };
-            String[] controllers = new[] { "Roles", "Profile" };
+            String[] actions = { "Edit", "Delete" };
+            String[] controllers = { "Roles", "Profile" };
 
             Int32 privNumber = 1;
             Role role = ObjectFactory.CreateRole();
@@ -356,7 +357,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 foreach (String action in actions)
                 {
                     RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
-                    rolePrivilege.Privilege = new Privilege() { Controller = controller, Action = action };
+                    rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
                     rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;
                     rolePrivilege.PrivilegeId = rolePrivilege.Id;
@@ -382,7 +383,7 @@ namespace MvcTemplate.Tests.Unit.Services
             expectedTree.Nodes.Add(new JsTreeNode());
             JsTreeNode rootNode = expectedTree.Nodes[0];
 
-            rootNode.Name = MvcTemplate.Resources.Privilege.Titles.All;
+            rootNode.Name = Titles.All;
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
 
             IEnumerable<Privilege> allPrivileges = role

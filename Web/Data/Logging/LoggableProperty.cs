@@ -20,7 +20,7 @@ namespace MvcTemplate.Data.Logging
             this.propertyName = entry.Name;
             this.originalValue = originalValue;
             this.currentValue = entry.CurrentValue;
-            IsModified = entry.IsModified && !Object.Equals(originalValue, entry.CurrentValue);
+            IsModified = entry.IsModified && !Equals(originalValue, entry.CurrentValue);
         }
 
         public override String ToString()

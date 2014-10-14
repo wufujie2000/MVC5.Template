@@ -17,7 +17,7 @@ namespace MvcTemplate.Components.Mvc
         {
             return new[]
             {
-                new ModelClientValidationRule()
+                new ModelClientValidationRule
                 {
                     ErrorMessage = ErrorMessage,
                     ValidationType = "email"

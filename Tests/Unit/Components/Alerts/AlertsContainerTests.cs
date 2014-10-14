@@ -156,7 +156,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void GetEnumerator_ReturnsAlerts()
         {
-            List<Alert> alertsContainer = new List<Alert>() { new Alert() };
+            List<Alert> alertsContainer = new List<Alert> { new Alert() };
             foreach (Alert message in alertsContainer) alerts.Add(message);
 
             IEnumerator expected = alertsContainer.GetEnumerator();

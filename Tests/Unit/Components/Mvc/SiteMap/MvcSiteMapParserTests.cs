@@ -76,27 +76,27 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
         private IEnumerable<MvcSiteMapNode> CreateExpectedSiteMap()
         {
-            List<MvcSiteMapNode> map = new List<MvcSiteMapNode>()
+            List<MvcSiteMapNode> map = new List<MvcSiteMapNode>
             {
-                new MvcSiteMapNode()
+                new MvcSiteMapNode
                 {
                     IconClass = "fa fa-home",
 
                     Controller = "Home",
                     Action = "Index",
 
-                    Children = new List<MvcSiteMapNode>()
+                    Children = new List<MvcSiteMapNode>
                     {
-                        new MvcSiteMapNode()
+                        new MvcSiteMapNode
                         {
                             IconClass = "fa fa-gears",
                             IsMenu = true,
 
                             Area = "Administration",
 
-                            Children = new List<MvcSiteMapNode>()
+                            Children = new List<MvcSiteMapNode>
                             {
-                                new MvcSiteMapNode()
+                                new MvcSiteMapNode
                                 {
                                     IconClass = "fa fa-user",
                                     IsMenu = false,
@@ -105,9 +105,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                                     Controller = "Accounts",
                                     Action = "Index",
 
-                                    Children = new List<MvcSiteMapNode>()
+                                    Children = new List<MvcSiteMapNode>
                                     {
-                                        new MvcSiteMapNode()
+                                        new MvcSiteMapNode
                                         {
                                             IconClass = "fa fa-file-o",
                                             IsMenu = true,

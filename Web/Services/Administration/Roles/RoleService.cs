@@ -6,6 +6,7 @@ using MvcTemplate.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MvcTemplate.Resources.Privilege;
 
 namespace MvcTemplate.Services
 {
@@ -20,7 +21,7 @@ namespace MvcTemplate.Services
         {
             JsTreeNode rootNode = new JsTreeNode();
             view.PrivilegesTree.Nodes.Add(rootNode);
-            rootNode.Name = Resources.Privilege.Titles.All;
+            rootNode.Name = Titles.All;
 
             IEnumerable<Privilege> privileges = GetAllPrivileges();
             foreach (IGrouping<String, Privilege> area in privileges.GroupBy(privilege => privilege.Area))
@@ -126,7 +127,7 @@ namespace MvcTemplate.Services
         private void CreateRolePrivileges(RoleView view)
         {
             foreach (String privilegeId in view.PrivilegesTree.SelectedIds)
-                UnitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege()
+                UnitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege
                 {
                     RoleId = view.Id,
                     PrivilegeId = privilegeId

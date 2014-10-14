@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.SiteMap;
 using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
@@ -174,7 +175,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
-            String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
+            String expected = Titles.HomeIndex;
             String actual = provider.GetMenus().First().Title;
 
             Assert.AreEqual(expected, actual);
@@ -207,7 +208,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["action"] = "index";
             routeValues["area"] = null;
 
-            String expected = MvcTemplate.Resources.SiteMap.Titles.HomeIndex;
+            String expected = Titles.HomeIndex;
             String actual = provider.GetBreadcrumb().Single().Title;
 
             Assert.AreEqual(expected, actual);
@@ -275,7 +276,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             MvcSiteMapBreadcrumb breadcrumb = new MvcSiteMapBreadcrumb();
 
             foreach (MvcSiteMapNode node in nodes)
-                breadcrumb.Add(new MvcSiteMapBreadcrumbNode()
+                breadcrumb.Add(new MvcSiteMapBreadcrumbNode
                 {
                     Title = ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action),
                     IconClass = node.IconClass,

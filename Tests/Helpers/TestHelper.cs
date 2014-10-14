@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public static void PropertyWiseEqual<T>(T expected, T actual)
         {
-            if (Object.Equals(expected, actual)) return;
+            if (Equals(expected, actual)) return;
             if (expected == null || actual == null)
                 throw new AssertionException(String.Format("'{0}' is not equal to '{1}'.", expected, actual));
 

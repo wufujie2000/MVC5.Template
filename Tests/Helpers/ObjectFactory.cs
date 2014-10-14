@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public static Account CreateAccount(Int32 instanceNumber = 1)
         {
-            return new Account()
+            return new Account
             {
                 Id = TestId + instanceNumber,
                 Username = "Username" + TestId + instanceNumber,
@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static AccountView CreateAccountView(Int32 instanceNumber = 1)
         {
-            return new AccountView()
+            return new AccountView
             {
                 Id = TestId + instanceNumber,
                 Username = "Username" + TestId + instanceNumber,
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static ProfileEditView CreateProfileEditView(Int32 instanceNumber = 1)
         {
-            return new ProfileEditView()
+            return new ProfileEditView
             {
                 Id = TestId + instanceNumber,
                 Username = "Username" + TestId + instanceNumber,
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static AccountEditView CreateAccountEditView(Int32 instanceNumber = 1)
         {
-            return new AccountEditView()
+            return new AccountEditView
             {
                 Id = TestId + instanceNumber,
                 Username = "Username" + TestId + instanceNumber,
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static AccountLoginView CreateAccountLoginView(Int32 instanceNumber = 1)
         {
-            return new AccountLoginView()
+            return new AccountLoginView
             {
                 Id = TestId + instanceNumber,
                 Username = "Username" + TestId + instanceNumber,
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static AccountRecoveryView CreateAccountRecoveryView(Int32 instanceNumber = 1)
         {
-            return new AccountRecoveryView()
+            return new AccountRecoveryView
             {
                 Id = TestId + instanceNumber,
                 Email = TestId + instanceNumber + "@tests.com"
@@ -78,7 +78,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static AccountResetView CreateAccountResetView(Int32 instanceNumber = 1)
         {
-            return new AccountResetView()
+            return new AccountResetView
             {
                 Id = TestId + instanceNumber,
 
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public static Role CreateRole(Int32 instanceNumber = 1)
         {
-            return new Role()
+            return new Role
             {
                 Id = TestId + instanceNumber,
                 Name = "Name" + TestId + instanceNumber
@@ -97,7 +97,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static RoleView CreateRoleView(Int32 instanceNumber = 1)
         {
-            return new RoleView()
+            return new RoleView
             {
                 Id = TestId + instanceNumber,
                 Name = "Name" + TestId + instanceNumber
@@ -106,14 +106,14 @@ namespace MvcTemplate.Tests.Helpers
 
         public static RolePrivilege CreateRolePrivilege(Int32 instanceNumber = 1)
         {
-            return new RolePrivilege()
+            return new RolePrivilege
             {
                 Id = TestId + instanceNumber
             };
         }
         public static RolePrivilegeView CreateRolePrivilegeView(Int32 instanceNumber = 1)
         {
-            return new RolePrivilegeView()
+            return new RolePrivilegeView
             {
                 Id = TestId + instanceNumber
             };
@@ -121,7 +121,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public static Privilege CreatePrivilege(Int32 instanceNumber = 1)
         {
-            return new Privilege()
+            return new Privilege
             {
                 Id = TestId + instanceNumber,
                 Area = "Area" + instanceNumber,
@@ -131,7 +131,7 @@ namespace MvcTemplate.Tests.Helpers
         }
         public static PrivilegeView CreatePrivilegeView(Int32 instanceNumber = 1)
         {
-            return new PrivilegeView()
+            return new PrivilegeView
             {
                 Id = TestId + instanceNumber,
                 Controller = "Controller",
@@ -142,7 +142,7 @@ namespace MvcTemplate.Tests.Helpers
 
         public static TestModel CreateTestModel(Int32 instanceNumber = 1)
         {
-            return new TestModel()
+            return new TestModel
             {
                 Id = TestId + instanceNumber,
                 Text = "Text" + instanceNumber

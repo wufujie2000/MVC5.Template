@@ -359,6 +359,22 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterAdapters()
 
         [Test]
+        public void RegisterAdapters_RegistersRangeAdapter()
+        {
+            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "Range");
+
+            application.RegisterAdapters();
+
+            ModelValidator actual = provider
+                .GetValidators(metadata, new ControllerContext())
+                .SingleOrDefault(validator => validator.GetType() == typeof(RangeAdapter));
+
+            Assert.IsNotNull(actual);
+        }
+
+        [Test]
         public void RegisterAdapters_RegistersRequiredAdapter()
         {
             DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();

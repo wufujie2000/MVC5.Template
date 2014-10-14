@@ -129,6 +129,9 @@
   <data name="FieldMustBeGreaterOrEqualTo" xml:space="preserve">
     <value>'{0}' field must be greater or equal to {1}.</value>
   </data>
+  <data name="FieldMustBeInRange" xml:space="preserve">
+    <value>'{0}' field must be between {1} and {2}.</value>
+  </data>
   <data name="FieldMustBeInRangeOfLength" xml:space="preserve">
     <value>'{0}' field must contain between {2} and {1} symbols.</value>
   </data>

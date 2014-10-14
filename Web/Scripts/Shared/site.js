@@ -45,6 +45,10 @@
     $.validator.methods.max = function (value, element, param) {
         return this.optional(element) || Globalize.parseFloat(value) <= parseFloat(param);
     };
+
+    $.validator.methods.range = function (value, element, param) {
+        return this.optional(element) || (Globalize.parseFloat(value) >= parseFloat(param[0]) && Globalize.parseFloat(value) <= parseFloat(param[1]));
+    };
 }());
 
 // Datepicker binding

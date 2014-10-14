@@ -97,6 +97,15 @@ namespace MvcTemplate.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be between {1} and {2}..
+        /// </summary>
+        public static string FieldMustBeInRange {
+            get {
+                return ResourceManager.GetString("FieldMustBeInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must contain between {2} and {1} symbols..
         /// </summary>
         public static string FieldMustBeInRangeOfLength {

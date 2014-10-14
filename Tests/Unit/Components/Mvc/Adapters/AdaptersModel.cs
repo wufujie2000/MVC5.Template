@@ -6,6 +6,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class AdaptersModel
     {
+        [Range(0, 128)]
+        public Int32? Range { get; set; }
+
         [Required]
         public Int32? Required { get; set; }
 

@@ -66,6 +66,7 @@
     <Compile Include="Mvc\Adapters\MinLengthAdapter.cs" />
     <Compile Include="Mvc\Adapters\MaxValueAdapter.cs" />
     <Compile Include="Mvc\Adapters\MinValueAdapter.cs" />
+    <Compile Include="Mvc\Adapters\RangeAdapter.cs" />
     <Compile Include="Mvc\Adapters\StringLengthAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Mvc\Attributes\MaxValueAttribute.cs" />

@@ -145,6 +145,8 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.lt-LT.js" />
+    <Content Include="Scripts\JQuery\Cultures\globalize.culture.en-GB.js" />
+    <Content Include="Scripts\JQuery\Cultures\globalize.culture.lt-LT.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Globalization.xml" />
     <Content Include="Views\Auth\Reset.cshtml" />
@@ -206,11 +208,9 @@
     <Content Include="Scripts\Bootstrap\bootstrap.min.js">
       <DependentUpon>bootstrap.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Globalize\Cultures\globalize.culture.en-GB.js" />
-    <Content Include="Scripts\Globalize\Cultures\globalize.culture.lt-LT.js" />
-    <Content Include="Scripts\Globalize\globalize.js" />
-    <Content Include="Scripts\Globalize\globalize.min.js">
-      <DependentUpon>globalize.js</DependentUpon>
+    <Content Include="Scripts\JQuery\jquery.globalize.js" />
+    <Content Include="Scripts\JQuery\jquery.globalize.min.js">
+      <DependentUpon>jquery.globalize.js</DependentUpon>
     </Content>
     <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.en-GB.js" />
     <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.lt-LT.js" />

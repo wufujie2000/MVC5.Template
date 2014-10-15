@@ -14,7 +14,6 @@ namespace MvcTemplate.Web
             bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").Include("~/Scripts/JQuery/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Bootstrap/Bundle").Include("~/Scripts/Bootstrap/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").Include("~/Scripts/JQueryUI/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/Globalize/Bundle").Include("~/Scripts/Globalize/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/GridMvc/Bundle").Include("~/Scripts/GridMvc/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/JsTree/Bundle").Include("~/Scripts/JsTree/*.js"));
             bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").Include("~/Scripts/Datalist/*.js"));

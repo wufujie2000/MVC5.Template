@@ -26,7 +26,6 @@ namespace MvcTemplate.Tests.Unit.Web
                 "~/Scripts/JQuery/Bundle",
                 "~/Scripts/Bootstrap/Bundle",
                 "~/Scripts/JQueryUI/Bundle",
-                "~/Scripts/Globalize/Bundle",
                 "~/Scripts/GridMvc/Bundle",
                 "~/Scripts/JsTree/Bundle",
                 "~/Scripts/Datalist/Bundle",

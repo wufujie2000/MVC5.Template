@@ -27,12 +27,12 @@ namespace MvcTemplate.Data.Logging
                     case EntityState.Added:
                     case EntityState.Deleted:
                         entity = new LoggableEntity(entry);
-                        context.Set<AuditLog>().Add(new AuditLog(entity.Name, entity.Id, entity.ToString()));
+                        context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
                         break;
                     case EntityState.Modified:
                         entity = new LoggableEntity(entry);
                         if (entity.HasChanges)
-                            context.Set<AuditLog>().Add(new AuditLog(entity.Name, entity.Id, entity.ToString()));
+                            context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
                         break;
                 }
             }

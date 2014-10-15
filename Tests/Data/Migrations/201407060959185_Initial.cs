@@ -71,6 +71,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         AccountId = c.String(maxLength: 128),
+                        Action = c.String(nullable: false, maxLength: 128),
                         EntityName = c.String(nullable: false, maxLength: 128),
                         EntityId = c.String(nullable: false, maxLength: 128),
                         Changes = c.String(nullable: false),
@@ -78,6 +79,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .Index(t => t.AccountId)
+                .Index(t => t.Action)
                 .Index(t => t.EntityName)
                 .Index(t => t.EntityId);
             
@@ -114,6 +116,7 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropIndex("dbo.Logs", new[] { "AccountId" });
             DropIndex("dbo.AuditLogs", new[] { "EntityId" });
             DropIndex("dbo.AuditLogs", new[] { "EntityName" });
+            DropIndex("dbo.AuditLogs", new[] { "Action" });
             DropIndex("dbo.AuditLogs", new[] { "AccountId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });

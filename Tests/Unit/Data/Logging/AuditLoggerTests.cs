@@ -158,7 +158,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            AuditLog expected = new AuditLog(entity.Name, entity.Id, entity.ToString());
+            AuditLog expected = new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString());
             AuditLog actual = context.Set<AuditLog>().Single();
 
             Assert.AreEqual(expected.AccountId, actual.AccountId);

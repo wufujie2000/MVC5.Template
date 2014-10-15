@@ -32,7 +32,6 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context = new TestingContext();
             model = context.Set<Role>().Single();
             entry = context.Entry<BaseModel>(model);
-            entry.State = EntityState.Modified;
         }
 
         [TearDown]
@@ -73,6 +72,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void LoggableEntity_HasChangesIfAnyPropertyIsModified()
         {
             model.Name += "1";
+            entry = context.Entry<BaseModel>(model);
 
             Assert.IsTrue(new LoggableEntity(entry).HasChanges);
         }
@@ -100,12 +100,12 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Test]
-        public void LoggableEntity_SetsActionInLowercase()
+        public void LoggableEntity_SetsAction()
         {
             entry.State = EntityState.Deleted;
 
-            String expected = entry.State.ToString().ToLower();
             String actual = new LoggableEntity(entry).Action;
+            String expected = entry.State.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -148,8 +148,13 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void ToString_FormsEntityChanges()
         {
-            String actual = new LoggableEntity(entry).ToString();
-            String expected = FormExpectedChanges(entry);
+            StringBuilder changes = new StringBuilder();
+            LoggableEntity loggableEntity = new LoggableEntity(entry);
+            foreach (LoggableProperty property in loggableEntity.Properties)
+                changes.AppendFormat("{0}{1}", property, Environment.NewLine);
+
+            String actual = loggableEntity.ToString();
+            String expected = changes.ToString();
 
             Assert.AreEqual(expected, actual);
         }
@@ -179,20 +184,6 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
 
             TestHelper.EnumPropertyWiseEqual(expected, actual);
-        }
-        private String FormExpectedChanges(DbEntityEntry<BaseModel> entry)
-        {
-            LoggableEntity entity = new LoggableEntity(entry);
-            StringBuilder changes = new StringBuilder();
-            changes.AppendFormat("{0} {1}:{2}",
-                entity.Name,
-                entity.Action,
-                Environment.NewLine);
-
-            foreach (LoggableProperty property in entity.Properties)
-                changes.AppendFormat("    {0}{1}", property, Environment.NewLine);
-
-            return changes.ToString();
         }
 
         #endregion

@@ -48,20 +48,18 @@ namespace MvcTemplate.Data.Logging
             if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
             Properties = originalValues.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), originalValues[name]));
             HasChanges = Properties.Any(property => property.IsModified);
-            Action = entry.State.ToString().ToLower();
+            Action = entry.State.ToString();
             Name = entityType.Name;
             Id = entry.Entity.Id;
         }
 
         public override String ToString()
         {
-            StringBuilder entry = new StringBuilder();
-            entry.AppendFormat("{0} {1}:{2}", Name, Action, Environment.NewLine);
-
+            StringBuilder changes = new StringBuilder();
             foreach (LoggableProperty property in Properties)
-                entry.AppendFormat("    {0}{1}", property, Environment.NewLine);
+                changes.AppendFormat("{0}{1}", property, Environment.NewLine);
 
-            return entry.ToString();
+            return changes.ToString();
         }
     }
 }

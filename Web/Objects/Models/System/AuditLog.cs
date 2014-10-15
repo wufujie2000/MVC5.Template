@@ -14,6 +14,11 @@ namespace MvcTemplate.Objects
         [Index]
         [Required]
         [StringLength(128)]
+        public String Action { get; set; }
+
+        [Index]
+        [Required]
+        [StringLength(128)]
         public String EntityName { get; set; }
 
         [Index]
@@ -27,12 +32,13 @@ namespace MvcTemplate.Objects
         public AuditLog()
         {
         }
-        public AuditLog(String entityName, String entityId, String changes)
+        public AuditLog(String action, String entityName, String entityId, String changes)
         {
             AccountId = HttpContext.Current.User.Identity.Name;
             EntityName = entityName;
             EntityId = entityId;
             Changes = changes;
+            Action = action;
         }
     }
 }

@@ -36,13 +36,22 @@ namespace MvcTemplate.Tests.Unit.Objects
 
         #endregion
 
-        #region Constructor: AuditLog(String entityName, String entityId, String changes)
+        #region Constructor: AuditLog(String action, String entityName, String entityId, String changes)
 
         [Test]
         public void AuditLog_SetsAccountId()
         {
             String expected = HttpContext.Current.User.Identity.Name;
-            String actual = new AuditLog(null, null, null).AccountId;
+            String actual = new AuditLog(null, null, null, null).AccountId;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AuditLog_SetsAction()
+        {
+            String expected = HttpContext.Current.User.Identity.Name;
+            String actual = new AuditLog("Action", null, null, null).AccountId;
 
             Assert.AreEqual(expected, actual);
         }
@@ -50,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void AuditLog_SetsEntityName()
         {
-            String actual = new AuditLog("Nameless", null, null).EntityName;
+            String actual = new AuditLog(null, "Nameless", null, null).EntityName;
             String expected = "Nameless";
 
             Assert.AreEqual(expected, actual);
@@ -59,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void AuditLog_SetsEntityId()
         {
-            String actual = new AuditLog(null, "Id", null).EntityId;
+            String actual = new AuditLog(null, null, "Id", null).EntityId;
             String expected = "Id";
 
             Assert.AreEqual(expected, actual);
@@ -68,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void AuditLog_SetsChagnes()
         {
-            String actual = new AuditLog(null, null, "Changes").Changes;
+            String actual = new AuditLog(null, null, null, "Changes").Changes;
             String expected = "Changes";
 
             Assert.AreEqual(expected, actual);

@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 
 namespace MvcTemplate.Tests.Helpers
@@ -11,7 +10,7 @@ namespace MvcTemplate.Tests.Helpers
         {
             get
             {
-                return TestContext.CurrentContext.Test.Name;
+                return "Test";
             }
         }
 

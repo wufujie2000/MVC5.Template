@@ -22,8 +22,6 @@ namespace MvcTemplate.Tests.Unit.Security
         {
             context = new TestingContext();
             provider = new AuthorizationProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
-
-            TearDownData();
         }
 
         [TearDown]
@@ -35,746 +33,198 @@ namespace MvcTemplate.Tests.Unit.Security
 
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
 
-        #region Not attributed controller
+        #region Not attributed
 
         [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnNotAttributedController()
+        [TestCase("NotAttributed", "Get")]
+        [TestCase("NotAttributed", "Post")]
+        [TestCase("NotAttributed", "GetName")]
+        [TestCase("NotAttributed", "PostName")]
+        public void IsAuthorizedFor_AuthorizeNotAttributedActions(String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "NotAttributedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "NotAttributedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "NotAttributedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "NotAttributedPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnNotAttributedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnNotAttributedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnNotAttributedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnNotAttributedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionOnNotAttributedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionOnNotAttributedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizePostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnNotAttributedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnNotAttributedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizePostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowAnonymousPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowAnonymousGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowAnonymousPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowUnauthorizedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowUnauthorizedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowUnauthorizedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnNotAttributedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "NotAttributed", "AllowUnauthorizedPostActionName"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
 
         #endregion
 
-        #region Authorized controller
+        #region Authorized without privileges
 
         [Test]
-        public void IsAuthorizedFor_NotAuthorizesNotAttributedGetActionOnAuthorizedController()
+        [TestCase("NotAttributed", "AuthorizedGet")]
+        [TestCase("NotAttributed", "AuthorizedPost")]
+        [TestCase("NotAttributed", "AuthorizedGetName")]
+        [TestCase("NotAttributed", "AuthorizedPostName")]
+
+        [TestCase("Authorized", "Get")]
+        [TestCase("Authorized", "Post")]
+        [TestCase("Authorized", "GetName")]
+        [TestCase("Authorized", "PostName")]
+        [TestCase("Authorized", "AuthorizedGet")]
+        [TestCase("Authorized", "AuthorizedPost")]
+        [TestCase("Authorized", "AuthorizedGetName")]
+        [TestCase("Authorized", "AuthorizedPostName")]
+
+        [TestCase("AllowAnonymous", "AuthorizedGet")]
+        [TestCase("AllowAnonymous", "AuthorizedPost")]
+        [TestCase("AllowAnonymous", "AuthorizedGetName")]
+        [TestCase("AllowAnonymous", "AuthorizedPostName")]
+
+        [TestCase("AllowUnauthorized", "AuthorizedGet")]
+        [TestCase("AllowUnauthorized", "AuthorizedPost")]
+        [TestCase("AllowUnauthorized", "AuthorizedGetName")]
+        [TestCase("AllowUnauthorized", "AuthorizedPostName")]
+
+        [TestCase("InheritedAuthorized", "InheritanceGet")]
+        [TestCase("InheritedAuthorized", "InheritancePost")]
+        [TestCase("InheritedAuthorized", "InheritanceGetName")]
+        [TestCase("InheritedAuthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_DoesNotAuthorizeAuthorizedAction(String controller, String action)
         {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "NotAttributedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesNotAttributedGetActionNameOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "NotAttributedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedGetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesNotAttributedPostActionOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "NotAttributedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedPostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesNotAttributedPostActionNameOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "NotAttributedPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "NotAttributedPostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "NotAttributedPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizePostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "Authorized", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizePostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowAnonymousPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowAnonymousGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowAnonymousPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowUnauthorizedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowUnauthorizedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowUnauthorizedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAuthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "Authorized", "AllowUnauthorizedPostActionName"));
+            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
 
         #endregion
 
-        #region Allow anonymous controller
+        #region Authorized with privileges
 
         [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAllowAnonymousController()
+        [TestCase("NotAttributed", "AuthorizedGet")]
+        [TestCase("NotAttributed", "AuthorizedPost")]
+        [TestCase("NotAttributed", "AuthorizedGetName")]
+        [TestCase("NotAttributed", "AuthorizedPostName")]
+
+        [TestCase("Authorized", "Get")]
+        [TestCase("Authorized", "Post")]
+        [TestCase("Authorized", "GetName")]
+        [TestCase("Authorized", "PostName")]
+        [TestCase("Authorized", "AuthorizedGet")]
+        [TestCase("Authorized", "AuthorizedPost")]
+        [TestCase("Authorized", "AuthorizedGetName")]
+        [TestCase("Authorized", "AuthorizedPostName")]
+
+        [TestCase("AllowAnonymous", "AuthorizedGet")]
+        [TestCase("AllowAnonymous", "AuthorizedPost")]
+        [TestCase("AllowAnonymous", "AuthorizedGetName")]
+        [TestCase("AllowAnonymous", "AuthorizedPostName")]
+
+        [TestCase("AllowUnauthorized", "AuthorizedGet")]
+        [TestCase("AllowUnauthorized", "AuthorizedPost")]
+        [TestCase("AllowUnauthorized", "AuthorizedGetName")]
+        [TestCase("AllowUnauthorized", "AuthorizedPostName")]
+
+        [TestCase("InheritedAuthorized", "InheritanceGet")]
+        [TestCase("InheritedAuthorized", "InheritancePost")]
+        [TestCase("InheritedAuthorized", "InheritanceGetName")]
+        [TestCase("InheritedAuthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesAuthorizedAction(String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "NotAttributedGetAction"));
-        }
+            Account account = CreateAccountWithPrivilegeFor("Security", controller, action);
 
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "NotAttributedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "NotAttributedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "NotAttributedPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowAnonymousController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAllowAnonymousController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAllowAnonymousController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAllowAnonymousController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizeGetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionOnAllowAnonymousController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionOnAllowAnonymousController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizePostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAllowAnonymousController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAllowAnonymousController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowAnonymous", "AuthorizePostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowAnonymousPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowAnonymousGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowAnonymousPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowUnauthorizedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowUnauthorizedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowUnauthorizedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowAnonymous", "AllowUnauthorizedPostActionName"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", controller, action));
         }
 
         #endregion
 
-        #region Allow unauthorized controller
+        #region Allow anonymous
 
         [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionOnAllowUnauthorizedController()
+        [TestCase("NotAttributed", "AnonymousGet")]
+        [TestCase("NotAttributed", "AnonymousPost")]
+        [TestCase("NotAttributed", "AnonymousGetName")]
+        [TestCase("NotAttributed", "AnonymousPostName")]
+
+        [TestCase("Authorized", "AnonymousGet")]
+        [TestCase("Authorized", "AnonymousPost")]
+        [TestCase("Authorized", "AnonymousGetName")]
+        [TestCase("Authorized", "AnonymousPostName")]
+
+        [TestCase("AllowAnonymous", "Get")]
+        [TestCase("AllowAnonymous", "Post")]
+        [TestCase("AllowAnonymous", "GetName")]
+        [TestCase("AllowAnonymous", "PostName")]
+        [TestCase("AllowAnonymous", "AnonymousGet")]
+        [TestCase("AllowAnonymous", "AnonymousPost")]
+        [TestCase("AllowAnonymous", "AnonymousGetName")]
+        [TestCase("AllowAnonymous", "AnonymousPostName")]
+
+        [TestCase("AllowUnauthorized", "AnonymousGet")]
+        [TestCase("AllowUnauthorized", "AnonymousPost")]
+        [TestCase("AllowUnauthorized", "AnonymousGetName")]
+        [TestCase("AllowUnauthorized", "AnonymousPostName")]
+
+        [TestCase("InheritedAllowAnonymous", "InheritanceGet")]
+        [TestCase("InheritedAllowAnonymous", "InheritancePost")]
+        [TestCase("InheritedAllowAnonymous", "InheritanceGetName")]
+        [TestCase("InheritedAllowAnonymous", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesAnonymousAction(String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "NotAttributedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "NotAttributedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedGetActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "NotAttributedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesNotAttributedPostActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "NotAttributedPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionOnAllowUnauthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedGetActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedGetActionNameOnAllowUnauthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizeGetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizeGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionOnAllowUnauthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionOnAllowUnauthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizePostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizePostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesAuthorizedPostActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAuthorizedPostActionNameOnAllowUnauthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "AllowUnauthorized", "AuthorizePostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "AuthorizePostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowAnonymousPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousGetActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowAnonymousGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowAnonymousPostActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowAnonymousPostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowUnauthorizedGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowUnauthorizedPostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedGetActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowUnauthorizedGetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesAllowUnauthorizedPostActionNameOnAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "AllowUnauthorized", "AllowUnauthorizedPostActionName"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
 
         #endregion
 
-        #region Inherited authorized controller
+        #region Allow unauthorized
 
         [Test]
-        public void IsAuthorizedFor_NotAuthorizesGetActionOnInheritedAuthorizedController()
+        [TestCase("NotAttributed", "UnauthorizedGet")]
+        [TestCase("NotAttributed", "UnauthorizedPost")]
+        [TestCase("NotAttributed", "UnauthorizedGetName")]
+        [TestCase("NotAttributed", "UnauthorizedPostName")]
+
+        [TestCase("Authorized", "UnauthorizedGet")]
+        [TestCase("Authorized", "UnauthorizedPost")]
+        [TestCase("Authorized", "UnauthorizedGetName")]
+        [TestCase("Authorized", "UnauthorizedPostName")]
+
+        [TestCase("AllowAnonymous", "UnauthorizedGet")]
+        [TestCase("AllowAnonymous", "UnauthorizedPost")]
+        [TestCase("AllowAnonymous", "UnauthorizedGetName")]
+        [TestCase("AllowAnonymous", "UnauthorizedPostName")]
+
+        [TestCase("AllowUnauthorized", "Get")]
+        [TestCase("AllowUnauthorized", "Post")]
+        [TestCase("AllowUnauthorized", "GetName")]
+        [TestCase("AllowUnauthorized", "PostName")]
+        [TestCase("AllowUnauthorized", "UnauthorizedGet")]
+        [TestCase("AllowUnauthorized", "UnauthorizedPost")]
+        [TestCase("AllowUnauthorized", "UnauthorizedGetName")]
+        [TestCase("AllowUnauthorized", "UnauthorizedPostName")]
+
+        [TestCase("InheritedAllowUnauthorized", "InheritanceGet")]
+        [TestCase("InheritedAllowUnauthorized", "InheritancePost")]
+        [TestCase("InheritedAllowUnauthorized", "InheritanceGetName")]
+        [TestCase("InheritedAllowUnauthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesUnauthorizedAction(String controller, String action)
         {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAuthorized", "GetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "GetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "GetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesGetActionNameOnInheritedAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAuthorized", "GetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "GetActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "GetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesPostActionOnInheritedAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAuthorized", "PostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionOnInheritedAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "PostAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "PostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesPostActionNameOnInheritedAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAuthorized", "PostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "PostActionName");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "PostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAuthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAuthorized", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAuthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAuthorized", "AllowAnonymousGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "AllowAnonymousGetAction"));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
 
         #endregion
-
-        #region Inherited allow anonymous controller
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowAnonymous", "GetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionOnInheritedAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowAnonymous", "PostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowAnonymous", "GetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAllowAnonymousController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowAnonymous", "PostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAllowAnonymousController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAllowAnonymous", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAllowAnonymousController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAllowAnonymous", "AllowAnonymousGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowAnonymous", "AllowAnonymousGetAction"));
-        }
-
-        #endregion
-
-        #region Inherited allow unauthorized controller
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionOnInheritedAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowUnauthorized", "GetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionOnInheritedAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowUnauthorized", "PostAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesGetActionNameOnInheritedAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowUnauthorized", "GetActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesPostActionNameOnInheritedAllowUnauthorizedController()
-        {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", "InheritedAllowUnauthorized", "PostActionName"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_NotAuthorizesInheritedAllowAnonymouActionOnInheritedAllowUnauthorizedController()
-        {
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", "InheritedAllowUnauthorized", "AllowAnonymousGetAction"));
-        }
-
-        [Test]
-        public void IsAuthorizedFor_AuthorizesInheritedAllowAnonymouActionOnInheritedAllowUnauthorizedController()
-        {
-            Account account = CreateAccountWithPrivilegeFor(null, "InheritedAllowUnauthorized", "AllowAnonymousGetAction");
-
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowUnauthorized", "AllowAnonymousGetAction"));
-        }
-
-        #endregion
-
+        
         [Test]
         public void IsAuthorizedFor_CachesAccountPrivileges()
         {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetAction");
+            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizedGet");
             TearDownData();
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetAction"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizedGet"));
         }
 
         [Test]
         public void IsAuthorizedFor_IgnoresCase()
         {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizeGetAction");
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizedGet");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "notattributed", "AUTHORIZEGETACTION"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "notattributed", "AUTHORIZEDGET"));
         }
 
         [Test]
         public void IsAuthorizedFor_OnNotExistingActionThrows()
         {
-            Exception expected = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, "Security", "NotAttributed", "Test"));
-            Assert.AreEqual(expected.Message, "'NotAttributedController' does not have 'Test' action.");
+            String actual = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, "Security", "NotAttributed", "Test")).Message;
+            String expected = "'NotAttributedController' does not have 'Test' action.";
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -784,12 +234,12 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void Refresh_RefreshesPrivileges()
         {
-            Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizeGetAction");
+            Account account = CreateAccountWithPrivilegeFor("Security", "Authorized", "AuthorizedGet");
 
             TearDownData();
             provider.Refresh();
 
-            Assert.IsFalse(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AuthorizeGetAction"));
+            Assert.IsFalse(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
         }
 
         #endregion
@@ -820,11 +270,12 @@ namespace MvcTemplate.Tests.Unit.Security
 
         private Account CreateAccountWithPrivilegeFor(String area, String controller, String action)
         {
+            TearDownData();
+
             Account account = ObjectFactory.CreateAccount();
             Role role = ObjectFactory.CreateRole();
             account.RoleId = role.Id;
-
-            context.Set<Account>().Add(account);
+            account.Role = role;
 
             role.RolePrivileges = new List<RolePrivilege>();
             RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
@@ -834,14 +285,15 @@ namespace MvcTemplate.Tests.Unit.Security
             rolePrivilege.RoleId = role.Id;
             rolePrivilege.Role = role;
 
-            privilege.Area = area;
             privilege.Controller = controller;
             privilege.Action = action;
+            privilege.Area = area;
 
             role.RolePrivileges.Add(rolePrivilege);
 
-            context.Set<Role>().Add(role);
+            context.Set<Account>().Add(account);
             context.SaveChanges();
+
             provider.Refresh();
 
             return account;

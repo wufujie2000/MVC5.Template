@@ -32,128 +32,44 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         #region Method: Load()
 
         [Test]
-        public void Load_BindsILogger()
+        [TestCase(typeof(ILogger), typeof(Logger))]
+        [TestCase(typeof(AContext), typeof(Context))]
+        [TestCase(typeof(IUnitOfWork), typeof(UnitOfWork))]
+        [TestCase(typeof(IAuditLogger), typeof(AuditLogger))]
+
+        [TestCase(typeof(IHasher), typeof(BCrypter))]
+        [TestCase(typeof(IMailClient), typeof(SmtpMailClient))]
+
+        [TestCase(typeof(IRouteConfig), typeof(RouteConfig))]
+        [TestCase(typeof(IBundleConfig), typeof(BundleConfig))]
+        [TestCase(typeof(IExceptionFilter), typeof(ExceptionFilter))]
+
+        [TestCase(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
+        [TestCase(typeof(IGlobalizationProvider), typeof(GlobalizationProvider), IgnoreReason = "Globalization provider uses virtual server path.")]
+        [TestCase(typeof(IMvcSiteMapProvider), typeof(MvcSiteMapProvider), IgnoreReason = "Site map provider uses virtual server path.")]
+        
+        [TestCase(typeof(IRoleService), typeof(RoleService))]
+        [TestCase(typeof(IAccountService), typeof(AccountService))]
+        
+        [TestCase(typeof(IRoleValidator), typeof(RoleValidator))]
+        [TestCase(typeof(IAccountValidator), typeof(AccountValidator))]
+        public void Load_BindsToImplementation(Type abstraction, Type implementation)
         {
-            AssertBind<ILogger, Logger>();
+            Type actual = kernel.Get(abstraction).GetType();
+            Type expected = implementation;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void Load_BindsAContext()
-        {
-            AssertBind<AContext, Context>();
-        }
-
-        [Test]
-        public void Load_BindsIUnitOfWork()
-        {
-            AssertBind<IUnitOfWork, UnitOfWork>();
-        }
-
-        [Test]
-        public void Load_BindsIAuditLogger()
-        {
-            AssertBind<IAuditLogger, AuditLogger>();
-        }
-
-        [Test]
-        public void Load_BindsIMailClientToSmtpMailClient()
-        {
-            AssertBind<IMailClient, SmtpMailClient>();
-        }
-
-        [Test]
-        public void Load_BindsIRouteConfig()
-        {
-            AssertBind<IRouteConfig, RouteConfig>();
-        }
-
-        [Test]
-        public void Load_BindsIBundleConfig()
-        {
-            AssertBind<IBundleConfig, BundleConfig>();
-        }
-
-        [Test]
-        public void Load_BindsIExceptionFilter()
-        {
-            AssertBind<IExceptionFilter, ExceptionFilter>();
-        }
-
-        [Test]
-        public void Load_BindsIAuthorizationProvider()
-        {
-            AssertBind<IAuthorizationProvider, AuthorizationProvider>();
-        }
-
-        [Test]
-        public void Load_BindsIAuthorizationProviderToConstant()
+        [TestCase(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
+        public void Load_BindsToConstantImplementation(Type abstraction, Type implementation)
         {
             IAuthorizationProvider expected = kernel.Get<IAuthorizationProvider>();
             IAuthorizationProvider actual = kernel.Get<IAuthorizationProvider>();
 
+            Assert.AreEqual(actual.GetType(), implementation);
             Assert.AreSame(expected, actual);
-        }
-
-        [Test]
-        public void Load_BindsIMvcSiteMapParser()
-        {
-            AssertBind<IMvcSiteMapParser, MvcSiteMapParser>();
-        }
-
-        [Test]
-        [Ignore("Globalization provider uses virtual server path.")]
-        public void Load_BindsIGlobalizationProvider()
-        {
-            AssertBind<IGlobalizationProvider, GlobalizationProvider>();
-        }
-
-        [Test]
-        [Ignore("Site map provider uses virtual server path.")]
-        public void Load_BindsIMvcSiteMapProvider()
-        {
-            AssertBind<IMvcSiteMapProvider, MvcSiteMapProvider>();
-        }
-
-        [Test]
-        public void Load_BindsIHasher()
-        {
-            AssertBind<IHasher, BCrypter>();
-        }
-
-        [Test]
-        public void Load_BindsIRolesService()
-        {
-            AssertBind<IRoleService, RoleService>();
-        }
-
-        [Test]
-        public void Load_BindsIAccountsService()
-        {
-            AssertBind<IAccountService, AccountService>();
-        }
-
-        [Test]
-        public void Load_BindsIRoleValidator()
-        {
-            AssertBind<IRoleValidator, RoleValidator>();
-        }
-
-        [Test]
-        public void Load_BindsIAccountValidator()
-        {
-            AssertBind<IAccountValidator, AccountValidator>();
-        }
-
-        #endregion
-
-        #region Test helpers
-
-        private void AssertBind<TAbstraction, TImplementation>()
-        {
-            Type actual = kernel.Get<TAbstraction>().GetType();
-            Type expected = typeof(TImplementation);
-
-            Assert.AreEqual(expected, actual);
         }
 
         #endregion

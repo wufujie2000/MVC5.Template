@@ -359,113 +359,24 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterAdapters()
 
         [Test]
-        public void RegisterAdapters_RegistersRangeAdapter()
+        [TestCase("Range", typeof(RangeAdapter))]
+        [TestCase("Required", typeof(RequiredAdapter))]
+        [TestCase("MinValue", typeof(MinValueAdapter))]
+        [TestCase("MaxValue", typeof(MaxValueAdapter))]
+        [TestCase("MinLength", typeof(MinLengthAdapter))]
+        [TestCase("EmailAddress", typeof(EmailAddressAdapter))]
+        [TestCase("StringLength", typeof(StringLengthAdapter))]
+        public void RegisterAdapters_RegistersAdapter(String property, Type adapterType)
         {
             DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "Range");
+                .GetMetadataForProperty(null, typeof(AdaptersModel), property);
 
             application.RegisterAdapters();
 
             ModelValidator actual = provider
                 .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(RangeAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersRequiredAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(RequiredAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersMinValueAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "MinValue");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(MinValueAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersMaxValueAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "MaxValue");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(MaxValueAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersMinLengthAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(MinLengthAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersEmailAddressAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "Email");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(EmailAddressAdapter));
-
-            Assert.IsNotNull(actual);
-        }
-
-        [Test]
-        public void RegisterAdapters_RegistersStringLengthAdapter()
-        {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
-
-            application.RegisterAdapters();
-
-            ModelValidator actual = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == typeof(StringLengthAdapter));
+                .SingleOrDefault(validator => validator.GetType() == adapterType);
 
             Assert.IsNotNull(actual);
         }

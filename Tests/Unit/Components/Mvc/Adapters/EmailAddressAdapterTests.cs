@@ -20,7 +20,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new EmailAddressAttribute();
             metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "Email");
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "EmailAddress");
             adapter = new EmailAddressAdapter(metadata, new ControllerContext(), attribute);
         }
 

@@ -27,65 +27,21 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         #region Table: Privileges
 
         [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsIndex()
-        {
-            HasPrivilege("Administration", "Accounts", "Index");
-        }
+        [TestCase("Administration", "Accounts", "Index")]
+        [TestCase("Administration", "Accounts", "Details")]
+        [TestCase("Administration", "Accounts", "Edit")]
 
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsCreate()
-        {
-            HasPrivilege("Administration", "Accounts", "Create");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationAccountssDetails()
-        {
-            HasPrivilege("Administration", "Accounts", "Details");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationAccountsEdit()
-        {
-            HasPrivilege("Administration", "Accounts", "Edit");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationRolesIndex()
-        {
-            HasPrivilege("Administration", "Roles", "Index");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationRolesCreate()
-        {
-            HasPrivilege("Administration", "Roles", "Create");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationRolesDetails()
-        {
-            HasPrivilege("Administration", "Roles", "Details");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationRolesEdit()
-        {
-            HasPrivilege("Administration", "Roles", "Edit");
-        }
-
-        [Test]
-        public void PrivilegesTable_HasPrivilegeForAdministrationRolesDelete()
-        {
-            HasPrivilege("Administration", "Roles", "Delete");
-        }
-
-        private void HasPrivilege(String area, String controller, String action)
+        [TestCase("Administration", "Roles", "Index")]
+        [TestCase("Administration", "Roles", "Create")]
+        [TestCase("Administration", "Roles", "Details")]
+        [TestCase("Administration", "Roles", "Edit")]
+        [TestCase("Administration", "Roles", "Delete")]
+        public void PrivilegesTable_HasPrivilege(String area, String controller, String action)
         {
             Assert.IsNotNull(context.Set<Privilege>().SingleOrDefault(privilege =>
-                privilege.Area == area &&
                 privilege.Controller == controller &&
-                privilege.Action == action));
+                privilege.Action == action &&
+                privilege.Area == area));
         }
 
         #endregion

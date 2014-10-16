@@ -98,165 +98,64 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: GetColumnCssClass(PropertyInfo property)
 
         [Test]
-        public void GetColumnCssClass_ReturnsTextCellForEnum()
+        [TestCase("EnumField", "text-cell")]
+        [TestCase("SByteField", "number-cell")]
+        [TestCase("ByteField", "number-cell")]
+        [TestCase("Int16Field", "number-cell")]
+        [TestCase("UInt16Field", "number-cell")]
+        [TestCase("Int32Field", "number-cell")]
+        [TestCase("UInt32Field", "number-cell")]
+        [TestCase("Int64Field", "number-cell")]
+        [TestCase("UInt64Field", "number-cell")]
+        [TestCase("SingleField", "number-cell")]
+        [TestCase("DoubleField", "number-cell")]
+        [TestCase("DecimalField", "number-cell")]
+        [TestCase("DateTimeField", "date-cell")]
+        public void GetColumnCssClass_GetsCssClassForNotNullableProperty(String propertyName, String cssClass)
         {
-            AssertCssClassFor<AllTypesView>("EnumField", "text-cell");
+            PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
+
+            String actual = datalist.BaseGetColumnCssClass(property);
+            String expected = cssClass;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForSByte()
+        [TestCase("NullableEnumField", "text-cell")]
+        [TestCase("NullableSByteField", "number-cell")]
+        [TestCase("NullableByteField", "number-cell")]
+        [TestCase("NullableInt16Field", "number-cell")]
+        [TestCase("NullableUInt16Field", "number-cell")]
+        [TestCase("NullableInt32Field", "number-cell")]
+        [TestCase("NullableUInt32Field", "number-cell")]
+        [TestCase("NullableInt64Field", "number-cell")]
+        [TestCase("NullableUInt64Field", "number-cell")]
+        [TestCase("NullableSingleField", "number-cell")]
+        [TestCase("NullableDoubleField", "number-cell")]
+        [TestCase("NullableDecimalField", "number-cell")]
+        [TestCase("NullableDateTimeField", "date-cell")]
+        public void GetColumnCssClass_GetsCssClassForNullableProperty(String propertyName, String cssClass)
         {
-            AssertCssClassFor<AllTypesView>("SByteField", "number-cell");
+            PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
+
+            String actual = datalist.BaseGetColumnCssClass(property);
+            String expected = cssClass;
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForByte()
+        [TestCase("StringField", "text-cell")]
+        [TestCase("Child", "text-cell")]
+        public void GetColumnCssClass_GetsTextCellForOtherTypes(String propertyName, String cssClass)
         {
-            AssertCssClassFor<AllTypesView>("ByteField", "number-cell");
-        }
+            PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForInt16()
-        {
-            AssertCssClassFor<AllTypesView>("Int16Field", "number-cell");
-        }
+            String actual = datalist.BaseGetColumnCssClass(property);
+            String expected = cssClass;
 
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForUInt16()
-        {
-            AssertCssClassFor<AllTypesView>("UInt16Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForInt32()
-        {
-            AssertCssClassFor<AllTypesView>("Int32Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForUInt32()
-        {
-            AssertCssClassFor<AllTypesView>("UInt32Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForInt64()
-        {
-            AssertCssClassFor<AllTypesView>("Int64Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForUInt64()
-        {
-            AssertCssClassFor<AllTypesView>("UInt64Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForSingle()
-        {
-            AssertCssClassFor<AllTypesView>("SingleField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForDouble()
-        {
-            AssertCssClassFor<AllTypesView>("DoubleField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForDecimal()
-        {
-            AssertCssClassFor<AllTypesView>("DecimalField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsDateCellForDateTime()
-        {
-            AssertCssClassFor<AllTypesView>("DateTimeField", "date-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsTextCellForNullableEnum()
-        {
-            AssertCssClassFor<AllTypesView>("NullableEnumField", "text-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableSByte()
-        {
-            AssertCssClassFor<AllTypesView>("NullableSByteField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableByte()
-        {
-            AssertCssClassFor<AllTypesView>("NullableByteField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableInt16()
-        {
-            AssertCssClassFor<AllTypesView>("NullableInt16Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableUInt16()
-        {
-            AssertCssClassFor<AllTypesView>("NullableUInt16Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableInt32()
-        {
-            AssertCssClassFor<AllTypesView>("NullableInt32Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableUInt32()
-        {
-            AssertCssClassFor<AllTypesView>("NullableUInt32Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableInt64()
-        {
-            AssertCssClassFor<AllTypesView>("NullableInt64Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableUInt64()
-        {
-            AssertCssClassFor<AllTypesView>("NullableUInt64Field", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableSingle()
-        {
-            AssertCssClassFor<AllTypesView>("NullableSingleField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableDouble()
-        {
-            AssertCssClassFor<AllTypesView>("NullableDoubleField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsNumberCellForNullableDecimal()
-        {
-            AssertCssClassFor<AllTypesView>("NullableDecimalField", "number-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsDateCellForNullableDateTime()
-        {
-            AssertCssClassFor<AllTypesView>("NullableDateTimeField", "date-cell");
-        }
-
-        [Test]
-        public void GetColumnCssClass_ReturnsTextCellForOtherTypes()
-        {
-            AssertCssClassFor<AllTypesView>("StringField", "text-cell");
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -274,18 +173,6 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             IQueryable<RoleView> actual = datalist.BaseGetModels();
 
             CollectionAssert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Test helpers
-
-        private void AssertCssClassFor<T>(String propertyName, String expected)
-        {
-            PropertyInfo property = typeof(T).GetProperty(propertyName);
-            String actual = datalist.BaseGetColumnCssClass(property);
-
-            Assert.AreEqual(expected, actual);
         }
 
         #endregion

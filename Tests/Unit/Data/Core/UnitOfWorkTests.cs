@@ -82,13 +82,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
+            context.Set<Account>().RemoveRange(context.Set<Account>());
+            context.SaveChanges();
+
             Account model = ObjectFactory.CreateAccount();
             context.Set<Account>().Add(model);
 
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            Assert.IsNull(unitOfWork.Repository<Account>().GetById(model.Id));
+            CollectionAssert.IsEmpty(unitOfWork.Repository<Account>());
         }
 
         #endregion

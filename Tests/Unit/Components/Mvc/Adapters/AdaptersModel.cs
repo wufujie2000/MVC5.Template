@@ -21,10 +21,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [MinLength(128)]
         public String MinLength { get; set; }
 
+        [EmailAddress]
+        public String EmailAddress { get; set; }
+
         [StringLength(128)]
         public String StringLength { get; set; }
-
-        [EmailAddress]
-        public String Email { get; set; }
     }
 }

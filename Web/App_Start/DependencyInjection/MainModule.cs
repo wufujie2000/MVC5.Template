@@ -24,6 +24,7 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IUnitOfWork>().To<UnitOfWork>();
             Bind<IAuditLogger>().To<AuditLogger>();
 
+            Bind<IHasher>().To<BCrypter>();
             Bind<IMailClient>().To<SmtpMailClient>();
 
             Bind<IRouteConfig>().To<RouteConfig>();
@@ -33,13 +34,12 @@ namespace MvcTemplate.Web.DependencyInjection
             Bind<IMvcSiteMapParser>().To<MvcSiteMapParser>();
             Bind<IAuthorizationProvider>().ToConstant(CreateAuthorizationProvider());
 
-            String globalizationPath = HostingEnvironment.MapPath("~/Globalization.xml");
-            Bind<IGlobalizationProvider>().To<GlobalizationProvider>().WithConstructorArgument("path", globalizationPath);
+            Bind<IGlobalizationProvider>().To<GlobalizationProvider>()
+                .WithConstructorArgument("path", HostingEnvironment.MapPath("~/Globalization.xml"));
 
-            String siteMapPath = HostingEnvironment.MapPath("~/Mvc.sitemap");
-            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>().WithConstructorArgument("path", siteMapPath);
+            Bind<IMvcSiteMapProvider>().To<MvcSiteMapProvider>()
+                .WithConstructorArgument("path", HostingEnvironment.MapPath("~/Mvc.sitemap"));
 
-            Bind<IHasher>().To<BCrypter>();
             Bind<IRoleService>().To<RoleService>();
             Bind<IAccountService>().To<AccountService>();
 

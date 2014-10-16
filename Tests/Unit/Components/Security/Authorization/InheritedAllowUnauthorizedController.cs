@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Components.Security;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
@@ -8,36 +7,29 @@ namespace MvcTemplate.Tests.Unit.Components.Security
     public class InheritedAllowUnauthorizedController : AllowUnauthorizedController
     {
         [HttpGet]
-        public ViewResult GetAction()
+        public ViewResult InheritanceGet()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult PostAction()
+        public ViewResult InheritancePost()
         {
             return View();
         }
 
         [HttpGet]
-        [ActionName("GetActionName")]
-        public ViewResult GetActionWithActionName()
+        [ActionName("InheritanceGetName")]
+        public ViewResult InheritanceGetAction()
         {
             return View();
         }
 
         [HttpPost]
-        [ActionName("PostActionName")]
-        public ViewResult PostActionWithActionName()
+        [ActionName("InheritancePostName")]
+        public ViewResult InheritancePostAction()
         {
             return View();
-        }
-
-        [HttpGet]
-        [GlobalizedAuthorize]
-        public override ViewResult AllowAnonymousGetAction()
-        {
-            return base.AllowAnonymousGetAction();
         }
     }
 }

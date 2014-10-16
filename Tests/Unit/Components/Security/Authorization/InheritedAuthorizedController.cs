@@ -7,35 +7,29 @@ namespace MvcTemplate.Tests.Unit.Components.Security
     public class InheritedAuthorizedController : AuthorizedController
     {
         [HttpGet]
-        public ViewResult GetAction()
+        public ViewResult InheritanceGet()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult PostAction()
+        public ViewResult InheritancePost()
         {
             return View();
         }
 
         [HttpGet]
-        [ActionName("GetActionName")]
-        public ViewResult GetActionWithActionName()
+        [ActionName("InheritanceGetName")]
+        public ViewResult InheritanceGetAction()
         {
             return View();
         }
 
         [HttpPost]
-        [ActionName("PostActionName")]
-        public ViewResult PostActionWithActionName()
+        [ActionName("InheritancePostName")]
+        public ViewResult InheritancePostAction()
         {
             return View();
-        }
-
-        [HttpGet]
-        public override ViewResult AllowAnonymousGetAction()
-        {
-            return base.AllowAnonymousGetAction();
         }
     }
 }

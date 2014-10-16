@@ -8,117 +8,117 @@ namespace MvcTemplate.Tests.Unit.Components.Security
     public class NotAttributedController : Controller
     {
         [HttpGet]
-        public ViewResult NotAttributedGetAction()
+        public ViewResult Get()
         {
             return View();
         }
 
         [HttpPost]
-        public ViewResult NotAttributedPostAction()
+        public ViewResult Post()
         {
             return View();
         }
 
         [HttpGet]
-        [ActionName("NotAttributedGetActionName")]
-        public ViewResult NotAttributedGetActionWithActionName()
+        [ActionName("GetName")]
+        public ViewResult GetAction()
         {
             return View();
         }
 
         [HttpPost]
-        [ActionName("NotAttributedPostActionName")]
-        public ViewResult NotAttributedPostActionWithActionName()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        [GlobalizedAuthorize]
-        public ViewResult AuthorizeGetAction()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [GlobalizedAuthorize]
-        public ViewResult AuthorizePostAction()
+        [ActionName("PostName")]
+        public ViewResult PostAction()
         {
             return View();
         }
 
         [HttpGet]
         [GlobalizedAuthorize]
-        [ActionName("AuthorizeGetActionName")]
-        public ViewResult AuthorizeGetActionWithActionName()
+        public ViewResult AuthorizedGet()
         {
             return View();
         }
 
         [HttpPost]
         [GlobalizedAuthorize]
-        [ActionName("AuthorizePostActionName")]
-        public ViewResult AuthorizePostActionWithActionName()
+        public ViewResult AuthorizedPost()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [GlobalizedAuthorize]
+        [ActionName("AuthorizedGetName")]
+        public ViewResult AuthorizedGetAction()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [GlobalizedAuthorize]
+        [ActionName("AuthorizedPostName")]
+        public ViewResult AuthorizedPostAction()
         {
             return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public virtual ViewResult AllowAnonymousGetAction()
+        public ViewResult AnonymousGet()
         {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ViewResult AllowAnonymousPostAction()
+        public ViewResult AnonymousPost()
         {
             return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
-        [ActionName("AllowAnonymousGetActionName")]
-        public ViewResult AllowAnonymousGetActionWithActionName()
+        [ActionName("AnonymousGetName")]
+        public ViewResult AnonymousGetAction()
         {
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        [ActionName("AllowAnonymousPostActionName")]
-        public ViewResult AllowAnonymousPostActionWithActionName()
+        [ActionName("AnonymousPostName")]
+        public ViewResult AnonymousPostAction()
         {
             return View();
         }
 
         [HttpGet]
         [AllowUnauthorized]
-        public ViewResult AllowUnauthorizedGetAction()
+        public ViewResult UnauthorizedGet()
         {
             return View();
         }
 
         [HttpPost]
         [AllowUnauthorized]
-        public ViewResult AllowUnauthorizedPostAction()
+        public ViewResult UnauthorizedPost()
         {
             return View();
         }
 
         [HttpGet]
         [AllowUnauthorized]
-        [ActionName("AllowUnauthorizedGetActionName")]
-        public ViewResult AllowUnauthorizedGetActionWithActionName()
+        [ActionName("UnauthorizedGetName")]
+        public ViewResult UnauthorizedGetAction()
         {
             return View();
         }
 
         [HttpPost]
         [AllowUnauthorized]
-        [ActionName("AllowUnauthorizedPostActionName")]
-        public ViewResult AllowUnauthorizedPostActionWithActionName()
+        [ActionName("UnauthorizedPostName")]
+        public ViewResult UnauthorizedPostAction()
         {
             return View();
         }

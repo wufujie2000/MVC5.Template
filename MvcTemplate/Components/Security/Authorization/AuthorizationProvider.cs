@@ -11,8 +11,8 @@ namespace MvcTemplate.Components.Security
     public class AuthorizationProvider : IAuthorizationProvider, IDisposable
     {
         private Dictionary<String, IEnumerable<Privilege>> cache;
-        private IEnumerable<Type> controllers;
         private IUnitOfWork unitOfWork;
+        private List<Type> controllers;
         private Type controllerType;
         private Boolean disposed;
 
@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Security
         {
             this.unitOfWork = unitOfWork;
             controllerType = typeof(Controller);
-            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type));
+            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToList();
 
             Refresh();
         }
@@ -86,7 +86,7 @@ namespace MvcTemplate.Components.Security
         }
         private MethodInfo GetAction(Type controller, String action)
         {
-            IEnumerable<MethodInfo> actionMethods = controller
+            List<MethodInfo> actionMethods = controller
                 .GetMethods()
                 .Where(method =>
                     (
@@ -94,16 +94,17 @@ namespace MvcTemplate.Components.Security
                         method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()
                     )
                     ||
-                    method.Name.ToLowerInvariant() == action.ToLowerInvariant());
+                    method.Name.ToLowerInvariant() == action.ToLowerInvariant())
+                .ToList();
 
             MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
             if (getAction != null)
                 return getAction;
 
-            if (!actionMethods.Any())
+            if (actionMethods.Count == 0)
                 throw new Exception(String.Format("'{0}' does not have '{1}' action.", controller.Name, action));
 
-            return actionMethods.First();
+            return actionMethods[0];
         }
 
         public void Dispose()

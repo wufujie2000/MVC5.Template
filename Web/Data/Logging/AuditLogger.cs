@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace MvcTemplate.Data.Logging
 {
@@ -26,12 +27,9 @@ namespace MvcTemplate.Data.Logging
                 {
                     case EntityState.Added:
                     case EntityState.Deleted:
-                        entity = new LoggableEntity(entry);
-                        context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
-                        break;
                     case EntityState.Modified:
                         entity = new LoggableEntity(entry);
-                        if (entity.HasChanges)
+                        if (entity.Properties.Any())
                             context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
                         break;
                 }

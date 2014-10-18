@@ -25,11 +25,6 @@ namespace MvcTemplate.Data.Logging
             get;
             private set;
         }
-        public Boolean HasChanges
-        {
-            get;
-            private set;
-        }
 
         public IEnumerable<LoggableProperty> Properties
         {
@@ -47,7 +42,8 @@ namespace MvcTemplate.Data.Logging
             Type entityType = entry.Entity.GetType();
             if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
             Properties = originalValues.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), originalValues[name]));
-            HasChanges = Properties.Any(property => property.IsModified);
+            Properties = entry.State == EntityState.Modified ? Properties.Where(property => property.IsModified) : Properties;
+            Properties = Properties.ToList();
             Action = entry.State.ToString();
             Name = entityType.Name;
             Id = entry.Entity.Id;

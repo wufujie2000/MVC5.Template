@@ -47,17 +47,40 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             entry.State = EntityState.Added;
 
-            AsssertCreatedProperties(entry.CurrentValues);
+            AsssertProperties(entry.CurrentValues);
         }
 
         [Test]
         public void LoggableEntity_CreatesPropertiesForModifiedEntity()
         {
+            String roleName = model.Name;
             entry.State = EntityState.Modified;
             entry.CurrentValues["Name"] = "Role";
             entry.OriginalValues["Name"] = "Role";
 
-            AsssertCreatedProperties(entry.GetDatabaseValues());
+            IEnumerable<LoggableProperty> expected = new[] { new LoggableProperty(entry.Property("Name"), roleName) };
+            IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
+
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
+        }
+
+        [Test]
+        public void LoggableEntity_CreatesPropertiesForAttachedEntity()
+        {
+            context.Dispose();
+            String roleName = model.Name;
+            context = new TestingContext();
+            context.Set<Role>().Attach(model);
+
+            entry = context.Entry<BaseModel>(model);
+            entry.OriginalValues["Name"] = "Role";
+            entry.CurrentValues["Name"] = "Role";
+            entry.State = EntityState.Modified;
+
+            IEnumerable<LoggableProperty> expected = new[] { new LoggableProperty(entry.Property("Name"), roleName) };
+            IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
+
+            TestHelper.EnumPropertyWiseEqual(expected, actual);
         }
 
         [Test]
@@ -65,40 +88,9 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             entry.State = EntityState.Deleted;
 
-            AsssertCreatedProperties(entry.GetDatabaseValues());
+            AsssertProperties(entry.GetDatabaseValues());
         }
-
-        [Test]
-        public void LoggableEntity_HasChangesIfAnyPropertyIsModified()
-        {
-            model.Name += "1";
-            entry = context.Entry<BaseModel>(model);
-
-            Assert.IsTrue(new LoggableEntity(entry).HasChanges);
-        }
-
-        [Test]
-        public void LoggableEntity_HasChangesIfAnyAttachedPropertyIsModified()
-        {
-            using (TestingContext newContext = new TestingContext())
-            {
-                Role role = ObjectFactory.CreateRole();
-                role.Name += "1";
-
-                newContext.Set<Role>().Attach(role);
-                entry = newContext.Entry<BaseModel>(role);
-                entry.State = EntityState.Modified;
-
-                Assert.IsTrue(new LoggableEntity(entry).HasChanges);
-            }
-        }
-
-        [Test]
-        public void LoggableEntity_DoNoHaveChangesIfPropertiesAreNotModified()
-        {
-            Assert.IsFalse(new LoggableEntity(entry).HasChanges);
-        }
-
+        
         [Test]
         public void LoggableEntity_SetsAction()
         {
@@ -175,7 +167,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context.SaveChanges();
         }
 
-        private void AsssertCreatedProperties(DbPropertyValues originalValues)
+        private void AsssertProperties(DbPropertyValues originalValues)
         {
             IEnumerable<String> properties = originalValues.PropertyNames;
 

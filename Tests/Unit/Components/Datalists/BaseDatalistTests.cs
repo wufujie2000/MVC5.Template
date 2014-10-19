@@ -18,16 +18,18 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
     public class BaseDatalistTests
     {
         private BaseDatalistProxy<Role, RoleView> datalist;
+        private IUnitOfWork unitOfWork;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             datalist = new BaseDatalistProxy<Role, RoleView>();
+            unitOfWork = Substitute.For<IUnitOfWork>();
         }
 
-        [TearDown]
-        public void TearDown()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
         {
             HttpContext.Current = null;
         }
@@ -62,8 +64,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsUnitOfWork()
         {
-            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            BaseDatalistProxy<Role, RoleView> datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
             IUnitOfWork actual = datalist.BaseUnitOfWork;
             IUnitOfWork expected = unitOfWork;
@@ -165,9 +166,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_ReturnsModelsProjectedToViews()
         {
-            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
             unitOfWork.Repository<Role>().ProjectTo<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
+            BaseDatalistProxy<Role, RoleView> datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
             IQueryable<RoleView> expected = unitOfWork.Repository<Role>().ProjectTo<RoleView>();
             IQueryable<RoleView> actual = datalist.BaseGetModels();

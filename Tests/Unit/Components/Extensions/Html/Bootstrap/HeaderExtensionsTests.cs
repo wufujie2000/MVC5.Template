@@ -16,16 +16,21 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private HtmlHelper html;
         private UrlHelper url;
 
-        [SetUp]
-        public void SetUpFixture()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
             url = new UrlHelper(html.ViewContext.RequestContext);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
         }
 
-        [TearDown]
-        public void TearDownFixture()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
         {
             GlobalizationManager.Provider = null;
         }

@@ -19,13 +19,25 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private StringBuilder htmlStringBuilder;
         private BootstrapModel model;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            html.ViewContext.Writer = new StringWriter();
             htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
+        }
+
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+            GlobalizationManager.Provider = null;
         }
 
         #region Extension method: FormGroup(this HtmlHelper html)

@@ -13,10 +13,15 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     {
         private GlobalizationProvider provider;
 
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
+        {
+            CreateGlobalizationXml("Globalization.xml");
+        }
+
         [SetUp]
         public void SetUp()
         {
-            CreateGlobalizationXml("Globalization.xml");
             provider = new GlobalizationProvider("Globalization.xml");
         }
 

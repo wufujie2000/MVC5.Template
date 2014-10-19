@@ -17,17 +17,22 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private HtmlHelper<BootstrapModel> html;
         private BootstrapModel model;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             model = new BootstrapModel();
             html = HtmlHelperFactory.CreateHtmlHelper(model);
             expression = (expModel) => expModel.Relation.Required;
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
         }
 
-        [TearDown]
-        public void TearDown()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
         {
             GlobalizationManager.Provider = null;
         }

@@ -14,8 +14,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         private MvcSiteMapParser parser;
         private XElement siteMap;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
             parser = new MvcSiteMapParser();
             siteMap = CreateSiteMap();

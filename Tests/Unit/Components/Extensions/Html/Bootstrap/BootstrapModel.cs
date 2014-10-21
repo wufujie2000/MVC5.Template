@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
@@ -12,13 +11,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public Decimal Number { get; set; }
         public DateTime? Date { get; set; }
 
-        public String NotReadOnly { get; set; }
+        public String Editable { get; set; }
 
-        [ReadOnly(false)]
-        public String ReadOnlyFalse { get; set; }
+        [Editable(true)]
+        public String EditableTrue { get; set; }
 
-        [ReadOnly(true)]
-        public String ReadOnlyTrue { get; set; }
+        [Editable(false)]
+        public String EditableFalse { get; set; }
 
         public BootstrapModel Relation { get; set; }
 
@@ -27,9 +26,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             NotRequired = "NotRequired";
             Required = "Required";
             Date = DateTime.Now;
-            NotReadOnly = "Not";
-            ReadOnlyFalse = "F";
-            ReadOnlyTrue = "T";
+            Editable = "Not";
+            EditableTrue = "T";
+            EditableFalse = "F";
             Number = 10.7854M;
 
             Relation = new BootstrapModel(true)
@@ -37,9 +36,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 Date = new DateTime(2011, 01, 01, 1, 1, 1),
                 NotRequired = "NotRequiredRelation",
                 Required = "RequiredRelation",
-                NotReadOnly = "NotRelation",
-                ReadOnlyFalse = "FRelation",
-                ReadOnlyTrue = "TRelation",
+                Editable = "NotRelation",
+                EditableTrue = "TRelation",
+                EditableFalse = "FRelation",
                 Number = 1.6666M,
             };
         }

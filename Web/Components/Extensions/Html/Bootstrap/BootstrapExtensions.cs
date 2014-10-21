@@ -2,7 +2,6 @@
 using MvcTemplate.Resources;
 using System;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -171,9 +170,8 @@ namespace MvcTemplate.Components.Extensions.Html
             MemberExpression memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression.");
 
-            ReadOnlyAttribute readOnly = memberExpression.Member.GetCustomAttribute<ReadOnlyAttribute>();
-            if (readOnly != null && readOnly.IsReadOnly)
-                htmlAttributes.Add("readonly", "readonly");
+            EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>();
+            if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
 
             return htmlAttributes;
         }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Objects
 {
     public class AccountEditView : BaseView
     {
-        [ReadOnly(true)]
+        [Editable(false)]
         public String Username { get; set; }
 
         public String RoleId { get; set; }

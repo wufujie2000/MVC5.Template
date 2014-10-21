@@ -199,7 +199,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
 
             String actual = html.FormTextBoxFor(expression).ToString();
             String expected = String.Format(
@@ -209,15 +209,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.NotReadOnly);
+                model.Editable);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_DoesNotAddFalseReadOnlyAttribute()
+        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableTrue()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
             String actual = html.FormTextBoxFor(expression).ToString();
             String expected = String.Format(
@@ -227,15 +227,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyFalse);
+                model.EditableTrue);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_AddsReadOnlyAttribute()
+        public void FormTextBoxFor_AddsReadOnlyAttributeOnEditableFalse()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression).ToString();
             String expected = String.Format(
@@ -245,7 +245,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -282,7 +282,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
 
             String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
@@ -292,15 +292,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.NotReadOnly);
+                model.Editable);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Format_DoesNotAddFalseReadOnlyAttribute()
+        public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableTrue()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
             String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
@@ -310,15 +310,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyFalse);
+                model.EditableTrue);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Format_AddsReadOnlyAttribute()
+        public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnEditableFalse()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression, null).ToString();
             String expected = String.Format(
@@ -328,7 +328,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -412,7 +412,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression, new { @readonly = "false" }).ToString();
             String expected = String.Format(
@@ -422,7 +422,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -437,7 +437,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
 
             String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
             String expected = String.Format(
@@ -447,15 +447,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.NotReadOnly);
+                model.Editable);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Attributes_DoesNotAddFalseReadOnlyAttribute()
+        public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableTrue()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
             String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
             String expected = String.Format(
@@ -465,15 +465,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyFalse);
+                model.EditableTrue);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Attributes_AddsReadOnlyAttribute()
+        public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnEditableFalse()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
             String expected = String.Format(
@@ -483,7 +483,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -549,7 +549,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression, null, new { @readonly = "false" }).ToString();
             String expected = String.Format(
@@ -559,7 +559,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }
@@ -574,7 +574,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.NotReadOnly;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
 
             String actual = html.FormTextBoxFor(expression, null, null).ToString();
             String expected = String.Format(
@@ -584,15 +584,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.NotReadOnly);
+                model.Editable);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Format_Attributes_DoesNotAddFalseReadOnlyAttribute()
+        public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableTrue()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyFalse;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
             String actual = html.FormTextBoxFor(expression, null, null).ToString();
             String expected = String.Format(
@@ -602,15 +602,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyFalse);
+                model.EditableTrue);
 
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttribute()
+        public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnEditableFalse()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.ReadOnlyTrue;
+            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
             String actual = html.FormTextBoxFor(expression, null, null).ToString();
             String expected = String.Format(
@@ -620,7 +620,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 BootstrapExtensions.ContentClass,
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                model.ReadOnlyTrue);
+                model.EditableFalse);
 
             Assert.AreEqual(expected, actual);
         }

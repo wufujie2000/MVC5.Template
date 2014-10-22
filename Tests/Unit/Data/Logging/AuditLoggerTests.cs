@@ -71,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             entry.State = EntityState.Modified;
 
-            Assert.IsFalse(context.Set<AuditLog>().Any());
+            CollectionAssert.IsEmpty(context.Set<AuditLog>());
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
                 logger.Save();
             }
 
-            Assert.IsFalse(context.Set<AuditLog>().Any());
+            CollectionAssert.IsEmpty(context.Set<AuditLog>());
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.State = EntityState.Added;
             logger.Log(new[] { entry });
 
-            Assert.IsFalse(context.Set<AuditLog>().Any());
+            CollectionAssert.IsEmpty(context.Set<AuditLog>());
         }
 
         #endregion
@@ -123,7 +123,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Log(new[] { entry });
             logger.Save();
 
-            Assert.IsTrue(context.Set<AuditLog>().Any());
+            CollectionAssert.IsNotEmpty(context.Set<AuditLog>());
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Save();
             logger.Save();
 
-            Assert.IsTrue(context.Set<AuditLog>().Any());
+            CollectionAssert.IsNotEmpty(context.Set<AuditLog>());
         }
 
         #endregion

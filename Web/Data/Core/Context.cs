@@ -8,7 +8,7 @@ namespace MvcTemplate.Data.Core
 {
     public class Context : AContext
     {
-        protected Hashtable repositories;
+        protected Hashtable Repositories;
 
         #region DbSets
 
@@ -41,18 +41,18 @@ namespace MvcTemplate.Data.Core
         }
         public Context()
         {
-            repositories = new Hashtable();
+            Repositories = new Hashtable();
         }
 
         public override IRepository<TModel> Repository<TModel>()
         {
             String name = typeof(TModel).Name;
-            if (repositories.ContainsKey(name))
-                return (IRepository<TModel>)repositories[name];
+            if (Repositories.ContainsKey(name))
+                return (IRepository<TModel>)Repositories[name];
 
             Type repositoryType = typeof(Repository<>).MakeGenericType(typeof(TModel));
             IRepository<TModel> repository = (IRepository<TModel>)Activator.CreateInstance(repositoryType, this);
-            repositories.Add(name, repository);
+            Repositories.Add(name, repository);
 
             return repository;
         }

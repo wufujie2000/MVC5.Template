@@ -367,7 +367,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(accountId);
 
-            Assert.IsFalse(context.Set<Account>().Any());
+            CollectionAssert.IsEmpty(context.Set<Account>());
         }
 
         #endregion

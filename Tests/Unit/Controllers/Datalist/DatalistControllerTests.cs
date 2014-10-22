@@ -56,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void GetData_SetsEmptyAdditionalFilters()
         {
-            controller.GetData(datalist, filter, null);
+            controller.GetData(datalist, filter);
 
             Int32 actual = filter.AdditionalFilters.Count;
             Int32 expected = 0;
@@ -67,10 +67,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void GetData_SetsAdditionalFilters()
         {
-            Dictionary<String, Object> expected = new Dictionary<String, Object> { { "Key", "Value" } };
-            controller.GetData(datalist, filter, expected);
+            Dictionary<String, Object> filters = new Dictionary<String, Object> { { "Key", "Value" } };
+            controller.GetData(datalist, filter, filters);
 
             Dictionary<String, Object> actual = filter.AdditionalFilters;
+            Dictionary<String, Object> expected = filters;
 
             Assert.AreEqual(expected, actual);
         }

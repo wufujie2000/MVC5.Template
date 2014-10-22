@@ -16,7 +16,7 @@ namespace MvcTemplate.Controllers
         public ActionResult Index()
         {
             if (!Service.AccountExists(CurrentAccountId))
-                return LogOut();
+                return RedirectToAction("Logout", "Auth");
 
             return View();
         }
@@ -39,14 +39,9 @@ namespace MvcTemplate.Controllers
         public ActionResult Unauthorized()
         {
             if (!Service.AccountExists(CurrentAccountId))
-                return LogOut();
+                return RedirectToAction("Logout", "Auth");
 
             return View();
-        }
-
-        private RedirectToRouteResult LogOut()
-        {
-            return RedirectToAction("Logout", "Auth");
         }
     }
 }

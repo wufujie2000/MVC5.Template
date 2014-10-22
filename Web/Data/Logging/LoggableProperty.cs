@@ -36,7 +36,7 @@ namespace MvcTemplate.Data.Logging
             if (value == null)
                 return "{null}";
 
-            if (typeof(DateTime?).IsAssignableFrom(value.GetType()))
+            if (value is DateTime?)
                 return ((DateTime)value).ToString("yyyy-MM-dd hh:mm:ss");
 
             return value.ToString();

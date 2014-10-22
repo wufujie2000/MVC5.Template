@@ -119,7 +119,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerable<JsTreeNode> nodes = role.PrivilegesTree.Nodes;
             IEnumerable<JsTreeNode> branches = GetAllBranchNodes(nodes);
 
-            Assert.IsFalse(branches.Any(branch => branch.Id != null));
+            CollectionAssert.IsEmpty(branches.Where(branch => branch.Id != null));
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerable<JsTreeNode> nodes = role.PrivilegesTree.Nodes;
             IEnumerable<JsTreeNode> leafs = GetAllLeafNodes(nodes);
 
-            Assert.IsFalse(leafs.Any(leaf => leaf.Id == null));
+            CollectionAssert.IsEmpty(leafs.Where(leaf => leaf.Id == null));
         }
 
         #endregion
@@ -261,9 +261,9 @@ namespace MvcTemplate.Tests.Unit.Services
             Role actual = context.Set<Role>().Single();
             RoleView expected = roleView;
 
-            Assert.AreEqual(roleView.CreationDate, actual.CreationDate);
-            Assert.AreEqual(roleView.Name, actual.Name);
-            Assert.AreEqual(roleView.Id, actual.Id);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]
@@ -313,7 +313,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(role.Id);
 
-            Assert.IsTrue(context.Set<Account>().Any(acc => acc.Id == account.Id && acc.RoleId == null));
+            CollectionAssert.IsNotEmpty(context.Set<Account>().Where(acc => acc.Id == account.Id && acc.RoleId == null));
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(role.Id);
 
-            Assert.IsFalse(context.Set<Role>().Any());
+            CollectionAssert.IsEmpty(context.Set<Role>());
         }
 
         [Test]

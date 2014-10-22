@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Shared;
 using NUnit.Framework;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -9,24 +10,26 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class RequiredAdapterTests
     {
-        private RequiredAttribute attribute;
         private ModelMetadata metadata;
 
         [SetUp]
         public void SetUp()
         {
-            attribute = new RequiredAttribute();
-            metadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
-            new RequiredAdapter(metadata, new ControllerContext(), attribute);
+            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
         }
 
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Test]
-        public void RequiredAdapter_SetsErrorMessage()
+        public void RequiredAdapter_SetsRequiredErrorMessage()
         {
-            Assert.AreEqual(attribute.ErrorMessage, Validations.FieldIsRequired);
+            RequiredAttribute attribute = new RequiredAttribute();
+            new RequiredAdapter(metadata, new ControllerContext(), attribute);
+
+            String expected = Validations.FieldIsRequired;
+            String actual = attribute.ErrorMessage;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -347,7 +347,6 @@ namespace MvcTemplate.Tests.Unit.Web
         {
             application.RegisterViewEngine();
 
-            ViewEngineCollection actualEngines = ViewEngines.Engines;
             Type actual = ViewEngines.Engines.Single().GetType();
             Type expected = typeof(ViewEngine);
 

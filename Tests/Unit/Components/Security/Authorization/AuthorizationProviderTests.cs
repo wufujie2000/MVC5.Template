@@ -200,7 +200,7 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         #endregion
-        
+
         [Test]
         public void IsAuthorizedFor_CachesAccountPrivileges()
         {

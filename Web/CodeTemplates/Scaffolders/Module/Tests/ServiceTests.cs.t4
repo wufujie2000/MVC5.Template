@@ -109,7 +109,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(<#= Model.ModelName #>.Id);
 
-            Assert.IsFalse(context.Set<<#= Model.Model #>>().Any());
+            CollectionAssert.IsEmpty(context.Set<<#= Model.Model #>>());
         }
 
         #endregion

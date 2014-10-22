@@ -196,7 +196,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Delete(expected.Id);
             context.SaveChanges();
 
-            Assert.IsFalse(context.Set<TestModel>().Any());
+            CollectionAssert.IsEmpty(context.Set<TestModel>());
         }
 
         #endregion

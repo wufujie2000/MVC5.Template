@@ -90,7 +90,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
             AsssertProperties(entry.GetDatabaseValues());
         }
-        
+
         [Test]
         public void LoggableEntity_SetsAction()
         {

@@ -23,7 +23,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             context = new TestingContext();
             logger = new Logger(context);
 
-            TearDownData();
+            context.Set<Log>().RemoveRange(context.Set<Log>());
+            context.SaveChanges();
         }
 
         [TearDown]
@@ -56,16 +57,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         {
             logger.Dispose();
             logger.Dispose();
-        }
-
-        #endregion
-
-        #region Test helpers
-
-        private void TearDownData()
-        {
-            context.Set<Log>().RemoveRange(context.Set<Log>());
-            context.SaveChanges();
         }
 
         #endregion

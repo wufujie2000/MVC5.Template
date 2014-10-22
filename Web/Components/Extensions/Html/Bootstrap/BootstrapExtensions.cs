@@ -123,7 +123,6 @@ namespace MvcTemplate.Components.Extensions.Html
                 String imageSrc = urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation));
                 routeValues["language"] = language.Abbrevation;
                 TagBuilder languageItem = new TagBuilder("li");
-
                 languageItem.InnerHtml = String.Format(
                     html.ActionLink("{0}{1}", routeValues["action"].ToString(), routeValues).ToString(),
                     String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc),

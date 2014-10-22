@@ -2,7 +2,6 @@
 using MvcTemplate.Validators;
 using NSubstitute;
 using NUnit.Framework;
-using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
@@ -30,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void BaseValidator_CreateEmptyAlertsContainer()
         {
-            Assert.IsFalse(validator.Alerts.Any());
+            CollectionAssert.IsEmpty(validator.Alerts);
         }
 
         #endregion

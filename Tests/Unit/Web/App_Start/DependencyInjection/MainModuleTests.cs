@@ -47,10 +47,10 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [TestCase(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
         [TestCase(typeof(IGlobalizationProvider), typeof(GlobalizationProvider), IgnoreReason = "Globalization provider uses virtual server path.")]
         [TestCase(typeof(IMvcSiteMapProvider), typeof(MvcSiteMapProvider), IgnoreReason = "Site map provider uses virtual server path.")]
-        
+
         [TestCase(typeof(IRoleService), typeof(RoleService))]
         [TestCase(typeof(IAccountService), typeof(AccountService))]
-        
+
         [TestCase(typeof(IRoleValidator), typeof(RoleValidator))]
         [TestCase(typeof(IAccountValidator), typeof(AccountValidator))]
         public void Load_BindsToImplementation(Type abstraction, Type implementation)

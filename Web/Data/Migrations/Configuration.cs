@@ -31,7 +31,6 @@ namespace MvcTemplate.Data.Migrations
             List<Privilege> allPrivileges = new List<Privilege>
             {
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Index" },
-                new Privilege { Area = "Administration", Controller = "Accounts", Action = "Create" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Details" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Edit" },
 

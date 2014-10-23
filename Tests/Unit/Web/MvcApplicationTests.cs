@@ -1,9 +1,9 @@
-﻿using MvcTemplate.Components.Mvc;
+﻿using LightInject.Mvc;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Tests.Unit.Components.Mvc;
 using MvcTemplate.Web;
-using MvcTemplate.Web.DependencyInjection;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -197,12 +197,12 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterCurrentDependencyResolver_RegistersCurrentDependencyResolver()
         {
-            Assert.IsNotInstanceOf<NinjectResolver>(DependencyResolver.Current);
+            Assert.IsNotInstanceOf<LightInjectMvcDependencyResolver>(DependencyResolver.Current);
 
             application.RegisterCurrentDependencyResolver();
 
+            Type expected = typeof(LightInjectMvcDependencyResolver);
             Type actual = DependencyResolver.Current.GetType();
-            Type expected = typeof(NinjectResolver);
 
             Assert.AreEqual(expected, actual);
         }

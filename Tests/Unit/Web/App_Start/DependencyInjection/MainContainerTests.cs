@@ -9,7 +9,6 @@ using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using MvcTemplate.Web;
 using MvcTemplate.Web.DependencyInjection;
-using Ninject;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;
@@ -17,19 +16,24 @@ using System.Web.Mvc;
 namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 {
     [TestFixture]
-    public class MainModuleTests
+    public class MainContainerTests
     {
-        private KernelBase kernel;
-        private MainModule module;
+        private MainContainer container;
 
-        [SetUp]
-        public void SetUp()
+        [TestFixtureSetUp]
+        public void TestFixtureSetUp()
         {
-            module = new MainModule();
-            kernel = new StandardKernel(module);
+            container = new MainContainer();
+            container.RegisterServices();
         }
 
-        #region Method: Load()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
+        {
+            container.Dispose();
+        }
+
+        #region Method: RegisterServices()
 
         [Test]
         [TestCase(typeof(ILogger), typeof(Logger))]
@@ -53,20 +57,22 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [TestCase(typeof(IRoleValidator), typeof(RoleValidator))]
         [TestCase(typeof(IAccountValidator), typeof(AccountValidator))]
-        public void Load_BindsToImplementation(Type abstraction, Type implementation)
+        public void RegisterServices_RegistersTransientImplementation(Type abstraction, Type implementation)
         {
-            Type actual = kernel.Get(abstraction).GetType();
-            Type expected = implementation;
+            Object expected = container.GetInstance(abstraction);
+            Object actual = container.GetInstance(abstraction);
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(actual.GetType(), expected.GetType());
+            Assert.AreEqual(actual.GetType(), implementation);
+            Assert.AreNotSame(expected, actual);
         }
 
         [Test]
         [TestCase(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
-        public void Load_BindsToConstantImplementation(Type abstraction, Type implementation)
+        public void RegisterServices_RegistersSingletonImplementation(Type abstraction, Type implementation)
         {
-            IAuthorizationProvider expected = kernel.Get<IAuthorizationProvider>();
-            IAuthorizationProvider actual = kernel.Get<IAuthorizationProvider>();
+            IAuthorizationProvider expected = container.GetInstance<IAuthorizationProvider>();
+            IAuthorizationProvider actual = container.GetInstance<IAuthorizationProvider>();
 
             Assert.AreEqual(actual.GetType(), implementation);
             Assert.AreSame(expected, actual);

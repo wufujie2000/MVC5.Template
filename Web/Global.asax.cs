@@ -1,4 +1,6 @@
-﻿using MvcTemplate.Components.Mvc;
+﻿using LightInject;
+using LightInject.Mvc;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Web.DependencyInjection;
@@ -71,7 +73,12 @@ namespace MvcTemplate.Web
 
         public virtual void RegisterCurrentDependencyResolver()
         {
-            DependencyResolver.SetResolver(new NinjectResolver(new MainModule()));
+            MainContainer container = new MainContainer();
+            container.RegisterControllers(typeof(BaseController).Assembly);
+            container.RegisterServices();
+            container.EnableMvc();
+
+            DependencyResolver.SetResolver(new LightInjectMvcDependencyResolver(container));
         }
         public virtual void RegisterGlobalizationProvider()
         {

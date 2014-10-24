@@ -8,7 +8,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
-using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
 
@@ -35,23 +34,15 @@ namespace MvcTemplate.Web.DependencyInjection
                  HostingEnvironment.MapPath("~/Mvc.sitemap"),
                  factory.GetInstance<IMvcSiteMapParser>()));
 
-            RegisterInstance<IAuthorizationProvider>(CreateAuthorizationProvider());
             Register<IGlobalizationProvider>(factory =>
                 new GlobalizationProvider(HostingEnvironment.MapPath("~/Globalization.xml")));
+            RegisterInstance<IAuthorizationProvider>(new AuthorizationProvider(typeof(BaseController).Assembly));
 
             Register<IRoleService, RoleService>();
             Register<IAccountService, AccountService>();
 
             Register<IRoleValidator, RoleValidator>();
             Register<IAccountValidator, AccountValidator>();
-        }
-
-        private IAuthorizationProvider CreateAuthorizationProvider()
-        {
-            Assembly controllersAssembly = typeof(BaseController).Assembly;
-            IUnitOfWork unitOfWork = GetInstance<IUnitOfWork>();
-
-            return new AuthorizationProvider(controllersAssembly, unitOfWork);
         }
     }
 }

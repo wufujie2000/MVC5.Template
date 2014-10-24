@@ -310,6 +310,19 @@ namespace MvcTemplate.Tests.Unit.Web
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void RegisterAuthorization_RefreshesAuthorizationProvider()
+        {
+            IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
+            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            resolver.GetService<IAuthorizationProvider>().Returns(provider);
+            DependencyResolver.SetResolver(resolver);
+
+            application.RegisterAuthorization();
+
+            Authorization.Provider.Received().Refresh();
+        }
+
         #endregion
 
         #region Method: RegisterModelBinders()

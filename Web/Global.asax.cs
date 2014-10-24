@@ -100,6 +100,7 @@ namespace MvcTemplate.Web
         public virtual void RegisterAuthorization()
         {
             Authorization.Provider = DependencyResolver.Current.GetService<IAuthorizationProvider>();
+            Authorization.Provider.Refresh();
         }
         public virtual void RegisterModelBinders()
         {

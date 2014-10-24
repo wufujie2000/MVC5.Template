@@ -49,8 +49,9 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [TestCase(typeof(IExceptionFilter), typeof(ExceptionFilter))]
 
         [TestCase(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
-        [TestCase(typeof(IGlobalizationProvider), typeof(GlobalizationProvider), IgnoreReason = "Globalization provider uses virtual server path.")]
         [TestCase(typeof(IMvcSiteMapProvider), typeof(MvcSiteMapProvider), IgnoreReason = "Site map provider uses virtual server path.")]
+
+        [TestCase(typeof(IGlobalizationProvider), typeof(GlobalizationProvider), IgnoreReason = "Globalization provider uses virtual server path.")]
 
         [TestCase(typeof(IRoleService), typeof(RoleService))]
         [TestCase(typeof(IAccountService), typeof(AccountService))]

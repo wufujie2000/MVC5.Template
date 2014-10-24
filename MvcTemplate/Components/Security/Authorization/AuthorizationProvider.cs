@@ -8,21 +8,16 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Security
 {
-    public class AuthorizationProvider : IAuthorizationProvider, IDisposable
+    public class AuthorizationProvider : IAuthorizationProvider
     {
         private Dictionary<String, IEnumerable<Privilege>> cache;
-        private IUnitOfWork unitOfWork;
         private List<Type> controllers;
         private Type controllerType;
-        private Boolean disposed;
 
-        public AuthorizationProvider(Assembly controllersAssembly, IUnitOfWork unitOfWork)
+        public AuthorizationProvider(Assembly controllersAssembly)
         {
-            this.unitOfWork = unitOfWork;
             controllerType = typeof(Controller);
             controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToList();
-
-            Refresh();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -42,20 +37,23 @@ namespace MvcTemplate.Components.Security
 
         public virtual void Refresh()
         {
-            cache = unitOfWork
-                .Repository<Account>()
-                .Where(account => account.RoleId != null)
-                .Select(account => new
-                {
-                    Id = account.Id,
-                    Privileges = account
-                        .Role
-                        .RolePrivileges
-                        .Select(rolePrivilege => rolePrivilege.Privilege)
-                })
-                .ToDictionary(
-                    account => account.Id,
-                    account => account.Privileges);
+            using (IUnitOfWork unitOfWork = DependencyResolver.Current.GetService<IUnitOfWork>())
+            {
+                cache = unitOfWork
+                    .Repository<Account>()
+                    .Where(account => account.RoleId != null)
+                    .Select(account => new
+                    {
+                        Id = account.Id,
+                        Privileges = account
+                            .Role
+                            .RolePrivileges
+                            .Select(rolePrivilege => rolePrivilege.Privilege)
+                    })
+                    .ToDictionary(
+                        account => account.Id,
+                        account => account.Privileges);
+            }
         }
 
         private Boolean AllowsUnauthorized(String area, String controller, String action)
@@ -105,21 +103,6 @@ namespace MvcTemplate.Components.Security
                 throw new Exception(String.Format("'{0}' does not have '{1}' action.", controller.Name, action));
 
             return actionMethods[0];
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(Boolean disposing)
-        {
-            if (disposed) return;
-
-            unitOfWork.Dispose();
-            unitOfWork = null;
-
-            disposed = true;
         }
     }
 }

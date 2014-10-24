@@ -8,6 +8,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Security
 {
@@ -15,20 +16,17 @@ namespace MvcTemplate.Tests.Unit.Security
     public class AuthorizationProviderTests
     {
         private AuthorizationProvider provider;
-        private TestingContext context;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
-            context = new TestingContext();
-            provider = new AuthorizationProvider(Assembly.GetExecutingAssembly(), new UnitOfWork(context));
+            provider = new AuthorizationProvider(Assembly.GetExecutingAssembly());
         }
 
         [TearDown]
         public void TearDown()
         {
-            context.Dispose();
-            provider.Dispose();
+            DependencyResolver.SetResolver(Substitute.For<IDependencyResolver>());
         }
 
         #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -40,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Security
         [TestCase("NotAttributed", "Post")]
         [TestCase("NotAttributed", "GetName")]
         [TestCase("NotAttributed", "PostName")]
-        public void IsAuthorizedFor_AuthorizeNotAttributedActions(String controller, String action)
+        public void IsAuthorizedFor_AuthorizesNotAttributedActions(String controller, String action)
         {
             Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
@@ -80,6 +78,9 @@ namespace MvcTemplate.Tests.Unit.Security
         [TestCase("InheritedAuthorized", "InheritancePostName")]
         public void IsAuthorizedFor_DoesNotAuthorizeAuthorizedAction(String controller, String action)
         {
+            SetUpDependencyResolver();
+            provider.Refresh();
+
             Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", controller, action));
         }
 
@@ -235,33 +236,14 @@ namespace MvcTemplate.Tests.Unit.Security
         public void Refresh_RefreshesPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor("Security", "Authorized", "AuthorizedGet");
+            Assume.That(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
 
             TearDownData();
+
+            SetUpDependencyResolver();
             provider.Refresh();
 
             Assert.IsFalse(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
-        }
-
-        #endregion
-
-        #region Method: Dispose()
-
-        [Test]
-        public void Dispose_DisposesUnitOfWork()
-        {
-            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            unitOfWork.Repository<Account>().Returns(new Repository<Account>(context));
-
-            new AuthorizationProvider(Assembly.GetExecutingAssembly(), unitOfWork).Dispose();
-
-            unitOfWork.Received().Dispose();
-        }
-
-        [Test]
-        public void Dispose_CanBeCalledMultipleTimes()
-        {
-            provider.Dispose();
-            provider.Dispose();
         }
 
         #endregion
@@ -272,39 +254,54 @@ namespace MvcTemplate.Tests.Unit.Security
         {
             TearDownData();
 
-            Account account = ObjectFactory.CreateAccount();
-            Role role = ObjectFactory.CreateRole();
-            account.RoleId = role.Id;
-            account.Role = role;
+            using (TestingContext context = new TestingContext())
+            {
+                Account account = ObjectFactory.CreateAccount();
+                Role role = ObjectFactory.CreateRole();
+                account.RoleId = role.Id;
+                account.Role = role;
 
-            role.RolePrivileges = new List<RolePrivilege>();
-            RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
-            Privilege privilege = ObjectFactory.CreatePrivilege();
-            rolePrivilege.PrivilegeId = privilege.Id;
-            rolePrivilege.Privilege = privilege;
-            rolePrivilege.RoleId = role.Id;
-            rolePrivilege.Role = role;
+                role.RolePrivileges = new List<RolePrivilege>();
+                RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
+                Privilege privilege = ObjectFactory.CreatePrivilege();
+                rolePrivilege.PrivilegeId = privilege.Id;
+                rolePrivilege.Privilege = privilege;
+                rolePrivilege.RoleId = role.Id;
+                rolePrivilege.Role = role;
 
-            privilege.Controller = controller;
-            privilege.Action = action;
-            privilege.Area = area;
+                privilege.Controller = controller;
+                privilege.Action = action;
+                privilege.Area = area;
 
-            role.RolePrivileges.Add(rolePrivilege);
+                role.RolePrivileges.Add(rolePrivilege);
 
-            context.Set<Account>().Add(account);
-            context.SaveChanges();
+                context.Set<Account>().Add(account);
+                context.SaveChanges();
 
-            provider.Refresh();
+                SetUpDependencyResolver();
+                provider.Refresh();
 
-            return account;
+                return account;
+            }
+        }
+
+        private void SetUpDependencyResolver()
+        {
+            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
+            resolver.GetService<IUnitOfWork>().Returns(new UnitOfWork(new TestingContext()));
+
+            DependencyResolver.SetResolver(resolver);
         }
 
         private void TearDownData()
         {
-            context.Set<Privilege>().RemoveRange(context.Set<Privilege>());
-            context.Set<Account>().RemoveRange(context.Set<Account>());
-            context.Set<Role>().RemoveRange(context.Set<Role>());
-            context.SaveChanges();
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<Privilege>().RemoveRange(context.Set<Privilege>());
+                context.Set<Account>().RemoveRange(context.Set<Account>());
+                context.Set<Role>().RemoveRange(context.Set<Role>());
+                context.SaveChanges();
+            }
         }
 
         #endregion

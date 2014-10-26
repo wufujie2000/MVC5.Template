@@ -116,7 +116,7 @@
     <Compile Include="Security\Cryptography\IHasher.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Resources\MvcTemplate.Resources.csproj">
+    <ProjectReference Include="..\MvcTemplate.Resources\MvcTemplate.Resources.csproj">
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>MvcTemplate.Resources</Name>
     </ProjectReference>

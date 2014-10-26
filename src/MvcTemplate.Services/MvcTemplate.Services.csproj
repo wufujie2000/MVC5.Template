@@ -50,19 +50,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Components\MvcTemplate.Components.csproj">
+    <ProjectReference Include="..\MvcTemplate.Components\MvcTemplate.Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>MvcTemplate.Components</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\MvcTemplate.Data.csproj">
+    <ProjectReference Include="..\MvcTemplate.Data\MvcTemplate.Data.csproj">
       <Project>{4ec117ab-87ff-4360-bd49-8e29d2d71d89}</Project>
       <Name>MvcTemplate.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Objects\MvcTemplate.Objects.csproj">
+    <ProjectReference Include="..\MvcTemplate.Objects\MvcTemplate.Objects.csproj">
       <Project>{8a9dc311-3844-4024-a193-8f89b60d1fd8}</Project>
       <Name>MvcTemplate.Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Resources\MvcTemplate.Resources.csproj">
+    <ProjectReference Include="..\MvcTemplate.Resources\MvcTemplate.Resources.csproj">
       <Project>{0bc1938b-b09c-4951-9ccb-13ee2c61d65c}</Project>
       <Name>MvcTemplate.Resources</Name>
     </ProjectReference>

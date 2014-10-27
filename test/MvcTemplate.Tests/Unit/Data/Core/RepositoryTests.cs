@@ -104,17 +104,17 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: ProjectTo<TView>()
+        #region Method: To<TView>()
 
         [Test]
-        public void ProjectTo_ProjectsContextsSet()
+        public void To_ProjectsContextsSet()
         {
             TestModel model = ObjectFactory.CreateTestModel();
             context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             IEnumerable<String> expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToList();
-            IEnumerable<String> actual = repository.ProjectTo<TestView>().Select(view => view.Id).ToList();
+            IEnumerable<String> actual = repository.To<TestView>().Select(view => view.Id).ToList();
 
             CollectionAssert.AreEqual(expected, actual);
         }

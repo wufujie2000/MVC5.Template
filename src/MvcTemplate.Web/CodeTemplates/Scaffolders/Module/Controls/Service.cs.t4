@@ -19,7 +19,7 @@ namespace MvcTemplate.Services
         {
             return UnitOfWork
                 .Repository<<#= Model.Model #>>()
-                .ProjectTo<<#= Model.View #>>()
+                .To<<#= Model.View #>>()
                 .OrderByDescending(view => view.CreationDate);
         }
         public <#= Model.View #> GetView(String id)

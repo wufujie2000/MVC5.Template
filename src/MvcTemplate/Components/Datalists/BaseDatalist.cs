@@ -69,7 +69,7 @@ namespace MvcTemplate.Components.Datalists
 
         protected override IQueryable<TView> GetModels()
         {
-            return UnitOfWork.Repository<TModel>().ProjectTo<TView>();
+            return UnitOfWork.Repository<TModel>().To<TView>();
         }
     }
 }

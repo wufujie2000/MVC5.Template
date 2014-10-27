@@ -166,10 +166,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_ReturnsModelsProjectedToViews()
         {
-            unitOfWork.Repository<Role>().ProjectTo<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
+            unitOfWork.Repository<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
             BaseDatalistProxy<Role, RoleView> datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
-            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().ProjectTo<RoleView>();
+            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().To<RoleView>();
             IQueryable<RoleView> actual = datalist.BaseGetModels();
 
             CollectionAssert.AreEqual(expected, actual);

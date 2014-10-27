@@ -9,7 +9,7 @@ namespace MvcTemplate.Data.Core
         TModel GetById(String id);
         TView GetById<TView>(String id) where TView : BaseView;
 
-        IQueryable<TView> ProjectTo<TView>() where TView : BaseView;
+        IQueryable<TView> To<TView>() where TView : BaseView;
 
         void Insert(TModel model);
         void Update(TModel model);

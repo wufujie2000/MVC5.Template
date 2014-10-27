@@ -49,11 +49,10 @@ namespace MvcTemplate.Data.Core
         }
         public TView GetById<TView>(String id) where TView : BaseView
         {
-            return ProjectTo<TView>().SingleOrDefault(view => view.Id == id);
+            return To<TView>().SingleOrDefault(view => view.Id == id);
         }
 
-        public IQueryable<TView> ProjectTo<TView>()
-            where TView : BaseView
+        public IQueryable<TView> To<TView>() where TView : BaseView
         {
             return repository.Project().To<TView>();
         }

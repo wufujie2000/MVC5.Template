@@ -139,7 +139,7 @@
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Mvc\Adapters\AdaptersModel.cs" />
+    <Compile Include="Objects\Models\AdaptersModel.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RangeAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MinLengthAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MaxValueAdapterTests.cs" />

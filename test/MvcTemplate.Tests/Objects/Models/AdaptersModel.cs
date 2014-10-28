@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace MvcTemplate.Tests.Unit.Components.Mvc
+namespace MvcTemplate.Tests.Objects
 {
     public class AdaptersModel
     {

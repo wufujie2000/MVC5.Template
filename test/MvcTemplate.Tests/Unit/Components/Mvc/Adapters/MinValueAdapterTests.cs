@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
 using System.Linq;

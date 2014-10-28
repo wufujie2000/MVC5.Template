@@ -2,7 +2,7 @@
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
-using MvcTemplate.Tests.Unit.Components.Mvc;
+using MvcTemplate.Tests.Objects;
 using MvcTemplate.Web;
 using NSubstitute;
 using NUnit.Framework;

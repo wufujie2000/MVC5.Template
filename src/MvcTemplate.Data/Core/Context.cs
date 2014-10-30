@@ -8,7 +8,7 @@ namespace MvcTemplate.Data.Core
 {
     public class Context : AContext
     {
-        protected Hashtable Repositories;
+        protected Hashtable Repositories { get; set; }
 
         #region DbSets
 

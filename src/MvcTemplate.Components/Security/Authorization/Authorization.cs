@@ -2,10 +2,6 @@
 {
     public sealed class Authorization
     {
-        public static IAuthorizationProvider Provider
-        {
-            get;
-            set;
-        }
+        public static IAuthorizationProvider Provider { get; set; }
     }
 }

@@ -27,7 +27,8 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(String.Format("{0}{1}", addon, html.PasswordFor(expression, attributes)));
         }
-        public static MvcHtmlString AuthEmailFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression)
+        public static MvcHtmlString AuthEmailFor<TModel>(this HtmlHelper<TModel> html,
+            Expression<Func<TModel, String>> expression)
         {
             TagBuilder addon = CreateAddon("fa-envelope");
             RouteValueDictionary attributes = CreateAttributesFor(expression, false);

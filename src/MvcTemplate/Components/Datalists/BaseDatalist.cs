@@ -14,11 +14,7 @@ namespace MvcTemplate.Components.Datalists
         where TModel : BaseModel
         where TView : BaseView
     {
-        protected IUnitOfWork UnitOfWork
-        {
-            get;
-            set;
-        }
+        protected IUnitOfWork UnitOfWork { get; set; }
 
         public BaseDatalist()
         {
@@ -28,8 +24,7 @@ namespace MvcTemplate.Components.Datalists
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
             DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = String.Empty }, request.Url.Scheme);
         }
-        public BaseDatalist(IUnitOfWork unitOfWork)
-            : this()
+        public BaseDatalist(IUnitOfWork unitOfWork) : this()
         {
             UnitOfWork = unitOfWork;
         }

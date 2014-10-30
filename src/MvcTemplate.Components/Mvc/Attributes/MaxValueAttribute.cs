@@ -9,18 +9,15 @@ namespace MvcTemplate.Components.Mvc
     {
         public Decimal Maximum { get; private set; }
 
-        public MaxValueAttribute(Int32 maximum)
-            : this()
+        public MaxValueAttribute(Int32 maximum) : this()
         {
             Maximum = maximum;
         }
-        public MaxValueAttribute(Double maximum)
-            : this()
+        public MaxValueAttribute(Double maximum) : this()
         {
             Maximum = Convert.ToDecimal(maximum);
         }
-        private MaxValueAttribute()
-            : base(() => Validations.FieldMustBeLessOrEqualTo)
+        private MaxValueAttribute() : base(() => Validations.FieldMustBeLessOrEqualTo)
         {
         }
 

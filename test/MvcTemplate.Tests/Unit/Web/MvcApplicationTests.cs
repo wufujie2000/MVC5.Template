@@ -386,11 +386,11 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterAdapters();
 
-            ModelValidator actual = provider
+            ModelValidator adapter = provider
                 .GetValidators(metadata, new ControllerContext())
                 .SingleOrDefault(validator => validator.GetType() == adapterType);
 
-            Assert.IsNotNull(actual);
+            Assert.IsNotNull(adapter);
         }
 
         #endregion

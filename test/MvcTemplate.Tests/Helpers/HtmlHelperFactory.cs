@@ -16,7 +16,8 @@ namespace MvcTemplate.Tests.Helpers
         public static HtmlHelper<T> CreateHtmlHelper<T>(T model)
         {
             ViewContext viewContext = CreateViewContext(CreateControllerContext());
-            IViewDataContainer viewDataContainer = CreateViewDataContainer(viewContext);
+            IViewDataContainer viewDataContainer = new ViewPage();
+            viewDataContainer.ViewData = viewContext.ViewData;
 
             HtmlHelper<T> html = new HtmlHelper<T>(viewContext, viewDataContainer, RouteTable.Routes);
             html.ViewData.Model = model;
@@ -42,13 +43,6 @@ namespace MvcTemplate.Tests.Helpers
             viewContext.ClientValidationEnabled = true;
 
             return viewContext;
-        }
-        private static IViewDataContainer CreateViewDataContainer(ViewContext viewContext)
-        {
-            IViewDataContainer container = Substitute.For<IViewDataContainer>();
-            container.ViewData = viewContext.ViewData;
-
-            return container;
         }
     }
 }

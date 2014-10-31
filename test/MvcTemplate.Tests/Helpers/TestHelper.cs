@@ -43,11 +43,5 @@ namespace MvcTemplate.Tests.Helpers
             while (expectedEnumerator.MoveNext() | actualEnumerator.MoveNext())
                 PropertyWiseEqual(expectedEnumerator.Current, actualEnumerator.Current);
         }
-
-        public static void EnumeratorsEqual(IEnumerator expected, IEnumerator actual)
-        {
-            while (expected.MoveNext() | actual.MoveNext())
-                Assert.AreSame(expected.Current, actual.Current);
-        }
     }
 }

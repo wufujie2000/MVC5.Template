@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,12 +9,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
     [TestFixture]
     public class AlertsContainerTests
     {
-        private AlertsContainer alerts;
+        private AlertsContainer container;
 
         [SetUp]
         public void SetUp()
         {
-            alerts = new AlertsContainer();
+            container = new AlertsContainer();
         }
 
         #region Constanct: DefaultFadeout
@@ -34,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void AlertsContainer_IsEmpty()
         {
-            CollectionAssert.IsEmpty(alerts);
+            CollectionAssert.IsEmpty(container);
         }
 
         #endregion
@@ -45,9 +44,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         public void Add_AddsAlert()
         {
             Alert alert = new Alert();
-            alerts.Add(alert);
+            container.Add(alert);
 
-            Alert actual = alerts.Single();
+            Alert actual = container.Single();
             Alert expected = alert;
 
             Assert.AreSame(expected, actual);
@@ -60,9 +59,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsTypedMessage()
         {
-            alerts.Add(AlertTypes.Danger, "Test");
+            container.Add(AlertTypes.Danger, "Test");
 
-            Alert actual = alerts.Single();
+            Alert actual = container.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
@@ -76,9 +75,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsFadingTypedMessage()
         {
-            alerts.Add(AlertTypes.Danger, "TestMessage", 20);
+            container.Add(AlertTypes.Danger, "TestMessage", 20);
 
-            Alert actual = alerts.Single();
+            Alert actual = container.Single();
 
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
             Assert.AreEqual("TestMessage", actual.Message);
@@ -92,9 +91,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void AddError_AddsErrorMessage()
         {
-            alerts.AddError("ErrorMessage");
+            container.AddError("ErrorMessage");
 
-            Alert actual = alerts.Single();
+            Alert actual = container.Single();
 
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
@@ -108,9 +107,9 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void AddError_AddsFadingErrorMessage()
         {
-            alerts.AddError("ErrorMessage", 1);
+            container.AddError("ErrorMessage", 1);
 
-            Alert actual = alerts.Single();
+            Alert actual = container.Single();
 
             Assert.AreEqual(AlertTypes.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
@@ -125,12 +124,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         public void Merge_MergesAlerts()
         {
             AlertsContainer part = new AlertsContainer();
-            alerts.AddError("FirstError");
+            container.AddError("FirstError");
             part.AddError("SecondError");
 
-            IEnumerable expected = alerts.ToList().Union(part);
-            IEnumerable actual = alerts;
-            alerts.Merge(part);
+            IEnumerable expected = container.ToList().Union(part);
+            IEnumerable actual = container;
+            container.Merge(part);
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -138,13 +137,13 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Merge_OnMergeWithIselfStaysTheSame()
         {
-            alerts.Add(new Alert());
-            IEnumerable alertsList = alerts.ToList();
+            container.Add(new Alert());
+            IEnumerable alertsList = container.ToList();
 
-            alerts.Merge(alerts);
+            container.Merge(container);
 
             IEnumerable expected = alertsList;
-            IEnumerable actual = alerts;
+            IEnumerable actual = container;
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -156,25 +155,24 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void GetEnumerator_ReturnsAlerts()
         {
-            List<Alert> alertsContainer = new List<Alert> { new Alert() };
-            foreach (Alert message in alertsContainer) alerts.Add(message);
+            List<Alert> alerts = new List<Alert> { new Alert() };
+            foreach (Alert alert in alerts) container.Add(alert);
 
-            IEnumerator expected = alertsContainer.GetEnumerator();
-            IEnumerator actual = alerts.GetEnumerator();
+            IEnumerable<Alert> actual = container.ToList();
+            IEnumerable<Alert> expected = alerts;
 
-            TestHelper.EnumeratorsEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetEnumerator_ReturnsSameAlerts()
         {
-            alerts.Add(new Alert());
-            alerts.Add(new Alert());
+            container.Add(new Alert());
 
-            IEnumerator actual = (alerts as IEnumerable).GetEnumerator();
-            IEnumerator expected = alerts.GetEnumerator();
+            IEnumerable expected = container.ToList();
+            IEnumerable actual = container;
 
-            TestHelper.EnumeratorsEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

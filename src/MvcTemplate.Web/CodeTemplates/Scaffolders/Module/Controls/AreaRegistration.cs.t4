@@ -30,7 +30,7 @@ namespace <#= Model.ControllerNamespace #>
                     "<#= Model.Area #>",
                     "{area}/{controller}/{action}/{id}",
                     new { language = "en", area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en", area = "<#= Model.Area #>"  },
+                    new { language = "en", area = "<#= Model.Area #>" },
                     new[] { "<#= Model.ControllerNamespace #>" });
         }
     }

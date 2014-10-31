@@ -239,7 +239,7 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id) as RedirectToRouteResult;
+            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
             ActionResult expected = controller.RedirectIfAuthorized("Index");
 
             Assert.AreSame(expected, actual);

@@ -204,15 +204,15 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: GetEnumerator()
 
         [Test]
-        public void GetEnumerator_ReturnsContextsSetEnumerator()
+        public void GetEnumerator_ReturnsContextsSetsEnumerator()
         {
             repository.Insert(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            IEnumerator<TestModel> expected = (context.Set<TestModel>() as IEnumerable<TestModel>).GetEnumerator();
-            IEnumerator<TestModel> actual = repository.GetEnumerator();
+            IEnumerable<TestModel> expected = context.Set<TestModel>();
+            IEnumerable<TestModel> actual = repository.ToList();
 
-            TestHelper.EnumeratorsEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -221,10 +221,10 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Insert(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            IEnumerator expected = (context.Set<TestModel>() as IEnumerable).GetEnumerator();
-            IEnumerator actual = (repository as IEnumerable).GetEnumerator();
+            IEnumerable expected = context.Set<TestModel>();
+            IEnumerable actual = repository;
 
-            TestHelper.EnumeratorsEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion

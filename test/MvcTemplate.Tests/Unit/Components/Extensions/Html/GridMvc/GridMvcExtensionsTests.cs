@@ -74,14 +74,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_SetsGridColumnWidthTo20()
-        {
-            columns.AddActionLink(LinkAction.Edit);
-
-            column.Received().SetWidth(20);
-        }
-
-        [Test]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
             columns.AddActionLink(LinkAction.Edit);
@@ -592,7 +584,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.RenderValueAs(Arg.Any<Func<TModel, String>>()).Returns(column);
             column.Sanitized(Arg.Any<Boolean>()).Returns(column);
             column.Encoded(Arg.Any<Boolean>()).Returns(column);
-            column.SetWidth(Arg.Any<Int32>()).Returns(column);
             column.Format(Arg.Any<String>()).Returns(column);
             column.Titled(Arg.Any<String>()).Returns(column);
             column.Css(Arg.Any<String>()).Returns(column);
@@ -615,11 +606,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
         private IGridColumnCollection<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> gridColumn)
         {
-            IGridColumnCollection<TModel> collection = Substitute.For<IGridColumnCollection<TModel>>();
-            collection.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(gridColumn);
-            collection.Add().Returns(gridColumn);
+            IGridColumnCollection<TModel> columns = Substitute.For<IGridColumnCollection<TModel>>();
+            columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(gridColumn);
+            columns.Add().Returns(gridColumn);
 
-            return collection;
+            return columns;
         }
 
         private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)

@@ -12,6 +12,9 @@ table tbody tr .grid-cell {
 table th {
   text-align: center;
 }
+table th.action-cell {
+  width: 20px;
+}
 table th,
 table td {
   border-left: 1px solid #cdcdcd;

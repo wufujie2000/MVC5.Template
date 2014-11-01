@@ -45,7 +45,6 @@ namespace MvcTemplate.Components.Extensions.Html
 
             IGridColumn<T> gridColumn = column
                 .Add()
-                .SetWidth(20)
                 .Encoded(false)
                 .Sanitized(false)
                 .Css("action-cell");

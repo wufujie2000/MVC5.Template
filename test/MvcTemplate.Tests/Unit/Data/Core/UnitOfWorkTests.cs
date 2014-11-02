@@ -3,7 +3,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;

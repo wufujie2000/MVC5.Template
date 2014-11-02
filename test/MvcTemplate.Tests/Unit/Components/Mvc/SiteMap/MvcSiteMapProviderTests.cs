@@ -2,7 +2,6 @@
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using MvcTemplate.Resources.SiteMap;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

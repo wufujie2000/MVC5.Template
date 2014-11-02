@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Controllers;
 using MvcTemplate.Services;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

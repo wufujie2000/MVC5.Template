@@ -2,7 +2,6 @@
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -2,8 +2,7 @@
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
-using MvcTemplate.Tests.Helpers;
-using MvcTemplate.Tests.Objects.Views;
+using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using NUnit.Framework;
 using System;

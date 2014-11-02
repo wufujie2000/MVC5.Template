@@ -8,7 +8,6 @@ using MvcTemplate.Resources;
 using MvcTemplate.Resources.Privilege;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

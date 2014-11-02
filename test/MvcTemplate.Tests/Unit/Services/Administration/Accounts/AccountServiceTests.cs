@@ -7,7 +7,6 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

@@ -1,7 +1,6 @@
 ﻿using AutoMapper.QueryableExtensions;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using NUnit.Framework;

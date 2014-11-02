@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using MvcTemplate.Tests.Helpers;
 using NUnit.Framework;
 using System;
 using System.Web.Mvc;

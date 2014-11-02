@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

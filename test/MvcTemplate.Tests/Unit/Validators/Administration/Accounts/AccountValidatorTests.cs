@@ -3,7 +3,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
 using NSubstitute;
 using NUnit.Framework;

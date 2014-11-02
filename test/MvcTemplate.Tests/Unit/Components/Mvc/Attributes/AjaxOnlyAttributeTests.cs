@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Mvc;
-using MvcTemplate.Tests.Helpers;
 using NSubstitute;
 using NUnit.Framework;
 using System;

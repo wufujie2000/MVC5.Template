@@ -2,7 +2,7 @@
 using MvcTemplate.Objects;
 using System;
 
-namespace MvcTemplate.Tests.Objects.Views
+namespace MvcTemplate.Tests.Objects
 {
     public class AllTypesView : BaseView
     {

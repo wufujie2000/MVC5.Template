@@ -2,7 +2,7 @@
 using MvcTemplate.Tests.Objects;
 using System;
 
-namespace MvcTemplate.Tests.Helpers
+namespace MvcTemplate.Tests
 {
     public class ObjectFactory
     {

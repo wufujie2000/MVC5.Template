@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
-namespace MvcTemplate.Tests.Helpers
+namespace MvcTemplate.Tests
 {
     public class GlobalizationProviderFactory
     {

@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Tests.Helpers;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 using System.Web;
 using System.Web.Mvc;

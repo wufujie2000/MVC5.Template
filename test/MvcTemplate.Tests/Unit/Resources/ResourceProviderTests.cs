@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using MvcTemplate.Resources.Form;
-using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;

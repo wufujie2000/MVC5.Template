@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Services;
-using MvcTemplate.Tests.Helpers;
 using MvcTemplate.Validators;
 using NSubstitute;
 using NUnit.Framework;

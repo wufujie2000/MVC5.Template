@@ -51,10 +51,10 @@
   },
   "Html": {
     "AutoMinify": false,
-    "EnableAngularValidation": true,
+    "EnableAngularValidation": false,
     "EnableBootstrapValidation": true,
     "EnableEnterFormat": true,
-    "EnableFoundationValidation": true,
+    "EnableFoundationValidation": false,
     "GzipMinifiedFiles": false,
     "ImageDropFormats": [
       {

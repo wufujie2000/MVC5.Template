@@ -49,6 +49,9 @@ namespace MvcTemplate.Components.Extensions.Html
                     case LinkAction.Delete:
                         icon.AddCssClass("fa fa-times");
                         break;
+                    case LinkAction.Copy:
+                        icon.AddCssClass("fa fa-files-o");
+                        break;
                 }
 
                 String button = String.Format(

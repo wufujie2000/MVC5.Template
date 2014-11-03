@@ -5,6 +5,7 @@
         Create,
         Details,
         Edit,
-        Delete
+        Delete,
+        Copy
     }
 }

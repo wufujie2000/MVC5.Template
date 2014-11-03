@@ -108,15 +108,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void FormWidgetBox_FormsWidgetBoxWithButtons()
         {
+            LinkAction[] actions = { LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete, LinkAction.Copy };
             StringBuilder expected = new StringBuilder();
             StringBuilder actual = new StringBuilder();
             Authorization.Provider = null;
 
-            String buttons = FormTitleButtons(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete);
+            String buttons = FormTitleButtons(actions);
             new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), buttons).Dispose();
 
             html.ViewContext.Writer = new StringWriter(actual);
-            html.FormWidgetBox(LinkAction.Create, LinkAction.Details, LinkAction.Edit, LinkAction.Delete).Dispose();
+            html.FormWidgetBox(actions).Dispose();
 
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
@@ -168,6 +169,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                         break;
                     case LinkAction.Delete:
                         icon.AddCssClass("fa fa-times");
+                        break;
+                    case LinkAction.Copy:
+                        icon.AddCssClass("fa fa-files-o");
                         break;
                 }
 

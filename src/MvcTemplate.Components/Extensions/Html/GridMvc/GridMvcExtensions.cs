@@ -127,6 +127,9 @@ namespace MvcTemplate.Components.Extensions.Html
                 case LinkAction.Delete:
                     column.RenderValueAs(GetDeleteLink);
                     break;
+                case LinkAction.Copy:
+                    column.RenderValueAs(GetCopyLink);
+                    break;
             }
         }
         private static String GetDetailsLink<T>(T model)
@@ -140,6 +143,10 @@ namespace MvcTemplate.Components.Extensions.Html
         private static String GetDeleteLink<T>(T model)
         {
             return GetLink(model, LinkAction.Delete, "fa fa-times");
+        }
+        private static String GetCopyLink<T>(T model)
+        {
+            return GetLink(model, LinkAction.Copy, "fa fa-files-o");
         }
         private static String GetLink<T>(T model, LinkAction action, String iconClass)
         {

@@ -47,6 +47,9 @@ table .action-cell .edit-action {
 table .action-cell .delete-action {
   background-color: #d9534f;
 }
+table .action-cell .copy-action {
+  background-color: #4da6fe;
+}
 table .action-cell a {
   -webkit-transition-duration: 0.3s;
   -moz-transition-duration: 0.3s;

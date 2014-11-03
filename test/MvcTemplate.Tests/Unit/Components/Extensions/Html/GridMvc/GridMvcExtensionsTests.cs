@@ -105,7 +105,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 .Where(action =>
                     action != LinkAction.Edit &&
                     action != LinkAction.Details &&
-                    action != LinkAction.Delete);
+                    action != LinkAction.Delete &&
+                    action != LinkAction.Copy);
 
             foreach (LinkAction action in notSupportedActions)
                 columns.AddActionLink(action);
@@ -119,10 +120,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             IEnumerable<LinkAction> supportedActions = Enum
                 .GetValues(typeof(LinkAction))
                 .Cast<LinkAction>()
-                .Where(action =>
-                    action == LinkAction.Edit ||
-                    action == LinkAction.Details ||
-                    action == LinkAction.Delete);
+                .Where(action => action != LinkAction.Create);
 
             foreach (LinkAction action in supportedActions)
                 columns.AddActionLink(action);
@@ -204,6 +202,32 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "<i class=\"fa fa-times\"></i>" +
                 "</a>",
                 urlHelper.Action("Delete", new { id = view.Id }));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AddActionLink_RendersCopyLinkAction()
+        {
+            Func<AllTypesView, String> deleteFunc = null;
+            AllTypesView view = new AllTypesView();
+
+            column
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
+                .Returns(column)
+                .AndDoes(info =>
+                {
+                    deleteFunc = info.Arg<Func<AllTypesView, String>>();
+                });
+
+            columns.AddActionLink(LinkAction.Copy);
+
+            String actual = deleteFunc.Invoke(view);
+            String expected = String.Format(
+                "<a class=\"copy-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-files-o\"></i>" +
+                "</a>",
+                urlHelper.Action("Copy", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
         }

@@ -111,8 +111,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
         internal static TagBuilder FormLanguagesDropdown(HtmlHelper html)
         {
-            NameValueCollection query = html.ViewContext.RequestContext.HttpContext.Request.QueryString;
-            RouteValueDictionary routeValues = MergeQuery(html.ViewContext.RouteData.Values, query);
+            RouteValueDictionary routeValues = MergeQuery(html.ViewContext.RequestContext);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             TagBuilder dropdown = new TagBuilder("ul");
             dropdown.MergeAttribute("role", "menu");
@@ -134,9 +133,11 @@ namespace MvcTemplate.Components.Extensions.Html
             return dropdown;
         }
 
-        private static RouteValueDictionary MergeQuery(RouteValueDictionary routeValues, NameValueCollection query)
+        private static RouteValueDictionary MergeQuery(RequestContext requestContext)
         {
-            RouteValueDictionary mergedValues = new RouteValueDictionary(routeValues);
+            RouteValueDictionary mergedValues = new RouteValueDictionary(requestContext.RouteData.Values);
+            NameValueCollection query = requestContext.HttpContext.Request.QueryString;
+
             foreach (String parameter in query)
                 mergedValues[parameter] = query[parameter];
 

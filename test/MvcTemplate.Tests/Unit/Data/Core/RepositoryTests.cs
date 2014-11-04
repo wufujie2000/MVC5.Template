@@ -131,7 +131,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel actual = context.Set<TestModel>().Single();
             TestModel expected = repository.Single();
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion
@@ -151,7 +153,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             TestModel actual = context.Set<TestModel>().Single();
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]
@@ -169,7 +173,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             TestModel actual = context.Set<TestModel>().Single();
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]

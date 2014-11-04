@@ -101,7 +101,6 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Text = c.String(),
-                        Date = c.DateTime(),
                         CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);

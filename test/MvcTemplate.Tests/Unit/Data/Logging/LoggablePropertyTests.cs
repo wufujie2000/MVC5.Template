@@ -23,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
                 context.Set<TestModel>().Add(model);
                 context.Entry(model).State = EntityState.Modified;
                 textProperty = context.Entry(model).Property(prop => prop.Text);
-                dateProperty = context.Entry(model).Property(prop => prop.Date);
+                dateProperty = context.Entry(model).Property(prop => prop.CreationDate);
             }
         }
 

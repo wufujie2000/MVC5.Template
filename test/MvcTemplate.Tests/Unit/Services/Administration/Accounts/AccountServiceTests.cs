@@ -95,14 +95,24 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetViews_GetsAccountViews()
         {
-            IEnumerable<AccountView> actual = service.GetViews();
-            IEnumerable<AccountView> expected = context
+            IEnumerator<AccountView> actual = service.GetViews().GetEnumerator();
+            IEnumerator<AccountView> expected = context
                 .Set<Account>()
                 .Project()
                 .To<AccountView>()
-                .OrderByDescending(account => account.CreationDate);
+                .OrderByDescending(account => account.CreationDate)
+                .GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.AreEqual(expected.Current.Username, actual.Current.Username);
+                Assert.AreEqual(expected.Current.Password, actual.Current.Password);
+                Assert.AreEqual(expected.Current.RoleName, actual.Current.RoleName);
+                Assert.AreEqual(expected.Current.RoleId, actual.Current.RoleId);
+                Assert.AreEqual(expected.Current.Email, actual.Current.Email);
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+            }
         }
 
         #endregion
@@ -117,7 +127,13 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView actual = service.GetView<AccountView>(accountId);
             AccountView expected = Mapper.Map<AccountView>(account);
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Password, actual.Password);
+            Assert.AreEqual(expected.RoleName, actual.RoleName);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion
@@ -140,18 +156,20 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
             Account expected = context.Set<Account>().AsNoTracking().Single();
-            String oldToken = expected.RecoveryToken;
             account.Email = account.Email.ToLower();
 
             service.Recover(account);
 
             Account actual = context.Set<Account>().Single();
-            expected.RecoveryTokenExpirationDate = actual.RecoveryTokenExpirationDate;
-            expected.RecoveryToken = actual.RecoveryToken;
 
             Assert.AreEqual(actual.RecoveryTokenExpirationDate.Value.Ticks, DateTime.Now.AddMinutes(30).Ticks, 10000000);
-            Assert.AreNotEqual(oldToken, actual.RecoveryToken);
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreNotEqual(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Passhash, actual.Passhash);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNotNull(actual.RecoveryToken);
         }
 
@@ -192,7 +210,14 @@ namespace MvcTemplate.Tests.Unit.Services
             expected.RecoveryToken = null;
             expected.Passhash = "Reset";
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
+            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Passhash, actual.Passhash);
+            Assert.AreEqual(expected.Username, actual.Username);
+            Assert.AreEqual(expected.RoleId, actual.RoleId);
+            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion

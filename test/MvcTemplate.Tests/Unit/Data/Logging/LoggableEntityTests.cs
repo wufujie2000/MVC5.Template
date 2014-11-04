@@ -57,10 +57,14 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.CurrentValues["Name"] = "Role";
             entry.OriginalValues["Name"] = "Role";
 
-            IEnumerable<LoggableProperty> expected = new[] { new LoggableProperty(entry.Property("Name"), roleName) };
-            IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty>() { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+            }
         }
 
         [Test]
@@ -76,10 +80,14 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.CurrentValues["Name"] = "Role";
             entry.State = EntityState.Modified;
 
-            IEnumerable<LoggableProperty> expected = new[] { new LoggableProperty(entry.Property("Name"), roleName) };
-            IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty>() { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+            }
         }
 
         [Test]
@@ -170,11 +178,15 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             IEnumerable<String> properties = originalValues.PropertyNames;
 
-            IEnumerable<LoggableProperty> expected = properties.Select(name =>
-                new LoggableProperty(entry.Property(name), originalValues[name]));
-            IEnumerable<LoggableProperty> actual = new LoggableEntity(entry).Properties;
+            IEnumerator<LoggableProperty> expected = properties.Select(name =>
+                new LoggableProperty(entry.Property(name), originalValues[name])).GetEnumerator();
+            IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+            }
         }
 
         #endregion

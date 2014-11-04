@@ -41,14 +41,21 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetViews_Gets<#= Model.View #>s()
         {
-            IEnumerable<<#= Model.View #>> actual = service.GetViews();
-            IEnumerable<<#= Model.View #>> expected = context
+            IEnumerator<<#= Model.View #>> actual = service.GetViews().GetEnumerator();
+            IEnumerator<<#= Model.View #>> expected = context
                 .Set<<#= Model.Model #>>()
                 .Project()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(view => view.CreationDate);
+                .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate)
+                .GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+            }
+            
+            Assert.Inconclusive("Not all properties tested");
         }
 
         #endregion
@@ -61,7 +68,10 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
             <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Id, actual.Id);
+
+            Assert.Inconclusive("Not all properties tested");
         }
 
         #endregion
@@ -77,6 +87,8 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Id, actual.Id);
+
             Assert.Inconclusive("Not all properties tested");
         }
 
@@ -94,6 +106,8 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single();
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Id, actual.Id);
+
             Assert.Inconclusive("Not all properties tested");
         }
 

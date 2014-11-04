@@ -149,14 +149,21 @@ namespace MvcTemplate.Tests.Unit.Services
             roles.Add(ObjectFactory.CreateRole(2));
             context.Set<Role>().AddRange(roles);
 
-            IEnumerable<RoleView> actual = service.GetViews();
-            IEnumerable<RoleView> expected = context
+            IEnumerator<RoleView> actual = service.GetViews().GetEnumerator();
+            IEnumerator<RoleView> expected = context
                 .Set<Role>()
                 .Project()
                 .To<RoleView>()
-                .OrderByDescending(view => view.CreationDate);
+                .OrderByDescending(view => view.CreationDate)
+                .GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                CollectionAssert.AreEqual(expected.Current.PrivilegesTree.SelectedIds, actual.Current.PrivilegesTree.SelectedIds);
+                Assert.AreEqual(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.AreEqual(expected.Current.Name, actual.Current.Name);
+                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+            }
         }
 
         #endregion
@@ -174,7 +181,10 @@ namespace MvcTemplate.Tests.Unit.Services
             RoleView expected = Mapper.Map<RoleView>(role);
             RoleView actual = service.GetView(role.Id);
 
-            TestHelper.PropertyWiseEqual(expected, actual);
+            CollectionAssert.AreEqual(expected.PrivilegesTree.SelectedIds, actual.PrivilegesTree.SelectedIds);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]

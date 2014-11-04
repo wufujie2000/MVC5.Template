@@ -193,10 +193,17 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             List<MvcSiteMapNode> nodes = parser.GetAllNodes(siteMap).ToList();
 
-            MvcSiteMapBreadcrumb expected = CreateBreadcrumb(nodes[1], nodes[1].Children.First());
-            MvcSiteMapBreadcrumb actual = provider.GetBreadcrumb();
+            IEnumerator<MvcSiteMapBreadcrumbNode> expected = CreateBreadcrumb(nodes[1], nodes[1].Children.First()).GetEnumerator();
+            IEnumerator<MvcSiteMapBreadcrumbNode> actual = provider.GetBreadcrumb().GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
+                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
+                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
+                Assert.AreEqual(expected.Current.Title, actual.Current.Title);
+                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
+            }
         }
 
         [Test]

@@ -25,14 +25,26 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
-            IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetAllNodes(siteMap));
-            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap());
+            IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetAllNodes(siteMap)).GetEnumerator();
+            IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap()).GetEnumerator();
 
-            IEnumerable<MvcSiteMapNode> expectedParents = expected.Select(node => node.Parent);
-            IEnumerable<MvcSiteMapNode> actualParents = actual.Select(node => node.Parent);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
+                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
+                Assert.AreEqual(expected.Current.IsMenu, actual.Current.IsMenu);
+                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
+                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
 
-            TestHelper.EnumPropertyWiseEqual(expectedParents, actualParents);
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+                if (expected.Current.Parent != null || actual.Current.Parent != null)
+                {
+                    Assert.AreEqual(expected.Current.Parent.Controller, actual.Current.Parent.Controller);
+                    Assert.AreEqual(expected.Current.Parent.IconClass, actual.Current.Parent.IconClass);
+                    Assert.AreEqual(expected.Current.Parent.IsMenu, actual.Current.Parent.IsMenu);
+                    Assert.AreEqual(expected.Current.Parent.Action, actual.Current.Parent.Action);
+                    Assert.AreEqual(expected.Current.Parent.Area, actual.Current.Parent.Area);
+                }
+            }
         }
 
         #endregion
@@ -42,16 +54,30 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void GetMenus_ReturnsOnlyMenus()
         {
-            IEnumerable<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap()).Where(node => node.IsMenu);
-            IEnumerable<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap));
-            expected.Last().Parent = expected.First();
-            expected.First().Parent = null;
+            IEnumerable<MvcSiteMapNode> menus = TreeToEnumerable(CreateExpectedSiteMap()).Where(node => node.IsMenu);
+            menus.Last().Parent = menus.First();
+            menus.First().Parent = null;
 
-            IEnumerable<MvcSiteMapNode> expectedParents = expected.Select(node => node.Parent);
-            IEnumerable<MvcSiteMapNode> actualParents = actual.Select(node => node.Parent);
+            IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap)).GetEnumerator();
+            IEnumerator<MvcSiteMapNode> expected = menus.GetEnumerator();
 
-            TestHelper.EnumPropertyWiseEqual(expectedParents, actualParents);
-            TestHelper.EnumPropertyWiseEqual(expected, actual);
+            while (expected.MoveNext() | actual.MoveNext())
+            {
+                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
+                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
+                Assert.AreEqual(expected.Current.IsMenu, actual.Current.IsMenu);
+                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
+                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
+
+                if (expected.Current.Parent != null || actual.Current.Parent != null)
+                {
+                    Assert.AreEqual(expected.Current.Parent.Controller, actual.Current.Parent.Controller);
+                    Assert.AreEqual(expected.Current.Parent.IconClass, actual.Current.Parent.IconClass);
+                    Assert.AreEqual(expected.Current.Parent.IsMenu, actual.Current.Parent.IsMenu);
+                    Assert.AreEqual(expected.Current.Parent.Action, actual.Current.Parent.Action);
+                    Assert.AreEqual(expected.Current.Parent.Area, actual.Current.Parent.Area);
+                }
+            }
         }
 
         #endregion

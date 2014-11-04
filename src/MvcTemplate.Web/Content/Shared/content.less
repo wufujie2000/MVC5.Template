@@ -46,6 +46,7 @@ body.public {
 .content-breadcrumb {
     padding-left: 10px;
     font-weight: bold;
+    cursor: default;
 
     a {
         color: @content-link-color;
@@ -65,7 +66,8 @@ body.public {
         color: @active-content-link-color;
     }
 
-    .current {
+    .current,
+    .current:hover {
         color: @content-color;
     }
 }

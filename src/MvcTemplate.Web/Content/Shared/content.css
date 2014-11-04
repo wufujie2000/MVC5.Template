@@ -34,6 +34,7 @@ body.public .public-action {
 .content-breadcrumb {
   padding-left: 10px;
   font-weight: bold;
+  cursor: default;
 }
 .content-breadcrumb a {
   color: #999999;
@@ -49,7 +50,8 @@ body.public .public-action {
 .content-breadcrumb span {
   color: #777777;
 }
-.content-breadcrumb .current {
+.content-breadcrumb .current,
+.content-breadcrumb .current:hover {
   color: #555555;
 }
 .content {

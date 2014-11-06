@@ -12,23 +12,17 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
 
         [Test]
-        public void IsValidForRequest_ReturnsFalseForNormalRequest()
+        [TestCase("", false)]
+        [TestCase("XMLHttpRequest", true)]
+        public void IsValidForRequest_ValidatesAjaxRequests(String headerValue, Boolean expected)
         {
             ControllerContext context = new ControllerContext();
             context.HttpContext = HttpContextFactory.CreateHttpContextBase();
-            context.HttpContext.Request["X-Requested-With"].Returns(String.Empty);
+            context.HttpContext.Request["X-Requested-With"].Returns(headerValue);
 
-            Assert.IsFalse(new AjaxOnlyAttribute().IsValidForRequest(context, null));
-        }
+            Boolean actual = new AjaxOnlyAttribute().IsValidForRequest(context, null);
 
-        [Test]
-        public void IsValidForRequest_ReturnsTrueForAjaxRequest()
-        {
-            ControllerContext context = new ControllerContext();
-            context.HttpContext = HttpContextFactory.CreateHttpContextBase();
-            context.HttpContext.Request["X-Requested-With"].Returns("XMLHttpRequest");
-
-            Assert.IsTrue(new AjaxOnlyAttribute().IsValidForRequest(context, null));
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

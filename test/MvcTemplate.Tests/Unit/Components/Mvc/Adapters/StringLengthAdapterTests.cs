@@ -11,19 +11,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class StringLengthAdapterTests
     {
-        private ModelMetadata metadata;
-
-        [SetUp]
-        public void SetUp()
-        {
-            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
-        }
-
         #region Constructor: StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
 
         [Test]
         public void StringLengthAdapter_SetsMaxLengthErrorMessage()
         {
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
             StringLengthAttribute attribute = new StringLengthAttribute(128);
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
@@ -37,6 +31,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void StringLengthAdapter_SetsMinMaxLengthErrorMessage()
         {
             StringLengthAttribute attribute = new StringLengthAttribute(128) { MinimumLength = 4 };
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
             String expected = Validations.FieldMustBeInRangeOfLength;

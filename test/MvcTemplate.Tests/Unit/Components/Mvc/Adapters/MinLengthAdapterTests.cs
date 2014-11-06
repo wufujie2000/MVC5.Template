@@ -11,19 +11,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class MinLengthAdapterTests
     {
-        private ModelMetadata metadata;
-
-        [SetUp]
-        public void SetUp()
-        {
-            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
-        }
-
         #region Constructor: MinLengthAdapter(ModelMetadata metadata, ControllerContext context, MinLengthAttribute attribute)
 
         [Test]
         public void MinLengthAdapter_SetsMinLengthErrorMessage()
         {
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
+
             MinLengthAttribute attribute = new MinLengthAttribute(128);
             new MinLengthAdapter(metadata, new ControllerContext(), attribute);
 

@@ -43,7 +43,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             String actual = context.Set<Log>().Single().Message;
             String expected = new String('L', 10000);
 
-            Assert.AreEqual(1, context.Set<Log>().Count());
             Assert.AreEqual(expected, actual);
         }
 

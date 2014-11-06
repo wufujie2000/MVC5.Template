@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void MaxValueAttribute_SetsMaximumFromDouble()
         {
-            Decimal actual = attribute.Maximum;
+            Decimal actual = new MaxValueAttribute(12.56).Maximum;
             Decimal expected = 12.56M;
 
             Assert.AreEqual(expected, actual);
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForInteger()
         {
-            MaxValueAttribute attribute = new MaxValueAttribute(10);
+            attribute = new MaxValueAttribute(10);
 
             String expected = String.Format(Validations.FieldMustBeLessOrEqualTo, "Sum", attribute.Maximum);
             String actual = attribute.FormatErrorMessage("Sum");
@@ -58,8 +58,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForDouble()
         {
+            attribute = new MaxValueAttribute(13.44);
+
             String expected = String.Format(Validations.FieldMustBeLessOrEqualTo, "Sum", attribute.Maximum);
-            String actual = new MaxValueAttribute(12.56).FormatErrorMessage("Sum");
+            String actual = attribute.FormatErrorMessage("Sum");
 
             Assert.AreEqual(expected, actual);
         }
@@ -75,13 +77,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void IsValid_IsValidStringValue()
+        public void IsValid_StringValueIsValid()
         {
             Assert.IsTrue(attribute.IsValid("5"));
         }
 
         [Test]
-        public void IsValid_IsNotValidStringValue()
+        public void IsValid_StringValueIsNotValid()
         {
             Assert.IsFalse(attribute.IsValid("100"));
         }

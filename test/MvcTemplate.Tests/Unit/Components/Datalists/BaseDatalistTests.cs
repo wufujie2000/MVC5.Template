@@ -38,6 +38,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsDialogTitle()
         {
+            datalist = new BaseDatalistProxy<Role, RoleView>();
+
             String expected = ResourceProvider.GetDatalistTitle<Role>();
             String actual = datalist.DialogTitle;
 
@@ -48,9 +50,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public void BaseDatalist_SetsDatalistUrl()
         {
             HttpRequest request = HttpContext.Current.Request;
+            datalist = new BaseDatalistProxy<Role, RoleView>();
             UrlHelper url = new UrlHelper(request.RequestContext);
 
-            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = String.Empty }, request.Url.Scheme);
+            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = String.Empty });
             String actual = datalist.DatalistUrl;
 
             Assert.AreEqual(expected, actual);
@@ -63,12 +66,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void BaseDatalist_SetsUnitOfWork()
         {
-            BaseDatalistProxy<Role, RoleView> datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
             IUnitOfWork actual = datalist.BaseUnitOfWork;
             IUnitOfWork expected = unitOfWork;
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -111,17 +114,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [TestCase("DoubleField", "number-cell")]
         [TestCase("DecimalField", "number-cell")]
         [TestCase("DateTimeField", "date-cell")]
-        public void GetColumnCssClass_GetsCssClassForNotNullableProperty(String propertyName, String cssClass)
-        {
-            PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
-            String actual = datalist.BaseGetColumnCssClass(property);
-            String expected = cssClass;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         [TestCase("NullableEnumField", "text-cell")]
         [TestCase("NullableSByteField", "number-cell")]
         [TestCase("NullableByteField", "number-cell")]
@@ -135,25 +128,14 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [TestCase("NullableDoubleField", "number-cell")]
         [TestCase("NullableDecimalField", "number-cell")]
         [TestCase("NullableDateTimeField", "date-cell")]
-        public void GetColumnCssClass_GetsCssClassForNullableProperty(String propertyName, String cssClass)
-        {
-            PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
-            String actual = datalist.BaseGetColumnCssClass(property);
-            String expected = cssClass;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
         [TestCase("StringField", "text-cell")]
         [TestCase("Child", "text-cell")]
-        public void GetColumnCssClass_GetsTextCellForOtherTypes(String propertyName, String cssClass)
+        public void GetColumnCssClass_ReturnsCssClassForPropertyType(String propertyName, String expected)
         {
             PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
             String actual = datalist.BaseGetColumnCssClass(property);
-            String expected = cssClass;
 
             Assert.AreEqual(expected, actual);
         }
@@ -163,15 +145,15 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: GetModels()
 
         [Test]
-        public void GetModels_ReturnsModelsProjectedToViews()
+        public void GetModels_ReturnsModelsFromUnitOfWork()
         {
             unitOfWork.Repository<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
-            BaseDatalistProxy<Role, RoleView> datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
-            IQueryable<RoleView> expected = unitOfWork.Repository<Role>().To<RoleView>();
-            IQueryable<RoleView> actual = datalist.BaseGetModels();
+            IQueryable expected = unitOfWork.Repository<Role>().To<RoleView>();
+            IQueryable actual = datalist.BaseGetModels();
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

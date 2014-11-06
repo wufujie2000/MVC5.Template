@@ -11,19 +11,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class RequiredAdapterTests
     {
-        private ModelMetadata metadata;
-
-        [SetUp]
-        public void SetUp()
-        {
-            metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
-        }
-
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Test]
         public void RequiredAdapter_SetsRequiredErrorMessage()
         {
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AdaptersModel), "Required");
             RequiredAttribute attribute = new RequiredAttribute();
             new RequiredAdapter(metadata, new ControllerContext(), attribute);
 

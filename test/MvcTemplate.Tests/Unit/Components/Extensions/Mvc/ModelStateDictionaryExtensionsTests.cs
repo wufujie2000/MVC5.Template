@@ -62,11 +62,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Test]
         public void AddModelError_AddsModelException()
         {
-            Exception expected = new Exception();
-            modelState.AddModelError(expression, expected);
-            Exception actual = modelState.Single().Value.Errors.Single().Exception;
+            Exception exception = new Exception();
+            modelState.AddModelError(expression, exception);
 
-            Assert.AreEqual(expected, actual);
+            Exception actual = modelState.Single().Value.Errors.Single().Exception;
+            Exception expected = exception;
+
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

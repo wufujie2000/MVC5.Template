@@ -29,17 +29,12 @@ namespace MvcTemplate.Components.Mail
 
         public void Send(String to, String subject, String body)
         {
-            client.Send(CreateEmail(to, subject, body));
-        }
-
-        private MailMessage CreateEmail(String to, String subject, String body)
-        {
             MailMessage email = new MailMessage(sender, to, subject, body);
             email.SubjectEncoding = Encoding.UTF8;
             email.BodyEncoding = Encoding.UTF8;
             email.IsBodyHtml = true;
 
-            return email;
+            client.Send(email);
         }
 
         public void Dispose()

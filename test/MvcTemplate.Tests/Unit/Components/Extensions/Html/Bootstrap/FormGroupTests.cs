@@ -24,24 +24,5 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         #endregion
-
-        #region Method: Dispose()
-
-        [Test]
-        public void Dispose_CanBeDisposedMultipleTimes()
-        {
-            StringWriter writer = new StringWriter(new StringBuilder());
-            FormGroup formActions = new FormGroup(writer);
-            writer.Write("Content");
-            formActions.Dispose();
-            formActions.Dispose();
-
-            String expected = "<div class=\"form-group\">Content</div>";
-            String actual = writer.GetStringBuilder().ToString();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
     }
 }

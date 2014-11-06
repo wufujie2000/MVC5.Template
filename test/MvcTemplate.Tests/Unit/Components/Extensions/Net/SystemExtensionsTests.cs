@@ -10,33 +10,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Net
         #region Extension method: LimitTo(this Int32 number, Int32 lowerBound, Int32 upperBound)
 
         [Test]
-        public void LimitTo_LimitsToLowerBound()
+        [TestCase(0, 1, 3, 1)]
+        [TestCase(1, 1, 3, 1)]
+        [TestCase(2, 1, 3, 2)]
+        [TestCase(3, 1, 3, 3)]
+        [TestCase(4, 1, 3, 3)]
+        public void LimitTo_LimitsTo(Int32 number, Int32 lowerBound, Int32 upperBound, Int32 expected)
         {
-            Assert.AreEqual(1, 0.LimitTo(1, 3));
-        }
+            Int32 actual = number.LimitTo(lowerBound, upperBound);
 
-        [Test]
-        public void LimitTo_LimitsLowerBound()
-        {
-            Assert.AreEqual(1, 1.LimitTo(1, 3));
-        }
-
-        [Test]
-        public void LimitTo_DoesNotLimit()
-        {
-            Assert.AreEqual(2, 2.LimitTo(1, 3));
-        }
-
-        [Test]
-        public void LimitTo_LimitsUpperBound()
-        {
-            Assert.AreEqual(3, 3.LimitTo(1, 3));
-        }
-
-        [Test]
-        public void LimitTo_LimitsToUpperBound()
-        {
-            Assert.AreEqual(3, 4.LimitTo(1, 3));
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

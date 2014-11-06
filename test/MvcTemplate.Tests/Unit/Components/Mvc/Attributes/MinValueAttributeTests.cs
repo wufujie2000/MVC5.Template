@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void MinValueAttribute_SetsMinimumFromDouble()
         {
-            Decimal actual = attribute.Minimum;
+            Decimal actual = new MinValueAttribute(12.56).Minimum;
             Decimal expected = 12.56M;
 
             Assert.AreEqual(expected, actual);
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForInteger()
         {
-            MinValueAttribute attribute = new MinValueAttribute(10);
+            attribute = new MinValueAttribute(10);
 
             String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
             String actual = attribute.FormatErrorMessage("Sum");
@@ -58,8 +58,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Test]
         public void FormatErrorMessage_FormatsErrorMessageForDouble()
         {
+            attribute = new MinValueAttribute(12.56);
+
             String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
-            String actual = new MinValueAttribute(12.56).FormatErrorMessage("Sum");
+            String actual = attribute.FormatErrorMessage("Sum");
 
             Assert.AreEqual(expected, actual);
         }
@@ -75,13 +77,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Test]
-        public void IsValid_IsValidStringValue()
+        public void IsValid_StringValueIsValid()
         {
             Assert.IsTrue(attribute.IsValid("100"));
         }
 
         [Test]
-        public void IsValid_IsNotValidStringValue()
+        public void IsValid_StringValueIsNotValid()
         {
             Assert.IsFalse(attribute.IsValid("1"));
         }

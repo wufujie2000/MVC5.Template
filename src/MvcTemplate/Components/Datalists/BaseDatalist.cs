@@ -18,13 +18,11 @@ namespace MvcTemplate.Components.Datalists
 
         public BaseDatalist()
         {
-            HttpRequest request = HttpContext.Current.Request;
-            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
-
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
-            DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = String.Empty }, request.Url.Scheme);
+            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = String.Empty });
         }
-        public BaseDatalist(IUnitOfWork unitOfWork) : this()
+        public BaseDatalist(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

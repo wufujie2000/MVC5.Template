@@ -39,27 +39,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthUsernameFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression, Boolean autocomplete = true)
 
         [Test]
-        public void AuthUsernameFor_FormsAutocompletableUsernameInput()
+        [TestCase(true, "on")]
+        [TestCase(false, "off")]
+        public void AuthUsernameFor_FormsUsernameInput(Boolean autocomplete, String htmlAutocomplete)
         {
-            String actual = html.AuthUsernameFor(expression).ToString();
+            String actual = html.AuthUsernameFor(expression, autocomplete).ToString();
             String expected = String.Format(
                 "<span class=\"fa fa-user\"></span>" +
-                "<input autocomplete=\"on\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                model.Relation.Required);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void AuthUsernameFor_FormsNotAutocompletableUsernameInput()
-        {
-            String actual = html.AuthUsernameFor(expression, autocomplete: false).ToString();
-            String expected = String.Format(
-                "<span class=\"fa fa-user\"></span>" +
-                "<input autocomplete=\"off\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                "<input autocomplete=\"{0}\" id=\"{1}\" name=\"{2}\" placeholder=\"\" type=\"text\" value=\"{3}\" />",
+                htmlAutocomplete, TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.Required);
 
@@ -71,26 +59,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AuthPasswordFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, String>> expression, Boolean autocomplete = true)
 
         [Test]
-        public void AuthPasswordFor_FormsAutocompletablePasswordInput()
+        [TestCase(true, "on")]
+        [TestCase(false, "off")]
+        public void AuthPasswordFor_FormsPasswordInput(Boolean autocomplete, String htmlAutocomplete)
         {
-            String actual = html.AuthPasswordFor(expression).ToString();
+            String actual = html.AuthPasswordFor(expression, autocomplete).ToString();
             String expected = String.Format(
                 "<span class=\"fa fa-lock\"></span>" +
-                "<input autocomplete=\"on\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void AuthPasswordFor_FormsNotAutocompletablePasswordInput()
-        {
-            String actual = html.AuthPasswordFor(expression, autocomplete: false).ToString();
-            String expected = String.Format(
-                "<span class=\"fa fa-lock\"></span>" +
-                "<input autocomplete=\"off\" id=\"{0}\" name=\"{1}\" placeholder=\"\" type=\"password\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                "<input autocomplete=\"{0}\" id=\"{1}\" name=\"{2}\" placeholder=\"\" type=\"password\" />",
+                htmlAutocomplete, TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression));
 
             Assert.AreEqual(expected, actual);

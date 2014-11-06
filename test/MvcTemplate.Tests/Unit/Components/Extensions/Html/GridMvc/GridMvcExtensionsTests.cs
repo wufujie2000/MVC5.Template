@@ -129,9 +129,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddActionLink_RendersDetailsLinkAction()
+        [TestCase(LinkAction.Edit, "fa fa-pencil")]
+        [TestCase(LinkAction.Copy, "fa fa-files-o")]
+        [TestCase(LinkAction.Delete, "fa fa-times")]
+        [TestCase(LinkAction.Details, "fa fa-info")]
+        public void AddActionLink_RendersLinkAction(LinkAction action, String iconClass)
         {
-            Func<AllTypesView, String> detailsFunc = null;
+            Func<AllTypesView, String> renderer = null;
             AllTypesView view = new AllTypesView();
 
             column
@@ -139,95 +143,19 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 .Returns(column)
                 .AndDoes(info =>
                 {
-                    detailsFunc = info.Arg<Func<AllTypesView, String>>();
+                    renderer = info.Arg<Func<AllTypesView, String>>();
                 });
 
-            columns.AddActionLink(LinkAction.Details);
+            columns.AddActionLink(action);
 
-            String actual = detailsFunc.Invoke(view);
+            String actual = renderer.Invoke(view);
             String expected = String.Format(
-                "<a class=\"details-action\" href=\"{0}\">" +
-                    "<i class=\"fa fa-info\"></i>" +
+                "<a class=\"{0}-action\" href=\"{1}\">" +
+                    "<i class=\"{2}\"></i>" +
                 "</a>",
-                urlHelper.Action("Details", new { id = view.Id }));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void AddActionLink_RendersEditLinkAction()
-        {
-            Func<AllTypesView, String> editFunc = null;
-            AllTypesView view = new AllTypesView();
-
-            column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    editFunc = info.Arg<Func<AllTypesView, String>>();
-                });
-
-            columns.AddActionLink(LinkAction.Edit);
-
-            String actual = editFunc.Invoke(view);
-            String expected = String.Format(
-                "<a class=\"edit-action\" href=\"{0}\">" +
-                    "<i class=\"fa fa-pencil\"></i>" +
-                "</a>",
-                urlHelper.Action("Edit", new { id = view.Id }));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void AddActionLink_RendersDeleteLinkAction()
-        {
-            Func<AllTypesView, String> deleteFunc = null;
-            AllTypesView view = new AllTypesView();
-
-            column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    deleteFunc = info.Arg<Func<AllTypesView, String>>();
-                });
-
-            columns.AddActionLink(LinkAction.Delete);
-
-            String actual = deleteFunc.Invoke(view);
-            String expected = String.Format(
-                "<a class=\"delete-action\" href=\"{0}\">" +
-                    "<i class=\"fa fa-times\"></i>" +
-                "</a>",
-                urlHelper.Action("Delete", new { id = view.Id }));
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void AddActionLink_RendersCopyLinkAction()
-        {
-            Func<AllTypesView, String> deleteFunc = null;
-            AllTypesView view = new AllTypesView();
-
-            column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    deleteFunc = info.Arg<Func<AllTypesView, String>>();
-                });
-
-            columns.AddActionLink(LinkAction.Copy);
-
-            String actual = deleteFunc.Invoke(view);
-            String expected = String.Format(
-                "<a class=\"copy-action\" href=\"{0}\">" +
-                    "<i class=\"fa fa-files-o\"></i>" +
-                "</a>",
-                urlHelper.Action("Copy", new { id = view.Id }));
+                action.ToString().ToLower(),
+                urlHelper.Action(action.ToString(), new { id = view.Id }),
+                iconClass);
 
             Assert.AreEqual(expected, actual);
         }
@@ -235,7 +163,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_OnModelWihoutKeyPropertyThrows()
         {
-            Func<Object, String> deleteFunc = null;
+            Func<Object, String> renderer = null;
             IGridColumn<Object> objectColumn = SubstituteColumn<Object>();
             IGridColumnCollection<Object> objectColumns = SubstituteColumns<Object, String>(objectColumn);
 
@@ -244,12 +172,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 .Returns(objectColumn)
                 .AndDoes(info =>
                 {
-                    deleteFunc = info.Arg<Func<Object, String>>();
+                    renderer = info.Arg<Func<Object, String>>();
                 });
 
             objectColumns.AddActionLink(LinkAction.Delete);
 
-            Exception expected = Assert.Throws<Exception>(() => deleteFunc.Invoke(new Object()));
+            Exception expected = Assert.Throws<Exception>(() => renderer.Invoke(new Object()));
             Assert.AreEqual(expected.Message, "Object type does not have a key property.");
         }
 

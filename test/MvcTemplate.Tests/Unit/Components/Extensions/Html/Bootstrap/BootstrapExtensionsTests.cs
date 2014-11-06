@@ -214,7 +214,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableTrue()
+        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
@@ -232,7 +232,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_AddsReadOnlyAttributeOnEditableFalse()
+        public void FormTextBoxFor_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
@@ -297,7 +297,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableTrue()
+        public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
@@ -315,7 +315,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnEditableFalse()
+        public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
@@ -333,7 +333,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_UsesFormat()
+        public void FormTextBoxFor_Format_FormatsTextBoxValue()
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
 
@@ -452,7 +452,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableTrue()
+        public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
@@ -470,7 +470,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnEditableFalse()
+        public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
@@ -589,7 +589,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableTrue()
+        public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
 
@@ -607,7 +607,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnEditableFalse()
+        public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
 
@@ -625,7 +625,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void FormTextBoxFor_Format_Attributes_UsesFormat()
+        public void FormTextBoxFor_Format_Attributes_FormatsTextBoxValue()
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
 
@@ -719,7 +719,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
         [Test]
-        public void FormValidationFor_FormsValidation()
+        public void FormValidationFor_FormsValidationContainer()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
 

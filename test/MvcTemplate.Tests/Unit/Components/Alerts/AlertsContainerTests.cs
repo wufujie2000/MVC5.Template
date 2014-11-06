@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Alerts;
 using NUnit.Framework;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Components.Alerts
@@ -24,32 +23,6 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         {
             Assert.IsTrue(typeof(AlertsContainer).GetField("DefaultFadeout").IsLiteral);
             Assert.AreEqual(4000, AlertsContainer.DefaultFadeout);
-        }
-
-        #endregion
-
-        #region Contructor: AlertsContainer()
-
-        [Test]
-        public void AlertsContainer_IsEmpty()
-        {
-            CollectionAssert.IsEmpty(container);
-        }
-
-        #endregion
-
-        #region Method: Add(Alert alert)
-
-        [Test]
-        public void Add_AddsAlert()
-        {
-            Alert alert = new Alert();
-            container.Add(alert);
-
-            Alert actual = container.Single();
-            Alert expected = alert;
-
-            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -121,56 +94,29 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         #region Method: Merge(AlertsContainer alerts)
 
         [Test]
+        public void Merge_DoesNotMergeItself()
+        {
+            container.Add(new Alert());
+            IEnumerable alerts = container.ToList();
+
+            container.Merge(container);
+
+            IEnumerable actual = container;
+            IEnumerable expected = alerts;
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Merge_MergesAlerts()
         {
             AlertsContainer part = new AlertsContainer();
             container.AddError("FirstError");
             part.AddError("SecondError");
 
-            IEnumerable expected = container.ToList().Union(part);
+            IEnumerable expected = container.Union(part);
             IEnumerable actual = container;
             container.Merge(part);
-
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void Merge_OnMergeWithIselfStaysTheSame()
-        {
-            container.Add(new Alert());
-            IEnumerable alertsList = container.ToList();
-
-            container.Merge(container);
-
-            IEnumerable expected = alertsList;
-            IEnumerable actual = container;
-
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Method: GetEnumerator()
-
-        [Test]
-        public void GetEnumerator_ReturnsAlerts()
-        {
-            List<Alert> alerts = new List<Alert> { new Alert() };
-            foreach (Alert alert in alerts) container.Add(alert);
-
-            IEnumerable<Alert> actual = container.ToList();
-            IEnumerable<Alert> expected = alerts;
-
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetEnumerator_ReturnsSameAlerts()
-        {
-            container.Add(new Alert());
-
-            IEnumerable expected = container.ToList();
-            IEnumerable actual = container;
 
             CollectionAssert.AreEqual(expected, actual);
         }

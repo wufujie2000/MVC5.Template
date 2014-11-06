@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace MvcTemplate.Components.Alerts
 {
-    public class AlertsContainer : IEnumerable<Alert>
+    public class AlertsContainer : List<Alert>
     {
         public const UInt32 DefaultFadeout = 4000;
-        private List<Alert> container;
 
-        public AlertsContainer()
-        {
-            container = new List<Alert>();
-        }
-
-        public void Add(Alert alert)
-        {
-            container.Add(alert);
-        }
         public void Add(AlertTypes type, String message)
         {
             Add(type, message, DefaultFadeout);
@@ -45,17 +34,7 @@ namespace MvcTemplate.Components.Alerts
         {
             if (alerts == this) return;
 
-            foreach (Alert alert in alerts)
-                Add(alert);
-        }
-
-        public IEnumerator<Alert> GetEnumerator()
-        {
-            return container.GetEnumerator();
-        }
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            AddRange(alerts);
         }
     }
 }

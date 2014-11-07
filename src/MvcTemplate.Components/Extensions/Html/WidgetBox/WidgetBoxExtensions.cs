@@ -22,7 +22,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new WidgetBox(html.ViewContext.Writer, iconClass, title, FormTitleButtons(html, actions));
         }
-        private static String FormTitleButtons(HtmlHelper html, IEnumerable<LinkAction> actions)
+        private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
         {
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;

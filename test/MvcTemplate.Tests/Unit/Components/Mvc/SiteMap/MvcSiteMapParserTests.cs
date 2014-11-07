@@ -101,7 +101,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
         private IEnumerable<MvcSiteMapNode> CreateExpectedSiteMap()
         {
-            List<MvcSiteMapNode> map = new List<MvcSiteMapNode>
+            MvcSiteMapNode[] map =
             {
                 new MvcSiteMapNode
                 {

@@ -191,7 +191,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["controller"] = "roles";
             routeValues["action"] = "index";
 
-            List<MvcSiteMapNode> nodes = parser.GetAllNodes(siteMap).ToList();
+            MvcSiteMapNode[] nodes = parser.GetAllNodes(siteMap).ToArray();
 
             IEnumerator<MvcSiteMapBreadcrumbNode> expected = CreateBreadcrumb(nodes[1], nodes[1].Children.First()).GetEnumerator();
             IEnumerator<MvcSiteMapBreadcrumbNode> actual = provider.GetBreadcrumb().GetEnumerator();

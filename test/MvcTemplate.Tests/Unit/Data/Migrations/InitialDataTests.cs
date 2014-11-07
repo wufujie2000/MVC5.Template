@@ -2,7 +2,7 @@
 using MvcTemplate.Objects;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Data.Migrations
@@ -61,10 +61,10 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         [Test]
         public void RolesPrivilegesTable_HasAllPrivilegesForAdminRole()
         {
-            IEnumerable<String> expected = context
+            IEnumerable expected = context
                 .Set<Privilege>()
                 .Select(privilege => privilege.Id);
-            IEnumerable<String> actual = context
+            IEnumerable actual = context
                 .Set<Role>()
                 .Single(role => role.Name == "Sys_Admin")
                 .RolePrivileges

@@ -11,13 +11,13 @@ namespace MvcTemplate.Components.Security
     public class AuthorizationProvider : IAuthorizationProvider
     {
         private Dictionary<String, IEnumerable<Privilege>> cache;
-        private List<Type> controllers;
+        private Type[] controllers;
         private Type controllerType;
 
         public AuthorizationProvider(Assembly controllersAssembly)
         {
             controllerType = typeof(Controller);
-            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToList();
+            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToArray();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -59,11 +59,11 @@ namespace MvcTemplate.Components.Security
         private Boolean AllowsUnauthorized(String area, String controller, String action)
         {
             Type authorizedControllerType = GetControllerType(area, controller);
-            MethodInfo actionInfo = GetAction(authorizedControllerType, action);
+            MethodInfo method = GetMethod(authorizedControllerType, action);
 
-            if (actionInfo.IsDefined(typeof(AuthorizeAttribute), false)) return false;
-            if (actionInfo.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
-            if (actionInfo.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+            if (method.IsDefined(typeof(AuthorizeAttribute), false)) return false;
+            if (method.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
+            if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
 
             while (authorizedControllerType != controllerType)
             {
@@ -82,9 +82,9 @@ namespace MvcTemplate.Components.Security
 
             return controllers.First(type => type.FullName.ToLowerInvariant().EndsWith(fullNameEnding));
         }
-        private MethodInfo GetAction(Type controller, String action)
+        private MethodInfo GetMethod(Type controller, String action)
         {
-            List<MethodInfo> actionMethods = controller
+            MethodInfo[] methods = controller
                 .GetMethods()
                 .Where(method =>
                     (
@@ -93,16 +93,16 @@ namespace MvcTemplate.Components.Security
                     )
                     ||
                     method.Name.ToLowerInvariant() == action.ToLowerInvariant())
-                .ToList();
+                .ToArray();
 
-            MethodInfo getAction = actionMethods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
-            if (getAction != null)
-                return getAction;
+            MethodInfo getMethod = methods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
+            if (getMethod != null)
+                return getMethod;
 
-            if (actionMethods.Count == 0)
+            if (methods.Length == 0)
                 throw new Exception(String.Format("'{0}' does not have '{1}' action.", controller.Name, action));
 
-            return actionMethods[0];
+            return methods[0];
         }
     }
 }

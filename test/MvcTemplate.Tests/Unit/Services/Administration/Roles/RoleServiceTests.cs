@@ -11,6 +11,7 @@ using MvcTemplate.Tests.Data;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -144,10 +145,9 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetViews_GetsRoleViews()
         {
-            List<Role> roles = new List<Role>();
-            roles.Add(ObjectFactory.CreateRole(1));
-            roles.Add(ObjectFactory.CreateRole(2));
-            context.Set<Role>().AddRange(roles);
+            context.Set<Role>().Add(ObjectFactory.CreateRole(1));
+            context.Set<Role>().Add(ObjectFactory.CreateRole(2));
+            context.SaveChanges();
 
             IEnumerator<RoleView> actual = service.GetViews().GetEnumerator();
             IEnumerator<RoleView> expected = context
@@ -195,8 +195,8 @@ namespace MvcTemplate.Tests.Unit.Services
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
-            IEnumerable<String> expected = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId);
-            IEnumerable<String> actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
+            IEnumerable expected = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId);
+            IEnumerable actual = service.GetView(role.Id).PrivilegesTree.SelectedIds;
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -242,8 +242,8 @@ namespace MvcTemplate.Tests.Unit.Services
             RoleView roleView = CreateRoleView();
             service.Create(roleView);
 
-            IEnumerable<String> expected = privileges.Select(privilege => privilege.Id);
-            IEnumerable<String> actual = context
+            IEnumerable expected = privileges.Select(privilege => privilege.Id);
+            IEnumerable actual = context
                 .Set<Role>()
                 .Single()
                 .RolePrivileges
@@ -287,8 +287,8 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Edit(roleView);
 
-            IEnumerable<String> actual = context.Set<RolePrivilege>().Select(rolePriv => rolePriv.PrivilegeId);
-            IEnumerable<String> expected = CreateRoleView().PrivilegesTree.SelectedIds.Skip(1);
+            IEnumerable actual = context.Set<RolePrivilege>().Select(rolePriv => rolePriv.PrivilegeId);
+            IEnumerable expected = CreateRoleView().PrivilegesTree.SelectedIds.Skip(1);
 
             CollectionAssert.AreEquivalent(expected, actual);
         }
@@ -438,7 +438,7 @@ namespace MvcTemplate.Tests.Unit.Services
         private IEnumerable<JsTreeNode> GetAllBranchNodes(IEnumerable<JsTreeNode> nodes)
         {
             List<JsTreeNode> branches = nodes.Where(node => node.Nodes.Count > 0).ToList();
-            foreach (JsTreeNode branch in branches.ToList())
+            foreach (JsTreeNode branch in branches.ToArray())
                 branches.AddRange(GetAllBranchNodes(branch.Nodes));
 
             return branches;

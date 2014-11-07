@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -11,8 +10,8 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
-        private static IEnumerable<String> resources;
         private static Assembly executingAssembly;
+        private static String[] resources;
 
         private static String CurrentArea
         {
@@ -39,7 +38,7 @@ namespace MvcTemplate.Resources
         static ResourceProvider()
         {
             executingAssembly = Assembly.GetExecutingAssembly();
-            resources = executingAssembly.DefinedTypes.Select(type => type.FullName);
+            resources = executingAssembly.DefinedTypes.Select(type => type.FullName).ToArray();
         }
 
         public static String GetCurrentFormTitle()
@@ -129,7 +128,7 @@ namespace MvcTemplate.Resources
         }
         private static String GetResource(String baseName, String key)
         {
-            if (resources.All(resourceName => resourceName != baseName)) return null;
+            if (!resources.Any(resourceName => resourceName == baseName)) return null;
 
             ResourceManager manager = new ResourceManager(baseName, executingAssembly);
             manager.IgnoreCase = true;

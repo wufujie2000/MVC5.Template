@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources;
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -37,7 +36,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString AuthLanguageSelect(this HtmlHelper html)
         {
-            if (GlobalizationManager.Provider.Languages.Count() < 2)
+            if (GlobalizationManager.Provider.Languages.Length < 2)
                 return new MvcHtmlString(String.Empty);
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);

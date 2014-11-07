@@ -43,7 +43,7 @@ namespace MvcTemplate.Data.Logging
             if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
             Properties = originalValues.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), originalValues[name]));
             Properties = entry.State == EntityState.Modified ? Properties.Where(property => property.IsModified) : Properties;
-            Properties = Properties.ToList();
+            Properties = Properties.ToArray();
             Action = entry.State.ToString();
             Name = entityType.Name;
             Id = entry.Entity.Id;

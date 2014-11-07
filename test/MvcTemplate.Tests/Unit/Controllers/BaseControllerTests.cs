@@ -4,6 +4,7 @@ using MvcTemplate.Components.Security;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -342,8 +343,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.BaseOnActionExecuted(new ActionExecutedContext());
             mergedController.BaseOnActionExecuted(new ActionExecutedContext());
 
-            IEnumerable<Alert> actual = controller.TempData["Alerts"] as AlertsContainer;
-            IEnumerable<Alert> expected = controllerAlerts.Union(mergedAlerts);
+            IEnumerable actual = controller.TempData["Alerts"] as AlertsContainer;
+            IEnumerable expected = controllerAlerts.Union(mergedAlerts);
 
             CollectionAssert.AreEqual(expected, actual);
         }

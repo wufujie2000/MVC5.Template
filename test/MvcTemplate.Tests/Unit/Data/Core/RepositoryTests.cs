@@ -112,8 +112,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
-            IEnumerable<String> expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToList();
-            IEnumerable<String> actual = repository.To<TestView>().Select(view => view.Id).ToList();
+            IEnumerable expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToArray();
+            IEnumerable actual = repository.To<TestView>().Select(view => view.Id).ToArray();
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -214,8 +214,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             repository.Insert(ObjectFactory.CreateTestModel());
             context.SaveChanges();
 
-            IEnumerable<TestModel> expected = context.Set<TestModel>();
-            IEnumerable<TestModel> actual = repository.ToList();
+            IEnumerable expected = context.Set<TestModel>();
+            IEnumerable actual = repository.ToArray();
 
             CollectionAssert.AreEqual(expected, actual);
         }

@@ -11,6 +11,13 @@ namespace MvcTemplate.Components.Mvc
     {
         private Dictionary<String, Language> languages;
 
+        public Language[] Languages
+        {
+            get
+            {
+                return languages.Select(language => language.Value).ToArray();
+            }
+        }
         public Language DefaultLanguage
         {
             get;
@@ -26,13 +33,6 @@ namespace MvcTemplate.Components.Mvc
             {
                 Thread.CurrentThread.CurrentCulture = value.Culture;
                 Thread.CurrentThread.CurrentUICulture = value.Culture;
-            }
-        }
-        public IEnumerable<Language> Languages
-        {
-            get
-            {
-                return languages.Select(language => language.Value);
             }
         }
 

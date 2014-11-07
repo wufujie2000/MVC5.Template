@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace MvcTemplate.Data.Migrations
         }
         private void SeedAllPrivileges()
         {
-            List<Privilege> allPrivileges = new List<Privilege>
+            Privilege[] allPrivileges =
             {
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Index" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Details" },
@@ -41,7 +40,7 @@ namespace MvcTemplate.Data.Migrations
                 new Privilege { Area = "Administration", Controller = "Roles", Action = "Delete" }
             };
 
-            IEnumerable<Privilege> privileges = context.Set<Privilege>().ToList();
+            Privilege[] privileges = context.Set<Privilege>().ToArray();
             foreach (Privilege privilege in allPrivileges)
                 if (!privileges.Any(priv =>
                         privilege.Area == priv.Area &&
@@ -60,10 +59,10 @@ namespace MvcTemplate.Data.Migrations
             }
 
             String adminRoleId = context.Set<Role>().Single(role => role.Name == "Sys_Admin").Id;
-            IEnumerable<RolePrivilege> adminPrivileges = context
+            RolePrivilege[] adminPrivileges = context
                 .Set<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
-                .ToList();
+                .ToArray();
 
             foreach (Privilege privilege in context.Set<Privilege>())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
@@ -77,7 +76,7 @@ namespace MvcTemplate.Data.Migrations
         }
         private void SeedAccounts()
         {
-            List<Account> accounts = new List<Account>
+            Account[] accounts =
             {
                 new Account
                 {

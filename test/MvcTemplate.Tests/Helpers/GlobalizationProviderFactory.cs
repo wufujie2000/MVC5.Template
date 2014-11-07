@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
 using NSubstitute;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
@@ -18,7 +17,7 @@ namespace MvcTemplate.Tests
 
         private static void SetUpSubstitute(IGlobalizationProvider provider)
         {
-            List<Language> languages = new List<Language>
+            Language[] languages =
             {
                 new Language
                 {

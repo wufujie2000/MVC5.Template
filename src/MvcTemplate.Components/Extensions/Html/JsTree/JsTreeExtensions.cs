@@ -39,7 +39,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return idSpan.ToString();
         }
-        private static String FormTree(String name, IEnumerable<JsTreeNode> nodes)
+        private static String FormTree(String name, IList<JsTreeNode> nodes)
         {
             TagBuilder tree = new TagBuilder("div");
             tree.MergeAttribute("for", name);
@@ -49,9 +49,9 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return tree.ToString();
         }
-        private static void AddNodes(TagBuilder root, IEnumerable<JsTreeNode> nodes)
+        private static void AddNodes(TagBuilder root, IList<JsTreeNode> nodes)
         {
-            if (!nodes.Any()) return;
+            if (nodes.Count == 0) return;
 
             StringBuilder leafBuilder = new StringBuilder();
             TagBuilder branch = new TagBuilder("ul");

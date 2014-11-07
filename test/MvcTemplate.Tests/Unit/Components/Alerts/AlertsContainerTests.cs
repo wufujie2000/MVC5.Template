@@ -97,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         public void Merge_DoesNotMergeItself()
         {
             container.Add(new Alert());
-            IEnumerable alerts = container.ToList();
+            IEnumerable alerts = container.ToArray();
 
             container.Merge(container);
 

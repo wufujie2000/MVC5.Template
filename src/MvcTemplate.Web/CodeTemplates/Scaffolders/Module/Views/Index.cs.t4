@@ -13,6 +13,6 @@
                 columns.AddActionLink(LinkAction.Edit);
                 columns.AddActionLink(LinkAction.Delete);
             })
-            .ApplyAttributes()
+            .ApplyDefaults()
     )
 }

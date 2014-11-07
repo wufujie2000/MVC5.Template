@@ -457,70 +457,70 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: ApplyAttributes<T>(this IGridHtmlOptions<T> options)
+        #region Extension method: ApplyDefaults<T>(this IGridHtmlOptions<T> options)
 
         [Test]
-        public void ApplyAttributes_SetsEmptyText()
+        public void ApplyDefaults_SetsEmptyText()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound);
         }
 
         [Test]
-        public void ApplyAttributes_SetsLanguage()
+        public void ApplyDefaults_SetsLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
 
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().SetLanguage(CultureInfo.CurrentUICulture.Name);
         }
 
         [Test]
-        public void ApplyAttributes_SetsName()
+        public void ApplyDefaults_SetsName()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().Named(typeof(AllTypesView).Name);
         }
 
         [Test]
-        public void ApplyAttributes_EnablesMultipleFilters()
+        public void ApplyDefaults_EnablesMultipleFilters()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().WithMultipleFilters();
         }
 
         [Test]
-        public void ApplyAttributes_DisablesRowSelection()
+        public void ApplyDefaults_DisablesRowSelection()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().Selectable(false);
         }
 
         [Test]
-        public void ApplyAttributes_SetsPaging()
+        public void ApplyDefaults_SetsPaging()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().WithPaging(20);
         }
 
         [Test]
-        public void ApplyAttributes_EnablesFiltering()
+        public void ApplyDefaults_EnablesFiltering()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().Filterable();
         }
 
         [Test]
-        public void ApplyAttributes_EnablesSorting()
+        public void ApplyDefaults_EnablesSorting()
         {
-            options.ApplyAttributes();
+            options.ApplyDefaults();
 
             options.Received().Sortable();
         }

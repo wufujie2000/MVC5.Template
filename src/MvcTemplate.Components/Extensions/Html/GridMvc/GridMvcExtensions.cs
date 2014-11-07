@@ -75,7 +75,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Titled(ResourceProvider.GetPropertyTitle(property));
         }
 
-        public static IGridHtmlOptions<T> ApplyAttributes<T>(this IGridHtmlOptions<T> options)
+        public static IGridHtmlOptions<T> ApplyDefaults<T>(this IGridHtmlOptions<T> options)
         {
             return options
                 .EmptyText(Resources.Table.Resources.NoDataFound)

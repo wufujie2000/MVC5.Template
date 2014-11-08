@@ -118,8 +118,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_Deletes<#= Model.Model #>()
         {
-            Assume.That(context.Set<<#= Model.Model #>>().Any());
-
             service.Delete(<#= Model.ModelName #>.Id);
 
             CollectionAssert.IsEmpty(context.Set<<#= Model.Model #>>());

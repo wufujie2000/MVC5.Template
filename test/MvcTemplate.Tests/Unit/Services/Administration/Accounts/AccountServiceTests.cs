@@ -387,8 +387,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Delete_DeletesAccount()
         {
-            Assume.That(context.Set<Account>().Any(account => account.Id == accountId));
-
             service.Delete(accountId);
 
             CollectionAssert.IsEmpty(context.Set<Account>());

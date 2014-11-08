@@ -235,11 +235,11 @@ namespace MvcTemplate.Tests.Unit.Security
         public void Refresh_RefreshesPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor("Security", "Authorized", "AuthorizedGet");
-            Assume.That(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
 
             TearDownData();
-
             SetUpDependencyResolver();
+
             provider.Refresh();
 
             Assert.IsFalse(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));

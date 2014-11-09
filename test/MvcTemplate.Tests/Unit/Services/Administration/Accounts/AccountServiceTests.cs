@@ -162,7 +162,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Account actual = context.Set<Account>().Single();
 
-            Assert.AreEqual(actual.RecoveryTokenExpirationDate.Value.Ticks, DateTime.Now.AddMinutes(30).Ticks, 10000000);
+            Assert.AreEqual(DateTime.Now.AddMinutes(30).Ticks, actual.RecoveryTokenExpirationDate.Value.Ticks, 10000000);
             Assert.AreNotEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Passhash, actual.Passhash);

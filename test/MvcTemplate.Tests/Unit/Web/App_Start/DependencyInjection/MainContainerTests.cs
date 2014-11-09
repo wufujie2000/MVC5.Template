@@ -58,24 +58,23 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [TestCase(typeof(IRoleValidator), typeof(RoleValidator))]
         [TestCase(typeof(IAccountValidator), typeof(AccountValidator))]
-        public void RegisterServices_RegistersTransientImplementation(Type abstraction, Type implementation)
+        public void RegisterServices_RegistersTransientImplementation(Type abstraction, Type expectedType)
         {
             Object expected = container.GetInstance(abstraction);
             Object actual = container.GetInstance(abstraction);
 
-            Assert.AreEqual(actual.GetType(), expected.GetType());
-            Assert.AreEqual(actual.GetType(), implementation);
+            Assert.AreEqual(expectedType, actual.GetType());
             Assert.AreNotSame(expected, actual);
         }
 
         [Test]
         [TestCase(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
-        public void RegisterServices_RegistersSingletonImplementation(Type abstraction, Type implementation)
+        public void RegisterServices_RegistersSingletonImplementation(Type abstraction, Type expectedType)
         {
             IAuthorizationProvider expected = container.GetInstance<IAuthorizationProvider>();
             IAuthorizationProvider actual = container.GetInstance<IAuthorizationProvider>();
 
-            Assert.AreEqual(actual.GetType(), implementation);
+            Assert.AreEqual(expectedType, actual.GetType());
             Assert.AreSame(expected, actual);
         }
 

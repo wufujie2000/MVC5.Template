@@ -43,3 +43,12 @@
   margin-bottom: 3px;
   margin-right: 5px;
 }
+@media (max-width: 767px) {
+  .header-navigation > .btn > a .fa {
+    margin: 0;
+  }
+  .header-navigation .text,
+  .header-navigation .caret {
+    display: none;
+  }
+}

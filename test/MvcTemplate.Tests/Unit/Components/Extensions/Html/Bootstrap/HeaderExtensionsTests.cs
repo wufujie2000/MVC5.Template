@@ -41,7 +41,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String actual = html.ProfileLink().ToString();
             String expected = String.Format(
-                "<a href=\"{0}\"><i class=\"fa fa-user\"></i><span>{1}</span></a>",
+                "<a href=\"{0}\">" +
+                    "<i class=\"fa fa-user\"></i>" +
+                    "<span class=\"text\">{1}</span>" +
+                "</a>",
                 url.Action("Edit", "Profile", new { area = String.Empty }),
                 ResourceProvider.GetActionTitle("Profile"));
 
@@ -73,7 +76,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.LanguageLink().ToString();
             String expected = String.Format(
                 "<a class=\"dropdown-toggle\" data-toggle=\"dropdown\">" +
-                    "<i class=\"fa fa-globe\"></i>{0}<span class=\"caret\"></span>" +
+                    "<i class=\"fa fa-globe\"></i>" +
+                    "<span class=\"text\">{0}</span>" +
+                    "<span class=\"caret\"></span>" +
                 "</a>" +
                 "<ul class=\"dropdown-menu\" role=\"menu\">" +
                     "<li>" +
@@ -103,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format(
                 "<a href=\"{0}\">" +
                     "<i class=\"fa fa-share\"></i>" +
-                     "<span>{1}</span>" +
+                     "<span class=\"text\">{1}</span>" +
                 "</a>",
                 url.Action("Logout", "Auth", new { area = String.Empty }),
                 ResourceProvider.GetActionTitle("Logout"));

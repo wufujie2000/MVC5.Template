@@ -10,13 +10,14 @@ namespace MvcTemplate.Components.Extensions.Html
     {
         public static MvcHtmlString ProfileLink(this HtmlHelper html)
         {
-            TagBuilder span = new TagBuilder("span");
+            TagBuilder textSpan = new TagBuilder("span");
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-user");
+            textSpan.AddCssClass("text");
 
-            span.InnerHtml = ResourceProvider.GetActionTitle("Profile");
+            textSpan.InnerHtml = ResourceProvider.GetActionTitle("Profile");
 
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", "Profile", new { area = String.Empty }, null).ToString(), icon,  span));
+            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", "Profile", new { area = String.Empty }, null).ToString(), icon,  textSpan));
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
@@ -24,29 +25,33 @@ namespace MvcTemplate.Components.Extensions.Html
                 return new MvcHtmlString(String.Empty);
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
-            TagBuilder span = new TagBuilder("span");
+            TagBuilder caretSpan = new TagBuilder("span");
+            TagBuilder textSpan = new TagBuilder("span");
             TagBuilder action = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
             action.MergeAttribute("data-toggle", "dropdown");
             action.AddCssClass("dropdown-toggle");
             icon.AddCssClass("fa fa-globe");
-            span.AddCssClass("caret");
+            caretSpan.AddCssClass("caret");
+            textSpan.AddCssClass("text");
 
-            action.InnerHtml = String.Format("{0}{1}{2}", icon, ResourceProvider.GetActionTitle("Language"), span);
+            textSpan.InnerHtml = ResourceProvider.GetActionTitle("Language");
+            action.InnerHtml = String.Format("{0}{1}{2}", icon, textSpan, caretSpan);
 
             return new MvcHtmlString(String.Format("{0}{1}", action, dropdown));
         }
         public static MvcHtmlString LogoutLink(this HtmlHelper html)
         {
             MvcHtmlString actionLink = html.ActionLink("{0}{1}", "Logout", "Auth", new { area = String.Empty }, null);
-            TagBuilder span = new TagBuilder("span");
+            TagBuilder textSpan = new TagBuilder("span");
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-share");
+            textSpan.AddCssClass("text");
 
-            span.InnerHtml = ResourceProvider.GetActionTitle("Logout");
+            textSpan.InnerHtml = ResourceProvider.GetActionTitle("Logout");
 
-            return new MvcHtmlString(String.Format(actionLink.ToString(), icon, span));
+            return new MvcHtmlString(String.Format(actionLink.ToString(), icon, textSpan));
         }
     }
 }

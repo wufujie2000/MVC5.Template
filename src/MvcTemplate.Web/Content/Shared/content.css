@@ -36,18 +36,18 @@ body.public .public-action {
   font-weight: bold;
   cursor: default;
 }
-.content-breadcrumb a {
+.content-breadcrumb > a {
   color: #999999;
   display: inline-block;
   padding: 8px;
 }
-.content-breadcrumb a:hover {
+.content-breadcrumb > a:hover {
   color: #777777;
 }
-.content-breadcrumb a i {
+.content-breadcrumb > a i {
   padding-right: 5px;
 }
-.content-breadcrumb span {
+.content-breadcrumb > span {
   color: #777777;
 }
 .content-breadcrumb .current,
@@ -82,5 +82,12 @@ body.public .public-action {
 @media (max-width: 767px) {
   .content-container {
     margin-left: 45px;
+  }
+  .content-breadcrumb .text {
+    display: none;
+  }
+  .content-breadcrumb > a {
+    padding-left: 4px;
+    padding-right: 0;
   }
 }

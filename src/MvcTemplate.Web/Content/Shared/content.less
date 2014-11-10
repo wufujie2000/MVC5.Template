@@ -48,7 +48,7 @@ body.public {
     font-weight: bold;
     cursor: default;
 
-    a {
+    > a {
         color: @content-link-color;
         display: inline-block;
         padding: 8px;
@@ -62,7 +62,7 @@ body.public {
         }
     }
 
-    span {
+    > span {
         color: @active-content-link-color;
     }
 
@@ -106,5 +106,16 @@ body.public {
 @media (max-width: 767px) {
     .content-container {
         margin-left: 45px;
+    }
+
+    .content-breadcrumb {
+        .text {
+            display: none;
+        }
+
+        > a {
+            padding-left: 4px;
+            padding-right: 0;
+        }
     }
 }

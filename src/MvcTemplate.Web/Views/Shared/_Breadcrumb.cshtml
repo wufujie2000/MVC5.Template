@@ -10,7 +10,8 @@
         if (node.Action != null && node != current)
         {
             <a href="@Url.Action(node.Action, node.Controller, new { area = node.Area })" class="@nodeClass">
-                <i class="@node.IconClass"></i>@node.Title
+                <i class="@node.IconClass"></i>
+                <span class="text">@node.Title</span>
             </a>
             <span class="fa fa-angle-right"></span>
         }
@@ -18,7 +19,8 @@
         if (node == current)
         {
             <a class="@nodeClass">
-                <i class="@node.IconClass"></i>@node.Title
+                <i class="@node.IconClass"></i>
+                <span class="text">@node.Title</span>
             </a>
         }
     }

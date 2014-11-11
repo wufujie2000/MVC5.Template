@@ -47,6 +47,9 @@
   .header-navigation > .btn > a .fa {
     margin: 0;
   }
+  .header-navigation .dropdown-menu {
+    left: -127px;
+  }
   .header-navigation .text,
   .header-navigation .caret {
     display: none;

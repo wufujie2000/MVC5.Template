@@ -6,6 +6,7 @@
   padding: 0;
 }
 .header-navigation > .btn {
+  min-width: 40px;
   border: none;
   padding: 0;
 }
@@ -48,7 +49,7 @@
     margin: 0;
   }
   .header-navigation .dropdown-menu {
-    left: -127px;
+    left: -120px;
   }
   .header-navigation .text,
   .header-navigation .caret {

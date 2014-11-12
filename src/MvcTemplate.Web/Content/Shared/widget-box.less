@@ -35,6 +35,7 @@
             color: @content-color;
             padding: 9px 10px 8px;
             border-radius: 0;
+            min-width: 40px;
             font-size: 12px;
 
             &:hover {
@@ -76,15 +77,23 @@
         }
     }
 
+    .control-label {
+        text-align: left;
+    }
+
     .form-actions {
         text-align: center;
     }
 }
 
-@media (min-width: 768px) {
-    .widget-content {
-        .control-label {
-            text-align: left;
+@media (max-width: 767px) {
+    .widget-title .widget-title-buttons {
+        .btn > i {
+            padding: 0;
+        }
+
+        .text {
+            display: none;
         }
     }
 }

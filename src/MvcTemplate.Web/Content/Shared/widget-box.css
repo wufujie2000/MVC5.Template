@@ -29,6 +29,7 @@
   color: #555555;
   padding: 9px 10px 8px;
   border-radius: 0;
+  min-width: 40px;
   font-size: 12px;
 }
 .widget-title .widget-title-buttons .btn:hover {
@@ -64,12 +65,18 @@
 .widget-content .form-group .input-group {
   width: 100%;
 }
+.widget-content .control-label {
+  text-align: left;
+}
 .widget-content .form-actions {
   text-align: center;
 }
-@media (min-width: 768px) {
-  .widget-content .control-label {
-    text-align: left;
+@media (max-width: 767px) {
+  .widget-title .widget-title-buttons .btn > i {
+    padding: 0;
+  }
+  .widget-title .widget-title-buttons .text {
+    display: none;
   }
 }
 @media (min-width: 992px) {

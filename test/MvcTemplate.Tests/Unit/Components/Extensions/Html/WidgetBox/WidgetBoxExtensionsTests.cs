@@ -155,7 +155,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String buttons = String.Empty;
             foreach (LinkAction action in actions)
             {
+                TagBuilder textSpan = new TagBuilder("span");
                 TagBuilder icon = new TagBuilder("i");
+                textSpan.AddCssClass("text");
+
                 switch (action)
                 {
                     case LinkAction.Create:
@@ -175,6 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                         break;
                 }
 
+                textSpan.InnerHtml = ResourceProvider.GetActionTitle(action.ToString());
                 String button = String.Format(
                     html.ActionLink(
                             "{0}{1}",
@@ -183,7 +187,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                             new { @class = "btn" })
                         .ToString(),
                     icon,
-                    ResourceProvider.GetActionTitle(action.ToString()));
+                    textSpan);
 
                 buttons += button;
             }

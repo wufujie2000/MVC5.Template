@@ -61,7 +61,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account&apos;s information.
+        ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string AdministrationAccounts {
             get {
@@ -70,7 +70,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role&apos;s information.
+        ///   Looks up a localized string similar to Role.
         /// </summary>
         public static string AdministrationRoles {
             get {
@@ -79,7 +79,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile information.
+        ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
             get {

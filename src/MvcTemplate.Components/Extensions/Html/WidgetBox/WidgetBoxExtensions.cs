@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -34,7 +33,10 @@ namespace MvcTemplate.Components.Extensions.Html
                 if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action.ToString()))
                     continue;
 
+                TagBuilder textSpan = new TagBuilder("span");
                 TagBuilder icon = new TagBuilder("i");
+                textSpan.AddCssClass("text");
+
                 switch (action)
                 {
                     case LinkAction.Create:
@@ -54,6 +56,7 @@ namespace MvcTemplate.Components.Extensions.Html
                         break;
                 }
 
+                textSpan.InnerHtml = ResourceProvider.GetActionTitle(action.ToString());
                 String button = String.Format(
                     html
                         .ActionLink(
@@ -63,7 +66,7 @@ namespace MvcTemplate.Components.Extensions.Html
                             new { @class = "btn" })
                         .ToString(),
                     icon,
-                    ResourceProvider.GetActionTitle(action.ToString()));
+                    textSpan);
 
                 buttons += button;
             }

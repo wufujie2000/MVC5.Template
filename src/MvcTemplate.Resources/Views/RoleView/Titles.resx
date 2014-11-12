@@ -121,7 +121,7 @@
     <value>Role</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Role</value>
+    <value>Name</value>
   </data>
   <data name="PrivilegesTree" xml:space="preserve">
     <value>Privileges</value>

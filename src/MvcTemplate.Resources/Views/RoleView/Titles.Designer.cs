@@ -70,7 +70,7 @@ namespace MvcTemplate.Resources.Views.RoleView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {

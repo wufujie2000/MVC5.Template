@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdministrationAccounts" xml:space="preserve">
-    <value>Account's information</value>
+    <value>Account</value>
   </data>
   <data name="AdministrationRoles" xml:space="preserve">
-    <value>Role's information</value>
+    <value>Role</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Profile information</value>
+    <value>Profile</value>
   </data>
 </root>

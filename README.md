@@ -28,11 +28,11 @@ This project will use the latest technologies and will try to incorporate the be
 - Tests.
 
 # Frameworks used
-- [ASP.NET MVC 5](http://www.asp.net/mvc/) - main framework.
+- [ASP.NET MVC](http://www.asp.net/mvc/) - main framework.
 - [Bootstrap](http://getbootstrap.com/) - design.
 - [JQuery](http://jquery.com/) - client side javascript.
 - [JQuery.UI](http://jqueryui.com/) - client side javascript.
-- [Ninject](http://www.ninject.org/) - dependency injector.
+- [LightInject](http://www.lightinject.net/) - dependency injector.
 - [AutoMapper](http://automapper.org/) - model<->view object mapper.
 - [T4Scaffolding](https://www.nuget.org/packages/T4Scaffolding.Core/) - program module scaffolder.
 - [GridMvc](http://gridmvc.codeplex.com/) - grid controls.

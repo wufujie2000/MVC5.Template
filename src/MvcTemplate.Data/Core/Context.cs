@@ -46,13 +46,12 @@ namespace MvcTemplate.Data.Core
 
         public override IRepository<TModel> Repository<TModel>()
         {
-            String name = typeof(TModel).Name;
-            if (Repositories.ContainsKey(name))
-                return (IRepository<TModel>)Repositories[name];
+            Type modelType = typeof(TModel);
+            if (Repositories.ContainsKey(modelType))
+                return (IRepository<TModel>)Repositories[modelType];
 
-            Type repositoryType = typeof(Repository<>).MakeGenericType(typeof(TModel));
-            IRepository<TModel> repository = (IRepository<TModel>)Activator.CreateInstance(repositoryType, this);
-            Repositories.Add(name, repository);
+            IRepository<TModel> repository = (IRepository<TModel>)Activator.CreateInstance(typeof(Repository<TModel>), this);
+            Repositories.Add(modelType, repository);
 
             return repository;
         }

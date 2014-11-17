@@ -41,11 +41,16 @@ table {
         }
     }
 
+    .grid-cell:first-of-type,
+    .grid-header:first-of-type {
+        border-left: none;
+    }
+
     .action-cell {
         text-align: center;
-        border-left: none;
 
         &+.action-cell {
+            border-left: none;
             padding-left: 0;
         }
 

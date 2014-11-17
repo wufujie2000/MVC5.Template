@@ -31,11 +31,15 @@ table td.date-cell {
 table td.number-cell {
   text-align: right;
 }
-table .action-cell {
-  text-align: center;
+table .grid-cell:first-of-type,
+table .grid-header:first-of-type {
   border-left: none;
 }
+table .action-cell {
+  text-align: center;
+}
 table .action-cell + .action-cell {
+  border-left: none;
   padding-left: 0;
 }
 table .action-cell .details-action {

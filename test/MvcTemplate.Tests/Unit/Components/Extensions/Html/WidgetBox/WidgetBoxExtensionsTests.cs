@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             StringBuilder expected = new StringBuilder();
             StringBuilder actual = new StringBuilder();
 
-            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), String.Empty).Dispose();
+            new WidgetBox(new StringWriter(expected), "fa fa-th", ResourceProvider.GetCurrentTableTitle(), "").Dispose();
             html.ViewContext.Writer = new StringWriter(actual);
             html.TableWidgetBox().Dispose();
 
@@ -96,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormWidgetBox_FormsWidgetBox()
         {
             StringBuilder expected = new StringBuilder();
-            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), String.Empty).Dispose();
+            new WidgetBox(new StringWriter(expected), "fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), "").Dispose();
 
             StringBuilder actual = new StringBuilder();
             html.ViewContext.Writer = new StringWriter(actual);
@@ -152,7 +152,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         private String FormTitleButtons(params LinkAction[] actions)
         {
-            String buttons = String.Empty;
+            String buttons = "";
             foreach (LinkAction action in actions)
             {
                 TagBuilder textSpan = new TagBuilder("span");

@@ -37,7 +37,7 @@ namespace MvcTemplate.Components.Extensions.Html
         public static MvcHtmlString AuthLanguageSelect(this HtmlHelper html)
         {
             if (GlobalizationManager.Provider.Languages.Length < 2)
-                return new MvcHtmlString(String.Empty);
+                return new MvcHtmlString("");
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -47,8 +47,8 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder addon = CreateAddon("fa-globe");
             TagBuilder caret = new TagBuilder("span");
 
-            languageImg.MergeAttribute("alt", String.Empty);
             currentLang.AddCssClass("current-language");
+            languageImg.MergeAttribute("alt", "");
             caret.AddCssClass("caret");
 
             languageImg.MergeAttribute("src", urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Provider.CurrentLanguage.Abbrevation)));

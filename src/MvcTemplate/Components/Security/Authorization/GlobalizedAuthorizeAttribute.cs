@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace MvcTemplate.Components.Security
@@ -11,8 +10,8 @@ namespace MvcTemplate.Components.Security
             RouteValueDictionary routeValues = context.RouteData.Values;
             routeValues["returnUrl"] = context.HttpContext.Request.RawUrl;
             routeValues["controller"] = "Auth";
-            routeValues["area"] = String.Empty;
             routeValues["action"] = "Login";
+            routeValues["area"] = "";
 
             context.Result = new RedirectToRouteResult(routeValues);
         }

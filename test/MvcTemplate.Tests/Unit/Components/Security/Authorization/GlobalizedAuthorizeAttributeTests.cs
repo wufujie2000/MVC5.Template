@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -27,9 +26,9 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
             Assert.AreEqual(context.RouteData.Values["language"], actual["language"]);
             Assert.AreEqual(context.HttpContext.Request.RawUrl, actual["returnUrl"]);
-            Assert.AreEqual(String.Empty, actual["area"]);
             Assert.AreEqual("Auth", actual["controller"]);
             Assert.AreEqual("Login", actual["action"]);
+            Assert.AreEqual("", actual["area"]);
         }
 
         #endregion

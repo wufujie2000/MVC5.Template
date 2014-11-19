@@ -102,7 +102,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             GlobalizationManager.Provider.Languages.Returns(new[] { new Language() });
 
             String actual = html.AuthLanguageSelect().ToString();
-            String expected = String.Empty;
+            String expected = "";
 
             Assert.AreEqual(expected, actual);
         }

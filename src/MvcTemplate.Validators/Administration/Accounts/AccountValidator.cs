@@ -104,7 +104,7 @@ namespace MvcTemplate.Validators
         {
             Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
             if (!isCorrect)
-                ModelState.AddModelError(String.Empty, Validations.IncorrectUsernameOrPassword);
+                ModelState.AddModelError("", Validations.IncorrectUsernameOrPassword);
 
             return isCorrect;
         }

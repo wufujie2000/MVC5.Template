@@ -6,7 +6,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -98,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void GetById_OnModelNotFoundReturnsNull()
         {
-            Assert.IsNull(repository.GetById(String.Empty));
+            Assert.IsNull(repository.GetById(""));
         }
 
         #endregion

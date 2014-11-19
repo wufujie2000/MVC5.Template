@@ -246,7 +246,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectToDefault();
-            ActionResult actual = controller.Reset(String.Empty);
+            ActionResult actual = controller.Reset("");
 
             Assert.AreSame(expected, actual);
         }
@@ -269,7 +269,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn().Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(true);
 
-            Object model = (controller.Reset(String.Empty) as ViewResult).Model;
+            Object model = (controller.Reset("") as ViewResult).Model;
 
             Assert.IsNull(model);
         }

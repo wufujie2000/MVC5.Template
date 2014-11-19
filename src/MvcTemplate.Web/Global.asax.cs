@@ -58,9 +58,9 @@ namespace MvcTemplate.Web
             HttpException httpException = Server.GetLastError() as HttpException;
             UrlHelper urlHelper = new UrlHelper(Request.RequestContext);
 
-            routeValues["area"] = String.Empty;
             routeValues["controller"] = "Home";
             routeValues["action"] = "Error";
+            routeValues["area"] = "";
             Server.ClearError();
 
             if (httpException != null)

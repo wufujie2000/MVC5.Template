@@ -118,7 +118,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanLogin_CanNotLoginFromNonExistingAccount()
         {
             AccountLoginView account = new AccountLoginView();
-            account.Username = String.Empty;
 
             Assert.IsFalse(validator.CanLogin(account));
         }
@@ -127,10 +126,9 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithNotExistingAccount()
         {
             AccountLoginView account = new AccountLoginView();
-            account.Username = String.Empty;
             validator.CanLogin(account);
 
-            String actual = validator.ModelState[String.Empty].Errors[0].ErrorMessage;
+            String actual = validator.ModelState[""].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
 
             Assert.AreEqual(expected, actual);
@@ -153,7 +151,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             account.Password += "Incorrect";
             validator.CanLogin(account);
 
-            String actual = validator.ModelState[String.Empty].Errors[0].ErrorMessage;
+            String actual = validator.ModelState[""].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
 
             Assert.AreEqual(expected, actual);

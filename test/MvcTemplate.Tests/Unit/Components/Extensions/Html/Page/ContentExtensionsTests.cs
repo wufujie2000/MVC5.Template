@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUp()
         {
             path = "ContentExtensionsTests.txt";
-            File.WriteAllText(path, String.Empty);
+            File.WriteAllText(path, "");
 
             html = HtmlHelperFactory.CreateHtmlHelper();
             urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -54,10 +54,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void RenderControllerScript_DoesNotRendersNotExistingScripts()
         {
-            html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns(String.Empty);
+            html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
 
             String actual = html.RenderControllerScript().ToString();
-            String expected = String.Empty;
+            String expected = "";
 
             Assert.AreEqual(expected, actual);
         }
@@ -94,10 +94,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void RenderControllerStyle_DoesNotRendersNotExistingStyles()
         {
-            html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns(String.Empty);
+            html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
 
             String actual = html.RenderControllerStyle().ToString();
-            String expected = String.Empty;
+            String expected = "";
 
             Assert.AreEqual(expected, actual);
         }

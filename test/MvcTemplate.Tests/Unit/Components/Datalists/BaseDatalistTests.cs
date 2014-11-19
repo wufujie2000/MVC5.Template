@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             datalist = new BaseDatalistProxy<Role, RoleView>();
             UrlHelper url = new UrlHelper(request.RequestContext);
 
-            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = String.Empty });
+            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
             String actual = datalist.DatalistUrl;
 
             Assert.AreEqual(expected, actual);

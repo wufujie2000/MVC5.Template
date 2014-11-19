@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Datalists
         {
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
             UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = String.Empty });
+            DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = "" });
         }
         public BaseDatalist(IUnitOfWork unitOfWork)
         {

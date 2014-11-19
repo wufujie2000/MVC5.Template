@@ -26,7 +26,7 @@ namespace MvcTemplate.Components.Extensions.Html
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
-            String buttons = String.Empty;
+            String buttons = "";
 
             foreach (LinkAction action in actions)
             {

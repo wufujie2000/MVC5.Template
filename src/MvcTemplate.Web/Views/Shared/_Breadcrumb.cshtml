@@ -6,7 +6,7 @@
 <div class="content-breadcrumb">
     @foreach (MvcSiteMapBreadcrumbNode node in Model)
     {
-        String nodeClass = node == current ? "current" : String.Empty;
+        String nodeClass = node == current ? "current" : "";
         if (node.Action != null && node != current)
         {
             <a href="@Url.Action(node.Action, node.Controller, new { area = node.Area })" class="@nodeClass">

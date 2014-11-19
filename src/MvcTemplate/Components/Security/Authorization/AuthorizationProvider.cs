@@ -25,7 +25,7 @@ namespace MvcTemplate.Components.Security
             if (AllowsUnauthorized(area, controller, action))
                 return true;
 
-            if (!cache.ContainsKey(accountId ?? String.Empty))
+            if (!cache.ContainsKey(accountId ?? ""))
                 return false;
 
             return cache[accountId]

@@ -17,12 +17,12 @@ namespace MvcTemplate.Components.Extensions.Html
 
             textSpan.InnerHtml = ResourceProvider.GetActionTitle("Profile");
 
-            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", "Profile", new { area = String.Empty }, null).ToString(), icon,  textSpan));
+            return new MvcHtmlString(String.Format(html.ActionLink("{0}{1}", "Edit", "Profile", new { area = "" }, null).ToString(), icon,  textSpan));
         }
         public static MvcHtmlString LanguageLink(this HtmlHelper html)
         {
             if (GlobalizationManager.Provider.Languages.Length < 2)
-                return new MvcHtmlString(String.Empty);
+                return new MvcHtmlString("");
 
             TagBuilder dropdown = BootstrapExtensions.FormLanguagesDropdown(html);
             TagBuilder caretSpan = new TagBuilder("span");
@@ -43,7 +43,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString LogoutLink(this HtmlHelper html)
         {
-            MvcHtmlString actionLink = html.ActionLink("{0}{1}", "Logout", "Auth", new { area = String.Empty }, null);
+            MvcHtmlString actionLink = html.ActionLink("{0}{1}", "Logout", "Auth", new { area = "" }, null);
             TagBuilder textSpan = new TagBuilder("span");
             TagBuilder icon = new TagBuilder("i");
             icon.AddCssClass("fa fa-share");

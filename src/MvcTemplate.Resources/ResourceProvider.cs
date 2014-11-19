@@ -133,7 +133,7 @@ namespace MvcTemplate.Resources
             ResourceManager manager = new ResourceManager(baseName, executingAssembly);
             manager.IgnoreCase = true;
 
-            return manager.GetString(key ?? String.Empty);
+            return manager.GetString(key ?? "");
         }
     }
 }

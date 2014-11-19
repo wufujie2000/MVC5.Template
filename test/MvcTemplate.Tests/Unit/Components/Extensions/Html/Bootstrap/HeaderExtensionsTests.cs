@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "<i class=\"fa fa-user\"></i>" +
                     "<span class=\"text\">{1}</span>" +
                 "</a>",
-                url.Action("Edit", "Profile", new { area = String.Empty }),
+                url.Action("Edit", "Profile", new { area = "" }),
                 ResourceProvider.GetActionTitle("Profile"));
 
             Assert.AreEqual(expected, actual);
@@ -62,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             GlobalizationManager.Provider.Languages.Returns(new[] { new Language() });
 
             String actual = html.LanguageLink().ToString();
-            String expected = String.Empty;
+            String expected = "";
 
             Assert.AreEqual(expected, actual);
         }
@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "<i class=\"fa fa-share\"></i>" +
                      "<span class=\"text\">{1}</span>" +
                 "</a>",
-                url.Action("Logout", "Auth", new { area = String.Empty }),
+                url.Action("Logout", "Auth", new { area = "" }),
                 ResourceProvider.GetActionTitle("Logout"));
 
             Assert.AreEqual(expected, actual);

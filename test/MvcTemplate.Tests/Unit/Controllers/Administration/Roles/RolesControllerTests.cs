@@ -125,12 +125,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView(String.Empty).Returns((RoleView)null);
+            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             Object expected = controller.RedirectToNotFound();
-            Object actual = controller.Details(String.Empty);
+            Object actual = controller.Details("");
 
             Assert.AreSame(expected, actual);
         }
@@ -153,12 +153,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView(String.Empty).Returns((RoleView)null);
+            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Edit(String.Empty);
+            ActionResult actual = controller.Edit("");
 
             Assert.AreSame(expected, actual);
         }
@@ -228,12 +228,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView(String.Empty).Returns((RoleView)null);
+            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Delete(String.Empty);
+            ActionResult actual = controller.Delete("");
 
             Assert.AreSame(expected, actual);
         }

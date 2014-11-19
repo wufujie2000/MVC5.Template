@@ -49,15 +49,15 @@ namespace MvcTemplate.Controllers
         }
         public virtual RedirectToRouteResult RedirectToDefault()
         {
-            return RedirectToAction(String.Empty, String.Empty, new { area = String.Empty });
+            return RedirectToAction("", "", new { area = "" });
         }
         public virtual RedirectToRouteResult RedirectToNotFound()
         {
-            return RedirectToAction("NotFound", "Home", new { area = String.Empty });
+            return RedirectToAction("NotFound", "Home", new { area = "" });
         }
         public virtual RedirectToRouteResult RedirectToUnauthorized()
         {
-            return RedirectToAction("Unauthorized", "Home", new { area = String.Empty });
+            return RedirectToAction("Unauthorized", "Home", new { area = "" });
         }
         public virtual RedirectToRouteResult RedirectIfAuthorized(String action)
         {

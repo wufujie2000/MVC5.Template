@@ -111,8 +111,11 @@ namespace MvcTemplate.Components.Extensions.Html
 
         internal static TagBuilder FormLanguagesDropdown(HtmlHelper html)
         {
-            RouteValueDictionary routeValues = MergeQuery(html.ViewContext.RequestContext);
+            RouteValueDictionary routeValues = new RouteValueDictionary(html.ViewContext.RouteData.Values);
+            NameValueCollection queryString = html.ViewContext.HttpContext.Request.QueryString;
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+            String query = (queryString.Count > 0) ? "?" + queryString : "";
+            String action = routeValues["action"] as String;
             TagBuilder dropdown = new TagBuilder("ul");
             dropdown.MergeAttribute("role", "menu");
             dropdown.AddCssClass("dropdown-menu");
@@ -123,25 +126,14 @@ namespace MvcTemplate.Components.Extensions.Html
                 routeValues["language"] = language.Abbrevation;
                 TagBuilder languageItem = new TagBuilder("li");
                 languageItem.InnerHtml = String.Format(
-                    html.ActionLink("{0}{1}", routeValues["action"].ToString(), routeValues).ToString(),
-                    String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc),
-                    language.Name);
+                    "<a href=\"{0}{1}\">{2}{3}</a>",
+                    urlHelper.Action(action, routeValues), query,
+                    String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc), language.Name);
 
                 dropdown.InnerHtml += languageItem.ToString();
             }
 
             return dropdown;
-        }
-
-        private static RouteValueDictionary MergeQuery(RequestContext requestContext)
-        {
-            RouteValueDictionary mergedValues = new RouteValueDictionary(requestContext.RouteData.Values);
-            NameValueCollection query = requestContext.HttpContext.Request.QueryString;
-
-            foreach (String parameter in query)
-                mergedValues[parameter] = query[parameter];
-
-            return mergedValues;
         }
 
         private static Boolean IsRequired(this LambdaExpression expression)

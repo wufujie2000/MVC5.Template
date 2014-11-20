@@ -4,6 +4,7 @@ using MvcTemplate.Resources;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -70,7 +71,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void LanguageLink_FormsLanguageLink()
         {
-            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            html.ViewContext.HttpContext.Request.QueryString.Returns(HttpUtility.ParseQueryString(""));
+            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             String action = routeValues["action"].ToString();
 
             String actual = html.LanguageLink().ToString();
@@ -89,8 +91,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "</li>" +
                 "</ul>",
                 ResourceProvider.GetActionTitle("Language"),
-                url.Action(action, new { area = routeValues["area"], language = "en", p = "1" }),
-                url.Action(action, new { area = routeValues["area"], language = "lt", p = "1" }),
+                url.Action(action, new { area = routeValues["area"], language = "en" }),
+                url.Action(action, new { area = routeValues["area"], language = "lt" }),
                 url.Content("~/Images/Flags/en.gif"),
                 url.Content("~/Images/Flags/lt.gif"));
 

@@ -12,7 +12,7 @@ namespace MvcTemplate.Tests
     {
         public static HttpContext CreateHttpContext()
         {
-            HttpRequest request = new HttpRequest("", "http://localhost:19175/domain/", "p=1");
+            HttpRequest request = new HttpRequest("", "http://localhost:19175/domain/", "p=1&n&=k");
             Hashtable browserCapabilities = new Hashtable { { "cookies", "true" } };
             HttpBrowserCapabilities browser = new HttpBrowserCapabilities();
             HttpResponse response = new HttpResponse(new StringWriter());

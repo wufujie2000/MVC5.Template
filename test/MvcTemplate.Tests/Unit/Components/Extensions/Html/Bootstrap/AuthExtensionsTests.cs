@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AuthLanguageSelect_FormsLanguageSelectInput()
         {
-            RouteValueDictionary routeValues = html.ViewContext.RequestContext.RouteData.Values;
+            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             String action = routeValues["action"].ToString();
 
@@ -126,18 +126,19 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</div>" +
                 "<ul class=\"dropdown-menu\" role=\"menu\">" +
                     "<li>" +
-                        "<a href=\"{2}\">" +
+                        "<a href=\"{2}?{4}\">" +
                         "<img src=\"{0}\" alt=\"\" />English</a>" +
                     "</li>" +
                     "<li>" +
-                        "<a href=\"{3}\">" +
+                        "<a href=\"{3}?{4}\">" +
                         "<img src=\"{1}\" alt=\"\" />Lietuvių</a>" +
                     "</li>" +
                 "</ul>",
                 urlHelper.Content("~/Images/Flags/en.gif"),
                 urlHelper.Content("~/Images/Flags/lt.gif"),
-                urlHelper.Action(action, new { area = routeValues["area"], language = "en", p = "1" }),
-                urlHelper.Action(action, new { area = routeValues["area"], language = "lt", p = "1" }));
+                urlHelper.Action(action, new { area = routeValues["area"], language = "en" }),
+                urlHelper.Action(action, new { area = routeValues["area"], language = "lt" }),
+                html.ViewContext.HttpContext.Request.QueryString);
 
             Assert.AreEqual(expected, actual);
         }

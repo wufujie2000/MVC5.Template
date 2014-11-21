@@ -19,19 +19,17 @@ namespace MvcTemplate.Web
 {
     public class MvcApplication : HttpApplication
     {
-        private static String version;
         public static String Version
         {
-            get
-            {
-                if (version != null) return version;
+            get;
+            private set;
+        }
 
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-                version = versionInfo.FileVersion;
-
-                return version;
-            }
+        static MvcApplication()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            Version = versionInfo.FileVersion;
         }
 
         public void Application_Start()
@@ -63,9 +61,8 @@ namespace MvcTemplate.Web
             routeValues["area"] = "";
             Server.ClearError();
 
-            if (httpException != null)
-                if (httpException.GetHttpCode() == 404)
-                    routeValues["action"] = "NotFound";
+            if (httpException != null && httpException.GetHttpCode() == 404)
+                routeValues["action"] = "NotFound";
 
             Response.TrySkipIisCustomErrors = true;
             Response.Redirect(urlHelper.RouteUrl(routeValues));

@@ -28,8 +28,6 @@ namespace MvcTemplate.Components.Extensions.Html
             if (disposed) return;
 
             writer.Write(wrapper.ToString(TagRenderMode.EndTag));
-            wrapper = null;
-            writer = null;
 
             disposed = true;
         }

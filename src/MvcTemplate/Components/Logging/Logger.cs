@@ -30,7 +30,6 @@ namespace MvcTemplate.Components.Logging
             if (disposed) return;
 
             context.Dispose();
-            context = null;
 
             disposed = true;
         }

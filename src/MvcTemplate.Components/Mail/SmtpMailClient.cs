@@ -47,7 +47,6 @@ namespace MvcTemplate.Components.Mail
             if (disposed) return;
 
             client.Dispose();
-            client = null;
 
             disposed = true;
         }

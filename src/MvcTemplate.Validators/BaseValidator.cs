@@ -41,8 +41,6 @@ namespace MvcTemplate.Validators
             if (disposed) return;
 
             UnitOfWork.Dispose();
-            UnitOfWork = null;
-            ModelState = null;
 
             disposed = true;
         }

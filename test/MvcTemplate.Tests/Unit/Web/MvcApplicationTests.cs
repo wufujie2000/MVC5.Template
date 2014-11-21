@@ -63,15 +63,6 @@ namespace MvcTemplate.Tests.Unit.Web
             Assert.AreEqual(expected, actual);
         }
 
-        [Test]
-        public void Version_ReturnsSameVersion()
-        {
-            String expected = MvcApplication.Version;
-            String actual = MvcApplication.Version;
-
-            Assert.AreEqual(expected, actual);
-        }
-
         #endregion
 
         #region Method: Application_Start()

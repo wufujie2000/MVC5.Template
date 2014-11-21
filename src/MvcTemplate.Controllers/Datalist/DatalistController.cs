@@ -40,7 +40,6 @@ namespace MvcTemplate.Controllers
             if (disposed) return;
 
             unitOfWork.Dispose();
-            unitOfWork = null;
             disposed = true;
 
             base.Dispose(disposing);

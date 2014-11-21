@@ -28,7 +28,6 @@ namespace MvcTemplate.Services
             if (disposed) return;
 
             UnitOfWork.Dispose();
-            UnitOfWork = null;
 
             disposed = true;
         }

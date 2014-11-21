@@ -59,8 +59,6 @@ namespace MvcTemplate.Data.Core
 
             if (logger != null) logger.Dispose();
             context.Dispose();
-            context = null;
-            logger = null;
 
             disposed = true;
         }

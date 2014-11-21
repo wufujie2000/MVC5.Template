@@ -47,8 +47,6 @@ namespace MvcTemplate.Components.Extensions.Html
 
             writer.Write(widgetBox.ToString(TagRenderMode.EndTag));
             writer.Write(widgetContent.ToString(TagRenderMode.EndTag));
-            widgetContent = null;
-            widgetBox = null;
 
             disposed = true;
         }

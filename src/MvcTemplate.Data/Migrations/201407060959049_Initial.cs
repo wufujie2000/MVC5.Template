@@ -58,9 +58,9 @@ namespace MvcTemplate.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Area = c.String(),
-                        Controller = c.String(nullable: false),
-                        Action = c.String(nullable: false),
+                        Area = c.String(maxLength: 128),
+                        Controller = c.String(nullable: false, maxLength: 128),
+                        Action = c.String(nullable: false, maxLength: 128),
                         CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);

@@ -3,10 +3,10 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.Privilege;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MvcTemplate.Resources.Privilege;
 
 namespace MvcTemplate.Services
 {

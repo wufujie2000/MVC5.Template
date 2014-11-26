@@ -24,7 +24,7 @@ namespace MvcTemplate.Objects
         public DateTime? CreationDate
         {
             get;
-            private set;
+            protected set;
         }
 
         protected BaseView()

@@ -15,6 +15,7 @@ namespace MvcTemplate.Objects
 
         [Required]
         [EmailAddress]
+        [StringLength(256)]
         public String Email { get; set; }
     }
 }

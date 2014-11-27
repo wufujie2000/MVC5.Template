@@ -61,7 +61,7 @@ namespace MvcTemplate.Resources.Table {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accounts list.
+        ///   Looks up a localized string similar to Accounts.
         /// </summary>
         public static string AdministrationAccountsIndex {
             get {
@@ -70,7 +70,7 @@ namespace MvcTemplate.Resources.Table {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roles list.
+        ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string AdministrationRolesIndex {
             get {

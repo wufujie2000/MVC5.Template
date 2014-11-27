@@ -14,7 +14,7 @@ namespace MvcTemplate.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false, maxLength: 128),
-                        Passhash = c.String(nullable: false),
+                        Passhash = c.String(nullable: false, maxLength: 512),
                         Email = c.String(nullable: false, maxLength: 256),
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(),

@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Username = c.String(nullable: false, maxLength: 128),
-                        Passhash = c.String(nullable: false),
+                        Passhash = c.String(nullable: false, maxLength: 512),
                         Email = c.String(nullable: false, maxLength: 256),
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(),
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Text = c.String(),
+                        Text = c.String(maxLength: 512),
                         CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);

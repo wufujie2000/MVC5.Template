@@ -12,6 +12,7 @@ namespace MvcTemplate.Objects
         public String Username { get; set; }
 
         [Required]
+        [StringLength(512)]
         public String Passhash { get; set; }
 
         [Required]

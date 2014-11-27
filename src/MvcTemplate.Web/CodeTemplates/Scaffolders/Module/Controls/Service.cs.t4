@@ -27,19 +27,19 @@ namespace MvcTemplate.Services
             return UnitOfWork.Repository<<#= Model.Model #>>().GetById<<#= Model.View #>>(id);
         }
 
-        public virtual void Create(<#= Model.View #> view)
+        public void Create(<#= Model.View #> view)
         {
             <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
             UnitOfWork.Repository<<#= Model.Model #>>().Insert(model);
             UnitOfWork.Commit();
         }
-        public virtual void Edit(<#= Model.View #> view)
+        public void Edit(<#= Model.View #> view)
         {
             <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
             UnitOfWork.Repository<<#= Model.Model #>>().Update(model);
             UnitOfWork.Commit();
         }
-        public virtual void Delete(String id)
+        public void Delete(String id)
         {
             UnitOfWork.Repository<<#= Model.Model #>>().Delete(id);
             UnitOfWork.Commit();

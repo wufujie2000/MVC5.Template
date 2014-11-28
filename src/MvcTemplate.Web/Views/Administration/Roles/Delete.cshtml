@@ -6,7 +6,6 @@
     {
         @Html.FormLabelFor(model => model.Name)
         @Html.FormTextBoxFor(model => model.Name)
-        @Html.FormValidationFor(model => model.Name)
     }
     using (Html.FormGroup())
     {
@@ -15,7 +14,6 @@
         {
             @Html.JsTreeFor(model => model.PrivilegesTree)
         }
-        @Html.FormValidationFor(model => model.PrivilegesTree)
     }
 
     using (Html.BeginForm())

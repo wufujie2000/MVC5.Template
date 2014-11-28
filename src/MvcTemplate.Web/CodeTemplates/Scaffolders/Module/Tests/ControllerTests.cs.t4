@@ -36,7 +36,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsModelsView()
+        public void Index_Returns<#= Model.View #>s()
         {
             service.GetViews().Returns(new[] { <#= Model.ModelName #> }.AsQueryable());
 

@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanRecover(new AccountRecoveryView()));
+            Assert.IsFalse(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanReset(new AccountResetView()));
+            Assert.IsFalse(validator.CanReset(ObjectFactory.CreateAccountResetView()));
         }
 
         [Test]
@@ -296,8 +296,8 @@ namespace MvcTemplate.Tests.Unit.Validators
             profile.Username = takenAccount.Username;
             validator.CanEdit(profile);
 
-            String expected = Validations.UsernameIsAlreadyTaken;
             String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
+            String expected = Validations.UsernameIsAlreadyTaken;
 
             Assert.AreEqual(expected, actual);
         }
@@ -307,15 +307,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = profile.Username.ToUpper();
-
-            Assert.IsTrue(validator.CanEdit(profile));
-        }
-
-        [Test]
-        public void CanEdit_CanEditWithoutSpecifyingNewPassword()
-        {
-            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            profile.NewPassword = null;
 
             Assert.IsTrue(validator.CanEdit(profile));
         }
@@ -374,7 +365,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanEdit(new AccountEditView()));
+            Assert.IsFalse(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
         }
 
         [Test]
@@ -403,6 +394,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountView profile = ObjectFactory.CreateAccountView();
             profile.Password += "1";
+
             validator.CanDelete(profile);
 
             String expected = Validations.IncorrectPassword;

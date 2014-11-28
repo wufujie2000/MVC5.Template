@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsModelsView()
+        public void Index_ReturnsAccountViews()
         {
             service.GetViews().Returns(new[] { account }.AsQueryable());
 
@@ -53,8 +53,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             service.GetView<AccountView>("").Returns((AccountView)null);
+            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             Object expected = controller.RedirectToNotFound();

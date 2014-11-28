@@ -12,13 +12,9 @@ namespace MvcTemplate.Data.Core
 
         #region DbSets
 
-        #region Account
+        #region Administration
 
         protected DbSet<Account> Accounts { get; set; }
-
-        #endregion
-
-        #region Administration
 
         protected DbSet<Role> Roles { get; set; }
         protected DbSet<Privilege> Privileges { get; set; }

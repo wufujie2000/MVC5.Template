@@ -299,12 +299,14 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_LeavesCurrentPasswordAfterEditing()
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            String passhash = context.Set<Account>().Single().Passhash;
             profile.NewPassword = null;
             service.Edit(profile);
 
-            Account actual = context.Set<Account>().Single();
+            String actual = context.Set<Account>().Single().Passhash;
+            String expected = passhash;
 
-            Assert.IsTrue(hasher.Verify(profile.Password, actual.Passhash));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]

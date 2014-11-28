@@ -76,9 +76,8 @@ namespace MvcTemplate.Services
         public void Register(AccountView view)
         {
             Account account = UnitOfWork.To<Account>(view);
+            view.Email = account.Email = view.Email.ToLower();
             account.Passhash = hasher.HashPassword(view.Password);
-            account.Email = account.Email.ToLower();
-            view.Email = account.Email;
 
             UnitOfWork.Repository<Account>().Insert(account);
             UnitOfWork.Commit();
@@ -86,9 +85,8 @@ namespace MvcTemplate.Services
         public void Edit(ProfileEditView view)
         {
             Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
-            account.Email = view.Email.ToLower();
+            view.Email = account.Email = view.Email.ToLower();
             account.Username = view.Username;
-            view.Email = account.Email;
 
             if (!String.IsNullOrWhiteSpace(view.NewPassword))
                 account.Passhash = hasher.HashPassword(view.NewPassword);

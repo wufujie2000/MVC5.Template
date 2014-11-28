@@ -256,7 +256,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
-            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Username);
+            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.Username);
             String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.AreEqual(expected, actual);
@@ -265,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_GetsTitleFromExpressionRelation()
         {
-            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.RoleId);
+            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.RoleId);
             String expected = MvcTemplate.Resources.Views.RoleView.Titles.Id;
 
             Assert.AreEqual(expected, actual);
@@ -274,13 +274,13 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPropertyTitle_OnPropertyFromExpressionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle<AccountView, String>(profile => profile.Id));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.Id));
         }
 
         [Test]
         public void GetPropertyTitle_OnTypeFromExpressionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPropertyTitle<TestView, String>(model => model.Text));
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<TestView, String>(test => test.Text));
         }
 
         #endregion

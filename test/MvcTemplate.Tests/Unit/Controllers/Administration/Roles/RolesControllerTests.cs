@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsModelsView()
+        public void Index_ReturnsRoleViews()
         {
             service.GetViews().Returns(new[] { role }.AsQueryable());
 

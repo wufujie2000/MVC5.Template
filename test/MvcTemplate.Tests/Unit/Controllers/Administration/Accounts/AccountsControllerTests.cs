@@ -118,7 +118,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_EditsAccountView()
+        public void Edit_EditsAccount()
         {
             validator.CanEdit(accountEdit).Returns(true);
 

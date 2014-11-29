@@ -147,5 +147,13 @@ namespace MvcTemplate.Tests
                 Text = "Text" + instanceNumber
             };
         }
+        public static TestView CreateTestView(Int32 instanceNumber = 1)
+        {
+            return new TestView
+            {
+                Id = TestId + instanceNumber,
+                Text = "Text" + instanceNumber
+            };
+        }
     }
 }

@@ -3,8 +3,10 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 
@@ -36,8 +38,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Repository_UsesContextsRepository()
         {
-            IRepository<Account> actual = unitOfWork.Repository<Account>();
-            IRepository<Account> expected = context.Repository<Account>();
+            IRepository<TestModel> actual = unitOfWork.Repository<TestModel>();
+            IRepository<TestModel> expected = context.Repository<TestModel>();
 
             Assert.AreSame(expected, actual);
         }
@@ -49,19 +51,13 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void ToModel_ConvertsViewToModel()
         {
-            AccountView view = ObjectFactory.CreateAccountView();
+            TestView view = ObjectFactory.CreateTestView();
 
-            Account actual = unitOfWork.To<Account>(view);
-            Account expected = Mapper.Map<Account>(view);
+            TestModel actual = unitOfWork.To<TestModel>(view);
+            TestModel expected = Mapper.Map<TestModel>(view);
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Role, actual.Role);
+            Assert.AreEqual(expected.Text, actual.Text);
             Assert.AreEqual(expected.Id, actual.Id);
         }
 
@@ -72,19 +68,13 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void ToView_ConvertsModelToView()
         {
-            Account model = ObjectFactory.CreateAccount();
-            model.Role = ObjectFactory.CreateRole();
-            model.RoleId = model.Role.Id;
+            TestModel model = ObjectFactory.CreateTestModel();
 
-            AccountView actual = unitOfWork.To<AccountView>(model);
-            AccountView expected = Mapper.Map<AccountView>(model);
+            TestView actual = unitOfWork.To<TestView>(model);
+            TestView expected = Mapper.Map<TestView>(model);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Password, actual.Password);
-            Assert.AreEqual(expected.RoleName, actual.RoleName);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
+            Assert.AreEqual(expected.Text, actual.Text);
             Assert.AreEqual(expected.Id, actual.Id);
         }
 
@@ -95,16 +85,15 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            context.Set<Account>().RemoveRange(context.Set<Account>());
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
             context.SaveChanges();
 
-            Account model = ObjectFactory.CreateAccount();
-            context.Set<Account>().Add(model);
+            context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
 
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            CollectionAssert.IsEmpty(unitOfWork.Repository<Account>());
+            CollectionAssert.IsEmpty(unitOfWork.Repository<TestModel>());
         }
 
         #endregion
@@ -114,22 +103,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            Account expected = ObjectFactory.CreateAccount(2);
-            unitOfWork.Repository<Account>().Insert(expected);
+            TestModel expected = ObjectFactory.CreateTestModel(2);
+            unitOfWork.Repository<TestModel>().Insert(expected);
             unitOfWork.Commit();
 
-            Account actual = unitOfWork.Repository<Account>().GetById(expected.Id);
-            unitOfWork.Repository<Account>().Delete(expected.Id);
+            TestModel actual = unitOfWork.Repository<TestModel>().GetById(expected.Id);
+            unitOfWork.Repository<TestModel>().Delete(expected.Id);
             unitOfWork.Commit();
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Role, actual.Role);
+            Assert.AreEqual(expected.Text, actual.Text);
             Assert.AreEqual(expected.Id, actual.Id);
         }
 
@@ -147,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         {
             try
             {
-                unitOfWork.Repository<Account>().Insert(new Account());
+                unitOfWork.Repository<TestModel>().Insert(new TestModel { Text = new String('X', 513) });
                 unitOfWork.Commit();
             }
             catch

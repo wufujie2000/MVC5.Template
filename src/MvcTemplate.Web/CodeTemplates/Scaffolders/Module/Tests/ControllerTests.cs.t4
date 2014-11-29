@@ -173,7 +173,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Test]
-        public void Edit_Edits<#= Model.View #>()
+        public void Edit_Edits<#= Model.Model #>()
         {
             validator.CanEdit(<#= Model.ModelName #>).Returns(true);
 

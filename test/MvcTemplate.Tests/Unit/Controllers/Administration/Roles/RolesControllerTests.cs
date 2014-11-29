@@ -200,7 +200,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_EditsRoleView()
+        public void Edit_EditsRole()
         {
             validator.CanEdit(role).Returns(true);
 

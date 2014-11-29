@@ -240,6 +240,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNull(actual.RecoveryToken);
             Assert.IsNull(actual.RoleId);
+            Assert.IsNull(actual.Role);
         }
 
         [Test]

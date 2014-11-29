@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Edit_EditsProfileIfCanEdit()
+        public void Edit_EditsProfile()
         {
             service.AccountExists(accountId).Returns(true);
             validator.CanEdit(profile).Returns(true);

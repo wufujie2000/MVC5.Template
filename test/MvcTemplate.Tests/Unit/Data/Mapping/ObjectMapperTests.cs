@@ -43,9 +43,11 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.IsNull(actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.RecoveryToken);
             Assert.IsNull(actual.Passhash);
             Assert.IsNull(actual.Role);
         }
@@ -75,9 +77,12 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.IsNull(actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(expected.RoleId, actual.RoleId);
             Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.RecoveryToken);
             Assert.IsNull(actual.Passhash);
+            Assert.IsNull(actual.Email);
             Assert.IsNull(actual.Role);
         }
 
@@ -103,8 +108,10 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Username, actual.Username);
+            Assert.IsNull(actual.RecoveryTokenExpirationDate);
             Assert.AreEqual(expected.Email, actual.Email);
             Assert.AreEqual(expected.Id, actual.Id);
+            Assert.IsNull(actual.RecoveryToken);
             Assert.IsNull(actual.Passhash);
             Assert.IsNull(actual.RoleId);
             Assert.IsNull(actual.Role);

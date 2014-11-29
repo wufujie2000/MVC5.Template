@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 Assert.AreEqual(expected.Current.Id, actual.Current.Id);
             }
 
-            Assert.Inconclusive("Not all properties tested");
+            Assert.Fail("Not all properties tested");
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);
 
-            Assert.Inconclusive("Not all properties tested");
+            Assert.Fail("Not all properties tested");
         }
 
         #endregion
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);
 
-            Assert.Inconclusive("Not all properties tested");
+            Assert.Fail("Not all properties tested");
         }
 
         #endregion
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_Edits<#= Model.Model #>()
         {
             <#= Model.View #> expected = service.GetView(<#= Model.ModelName #>.Id);
-            Assert.Inconclusive("No update made");
+            Assert.Fail("No update made");
             service.Edit(expected);
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single();
@@ -108,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);
 
-            Assert.Inconclusive("Not all properties tested");
+            Assert.Fail("Not all properties tested");
         }
 
         #endregion

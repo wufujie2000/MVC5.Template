@@ -55,7 +55,7 @@ namespace <#= Model.ControllerTestNamespace #>
         {
             <#= Model.View #> actual = controller.Create().Model as <#= Model.View #>;
 
-            Assert.Inconclusive("No properties tested");
+            Assert.Fail("No properties tested");
         }
 
         #endregion

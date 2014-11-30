@@ -8,6 +8,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Required]
         public String Required { get; set; }
         public String NotRequired { get; set; }
+        public Int64 RequiredValue { get; set; }
+        public Int64? NotRequiredNullableValue { get; set; }
         public Decimal Number { get; set; }
         public DateTime? Date { get; set; }
 
@@ -23,6 +25,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         public BootstrapModel()
         {
+            NotRequiredNullableValue = 45877;
+            RequiredValue = 102055454454;
             NotRequired = "NotRequired";
             Required = "Required";
             Date = DateTime.Now;
@@ -35,7 +39,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             {
                 Date = new DateTime(2011, 01, 01, 1, 1, 1),
                 NotRequired = "NotRequiredRelation",
+                NotRequiredNullableValue = 5411,
                 Required = "RequiredRelation",
+                RequiredValue = 1020554544,
                 Editable = "NotRelation",
                 EditableTrue = "TRelation",
                 EditableFalse = "FRelation",

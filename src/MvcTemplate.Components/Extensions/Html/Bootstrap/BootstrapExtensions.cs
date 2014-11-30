@@ -136,21 +136,6 @@ namespace MvcTemplate.Components.Extensions.Html
             return dropdown;
         }
 
-        private static Boolean IsRequired(this LambdaExpression expression)
-        {
-            MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression.");
-
-            return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
-        }
-        private static MvcHtmlString Wrap(MvcHtmlString content, String cssClass)
-        {
-            TagBuilder wrapper = new TagBuilder("div");
-            wrapper.InnerHtml = content.ToString();
-            wrapper.AddCssClass(cssClass.Trim());
-
-            return new MvcHtmlString(wrapper.ToString());
-        }
 
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
@@ -166,6 +151,32 @@ namespace MvcTemplate.Components.Extensions.Html
             if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
 
             return htmlAttributes;
+        }
+        private static MvcHtmlString Wrap(MvcHtmlString content, String cssClass)
+        {
+            TagBuilder wrapper = new TagBuilder("div");
+            wrapper.InnerHtml = content.ToString();
+            wrapper.AddCssClass(cssClass.Trim());
+
+            return new MvcHtmlString(wrapper.ToString());
+        }
+        private static Boolean IsRequired(this LambdaExpression expression)
+        {
+            MemberExpression memberExpression = expression.Body as MemberExpression;
+            if (memberExpression == null)
+                throw new InvalidOperationException("Expression must be a member expression.");
+
+            if (!AllowsNullValues(expression.ReturnType))
+                return true;
+
+            return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
+        }
+        private static Boolean AllowsNullValues(Type type)
+        {
+            if (type.IsValueType)
+                return Nullable.GetUnderlyingType(type) != null;
+            
+            return true;
         }
     }
 }

@@ -153,9 +153,39 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
+        public void FormLabelFor_FormsRequiredLabelOnValueTypes()
+        {
+            Expression<Func<BootstrapModel, Int64>> expression = (exp) => exp.Relation.RequiredValue;
+
+            String actual = html.FormLabelFor(expression).ToString();
+            String expected = String.Format(
+                "<label class=\"{0}\" for=\"{1}\">" +
+                    "<span class=\"required\"> *</span>" +
+                "</label>",
+                BootstrapExtensions.LabelClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void FormLabelFor_FormsNotRequiredLabel()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
+
+            String actual = html.FormLabelFor(expression).ToString();
+            String expected = String.Format(
+                "<label class=\"{0}\" for=\"{1}\"></label>",
+                BootstrapExtensions.LabelClass,
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
+        {
+            Expression<Func<BootstrapModel, Int64?>> expression = (exp) => exp.Relation.NotRequiredNullableValue;
 
             String actual = html.FormLabelFor(expression).ToString();
             String expected = String.Format(

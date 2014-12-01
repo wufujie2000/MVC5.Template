@@ -400,6 +400,20 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Login(String username)
 
         [Test]
+        public void Login_IsCaseInsensitive()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username.ToUpper());
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+
+            String actual = ticket.Name;
+            String expected = accountId;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
         public void Login_CreatesPersistentCookie()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();

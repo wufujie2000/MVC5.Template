@@ -376,13 +376,21 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #endregion
 
-        #region Method: CanDelete(AccountView view)
+        #region Method: CanDelete(ProfileDeleteView view)
+
+        [Test]
+        public void CanEdit_CanNotDeleteWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.IsFalse(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
+        }
 
         [Test]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
+            ProfileDeleteView profile = ObjectFactory.CreateProfileDeleteView();
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
-            AccountView profile = ObjectFactory.CreateAccountView();
             profile.Password += "1";
 
             Assert.IsFalse(validator.CanDelete(profile));
@@ -391,8 +399,8 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
         {
+            ProfileDeleteView profile = ObjectFactory.CreateProfileDeleteView();
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
-            AccountView profile = ObjectFactory.CreateAccountView();
             profile.Password += "1";
 
             validator.CanDelete(profile);
@@ -404,9 +412,9 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanDelete_CanDeleteValidAccountView()
+        public void CanDelete_CanDeleteValidProfileDeleteView()
         {
-            Assert.IsTrue(validator.CanDelete(ObjectFactory.CreateAccountView()));
+            Assert.IsTrue(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
         }
 
         #endregion

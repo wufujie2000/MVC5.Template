@@ -252,6 +252,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProfileDeleteView\Titles.Designer.cs">
+      <DependentUpon>Titles.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\ProfileDeleteView\Titles.lt.Designer.cs">
+      <DependentUpon>Titles.lt.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\ProfileEditView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -456,6 +466,14 @@
     <EmbeddedResource Include="Shared\Validations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProfileDeleteView\Titles.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProfileDeleteView\Titles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ProfileEditView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

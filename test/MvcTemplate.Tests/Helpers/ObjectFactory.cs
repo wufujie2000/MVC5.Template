@@ -37,6 +37,7 @@ namespace MvcTemplate.Tests
                 Password = "Password1"
             };
         }
+
         public static ProfileEditView CreateProfileEditView(Int32 instanceNumber = 1)
         {
             return new ProfileEditView
@@ -48,25 +49,15 @@ namespace MvcTemplate.Tests
                 Password = "Password1"
             };
         }
-        public static AccountEditView CreateAccountEditView(Int32 instanceNumber = 1)
+        public static ProfileDeleteView CreateProfileDeleteView(Int32 instanceNumber = 1)
         {
-            return new AccountEditView
+            return new ProfileDeleteView
             {
                 Id = TestId + instanceNumber,
-                Username = "Username" + TestId + instanceNumber,
-                RoleName = "Name" + TestId + instanceNumber,
-                RoleId = TestId + instanceNumber,
-            };
-        }
-        public static AccountLoginView CreateAccountLoginView(Int32 instanceNumber = 1)
-        {
-            return new AccountLoginView
-            {
-                Id = TestId + instanceNumber,
-                Username = "Username" + TestId + instanceNumber,
                 Password = "Password1"
             };
         }
+
         public static AccountRecoveryView CreateAccountRecoveryView(Int32 instanceNumber = 1)
         {
             return new AccountRecoveryView
@@ -83,6 +74,25 @@ namespace MvcTemplate.Tests
 
                 Token = TestId + instanceNumber,
                 NewPassword = "NewPassword1"
+            };
+        }
+        public static AccountLoginView CreateAccountLoginView(Int32 instanceNumber = 1)
+        {
+            return new AccountLoginView
+            {
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
+                Password = "Password1"
+            };
+        }
+        public static AccountEditView CreateAccountEditView(Int32 instanceNumber = 1)
+        {
+            return new AccountEditView
+            {
+                Id = TestId + instanceNumber,
+                Username = "Username" + TestId + instanceNumber,
+                RoleName = "Name" + TestId + instanceNumber,
+                RoleId = TestId + instanceNumber,
             };
         }
 

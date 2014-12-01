@@ -16,10 +16,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class ProfileControllerTests
     {
+        private ProfileDeleteView profileDelete;
         private ProfileController controller;
+        private ProfileEditView profileEdit;
         private IAccountValidator validator;
         private IAccountService service;
-        private ProfileEditView profile;
         private AccountView account;
         private String accountId;
 
@@ -30,7 +31,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
 
-            profile = new ProfileEditView();
+            profileDelete = new ProfileDeleteView();
+            profileEdit = new ProfileEditView();
             account = new AccountView();
 
             controller = new ProfileController(service, validator);
@@ -83,20 +85,20 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Edit_EditsProfile()
         {
             service.AccountExists(accountId).Returns(true);
-            validator.CanEdit(profile).Returns(true);
+            validator.CanEdit(profileEdit).Returns(true);
 
-            controller.Edit(profile);
+            controller.Edit(profileEdit);
 
-            service.Received().Edit(profile);
+            service.Received().Edit(profileEdit);
         }
 
         [Test]
         public void Edit_AddsProfileUpdatedMessage()
         {
             service.AccountExists(accountId).Returns(true);
-            validator.CanEdit(profile).Returns(true);
+            validator.CanEdit(profileEdit).Returns(true);
 
-            controller.Edit(profile);
+            controller.Edit(profileEdit);
             Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
@@ -108,20 +110,20 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Edit_DoesNotEditProfileIfCanNotEdit()
         {
             service.AccountExists(accountId).Returns(true);
-            validator.CanEdit(profile).Returns(false);
+            validator.CanEdit(profileEdit).Returns(false);
 
-            controller.Edit(profile);
+            controller.Edit(profileEdit);
 
-            service.DidNotReceive().Edit(profile);
+            service.DidNotReceive().Edit(profileEdit);
         }
 
         [Test]
         public void Edit_ReturnsSameModel()
         {
             service.AccountExists(accountId).Returns(true);
-            validator.CanEdit(profile).Returns(false);
+            validator.CanEdit(profileEdit).Returns(false);
 
-            Assert.AreSame(profile, (controller.Edit(profile) as ViewResult).Model);
+            Assert.AreSame(profileEdit, (controller.Edit(profileEdit) as ViewResult).Model);
         }
 
         #endregion
@@ -171,7 +173,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service.AccountExists(accountId).Returns(false);
 
-            RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
@@ -180,10 +182,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
         {
+            validator.CanDelete(profileDelete).Returns(false);
             service.AccountExists(accountId).Returns(true);
-            validator.CanDelete(account).Returns(false);
 
-            controller.DeleteConfirmed(account);
+            controller.DeleteConfirmed(profileDelete);
             Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
@@ -194,10 +196,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
         {
+            validator.CanDelete(profileDelete).Returns(false);
             service.AccountExists(accountId).Returns(true);
-            validator.CanDelete(account).Returns(false);
 
-            Object model = (controller.DeleteConfirmed(account) as ViewResult).Model;
+            Object model = (controller.DeleteConfirmed(profileDelete) as ViewResult).Model;
 
             Assert.IsNull(model);
         }
@@ -205,10 +207,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void DeleteConfirmed_DeletesProfileIfCanDelete()
         {
+            validator.CanDelete(profileDelete).Returns(true);
             service.AccountExists(accountId).Returns(true);
-            validator.CanDelete(account).Returns(true);
 
-            controller.DeleteConfirmed(account);
+            controller.DeleteConfirmed(profileDelete);
 
             service.Received().Delete(accountId);
         }
@@ -216,10 +218,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
+            validator.CanDelete(profileDelete).Returns(true);
             service.AccountExists(accountId).Returns(true);
-            validator.CanDelete(account).Returns(true);
 
-            RedirectToRouteResult actual = controller.DeleteConfirmed(account) as RedirectToRouteResult;
+            RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);

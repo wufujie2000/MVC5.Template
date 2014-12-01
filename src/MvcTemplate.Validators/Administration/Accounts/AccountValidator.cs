@@ -45,6 +45,7 @@ namespace MvcTemplate.Validators
 
             return isValid;
         }
+
         public Boolean CanEdit(ProfileEditView view)
         {
             Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, view.Username);
@@ -58,9 +59,12 @@ namespace MvcTemplate.Validators
         {
             return ModelState.IsValid;
         }
-        public Boolean CanDelete(AccountView view)
+        public Boolean CanDelete(ProfileDeleteView view)
         {
-            return IsCorrectPassword(view.Password);
+            Boolean isValid = IsCorrectPassword(view.Password);
+            isValid &= ModelState.IsValid;
+
+            return isValid;
         }
 
         private Boolean IsUniqueUsername(String accountId, String username)

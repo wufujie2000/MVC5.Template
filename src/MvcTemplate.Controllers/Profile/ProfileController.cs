@@ -55,7 +55,7 @@ namespace MvcTemplate.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(AccountView profile)
+        public ActionResult DeleteConfirmed(ProfileDeleteView profile)
         {
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();

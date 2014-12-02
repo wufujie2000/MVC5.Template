@@ -49,8 +49,8 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void AuditLog_SetsAction()
         {
-            String expected = HttpContext.Current.User.Identity.Name;
-            String actual = new AuditLog("Action", null, null, null).AccountId;
+            String actual = new AuditLog("Action", null, null, null).Action;
+            String expected = "Action";
 
             Assert.AreEqual(expected, actual);
         }

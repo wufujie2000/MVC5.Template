@@ -431,6 +431,7 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Login(account.Username);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+
             String expected = account.Id;
             String actual = ticket.Name;
 

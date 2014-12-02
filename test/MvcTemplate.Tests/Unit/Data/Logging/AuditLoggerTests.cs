@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Data.Core;
-using MvcTemplate.Data.Logging;
+﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
@@ -16,8 +15,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     [TestFixture]
     public class AuditLoggerTests
     {
-        private AContext dataContext;
-        private AContext context;
+        private TestingContext dataContext;
+        private TestingContext context;
 
         private DbEntityEntry<BaseModel> entry;
         private AuditLogger logger;
@@ -69,6 +68,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
         {
             entry.State = EntityState.Modified;
+
+            LoggableEntity entity = new LoggableEntity(entry);
+            logger.Log(new[] { entry });
+            logger.Save();
 
             CollectionAssert.IsEmpty(context.Set<AuditLog>());
         }

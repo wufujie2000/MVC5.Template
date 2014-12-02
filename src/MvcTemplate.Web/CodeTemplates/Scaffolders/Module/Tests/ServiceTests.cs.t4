@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Services
     {
         private <#= Model.Service #> service;
         private <#= Model.Model #> <#= Model.ModelName #>;
-        private Context context;
+        private TestingContext context;
 
         [SetUp]
         public void SetUp()

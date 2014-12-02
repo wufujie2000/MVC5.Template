@@ -36,9 +36,10 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         #region Method: RegisterServices()
 
         [Test]
-        [TestCase(typeof(ILogger), typeof(Logger))]
         [TestCase(typeof(AContext), typeof(Context))]
         [TestCase(typeof(IUnitOfWork), typeof(UnitOfWork))]
+
+        [TestCase(typeof(ILogger), typeof(Logger))]
         [TestCase(typeof(IAuditLogger), typeof(AuditLogger))]
 
         [TestCase(typeof(IHasher), typeof(BCrypter))]

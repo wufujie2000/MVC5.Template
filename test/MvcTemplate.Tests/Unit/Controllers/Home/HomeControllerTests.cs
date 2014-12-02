@@ -38,6 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual(2, actual.RouteValues.Count);
         }
 
         [Test]
@@ -86,6 +87,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
+            Assert.AreEqual(2, actual.RouteValues.Count);
         }
 
         [Test]

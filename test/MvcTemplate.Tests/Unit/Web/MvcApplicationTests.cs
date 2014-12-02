@@ -206,9 +206,7 @@ namespace MvcTemplate.Tests.Unit.Web
         public void RegisterGlobalizationProvider_RegistersGlobalizationProvider()
         {
             IGlobalizationProvider globalization = Substitute.For<IGlobalizationProvider>();
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
-            resolver.GetService<IGlobalizationProvider>().Returns(globalization);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IGlobalizationProvider>().Returns(globalization);
 
             application = Substitute.ForPartsOf<MvcApplication>();
             application.RegisterGlobalizationProvider();
@@ -267,10 +265,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterSiteMapProvider_RegistersSiteMapProvider()
         {
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
             IMvcSiteMapProvider siteMap = Substitute.For<IMvcSiteMapProvider>();
-            resolver.GetService<IMvcSiteMapProvider>().Returns(siteMap);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IMvcSiteMapProvider>().Returns(siteMap);
 
             application = Substitute.ForPartsOf<MvcApplication>();
             application.RegisterSiteMapProvider();
@@ -289,9 +285,7 @@ namespace MvcTemplate.Tests.Unit.Web
         public void RegisterAuthorization_RegistersAuthorization()
         {
             IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
-            resolver.GetService<IAuthorizationProvider>().Returns(provider);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(provider);
 
             application.RegisterAuthorization();
 
@@ -305,9 +299,7 @@ namespace MvcTemplate.Tests.Unit.Web
         public void RegisterAuthorization_RefreshesAuthorizationProvider()
         {
             IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
-            resolver.GetService<IAuthorizationProvider>().Returns(provider);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(provider);
 
             application.RegisterAuthorization();
 
@@ -391,10 +383,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterFilters_RegistersExceptionFilter()
         {
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
             IExceptionFilter filter = Substitute.For<IExceptionFilter>();
-            resolver.GetService<IExceptionFilter>().Returns(filter);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IExceptionFilter>().Returns(filter);
 
             application.RegisterFilters();
 
@@ -411,10 +401,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterBundles_RegistersBundles()
         {
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
             IBundleConfig bundleConfig = Substitute.For<IBundleConfig>();
-            resolver.GetService<IBundleConfig>().Returns(bundleConfig);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IBundleConfig>().Returns(bundleConfig);
 
             application.RegisterBundles();
 
@@ -438,10 +426,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterRoute_RegistersLowercaseUrls()
         {
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
-            resolver.GetService<IRouteConfig>().Returns(routeConfig);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);
 
             application.RegisterRoute();
 
@@ -451,10 +437,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Test]
         public void RegisterRoute_RegistersRoute()
         {
-            IDependencyResolver resolver = Substitute.For<IDependencyResolver>();
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
-            resolver.GetService<IRouteConfig>().Returns(routeConfig);
-            DependencyResolver.SetResolver(resolver);
+            DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);
 
             application.RegisterRoute();
 

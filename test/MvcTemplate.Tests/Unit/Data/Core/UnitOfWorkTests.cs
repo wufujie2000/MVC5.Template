@@ -15,9 +15,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
     [TestFixture]
     public class UnitOfWorkTests
     {
+        private TestingContext context;
         private UnitOfWork unitOfWork;
         private IAuditLogger logger;
-        private AContext context;
 
         [SetUp]
         public void SetUp()

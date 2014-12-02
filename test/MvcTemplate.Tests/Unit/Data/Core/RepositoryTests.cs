@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
     public class RepositoryTests
     {
         private Repository<TestModel> repository;
-        private AContext context;
+        private TestingContext context;
 
         [SetUp]
         public void SetUp()

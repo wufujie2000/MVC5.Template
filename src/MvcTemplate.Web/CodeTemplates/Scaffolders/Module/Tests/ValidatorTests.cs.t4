@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Validators
     public class <#= Model.Validator #>Tests
     {
         private <#= Model.Validator #> validator;
-        private Context context;
+        private TestingContext context;
 
         [SetUp]
         public void SetUp()

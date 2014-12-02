@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Logging;
-using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using NUnit.Framework;
@@ -12,7 +11,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
     [TestFixture]
     public class LoggerTests
     {
-        private AContext context;
+        private TestingContext context;
         private Logger logger;
 
         [SetUp]

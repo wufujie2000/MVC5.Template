@@ -357,7 +357,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ActionResult expected = controller.RedirectToLocal("/");
             ActionResult actual = controller.Login("/");
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ActionResult expected = controller.RedirectToLocal("/");
             ActionResult actual = controller.Login(null, "/");
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]
@@ -419,7 +419,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ActionResult actual = controller.Login(accountLogin, "/");
             ActionResult expected = controller.RedirectToLocal("/");
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion

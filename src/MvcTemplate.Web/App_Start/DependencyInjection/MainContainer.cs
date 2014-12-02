@@ -17,9 +17,10 @@ namespace MvcTemplate.Web.DependencyInjection
     {
         public virtual void RegisterServices()
         {
-            Register<ILogger, Logger>();
             Register<AContext, Context>();
             Register<IUnitOfWork, UnitOfWork>();
+
+            Register<ILogger, Logger>();
             Register<IAuditLogger, AuditLogger>();
 
             Register<IHasher, BCrypter>();

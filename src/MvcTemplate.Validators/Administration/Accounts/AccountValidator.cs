@@ -98,8 +98,8 @@ namespace MvcTemplate.Validators
         {
             String passhash = UnitOfWork
                 .Repository<Account>()
-                .Where(acc => acc.Username.ToLower() == username.ToLower())
-                .Select(acc => acc.Passhash)
+                .Where(account => account.Username.ToLower() == username.ToLower())
+                .Select(account => account.Passhash)
                 .SingleOrDefault();
 
             return IsCorrectPassword(password, passhash);

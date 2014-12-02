@@ -175,7 +175,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             if (type.IsValueType)
                 return Nullable.GetUnderlyingType(type) != null;
-            
+
             return true;
         }
     }

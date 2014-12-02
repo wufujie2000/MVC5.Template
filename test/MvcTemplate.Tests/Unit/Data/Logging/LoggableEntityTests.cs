@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Data.Core;
-using MvcTemplate.Data.Logging;
+﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     public class LoggableEntityTests
     {
         private DbEntityEntry<BaseModel> entry;
-        private AContext context;
+        private TestingContext context;
         private Role model;
 
         [SetUp]

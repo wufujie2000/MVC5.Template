@@ -20,6 +20,33 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
             modelState = new ModelStateDictionary();
         }
 
+        #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
+
+        [Test]
+        public void AddModelError_AddsModelExceptionKey()
+        {
+            modelState.AddModelError(expression, new Exception());
+
+            String expected = ExpressionHelper.GetExpressionText(expression);
+            String actual = modelState.Single().Key;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AddModelError_AddsModelException()
+        {
+            Exception exception = new Exception();
+            modelState.AddModelError(expression, exception);
+
+            Exception actual = modelState.Single().Value.Errors.Single().Exception;
+            Exception expected = exception;
+
+            Assert.AreSame(expected, actual);
+        }
+
+        #endregion
+
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
 
         [Test]
@@ -46,12 +73,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
 
         #endregion
 
-        #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
+        #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String format, Object[] args)
 
         [Test]
-        public void AddModelError_AddsModelExceptionKey()
+        public void AddModelError_Format_AddsModelErrorKey()
         {
-            modelState.AddModelError(expression, new Exception());
+            modelState.AddModelError(expression, "Test {0}", "error");
 
             String expected = ExpressionHelper.GetExpressionText(expression);
             String actual = modelState.Single().Key;
@@ -60,15 +87,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         }
 
         [Test]
-        public void AddModelError_AddsModelException()
+        public void AddModelError_Format_AddsFormattedModelErrorMessage()
         {
-            Exception exception = new Exception();
-            modelState.AddModelError(expression, exception);
+            modelState.AddModelError(expression, "Test {0}", "error");
 
-            Exception actual = modelState.Single().Value.Errors.Single().Exception;
-            Exception expected = exception;
+            String actual = modelState.Single().Value.Errors.Single().ErrorMessage;
+            String expected = "Test error";
 
-            Assert.AreSame(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

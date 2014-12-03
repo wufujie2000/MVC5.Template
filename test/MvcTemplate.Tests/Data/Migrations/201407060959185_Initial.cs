@@ -77,11 +77,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Changes = c.String(nullable: false),
                         CreationDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
-                .Index(t => t.AccountId)
-                .Index(t => t.Action)
-                .Index(t => t.EntityName)
-                .Index(t => t.EntityId);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.Logs",
@@ -92,8 +88,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Message = c.String(nullable: false),
                         CreationDate = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
-                .Index(t => t.AccountId);
+                .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
                 "dbo.TestModels",
@@ -112,11 +107,6 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropIndex("dbo.Logs", new[] { "AccountId" });
-            DropIndex("dbo.AuditLogs", new[] { "EntityId" });
-            DropIndex("dbo.AuditLogs", new[] { "EntityName" });
-            DropIndex("dbo.AuditLogs", new[] { "Action" });
-            DropIndex("dbo.AuditLogs", new[] { "AccountId" });
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
             DropIndex("dbo.Roles", new[] { "Name" });

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Web;
 
 namespace MvcTemplate.Objects
 {
     public class Log : BaseModel
     {
-        [Index]
         [StringLength(128)]
         public String AccountId { get; set; }
 

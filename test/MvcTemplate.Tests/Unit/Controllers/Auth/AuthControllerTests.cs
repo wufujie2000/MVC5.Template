@@ -388,13 +388,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Login_ReturnsNullModelIfCanNotLogin()
+        public void Login_ReturnsSameModelIfCanNotLogin()
         {
             validator.CanLogin(accountLogin).Returns(false);
 
-            Object model = (controller.Login(accountLogin, null) as ViewResult).Model;
+            Object actual = (controller.Login(accountLogin, null) as ViewResult).Model;
+            Object expected = accountLogin;
 
-            Assert.IsNull(model);
+            Assert.AreSame(expected, actual);
         }
 
         [Test]

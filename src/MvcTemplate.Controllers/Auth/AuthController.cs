@@ -114,7 +114,7 @@ namespace MvcTemplate.Controllers
                 return RedirectToLocal(returnUrl);
 
             if (!Validator.CanLogin(account))
-                return View();
+                return View(account);
 
             Service.Login(account.Username);
 

@@ -19,22 +19,14 @@ namespace MvcTemplate.Data.Mapping
             Mapper.CreateMap<AccountView, Account>();
 
             Mapper.CreateMap<Account, AccountEditView>();
-            Mapper.CreateMap<AccountEditView, Account>();
 
             Mapper.CreateMap<Account, ProfileEditView>();
-            Mapper.CreateMap<ProfileEditView, Account>();
         }
 
         private static void MapRoles()
         {
             Mapper.CreateMap<Role, RoleView>();
             Mapper.CreateMap<RoleView, Role>();
-
-            Mapper.CreateMap<Privilege, PrivilegeView>();
-            Mapper.CreateMap<PrivilegeView, Privilege>();
-
-            Mapper.CreateMap<RolePrivilege, RolePrivilegeView>();
-            Mapper.CreateMap<RolePrivilegeView, RolePrivilege>();
         }
 
         #endregion

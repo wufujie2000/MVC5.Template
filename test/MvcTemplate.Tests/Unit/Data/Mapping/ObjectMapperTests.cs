@@ -70,23 +70,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
         }
 
         [Test]
-        public void MapAccounts_MapsAccountEditViewToAccount()
-        {
-            AccountEditView expected = ObjectFactory.CreateAccountEditView();
-            Account actual = Mapper.Map<Account>(expected);
-
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsNull(actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.RecoveryToken);
-            Assert.IsNull(actual.Passhash);
-            Assert.IsNull(actual.Email);
-            Assert.IsNull(actual.Role);
-        }
-
-        [Test]
         public void MapAccounts_MapsAccountToProfileEditView()
         {
             Account expected = ObjectFactory.CreateAccount();
@@ -98,23 +81,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNull(actual.NewPassword);
             Assert.IsNull(actual.Password);
-        }
-
-        [Test]
-        public void MapAccounts_MapsProfileEditViewToAccount()
-        {
-            ProfileEditView expected = ObjectFactory.CreateProfileEditView();
-            Account actual = Mapper.Map<Account>(expected);
-
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsNull(actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.RecoveryToken);
-            Assert.IsNull(actual.Passhash);
-            Assert.IsNull(actual.RoleId);
-            Assert.IsNull(actual.Role);
         }
 
         #endregion
@@ -143,77 +109,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.Id, actual.Id);
             Assert.IsNull(actual.RolePrivileges);
-        }
-
-        [Test]
-        public void MapRoles_MapsRolePrivilegeToRolePrivilegeView()
-        {
-            RolePrivilege model = ObjectFactory.CreateRolePrivilege();
-            model.Privilege = ObjectFactory.CreatePrivilege();
-            model.Role = ObjectFactory.CreateRole();
-            model.PrivilegeId = model.Privilege.Id;
-            model.RoleId = model.Role.Id;
-
-            RolePrivilegeView actual = Mapper.Map<RolePrivilegeView>(model);
-            RolePrivilege expected = model;
-
-            Assert.AreEqual(expected.Privilege.CreationDate, actual.Privilege.CreationDate);
-            Assert.AreEqual(expected.Privilege.Controller, actual.Privilege.Controller);
-            Assert.AreEqual(expected.Privilege.Action, actual.Privilege.Action);
-            Assert.AreEqual(expected.Privilege.Area, actual.Privilege.Area);
-            Assert.AreEqual(expected.Privilege.Id, actual.Privilege.Id);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.PrivilegeId, actual.PrivilegeId);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Id, actual.Id);
-        }
-
-        [Test]
-        public void MapRoles_MapsRolePrivilegeViewToRolePrivilege()
-        {
-            RolePrivilegeView view = ObjectFactory.CreateRolePrivilegeView();
-            view.Privilege = ObjectFactory.CreatePrivilegeView();
-            view.PrivilegeId = view.Privilege.Id;
-
-            RolePrivilege actual = Mapper.Map<RolePrivilege>(view);
-            RolePrivilegeView expected = view;
-
-            Assert.AreEqual(expected.Privilege.CreationDate, actual.Privilege.CreationDate);
-            Assert.AreEqual(expected.Privilege.Controller, actual.Privilege.Controller);
-            Assert.AreEqual(expected.Privilege.Action, actual.Privilege.Action);
-            Assert.AreEqual(expected.Privilege.Area, actual.Privilege.Area);
-            Assert.AreEqual(expected.Privilege.Id, actual.Privilege.Id);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.PrivilegeId, actual.PrivilegeId);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.Role);
-        }
-
-        [Test]
-        public void MapRoles_MapsPrivilegeToPrivilegeView()
-        {
-            Privilege expected = ObjectFactory.CreatePrivilege();
-            PrivilegeView actual = Mapper.Map<PrivilegeView>(expected);
-
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Controller, actual.Controller);
-            Assert.AreEqual(expected.Action, actual.Action);
-            Assert.AreEqual(expected.Area, actual.Area);
-            Assert.AreEqual(expected.Id, actual.Id);
-        }
-
-        [Test]
-        public void MapRoles_MapsPrivilegeViewToPrivilege()
-        {
-            PrivilegeView expected = ObjectFactory.CreatePrivilegeView();
-            Privilege actual = Mapper.Map<Privilege>(expected);
-
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Controller, actual.Controller);
-            Assert.AreEqual(expected.Action, actual.Action);
-            Assert.AreEqual(expected.Area, actual.Area);
-            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         #endregion

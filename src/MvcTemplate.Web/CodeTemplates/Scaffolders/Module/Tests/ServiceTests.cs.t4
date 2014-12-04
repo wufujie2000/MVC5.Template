@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Services
             <#= Model.View #> expected = new <#= Model.View #>();
             service.Create(expected);
 
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single(model => model.Id == expected.Id);
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single(model => model.Id == expected.Id);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -99,11 +99,14 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Edit_Edits<#= Model.Model #>()
         {
-            <#= Model.View #> expected = service.GetView(<#= Model.ModelName #>.Id);
+            <#= Model.Model #> <#= Model.ModelName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
+            <#= Model.View #> view = service.GetView(<#= Model.ModelName #>.Id);
             Assert.Fail("No update made");
-            service.Edit(expected);
+            
+            service.Edit(view);
 
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().Single();
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
+            <#= Model.Model #> expected = <#= Model.ModelName #>;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);

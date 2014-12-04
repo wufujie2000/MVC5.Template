@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -24,7 +25,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context = new TestingContext();
             repository = new Repository<TestModel>(context);
 
-            TearDownData();
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
+            context.SaveChanges();
         }
 
         [TearDown]
@@ -69,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Property: Provider
 
         [Test]
-        public void Provider_IsContextSetsProvider()
+        public void Provider_IsDbSetsProvider()
         {
             IQueryProvider expected = (context.Set<TestModel>() as IQueryable).Provider;
             IQueryProvider actual = (repository as IQueryable).Provider;
@@ -88,10 +90,12 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().Add(testModel);
             context.SaveChanges();
 
-            TestModel expected = context.Set<TestModel>().Single();
+            TestModel expected = context.Set<TestModel>().AsNoTracking().Single();
             TestModel actual = repository.GetById(testModel.Id);
 
-            Assert.AreSame(expected, actual);
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
         }
 
         [Test]
@@ -122,17 +126,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: Insert(TModel model)
 
         [Test]
-        public void Insert_InsertsModel()
+        public void Insert_AddsModelToDbSet()
         {
-            repository.Insert(ObjectFactory.CreateTestModel());
-            context.SaveChanges();
+            TestModel model = ObjectFactory.CreateTestModel();
+            repository.Insert(model);
 
-            TestModel actual = context.Set<TestModel>().Single();
-            TestModel expected = repository.Single();
+            TestModel actual = context.Set<TestModel>().Local.Single();
+            TestModel expected = model;
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(EntityState.Added, context.Entry<TestModel>(model).State);
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -140,47 +143,46 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: Update(TModel model)
 
         [Test]
-        public void Update_UpdatesAttachedModel()
+        public void Update_UpdatesNotAttachedModel()
         {
-            TestModel expected = ObjectFactory.CreateTestModel();
-            context.Set<TestModel>().Add(expected);
-            context.SaveChanges();
+            TestModel model = ObjectFactory.CreateTestModel();
+            model.Text += "Test";
 
-            expected.Text += "Test";
-            repository.Update(expected);
-            context.SaveChanges();
+            repository.Update(model);
 
-            TestModel actual = context.Set<TestModel>().Single();
+            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(model);
+            TestModel expected = model;
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.AreEqual(EntityState.Modified, actual.State);
+            Assert.AreEqual(expected.Text, actual.Entity.Text);
+            Assert.AreEqual(expected.Id, actual.Entity.Id);
         }
 
         [Test]
-        public void Update_UpdatesNotAttachedModel()
+        public void Update_UpdatesAttachedModel()
         {
-            TestModel expected = ObjectFactory.CreateTestModel();
-            context.Set<TestModel>().Add(expected);
-            context.SaveChanges();
+            TestModel attachedModel = ObjectFactory.CreateTestModel();
+            TestModel editedModel = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(attachedModel);
+            editedModel.Text += "Test";
 
-            expected.Text += "Test";
-            context = new TestingContext();
-            repository = new Repository<TestModel>(context);
-            repository.Update(expected);
-            context.SaveChanges();
+            repository.Update(editedModel);
 
-            TestModel actual = context.Set<TestModel>().Single();
+            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(attachedModel);
+            TestModel expected = editedModel;
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.AreEqual(EntityState.Modified, actual.State);
+            Assert.AreEqual(expected.Text, actual.Entity.Text);
+            Assert.AreEqual(expected.Id, actual.Entity.Id);
         }
 
         [Test]
         public void Update_DoesNotModifyCreationDate()
         {
             TestModel model = ObjectFactory.CreateTestModel();
+
             repository.Update(model);
 
             Assert.IsFalse(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
@@ -193,11 +195,11 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Delete_DeletesModelById()
         {
-            TestModel expected = ObjectFactory.CreateTestModel();
-            repository.Insert(expected);
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
-            repository.Delete(expected.Id);
+            repository.Delete(model.Id);
             context.SaveChanges();
 
             CollectionAssert.IsEmpty(context.Set<TestModel>());
@@ -229,16 +231,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerable actual = repository;
 
             CollectionAssert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
-        #region Test helpers
-
-        private void TearDownData()
-        {
-            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
-            context.SaveChanges();
         }
 
         #endregion

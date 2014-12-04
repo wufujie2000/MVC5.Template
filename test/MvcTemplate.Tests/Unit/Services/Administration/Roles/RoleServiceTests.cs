@@ -222,9 +222,10 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Create_CreatesRole()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
+
             service.Create(roleView);
 
-            Role actual = context.Set<Role>().SingleOrDefault();
+            Role actual = context.Set<Role>().AsNoTracking().SingleOrDefault();
             RoleView expected = roleView;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -239,12 +240,12 @@ namespace MvcTemplate.Tests.Unit.Services
             context.Set<Privilege>().AddRange(privileges);
             context.SaveChanges();
 
-            RoleView roleView = CreateRoleView();
-            service.Create(roleView);
+            service.Create(CreateRoleView());
 
             IEnumerable expected = privileges.Select(privilege => privilege.Id);
             IEnumerable actual = context
                 .Set<Role>()
+                .AsNoTracking()
                 .Single()
                 .RolePrivileges
                 .Select(role => role.PrivilegeId);
@@ -265,9 +266,10 @@ namespace MvcTemplate.Tests.Unit.Services
 
             RoleView roleView = Mapper.Map<RoleView>(role);
             roleView.Name += "EditedName";
+
             service.Edit(roleView);
 
-            Role actual = context.Set<Role>().Single();
+            Role actual = context.Set<Role>().AsNoTracking().Single();
             RoleView expected = roleView;
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -287,7 +289,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Edit(roleView);
 
-            IEnumerable actual = context.Set<RolePrivilege>().Select(rolePriv => rolePriv.PrivilegeId);
+            IEnumerable actual = context.Set<RolePrivilege>().AsNoTracking().Select(rolePriv => rolePriv.PrivilegeId);
             IEnumerable expected = CreateRoleView().PrivilegesTree.SelectedIds.Skip(1);
 
             CollectionAssert.AreEquivalent(expected, actual);
@@ -353,6 +355,14 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Test helpers
 
+        private RoleView CreateRoleView()
+        {
+            Role role = CreateRoleWithPrivileges();
+            RoleView roleView = Mapper.Map<RoleView>(role);
+            roleView.PrivilegesTree = CreatePrivilegesTree(role);
+
+            return roleView;
+        }
         private Role CreateRoleWithPrivileges()
         {
             String[] actions = { "Edit", "Delete" };
@@ -377,14 +387,6 @@ namespace MvcTemplate.Tests.Unit.Services
                 }
 
             return role;
-        }
-        private RoleView CreateRoleView()
-        {
-            Role role = CreateRoleWithPrivileges();
-            RoleView roleView = Mapper.Map<RoleView>(role);
-            roleView.PrivilegesTree = CreatePrivilegesTree(role);
-
-            return roleView;
         }
         private JsTree CreatePrivilegesTree(Role role)
         {

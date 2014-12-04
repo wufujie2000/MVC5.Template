@@ -1,6 +1,8 @@
 ﻿using MvcTemplate.Components.Logging;
+using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -11,38 +13,31 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
     [TestFixture]
     public class LoggerTests
     {
-        private TestingContext context;
-        private Logger logger;
-
-        [SetUp]
-        public void SetUp()
-        {
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            context = new TestingContext();
-            logger = new Logger(context);
-
-            context.Set<Log>().RemoveRange(context.Set<Log>());
-            context.SaveChanges();
-        }
-
-        [TearDown]
+        [TestFixtureTearDown]
         public void TearDown()
         {
             HttpContext.Current = null;
-            context.Dispose();
         }
 
         #region Method: Log(String message)
 
         [Test]
-        public void Log_LogsMessage()
+        public void Log_Logs()
         {
-            logger.Log(new String('L', 10000));
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<Log>().RemoveRange(context.Set<Log>());
+                context.SaveChanges();
 
-            String actual = context.Set<Log>().Single().Message;
-            String expected = new String('L', 10000);
+                new Logger(context).Log(new String('L', 10000));
+            
+                Log expected = new Log(new String('L', 10000));
+                Log actual = context.Set<Log>().Single();
 
-            Assert.AreEqual(expected, actual);
+                Assert.AreEqual(expected.AccountId, actual.AccountId);
+                Assert.AreEqual(expected.Message, actual.Message);
+            }
         }
 
         #endregion
@@ -50,10 +45,26 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Method: Dispose()
 
         [Test]
+        public void Dispose_DisposesContext()
+        {
+            AContext context = Substitute.For<AContext>();
+            Logger logger = new Logger(context);
+
+            logger.Dispose();
+
+            context.Received().Dispose();
+        }
+
+        [Test]
         public void Dispose_CanBeCalledMultipleTimes()
         {
+            AContext context = Substitute.For<AContext>();
+            Logger logger = new Logger(context);
+
             logger.Dispose();
             logger.Dispose();
+
+            context.Received(1).Dispose();
         }
 
         #endregion

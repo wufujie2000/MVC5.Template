@@ -103,7 +103,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            TestModel expected = ObjectFactory.CreateTestModel(2);
+            TestModel expected = ObjectFactory.CreateTestModel("2");
             unitOfWork.Repository<TestModel>().Insert(expected);
             unitOfWork.Commit();
 

@@ -233,7 +233,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanRegister_CanRegisterValidAccount()
         {
-            Assert.IsTrue(validator.CanRegister(ObjectFactory.CreateAccountView(2)));
+            Assert.IsTrue(validator.CanRegister(ObjectFactory.CreateAccountView("2")));
         }
 
         #endregion
@@ -275,7 +275,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
-            Account takenAccount = ObjectFactory.CreateAccount(2);
+            Account takenAccount = ObjectFactory.CreateAccount("2");
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
@@ -288,7 +288,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenUsername()
         {
-            Account takenAccount = ObjectFactory.CreateAccount(2);
+            Account takenAccount = ObjectFactory.CreateAccount("2");
             context.Set<Account>().Add(takenAccount);
             context.SaveChanges();
 
@@ -314,7 +314,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount(2);
+            Account takenEmailAccount = ObjectFactory.CreateAccount("2");
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 
@@ -327,7 +327,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount(2);
+            Account takenEmailAccount = ObjectFactory.CreateAccount("2");
             context.Set<Account>().Add(takenEmailAccount);
             context.SaveChanges();
 

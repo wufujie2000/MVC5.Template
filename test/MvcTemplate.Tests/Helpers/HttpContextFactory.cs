@@ -28,8 +28,8 @@ namespace MvcTemplate.Tests
             MapRoutes();
 
             IIdentity identity = Substitute.For<IIdentity>();
-            identity.Name.Returns(ObjectFactory.TestId + 1);
             identity.IsAuthenticated.Returns(true);
+            identity.Name.Returns("1");
 
             httpContext.User = Substitute.For<IPrincipal>();
             httpContext.User.Identity.Returns(identity);

@@ -145,8 +145,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void GetViews_GetsRoleViews()
         {
-            context.Set<Role>().Add(ObjectFactory.CreateRole(1));
-            context.Set<Role>().Add(ObjectFactory.CreateRole(2));
+            context.Set<Role>().Add(ObjectFactory.CreateRole("1"));
+            context.Set<Role>().Add(ObjectFactory.CreateRole("2"));
             context.SaveChanges();
 
             IEnumerator<RoleView> actual = service.GetViews().GetEnumerator();
@@ -365,7 +365,7 @@ namespace MvcTemplate.Tests.Unit.Services
             foreach (String controller in controllers)
                 foreach (String action in actions)
                 {
-                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
                     rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
                     rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;

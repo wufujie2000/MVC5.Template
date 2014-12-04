@@ -227,7 +227,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Register_CreatesAccount()
         {
-            AccountView expected = ObjectFactory.CreateAccountView(2);
+            AccountView expected = ObjectFactory.CreateAccountView("2");
             service.Register(expected);
 
             Account actual = context.Set<Account>().Single(model => model.Id == expected.Id);
@@ -246,7 +246,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Register_LowersEmailValue()
         {
-            AccountView view = ObjectFactory.CreateAccountView(2);
+            AccountView view = ObjectFactory.CreateAccountView("2");
             String expected = view.Email.ToLower();
             view.Email = view.Email.ToUpper();
 
@@ -330,7 +330,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Test]
         public void Edit_EditsAccount()
         {
-            Role role = ObjectFactory.CreateRole(2);
+            Role role = ObjectFactory.CreateRole("2");
             context.Set<Role>().Add(role);
             context.SaveChanges();
 

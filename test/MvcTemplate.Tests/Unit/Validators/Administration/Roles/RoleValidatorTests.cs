@@ -138,7 +138,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             foreach (String controller in controllers)
                 foreach (String action in actions)
                 {
-                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privNumber++);
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
                     rolePrivilege.Privilege = new Privilege { Area = "Administration", Controller = controller, Action = action };
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;
                     rolePrivilege.PrivilegeId = rolePrivilege.Id;

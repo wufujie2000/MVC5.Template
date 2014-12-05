@@ -32,7 +32,7 @@ namespace MvcTemplate.Components.Datalists
             if (column != null && column.Relation != null)
                 return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
 
-            return ResourceProvider.GetPropertyTitle(property.ReflectedType, property.Name);
+            return ResourceProvider.GetPropertyTitle(typeof(TView), property.Name) ?? "";
         }
         protected override String GetColumnCssClass(PropertyInfo property)
         {

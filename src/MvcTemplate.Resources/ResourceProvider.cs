@@ -92,7 +92,7 @@ namespace MvcTemplate.Resources
             MemberExpression expression = property.Body as MemberExpression;
             if (expression == null) throw new InvalidOperationException("Expression must be a member expression.");
 
-            return GetPropertyTitle(expression.Member.ReflectedType, expression.Member.Name);
+            return GetPropertyTitle(typeof(TModel), expression.Member.Name);
         }
         public static String GetPropertyTitle(Type view, String property)
         {

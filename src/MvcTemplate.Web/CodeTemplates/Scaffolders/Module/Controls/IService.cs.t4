@@ -2,13 +2,13 @@
 <#@ Output Extension="cs" #>
 using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MvcTemplate.Services
 {
     public interface <#= Model.IService #> : IService
     {
-        IEnumerable<<#= Model.View #>> GetViews();
+        IQueryable<<#= Model.View #>> GetViews();
         <#= Model.View #> GetView(String id);
 
         void Create(<#= Model.View #> view);

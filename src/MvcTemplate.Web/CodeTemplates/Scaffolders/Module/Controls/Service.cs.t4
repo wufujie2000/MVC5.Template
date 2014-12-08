@@ -3,7 +3,6 @@
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MvcTemplate.Services
@@ -15,7 +14,7 @@ namespace MvcTemplate.Services
         {
         }
 
-        public IEnumerable<<#= Model.View #>> GetViews()
+        public IQueryable<<#= Model.View #>> GetViews()
         {
             return UnitOfWork
                 .Repository<<#= Model.Model #>>()

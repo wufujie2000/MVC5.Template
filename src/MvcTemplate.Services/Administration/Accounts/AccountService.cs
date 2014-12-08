@@ -4,7 +4,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,7 +32,7 @@ namespace MvcTemplate.Services
             return UnitOfWork.Repository<Account>().Any(account => account.Id == accountId);
         }
 
-        public IEnumerable<AccountView> GetViews()
+        public IQueryable<AccountView> GetViews()
         {
             return UnitOfWork
                 .Repository<Account>()

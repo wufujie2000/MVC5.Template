@@ -1,6 +1,6 @@
 using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MvcTemplate.Services
 {
@@ -9,7 +9,7 @@ namespace MvcTemplate.Services
         Boolean IsLoggedIn();
         Boolean AccountExists(String accountId);
 
-        IEnumerable<AccountView> GetViews();
+        IQueryable<AccountView> GetViews();
         TView GetView<TView>(String id) where TView : BaseView;
 
         void Recover(AccountRecoveryView view);

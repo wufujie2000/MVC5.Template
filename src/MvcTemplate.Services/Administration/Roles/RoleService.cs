@@ -44,7 +44,7 @@ namespace MvcTemplate.Services
             }
         }
 
-        public IEnumerable<RoleView> GetViews()
+        public IQueryable<RoleView> GetViews()
         {
             return UnitOfWork
                 .Repository<Role>()

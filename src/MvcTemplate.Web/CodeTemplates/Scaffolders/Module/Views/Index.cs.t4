@@ -1,6 +1,6 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cshtml" #>
-@model IEnumerable<<#= Model.View #>>
+@model IQueryable<<#= Model.View #>>
 
 @using (Html.TableWidgetBox(LinkAction.Create))
 {

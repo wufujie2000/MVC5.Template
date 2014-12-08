@@ -1,6 +1,6 @@
 ﻿using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MvcTemplate.Services
 {
@@ -8,7 +8,7 @@ namespace MvcTemplate.Services
     {
         void SeedPrivilegesTree(RoleView view);
 
-        IEnumerable<RoleView> GetViews();
+        IQueryable<RoleView> GetViews();
         RoleView GetView(String id);
 
         void Create(RoleView view);

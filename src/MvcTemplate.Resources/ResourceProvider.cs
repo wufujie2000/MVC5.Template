@@ -43,7 +43,7 @@ namespace MvcTemplate.Resources
 
         public static String GetCurrentFormTitle()
         {
-            String key = String.Format("{0}{1}", CurrentArea, CurrentController);
+            String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
 
             return GetResource("MvcTemplate.Resources.Form.Titles", key);
         }
@@ -72,14 +72,19 @@ namespace MvcTemplate.Resources
         {
             return GetResource("MvcTemplate.Resources.Privilege.Area.Titles", area);
         }
-        public static String GetPrivilegeActionTitle(String action)
+        public static String GetPrivilegeControllerTitle(String area, String controller)
         {
-            return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", action);
+            String key = String.Format("{0}{1}", area, controller);
+
+            return GetResource("MvcTemplate.Resources.Privilege.Controller.Titles", key);
         }
-        public static String GetPrivilegeControllerTitle(String controller)
+        public static String GetPrivilegeActionTitle(String area, String controller, String action)
         {
-            return GetResource("MvcTemplate.Resources.Privilege.Controller.Titles", controller);
+            String key = String.Format("{0}{1}{2}", area, controller, action);
+
+            return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", key);
         }
+
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
             String key = String.Format("{0}{1}{2}", area, controller, action);

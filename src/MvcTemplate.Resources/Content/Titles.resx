@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdministrationAccountsCreate" xml:space="preserve">
-    <value>Account creation</value>
-  </data>
-  <data name="AdministrationAccountsDelete" xml:space="preserve">
-    <value>Account deletion</value>
-  </data>
   <data name="AdministrationAccountsDetails" xml:space="preserve">
     <value>Account details</value>
   </data>

@@ -32,7 +32,11 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetCurrentFormTitle_GetsTitle()
         {
-            String expected = Titles.AdministrationAccounts;
+            routeValues["area"] = "Administration";
+            routeValues["controller"] = "Accounts";
+            routeValues["action"] = "Details";
+
+            String expected = Titles.AdministrationAccountsDetails;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -42,9 +46,10 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetCurrentFormTitle_GetsTitleWithoutArea()
         {
             routeValues["controller"] = "Profile";
+            routeValues["action"] = "Edit";
             routeValues["area"] = null;
 
-            String expected = Titles.Profile;
+            String expected = Titles.ProfileEdit;
             String actual = ResourceProvider.GetCurrentFormTitle();
 
             Assert.AreEqual(expected, actual);
@@ -178,13 +183,13 @@ namespace MvcTemplate.Tests.Unit.Resources
 
         #endregion
 
-        #region Static method: GetPrivilegeControllerTitle(String controller)
+        #region Static method: GetPrivilegeControllerTitle(String area, String controller)
 
         [Test]
         public void GetPrivilegeControllerTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.Privilege.Controller.Titles.Roles;
-            String actual = ResourceProvider.GetPrivilegeControllerTitle("Roles");
+            String expected = MvcTemplate.Resources.Privilege.Controller.Titles.AdministrationRoles;
+            String actual = ResourceProvider.GetPrivilegeControllerTitle("Administration", "Roles");
 
             Assert.AreEqual(expected, actual);
         }
@@ -192,18 +197,18 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPrivilegeControllerTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPrivilegeControllerTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetPrivilegeControllerTitle("", ""));
         }
 
         #endregion
 
-        #region Static method: GetPrivilegeActionTitle(String controller)
+        #region Static method: GetPrivilegeActionTitle(String area, String controller, String action)
 
         [Test]
         public void GetPrivilegeActionTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.Privilege.Action.Titles.Index;
-            String actual = ResourceProvider.GetPrivilegeActionTitle("Index");
+            String expected = MvcTemplate.Resources.Privilege.Action.Titles.AdministrationAccountsIndex;
+            String actual = ResourceProvider.GetPrivilegeActionTitle("Administration", "Accounts", "Index");
 
             Assert.AreEqual(expected, actual);
         }
@@ -211,7 +216,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetPrivilegeActionTitle_OnActionNotFoundReturnsNull()
         {
-            Assert.IsNull(ResourceProvider.GetPrivilegeActionTitle("Test"));
+            Assert.IsNull(ResourceProvider.GetPrivilegeActionTitle("", "", ""));
         }
 
         #endregion

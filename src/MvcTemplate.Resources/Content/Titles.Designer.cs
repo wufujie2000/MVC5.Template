@@ -61,24 +61,6 @@ namespace MvcTemplate.Resources.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account creation.
-        /// </summary>
-        public static string AdministrationAccountsCreate {
-            get {
-                return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Account deletion.
-        /// </summary>
-        public static string AdministrationAccountsDelete {
-            get {
-                return ResourceManager.GetString("AdministrationAccountsDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account details.
         /// </summary>
         public static string AdministrationAccountsDetails {

@@ -63,18 +63,18 @@ namespace MvcTemplate.Resources.Privilege.Controller {
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string Accounts {
+        public static string AdministrationAccounts {
             get {
-                return ResourceManager.GetString("Accounts", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
-        public static string Roles {
+        public static string AdministrationRoles {
             get {
-                return ResourceManager.GetString("Roles", resourceCulture);
+                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
             }
         }
     }

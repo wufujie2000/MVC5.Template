@@ -63,27 +63,72 @@ namespace MvcTemplate.Resources.Form {
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
-        public static string AdministrationAccounts {
+        public static string AdministrationAccountsDetails {
             get {
-                return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string AdministrationAccountsEdit {
+            get {
+                return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
-        public static string AdministrationRoles {
+        public static string AdministrationRolesCreate {
             get {
-                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
+                return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string AdministrationRolesDelete {
+            get {
+                return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string AdministrationRolesDetails {
+            get {
+                return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string AdministrationRolesEdit {
+            get {
+                return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        public static string Profile {
+        public static string ProfileDelete {
             get {
-                return ResourceManager.GetString("Profile", resourceCulture);
+                return ResourceManager.GetString("ProfileDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string ProfileEdit {
+            get {
+                return ResourceManager.GetString("ProfileEdit", resourceCulture);
             }
         }
     }

@@ -98,8 +98,8 @@ namespace MvcTemplate.Services
                 {
                     Id = privilege.Id,
                     Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Area, privilege.Controller),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Area, privilege.Controller, privilege.Action)
                 })
                 .OrderBy(privilege => privilege.Area ?? privilege.Controller);
         }

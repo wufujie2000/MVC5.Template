@@ -404,8 +404,8 @@ namespace MvcTemplate.Tests.Unit.Services
                 {
                     Id = privilege.Id,
                     Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Action),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Controller)
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Area, privilege.Controller),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Area, privilege.Controller, privilege.Action)
                 });
 
             foreach (IGrouping<String, Privilege> areaPrivilege in allPrivileges.GroupBy(privilege => privilege.Area).OrderBy(privilege => privilege.Key ?? privilege.FirstOrDefault().Controller))

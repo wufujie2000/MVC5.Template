@@ -117,19 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="Details" xml:space="preserve">
+  <data name="AdministrationAccountsDetails" xml:space="preserve">
     <value>Details</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+  <data name="AdministrationAccountsEdit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="Index" xml:space="preserve">
+  <data name="AdministrationAccountsIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="AdministrationRolesCreate" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="AdministrationRolesDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="AdministrationRolesDetails" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="AdministrationRolesEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="AdministrationRolesIndex" xml:space="preserve">
     <value>Index</value>
   </data>
 </root>

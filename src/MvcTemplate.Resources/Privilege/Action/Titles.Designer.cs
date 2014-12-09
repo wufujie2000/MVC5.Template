@@ -61,47 +61,74 @@ namespace MvcTemplate.Resources.Privilege.Action {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create.
-        /// </summary>
-        public static string Create {
-            get {
-                return ResourceManager.GetString("Create", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
-        public static string Details {
+        public static string AdministrationAccountsDetails {
             get {
-                return ResourceManager.GetString("Details", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        public static string Edit {
+        public static string AdministrationAccountsEdit {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Index.
         /// </summary>
-        public static string Index {
+        public static string AdministrationAccountsIndex {
             get {
-                return ResourceManager.GetString("Index", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        public static string AdministrationRolesCreate {
+            get {
+                return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string AdministrationRolesDelete {
+            get {
+                return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string AdministrationRolesDetails {
+            get {
+                return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string AdministrationRolesEdit {
+            get {
+                return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        public static string AdministrationRolesIndex {
+            get {
+                return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
             }
         }
     }

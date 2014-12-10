@@ -30,9 +30,9 @@ namespace MvcTemplate.Components.Security
 
             return cache[accountId]
                 .Any(privilege =>
-                    String.Compare(privilege.Area, area, true) == 0 &&
-                    String.Compare(privilege.Action, action, true) == 0 &&
-                    String.Compare(privilege.Controller, controller, true) == 0);
+                    String.Equals(privilege.Area, area, StringComparison.OrdinalIgnoreCase) &&
+                    String.Equals(privilege.Action, action, StringComparison.OrdinalIgnoreCase) &&
+                    String.Equals(privilege.Controller, controller, StringComparison.OrdinalIgnoreCase));
         }
 
         public virtual void Refresh()

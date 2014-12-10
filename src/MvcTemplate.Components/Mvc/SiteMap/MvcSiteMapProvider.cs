@@ -57,9 +57,9 @@ namespace MvcTemplate.Components.Mvc
         {
             MvcSiteMapBreadcrumb breadcrumb = new MvcSiteMapBreadcrumb();
             MvcSiteMapNode currentNode = allNodes.SingleOrDefault(node =>
-                String.Compare(node.Controller, CurrentController, true) == 0 &&
-                String.Compare(node.Action, CurrentAction, true) == 0 &&
-                String.Compare(node.Area, CurrentArea, true) == 0);
+                String.Equals(node.Controller, CurrentController, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(node.Action, CurrentAction, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(node.Area, CurrentArea, StringComparison.OrdinalIgnoreCase));
 
             while (currentNode != null)
             {
@@ -107,7 +107,9 @@ namespace MvcTemplate.Components.Mvc
             authorizedMenu.Area = menu.Area;
 
             authorizedMenu.Submenus = GetAuthorizedMenus(menu.Children);
-            authorizedMenu.IsActive = String.Compare(menu.Area, CurrentArea, true) == 0 && String.Compare(menu.Controller, CurrentController, true) == 0;
+            authorizedMenu.IsActive =
+                String.Equals(menu.Area, CurrentArea, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(menu.Controller, CurrentController, StringComparison.OrdinalIgnoreCase);
             authorizedMenu.HasActiveSubMenu = authorizedMenu.Submenus.Any(submenu => submenu.IsActive || submenu.HasActiveSubMenu);
 
             return authorizedMenu;

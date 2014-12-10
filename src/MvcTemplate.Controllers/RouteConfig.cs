@@ -12,8 +12,8 @@ namespace MvcTemplate.Controllers
             routes
                 .MapRoute(
                     "DefaultMultilingual",
-                    "{language}/{controller}/{action}",
-                    new { controller = "Home", action = "Index" },
+                    "{language}/{controller}/{action}/{id}",
+                    new { controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "lt" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
@@ -21,8 +21,8 @@ namespace MvcTemplate.Controllers
             routes
                 .MapRoute(
                     "Default",
-                    "{controller}/{action}",
-                    new { language = "en", controller = "Home", action = "Index" },
+                    "{controller}/{action}/{id}",
+                    new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
                     new { language = "en" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;

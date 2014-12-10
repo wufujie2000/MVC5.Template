@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -41,8 +42,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Route actual = routes["DefaultMultilingual"] as Route;
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.AreEqual("{language}/{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual(false, actual.DataTokens["UseNamespaceFallback"]);
-            Assert.AreEqual("{language}/{controller}/{action}", actual.Url);
+            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
             Assert.AreEqual("lt", actual.Constraints["language"]);
             Assert.AreEqual("Index", actual.Defaults["action"]);
@@ -60,9 +62,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             CollectionAssert.AreEqual(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.AreEqual(false, actual.DataTokens["UseNamespaceFallback"]);
+            Assert.AreEqual(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.AreEqual("{controller}/{action}/{id}", actual.Url);
             Assert.AreEqual("Home", actual.Defaults["controller"]);
             Assert.AreEqual("en", actual.Constraints["language"]);
-            Assert.AreEqual("{controller}/{action}", actual.Url);
             Assert.AreEqual("Index", actual.Defaults["action"]);
             Assert.AreEqual("en", actual.Defaults["language"]);
             Assert.IsNull(actual.Defaults["area"]);

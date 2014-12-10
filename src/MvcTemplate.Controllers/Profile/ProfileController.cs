@@ -22,7 +22,7 @@ namespace MvcTemplate.Controllers
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            return View(Service.GetView<ProfileEditView>(CurrentAccountId));
+            return View(Service.Get<ProfileEditView>(CurrentAccountId));
         }
 
         [HttpPost]

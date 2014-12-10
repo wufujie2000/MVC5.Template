@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
                 context.SaveChanges();
 
                 new Logger(context).Log(new String('L', 10000));
-            
+
                 Log expected = new Log(new String('L', 10000));
                 Log actual = context.Set<Log>().Single();
 

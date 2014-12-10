@@ -314,12 +314,13 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_CanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount("2");
-            context.Set<Account>().Add(takenEmailAccount);
+            Account usedEmailAccount = ObjectFactory.CreateAccount("2");
+            context.Set<Account>().Add(usedEmailAccount);
+
             context.SaveChanges();
 
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            profile.Email = takenEmailAccount.Email;
+            profile.Email = usedEmailAccount.Email;
 
             Assert.IsFalse(validator.CanEdit(profile));
         }
@@ -327,12 +328,13 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Test]
         public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
         {
-            Account takenEmailAccount = ObjectFactory.CreateAccount("2");
-            context.Set<Account>().Add(takenEmailAccount);
+            Account usedEmailAccount = ObjectFactory.CreateAccount("2");
+            context.Set<Account>().Add(usedEmailAccount);
+
             context.SaveChanges();
 
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            profile.Email = takenEmailAccount.Email;
+            profile.Email = usedEmailAccount.Email;
             validator.CanEdit(profile);
 
             String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;

@@ -61,7 +61,7 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-mail address is already used..
+        ///   Looks up a localized string similar to E-mail address is already being used..
         /// </summary>
         public static string EmailIsAlreadyUsed {
             get {

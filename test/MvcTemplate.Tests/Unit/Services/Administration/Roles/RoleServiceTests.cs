@@ -154,7 +154,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<Role>()
                 .Project()
                 .To<RoleView>()
-                .OrderByDescending(view => view.CreationDate)
+                .OrderByDescending(role => role.CreationDate)
                 .GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -340,6 +340,26 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Test]
+        public void Delete_CascadesRolePrivileges()
+        {
+            RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
+            Privilege privilege = ObjectFactory.CreatePrivilege();
+            Role role = ObjectFactory.CreateRole();
+
+            rolePrivilege.PrivilegeId = privilege.Id;
+            rolePrivilege.Privilege = privilege;
+            rolePrivilege.RoleId = role.Id;
+            rolePrivilege.Role = role;
+
+            context.Set<RolePrivilege>().Add(rolePrivilege);
+            context.SaveChanges();
+
+            service.Delete(role.Id);
+
+            CollectionAssert.IsEmpty(context.Set<RolePrivilege>());
+        }
+
+        [Test]
         public void Delete_RefreshesAuthorizationProvider()
         {
             Role role = ObjectFactory.CreateRole();
@@ -355,39 +375,6 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Test helpers
 
-        private RoleView CreateRoleView()
-        {
-            Role role = CreateRoleWithPrivileges();
-            RoleView roleView = Mapper.Map<RoleView>(role);
-            roleView.PrivilegesTree = CreatePrivilegesTree(role);
-
-            return roleView;
-        }
-        private Role CreateRoleWithPrivileges()
-        {
-            String[] actions = { "Edit", "Delete" };
-            String[] controllers = { "Roles", "Profile" };
-
-            Int32 privNumber = 1;
-            Role role = ObjectFactory.CreateRole();
-            role.RolePrivileges = new List<RolePrivilege>();
-
-            foreach (String controller in controllers)
-                foreach (String action in actions)
-                {
-                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
-                    rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
-                    rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
-                    rolePrivilege.Privilege.Id = rolePrivilege.Id;
-                    rolePrivilege.PrivilegeId = rolePrivilege.Id;
-                    rolePrivilege.RoleId = role.Id;
-                    rolePrivilege.Role = role;
-
-                    role.RolePrivileges.Add(rolePrivilege);
-                }
-
-            return role;
-        }
         private JsTree CreatePrivilegesTree(Role role)
         {
             JsTree expectedTree = new JsTree();
@@ -428,6 +415,39 @@ namespace MvcTemplate.Tests.Unit.Services
             }
 
             return expectedTree;
+        }
+        private Role CreateRoleWithPrivileges()
+        {
+            String[] actions = { "Edit", "Delete" };
+            String[] controllers = { "Roles", "Profile" };
+
+            Int32 privNumber = 1;
+            Role role = ObjectFactory.CreateRole();
+            role.RolePrivileges = new List<RolePrivilege>();
+
+            foreach (String controller in controllers)
+                foreach (String action in actions)
+                {
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
+                    rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
+                    rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
+                    rolePrivilege.Privilege.Id = rolePrivilege.Id;
+                    rolePrivilege.PrivilegeId = rolePrivilege.Id;
+                    rolePrivilege.RoleId = role.Id;
+                    rolePrivilege.Role = role;
+
+                    role.RolePrivileges.Add(rolePrivilege);
+                }
+
+            return role;
+        }
+        private RoleView CreateRoleView()
+        {
+            Role role = CreateRoleWithPrivileges();
+            RoleView roleView = Mapper.Map<RoleView>(role);
+            roleView.PrivilegesTree = CreatePrivilegesTree(role);
+
+            return roleView;
         }
         private void TearDownData()
         {

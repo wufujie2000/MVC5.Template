@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests
                 Id = id,
                 Username = "Username" + id,
                 RoleName = "Name" + id,
-                RoleId = id,
+                RoleId = id
             };
         }
 

@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Role(DatalistFilter filter)
 
         [Test]
-        public void Roles_GetsRolesData()
+        public void Role_GetsRolesData()
         {
             controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());

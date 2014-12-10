@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanCreate_CanNotCreateWithAlreadyTakenRoleName()
+        public void CanCreate_CanNotCreateWithAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
@@ -56,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyTakenRoleName()
+        public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.CanCreate(roleView);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
-            String expected = Validations.RoleNameIsAlreadyTaken;
+            String expected = Validations.RoleNameIsAlreadyUsed;
 
             Assert.AreEqual(expected, actual);
         }
@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanEdit_CanNotEditToAlreadyTakenRoleName()
+        public void CanEdit_CanNotEditToAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Test]
-        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenRoleName()
+        public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
@@ -106,7 +106,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.CanEdit(roleView);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
-            String expected = Validations.RoleNameIsAlreadyTaken;
+            String expected = Validations.RoleNameIsAlreadyUsed;
 
             Assert.AreEqual(expected, actual);
         }

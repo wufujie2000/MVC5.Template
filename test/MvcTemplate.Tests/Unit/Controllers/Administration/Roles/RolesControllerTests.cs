@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsRoleViews()
         {
-            service.GetViews().Returns(new[] { role }.AsQueryable());
+            service.GetViews().Returns(new RoleView[0].AsQueryable());
 
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();

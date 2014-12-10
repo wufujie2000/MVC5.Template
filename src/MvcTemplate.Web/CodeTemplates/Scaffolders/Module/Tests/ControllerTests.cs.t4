@@ -38,7 +38,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Index_Returns<#= Model.View #>s()
         {
-            service.GetViews().Returns(new[] { <#= Model.ModelName #> }.AsQueryable());
+            service.GetViews().Returns(new <#= Model.View #>[0].AsQueryable());
 
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
@@ -108,7 +108,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((<#= Model.View #>)null);
+            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -121,7 +121,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Details_Returns<#= Model.View #>()
         {
-            service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Details(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
@@ -136,7 +136,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((<#= Model.View #>)null);
+            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -149,7 +149,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Edit_Returns<#= Model.View #>()
         {
-            service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Edit(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
@@ -201,7 +201,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((<#= Model.View #>)null);
+            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -214,7 +214,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Test]
         public void Delete_Returns<#= Model.View #>()
         {
-            service.GetView(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
             Object actual = (controller.Delete(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;

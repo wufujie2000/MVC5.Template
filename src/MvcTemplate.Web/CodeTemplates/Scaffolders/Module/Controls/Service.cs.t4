@@ -19,23 +19,23 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Repository<<#= Model.Model #>>()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(view => view.CreationDate);
+                .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate);
         }
-        public <#= Model.View #> GetView(String id)
+        public TView Get<TView>(String id) where TView : BaseView
         {
-            return UnitOfWork.Repository<<#= Model.Model #>>().GetById<<#= Model.View #>>(id);
+            return UnitOfWork.Repository<<#= Model.Model #>>().GetById<TView>(id);
         }
 
         public void Create(<#= Model.View #> view)
         {
-            <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
-            UnitOfWork.Repository<<#= Model.Model #>>().Insert(model);
+            <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
+            UnitOfWork.Repository<<#= Model.Model #>>().Insert(<#= Model.ModelName #>);
             UnitOfWork.Commit();
         }
         public void Edit(<#= Model.View #> view)
         {
-            <#= Model.Model #> model = UnitOfWork.To<<#= Model.Model #>>(view);
-            UnitOfWork.Repository<<#= Model.Model #>>().Update(model);
+            <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
+            UnitOfWork.Repository<<#= Model.Model #>>().Update(<#= Model.ModelName #>);
             UnitOfWork.Commit();
         }
         public void Delete(String id)

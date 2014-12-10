@@ -22,13 +22,13 @@ namespace MvcTemplate.Controllers.Administration
         [HttpGet]
         public ActionResult Details(String id)
         {
-            return NotEmptyView(Service.GetView<AccountView>(id));
+            return NotEmptyView(Service.Get<AccountView>(id));
         }
 
         [HttpGet]
         public ActionResult Edit(String id)
         {
-            return NotEmptyView(Service.GetView<AccountEditView>(id));
+            return NotEmptyView(Service.Get<AccountEditView>(id));
         }
 
         [HttpPost]

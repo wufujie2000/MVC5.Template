@@ -61,11 +61,11 @@ namespace MvcTemplate.Resources.Views.RoleView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role name is already taken..
+        ///   Looks up a localized string similar to Role name is already being used..
         /// </summary>
-        public static string RoleNameIsAlreadyTaken {
+        public static string RoleNameIsAlreadyUsed {
             get {
-                return ResourceManager.GetString("RoleNameIsAlreadyTaken", resourceCulture);
+                return ResourceManager.GetString("RoleNameIsAlreadyUsed", resourceCulture);
             }
         }
     }

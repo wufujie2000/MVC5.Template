@@ -117,14 +117,14 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: GetView<TView>(String id)
+        #region Method: Get<TView>(String id)
 
         [Test]
         public void GetView_GetsViewById()
         {
             Account account = context.Set<Account>().Single();
 
-            AccountView actual = service.GetView<AccountView>(accountId);
+            AccountView actual = service.Get<AccountView>(accountId);
             AccountView expected = Mapper.Map<AccountView>(account);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
@@ -391,7 +391,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Test]
-        public void Login_CreatesPersistentCookie()
+        public void Login_CreatesPersistentAuthenticationTicket()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
             service.Login(account.Username);
@@ -399,6 +399,20 @@ namespace MvcTemplate.Tests.Unit.Services
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
             Assert.IsTrue(ticket.IsPersistent);
+        }
+
+        [Test]
+        public void Login_SetAccountIdAsAuthenticationTicketValue()
+        {
+            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            service.Login(account.Username);
+
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
+
+            String expected = account.Id;
+            String actual = ticket.Name;
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

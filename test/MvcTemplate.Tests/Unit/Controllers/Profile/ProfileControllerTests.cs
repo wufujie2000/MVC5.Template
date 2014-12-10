@@ -58,10 +58,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Edit_ReturnsCurrentProfileEditView()
         {
-            service.GetView<ProfileEditView>(accountId).Returns(new ProfileEditView());
+            service.Get<ProfileEditView>(accountId).Returns(new ProfileEditView());
             service.AccountExists(accountId).Returns(true);
 
-            Object expected = service.GetView<ProfileEditView>(accountId);
+            Object expected = service.Get<ProfileEditView>(accountId);
             Object actual = (controller.Edit() as ViewResult).Model;
 
             Assert.AreSame(expected, actual);

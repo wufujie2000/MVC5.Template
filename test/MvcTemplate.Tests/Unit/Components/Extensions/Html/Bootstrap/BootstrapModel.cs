@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 Editable = "NotRelation",
                 EditableTrue = "TRelation",
                 EditableFalse = "FRelation",
-                Number = 1.6666M,
+                Number = 1.6666M
             };
         }
         private BootstrapModel(Boolean noInit)

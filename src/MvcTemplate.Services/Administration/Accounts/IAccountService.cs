@@ -10,7 +10,7 @@ namespace MvcTemplate.Services
         Boolean AccountExists(String accountId);
 
         IQueryable<AccountView> GetViews();
-        TView GetView<TView>(String id) where TView : BaseView;
+        TView Get<TView>(String id) where TView : BaseView;
 
         void Recover(AccountRecoveryView view);
         void Reset(AccountResetView view);

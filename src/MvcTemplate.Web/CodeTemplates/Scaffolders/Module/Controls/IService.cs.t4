@@ -9,7 +9,7 @@ namespace MvcTemplate.Services
     public interface <#= Model.IService #> : IService
     {
         IQueryable<<#= Model.View #>> GetViews();
-        <#= Model.View #> GetView(String id);
+        TView Get<TView>(String id) where TView : BaseView;
 
         void Create(<#= Model.View #> view);
         void Edit(<#= Model.View #> view);

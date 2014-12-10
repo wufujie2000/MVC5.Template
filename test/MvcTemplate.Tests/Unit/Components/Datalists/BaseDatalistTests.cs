@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public void GetColumnHeader_ReturnsRelationPropertyTitle()
         {
             PropertyInfo property = typeof(AllTypesView).GetProperty("Child");
-            
+
             String actual = datalist.BaseGetColumnHeader(property);
             String expected = "";
 

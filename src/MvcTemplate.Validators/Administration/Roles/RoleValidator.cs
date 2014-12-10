@@ -38,7 +38,7 @@ namespace MvcTemplate.Validators
                     role.Name.ToLower() == view.Name.ToLower());
 
             if (!isUnique)
-                ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyTaken);
+                ModelState.AddModelError<RoleView>(model => model.Name, Validations.RoleNameIsAlreadyUsed);
 
             return isUnique;
         }

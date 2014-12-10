@@ -60,13 +60,13 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: GetView(String id)
+        #region Method: Get<TView>(String id)
 
         [Test]
         public void GetView_GetsViewById()
         {
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
-            <#= Model.View #> actual = service.GetView(<#= Model.ModelName #>.Id);
+            <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
 
             Assert.AreEqual(expected.CreationDate, actual.CreationDate);
             Assert.AreEqual(expected.Id, actual.Id);
@@ -100,9 +100,9 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_Edits<#= Model.Model #>()
         {
             <#= Model.Model #> <#= Model.ModelName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
-            <#= Model.View #> view = service.GetView(<#= Model.ModelName #>.Id);
+            <#= Model.View #> view = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
             Assert.Fail("No update made");
-            
+
             service.Edit(view);
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single();

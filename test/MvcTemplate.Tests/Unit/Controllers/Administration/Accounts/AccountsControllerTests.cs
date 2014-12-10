@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Index_ReturnsAccountViews()
         {
-            service.GetViews().Returns(new[] { account }.AsQueryable());
+            service.GetViews().Returns(new AccountView[0].AsQueryable());
 
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView<AccountView>("").Returns((AccountView)null);
+            service.Get<AccountView>("").Returns((AccountView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Details_ReturnsAccountView()
         {
-            service.GetView<AccountView>(account.Id).Returns(account);
+            service.Get<AccountView>(account.Id).Returns(account);
 
             Object actual = (controller.Details(account.Id) as ViewResult).Model;
             Object expected = account;
@@ -82,7 +82,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            service.GetView<AccountView>("").Returns((AccountView)null);
+            service.Get<AccountView>("").Returns((AccountView)null);
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             Object expected = controller.RedirectToNotFound();
@@ -94,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Test]
         public void Edit_ReturnsAccountView()
         {
-            service.GetView<AccountEditView>(account.Id).Returns(accountEdit);
+            service.Get<AccountEditView>(account.Id).Returns(accountEdit);
 
             Object actual = (controller.Edit(account.Id) as ViewResult).Model;
             Object expected = accountEdit;

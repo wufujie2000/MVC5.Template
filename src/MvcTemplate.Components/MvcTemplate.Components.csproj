@@ -100,7 +100,6 @@
     <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
     <Compile Include="Extensions\Html\Bootstrap\HeaderExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeExtensions.cs" />
-    <Compile Include="Extensions\Net\SystemExtensions.cs" />
     <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />

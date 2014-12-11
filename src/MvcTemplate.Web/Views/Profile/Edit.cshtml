@@ -1,40 +1,64 @@
 ﻿@model ProfileEditView
 
-@using (Html.FormWidgetBox(LinkAction.Delete))
-{
-    using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        using (Html.FormGroup())
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="widget-title-icon fa fa-th-list"></span>
+        <h5>@ResourceProvider.GetCurrentFormTitle()</h5>
+        <div class="widget-title-buttons">@Html.WidgetButtons(LinkAction.Delete)</div>
+    </div>
+    <div class="widget-content">
+        @using (Html.BeginForm())
         {
-            @Html.FormLabelFor(model => model.Username)
-            @Html.FormTextBoxFor(model => model.Username)
-            @Html.FormValidationFor(model => model.Username)
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                    @Html.FormLabelFor(model => model.Username)
+                </div>
+                <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                    @Html.FormTextBoxFor(model => model.Username)
+                </div>
+                <div class="control-validation col-sm-12 col-md-12 col-lg-5">
+                    @Html.ValidationMessageFor(model => model.Username)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                    @Html.FormLabelFor(model => model.Password)
+                </div>
+                <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                    @Html.FormPasswordFor(model => model.Password)
+                </div>
+                <div class="control-validation col-sm-12 col-md-12 col-lg-5">
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                    @Html.FormLabelFor(model => model.NewPassword)
+                </div>
+                <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                    @Html.FormPasswordFor(model => model.NewPassword)
+                </div>
+                <div class="control-validation col-sm-12 col-md-12 col-lg-5">
+                    @Html.ValidationMessageFor(model => model.NewPassword)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                    @Html.FormLabelFor(model => model.Email)
+                </div>
+                <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                    @Html.FormTextBoxFor(model => model.Email)
+                </div>
+                <div class="control-validation col-sm-12 col-md-12 col-lg-5">
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-actions col-sm-12 col-md-12 col-lg-7">
+                    <input class="btn btn-primary" type="submit" value="@Resource.Submit" />
+                </div>
+            </div>
         }
-        using (Html.FormGroup())
-        {
-            @Html.FormLabelFor(model => model.Password)
-            @Html.FormPasswordFor(model => model.Password)
-            @Html.FormValidationFor(model => model.Password)
-        }
-        using (Html.FormGroup())
-        {
-            @Html.FormLabelFor(model => model.NewPassword)
-            @Html.FormPasswordFor(model => model.NewPassword)
-            @Html.FormValidationFor(model => model.NewPassword)
-        }
-        using (Html.FormGroup())
-        {
-            @Html.FormLabelFor(model => model.Email)
-            @Html.FormTextBoxFor(model => model.Email)
-            @Html.FormValidationFor(model => model.Email)
-        }
-        using (Html.FormGroup())
-        {
-            using (Html.FormActions())
-            {
-                @Html.Submit()
-            }
-        }
-    }
-}
+    </div>
+</div>

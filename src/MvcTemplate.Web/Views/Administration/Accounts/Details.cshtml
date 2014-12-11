@@ -1,23 +1,37 @@
 @model AccountView
 
-@using (Html.FormWidgetBox(LinkAction.Edit))
-{
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.Username)
-        @Html.FormTextBoxFor(model => model.Username)
-    }
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.Email)
-        @Html.FormTextBoxFor(model => model.Email)
-    }
-    using (Html.FormGroup())
-    {
-    }
-    using (Html.FormGroup())
-    {
-        @Html.FormLabelFor(model => model.RoleName)
-        @Html.FormTextBoxFor(model => model.RoleName)
-    }
-}
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="widget-title-icon fa fa-th-list"></span>
+        <h5>@ResourceProvider.GetCurrentFormTitle()</h5>
+        <div class="widget-title-buttons">@Html.WidgetButtons(LinkAction.Edit)</div>
+    </div>
+    <div class="widget-content">
+        <div class="form-group">
+            <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                @Html.FormLabelFor(model => model.Username)
+            </div>
+            <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                @Html.FormTextBoxFor(model => model.Username)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                @Html.FormLabelFor(model => model.Email)
+            </div>
+            <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                @Html.FormTextBoxFor(model => model.Email)
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+            <div class="control-label col-sm-12 col-md-3 col-lg-2">
+                @Html.FormLabelFor(model => model.RoleName)
+            </div>
+            <div class="control-content col-sm-12 col-md-9 col-lg-5">
+                @Html.FormTextBoxFor(model => model.RoleName)
+            </div>
+        </div>
+    </div>
+</div>

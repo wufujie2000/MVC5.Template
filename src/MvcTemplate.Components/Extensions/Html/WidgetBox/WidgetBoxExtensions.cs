@@ -8,20 +8,7 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class WidgetBoxExtensions
     {
-        public static WidgetBox TableWidgetBox(this HtmlHelper html, params LinkAction[] actions)
-        {
-            return html.WidgetBox("fa fa-th", ResourceProvider.GetCurrentTableTitle(), actions);
-        }
-        public static WidgetBox FormWidgetBox(this HtmlHelper html, params LinkAction[] actions)
-        {
-            return html.WidgetBox("fa fa-th-list", ResourceProvider.GetCurrentFormTitle(), actions);
-        }
-
-        private static WidgetBox WidgetBox(this HtmlHelper html, String iconClass, String title, params LinkAction[] actions)
-        {
-            return new WidgetBox(html.ViewContext.Writer, iconClass, title, FormTitleButtons(html, actions));
-        }
-        private static String FormTitleButtons(HtmlHelper html, LinkAction[] actions)
+        public static MvcHtmlString WidgetButtons(this HtmlHelper html, params LinkAction[] actions)
         {
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
@@ -71,7 +58,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 buttons += button;
             }
 
-            return buttons;
+            return new MvcHtmlString(buttons);
         }
     }
 }

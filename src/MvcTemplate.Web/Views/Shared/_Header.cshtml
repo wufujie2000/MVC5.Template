@@ -1,13 +1,40 @@
-﻿<div class="header">
+﻿@using MvcTemplate.Resources.Action
+
+<div class="header">
     <ul class="header-navigation btn-group">
         <li class="btn">
-            @Html.ProfileLink()
+            <a href="@Url.Action("Edit", "Profile", new { area = "" })">
+                <i class="fa fa-user"></i>
+                <span class="text">@Titles.Profile</span>
+            </a>
         </li>
-        <li class="btn dropdown">
-            @Html.LanguageLink()
-        </li>
+        @if (GlobalizationManager.Provider.Languages.Length > 1)
+        {
+            String query = (Request.QueryString.Count > 0) ? "?" + Request.QueryString : "";
+            <li class="btn dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">
+                    <i class="fa fa-globe"></i>
+                    <span class="text">@Titles.Language</span>
+                    <span class="caret"></span>
+                </a>
+                <ul role="menu" class="dropdown-menu">
+                    @foreach (Language language in GlobalizationManager.Provider.Languages)
+                    {
+                        <li>
+                            <a href="@(Url.Action(ViewContext.RouteData.Values["action"] as String, new { language = language.Abbrevation }) + query)">
+                                <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation))" alt="">
+                                @language.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
         <li class="btn">
-            @Html.LogoutLink()
+            <a href="@Url.Action("Logout", "Auth", new { area = "" })">
+                <i class="fa fa-share"></i>
+                <span class="text">@Titles.Logout</span>
+            </a>
         </li>
     </ul>
 </div>

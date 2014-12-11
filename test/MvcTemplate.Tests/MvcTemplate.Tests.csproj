@@ -207,14 +207,7 @@
     <Compile Include="Unit\Components\Alerts\AlertsContainerTests.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormGroupTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\InputGroupTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\FormWrapperTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\AuthExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\HeaderExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />

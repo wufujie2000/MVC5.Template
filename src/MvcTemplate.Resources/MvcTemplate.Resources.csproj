@@ -125,15 +125,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\Resources.lt.Designer.cs">
-      <DependentUpon>Resources.lt.resx</DependentUpon>
+    <Compile Include="Shared\Resource.lt.Designer.cs">
+      <DependentUpon>Resource.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Shared\Resources.Designer.cs">
+    <Compile Include="Shared\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="SiteMap\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -189,6 +189,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccountRecoveryView\Titles.lt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\AccountResetView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
@@ -366,13 +371,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Resources.lt.resx">
+    <EmbeddedResource Include="Shared\Resource.lt.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resource.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Resources.resx">
+    <EmbeddedResource Include="Shared\Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SiteMap\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -414,9 +419,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountRecoveryView\Titles.lt.resx" />
+    <EmbeddedResource Include="Views\AccountRecoveryView\Titles.lt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AccountRecoveryView\Titles.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AccountResetView\Titles.lt.resx">

@@ -92,16 +92,10 @@
     <Compile Include="Mvc\Providers\DataTypeValidatorProvider.cs" />
     <Compile Include="Mvc\Validators\NumberValidator.cs" />
     <Compile Include="Mvc\Adapters\RequiredAdapter.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\FormWrapper.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\AuthExtensions.cs" />
     <Compile Include="Extensions\Html\Bootstrap\BootstrapExtensions.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\FormGroup.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\InputGroup.cs" />
     <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
-    <Compile Include="Extensions\Html\Bootstrap\HeaderExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeExtensions.cs" />
     <Compile Include="Extensions\Html\LinkAction.cs" />
-    <Compile Include="Extensions\Html\WidgetBox\WidgetBox.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
     <Compile Include="Mvc\ViewEngines\ViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

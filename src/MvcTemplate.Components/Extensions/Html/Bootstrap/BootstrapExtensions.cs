@@ -1,7 +1,5 @@
-﻿using MvcTemplate.Components.Mvc;
-using MvcTemplate.Resources;
+﻿using MvcTemplate.Resources;
 using System;
-using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -14,42 +12,6 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class BootstrapExtensions
     {
-        public const String ValidationClass = "control-validation col-sm-12 col-md-12 col-lg-5";
-        public const String FormActionsClass = "form-actions col-sm-12 col-md-12 col-lg-7";
-        public const String ContentClass = "control-content col-sm-12 col-md-9 col-lg-5";
-        public const String LabelClass = "control-label col-sm-12 col-md-3 col-lg-2";
-
-        public static FormGroup FormGroup(this HtmlHelper html)
-        {
-            return new FormGroup(html.ViewContext.Writer);
-        }
-        public static InputGroup InputGroup(this HtmlHelper html)
-        {
-            return new InputGroup(html.ViewContext.Writer);
-        }
-        public static FormWrapper FormActions(this HtmlHelper html)
-        {
-            return new FormWrapper(html.ViewContext.Writer, FormActionsClass);
-        }
-        public static FormWrapper ContentGroup(this HtmlHelper html)
-        {
-            return new FormWrapper(html.ViewContext.Writer, ContentClass);
-        }
-
-        public static MvcHtmlString Submit(this HtmlHelper html)
-        {
-            return html.SubmitFor(Resources.Shared.Resources.Submit);
-        }
-        public static MvcHtmlString SubmitFor(this HtmlHelper html, String value)
-        {
-            TagBuilder submit = new TagBuilder("input");
-            submit.MergeAttribute("type", "submit");
-            submit.AddCssClass("btn btn-primary");
-            submit.MergeAttribute("value", value);
-
-            return new MvcHtmlString(submit.ToString(TagRenderMode.SelfClosing));
-        }
-
         public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             TagBuilder label = new TagBuilder("label");
@@ -64,7 +26,6 @@ namespace MvcTemplate.Components.Extensions.Html
 
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + label.InnerHtml;
-            label.AddCssClass(LabelClass);
 
             return new MvcHtmlString(label.ToString());
         }
@@ -84,7 +45,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control");
 
-            return Wrap(html.TextBoxFor(expression, format, attributes), ContentClass);
+            return html.TextBoxFor(expression, format, attributes);
         }
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
@@ -102,40 +63,8 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {
-            return Wrap(html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" }), ContentClass);
+            return html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" });
         }
-        public static MvcHtmlString FormValidationFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
-        {
-            return Wrap(html.ValidationMessageFor(expression), ValidationClass);
-        }
-
-        internal static TagBuilder FormLanguagesDropdown(HtmlHelper html)
-        {
-            RouteValueDictionary routeValues = new RouteValueDictionary(html.ViewContext.RouteData.Values);
-            NameValueCollection queryString = html.ViewContext.HttpContext.Request.QueryString;
-            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            String query = (queryString.Count > 0) ? "?" + queryString : "";
-            String action = routeValues["action"] as String;
-            TagBuilder dropdown = new TagBuilder("ul");
-            dropdown.MergeAttribute("role", "menu");
-            dropdown.AddCssClass("dropdown-menu");
-
-            foreach (Language language in GlobalizationManager.Provider.Languages)
-            {
-                String imageSrc = urlHelper.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation));
-                routeValues["language"] = language.Abbrevation;
-                TagBuilder languageItem = new TagBuilder("li");
-                languageItem.InnerHtml = String.Format(
-                    "<a href=\"{0}{1}\">{2}{3}</a>",
-                    urlHelper.Action(action, routeValues), query,
-                    String.Format("<img src=\"{0}\" alt=\"\" />", imageSrc), language.Name);
-
-                dropdown.InnerHtml += languageItem.ToString();
-            }
-
-            return dropdown;
-        }
-
 
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
@@ -151,14 +80,6 @@ namespace MvcTemplate.Components.Extensions.Html
             if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
 
             return htmlAttributes;
-        }
-        private static MvcHtmlString Wrap(MvcHtmlString content, String cssClass)
-        {
-            TagBuilder wrapper = new TagBuilder("div");
-            wrapper.InnerHtml = content.ToString();
-            wrapper.AddCssClass(cssClass.Trim());
-
-            return new MvcHtmlString(wrapper.ToString());
         }
         private static Boolean IsRequired(this LambdaExpression expression)
         {

@@ -1,4 +1,6 @@
-﻿@model AccountResetView
+﻿@using MvcTemplate.Resources.Views.AccountResetView
+
+@model AccountResetView
 
 <div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
 <div class="separator"></div>
@@ -9,13 +11,12 @@
 
     @Html.AntiForgeryToken()
     <div class="auth-content">
-        @using (Html.InputGroup())
-        {
-            @Html.AuthPasswordFor(model => model.NewPassword, autocomplete: false)
-        }
+        <div class="input-group">
+            <span class="fa fa-lock"></span>
+            @Html.PasswordFor(model => model.NewPassword, new { autocomplete = "off", placeholder = Titles.NewPassword })
+        </div>
     </div>
-
-    @Html.SubmitFor(MvcTemplate.Resources.Shared.Resources.Submit)
+    <input class="btn btn-primary" type="submit" value="@Resource.Submit" />
 }
 
 <div class="separator"></div>

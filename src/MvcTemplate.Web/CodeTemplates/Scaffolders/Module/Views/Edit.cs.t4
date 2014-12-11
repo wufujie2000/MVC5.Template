@@ -2,17 +2,21 @@
 <#@ Output Extension="cshtml" #>
 @model <#= Model.View #>
 
-@using (Html.FormWidgetBox(LinkAction.Details, LinkAction.Delete))
-{
-    using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        using (Html.FormGroup())
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="widget-title-icon fa fa-th-list"></span>
+        <h5>@ResourceProvider.GetCurrentFormTitle()</h5>
+        <div class="widget-title-buttons">@Html.WidgetButtons(LinkAction.Details, LinkAction.Delete)</div>
+    </div>
+    <div class="widget-content">
+        @using (Html.BeginForm())
         {
-            using (Html.FormActions())
-            {
-                @Html.Submit()
-            }
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="form-actions col-sm-12 col-md-12 col-lg-7">
+                    <input class="btn btn-primary" type="submit" value="@Resource.Submit" />
+                </div>
+            </div>
         }
-    }
-}
+    </div>
+</div>

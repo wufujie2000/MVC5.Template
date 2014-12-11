@@ -1,19 +1,24 @@
 @model IQueryable<AccountView>
 
-@using (Html.TableWidgetBox())
-{
-    @(
-        Html
-            .Grid(Model)
-            .Columns(columns =>
-            {
-                columns.AddActionLink(LinkAction.Details);
-                columns.AddActionLink(LinkAction.Edit);
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="widget-title-icon fa fa-th"></span>
+        <h5>@ResourceProvider.GetCurrentTableTitle()</h5>
+    </div>
+    <div class="widget-content">
+        @(
+            Html
+                .Grid(Model)
+                .Columns(columns =>
+                {
+                    columns.AddActionLink(LinkAction.Details);
+                    columns.AddActionLink(LinkAction.Edit);
 
-                columns.AddProperty(model => model.Username);
-                columns.AddProperty(model => model.RoleName);
-                columns.AddProperty(model => model.Email);
-            })
-            .ApplyDefaults()
-    )
-}
+                    columns.AddProperty(model => model.Username);
+                    columns.AddProperty(model => model.RoleName);
+                    columns.AddProperty(model => model.Email);
+                })
+                .ApplyDefaults()
+        )
+    </div>
+</div>

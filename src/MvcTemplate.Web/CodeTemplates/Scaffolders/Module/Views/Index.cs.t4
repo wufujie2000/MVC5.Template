@@ -2,17 +2,23 @@
 <#@ Output Extension="cshtml" #>
 @model IQueryable<<#= Model.View #>>
 
-@using (Html.TableWidgetBox(LinkAction.Create))
-{
-    @(
-        Html
-            .Grid(Model)
-            .Columns(columns =>
-            {
-                columns.AddActionLink(LinkAction.Details);
-                columns.AddActionLink(LinkAction.Edit);
-                columns.AddActionLink(LinkAction.Delete);
-            })
-            .ApplyDefaults()
-    )
-}
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="widget-title-icon fa fa-th"></span>
+        <h5>@ResourceProvider.GetCurrentTableTitle()</h5>
+        <div class="widget-title-buttons">@Html.WidgetButtons(LinkAction.Create)</div>
+    </div>
+    <div class="widget-content">
+        @(
+            Html
+                .Grid(Model)
+                .Columns(columns =>
+                {
+                    columns.AddActionLink(LinkAction.Details);
+                    columns.AddActionLink(LinkAction.Edit);
+                    columns.AddActionLink(LinkAction.Delete);
+                })
+                .ApplyDefaults()
+        )
+    </div>
+</div>

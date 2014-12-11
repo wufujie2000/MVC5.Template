@@ -1,4 +1,6 @@
-﻿@model AccountRecoveryView
+﻿@using MvcTemplate.Resources.Views.AccountRecoveryView
+
+@model AccountRecoveryView
 
 <div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
 <div class="separator"></div>
@@ -9,13 +11,12 @@
 
     @Html.AntiForgeryToken()
     <div class="auth-content">
-        @using (Html.InputGroup())
-        {
-            @Html.AuthEmailFor(model => model.Email)
-        }
+        <div class="input-group">
+            <span class="fa fa-envelope"></span>
+            @Html.TextBoxFor(model => model.Email, new { autocomplete = "off", placeholder = Titles.Email })
+        </div>
     </div>
-
-    @Html.SubmitFor(MvcTemplate.Resources.Shared.Resources.Recover)
+    <input class="btn btn-primary" type="submit" value="@Resource.Recover" />
 }
 
 <div class="separator"></div>

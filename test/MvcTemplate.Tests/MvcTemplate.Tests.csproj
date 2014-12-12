@@ -64,8 +64,9 @@
     <Reference Include="GridMvc">
       <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
     </Reference>
-    <Reference Include="LightInject">
-      <HintPath>..\..\packages\LightInject.3.0.2.0\lib\net45\LightInject.dll</HintPath>
+    <Reference Include="LightInject, Version=3.0.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\LightInject.3.0.2.1\lib\net45\LightInject.dll</HintPath>
     </Reference>
     <Reference Include="LightInject.Mvc">
       <HintPath>..\..\packages\LightInject.Mvc.1.0.0.4\lib\net45\LightInject.Mvc.dll</HintPath>

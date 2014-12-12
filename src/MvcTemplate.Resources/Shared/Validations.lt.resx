@@ -126,6 +126,9 @@
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>Laukas '{0}' turi būti data.</value>
   </data>
+  <data name="FieldMustBeEqualTo" xml:space="preserve">
+    <value>Laukas '{0}' turi būti lygus laukui '{1}'.</value>
+  </data>
   <data name="FieldMustBeGreaterOrEqualTo" xml:space="preserve">
     <value>Laukas '{0}' turi būti didesnis arba lygus {1}.</value>
   </data>

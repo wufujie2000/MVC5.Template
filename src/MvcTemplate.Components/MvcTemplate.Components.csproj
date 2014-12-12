@@ -63,12 +63,14 @@
     <Compile Include="Mail\IMailClient.cs" />
     <Compile Include="Mail\SmtpMailClient.cs" />
     <Compile Include="Mvc\Adapters\EmailAddressAdapter.cs" />
+    <Compile Include="Mvc\Adapters\EqualToAdapter.cs" />
     <Compile Include="Mvc\Adapters\MinLengthAdapter.cs" />
     <Compile Include="Mvc\Adapters\MaxValueAdapter.cs" />
     <Compile Include="Mvc\Adapters\MinValueAdapter.cs" />
     <Compile Include="Mvc\Adapters\RangeAdapter.cs" />
     <Compile Include="Mvc\Adapters\StringLengthAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Mvc\Attributes\EqualToAttribute.cs" />
     <Compile Include="Mvc\Attributes\MaxValueAttribute.cs" />
     <Compile Include="Mvc\Attributes\MinValueAttribute.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />

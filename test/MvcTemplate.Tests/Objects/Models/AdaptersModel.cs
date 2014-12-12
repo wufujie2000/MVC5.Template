@@ -26,5 +26,8 @@ namespace MvcTemplate.Tests.Objects
 
         [StringLength(128)]
         public String StringLength { get; set; }
+
+        [EqualTo("StringLength")]
+        public String EqualTo { get; set; }
     }
 }

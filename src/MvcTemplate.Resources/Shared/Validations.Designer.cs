@@ -88,6 +88,15 @@ namespace MvcTemplate.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be equal to &apos;{1}&apos;..
+        /// </summary>
+        public static string FieldMustBeEqualTo {
+            get {
+                return ResourceManager.GetString("FieldMustBeEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must be greater or equal to {1}..
         /// </summary>
         public static string FieldMustBeGreaterOrEqualTo {

@@ -126,6 +126,9 @@
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>'{0}' field must be a date.</value>
   </data>
+  <data name="FieldMustBeEqualTo" xml:space="preserve">
+    <value>'{0}' field must be equal to '{1}'.</value>
+  </data>
   <data name="FieldMustBeGreaterOrEqualTo" xml:space="preserve">
     <value>'{0}' field must be greater or equal to {1}.</value>
   </data>

@@ -355,6 +355,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         [Test]
         [TestCase("Range", typeof(RangeAdapter))]
+        [TestCase("EqualTo", typeof(EqualToAdapter))]
         [TestCase("Required", typeof(RequiredAdapter))]
         [TestCase("MinValue", typeof(MinValueAdapter))]
         [TestCase("MaxValue", typeof(MaxValueAdapter))]

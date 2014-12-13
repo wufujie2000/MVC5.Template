@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvcTemplate.Components.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Objects
@@ -9,6 +10,7 @@ namespace MvcTemplate.Objects
         public String Token { get; set; }
 
         [Required]
+        [NotTrimmed]
         public String NewPassword { get; set; }
     }
 }

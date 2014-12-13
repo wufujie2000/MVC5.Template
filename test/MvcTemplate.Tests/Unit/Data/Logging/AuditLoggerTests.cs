@@ -1,7 +1,9 @@
-﻿using MvcTemplate.Data.Logging;
+﻿using MvcTemplate.Data.Core;
+using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     public class AuditLoggerTests
     {
         private TestingContext dataContext;
-        private TestingContext context;
+        private AContext context;
 
         private DbEntityEntry<BaseModel> entry;
         private AuditLogger logger;
@@ -25,15 +27,13 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void SetUp()
         {
             context = new TestingContext();
-            logger = new AuditLogger(context);
             dataContext = new TestingContext();
             TestModel model = ObjectFactory.CreateTestModel();
+            logger = Substitute.ForPartsOf<AuditLogger>(context);
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            TearDownData();
-
-            dataContext.Set<TestModel>().Add(model);
-            entry = dataContext.Entry<BaseModel>(model);
+            entry = dataContext.Entry<BaseModel>(dataContext.Set<TestModel>().Add(model));
+            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
             dataContext.SaveChanges();
         }
 
@@ -69,11 +69,9 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             entry.State = EntityState.Modified;
 
-            LoggableEntity entity = new LoggableEntity(entry);
             logger.Log(new[] { entry });
-            logger.Save();
 
-            CollectionAssert.IsEmpty(context.Set<AuditLog>());
+            logger.DidNotReceiveWithAnyArgs().Log((LoggableEntity)null);
         }
 
         [Test]
@@ -99,19 +97,60 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             {
                 entry.State = usupportedState;
                 logger.Log(new[] { entry });
-                logger.Save();
             }
 
-            CollectionAssert.IsEmpty(context.Set<AuditLog>());
+            logger.DidNotReceiveWithAnyArgs().Log((LoggableEntity)null);
         }
 
         [Test]
         public void Log_DoesNotSaveLogs()
         {
             entry.State = EntityState.Added;
+            AContext context = Substitute.For<AContext>();
+            logger = Substitute.ForPartsOf<AuditLogger>(context);
+            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
+
             logger.Log(new[] { entry });
 
-            CollectionAssert.IsEmpty(context.Set<AuditLog>());
+            logger.DidNotReceive().Save();
+            context.DidNotReceive().SaveChanges();
+        }
+
+        #endregion
+
+        #region Method: Log(LoggableEntity entity)
+
+        [Test]
+        public void Log_AddsLogToTheSet()
+        {
+            LoggableEntity entity = new LoggableEntity(entry);
+
+            logger.Log(entity);
+
+            AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
+            LoggableEntity expected = entity;
+
+            Assert.AreEqual(HttpContext.Current.User.Identity.Name, actual.AccountId);
+            Assert.AreEqual(expected.ToString(), actual.Changes);
+            Assert.AreEqual(expected.Name, actual.EntityName);
+            Assert.AreEqual(expected.Action, actual.Action);
+            Assert.AreEqual(expected.Id, actual.EntityId);
+        }
+
+        [Test]
+        public void Log_DoesNotSaveLog()
+        {
+            entry.State = EntityState.Added;
+            AContext context = Substitute.For<AContext>();
+            LoggableEntity entity = new LoggableEntity(entry);
+
+            logger = Substitute.ForPartsOf<AuditLogger>(context);
+            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
+
+            logger.Log(entity);
+
+            logger.DidNotReceive().Save();
+            context.DidNotReceive().SaveChanges();
         }
 
         #endregion
@@ -121,27 +160,28 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void Save_SavesLogs()
         {
-            entry.State = EntityState.Added;
-            logger.Log(new[] { entry });
+            AContext context = Substitute.For<AContext>();
+            logger = Substitute.ForPartsOf<AuditLogger>(context);
+
             logger.Save();
 
-            CollectionAssert.IsNotEmpty(context.Set<AuditLog>());
-        }
-
-        [Test]
-        public void Save_ClearsLogMessagesBuffer()
-        {
-            entry.State = EntityState.Added;
-            logger.Log(new[] { entry });
-            logger.Save();
-            logger.Save();
-
-            CollectionAssert.IsNotEmpty(context.Set<AuditLog>());
+            context.Received().SaveChanges();
         }
 
         #endregion
 
         #region Method: Dispose()
+
+        [Test]
+        public void Dispose_DisposesContext()
+        {
+            AContext context = Substitute.For<AContext>();
+            logger = Substitute.ForPartsOf<AuditLogger>(context);
+
+            logger.Dispose();
+
+            context.Received().Dispose();
+        }
 
         [Test]
         public void Dispose_CanBeCalledMultipleTimes()
@@ -156,25 +196,21 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         private void Logs(DbEntityEntry<BaseModel> entry)
         {
-            LoggableEntity entity = new LoggableEntity(entry);
+            LoggableEntity expected = new LoggableEntity(entry);
+            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
+            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).Do(info =>
+            {
+                LoggableEntity actual = info.Arg<LoggableEntity>();
+
+                Assert.AreEqual(expected.ToString(), actual.ToString());
+                Assert.AreEqual(expected.Action, actual.Action);
+                Assert.AreEqual(expected.Name, actual.Name);
+                Assert.AreEqual(expected.Id, actual.Id);
+            });
+
             logger.Log(new[] { entry });
-            logger.Save();
 
-            AuditLog expected = new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString());
-            AuditLog actual = context.Set<AuditLog>().Single();
-
-            Assert.AreEqual(expected.AccountId, actual.AccountId);
-            Assert.AreEqual(expected.EntityName, actual.EntityName);
-            Assert.AreEqual(expected.EntityId, actual.EntityId);
-            Assert.AreEqual(expected.Changes, actual.Changes);
-        }
-
-        private void TearDownData()
-        {
-            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
-            context.Set<AuditLog>().RemoveRange(context.Set<AuditLog>());
-            dataContext.SaveChanges();
-            context.SaveChanges();
+            logger.ReceivedWithAnyArgs().Log(expected);
         }
 
         #endregion

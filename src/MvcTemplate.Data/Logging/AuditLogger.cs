@@ -30,10 +30,14 @@ namespace MvcTemplate.Data.Logging
                     case EntityState.Modified:
                         entity = new LoggableEntity(entry);
                         if (entity.Properties.Any())
-                            context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
+                            Log(entity);
                         break;
                 }
             }
+        }
+        public virtual void Log(LoggableEntity entity)
+        {
+            context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
         }
         public virtual void Save()
         {

@@ -83,7 +83,7 @@ namespace MvcTemplate.Services
         }
         public void Edit(ProfileEditView view)
         {
-            Account account = UnitOfWork.Repository<Account>().GetById(HttpContext.Current.User.Identity.Name);
+            Account account = UnitOfWork.Repository<Account>().GetById(view.Id);
             view.Email = account.Email = view.Email.ToLower();
             account.Username = view.Username;
 

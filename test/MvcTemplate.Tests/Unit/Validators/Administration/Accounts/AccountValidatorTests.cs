@@ -8,7 +8,6 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Validators
@@ -27,7 +26,6 @@ namespace MvcTemplate.Tests.Unit.Validators
             hasher = Substitute.For<IHasher>();
             hasher.Verify(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             validator = new AccountValidator(new UnitOfWork(context), hasher);
             validator.ModelState = new ModelStateDictionary();
 
@@ -38,7 +36,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         [TearDown]
         public void TearDown()
         {
-            HttpContext.Current = null;
             validator.Dispose();
             context.Dispose();
         }

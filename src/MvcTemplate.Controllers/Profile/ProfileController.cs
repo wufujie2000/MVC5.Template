@@ -27,11 +27,12 @@ namespace MvcTemplate.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProfileEditView profile)
+        public ActionResult Edit([Bind(Exclude = "Id")] ProfileEditView profile)
         {
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
+            profile.Id = CurrentAccountId;
             if (Validator.CanEdit(profile))
             {
                 Service.Edit(profile);
@@ -55,11 +56,12 @@ namespace MvcTemplate.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(ProfileDeleteView profile)
+        public ActionResult DeleteConfirmed([Bind(Exclude = "Id")] ProfileDeleteView profile)
         {
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
+            profile.Id = CurrentAccountId;
             if (!Validator.CanDelete(profile))
             {
                 Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);

@@ -5,7 +5,6 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Linq;
-using System.Web;
 
 namespace MvcTemplate.Validators
 {
@@ -48,9 +47,9 @@ namespace MvcTemplate.Validators
 
         public Boolean CanEdit(ProfileEditView view)
         {
-            Boolean isValid = IsUniqueUsername(HttpContext.Current.User.Identity.Name, view.Username);
-            isValid &= IsUniqueEmail(HttpContext.Current.User.Identity.Name, view.Email);
-            isValid &= IsCorrectPassword(view.Password);
+            Boolean isValid = IsUniqueUsername(view.Id, view.Username);
+            isValid &= IsCorrectPassword(view.Id, view.Password);
+            isValid &= IsUniqueEmail(view.Id, view.Email);
             isValid &= ModelState.IsValid;
 
             return isValid;
@@ -61,7 +60,7 @@ namespace MvcTemplate.Validators
         }
         public Boolean CanDelete(ProfileDeleteView view)
         {
-            Boolean isValid = IsCorrectPassword(view.Password);
+            Boolean isValid = IsCorrectPassword(view.Id, view.Password);
             isValid &= ModelState.IsValid;
 
             return isValid;
@@ -102,21 +101,17 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .SingleOrDefault();
 
-            return IsCorrectPassword(password, passhash);
-        }
-        private Boolean IsCorrectPassword(String password, String passhash)
-        {
             Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError("", Validations.IncorrectUsernameOrPassword);
 
             return isCorrect;
         }
-        private Boolean IsCorrectPassword(String password)
+        private Boolean IsCorrectPassword(String accountId, String password)
         {
             String passhash = UnitOfWork
                 .Repository<Account>()
-                .Where(account => account.Id == HttpContext.Current.User.Identity.Name)
+                .Where(account => account.Id == accountId)
                 .Select(account => account.Passhash)
                 .Single();
 

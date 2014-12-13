@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Register(AccountView account)
+        #region Method: Register([Bind(Exclude = "Id")] AccountView account)
 
         [Test]
         public void Register_ProtectsFromOverpostingId()

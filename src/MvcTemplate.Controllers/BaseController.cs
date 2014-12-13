@@ -18,7 +18,7 @@ namespace MvcTemplate.Controllers
         {
             get
             {
-                return HttpContext.User.Identity.Name;
+                return User.Identity.Name;
             }
         }
         public AlertsContainer Alerts

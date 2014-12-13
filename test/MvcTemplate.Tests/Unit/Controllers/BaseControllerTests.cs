@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void CurrentAccountId_GetsCurrentIdentityName()
         {
-            String expected = controller.ControllerContext.HttpContext.User.Identity.Name;
+            String expected = controller.User.Identity.Name;
             String actual = controller.BaseCurrentAccountId;
 
             Assert.AreEqual(expected, actual);

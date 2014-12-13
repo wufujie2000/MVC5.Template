@@ -8,13 +8,12 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
-    public class ProfileControllerTests
+    public class ProfileControllerTests : AControllerTests
     {
         private ProfileDeleteView profileDelete;
         private ProfileController controller;
@@ -27,18 +26,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
 
-            profileDelete = new ProfileDeleteView();
-            profileEdit = new ProfileEditView();
+            profileDelete = ObjectFactory.CreateProfileDeleteView("Edition");
+            profileEdit = ObjectFactory.CreateProfileEditView("Edition");
             account = new AccountView();
 
             controller = new ProfileController(service, validator);
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpContext;
-            accountId = httpContext.User.Identity.Name;
+            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
+
+            accountId = controller.User.Identity.Name;
         }
 
         #region Method: Edit()
@@ -69,7 +68,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Edit(ProfileEditView profile)
+        #region Method: Edit([Bind(Exclude = "Id")] ProfileEditView profile)
+
+        [Test]
+        public void Edit_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverpostingId(controller, "Edit");
+        }
 
         [Test]
         public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
@@ -81,6 +86,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.AreEqual("Auth", actual.RouteValues["controller"]);
             Assert.AreEqual("Logout", actual.RouteValues["action"]);
             Assert.AreEqual(2, actual.RouteValues.Count);
+        }
+
+        [Test]
+        public void Edit_BeforeEditingSetsProfileIdToCurrentAccountId()
+        {
+            service.AccountExists(accountId).Returns(true);
+            validator.CanEdit(profileEdit).Returns(true);
+
+            profileEdit.Id = accountId + "Edition";
+            controller.Edit(profileEdit);
+
+            validator.Received().CanEdit(Arg.Is<ProfileEditView>(view => view == profileEdit && profileEdit.Id == accountId));
+            service.Received().Edit(Arg.Is<ProfileEditView>(view => view == profileEdit && profileEdit.Id == accountId));
         }
 
         [Test]
@@ -169,7 +187,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: DeleteConfirmed(AccountView profile)
+        #region Method: DeleteConfirmed([Bind(Exclude = "Id")] AccountView profile)
+
+        [Test]
+        public void DeleteConfirmed_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverpostingId(controller, "DeleteConfirmed");
+        }
 
         [Test]
         public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
@@ -209,7 +233,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void DeleteConfirmed_DeletesProfileIfCanDelete()
+        public void DeleteConfirmed_BeforeDeletingSetsProfileIdToCurrentAccountId()
+        {
+            validator.CanDelete(profileDelete).Returns(true);
+            service.AccountExists(accountId).Returns(true);
+
+            profileDelete.Id = accountId + "Edition";
+            controller.DeleteConfirmed(profileDelete);
+
+            validator.Received().CanDelete(Arg.Is<ProfileDeleteView>(view => view == profileDelete && profileDelete.Id == accountId));
+        }
+
+        [Test]
+        public void DeleteConfirmed_DeletesProfile()
         {
             validator.CanDelete(profileDelete).Returns(true);
             service.AccountExists(accountId).Returns(true);

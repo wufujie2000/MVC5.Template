@@ -13,6 +13,7 @@ namespace MvcTemplate.Components.Extensions.Html
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
+            Object idValue = html.ViewContext.RouteData.Values["id"];
             String buttons = "";
 
             foreach (LinkAction action in actions)
@@ -49,7 +50,7 @@ namespace MvcTemplate.Components.Extensions.Html
                         .ActionLink(
                             "{0}{1}",
                             action.ToString(),
-                            new { id = html.ViewContext.RouteData.Values["id"] },
+                            new { id = idValue },
                             new { @class = "btn" })
                         .ToString(),
                     icon,

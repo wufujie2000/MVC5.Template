@@ -17,14 +17,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
     public class BaseControllerTests
     {
         private BaseControllerProxy controller;
-        private String accountId;
 
         [SetUp]
         public void SetUp()
         {
             HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            accountId = httpContext.User.Identity.Name;
 
             controller = Substitute.ForPartsOf<BaseControllerProxy>();
             controller.ControllerContext = new ControllerContext();
@@ -48,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void CurrentAccountId_GetsCurrentIdentityName()
         {
             String expected = controller.User.Identity.Name;
-            String actual = controller.BaseCurrentAccountId;
+            String actual = controller.CurrentAccountId;
 
             Assert.AreEqual(expected, actual);
         }
@@ -60,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void BaseController_SetsAuthorizationProviderFromFactory()
         {
-            IAuthorizationProvider actual = controller.BaseAuthorizationProvider;
+            IAuthorizationProvider actual = controller.AuthorizationProvider;
             IAuthorizationProvider expected = Authorization.Provider;
 
             Assert.AreEqual(expected, actual);
@@ -229,15 +227,17 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void IsAuthorizedFor_OnNullAuthorizationProviderReturnsTrue()
         {
-            controller.BaseAuthorizationProvider = null;
+            Authorization.Provider = null;
+            controller = Substitute.ForPartsOf<BaseControllerProxy>();
 
+            Assert.IsNull(controller.AuthorizationProvider);
             Assert.IsTrue(controller.IsAuthorizedFor(null, null, null));
         }
 
         [Test]
         public void IsAuthorizedFor_ReturnsAuthorizationProviderResult()
         {
-            Authorization.Provider.IsAuthorizedFor(accountId, "AR", "CO", "AC").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(controller.CurrentAccountId, "AR", "CO", "AC").Returns(true);
 
             Assert.IsTrue(controller.IsAuthorizedFor("AR", "CO", "AC"));
         }
@@ -298,7 +298,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void OnAuthorization_SetsResultToNullThenAuthorized()
         {
             AuthorizationContext context = new AuthorizationContext(controller.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
-            Authorization.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(controller.CurrentAccountId, "Area", "Controller", "Action").Returns(true);
             controller.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(true);
             context.RouteData.Values["controller"] = "Controller";
             context.RouteData.Values["action"] = "Action";

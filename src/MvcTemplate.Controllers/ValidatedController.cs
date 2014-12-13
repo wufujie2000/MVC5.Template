@@ -10,7 +10,7 @@ namespace MvcTemplate.Controllers
     {
         private Boolean disposed;
 
-        protected TValidator Validator
+        public TValidator Validator
         {
             get;
             private set;

@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Controllers;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
@@ -10,23 +11,16 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class ValidatedControllerTests
     {
-        private ValidatedControllerProxy controller;
+        private ValidatedController<IService, IValidator> controller;
         private IValidator validator;
+        private IService service;
 
         [SetUp]
         public void SetUp()
         {
+            service = Substitute.For<IService>();
             validator = Substitute.For<IValidator>();
-            IService service = Substitute.For<IService>();
-            controller = new ValidatedControllerProxy(service, validator);
-            controller.ControllerContext = Substitute.For<ControllerContext>();
-            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
-        }
-
-        [TearDown]
-        public void TearDwon()
-        {
-            controller.Dispose();
+            controller = Substitute.ForPartsOf<ValidatedController<IService, IValidator>>(service, validator);
         }
 
         #region Constructor: ValidatedController(TService service, TValidator validator)
@@ -34,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ValidatedController_SetsValidator()
         {
-            IValidator actual = controller.BaseValidator;
+            IValidator actual = controller.Validator;
             IValidator expected = validator;
 
             Assert.AreSame(expected, actual);

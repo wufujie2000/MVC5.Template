@@ -3,7 +3,6 @@ using MvcTemplate.Services;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -17,13 +16,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [SetUp]
         public void SetUp()
         {
-            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             service = Substitute.For<IAccountService>();
+            controller = Substitute.ForPartsOf<HomeController>(service);
 
-            controller = new HomeController(service);
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpContext;
-            service.AccountExists(httpContext.User.Identity.Name).Returns(true);
+            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
+            controller.CurrentAccountId.Returns("CurrentAccount");
         }
 
         #region Method: Index()
@@ -31,8 +28,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Index_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            String currentAccountId = controller.HttpContext.User.Identity.Name;
-            service.AccountExists(currentAccountId).Returns(false);
+            service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
 
@@ -44,6 +40,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Index_ReturnsViewWithNullModel()
         {
+            service.AccountExists(controller.CurrentAccountId).Returns(true);
+
             Object model = (controller.Index() as ViewResult).Model;
 
             Assert.IsNull(model);
@@ -80,8 +78,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
         {
-            String currentAccountId = controller.HttpContext.User.Identity.Name;
-            service.AccountExists(currentAccountId).Returns(false);
+            service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
 
@@ -93,6 +90,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void Unauthorized_ReturnsViewWithNullModel()
         {
+            service.AccountExists(controller.CurrentAccountId).Returns(true);
+
             Object model = (controller.Unauthorized() as ViewResult).Model;
 
             Assert.IsNull(model);

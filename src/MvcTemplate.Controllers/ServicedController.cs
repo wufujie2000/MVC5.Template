@@ -8,7 +8,7 @@ namespace MvcTemplate.Controllers
     {
         private Boolean disposed;
 
-        protected TService Service
+        public TService Service
         {
             get;
             private set;

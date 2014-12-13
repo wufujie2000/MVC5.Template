@@ -1,23 +1,21 @@
-﻿using MvcTemplate.Services;
+﻿using MvcTemplate.Controllers;
+using MvcTemplate.Services;
 using NSubstitute;
 using NUnit.Framework;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
     [TestFixture]
     public class ServicedControllerTests
     {
-        private ServicedControllerProxy controller;
+        private ServicedController<IService> controller;
         private IService service;
 
         [SetUp]
         public void SetUp()
         {
             service = Substitute.For<IService>();
-            controller = new ServicedControllerProxy(service);
-            controller.ControllerContext = Substitute.For<ControllerContext>();
-            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
+            controller = Substitute.ForPartsOf<ServicedController<IService>>(service);
         }
 
         #region Constructor: ServicedController(TService service)
@@ -25,9 +23,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Test]
         public void ServicedController_SetsService()
         {
-            controller = new ServicedControllerProxy(service);
-
-            IService actual = controller.BaseService;
+            IService actual = controller.Service;
             IService expected = service;
 
             Assert.AreSame(expected, actual);

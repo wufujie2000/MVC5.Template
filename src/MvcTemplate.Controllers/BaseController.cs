@@ -9,12 +9,12 @@ namespace MvcTemplate.Controllers
     [GlobalizedAuthorize]
     public abstract class BaseController : Controller
     {
-        protected IAuthorizationProvider AuthorizationProvider
+        public IAuthorizationProvider AuthorizationProvider
         {
             get;
-            set;
+            protected set;
         }
-        protected String CurrentAccountId
+        public virtual String CurrentAccountId
         {
             get
             {
@@ -24,7 +24,7 @@ namespace MvcTemplate.Controllers
         public AlertsContainer Alerts
         {
             get;
-            private set;
+            protected set;
         }
 
         protected BaseController()

@@ -1,8 +1,10 @@
-﻿namespace MvcTemplate.Components.Mvc
+﻿using System.Collections.Generic;
+
+namespace MvcTemplate.Components.Mvc
 {
     public interface IMvcSiteMapProvider
     {
-        MvcSiteMapMenus GetMenus();
-        MvcSiteMapBreadcrumb GetBreadcrumb();
+        IEnumerable<MvcSiteMapNode> GetAuthorizedMenus();
+        IEnumerable<MvcSiteMapNode> GetBreadcrumb();
     }
 }

@@ -16,12 +16,12 @@
 </head>
 <body class="private">
     @Html.Partial("_Header")
-    @Html.Partial("_Sidebar", MvcSiteMap.Provider.GetMenus())
+    @Html.Partial("_Sidebar")
     @Html.Partial("_Datalist")
     <div class="content-container clear">
         <div class="separator"></div>
 
-        @Html.Partial("_Breadcrumb", MvcSiteMap.Provider.GetBreadcrumb())
+        @Html.Partial("_Breadcrumb")
 
         <div class="separator"></div>
 

@@ -5,8 +5,10 @@ namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapNode
     {
-        public String IconClass { get; set; }
         public Boolean IsMenu { get; set; }
+        public String IconClass { get; set; }
+        public Boolean IsActive { get; set; }
+        public Boolean HasActiveChildren { get; set; }
 
         public String Controller { get; set; }
         public String Action { get; set; }

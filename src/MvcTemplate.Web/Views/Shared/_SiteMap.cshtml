@@ -1,24 +1,24 @@
-﻿@model MvcSiteMapMenus
+﻿@model IEnumerable<MvcSiteMapNode>
 
-@foreach (MvcSiteMapMenuNode node in Model)
+@foreach (MvcSiteMapNode node in Model)
 {
     String menuLink = node.Action != null ? Url.Action(node.Action, node.Controller, new { area = node.Area }) : "#";
     String menuAddOn = node.Action == null ? "<i class='arrow fa fa-chevron-right'></i>" : "";
-    String menuClass = node.HasActiveSubMenu ? "has-active open" : "";
-    menuClass += node.Submenus.Count > 0 ? " submenu" : "";
+    String menuClass = node.HasActiveChildren ? "has-active open" : "";
+    menuClass += node.Children.Count() > 0 ? " submenu" : "";
     menuClass += node.IsActive ? " active" : "";
     menuClass = menuClass.Trim();
 
     <li class="@menuClass">
         <a href="@menuLink">
             <i class="menu-icon @node.IconClass"></i>
-            <span>@node.Title</span>
+            <span>@ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action)</span>
             @Html.Raw(menuAddOn)
         </a>
-        @if (node.Submenus.Any())
+        @if (node.Children.Count() > 0)
         {
             <ul>
-                @Html.DisplayFor(model => node.Submenus)
+                @Html.Partial("_SiteMap", node.Children)
             </ul>
         }
     </li>

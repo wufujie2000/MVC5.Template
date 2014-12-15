@@ -84,11 +84,7 @@
     <Compile Include="Mvc\SiteMap\IMvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\IMvcSiteMapProvider.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMap.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumb.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapBreadcrumbNode.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapMenuNode.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapNode.cs" />
-    <Compile Include="Mvc\SiteMap\MvcSiteMapMenus.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapParser.cs" />
     <Compile Include="Mvc\SiteMap\MvcSiteMapProvider.cs" />
     <Compile Include="Mvc\Validators\DateValidator.cs" />

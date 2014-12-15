@@ -1,8 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
@@ -20,46 +18,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             siteMap = CreateSiteMap();
         }
 
-        #region Method: GetNodes(XElement siteMap)
+        #region Method: GetNodeTree(XElement siteMap)
 
         [Test]
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
-            IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetAllNodes(siteMap)).GetEnumerator();
-            IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(CreateExpectedSiteMap()).GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsMenu, actual.Current.IsMenu);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
-
-                if (expected.Current.Parent != null || actual.Current.Parent != null)
-                {
-                    Assert.AreEqual(expected.Current.Parent.Controller, actual.Current.Parent.Controller);
-                    Assert.AreEqual(expected.Current.Parent.IconClass, actual.Current.Parent.IconClass);
-                    Assert.AreEqual(expected.Current.Parent.IsMenu, actual.Current.Parent.IsMenu);
-                    Assert.AreEqual(expected.Current.Parent.Action, actual.Current.Parent.Action);
-                    Assert.AreEqual(expected.Current.Parent.Area, actual.Current.Parent.Area);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Method: GetMenus(XElement siteMap)
-
-        [Test]
-        public void GetMenus_ReturnsOnlyMenus()
-        {
-            IEnumerable<MvcSiteMapNode> menus = TreeToEnumerable(CreateExpectedSiteMap()).Where(node => node.IsMenu);
-            menus.Last().Parent = menus.First();
-            menus.First().Parent = null;
-
-            IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetMenuNodes(siteMap)).GetEnumerator();
-            IEnumerator<MvcSiteMapNode> expected = menus.GetEnumerator();
+            IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetNodeTree(siteMap)).GetEnumerator();
+            IEnumerator<MvcSiteMapNode> expected = TreeToEnumerable(GetExpectedNodeTree()).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {
@@ -86,20 +51,18 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private XElement CreateSiteMap()
         {
-            XElement map = new XElement("siteMap");
-            XElement homeNode = CreateSiteMapNode(false, "fa fa-home", null, "Home", "Index");
-            XElement administrationNode = CreateSiteMapNode(true, "fa fa-gears", "Administration", null, null);
-            XElement accountsNode = CreateSiteMapNode(false, "fa fa-user", "Administration", "Accounts", "Index");
-            XElement accountsCreateNode = CreateSiteMapNode(true, "fa fa-file-o", "Administration", "Accounts", "Create");
-
-            map.Add(homeNode);
-            homeNode.Add(administrationNode);
-            administrationNode.Add(accountsNode);
-            accountsNode.Add(accountsCreateNode);
-
-            return map;
+            return XElement.Parse(
+            @"<siteMap>
+              <siteMapNode controller=""Home"" action=""Index"" menu=""false"" icon=""fa fa-home"">
+                <siteMapNode menu=""true"" area=""Administration"" icon=""fa fa-gears"">
+                  <siteMapNode controller=""Accounts"" action=""Index"" menu=""false"" area=""Administration"" icon=""fa fa-user"">
+                    <siteMapNode controller=""Accounts"" action=""Create"" menu=""true"" area=""Administration"" icon=""fa fa-file-o"" />
+                  </siteMapNode>
+                </siteMapNode>
+              </siteMapNode>
+            </siteMap>");
         }
-        private IEnumerable<MvcSiteMapNode> CreateExpectedSiteMap()
+        private IEnumerable<MvcSiteMapNode> GetExpectedNodeTree()
         {
             MvcSiteMapNode[] map =
             {
@@ -170,17 +133,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             }
 
             return map;
-        }
-        private XElement CreateSiteMapNode(Boolean isMenu, String icon, String area, String controller, String action)
-        {
-            XElement siteMapNode = new XElement("siteMapNode");
-            siteMapNode.SetAttributeValue("controller", controller);
-            siteMapNode.SetAttributeValue("action", action);
-            siteMapNode.SetAttributeValue("menu", isMenu);
-            siteMapNode.SetAttributeValue("area", area);
-            siteMapNode.SetAttributeValue("icon", icon);
-
-            return siteMapNode;
         }
 
         private IEnumerable<MvcSiteMapNode> TreeToEnumerable(IEnumerable<MvcSiteMapNode> nodes)

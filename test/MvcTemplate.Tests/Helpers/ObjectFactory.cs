@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
                 Email = id + "@tests.com",
 
-                RecoveryToken = id,
+                RecoveryToken = "Token" + id,
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5)
             };
         }
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests
             {
                 Id = id,
 
-                Token = id,
+                Token = "Token" + id,
                 NewPassword = "NewPassword1"
             };
         }
@@ -83,8 +83,7 @@ namespace MvcTemplate.Tests
             {
                 Id = id,
                 Username = "Username" + id,
-                RoleName = "Name" + id,
-                RoleId = id
+                RoleName = "Name" + id
             };
         }
 

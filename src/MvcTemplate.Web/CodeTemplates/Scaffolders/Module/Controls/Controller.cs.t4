@@ -24,7 +24,7 @@ namespace <#= Model.ControllerNamespace #>
         [HttpGet]
         public ViewResult Create()
         {
-            return View(new <#= Model.View #>());
+            return View();
         }
 
         [HttpPost]

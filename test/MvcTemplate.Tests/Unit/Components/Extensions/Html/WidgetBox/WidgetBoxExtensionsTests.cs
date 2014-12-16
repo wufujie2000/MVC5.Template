@@ -40,19 +40,19 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<a class=\"btn\" href=\"{0}\">" +
                     "<i class=\"fa fa-file-o\"></i>" +
                     "<span class=\"text\">{1}</span>" +
-                "</a>" + 
+                "</a>" +
                 "<a class=\"btn\" href=\"{2}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                     "<span class=\"text\">{3}</span>" +
-                "</a>" + 
+                "</a>" +
                 "<a class=\"btn\" href=\"{4}\">" +
                     "<i class=\"fa fa-pencil\"></i>" +
                     "<span class=\"text\">{5}</span>" +
-                "</a>" + 
+                "</a>" +
                 "<a class=\"btn\" href=\"{6}\">" +
                     "<i class=\"fa fa-times\"></i>" +
                     "<span class=\"text\">{7}</span>" +
-                "</a>" + 
+                "</a>" +
                 "<a class=\"btn\" href=\"{8}\">" +
                     "<i class=\"fa fa-files-o\"></i>" +
                     "<span class=\"text\">{9}</span>" +

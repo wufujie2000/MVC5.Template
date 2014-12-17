@@ -31,6 +31,8 @@
   border-radius: 0;
   min-width: 40px;
   font-size: 12px;
+  display: block;
+  float: left;
 }
 .widget-title .widget-title-buttons .btn:hover {
   background-color: #396b86;

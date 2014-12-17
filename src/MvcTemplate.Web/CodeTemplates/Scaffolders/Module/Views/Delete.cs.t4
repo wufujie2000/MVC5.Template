@@ -7,7 +7,8 @@
         <span class="widget-title-icon fa fa-th-list"></span>
         <h5>@ResourceProvider.GetCurrentFormTitle()</h5>
         <div class="widget-title-buttons">
-            @Html.WidgetButtons(LinkAction.Details, LinkAction.Edit)
+            @Html.WidgetButton("Details", "fa fa-info")
+            @Html.WidgetButton("Edit", "fa fa-pencil")
         </div>
     </div>
     <div class="widget-content">

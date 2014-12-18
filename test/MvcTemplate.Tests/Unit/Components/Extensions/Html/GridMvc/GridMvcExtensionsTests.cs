@@ -7,9 +7,7 @@ using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Web;
@@ -46,28 +44,20 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             HttpContext.Current = null;
         }
 
-        #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action)
+        #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, String action, String iconClass)
 
         [Test]
         public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
         {
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
 
-            Assert.IsNull(columns.AddActionLink(LinkAction.Edit));
-        }
-
-        [Test]
-        public void AddActionLink_OnNullAuthorizationProviderAddsActionLink()
-        {
-            Authorization.Provider = null;
-
-            Assert.IsNotNull(columns.AddActionLink(LinkAction.Edit));
+            Assert.IsNull(columns.AddActionLink("Edit", "fa fa-pencil"));
         }
 
         [Test]
         public void AddActionLink_AddsGridColumn()
         {
-            columns.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink("Edit", "fa fa-pencil");
 
             columns.Received().Add();
         }
@@ -75,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
-            columns.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink("Edit", "fa fa-pencil");
 
             column.Received().Encoded(false);
         }
@@ -83,7 +73,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_DoesNotSanitizeGridColumn()
         {
-            columns.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink("Edit", "fa fa-pencil");
 
             column.Received().Sanitized(false);
         }
@@ -91,71 +81,55 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_SetsCssOnGridColumn()
         {
-            columns.AddActionLink(LinkAction.Edit);
+            columns.AddActionLink("Edit", "fa fa-pencil");
 
             column.Received().Css("action-cell");
         }
 
         [Test]
-        public void AddActionLink_DoesNotRenderValueForUnsupportedLinkActions()
+        public void AddActionLink_RendersAuthorizedActionLink()
         {
-            IEnumerable<LinkAction> notSupportedActions = Enum
-                .GetValues(typeof(LinkAction))
-                .Cast<LinkAction>()
-                .Where(action =>
-                    action != LinkAction.Edit &&
-                    action != LinkAction.Details &&
-                    action != LinkAction.Delete &&
-                    action != LinkAction.Copy);
-
-            foreach (LinkAction action in notSupportedActions)
-                columns.AddActionLink(action);
-
-            column.DidNotReceive().RenderValueAs(Arg.Any<Func<AllTypesView, String>>());
-        }
-
-        [Test]
-        public void AddActionLink_RendersValueOnGridColumn()
-        {
-            IEnumerable<LinkAction> supportedActions = Enum
-                .GetValues(typeof(LinkAction))
-                .Cast<LinkAction>()
-                .Where(action => action != LinkAction.Create);
-
-            foreach (LinkAction action in supportedActions)
-                columns.AddActionLink(action);
-
-            column.Received(supportedActions.Count()).RenderValueAs(Arg.Any<Func<AllTypesView, String>>());
-        }
-
-        [Test]
-        [TestCase(LinkAction.Edit, "fa fa-pencil")]
-        [TestCase(LinkAction.Copy, "fa fa-files-o")]
-        [TestCase(LinkAction.Delete, "fa fa-times")]
-        [TestCase(LinkAction.Details, "fa fa-info")]
-        public void AddActionLink_RendersLinkAction(LinkAction action, String iconClass)
-        {
-            Func<AllTypesView, String> renderer = null;
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
             AllTypesView view = new AllTypesView();
+            Authorization.Provider = null;
+            String actionLink = "";
 
             column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    renderer = info.Arg<Func<AllTypesView, String>>();
-                });
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column)
+                .AndDoes(info => { actionLink = info.Arg<Func<AllTypesView, String>>().Invoke(view); });
 
-            columns.AddActionLink(action);
+            columns.AddActionLink("Details", "fa fa-info");
 
-            String actual = renderer.Invoke(view);
+            String actual = actionLink;
             String expected = String.Format(
-                "<a class=\"{0}-action\" href=\"{1}\">" +
-                    "<i class=\"{2}\"></i>" +
+                "<a class=\"details-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-info\"></i>" +
                 "</a>",
-                action.ToString().ToLower(),
-                urlHelper.Action(action.ToString(), new { id = view.Id }),
-                iconClass);
+                urlHelper.Action("Details", new { id = view.Id }));
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void AddActionLink_OnNullAuthorizationProviderRendersActionLink()
+        {
+            AllTypesView view = new AllTypesView();
+            Authorization.Provider = null;
+            String actionLink = "";
+
+            column
+                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column)
+                .AndDoes(info => { actionLink = info.Arg<Func<AllTypesView, String>>().Invoke(view); });
+
+            columns.AddActionLink("Details", "fa fa-info");
+
+            String actual = actionLink;
+            String expected = String.Format(
+                "<a class=\"details-action\" href=\"{0}\">" +
+                    "<i class=\"fa fa-info\"></i>" +
+                "</a>",
+                urlHelper.Action("Details", new { id = view.Id }));
 
             Assert.AreEqual(expected, actual);
         }
@@ -175,10 +149,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     renderer = info.Arg<Func<Object, String>>();
                 });
 
-            objectColumns.AddActionLink(LinkAction.Delete);
+            objectColumns.AddActionLink("Delete", "fa fa-times");
 
-            Exception expected = Assert.Throws<Exception>(() => renderer.Invoke(new Object()));
-            Assert.AreEqual(expected.Message, "Object type does not have a key property.");
+            String actual = Assert.Throws<Exception>(() => renderer.Invoke(new Object())).Message;
+            String expected = "Object type does not have a key property.";
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion

@@ -94,7 +94,6 @@
     <Compile Include="Extensions\Html\Bootstrap\BootstrapExtensions.cs" />
     <Compile Include="Extensions\Html\GridMvc\GridMvcExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeExtensions.cs" />
-    <Compile Include="Extensions\Html\LinkAction.cs" />
     <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
     <Compile Include="Mvc\ViewEngines\ViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

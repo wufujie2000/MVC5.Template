@@ -11,8 +11,8 @@
                 .Grid(Model)
                 .Columns(columns =>
                 {
-                    columns.AddActionLink(LinkAction.Details);
-                    columns.AddActionLink(LinkAction.Edit);
+                    columns.AddActionLink("Details", "fa fa-info");
+                    columns.AddActionLink("Edit", "fa fa-pencil");
 
                     columns.AddProperty(model => model.Username);
                     columns.AddProperty(model => model.RoleName);

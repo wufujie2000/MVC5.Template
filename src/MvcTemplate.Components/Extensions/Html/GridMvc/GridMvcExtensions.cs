@@ -23,13 +23,6 @@ namespace MvcTemplate.Components.Extensions.Html
                 return HttpContext.Current.User.Identity.Name;
             }
         }
-        private static String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
         private static String CurrentController
         {
             get
@@ -37,21 +30,25 @@ namespace MvcTemplate.Components.Extensions.Html
                 return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
             }
         }
-
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, LinkAction action)
+        private static String CurrentArea
         {
-            if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action.ToString()))
+            get
+            {
+                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
+            }
+        }
+
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, String action, String iconClass)
+        {
+            if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action))
                 return null;
 
-            IGridColumn<T> gridColumn = column
+            return column
                 .Add()
                 .Encoded(false)
                 .Sanitized(false)
-                .Css("action-cell");
-
-            AddLinkAction(gridColumn, action);
-
-            return gridColumn;
+                .Css("action-cell")
+                .RenderAction(action, iconClass);
         }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
         {
@@ -114,41 +111,11 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        private static void AddLinkAction<T>(IColumn<T> column, LinkAction action)
+        private static IGridColumn<T> RenderAction<T>(this IColumn<T> column, String action, String iconClass)
         {
-            switch (action)
-            {
-                case LinkAction.Details:
-                    column.RenderValueAs(GetDetailsLink);
-                    break;
-                case LinkAction.Edit:
-                    column.RenderValueAs(GetEditLink);
-                    break;
-                case LinkAction.Delete:
-                    column.RenderValueAs(GetDeleteLink);
-                    break;
-                case LinkAction.Copy:
-                    column.RenderValueAs(GetCopyLink);
-                    break;
-            }
+            return column.RenderValueAs(model => GetLink(model, action, iconClass));
         }
-        private static String GetDetailsLink<T>(T model)
-        {
-            return GetLink(model, LinkAction.Details, "fa fa-info");
-        }
-        private static String GetEditLink<T>(T model)
-        {
-            return GetLink(model, LinkAction.Edit, "fa fa-pencil");
-        }
-        private static String GetDeleteLink<T>(T model)
-        {
-            return GetLink(model, LinkAction.Delete, "fa fa-times");
-        }
-        private static String GetCopyLink<T>(T model)
-        {
-            return GetLink(model, LinkAction.Copy, "fa fa-files-o");
-        }
-        private static String GetLink<T>(T model, LinkAction action, String iconClass)
+        private static String GetLink<T>(T model, String action, String iconClass)
         {
             UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
             TagBuilder actionTag = new TagBuilder("a");
@@ -162,7 +129,6 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return actionTag.ToString();
         }
-
         private static RouteValueDictionary GetRouteValuesFor<T>(T model)
         {
             PropertyInfo keyProperty = typeof(T)

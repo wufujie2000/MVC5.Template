@@ -190,6 +190,23 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
+        #region Method: Delete(TModel model)
+
+        [Test]
+        public void Delete_DeletesModel()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
+
+            repository.Delete(model);
+            context.SaveChanges();
+
+            CollectionAssert.IsEmpty(context.Set<TestModel>());
+        }
+
+        #endregion
+
         #region Method: Delete(String id)
 
         [Test]

@@ -73,9 +73,13 @@ namespace MvcTemplate.Data.Core
             entry.State = EntityState.Modified;
             entry.Property(property => property.CreationDate).IsModified = false;
         }
+        public void Delete(TModel model)
+        {
+            repository.Remove(model);
+        }
         public void Delete(String id)
         {
-            repository.Remove(repository.Find(id));
+            Delete(repository.Find(id));
         }
 
         public IEnumerator<TModel> GetEnumerator()

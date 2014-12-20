@@ -8,7 +8,9 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace MvcTemplate.Tests.Unit.Data.Core
 {
@@ -25,6 +27,9 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context = new TestingContext();
             logger = Substitute.For<IAuditLogger>();
             unitOfWork = new UnitOfWork(context, logger);
+
+            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
+            context.SaveChanges();
         }
 
         [TearDown]
@@ -33,15 +38,19 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Dispose();
         }
 
-        #region Method: Repository<TModel>()
+        #region Method: Select<TModel>()
 
         [Test]
-        public void Repository_UsesContextsRepository()
+        public void Select_CreatesSelectForSet()
         {
-            IRepository<TestModel> actual = unitOfWork.Repository<TestModel>();
-            IRepository<TestModel> expected = context.Repository<TestModel>();
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
 
-            Assert.AreSame(expected, actual);
+            IEnumerable<TestModel> actual = unitOfWork.Select<TestModel>();
+            IEnumerable<TestModel> expected = context.Set<TestModel>();
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -80,6 +89,151 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
+        #region Method: Get<TModel>(String id)
+
+        [Test]
+        public void Get_GetsModelById()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
+
+            TestModel expected = context.Set<TestModel>().AsNoTracking().Single();
+            TestModel actual = unitOfWork.Get<TestModel>(model.Id);
+
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
+        }
+
+        [Test]
+        public void Get_OnModelNotFoundReturnsNull()
+        {
+            Assert.IsNull(unitOfWork.Get<TestModel>(""));
+        }
+
+        #endregion
+
+        #region Method: GetAs<TModel, TView>(String id)
+
+        [Test]
+        public void GetAs_ReturnsModelAsViewById()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
+
+            TestView expected = Mapper.Map<TestView>(context.Set<TestModel>().AsNoTracking().Single());
+            TestView actual = unitOfWork.GetAs<TestModel, TestView>(model.Id);
+
+            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
+            Assert.AreEqual(expected.Text, actual.Text);
+            Assert.AreEqual(expected.Id, actual.Id);
+        }
+
+        #endregion
+
+        #region Method: Insert<TModel>(TModel model)
+
+        [Test]
+        public void Insert_AddsModelToDbSet()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            unitOfWork.Insert(model);
+
+            TestModel actual = context.Set<TestModel>().Local.Single();
+            TestModel expected = model;
+
+            Assert.AreEqual(EntityState.Added, context.Entry<TestModel>(model).State);
+            Assert.AreSame(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Update(TModel model)
+
+        [Test]
+        public void Update_UpdatesNotAttachedModel()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            model.Text += "Test";
+
+            unitOfWork.Update(model);
+
+            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(model);
+            TestModel expected = model;
+
+            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.AreEqual(EntityState.Modified, actual.State);
+            Assert.AreEqual(expected.Text, actual.Entity.Text);
+            Assert.AreEqual(expected.Id, actual.Entity.Id);
+        }
+
+        [Test]
+        public void Update_UpdatesAttachedModel()
+        {
+            TestModel attachedModel = ObjectFactory.CreateTestModel();
+            TestModel editedModel = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(attachedModel);
+            editedModel.Text += "Test";
+
+            unitOfWork.Update(editedModel);
+
+            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(attachedModel);
+            TestModel expected = editedModel;
+
+            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.AreEqual(EntityState.Modified, actual.State);
+            Assert.AreEqual(expected.Text, actual.Entity.Text);
+            Assert.AreEqual(expected.Id, actual.Entity.Id);
+        }
+
+        [Test]
+        public void Update_DoesNotModifyCreationDate()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+
+            unitOfWork.Update(model);
+
+            Assert.IsFalse(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
+        }
+
+        #endregion
+
+        #region Method: Delete(TModel model)
+
+        [Test]
+        public void Delete_DeletesModel()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
+
+            unitOfWork.Delete(model);
+            context.SaveChanges();
+
+            CollectionAssert.IsEmpty(context.Set<TestModel>());
+        }
+
+        #endregion
+
+        #region Method: Delete(String id)
+
+        [Test]
+        public void Delete_DeletesModelById()
+        {
+            TestModel model = ObjectFactory.CreateTestModel();
+            context.Set<TestModel>().Add(model);
+            context.SaveChanges();
+
+            unitOfWork.Delete<TestModel>(model.Id);
+            context.SaveChanges();
+
+            CollectionAssert.IsEmpty(context.Set<TestModel>());
+        }
+
+        #endregion
+
         #region Method: Rollback()
 
         [Test]
@@ -93,7 +247,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            CollectionAssert.IsEmpty(unitOfWork.Repository<TestModel>());
+            CollectionAssert.IsEmpty(unitOfWork.Select<TestModel>());
         }
 
         #endregion
@@ -103,17 +257,12 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Commit_SavesChanges()
         {
-            TestModel expected = ObjectFactory.CreateTestModel("2");
-            unitOfWork.Repository<TestModel>().Insert(expected);
+            DbContext context = Substitute.For<DbContext>();
+            unitOfWork = new UnitOfWork(context);
+
             unitOfWork.Commit();
 
-            TestModel actual = unitOfWork.Repository<TestModel>().GetById(expected.Id);
-            unitOfWork.Repository<TestModel>().Delete(expected.Id);
-            unitOfWork.Commit();
-
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            context.Received().SaveChanges();
         }
 
         [Test]
@@ -130,7 +279,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         {
             try
             {
-                unitOfWork.Repository<TestModel>().Insert(new TestModel { Text = new String('X', 513) });
+                unitOfWork.Insert(new TestModel { Text = new String('X', 513) });
                 unitOfWork.Commit();
             }
             catch
@@ -156,7 +305,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void Dispose_DiposesContext()
         {
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             UnitOfWork unitOfWork = new UnitOfWork(context);
 
             unitOfWork.Dispose();

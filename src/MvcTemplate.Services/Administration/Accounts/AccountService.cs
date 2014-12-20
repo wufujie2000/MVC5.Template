@@ -29,30 +29,30 @@ namespace MvcTemplate.Services
         }
         public Boolean AccountExists(String accountId)
         {
-            return UnitOfWork.Repository<Account>().Any(account => account.Id == accountId);
+            return UnitOfWork.Select<Account>().Any(account => account.Id == accountId);
         }
 
         public IQueryable<AccountView> GetViews()
         {
             return UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .To<AccountView>()
                 .OrderByDescending(account => account.CreationDate);
         }
         public TView Get<TView>(String id) where TView : BaseView
         {
-            return UnitOfWork.Repository<Account>().GetById<TView>(id);
+            return UnitOfWork.GetAs<Account, TView>(id);
         }
 
         public void Recover(AccountRecoveryView view)
         {
-            Account account = UnitOfWork.Repository<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
+            Account account = UnitOfWork.Select<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
             if (account == null) return;
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();
 
-            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Update(account);
             UnitOfWork.Commit();
 
             HttpRequest request = HttpContext.Current.Request;
@@ -64,12 +64,12 @@ namespace MvcTemplate.Services
         }
         public void Reset(AccountResetView view)
         {
-            Account account = UnitOfWork.Repository<Account>().Single(acc => acc.RecoveryToken == view.Token);
+            Account account = UnitOfWork.Select<Account>().Single(acc => acc.RecoveryToken == view.Token);
             account.Passhash = hasher.HashPassword(view.NewPassword);
             account.RecoveryTokenExpirationDate = null;
             account.RecoveryToken = null;
 
-            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Update(account);
             UnitOfWork.Commit();
         }
         public void Register(AccountView view)
@@ -78,34 +78,34 @@ namespace MvcTemplate.Services
             view.Email = account.Email = view.Email.ToLower();
             account.Passhash = hasher.HashPassword(view.Password);
 
-            UnitOfWork.Repository<Account>().Insert(account);
+            UnitOfWork.Insert(account);
             UnitOfWork.Commit();
         }
         public void Edit(ProfileEditView view)
         {
-            Account account = UnitOfWork.Repository<Account>().GetById(view.Id);
+            Account account = UnitOfWork.Get<Account>(view.Id);
             view.Email = account.Email = view.Email.ToLower();
             account.Username = view.Username;
 
             if (!String.IsNullOrWhiteSpace(view.NewPassword))
                 account.Passhash = hasher.HashPassword(view.NewPassword);
 
-            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Update(account);
             UnitOfWork.Commit();
         }
         public void Edit(AccountEditView view)
         {
-            Account account = UnitOfWork.Repository<Account>().GetById(view.Id);
+            Account account = UnitOfWork.Get<Account>(view.Id);
             account.RoleId = view.RoleId;
 
-            UnitOfWork.Repository<Account>().Update(account);
+            UnitOfWork.Update(account);
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
         }
         public void Delete(String id)
         {
-            UnitOfWork.Repository<Account>().Delete(id);
+            UnitOfWork.Delete<Account>(id);
             UnitOfWork.Commit();
         }
 
@@ -121,7 +121,7 @@ namespace MvcTemplate.Services
         private String GetAccountId(String username)
         {
             return UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Where(account => account.Username.ToLower() == username.ToLower())
                 .Select(account => account.Id)
                 .Single();

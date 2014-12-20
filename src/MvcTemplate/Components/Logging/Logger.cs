@@ -1,15 +1,15 @@
-﻿using MvcTemplate.Data.Core;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
 using System;
+using System.Data.Entity;
 
 namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {
-        private AContext context;
+        private DbContext context;
         private Boolean disposed;
 
-        public Logger(AContext context)
+        public Logger(DbContext context)
         {
             this.context = context;
         }

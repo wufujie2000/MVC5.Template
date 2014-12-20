@@ -1,10 +1,10 @@
 ﻿using MvcTemplate.Components.Logging;
-using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void Dispose_DisposesContext()
         {
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             Logger logger = new Logger(context);
 
             logger.Dispose();
@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         [Test]
         public void Dispose_CanBeCalledMultipleTimes()
         {
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             Logger logger = new Logger(context);
 
             logger.Dispose();

@@ -47,15 +47,15 @@ namespace MvcTemplate.Services
         public IQueryable<RoleView> GetViews()
         {
             return UnitOfWork
-                .Repository<Role>()
+                .Select<Role>()
                 .To<RoleView>()
                 .OrderByDescending(role => role.CreationDate);
         }
         public RoleView GetView(String id)
         {
-            RoleView role = UnitOfWork.Repository<Role>().GetById<RoleView>(id);
+            RoleView role = UnitOfWork.GetAs<Role, RoleView>(id);
             role.PrivilegesTree.SelectedIds = UnitOfWork
-                .Repository<RolePrivilege>()
+                .Select<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == role.Id)
                 .Select(rolePrivilege => rolePrivilege.PrivilegeId)
                 .ToList();
@@ -83,7 +83,7 @@ namespace MvcTemplate.Services
         public void Delete(String id)
         {
             RemoveRoleFromAccounts(id);
-            UnitOfWork.Repository<Role>().Delete(id);
+            UnitOfWork.Delete<Role>(id);
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
@@ -92,7 +92,7 @@ namespace MvcTemplate.Services
         private IEnumerable<Privilege> GetAllPrivileges()
         {
             return UnitOfWork
-                .Repository<Privilege>()
+                .Select<Privilege>()
                 .ToList()
                 .Select(privilege => new Privilege
                 {
@@ -107,27 +107,27 @@ namespace MvcTemplate.Services
         private void CreateRole(RoleView view)
         {
             Role model = UnitOfWork.To<Role>(view);
-            UnitOfWork.Repository<Role>().Insert(model);
+            UnitOfWork.Insert(model);
         }
         private void EditRole(RoleView view)
         {
             Role model = UnitOfWork.To<Role>(view);
-            UnitOfWork.Repository<Role>().Update(model);
+            UnitOfWork.Update(model);
         }
 
         private void DeleteRolePrivileges(RoleView view)
         {
-            IQueryable<String> rolePrivileges = UnitOfWork.Repository<RolePrivilege>()
+            IQueryable<String> rolePrivileges = UnitOfWork.Select<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == view.Id)
                 .Select(rolePrivilege => rolePrivilege.Id);
 
             foreach (String rolePrivilege in rolePrivileges)
-                UnitOfWork.Repository<RolePrivilege>().Delete(rolePrivilege);
+                UnitOfWork.Delete<RolePrivilege>(rolePrivilege);
         }
         private void CreateRolePrivileges(RoleView view)
         {
             foreach (String privilegeId in view.PrivilegesTree.SelectedIds)
-                UnitOfWork.Repository<RolePrivilege>().Insert(new RolePrivilege
+                UnitOfWork.Insert(new RolePrivilege
                 {
                     RoleId = view.Id,
                     PrivilegeId = privilegeId
@@ -136,13 +136,13 @@ namespace MvcTemplate.Services
         private void RemoveRoleFromAccounts(String roleId)
         {
             IQueryable<Account> accountsWithRole = UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Where(account => account.RoleId == roleId);
 
             foreach (Account account in accountsWithRole)
             {
                 account.RoleId = null;
-                UnitOfWork.Repository<Account>().Update(account);
+                UnitOfWork.Update(account);
             }
         }
     }

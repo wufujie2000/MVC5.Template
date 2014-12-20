@@ -32,7 +32,7 @@ namespace MvcTemplate.Validators
         private Boolean IsUniqueRole(RoleView view)
         {
             Boolean isUnique = !UnitOfWork
-                .Repository<Role>()
+                .Select<Role>()
                 .Any(role =>
                     role.Id != view.Id &&
                     role.Name.ToLower() == view.Name.ToLower());

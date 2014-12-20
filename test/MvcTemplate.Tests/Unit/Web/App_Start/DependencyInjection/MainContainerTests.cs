@@ -11,6 +11,7 @@ using MvcTemplate.Web;
 using MvcTemplate.Web.DependencyInjection;
 using NUnit.Framework;
 using System;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
@@ -36,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         #region Method: RegisterServices()
 
         [Test]
-        [TestCase(typeof(AContext), typeof(Context))]
+        [TestCase(typeof(DbContext), typeof(Context))]
         [TestCase(typeof(IUnitOfWork), typeof(UnitOfWork))]
 
         [TestCase(typeof(ILogger), typeof(Logger))]

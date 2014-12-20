@@ -1,17 +1,11 @@
 ﻿using MvcTemplate.Data.Mapping;
 using MvcTemplate.Objects;
-using System;
-using System.Collections;
 using System.Data.Entity;
 
 namespace MvcTemplate.Data.Core
 {
-    public class Context : AContext
+    public class Context : DbContext
     {
-        protected Hashtable Repositories { get; set; }
-
-        #region DbSets
-
         #region Administration
 
         protected DbSet<Account> Accounts { get; set; }
@@ -29,27 +23,9 @@ namespace MvcTemplate.Data.Core
 
         #endregion
 
-        #endregion
-
         static Context()
         {
             ObjectMapper.MapObjects();
-        }
-        public Context()
-        {
-            Repositories = new Hashtable();
-        }
-
-        public override IRepository<TModel> Repository<TModel>()
-        {
-            Type modelType = typeof(TModel);
-            if (Repositories.ContainsKey(modelType))
-                return (IRepository<TModel>)Repositories[modelType];
-
-            IRepository<TModel> repository = (IRepository<TModel>)Activator.CreateInstance(typeof(Repository<TModel>), this);
-            Repositories.Add(modelType, repository);
-
-            return repository;
         }
     }
 }

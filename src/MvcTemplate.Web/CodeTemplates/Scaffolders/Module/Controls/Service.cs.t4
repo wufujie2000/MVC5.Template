@@ -17,30 +17,30 @@ namespace MvcTemplate.Services
         public IQueryable<<#= Model.View #>> GetViews()
         {
             return UnitOfWork
-                .Repository<<#= Model.Model #>>()
+                .Select<<#= Model.Model #>>()
                 .To<<#= Model.View #>>()
                 .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate);
         }
         public TView Get<TView>(String id) where TView : BaseView
         {
-            return UnitOfWork.Repository<<#= Model.Model #>>().GetById<TView>(id);
+            return UnitOfWork.GetAs<<#= Model.Model #>, TView>(id);
         }
 
         public void Create(<#= Model.View #> view)
         {
             <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
-            UnitOfWork.Repository<<#= Model.Model #>>().Insert(<#= Model.ModelName #>);
+            UnitOfWork.Insert(<#= Model.ModelName #>);
             UnitOfWork.Commit();
         }
         public void Edit(<#= Model.View #> view)
         {
             <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
-            UnitOfWork.Repository<<#= Model.Model #>>().Update(<#= Model.ModelName #>);
+            UnitOfWork.Update(<#= Model.ModelName #>);
             UnitOfWork.Commit();
         }
         public void Delete(String id)
         {
-            UnitOfWork.Repository<<#= Model.Model #>>().Delete(id);
+            UnitOfWork.Delete<<#= Model.Model #>>(id);
             UnitOfWork.Commit();
         }
     }

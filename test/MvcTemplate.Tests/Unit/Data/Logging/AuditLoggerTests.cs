@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Data.Core;
-using MvcTemplate.Data.Logging;
+﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
@@ -18,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     public class AuditLoggerTests
     {
         private TestingContext dataContext;
-        private AContext context;
+        private DbContext context;
 
         private DbEntityEntry<BaseModel> entry;
         private AuditLogger logger;
@@ -106,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Log_DoesNotSaveLogs()
         {
             entry.State = EntityState.Added;
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
             logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
 
@@ -141,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Log_DoesNotSaveLog()
         {
             entry.State = EntityState.Added;
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             LoggableEntity entity = new LoggableEntity(entry);
 
             logger = Substitute.ForPartsOf<AuditLogger>(context);
@@ -160,7 +159,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void Save_SavesLogs()
         {
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
 
             logger.Save();
@@ -175,7 +174,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Test]
         public void Dispose_DisposesContext()
         {
-            AContext context = Substitute.For<AContext>();
+            DbContext context = Substitute.For<DbContext>();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
 
             logger.Dispose();

@@ -40,7 +40,7 @@ namespace MvcTemplate.Components.Security
             using (IUnitOfWork unitOfWork = DependencyResolver.Current.GetService<IUnitOfWork>())
             {
                 cache = unitOfWork
-                    .Repository<Account>()
+                    .Select<Account>()
                     .Where(account => account.RoleId != null)
                     .Select(account => new
                     {

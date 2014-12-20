@@ -8,6 +8,7 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
+using System.Data.Entity;
 using System.Web.Hosting;
 using System.Web.Mvc;
 
@@ -17,7 +18,7 @@ namespace MvcTemplate.Web.DependencyInjection
     {
         public virtual void RegisterServices()
         {
-            Register<AContext, Context>();
+            Register<DbContext, Context>();
             Register<IUnitOfWork, UnitOfWork>();
 
             Register<ILogger, Logger>();

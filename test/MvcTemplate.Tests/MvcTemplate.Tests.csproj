@@ -201,7 +201,7 @@
     <Compile Include="Unit\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Unit\Data\Logging\AuditLoggerTests.cs" />
     <Compile Include="Unit\Data\Logging\LoggableEntityTests.cs" />
-    <Compile Include="Unit\Data\Core\RepositoryTests.cs" />
+    <Compile Include="Unit\Data\Core\SelectTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />
     <Compile Include="Helpers\HtmlHelperFactory.cs" />
@@ -220,7 +220,6 @@
     <Compile Include="Unit\Components\Mvc\Validators\NumberValidatorTests.cs" />
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
     <Compile Include="Unit\Services\BaseServiceTests.cs" />
-    <Compile Include="Unit\Data\Core\ContextTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Objects\Models\System\LogTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeNodeTests.cs" />

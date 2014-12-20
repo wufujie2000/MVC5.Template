@@ -149,10 +149,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Test]
         public void GetModels_ReturnsModelsFromUnitOfWork()
         {
-            unitOfWork.Repository<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
+            unitOfWork.Select<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
-            IQueryable expected = unitOfWork.Repository<Role>().To<RoleView>();
+            IQueryable expected = unitOfWork.Select<Role>().To<RoleView>();
             IQueryable actual = datalist.BaseGetModels();
 
             Assert.AreSame(expected, actual);

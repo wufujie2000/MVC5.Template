@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Data.Core;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,10 +9,10 @@ namespace MvcTemplate.Data.Logging
 {
     public class AuditLogger : IAuditLogger
     {
-        private AContext context;
+        private DbContext context;
         private Boolean disposed;
 
-        public AuditLogger(AContext context)
+        public AuditLogger(DbContext context)
         {
             this.context = context;
         }

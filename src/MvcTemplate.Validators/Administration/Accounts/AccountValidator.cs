@@ -69,7 +69,7 @@ namespace MvcTemplate.Validators
         private Boolean IsUniqueUsername(String accountId, String username)
         {
             Boolean isUnique = !UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Any(account =>
                     account.Id != accountId &&
                     account.Username.ToLower() == username.ToLower());
@@ -82,7 +82,7 @@ namespace MvcTemplate.Validators
         private Boolean IsUniqueEmail(String accountId, String email)
         {
             Boolean isUnique = !UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Any(account =>
                     account.Id != accountId &&
                     account.Email.ToLower() == email.ToLower());
@@ -96,7 +96,7 @@ namespace MvcTemplate.Validators
         private Boolean IsAuthenticated(String username, String password)
         {
             String passhash = UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Where(account => account.Username.ToLower() == username.ToLower())
                 .Select(account => account.Passhash)
                 .SingleOrDefault();
@@ -110,7 +110,7 @@ namespace MvcTemplate.Validators
         private Boolean IsCorrectPassword(String accountId, String password)
         {
             String passhash = UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Where(account => account.Id == accountId)
                 .Select(account => account.Passhash)
                 .Single();
@@ -125,7 +125,7 @@ namespace MvcTemplate.Validators
         private Boolean IsValidResetToken(String token)
         {
             Boolean isValid = UnitOfWork
-                .Repository<Account>()
+                .Select<Account>()
                 .Any(account =>
                     account.RecoveryToken == token &&
                     account.RecoveryTokenExpirationDate > DateTime.Now);

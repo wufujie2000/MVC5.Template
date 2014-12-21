@@ -8,10 +8,10 @@ using System.Web.Mvc;
 
 namespace <#= Model.ControllerNamespace #>
 {
-    public class <#= Model.Controller #> : ValidatedController<<#= Model.IService #>, <#= Model.IValidator #>>
+    public class <#= Model.Controller #> : ValidatedController<<#= Model.IValidator #>, <#= Model.IService #>>
     {
-        public <#= Model.Controller #>(<#= Model.IService #> service, <#= Model.IValidator #> validator)
-            : base(service, validator)
+        public <#= Model.Controller #>(<#= Model.IValidator #> validator, <#= Model.IService #> service)
+            : base(validator, service)
         {
         }
 

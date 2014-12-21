@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = new AccountView();
 
-            controller = Substitute.ForPartsOf<AuthController>(service, validator);
+            controller = Substitute.ForPartsOf<AuthController>(validator, service);
             controller.ControllerContext = new ControllerContext();
         }
 

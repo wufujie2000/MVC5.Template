@@ -28,7 +28,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service = Substitute.For<<#= Model.IService #>>();
             <#= Model.ModelName #> = new <#= Model.View #>();
 
-            controller = Substitute.ForPartsOf<<#= Model.Controller #>>(service, validator);
+            controller = Substitute.ForPartsOf<<#= Model.Controller #>>(validator, service);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }

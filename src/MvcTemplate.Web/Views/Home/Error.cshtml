@@ -1,4 +1,6 @@
-﻿@{
+﻿@using MvcTemplate.Resources.Content
+
+@{
     Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
@@ -10,5 +12,5 @@
 
 <div class="separator"></div>
 
-<div class="describtion text">@MvcTemplate.Resources.Shared.Messages.SystemError</div>
-@Html.ActionLink(MvcTemplate.Resources.Content.Titles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })
+<div class="describtion text">@Messages.SystemError</div>
+@Html.ActionLink(Titles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })

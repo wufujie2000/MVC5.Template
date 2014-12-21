@@ -104,21 +104,6 @@ namespace MvcTemplate.Tests
             };
         }
 
-        public static RolePrivilege CreateRolePrivilege(String id = "1")
-        {
-            return new RolePrivilege
-            {
-                Id = id
-            };
-        }
-        public static RolePrivilegeView CreateRolePrivilegeView(String id = "1")
-        {
-            return new RolePrivilegeView
-            {
-                Id = id
-            };
-        }
-
         public static Privilege CreatePrivilege(String id = "1")
         {
             return new Privilege
@@ -129,14 +114,11 @@ namespace MvcTemplate.Tests
                 Controller = "Controller" + id
             };
         }
-        public static PrivilegeView CreatePrivilegeView(String id = "1")
+        public static RolePrivilege CreateRolePrivilege(String id = "1")
         {
-            return new PrivilegeView
+            return new RolePrivilege
             {
-                Id = id,
-                Area = "Area" + id,
-                Action = "Action" + id,
-                Controller = "Controller" + id
+                Id = id
             };
         }
 

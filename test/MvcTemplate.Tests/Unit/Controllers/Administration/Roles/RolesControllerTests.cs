@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service = Substitute.For<IRoleService>();
             role = new RoleView();
 
-            controller = Substitute.ForPartsOf<RolesController>(service, validator);
+            controller = Substitute.ForPartsOf<RolesController>(validator, service);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }

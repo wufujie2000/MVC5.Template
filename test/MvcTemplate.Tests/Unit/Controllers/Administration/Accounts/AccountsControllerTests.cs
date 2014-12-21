@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             accountEdit = new AccountEditView();
             account = new AccountView();
 
-            controller = Substitute.ForPartsOf<AccountsController>(service, validator);
+            controller = Substitute.ForPartsOf<AccountsController>(validator, service);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.RouteData = new RouteData();
         }

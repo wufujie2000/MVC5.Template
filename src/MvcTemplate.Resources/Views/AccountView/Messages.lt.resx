@@ -124,7 +124,7 @@
     <value>Paskyra atnaujinta sėkmingai</value>
   </data>
   <data name="RecoveryEmailBody" xml:space="preserve">
-    <value> Norėdami atkurti savo paskyrą, spauskite &lt;a href="{0}"&gt;čia&lt;/a&gt;.</value>
+    <value>Norėdami atkurti savo paskyrą, spauskite &lt;a href="{0}"&gt;čia&lt;/a&gt;.</value>
   </data>
   <data name="RecoveryEmailSubject" xml:space="preserve">
     <value>Paskyros atkūrimas</value>

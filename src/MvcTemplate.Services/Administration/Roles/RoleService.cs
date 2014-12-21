@@ -106,13 +106,13 @@ namespace MvcTemplate.Services
 
         private void CreateRole(RoleView view)
         {
-            Role model = UnitOfWork.To<Role>(view);
-            UnitOfWork.Insert(model);
+            Role role = UnitOfWork.To<Role>(view);
+            UnitOfWork.Insert(role);
         }
         private void EditRole(RoleView view)
         {
-            Role model = UnitOfWork.To<Role>(view);
-            UnitOfWork.Update(model);
+            Role role = UnitOfWork.To<Role>(view);
+            UnitOfWork.Update(role);
         }
 
         private void DeleteRolePrivileges(RoleView view)

@@ -11,7 +11,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
     [TestFixture]
     public class ValidatedControllerTests
     {
-        private ValidatedController<IService, IValidator> controller;
+        private ValidatedController<IValidator, IService> controller;
         private IValidator validator;
         private IService service;
 
@@ -20,7 +20,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service = Substitute.For<IService>();
             validator = Substitute.For<IValidator>();
-            controller = Substitute.ForPartsOf<ValidatedController<IService, IValidator>>(service, validator);
+            controller = Substitute.ForPartsOf<ValidatedController<IValidator, IService>>(validator, service);
         }
 
         #region Constructor: ValidatedController(TService service, TValidator validator)

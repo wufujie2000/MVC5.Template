@@ -9,10 +9,10 @@ using System.Web.Mvc;
 namespace MvcTemplate.Controllers
 {
     [AllowAnonymous]
-    public class AuthController : ValidatedController<IAccountService, IAccountValidator>
+    public class AuthController : ValidatedController<IAccountValidator, IAccountService>
     {
-        public AuthController(IAccountService service, IAccountValidator validator)
-            : base(service, validator)
+        public AuthController(IAccountValidator validator, IAccountService service)
+            : base(validator, service)
         {
         }
 

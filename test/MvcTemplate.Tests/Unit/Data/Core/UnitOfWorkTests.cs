@@ -173,14 +173,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         public void Update_UpdatesAttachedModel()
         {
             TestModel attachedModel = ObjectFactory.CreateTestModel();
-            TestModel editedModel = ObjectFactory.CreateTestModel();
+            TestModel model = ObjectFactory.CreateTestModel();
             context.Set<TestModel>().Add(attachedModel);
-            editedModel.Text += "Test";
+            model.Text += "Test";
 
-            unitOfWork.Update(editedModel);
+            unitOfWork.Update(model);
 
             DbEntityEntry<TestModel> actual = context.Entry<TestModel>(attachedModel);
-            TestModel expected = editedModel;
+            TestModel expected = model;
 
             Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
             Assert.AreEqual(EntityState.Modified, actual.State);

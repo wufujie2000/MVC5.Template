@@ -4,7 +4,7 @@ using System;
 
 namespace MvcTemplate.Controllers
 {
-    public abstract class ValidatedController<TService, TValidator> : ServicedController<TService>
+    public abstract class ValidatedController<TValidator, TService> : ServicedController<TService>
         where TValidator : IValidator
         where TService : IService
     {
@@ -16,7 +16,7 @@ namespace MvcTemplate.Controllers
             private set;
         }
 
-        protected ValidatedController(TService service, TValidator validator)
+        protected ValidatedController(TValidator validator, TService service)
             : base(service)
         {
             Validator = validator;

@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
-    public class AccountsController : ValidatedController<IAccountService, IAccountValidator>
+    public class AccountsController : ValidatedController<IAccountValidator, IAccountService>
     {
-        public AccountsController(IAccountService service, IAccountValidator validator)
-            : base(service, validator)
+        public AccountsController(IAccountValidator validator, IAccountService service)
+            : base(validator, service)
         {
         }
 

@@ -9,10 +9,10 @@ using System.Web.Mvc;
 namespace MvcTemplate.Controllers
 {
     [AllowUnauthorized]
-    public class ProfileController : ValidatedController<IAccountService, IAccountValidator>
+    public class ProfileController : ValidatedController<IAccountValidator, IAccountService>
     {
-        public ProfileController(IAccountService service, IAccountValidator validator)
-            : base(service, validator)
+        public ProfileController(IAccountValidator validator, IAccountService service)
+            : base(validator, service)
         {
         }
 

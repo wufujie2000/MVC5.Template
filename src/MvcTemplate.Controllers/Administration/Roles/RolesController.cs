@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
-    public class RolesController : ValidatedController<IRoleService, IRoleValidator>
+    public class RolesController : ValidatedController<IRoleValidator, IRoleService>
     {
-        public RolesController(IRoleService service, IRoleValidator validator)
-            : base(service, validator)
+        public RolesController(IRoleValidator validator, IRoleService service)
+            : base(validator, service)
         {
         }
 

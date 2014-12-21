@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             service = Substitute.For<IAccountService>();
             validator = Substitute.For<IAccountValidator>();
-            controller = Substitute.ForPartsOf<ProfileController>(service, validator);
+            controller = Substitute.ForPartsOf<ProfileController>(validator, service);
 
             controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
             controller.CurrentAccountId.Returns("CurrentAccount");

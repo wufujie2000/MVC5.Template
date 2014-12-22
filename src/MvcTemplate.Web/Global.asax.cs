@@ -6,9 +6,7 @@ using MvcTemplate.Controllers;
 using MvcTemplate.Web.DependencyInjection;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -19,19 +17,6 @@ namespace MvcTemplate.Web
 {
     public class MvcApplication : HttpApplication
     {
-        public static String Version
-        {
-            get;
-            private set;
-        }
-
-        static MvcApplication()
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Version = versionInfo.FileVersion;
-        }
-
         public void Application_Start()
         {
             RegisterCurrentDependencyResolver();

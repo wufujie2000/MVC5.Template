@@ -49,22 +49,6 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Dispose();
         }
 
-        #region Static property: Version
-
-        [Test]
-        public void Version_ReturnsCurrentVersion()
-        {
-            Assembly assembly = Assembly.GetAssembly(typeof(MvcApplication));
-            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-
-            String expected = versionInfo.FileVersion;
-            String actual = MvcApplication.Version;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        #endregion
-
         #region Method: Application_Start()
 
         [Test]

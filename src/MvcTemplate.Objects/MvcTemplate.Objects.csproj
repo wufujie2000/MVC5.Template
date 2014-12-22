@@ -64,8 +64,6 @@
     <Compile Include="Views\Administration\Accounts\ProfileEditView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountEditView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountView.cs" />
-    <Compile Include="Views\Administration\Roles\PrivilegeView.cs" />
-    <Compile Include="Views\Administration\Roles\RolePrivilegeView.cs" />
     <Compile Include="Views\Administration\Roles\RoleView.cs" />
     <Compile Include="Views\BaseView.cs" />
   </ItemGroup>

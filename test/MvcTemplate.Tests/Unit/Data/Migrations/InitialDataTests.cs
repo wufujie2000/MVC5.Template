@@ -44,6 +44,15 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
                 privilege.Area == area));
         }
 
+        [Test]
+        public void PrivilegesTable_HasExactNumberOfPrivileges()
+        {
+            Int32 actual = context.Set<Privilege>().Count();
+            Int32 expected = 8;
+
+            Assert.AreEqual(expected, actual);
+        }
+
         #endregion
 
         #region Table: Roles

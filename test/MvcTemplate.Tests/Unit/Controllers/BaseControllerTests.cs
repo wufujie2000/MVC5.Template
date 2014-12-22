@@ -87,7 +87,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void NotEmptyView_ReturnsViewResultIfModelIsNotNull()
+        public void NotEmptyView_ReturnsEmptyView()
         {
             Object expected = new Object();
             Object actual = (controller.NotEmptyView(expected) as ViewResult).Model;

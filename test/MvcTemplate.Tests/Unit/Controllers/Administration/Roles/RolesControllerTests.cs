@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsRoleViews()
+        public void Index_GetsRoleViews()
         {
             service.GetViews().Returns(new RoleView[0].AsQueryable());
 
@@ -136,7 +136,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Details_ReturnsRoleView()
+        public void Details_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
 
@@ -164,7 +164,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_ReturnsRoleView()
+        public void Edit_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
 
@@ -239,7 +239,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Delete_ReturnsRoleView()
+        public void Delete_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
 

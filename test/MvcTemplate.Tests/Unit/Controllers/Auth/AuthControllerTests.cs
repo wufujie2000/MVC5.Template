@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Register_ReturnsNullModelIfNotLoggedIn()
+        public void Register_IfNotLoggedInReturnsEmptyView()
         {
             service.IsLoggedIn().Returns(false);
 
@@ -157,7 +157,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Recover_ReturnsNullModelIfNotLoggedIn()
+        public void Recover_IfNotLoggedInReturnsEmptyView()
         {
             service.IsLoggedIn().Returns(false);
 
@@ -264,7 +264,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Reset_ReturnsNullModelIfCanReset()
+        public void Reset_IfCanResetReturnsEmptyView()
         {
             service.IsLoggedIn().Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(true);
@@ -361,7 +361,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Login_ReturnsNullModelIfNotLoggedIn()
+        public void Login_IfNotLoggedInReturnsEmptyView()
         {
             service.IsLoggedIn().Returns(false);
 

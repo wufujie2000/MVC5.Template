@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Index()
 
         [Test]
-        public void Index_ReturnsAccountViews()
+        public void Index_GetsAccountViews()
         {
             service.GetViews().Returns(new AccountView[0].AsQueryable());
 
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Details_ReturnsAccountView()
+        public void Details_GetsAccountView()
         {
             service.Get<AccountView>(account.Id).Returns(account);
 
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Test]
-        public void Edit_ReturnsAccountView()
+        public void Edit_GetsAccountView()
         {
             service.Get<AccountEditView>(account.Id).Returns(accountEdit);
 

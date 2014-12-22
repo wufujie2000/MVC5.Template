@@ -36,7 +36,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Index()
 
         [Test]
-        public void Index_Returns<#= Model.View #>s()
+        public void Index_Gets<#= Model.View #>s()
         {
             service.GetViews().Returns(new <#= Model.View #>[0].AsQueryable());
 
@@ -117,7 +117,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Test]
-        public void Details_Returns<#= Model.View #>()
+        public void Details_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
@@ -145,7 +145,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Test]
-        public void Edit_Returns<#= Model.View #>()
+        public void Edit_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 
@@ -210,7 +210,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Test]
-        public void Delete_Returns<#= Model.View #>()
+        public void Delete_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
 

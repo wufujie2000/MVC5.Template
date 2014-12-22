@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Index_ReturnsViewWithNullModel()
+        public void Index_ReturnsEmptyView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
 
@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Error()
 
         [Test]
-        public void Error_ReturnsViewWithNullModell()
+        public void Error_ReturnsEmptyView()
         {
             Object model = (controller.Error() as ViewResult).Model;
 
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: NotFound()
 
         [Test]
-        public void NotFound_ReturnsViewWithNullModel()
+        public void NotFound_ReturnsEmptyView()
         {
             Object model = (controller.NotFound() as ViewResult).Model;
 
@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Unauthorized_ReturnsViewWithNullModel()
+        public void Unauthorized_ReturnsEmptyView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
 

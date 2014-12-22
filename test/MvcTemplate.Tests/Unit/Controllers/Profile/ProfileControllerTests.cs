@@ -140,7 +140,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.AccountExists(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(false);
 
-            Assert.AreSame(profileEdit, (controller.Edit(profileEdit) as ViewResult).Model);
+            Object actual = (controller.Edit(profileEdit) as ViewResult).Model; 
+            Object expected = profileEdit;
+
+            Assert.AreSame(expected, actual);
         }
 
         #endregion
@@ -173,7 +176,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void Delete_ReturnsNullModel()
+        public void Delete_ReturnsEmptyView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
 
@@ -219,7 +222,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Test]
-        public void DeleteConfirmed_ReturnsNullModelIfCanNotDelete()
+        public void DeleteConfirmed_IfCanNotDeleteReturnsEmptyView()
         {
             validator.CanDelete(profileDelete).Returns(false);
             service.AccountExists(controller.CurrentAccountId).Returns(true);

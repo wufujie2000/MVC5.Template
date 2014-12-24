@@ -22,7 +22,14 @@ namespace MvcTemplate.Components.Security
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
         {
-            if (AllowsUnauthorized(area, controller, action))
+            Type authorizedController = GetControllerType(area, controller);
+            MethodInfo actionInfo = GetMethod(authorizedController, action);
+            String authorizedAs = GetAuthorizedAs(actionInfo);
+
+            if (authorizedAs != null)
+                return IsAuthorizedFor(accountId, area, controller, authorizedAs);
+
+            if (AllowsUnauthorized(authorizedController, actionInfo))
                 return true;
 
             if (!cache.ContainsKey(accountId ?? ""))
@@ -56,11 +63,8 @@ namespace MvcTemplate.Components.Security
             }
         }
 
-        private Boolean AllowsUnauthorized(String area, String controller, String action)
+        private Boolean AllowsUnauthorized(Type authorizedControllerType, MethodInfo method)
         {
-            Type authorizedControllerType = GetControllerType(area, controller);
-            MethodInfo method = GetMethod(authorizedControllerType, action);
-
             if (method.IsDefined(typeof(AuthorizeAttribute), false)) return false;
             if (method.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
@@ -103,6 +107,14 @@ namespace MvcTemplate.Components.Security
                 throw new Exception(String.Format("'{0}' does not have '{1}' action.", controller.Name, action));
 
             return methods[0];
+        }
+        private String GetAuthorizedAs(MethodInfo action)
+        {
+            AuthorizeAsAttribute authorizedAs = action.GetCustomAttribute<AuthorizeAsAttribute>();
+            if (authorizedAs == null || authorizedAs.Action == action.Name)
+                return null;
+
+            return authorizedAs.Action;
         }
     }
 }

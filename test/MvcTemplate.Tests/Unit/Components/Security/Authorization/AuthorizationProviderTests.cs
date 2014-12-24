@@ -202,6 +202,22 @@ namespace MvcTemplate.Tests.Unit.Security
         #endregion
 
         [Test]
+        public void IsAuthorizedFor_CanBeAuthorizedAsOtherAction()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Security", "NotAttributed", "AuthorizedGetAction");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "NotAttributed", "AuthorizedAsOther"));
+        }
+
+        [Test]
+        public void IsAuthorizedFor_CanBeAuthorizedAsOtherSelf()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Security", "NotAttributed", "AuthorizedAsSelf");
+
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "NotAttributed", "AuthorizedAsSelf"));
+        }
+
+        [Test]
         public void IsAuthorizedFor_CachesAccountPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "AuthorizedGet");

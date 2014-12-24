@@ -72,5 +72,15 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         [AllowUnauthorized]
         [ActionName("UnauthorizedPostName")]
         public abstract ViewResult UnauthorizedPostAction();
+
+        [HttpGet]
+        [Authorize]
+        [AuthorizeAs("AuthorizedGetAction")]
+        public abstract ViewResult AuthorizedAsOther();
+
+        [HttpGet]
+        [Authorize]
+        [AuthorizeAs("AuthorizedAsSelf")]
+        public abstract ViewResult AuthorizedAsSelf();
     }
 }

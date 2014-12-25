@@ -1,10 +1,9 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
-using MvcTemplate.Resources.Form;
+using MvcTemplate.Resources.Shared;
 using MvcTemplate.Tests.Objects;
 using NUnit.Framework;
 using System;
-using System.Web;
 using System.Web.Routing;
 
 namespace MvcTemplate.Tests.Unit.Resources
@@ -12,120 +11,6 @@ namespace MvcTemplate.Tests.Unit.Resources
     [TestFixture]
     public class ResourceProviderTests
     {
-        private RouteValueDictionary routeValues;
-
-        [SetUp]
-        public void SetUp()
-        {
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            routeValues = HttpContext.Current.Request.RequestContext.RouteData.Values;
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            HttpContext.Current = null;
-        }
-
-        #region Static method: GetCurrentFormTitle()
-
-        [Test]
-        public void GetCurrentFormTitle_GetsTitle()
-        {
-            routeValues["area"] = "Administration";
-            routeValues["controller"] = "Accounts";
-            routeValues["action"] = "Details";
-
-            String expected = Titles.AdministrationAccountsDetails;
-            String actual = ResourceProvider.GetCurrentFormTitle();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetCurrentFormTitle_GetsTitleWithoutArea()
-        {
-            routeValues["controller"] = "Profile";
-            routeValues["action"] = "Edit";
-            routeValues["area"] = null;
-
-            String expected = Titles.ProfileEdit;
-            String actual = ResourceProvider.GetCurrentFormTitle();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetCurrentFormTitle_OnFormNotFoundReturnsNull()
-        {
-            routeValues["controller"] = "Controller";
-
-            Assert.IsNull(ResourceProvider.GetCurrentFormTitle());
-        }
-
-        #endregion
-
-        #region Static method: GetCurrentTableTitle()
-
-        [Test]
-        public void GetCurrentTableTitle_GetsTitle()
-        {
-            routeValues["action"] = "Index";
-
-            String expected = MvcTemplate.Resources.Table.Titles.AdministrationAccountsIndex;
-            String actual = ResourceProvider.GetCurrentTableTitle();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        [Ignore("There is no controller without area, which uses table in one of it's actions.")]
-        public void GetCurrentTableTitle_GetsTitleWithoutArea()
-        {
-        }
-
-        [Test]
-        public void GetCurrentTableTitle_OnTableNotFoundReturnsNull()
-        {
-            Assert.IsNull(ResourceProvider.GetCurrentTableTitle());
-        }
-
-        #endregion
-
-        #region Static method: GetCurrentContentTitle()
-
-        [Test]
-        public void GetCurrentContentTitle_GetsTitle()
-        {
-            String expected = MvcTemplate.Resources.Content.Titles.AdministrationAccountsDetails;
-            String actual = ResourceProvider.GetCurrentContentTitle();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetCurrentContentTitle_GetsTitleWithoutArea()
-        {
-            routeValues["controller"] = "Profile";
-            routeValues["action"] = "Delete";
-            routeValues["area"] = null;
-
-            String expected = MvcTemplate.Resources.Content.Titles.ProfileDelete;
-            String actual = ResourceProvider.GetCurrentContentTitle();
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetCurrentContentTitle_OnContentNotFoundReturnsNull()
-        {
-            routeValues["area"] = null;
-
-            Assert.IsNull(ResourceProvider.GetCurrentContentTitle());
-        }
-
-        #endregion
-
         #region Static method: GetDatalistTitle<TModel>()
 
         [Test]
@@ -160,6 +45,72 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetActionTitle_OnActionNotFoundReturnsNull()
         {
             Assert.IsNull(ResourceProvider.GetActionTitle(null));
+        }
+
+        #endregion
+
+        #region Static method: GetContentTitle(RouteValueDictionary values)
+
+        [Test]
+        public void GetContentTitle_GetsTitle()
+        {
+            RouteValueDictionary values = new RouteValueDictionary();
+            values["area"] = "Administration";
+            values["controller"] = "Accounts";
+            values["action"] = "Details";
+
+            String expected = ContentTitles.AdministrationAccountsDetails;
+            String actual = ResourceProvider.GetContentTitle(values);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetContentTitle_GetsTitleWithoutArea()
+        {
+            RouteValueDictionary values = new RouteValueDictionary();
+            values["controller"] = "Profile";
+            values["action"] = "Edit";
+            values["area"] = null;
+
+            String actual = ResourceProvider.GetContentTitle(values);
+            String expected = ContentTitles.ProfileEdit;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetContentTitle_OnTitleNotFoundReturnsNull()
+        {
+            Assert.IsNull(ResourceProvider.GetContentTitle(new RouteValueDictionary()));
+        }
+
+        #endregion
+
+        #region Static method: GetSiteMapTitle(String area, String controller, String action)
+
+        [Test]
+        public void GetMenuTitle_GetsTitle()
+        {
+            String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
+            String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
+        {
+            String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
+            String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetMenuTitle_OnMenuNotFoundReturnsNull()
+        {
+            Assert.IsNull(ResourceProvider.GetSiteMapTitle("Test", "Test", "Test"));
         }
 
         #endregion
@@ -217,34 +168,6 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetPrivilegeActionTitle_OnActionNotFoundReturnsNull()
         {
             Assert.IsNull(ResourceProvider.GetPrivilegeActionTitle("", "", ""));
-        }
-
-        #endregion
-
-        #region Static method: GetSiteMapTitle(String area, String controller, String action)
-
-        [Test]
-        public void GetMenuTitle_GetsTitle()
-        {
-            String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
-            String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
-        {
-            String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
-            String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [Test]
-        public void GetMenuTitle_OnMenuNotFoundReturnsNull()
-        {
-            Assert.IsNull(ResourceProvider.GetSiteMapTitle("Test", "Test", "Test"));
         }
 
         #endregion

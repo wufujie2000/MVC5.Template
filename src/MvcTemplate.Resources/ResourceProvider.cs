@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Resources;
 using System.Text.RegularExpressions;
-using System.Web;
+using System.Web.Routing;
 
 namespace MvcTemplate.Resources
 {
@@ -13,51 +13,10 @@ namespace MvcTemplate.Resources
         private static Assembly executingAssembly;
         private static String[] resources;
 
-        private static String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
-        private static String CurrentController
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
-            }
-        }
-        private static String CurrentAction
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["action"] as String;
-            }
-        }
-
         static ResourceProvider()
         {
             executingAssembly = Assembly.GetExecutingAssembly();
             resources = executingAssembly.DefinedTypes.Select(type => type.FullName).ToArray();
-        }
-
-        public static String GetCurrentFormTitle()
-        {
-            String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
-
-            return GetResource("MvcTemplate.Resources.Form.Titles", key);
-        }
-        public static String GetCurrentTableTitle()
-        {
-            String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
-
-            return GetResource("MvcTemplate.Resources.Table.Titles", key);
-        }
-        public static String GetCurrentContentTitle()
-        {
-            String key = String.Format("{0}{1}{2}", CurrentArea, CurrentController, CurrentAction);
-
-            return GetResource("MvcTemplate.Resources.Content.Titles", key);
         }
 
         public static String GetDatalistTitle<TModel>()
@@ -68,6 +27,19 @@ namespace MvcTemplate.Resources
         {
             return GetResource("MvcTemplate.Resources.Action.Titles", action);
         }
+        public static String GetContentTitle(RouteValueDictionary values)
+        {
+            String key = String.Format("{0}{1}{2}", values["area"], values["controller"], values["action"]);
+
+            return GetResource("MvcTemplate.Resources.Shared.ContentTitles", key);
+        }
+        public static String GetSiteMapTitle(String area, String controller, String action)
+        {
+            String key = String.Format("{0}{1}{2}", area, controller, action);
+
+            return GetResource("MvcTemplate.Resources.SiteMap.Titles", key);
+        }
+
         public static String GetPrivilegeAreaTitle(String area)
         {
             return GetResource("MvcTemplate.Resources.Privilege.Area.Titles", area);
@@ -83,13 +55,6 @@ namespace MvcTemplate.Resources
             String key = String.Format("{0}{1}{2}", area, controller, action);
 
             return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", key);
-        }
-
-        public static String GetSiteMapTitle(String area, String controller, String action)
-        {
-            String key = String.Format("{0}{1}{2}", area, controller, action);
-
-            return GetResource("MvcTemplate.Resources.SiteMap.Titles", key);
         }
 
         public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
@@ -126,11 +91,6 @@ namespace MvcTemplate.Resources
 
             return null;
         }
-
-        private static String[] SplitCamelCase(String value)
-        {
-            return Regex.Split(value, @"(?<!^)(?=[A-Z])");
-        }
         private static String GetResource(String baseName, String key)
         {
             if (!resources.Any(resourceName => resourceName == baseName)) return null;
@@ -139,6 +99,10 @@ namespace MvcTemplate.Resources
             manager.IgnoreCase = true;
 
             return manager.GetString(key ?? "");
+        }
+        private static String[] SplitCamelCase(String value)
+        {
+            return Regex.Split(value, @"(?<!^)(?=[A-Z])");
         }
     }
 }

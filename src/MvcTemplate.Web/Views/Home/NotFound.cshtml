@@ -1,10 +1,8 @@
-﻿@using MvcTemplate.Resources.Content
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<div class="title text">@ResourceProvider.GetCurrentContentTitle()</div>
+<div class="title text">@ContentTitles.HomeNotFound</div>
 
 <div class="separator"></div>
 
@@ -13,4 +11,4 @@
 <div class="separator"></div>
 
 <div class="describtion text">@Messages.PageNotFound</div>
-@Html.ActionLink(Titles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })
+@Html.ActionLink(ContentTitles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })

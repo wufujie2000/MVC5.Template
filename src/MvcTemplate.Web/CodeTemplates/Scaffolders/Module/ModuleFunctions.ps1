@@ -37,10 +37,8 @@ Function Scaffold-AreaRegistration([String]$Template, [String]$Project, [String]
 {
     if (!$Delete)
     {
-        $ControllerNamespace = "MvcTemplate.Controllers"
-        $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
-        If ($Area) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
-        If ($Area) { $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area" }
+        $ControllerNamespace = "MvcTemplate.Controllers.$Area"
+        $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers.$Area"
 
         Add-ProjectItemViaTemplate `
             -OutputPath $OutputPath `
@@ -64,11 +62,15 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         Return;
     }
 
+    $HeaderTitle = $Controller
+    if ($Area) { $HeaderTitle = $Area + $HeaderTitle }
+
     Add-ProjectItemViaTemplate `
         -OutputPath $OutputPath `
         -Template $Template `
         -Model @{ `
             View = $Model + "View"; `
+            HeaderTitle = $HeaderTitle; `
         } `
         -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `

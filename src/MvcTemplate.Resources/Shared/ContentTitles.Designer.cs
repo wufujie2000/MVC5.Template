@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MvcTemplate.Resources.Form {
+namespace MvcTemplate.Resources.Shared {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace MvcTemplate.Resources.Form {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Titles {
+    public class ContentTitles {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Titles() {
+        internal ContentTitles() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace MvcTemplate.Resources.Form {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Form.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Shared.ContentTitles", typeof(ContentTitles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to Account details.
         /// </summary>
         public static string AdministrationAccountsDetails {
             get {
@@ -70,7 +70,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account.
+        ///   Looks up a localized string similar to Account edit.
         /// </summary>
         public static string AdministrationAccountsEdit {
             get {
@@ -79,7 +79,16 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string AdministrationAccountsIndex {
+            get {
+                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role creation.
         /// </summary>
         public static string AdministrationRolesCreate {
             get {
@@ -88,7 +97,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Role deletion.
         /// </summary>
         public static string AdministrationRolesDelete {
             get {
@@ -97,7 +106,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Role details.
         /// </summary>
         public static string AdministrationRolesDetails {
             get {
@@ -106,7 +115,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to Role edit.
         /// </summary>
         public static string AdministrationRolesEdit {
             get {
@@ -115,7 +124,88 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile.
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string AdministrationRolesIndex {
+            get {
+                return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string AuthLogin {
+            get {
+                return ResourceManager.GetString("AuthLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recover.
+        /// </summary>
+        public static string AuthRecover {
+            get {
+                return ResourceManager.GetString("AuthRecover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string AuthRegister {
+            get {
+                return ResourceManager.GetString("AuthRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string AuthReset {
+            get {
+                return ResourceManager.GetString("AuthReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string HomeError {
+            get {
+                return ResourceManager.GetString("HomeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomeIndex {
+            get {
+                return ResourceManager.GetString("HomeIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found.
+        /// </summary>
+        public static string HomeNotFound {
+            get {
+                return ResourceManager.GetString("HomeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized.
+        /// </summary>
+        public static string HomeUnauthorized {
+            get {
+                return ResourceManager.GetString("HomeUnauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile deletion.
         /// </summary>
         public static string ProfileDelete {
             get {
@@ -124,7 +214,7 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Profile.
+        ///   Looks up a localized string similar to Profile edit.
         /// </summary>
         public static string ProfileEdit {
             get {

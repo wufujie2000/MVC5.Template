@@ -329,9 +329,7 @@
     <Content Include="Views\Profile\Delete.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
-    <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-    <Content Include="Views\Shared\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_GridPager.cshtml" />

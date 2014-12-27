@@ -1,7 +1,3 @@
-As the name implies, it's a project starter template for ASP.NET MVC based solutions.
-
-This project will use the latest technologies and will try to incorporate the best ASP.NET MVC practices.
-
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
 2. Build project or restore NuGet packages.
@@ -18,7 +14,6 @@ This project will use the latest technologies and will try to incorporate the be
 - Lowercase or normal ASP.NET urls.
 - Protection from CSRF, XSS, etc.
 - Custom membership providers.
-- [Basic module scaffolding](https://github.com/NonFactors/MVC.Template/wiki/Scaffolding).
 - Easy project renaming.
 - Dependency injection.
 - Custom error pages.
@@ -26,16 +21,3 @@ This project will use the latest technologies and will try to incorporate the be
 - Audit log.
 - Site map.
 - Tests.
-
-# Frameworks used
-- [ASP.NET MVC](http://www.asp.net/mvc/) - main framework.
-- [Bootstrap](http://getbootstrap.com/) - design.
-- [JQuery](http://jquery.com/) - client side javascript.
-- [JQuery.UI](http://jqueryui.com/) - client side javascript.
-- [LightInject](http://www.lightinject.net/) - dependency injector.
-- [AutoMapper](http://automapper.org/) - model<->view object mapper.
-- [T4Scaffolding](https://www.nuget.org/packages/T4Scaffolding.Core/) - program module scaffolder.
-- [GridMvc](http://gridmvc.codeplex.com/) - grid controls.
-- [Datalist](http://non-factors.com/Datalist/) - data list controls.
-- [NSubstitute](http://nsubstitute.github.io/) - mocking framework.
-- [NUnit](http://www.nunit.org/) - testing framework.

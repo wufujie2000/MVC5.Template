@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Test]
         public void GetActionTitle_GetsTitle()
         {
-            String expected = MvcTemplate.Resources.Action.Titles.Create;
+            String expected = MvcTemplate.Resources.Shared.Actions.Create;
             String actual = ResourceProvider.GetActionTitle("Create");
 
             Assert.AreEqual(expected, actual);

@@ -35,15 +35,15 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action\Titles.lt.Designer.cs">
-      <DependentUpon>Titles.lt.resx</DependentUpon>
+    <Compile Include="Shared\Actions.lt.Designer.cs">
+      <DependentUpon>Actions.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Action\Titles.Designer.cs">
+    <Compile Include="Shared\Actions.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.resx</DependentUpon>
+      <DependentUpon>Actions.resx</DependentUpon>
     </Compile>
     <Compile Include="Shared\ContentTitles.lt.Designer.cs">
       <DependentUpon>ContentTitles.lt.resx</DependentUpon>
@@ -289,13 +289,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Action\Titles.lt.resx">
+    <EmbeddedResource Include="Shared\Actions.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Actions.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Action\Titles.resx">
+    <EmbeddedResource Include="Shared\Actions.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <LastGenOutput>Actions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Shared\ContentTitles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

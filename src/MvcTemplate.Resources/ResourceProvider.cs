@@ -25,7 +25,7 @@ namespace MvcTemplate.Resources
         }
         public static String GetActionTitle(String action)
         {
-            return GetResource("MvcTemplate.Resources.Action.Titles", action);
+            return GetResource("MvcTemplate.Resources.Shared.Actions", action);
         }
         public static String GetContentTitle(RouteValueDictionary values)
         {

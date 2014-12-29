@@ -117,12 +117,12 @@ namespace MvcTemplate.Services
 
         private void DeleteRolePrivileges(RoleView view)
         {
-            IQueryable<String> rolePrivileges = UnitOfWork.Select<RolePrivilege>()
-                .Where(rolePrivilege => rolePrivilege.RoleId == view.Id)
-                .Select(rolePrivilege => rolePrivilege.Id);
+            IQueryable<RolePrivilege> rolePrivileges = UnitOfWork
+                .Select<RolePrivilege>()
+                .Where(rolePrivilege => rolePrivilege.RoleId == view.Id);
 
-            foreach (String rolePrivilege in rolePrivileges)
-                UnitOfWork.Delete<RolePrivilege>(rolePrivilege);
+            foreach (RolePrivilege rolePrivilege in rolePrivileges)
+                UnitOfWork.Delete(rolePrivilege);
         }
         private void CreateRolePrivileges(RoleView view)
         {

@@ -23,7 +23,7 @@
     @Html.Partial("_Datalist")
     <div class="sidebar">
         <div class="sidebar-search">
-            @Html.TextBox("SearchInput", null, new { placeholder = Resource.Search + "..." })
+            @Html.TextBox("SearchInput", null, new { placeholder = Actions.Search + "..." })
         </div>
         <ul class="sidebar-navigation">
             @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetAuthorizedMenus())

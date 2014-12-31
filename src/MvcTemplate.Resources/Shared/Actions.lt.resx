@@ -135,10 +135,25 @@
   <data name="Language" xml:space="preserve">
     <value>Kalba</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Prisijungti</value>
+  </data>
   <data name="Logout" xml:space="preserve">
     <value>Atsijungti</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Paskyra</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Patvirtinti</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registruotis</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Ieškoti</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Patvirtinti</value>
   </data>
 </root>

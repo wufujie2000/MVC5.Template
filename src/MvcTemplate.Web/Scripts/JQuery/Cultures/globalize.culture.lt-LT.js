@@ -31,7 +31,7 @@ Globalize.addCultureInfo( "lt-LT", "default", {
             pattern: ["-n $","n $"],
             ",": ".",
             ".": ",",
-            symbol: "Lt"
+            symbol: "€"
         }
     },
     calendars: {

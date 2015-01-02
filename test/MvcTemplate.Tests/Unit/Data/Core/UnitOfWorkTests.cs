@@ -239,9 +239,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Test]
         public void RollBack_RollbacksChanges()
         {
-            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
-            context.SaveChanges();
-
             context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
 
             unitOfWork.Rollback();

@@ -140,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.AccountExists(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(false);
 
-            Object actual = (controller.Edit(profileEdit) as ViewResult).Model; 
+            Object actual = (controller.Edit(profileEdit) as ViewResult).Model;
             Object expected = profileEdit;
 
             Assert.AreSame(expected, actual);

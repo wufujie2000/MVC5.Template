@@ -21,26 +21,6 @@
 
 <div class="separator"></div>
 <div class="auth-actions">
-    @Html.ActionLink(
-        " ",
-        "Login",
-        null,
-        new
-        {
-            @class = "text fa fa-sign-in",
-            rel = "tooltip",
-            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.Login
-        }
-    )
-    @Html.ActionLink(
-        " ",
-        "Register",
-        null,
-        new
-        {
-            @class = "text fa fa-edit",
-            rel = "tooltip",
-            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount
-        }
-    )
+    <a class="text fa fa-sign-in" href="@Url.Action("Login")" rel="tooltip" data-original-title="@MvcTemplate.Resources.Views.AccountView.Texts.Login"></a>
+    <a class="text fa fa-edit" href="@Url.Action("Register")" rel="tooltip" data-original-title="@MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount"></a>
 </div>

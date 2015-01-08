@@ -51,26 +51,6 @@
 
 <div class="separator"></div>
 <div class="auth-actions">
-    @Html.ActionLink(
-        " ",
-        "Register",
-        null,
-        new
-        {
-            @class = "text fa fa-edit",
-            rel = "tooltip",
-            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount
-        }
-    )
-    @Html.ActionLink(
-        " ",
-        "Recover",
-        null,
-        new
-        {
-            @class = "text fa fa-unlock-alt",
-            rel = "tooltip",
-            data_original_title = MvcTemplate.Resources.Views.AccountView.Texts.LostPassword
-        }
-    )
+    <a class="text fa fa-edit" href="@Url.Action("Register")" rel="tooltip" data-original-title="@MvcTemplate.Resources.Views.AccountView.Texts.CreateNewAccount"></a>
+    <a class="text fa fa-unlock-alt" href="@Url.Action("Recover")" rel="tooltip" data-original-title="@MvcTemplate.Resources.Views.AccountView.Texts.LostPassword"></a>
 </div>

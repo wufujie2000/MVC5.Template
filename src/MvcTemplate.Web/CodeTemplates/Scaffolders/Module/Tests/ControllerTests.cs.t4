@@ -58,7 +58,7 @@ namespace <#= Model.ControllerTestNamespace #>
 
         #endregion
 
-        #region Method: Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
+        #region Method: Create(<#= Model.View #> <#= Model.ModelName #>)
 
         [Test]
         public void Create_ProtectsFromOverpostingId()

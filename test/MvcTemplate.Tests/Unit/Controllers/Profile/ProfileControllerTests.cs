@@ -65,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Edit([Bind(Exclude = "Id")] ProfileEditView profile)
+        #region Method: Edit(ProfileEditView profile)
 
         [Test]
         public void Edit_ProtectsFromOverpostingId()
@@ -187,7 +187,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: DeleteConfirmed([Bind(Exclude = "Id")] AccountView profile)
+        #region Method: DeleteConfirmed(AccountView profile)
 
         [Test]
         public void DeleteConfirmed_ProtectsFromOverpostingId()

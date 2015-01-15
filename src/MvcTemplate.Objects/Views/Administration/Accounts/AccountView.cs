@@ -12,6 +12,7 @@ namespace MvcTemplate.Objects
 
         [Required]
         [NotTrimmed]
+        [StringLength(128)]
         public String Password { get; set; }
 
         [Required]

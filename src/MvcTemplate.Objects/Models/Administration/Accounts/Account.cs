@@ -23,11 +23,9 @@ namespace MvcTemplate.Objects
 
         [StringLength(128)]
         public String RecoveryToken { get; set; }
-
         public DateTime? RecoveryTokenExpirationDate { get; set; }
 
         public String RoleId { get; set; }
-
         public virtual Role Role { get; set; }
     }
 }

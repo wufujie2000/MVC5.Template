@@ -115,15 +115,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\Messages.Designer.cs">
+    <Compile Include="Shared\SharedTexts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
+      <DependentUpon>SharedTexts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\Messages.lt.Designer.cs">
+    <Compile Include="Shared\SharedTexts.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.lt.resx</DependentUpon>
+      <DependentUpon>SharedTexts.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="SiteMap\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -227,12 +227,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\Validations.lt.Designer.cs">
+    <Compile Include="Form\Validations.lt.Designer.cs">
       <DependentUpon>Validations.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Shared\Validations.Designer.cs">
+    <Compile Include="Form\Validations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
@@ -343,13 +343,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Messages.lt.resx">
+    <EmbeddedResource Include="Shared\SharedTexts.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>SharedTexts.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Messages.resx">
+    <EmbeddedResource Include="Shared\SharedTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <LastGenOutput>SharedTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SiteMap\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -431,11 +431,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Validations.lt.resx">
+    <EmbeddedResource Include="Form\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\Validations.resx">
+    <EmbeddedResource Include="Form\Validations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>

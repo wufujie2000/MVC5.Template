@@ -1,5 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
-using MvcTemplate.Resources.Shared;
+using MvcTemplate.Resources.Form;
 using NUnit.Framework;
 using System;
 

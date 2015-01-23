@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Resources.Shared;
+﻿using MvcTemplate.Resources.Form;
 using System;
 using System.Collections.Generic;
 using System.Linq;

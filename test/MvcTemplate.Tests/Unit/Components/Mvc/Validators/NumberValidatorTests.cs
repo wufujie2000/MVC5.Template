@@ -1,6 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Objects;
-using MvcTemplate.Resources.Shared;
+using MvcTemplate.Resources.Form;
 using NUnit.Framework;
 using System;
 using System.Linq;

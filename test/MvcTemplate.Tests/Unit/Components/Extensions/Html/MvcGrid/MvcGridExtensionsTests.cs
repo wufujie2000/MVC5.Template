@@ -1,9 +1,8 @@
-﻿using GridMvc.Columns;
-using GridMvc.Html;
-using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Objects;
+using NonFactors.Mvc.Grid;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -16,10 +15,10 @@ using System.Web.Mvc;
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     [TestFixture]
-    public class GridMvcExtensionsTests
+    public class MvcGridExtensionsTests
     {
-        private IGridColumnCollection<AllTypesView> columns;
-        private IGridHtmlOptions<AllTypesView> options;
+        private IGridColumns<AllTypesView> columns;
+        private IHtmlGrid<AllTypesView> options;
         private IGridColumn<AllTypesView> column;
         private UrlHelper urlHelper;
 
@@ -27,14 +26,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUp()
         {
             column = SubstituteColumn<AllTypesView>();
-            options = SubstituteOptions<AllTypesView>();
+            options = SubstituteHtmlGrid<AllTypesView>();
             columns = SubstituteColumns<AllTypesView, DateTime?>(column);
 
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
         }
 
         [TearDown]
@@ -44,60 +40,31 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             HttpContext.Current = null;
         }
 
-        #region Extension method: AddActionLink<T>(this IGridColumnCollection<T> column, String action, String iconClass)
+        #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
 
         [Test]
         public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
         {
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
             Assert.IsNull(columns.AddActionLink("Edit", "fa fa-pencil"));
         }
 
         [Test]
-        public void AddActionLink_AddsGridColumn()
-        {
-            columns.AddActionLink("Edit", "fa fa-pencil");
-
-            columns.Received().Add();
-        }
-
-        [Test]
-        public void AddActionLink_DoesNotEncodeGridColumn()
-        {
-            columns.AddActionLink("Edit", "fa fa-pencil");
-
-            column.Received().Encoded(false);
-        }
-
-        [Test]
-        public void AddActionLink_DoesNotSanitizeGridColumn()
-        {
-            columns.AddActionLink("Edit", "fa fa-pencil");
-
-            column.Received().Sanitized(false);
-        }
-
-        [Test]
-        public void AddActionLink_SetsCssOnGridColumn()
-        {
-            columns.AddActionLink("Edit", "fa fa-pencil");
-
-            column.Received().Css("action-cell");
-        }
-
-        [Test]
         public void AddActionLink_RendersAuthorizedActionLink()
         {
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(false);
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
-            AllTypesView view = new AllTypesView();
-            Authorization.Provider = null;
             String actionLink = "";
+            AllTypesView view = new AllTypesView();
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
-            column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column)
-                .AndDoes(info => { actionLink = info.Arg<Func<AllTypesView, String>>().Invoke(view); });
+            columns
+                .Add<String>(Arg.Any<Expression<Func<AllTypesView, String>>>())
+                .Returns(column)
+                .AndDoes(info =>
+                {
+                    actionLink = info.Arg<Expression<Func<AllTypesView, String>>>().Compile().Invoke(view);
+                });
 
             columns.AddActionLink("Details", "fa fa-info");
 
@@ -118,9 +85,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = null;
             String actionLink = "";
 
-            column
-                .RenderValueAs(Arg.Any<Func<AllTypesView, String>>()).Returns(column)
-                .AndDoes(info => { actionLink = info.Arg<Func<AllTypesView, String>>().Invoke(view); });
+            columns
+                .Add<String>(Arg.Any<Expression<Func<AllTypesView, String>>>()).Returns(column)
+                .AndDoes(info => { actionLink = info.Arg<Expression<Func<AllTypesView, String>>>().Compile().Invoke(view); });
 
             columns.AddActionLink("Details", "fa fa-info");
 
@@ -138,18 +105,18 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddActionLink_OnModelWihoutKeyPropertyThrows()
         {
             Func<Object, String> renderer = null;
-            IGridColumn<Object> objectColumn = SubstituteColumn<Object>();
-            IGridColumnCollection<Object> objectColumns = SubstituteColumns<Object, String>(objectColumn);
+            IGridColumn<Object> column = SubstituteColumn<Object>();
+            IGridColumns<Object> columns = SubstituteColumns<Object, String>(column);
 
-            objectColumn
-                .RenderValueAs(Arg.Any<Func<Object, String>>())
-                .Returns(objectColumn)
+            columns
+                .Add(Arg.Any<Expression<Func<Object, String>>>())
+                .Returns(column)
                 .AndDoes(info =>
                 {
-                    renderer = info.Arg<Func<Object, String>>();
+                    renderer = info.Arg<Expression<Func<Object, String>>>().Compile();
                 });
 
-            objectColumns.AddActionLink("Delete", "fa fa-times");
+            columns.AddActionLink("Delete", "fa fa-times");
 
             String actual = Assert.Throws<Exception>(() => renderer.Invoke(new Object())).Message;
             String expected = "Object type does not have a key property.";
@@ -157,28 +124,48 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void AddActionLink_SetsCssOnGridColumn()
+        {
+            columns = SubstituteColumns<AllTypesView, String>(column);
+
+            columns.AddActionLink("Edit", "fa fa-pencil");
+
+            column.Received().Css("action-cell");
+        }
+
+        [Test]
+        public void AddActionLink_DoesNotEncodeGridColumn()
+        {
+            columns = SubstituteColumns<AllTypesView, String>(column);
+
+            columns.AddActionLink("Edit", "fa fa-pencil");
+
+            column.Received().Encoded(false);
+        }
+
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
 
         [Test]
         public void AddDateProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.CreationDate;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.CreationDate;
 
-            columns.AddDateProperty(propertyFunc);
+            columns.AddDateProperty(expression);
 
-            columns.Received().Add(propertyFunc);
+            columns.Received().Add(expression);
         }
 
         [Test]
         public void AddDateProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
             columns.AddDateProperty(model => model.CreationDate);
 
-            column.Received().Titled(expected);
+            column.Received().Titled(title);
         }
 
         [Test]
@@ -193,35 +180,35 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddDateProperty_FormatsGridColumn()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String expected = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
+            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
 
             columns.AddDateProperty(model => model.CreationDate);
 
-            column.Received().Format(expected);
+            column.Received().Formatted(format);
         }
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
 
         [Test]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> propertyFunc = (model) => model.CreationDate;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.CreationDate;
 
-            columns.AddDateTimeProperty(propertyFunc);
+            columns.AddDateTimeProperty(expression);
 
-            columns.Received().Add(propertyFunc);
+            columns.Received().Add(expression);
         }
 
         [Test]
         public void AddDateTimeProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
             columns.AddDateTimeProperty(model => model.CreationDate);
 
-            column.Received().Titled(expected);
+            column.Received().Titled(title);
         }
 
         [Test]
@@ -236,37 +223,37 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddDateTimeProperty_FormatsGridColumn()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String expected = String.Format("{{0:{0} {1}}}",
+            String format = String.Format("{{0:{0} {1}}}",
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
 
             columns.AddDateTimeProperty(model => model.CreationDate);
 
-            column.Received().Format(expected);
+            column.Received().Formatted(format);
         }
 
         #endregion
 
-        #region Extension method: AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
+        #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> property)
 
         [Test]
         public void AddProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, String>> propertyFunc = (model) => model.Id;
+            Expression<Func<AllTypesView, String>> expression = (model) => model.Id;
 
-            columns.AddProperty(propertyFunc);
+            columns.AddProperty(expression);
 
-            columns.Received().Add(propertyFunc);
+            columns.Received().Add(expression);
         }
 
         [Test]
         public void AddProperty_SetsGridColumnTitle()
         {
-            String expected = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
 
             columns.AddProperty(model => model.CreationDate);
 
-            column.Received().Titled(expected);
+            column.Received().Titled(title);
         }
 
         [Test]
@@ -433,24 +420,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: ApplyDefaults<T>(this IGridHtmlOptions<T> options)
+        #region Extension method: ApplyDefaults<T>(this IHtmlGrid<T> grid)
 
         [Test]
         public void ApplyDefaults_SetsEmptyText()
         {
             options.ApplyDefaults();
 
-            options.Received().EmptyText(MvcTemplate.Resources.Table.Resources.NoDataFound);
-        }
-
-        [Test]
-        public void ApplyDefaults_SetsLanguage()
-        {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-
-            options.ApplyDefaults();
-
-            options.Received().SetLanguage(CultureInfo.CurrentUICulture.Name);
+            options.Received().Empty(MvcTemplate.Resources.Table.Resources.NoDataFound);
         }
 
         [Test]
@@ -462,27 +439,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyDefaults_EnablesMultipleFilters()
+        public void ApplyDefaults_SetsCss()
         {
             options.ApplyDefaults();
 
-            options.Received().WithMultipleFilters();
-        }
-
-        [Test]
-        public void ApplyDefaults_DisablesRowSelection()
-        {
-            options.ApplyDefaults();
-
-            options.Received().Selectable(false);
-        }
-
-        [Test]
-        public void ApplyDefaults_SetsPaging()
-        {
-            options.ApplyDefaults();
-
-            options.Received().WithPaging(20);
+            options.Received().Css("table-hover");
         }
 
         [Test]
@@ -501,41 +462,44 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             options.Received().Sortable();
         }
 
+        [Test]
+        public void ApplyDefaults_EnabledPaging()
+        {
+            options.ApplyDefaults();
+
+            options.Received().Pageable();
+        }
+
         #endregion
 
         #region Test helpers
 
+        private IHtmlGrid<TModel> SubstituteHtmlGrid<TModel>()
+        {
+            IHtmlGrid<TModel> grid = Substitute.For<IHtmlGrid<TModel>>();
+            grid.Empty(Arg.Any<String>()).Returns(grid);
+            grid.Named(Arg.Any<String>()).Returns(grid);
+            grid.Css(Arg.Any<String>()).Returns(grid);
+            grid.Filterable().Returns(grid);
+            grid.Sortable().Returns(grid);
+            grid.Pageable().Returns(grid);
+
+            return grid;
+        }
         private IGridColumn<TModel> SubstituteColumn<TModel>()
         {
             IGridColumn<TModel> column = Substitute.For<IGridColumn<TModel>>();
-            column.RenderValueAs(Arg.Any<Func<TModel, String>>()).Returns(column);
-            column.Sanitized(Arg.Any<Boolean>()).Returns(column);
+            column.Formatted(Arg.Any<String>()).Returns(column);
             column.Encoded(Arg.Any<Boolean>()).Returns(column);
-            column.Format(Arg.Any<String>()).Returns(column);
             column.Titled(Arg.Any<String>()).Returns(column);
             column.Css(Arg.Any<String>()).Returns(column);
 
             return column;
         }
-        private IGridHtmlOptions<TModel> SubstituteOptions<TModel>()
+        private IGridColumns<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> column)
         {
-            IGridHtmlOptions<TModel> options = Substitute.For<IGridHtmlOptions<TModel>>();
-            options.SetLanguage(Arg.Any<String>()).Returns(options);
-            options.WithPaging(Arg.Any<Int32>()).Returns(options);
-            options.EmptyText(Arg.Any<String>()).Returns(options);
-            options.Named(Arg.Any<String>()).Returns(options);
-            options.WithMultipleFilters().Returns(options);
-            options.Selectable(false).Returns(options);
-            options.Filterable().Returns(options);
-            options.Sortable().Returns(options);
-
-            return options;
-        }
-        private IGridColumnCollection<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> gridColumn)
-        {
-            IGridColumnCollection<TModel> columns = Substitute.For<IGridColumnCollection<TModel>>();
-            columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(gridColumn);
-            columns.Add().Returns(gridColumn);
+            IGridColumns<TModel> columns = Substitute.For<IGridColumns<TModel>>();
+            columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(column);
 
             return columns;
         }

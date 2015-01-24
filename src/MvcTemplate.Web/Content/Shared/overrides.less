@@ -23,6 +23,17 @@
     }
 }
 
+.table {
+    margin-bottom: 0;
+}
+
+.table-hover {
+    > tbody > tr:hover > td {
+        .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
+        color: @active-color;
+    }
+}
+
 .input-group .form-control {
     z-index: 1;
 }
@@ -130,84 +141,12 @@
     }
 }
 
-/* GridMvc */
-.grid-wrap {
-    width: 100%;
-}
-
-table.grid-table {
-    .grid-filter {
-        margin-top: 5px;
-    }
-
-    .grid-header {
-        a {
-            color: @content-color;
-        }
-
-        .sorted-asc .grid-sort-arrow:after {
-            font-family: 'Glyphicons Halflings';
-            margin-left: 3px;
-            content: "\e155";
-            font-size: 9px;
-        }
-
-        .sorted-desc .grid-sort-arrow:after {
-            font-family: 'Glyphicons Halflings';
-            margin-left: 3px;
-            content: "\e156";
-            font-size: 9px;
-        }
-    }
-}
-
-.grid-dropdown {
-    padding: 0;
-}
-
-.grid-dropdown-inner {
-    padding: 0 5px 10px;
-
-    .form-group {
-        border-bottom: @form-group-border-bottom;
-        border-top: @form-group-border-top;
-        padding: 10px;
-        margin: 0;
-    }
-}
-
-.grid-filter-datepicker,
-.grid-filter-buttons {
-    padding: 10px 10px 0;
-}
-
-.grid-popup-additional {
-    padding: 0 10px;
-}
-
-.grid-filter-clear {
-    margin-top: 10px;
-}
-
-.grid-popup-widget label {
-    display: none;
-}
-
-.grid-empty-text,
-.grid-filter-type,
-.grid-filter-input {
-    text-align: center;
-}
-
-.grid-apply,
-.grid-filter-clear {
-    width: 100%;
-}
-
-.grid-footer {
+/* Mvc.Grid */
+.mvc-grid-pager {
+    border-top: 1px solid #dddddd;
     text-align: center;
 
-    .pagination {
+    ul {
         margin: 8px 0 3px;
     }
 }

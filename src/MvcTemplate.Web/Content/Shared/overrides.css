@@ -32,6 +32,18 @@
   background-image: linear-gradient(center top, #75a9c4, #5997b8);
   border: 1px solid #5997B8;
 }
+.table {
+  margin-bottom: 0;
+}
+.table-hover > tbody > tr:hover > td {
+  background-color: #396b86;
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  color: #ffffff;
+}
 .input-group .form-control {
   z-index: 1;
 }
@@ -128,66 +140,12 @@
 .ui-datepicker .ui-timepicker-div .ui_tpicker_timezone {
   margin-bottom: 10px;
 }
-/* GridMvc */
-.grid-wrap {
-  width: 100%;
-}
-table.grid-table .grid-filter {
-  margin-top: 5px;
-}
-table.grid-table .grid-header a {
-  color: #555555;
-}
-table.grid-table .grid-header .sorted-asc .grid-sort-arrow:after {
-  font-family: 'Glyphicons Halflings';
-  margin-left: 3px;
-  content: "\e155";
-  font-size: 9px;
-}
-table.grid-table .grid-header .sorted-desc .grid-sort-arrow:after {
-  font-family: 'Glyphicons Halflings';
-  margin-left: 3px;
-  content: "\e156";
-  font-size: 9px;
-}
-.grid-dropdown {
-  padding: 0;
-}
-.grid-dropdown-inner {
-  padding: 0 5px 10px;
-}
-.grid-dropdown-inner .form-group {
-  border-bottom: 1px solid #eeeeee;
-  border-top: 1px solid #ffffff;
-  padding: 10px;
-  margin: 0;
-}
-.grid-filter-datepicker,
-.grid-filter-buttons {
-  padding: 10px 10px 0;
-}
-.grid-popup-additional {
-  padding: 0 10px;
-}
-.grid-filter-clear {
-  margin-top: 10px;
-}
-.grid-popup-widget label {
-  display: none;
-}
-.grid-empty-text,
-.grid-filter-type,
-.grid-filter-input {
+/* Mvc.Grid */
+.mvc-grid-pager {
+  border-top: 1px solid #dddddd;
   text-align: center;
 }
-.grid-apply,
-.grid-filter-clear {
-  width: 100%;
-}
-.grid-footer {
-  text-align: center;
-}
-.grid-footer .pagination {
+.mvc-grid-pager ul {
   margin: 8px 0 3px;
 }
 /* JsTree */

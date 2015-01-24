@@ -12,7 +12,7 @@
         @(
             Html
                 .Grid(Model)
-                .Columns(columns =>
+                .Build(columns =>
                 {
                     columns.AddActionLink("Details", "fa fa-info");
                     columns.AddActionLink("Edit", "fa fa-pencil");

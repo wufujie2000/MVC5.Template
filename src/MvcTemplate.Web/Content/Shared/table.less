@@ -6,28 +6,20 @@ table {
         .linear-gradient-background(bottom, @gradient-middle-color 0, @gradient-to-color 100%, @active-color);
     }
 
-    tbody tr {
-        .grid-cell {
-            vertical-align: middle;
-        }
-    }
-
     th {
         text-align: center;
-
-        &.action-cell {
-            width: 20px;
-        }
     }
 
-    th,
-    td {
+    tr + tr td {
+        border-top: 1px solid #dddddd;
+    }
+
+    th + th,
+    td + td {
         border-left: @content-border;
     }
 
     td {
-        border-bottom: 1px solid #dddddd;
-
         &.text-cell {
             text-align: left;
         }
@@ -41,15 +33,11 @@ table {
         }
     }
 
-    .grid-cell:first-of-type,
-    .grid-header:first-of-type {
-        border-left: none;
-    }
-
     .action-cell {
         text-align: center;
+        width: 20px;
 
-        &+.action-cell {
+        & + .action-cell {
             border-left: none;
             padding-left: 0;
         }
@@ -64,10 +52,6 @@ table {
 
         .delete-action {
             background-color: @delete-color;
-        }
-
-        .copy-action {
-            background-color: @copy-color;
         }
 
         a {
@@ -85,22 +69,5 @@ table {
                 .transform(scale(1.2));
             }
         }
-    }
-}
-
-.table-striped {
-    > tbody > tr:nth-child(even) > td {
-        background-color: @table-row-even-color;
-    }
-
-    > tbody > tr:nth-child(odd) > td {
-        background-color: @table-row-odd-color;
-    }
-}
-
-.table-hover {
-    > tbody > tr:hover > td {
-        .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
-        color: @active-color;
     }
 }

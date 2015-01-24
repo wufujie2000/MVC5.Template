@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Web
                 "~/Scripts/JQuery/Bundle",
                 "~/Scripts/Bootstrap/Bundle",
                 "~/Scripts/JQueryUI/Bundle",
-                "~/Scripts/GridMvc/Bundle",
+                "~/Scripts/MvcGrid/Bundle",
                 "~/Scripts/JsTree/Bundle",
                 "~/Scripts/Datalist/Bundle",
                 "~/Scripts/Shared/Bundle"
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Web
                 "~/Content/Bootstrap/Bundle",
                 "~/Content/JQueryUI/Bundle",
                 "~/Content/FontAwesome/Bundle",
-                "~/Content/GridMvc/Bundle",
+                "~/Content/MvcGrid/Bundle",
                 "~/Content/JsTree/Bundle",
                 "~/Content/Datalist/Bundle",
                 "~/Content/Shared/Bundle"

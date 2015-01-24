@@ -1,7 +1,6 @@
-﻿using GridMvc.Columns;
-using GridMvc.Html;
-using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
+using NonFactors.Mvc.Grid;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -14,7 +13,7 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Components.Extensions.Html
 {
-    public static class GridMvcExtensions
+    public static class MvcGridExtensions
     {
         private static String CurrentAccountId
         {
@@ -38,51 +37,47 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumnCollection<T> column, String action, String iconClass)
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
         {
             if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action))
                 return null;
 
-            return column
-                .Add()
-                .Encoded(false)
-                .Sanitized(false)
+            return columns
+                .Add(model => GetLink(model, action, iconClass))
                 .Css("action-cell")
-                .RenderAction(action, iconClass);
+                .Encoded(false);
         }
-        public static IGridColumn<T> AddDateProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+        public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {
-            return column
+            return columns
                 .AddProperty(property)
-                .Format(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
+                .Formatted(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
         }
-        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumnCollection<T> column, Expression<Func<T, DateTime?>> property)
+        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {
-            return column
+            return columns
                 .AddProperty(property)
-                .Format(String.Format("{{0:{0} {1}}}",
+                .Formatted(String.Format("{{0:{0} {1}}}",
                     CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                     CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern));
         }
-        public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnCollection<T> column, Expression<Func<T, TProperty>> property)
+        public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> property)
         {
-            return column
+            return columns
                 .Add(property)
                 .Css(GetCssClassFor(property))
                 .Titled(ResourceProvider.GetPropertyTitle(property));
         }
 
-        public static IGridHtmlOptions<T> ApplyDefaults<T>(this IGridHtmlOptions<T> options)
+        public static IHtmlGrid<T> ApplyDefaults<T>(this IHtmlGrid<T> grid)
         {
-            return options
-                .EmptyText(Resources.Table.Resources.NoDataFound)
-                .SetLanguage(CultureInfo.CurrentUICulture.Name)
+            return grid
+                .Empty(Resources.Table.Resources.NoDataFound)
                 .Named(typeof(T).Name)
-                .WithMultipleFilters()
-                .Selectable(false)
-                .WithPaging(20)
+                .Css("table-hover")
                 .Filterable()
-                .Sortable();
+                .Sortable()
+                .Pageable();
         }
 
         private static String GetCssClassFor<T, TProperty>(Expression<Func<T, TProperty>> property)
@@ -111,10 +106,6 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        private static IGridColumn<T> RenderAction<T>(this IColumn<T> column, String action, String iconClass)
-        {
-            return column.RenderValueAs(model => GetLink(model, action, iconClass));
-        }
         private static String GetLink<T>(T model, String action, String iconClass)
         {
             UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);

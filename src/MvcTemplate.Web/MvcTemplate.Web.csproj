@@ -58,10 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GridMvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
-    </Reference>
     <Reference Include="LightInject, Version=3.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\LightInject.3.0.2.1\lib\net45\LightInject.dll</HintPath>
@@ -82,6 +78,9 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NonFactors.Mvc.Grid">
+      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.1.0.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -137,6 +136,7 @@
     <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="Images\Datalist\loading.gif" />
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.jpg" />
@@ -156,9 +156,18 @@
     <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.lt-LT.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.culture.lt-LT.js" />
+    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.culture.lt-LT.js" />
+    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.culture.en-GB.js" />
+    <Content Include="Scripts\MvcGrid\mvc-grid.js" />
+    <Content Include="Scripts\MvcGrid\mvc-grid.min.js">
+      <DependentUpon>mvc-grid.js</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Globalization.xml" />
     <Content Include="Views\Auth\Reset.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
+    <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\Auth\auth.css">
@@ -166,7 +175,6 @@
     </Content>
     <Content Include="Content\Bootstrap\bootstrap.css" />
     <Content Include="Content\FontAwesome\font-awesome.css" />
-    <Content Include="Content\GridMvc\gridmvc.css" />
     <Content Include="Content\JsTree\jstree.css" />
     <Content Include="Content\Shared\alerts.css">
       <DependentUpon>alerts.less</DependentUpon>
@@ -221,12 +229,6 @@
     <Content Include="Scripts\JQuery\jquery.globalize.min.js">
       <DependentUpon>jquery.globalize.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.en-GB.js" />
-    <Content Include="Scripts\GridMvc\Cultures\gridmvc.culture.lt-LT.js" />
-    <Content Include="Scripts\GridMvc\gridmvc.js" />
-    <Content Include="Scripts\GridMvc\gridmvc.min.js">
-      <DependentUpon>gridmvc.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\jquery.js" />
     <Content Include="Scripts\JQuery\jquery.min.js">
       <DependentUpon>jquery.js</DependentUpon>
@@ -258,7 +260,6 @@
     <Content Include="Scripts\Shared\site.js" />
     <Content Include="Scripts\Shared\sidebar.js" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Grid.cshtml" />
     <Content Include="Views\Shared\_PrivateLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -330,9 +331,6 @@
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Shared\_GridPager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\theme.less" />
@@ -463,6 +461,7 @@
   <ItemGroup>
     <Content Include="Views\Auth\Recover.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

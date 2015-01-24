@@ -61,9 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GridMvc">
-      <HintPath>..\..\packages\Grid.Mvc.3.0.0\lib\net40\GridMvc.dll</HintPath>
-    </Reference>
     <Reference Include="LightInject, Version=3.0.2.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\LightInject.3.0.2.1\lib\net45\LightInject.dll</HintPath>
@@ -79,6 +76,10 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NonFactors.Mvc.Grid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.1.0.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
     </Reference>
     <Reference Include="NSubstitute, Version=1.8.1.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,6 +143,7 @@
     <Compile Include="Objects\Models\AttributesModel.cs" />
     <Compile Include="Objects\Models\BindersModel.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
+    <Compile Include="Unit\Components\Extensions\Html\MvcGrid\MvcGridExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
     <Compile Include="Objects\Models\AdaptersModel.cs" />
     <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxExtensionsTests.cs" />
@@ -208,7 +210,6 @@
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />
     <Compile Include="Helpers\HtmlHelperFactory.cs" />
     <Compile Include="Helpers\HttpContextFactory.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\GridMvc\GridMvcExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\ProviderModel.cs" />
     <Compile Include="Unit\Components\Alerts\AlertsContainerTests.cs" />
     <Compile Include="Unit\Components\Datalists\BaseDatalistTests.cs" />

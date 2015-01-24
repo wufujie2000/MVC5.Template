@@ -6,21 +6,15 @@
   background-image: -o-linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
   background-image: linear-gradient(bottom, rgba(201, 198, 198, 0.33) 0, rgba(255, 255, 255, 0.27) 100%);
 }
-table tbody tr .grid-cell {
-  vertical-align: middle;
-}
 table th {
   text-align: center;
 }
-table th.action-cell {
-  width: 20px;
+table tr + tr td {
+  border-top: 1px solid #dddddd;
 }
-table th,
-table td {
+table th + th,
+table td + td {
   border-left: 1px solid #cdcdcd;
-}
-table td {
-  border-bottom: 1px solid #dddddd;
 }
 table td.text-cell {
   text-align: left;
@@ -31,12 +25,9 @@ table td.date-cell {
 table td.number-cell {
   text-align: right;
 }
-table .grid-cell:first-of-type,
-table .grid-header:first-of-type {
-  border-left: none;
-}
 table .action-cell {
   text-align: center;
+  width: 20px;
 }
 table .action-cell + .action-cell {
   border-left: none;
@@ -50,9 +41,6 @@ table .action-cell .edit-action {
 }
 table .action-cell .delete-action {
   background-color: #d9534f;
-}
-table .action-cell .copy-action {
-  background-color: #4da6fe;
 }
 table .action-cell a {
   -webkit-transition-duration: 0.3s;
@@ -77,19 +65,4 @@ table .action-cell a:hover {
   -ms-transform: scale(1.2);
   -o-transform: scale(1.2);
   transform: scale(1.2);
-}
-.table-striped > tbody > tr:nth-child(even) > td {
-  background-color: #ffffff;
-}
-.table-striped > tbody > tr:nth-child(odd) > td {
-  background-color: #f9f9f9;
-}
-.table-hover > tbody > tr:hover > td {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  color: #ffffff;
 }

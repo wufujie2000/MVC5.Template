@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 1.0.0
+ * Mvc.Grid 1.0.1
  * https://github.com/NonFactors/MVC.Grid
  *
  * Copyright © NonFactors
@@ -199,6 +199,7 @@ var MvcGrid = (function () {
         formFilterQuery: function (column) {
             var key = encodeURIComponent(this.name + '-' + column.name + '-' + column.filter.type);
             var columnKey = encodeURIComponent(this.name + '-' + column.name);
+            var pageKey = encodeURIComponent(this.name + '-Page');
             var value = encodeURIComponent(column.filter.val);
             var params = this.gridQuery.split('&');
             var paramExists = false;
@@ -211,8 +212,9 @@ var MvcGrid = (function () {
                         params[i] = key + '=' + value;
                         paramExists = true;
                     }
-
-                    newParams.push(params[i]);
+                    if (paramKey != pageKey) {
+                        newParams.push(params[i]);
+                    }
                 }
             }
             if (!paramExists) {
@@ -223,11 +225,12 @@ var MvcGrid = (function () {
         },
         formFilterQueryWithout: function (column) {
             var key = encodeURIComponent(this.name + '-' + column.name + '-' + column.filter.type);
+            var pageKey = encodeURIComponent(this.name + '-Page');
             var params = this.gridQuery.split('&');
             var newParams = [];
 
             for (var i = 0; i < params.length; i++) {
-                if (params[i] != '' && params[i].indexOf(key) != 0) {
+                if (params[i] != '' && params[i].indexOf(key) != 0 && params[i].split('=')[0] != pageKey) {
                     newParams.push(params[i]);
                 }
             }

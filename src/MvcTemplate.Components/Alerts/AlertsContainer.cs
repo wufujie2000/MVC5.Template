@@ -7,11 +7,11 @@ namespace MvcTemplate.Components.Alerts
     {
         public const UInt32 DefaultFadeout = 4000;
 
-        public void Add(AlertTypes type, String message)
+        public void Add(AlertType type, String message)
         {
             Add(type, message, DefaultFadeout);
         }
-        public void Add(AlertTypes type, String message, Decimal fadeoutAfter)
+        public void Add(AlertType type, String message, Decimal fadeoutAfter)
         {
             Add(new Alert
             {
@@ -27,7 +27,7 @@ namespace MvcTemplate.Components.Alerts
         }
         public void AddError(String message, Decimal fadeoutAfter)
         {
-            Add(AlertTypes.Danger, message, fadeoutAfter);
+            Add(AlertType.Danger, message, fadeoutAfter);
         }
 
         public void Merge(AlertsContainer alerts)

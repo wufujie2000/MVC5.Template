@@ -120,7 +120,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
-            Assert.AreEqual(AlertTypes.Success, actual.Type);
+            Assert.AreEqual(AlertType.Success, actual.Type);
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual(0, actual.FadeoutAfter);
         }
 
@@ -217,7 +217,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Alert actual = controller.Alerts.Single();
 
             Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual(0, actual.FadeoutAfter);
         }
 

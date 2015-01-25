@@ -36,7 +36,7 @@ namespace MvcTemplate.Controllers
             if (Validator.CanEdit(profile))
             {
                 Service.Edit(profile);
-                Alerts.Add(AlertTypes.Success, Messages.ProfileUpdated);
+                Alerts.Add(AlertType.Success, Messages.ProfileUpdated);
             }
 
             return View(profile);
@@ -48,7 +48,7 @@ namespace MvcTemplate.Controllers
             if (!Service.AccountExists(CurrentAccountId))
                 return LogOut();
 
-            Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
+            Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);
 
             return View();
         }
@@ -64,7 +64,7 @@ namespace MvcTemplate.Controllers
             profile.Id = CurrentAccountId;
             if (!Validator.CanDelete(profile))
             {
-                Alerts.Add(AlertTypes.Danger, Messages.ProfileDeleteDisclaimer, 0);
+                Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);
                 return View();
             }
 

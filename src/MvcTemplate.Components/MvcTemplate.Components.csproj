@@ -103,7 +103,7 @@
     <Compile Include="Security\Authorization\Authorization.cs" />
     <Compile Include="Security\Cryptography\BCrypter.cs" />
     <Compile Include="Alerts\Alert.cs" />
-    <Compile Include="Alerts\AlertTypes.cs" />
+    <Compile Include="Alerts\AlertType.cs" />
     <Compile Include="Alerts\AlertsContainer.cs" />
     <Compile Include="Security\Cryptography\IHasher.cs" />
   </ItemGroup>

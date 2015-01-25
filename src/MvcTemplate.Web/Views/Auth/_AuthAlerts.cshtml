@@ -20,7 +20,7 @@
     }
     @foreach (String errorMessage in errorMessages)
     {
-        <div class="alert alert-@AlertTypes.Danger.ToString().ToLowerInvariant()">
+        <div class="alert alert-@AlertType.Danger.ToString().ToLowerInvariant()">
             <div class="alert-text">
                 <span>@errorMessage</span>
             </div>

@@ -32,12 +32,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsTypedMessage()
         {
-            container.Add(AlertTypes.Danger, "Test");
+            container.Add(AlertType.Danger, "Test");
 
             Alert actual = container.Single();
 
             Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual("Test", actual.Message);
         }
 
@@ -48,11 +48,11 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Test]
         public void Add_AddsFadingTypedMessage()
         {
-            container.Add(AlertTypes.Danger, "TestMessage", 20);
+            container.Add(AlertType.Danger, "TestMessage", 20);
 
             Alert actual = container.Single();
 
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual("TestMessage", actual.Message);
             Assert.AreEqual(20, actual.FadeoutAfter);
         }
@@ -68,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
 
             Alert actual = container.Single();
 
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
             Assert.AreEqual(0, actual.FadeoutAfter);
         }
@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
 
             Alert actual = container.Single();
 
-            Assert.AreEqual(AlertTypes.Danger, actual.Type);
+            Assert.AreEqual(AlertType.Danger, actual.Type);
             Assert.AreEqual("ErrorMessage", actual.Message);
             Assert.AreEqual(1, actual.FadeoutAfter);
         }

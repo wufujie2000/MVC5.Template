@@ -431,11 +431,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void ApplyDefaults_SetsName()
+        public void ApplyDefaults_SetsNameByReplacingViewToEmpty()
         {
             options.ApplyDefaults();
 
-            options.Received().Named(typeof(AllTypesView).Name);
+            options.Received().Named("AllTypes");
         }
 
         [Test]

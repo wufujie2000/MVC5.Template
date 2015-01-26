@@ -73,7 +73,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return grid
                 .Empty(Resources.Table.Resources.NoDataFound)
-                .Named(typeof(T).Name)
+                .Named(typeof(T).Name.Replace("View", ""))
                 .Css("table-hover")
                 .Filterable()
                 .Sortable()

@@ -21,7 +21,7 @@ namespace MvcTemplate.Objects
             }
         }
 
-        public DateTime? CreationDate
+        public DateTime CreationDate
         {
             get;
             protected set;

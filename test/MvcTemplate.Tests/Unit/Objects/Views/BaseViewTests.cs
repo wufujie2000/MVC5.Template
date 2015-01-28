@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseView_SetsCreationDateToNow()
         {
-            Int64 actual = Substitute.For<BaseView>().CreationDate.Value.Ticks;
+            Int64 actual = Substitute.For<BaseView>().CreationDate.Ticks;
             Int64 expected = DateTime.Now.Ticks;
 
             Assert.AreEqual(expected, actual, 10000000);
@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseView_TruncatesMicrosecondsFromCreationDate()
         {
-            DateTime actual = Substitute.For<BaseView>().CreationDate.Value;
+            DateTime actual = Substitute.For<BaseView>().CreationDate;
             DateTime expected = new DateTime(actual.Year, actual.Month, actual.Day, actual.Hour, actual.Minute, actual.Second, actual.Millisecond);
 
             Assert.AreEqual(expected, actual);
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Test]
         public void BaseView_KeepsCurrentDateKind()
         {
-            DateTimeKind actual = Substitute.For<BaseView>().CreationDate.Value.Kind;
+            DateTimeKind actual = Substitute.For<BaseView>().CreationDate.Kind;
             DateTimeKind expected = DateTime.Now.Kind;
 
             Assert.AreEqual(expected, actual);

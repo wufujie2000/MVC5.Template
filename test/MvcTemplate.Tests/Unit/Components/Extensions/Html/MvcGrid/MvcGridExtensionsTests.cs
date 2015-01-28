@@ -151,7 +151,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.CreationDate;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
             columns.AddDateProperty(expression);
 
@@ -161,9 +161,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnTitle()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
 
-            columns.AddDateProperty(model => model.CreationDate);
+            columns.AddDateProperty(model => model.NullableDateTimeField);
 
             column.Received().Titled(title);
         }
@@ -171,7 +171,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnCss()
         {
-            columns.AddDateProperty(model => model.CreationDate);
+            columns.AddDateProperty(model => model.NullableDateTimeField);
 
             column.Received().Css("date-cell");
         }
@@ -182,7 +182,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
 
-            columns.AddDateProperty(model => model.CreationDate);
+            columns.AddDateProperty(model => model.NullableDateTimeField);
 
             column.Received().Formatted(format);
         }
@@ -194,7 +194,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.CreationDate;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
             columns.AddDateTimeProperty(expression);
 
@@ -204,9 +204,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_SetsGridColumnTitle()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
 
-            columns.AddDateTimeProperty(model => model.CreationDate);
+            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
             column.Received().Titled(title);
         }
@@ -214,7 +214,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_SetsGridColumnCss()
         {
-            columns.AddDateTimeProperty(model => model.CreationDate);
+            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
             column.Received().Css("date-cell");
         }
@@ -227,7 +227,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
                 CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
 
-            columns.AddDateTimeProperty(model => model.CreationDate);
+            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
             column.Received().Formatted(format);
         }
@@ -249,9 +249,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddProperty_SetsGridColumnTitle()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.CreationDate);
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
 
-            columns.AddProperty(model => model.CreationDate);
+            columns.AddProperty(model => model.NullableDateTimeField);
 
             column.Received().Titled(title);
         }

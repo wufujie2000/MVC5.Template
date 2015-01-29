@@ -74,10 +74,11 @@ namespace MvcTemplate.Components.Extensions.Html
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null) throw new InvalidOperationException("Expression must be a member expression.");
-
-            EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>();
-            if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
+            if (memberExpression != null)
+            {
+                EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>();
+                if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
+            }
 
             return htmlAttributes;
         }

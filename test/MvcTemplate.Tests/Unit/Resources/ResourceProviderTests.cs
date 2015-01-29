@@ -175,10 +175,9 @@ namespace MvcTemplate.Tests.Unit.Resources
         #region Static method: GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
 
         [Test]
-        public void GetPropertyTitle_OnNotMemberExpressionThrows()
+        public void GetPropertyTitle_OnNotMemberExpressionReturnNull()
         {
-            Exception expected = Assert.Throws<InvalidOperationException>(() => ResourceProvider.GetPropertyTitle<TestView, String>(view => view.ToString()));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
+            Assert.IsNull(ResourceProvider.GetPropertyTitle<TestView, String>(view => view.ToString()));
         }
 
         [Test]

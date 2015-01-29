@@ -60,7 +60,7 @@ namespace MvcTemplate.Resources
         public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
         {
             MemberExpression expression = property.Body as MemberExpression;
-            if (expression == null) throw new InvalidOperationException("Expression must be a member expression.");
+            if (expression == null) return null;
 
             return GetPropertyTitle(typeof(TModel), expression.Member.Name);
         }

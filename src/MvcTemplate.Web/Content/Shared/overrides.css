@@ -35,6 +35,12 @@
 .table {
   margin-bottom: 0;
 }
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th {
+  vertical-align: middle;
+  white-space: nowrap;
+}
 .table-hover > tbody > tr:hover > td {
   background-color: #396b86;
   background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);

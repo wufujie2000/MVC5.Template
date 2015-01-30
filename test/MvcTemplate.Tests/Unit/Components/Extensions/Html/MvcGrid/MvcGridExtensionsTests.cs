@@ -127,8 +127,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_SetsCssOnGridColumn()
         {
-            columns = SubstituteColumns<AllTypesView, String>(column);
-
             columns.AddActionLink("Edit", "fa fa-pencil");
 
             column.Received().Css("action-cell");
@@ -137,8 +135,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
-            columns = SubstituteColumns<AllTypesView, String>(column);
-
             columns.AddActionLink("Edit", "fa fa-pencil");
 
             column.Received().Encoded(false);
@@ -146,12 +142,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
 
         [Test]
         public void AddDateProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
 
             columns.AddDateProperty(expression);
 
@@ -161,6 +157,49 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_SetsGridColumnTitle()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
+
+            columns.AddDateProperty(model => model.DateTimeField);
+
+            column.Received().Titled(title);
+        }
+
+        [Test]
+        public void AddDateProperty_SetsGridColumnCss()
+        {
+            columns.AddDateProperty(model => model.DateTimeField);
+
+            column.Received().Css("date-cell");
+        }
+
+        [Test]
+        public void AddDateProperty_FormatsGridColumn()
+        {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
+
+            columns.AddDateProperty(model => model.DateTimeField);
+
+            column.Received().Formatted(format);
+        }
+
+        #endregion
+
+        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+
+        [Test]
+        public void AddDateProperty_Nullable_AddsGridColumn()
+        {
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
+
+            columns.AddDateProperty(expression);
+
+            columns.Received().Add(expression);
+        }
+
+        [Test]
+        public void AddDateProperty_Nullable_SetsGridColumnTitle()
+        {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
 
             columns.AddDateProperty(model => model.NullableDateTimeField);
@@ -169,7 +208,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateProperty_SetsGridColumnCss()
+        public void AddDateProperty_Nullable_SetsGridColumnCss()
         {
             columns.AddDateProperty(model => model.NullableDateTimeField);
 
@@ -177,7 +216,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateProperty_FormatsGridColumn()
+        public void AddDateProperty_Nullable_FormatsGridColumn()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
@@ -189,12 +228,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
 
         [Test]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
 
             columns.AddDateTimeProperty(expression);
 
@@ -204,6 +243,51 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_SetsGridColumnTitle()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
+
+            columns.AddDateTimeProperty(model => model.DateTimeField);
+
+            column.Received().Titled(title);
+        }
+
+        [Test]
+        public void AddDateTimeProperty_SetsGridColumnCss()
+        {
+            columns.AddDateTimeProperty(model => model.DateTimeField);
+
+            column.Received().Css("date-cell");
+        }
+
+        [Test]
+        public void AddDateTimeProperty_FormatsGridColumn()
+        {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            String format = String.Format("{{0:{0} {1}}}",
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
+                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
+
+            columns.AddDateTimeProperty(model => model.DateTimeField);
+
+            column.Received().Formatted(format);
+        }
+
+        #endregion
+
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+
+        [Test]
+        public void AddDateTimeProperty_Nullable_AddsGridColumn()
+        {
+            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
+
+            columns.AddDateTimeProperty(expression);
+
+            columns.Received().Add(expression);
+        }
+
+        [Test]
+        public void AddDateTimeProperty_Nullable_SetsGridColumnTitle()
+        {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
 
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
@@ -212,7 +296,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateTimeProperty_SetsGridColumnCss()
+        public void AddDateTimeProperty_Nullable_SetsGridColumnCss()
         {
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
@@ -220,7 +304,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Test]
-        public void AddDateTimeProperty_FormatsGridColumn()
+        public void AddDateTimeProperty_Nullable_FormatsGridColumn()
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
             String format = String.Format("{{0:{0} {1}}}",
@@ -499,6 +583,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private IGridColumns<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> column)
         {
             IGridColumns<TModel> columns = Substitute.For<IGridColumns<TModel>>();
+            columns.Add(Arg.Any<Expression<Func<TModel, String>>>()).Returns(column);
+            columns.Add(Arg.Any<Expression<Func<TModel, DateTime>>>()).Returns(column);
+            columns.Add(Arg.Any<Expression<Func<TModel, DateTime?>>>()).Returns(column);
             columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(column);
 
             return columns;

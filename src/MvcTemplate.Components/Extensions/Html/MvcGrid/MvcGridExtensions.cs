@@ -47,11 +47,25 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Css("action-cell")
                 .Encoded(false);
         }
+        public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
+        {
+            return columns
+                .AddProperty(property)
+                .Formatted(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
+        }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {
             return columns
                 .AddProperty(property)
                 .Formatted(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
+        }
+        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
+        {
+            return columns
+                .AddProperty(property)
+                .Formatted(String.Format("{{0:{0} {1}}}",
+                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
+                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern));
         }
         public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {

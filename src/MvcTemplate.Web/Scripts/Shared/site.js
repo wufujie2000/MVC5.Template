@@ -114,7 +114,7 @@
         zindex: 1000
     });
 
-    $('.grid-wrap').niceScroll({
+    $('.mvc-grid').niceScroll({
         cursorborderradius: 0,
         cursorborder: "none"
     });

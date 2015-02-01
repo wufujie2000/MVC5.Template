@@ -4,152 +4,143 @@
 .sidebar {
     width: 200px;
     float: left;
-}
 
-.sidebar-search {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-    margin: 10px;
+    .sidebar-search {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+        margin: 10px;
 
-    input {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 4px;
-        border-style: none;
-        text-align: center;
-        color: @color;
-        padding: 3px;
-        width: 100%;
-    }
-}
-
-.sidebar-navigation {
-    padding: 0;
-
-    a {
-        padding: 10px 0 10px 15px;
-        display: block;
-        color: @color;
-
-        .menu-icon {
+        input {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            border-style: none;
             text-align: center;
-            width: 20px;
+            color: @color;
+            padding: 3px;
+            width: 100%;
         }
     }
 
-    a:hover,
-    .active > a {
-        .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
-        color: @active-color;
-    }
+    ul {
+        padding: 0;
 
-    .active > a {
+        :not(.open) > ul {
+            display: none;
+        }
+
+        a {
+            padding: 10px 0 10px 15px;
+            display: block;
+            color: @color;
+
+            &:hover {
+                .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+                color: @active-color;
+            }
+
+            .menu-icon {
+                text-align: center;
+                width: 20px;
+            }
+        }
+
+        li {
+            position: relative;
+
+            ul {
+                list-style: none;
+                z-index: 2;
+
+                li {
+                    background-image: @background-image;
+                }
+
+                a {
+                    background-color: rgba(0, 0, 0, 0.15);
+                    padding: 10px 0 10px 25px;
+                }
+
+                ul a {
+                    background-color: rgba(0, 0, 0, 0.3);
+                    padding: 10px 0 10px 35px;
+                }
+            }
+        }
+
+        .arrow {
+            transition: transform 0.4s ease-out 0.1s;
+            margin: 6px 15px 5px 5px;
+            font-size: 10px;
+            float: right;
+        }
+
+        .open:not(.changing) > a > .arrow,
+        .changing:not(.open) > a > .arrow {
+            transform: rotate(90deg);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar > ul:not(:hover) .active > a {
         .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
         background-position: right center;
         background-repeat: no-repeat;
-    }
-
-    li {
-        position: relative;
-
-        ul {
-            list-style: none;
-            z-index: 2;
-            padding: 0;
-
-            li {
-                background-image: @background-image;
-            }
-
-            a {
-                background-color: rgba(0, 0, 0, 0.15);
-                padding: 10px 0 10px 25px;
-            }
-
-            ul a {
-                background-color: rgba(0, 0, 0, 0.3);
-                padding: 10px 0 10px 35px;
-            }
-        }
-    }
-
-    .arrow {
-        .transition(transform 0.4s ease-out 0.1s);
-        margin: 6px 15px 5px 5px;
-        font-size: 10px;
-        float: right;
-    }
-
-    .opening > a > .arrow,
-    .open > a > .arrow {
-        .transform(rotate(90deg));
-    }
-
-    li:not(.open):not(.closing) > ul {
-        display: none;
+        color: @active-color;
     }
 }
 
 @media (max-width: 767px) {
     .sidebar {
         width: 45px;
-    }
 
-    .sidebar-search {
-        display: none;
-    }
-
-    .sidebar-navigation {
-        > .has-active > a {
-            .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
-            background-position: right center;
-            background-repeat: no-repeat;
-            color: @active-color;
-        }
-
-        .menu-icon {
-            width: 10px;
-        }
-
-        .arrow,
-        > li > a > span {
+        .sidebar-search {
             display: none;
         }
 
-        > li {
-            .active > a {
-                background-image: none;
-                color: @color;
-
-                &:hover {
-                    .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
-                    color: @active-color;
-                }
+        > ul {
+            &:not(:hover) > .has-active > a {
+                .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+                background-position: right center;
+                background-repeat: no-repeat;
+                color: @active-color;
             }
 
-            > a {
-                text-align: center;
-                padding-left: 0;
+            .menu-icon {
+                width: 10px;
             }
 
-            ul {
-                position: absolute;
-                width: 100px;
-                left: 45px;
-                top: 0;
+            .arrow,
+            > li > a > span {
+                display: none;
+            }
 
-                a {
-                    font-size: 10px;
-                    padding: 6px;
+            > li {
+                > a {
+                    text-align: center;
+                    padding-left: 0;
                 }
 
                 ul {
-                    left: 100px;
-
-                    .active > a {
-                        background-image: none;
-                    }
+                    position: absolute;
+                    width: 100px;
+                    left: 45px;
+                    top: 0;
 
                     a {
+                        font-size: 10px;
                         padding: 6px;
+                    }
+
+                    ul {
+                        left: 100px;
+
+                        .active > a {
+                            background-image: none;
+                        }
+
+                        a {
+                            padding: 6px;
+                        }
                     }
                 }
             }

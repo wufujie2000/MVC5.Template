@@ -43,9 +43,6 @@ table .action-cell .delete-action {
   background-color: #d9534f;
 }
 table .action-cell a {
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
   display: inline-block;
   color: #ffffff;
@@ -56,13 +53,6 @@ table .action-cell a {
   width: 20px;
 }
 table .action-cell a:hover {
-  -webkit-transition-duration: 0.3s;
-  -moz-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
-  -webkit-transform: scale(1.2);
-  -moz-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  -o-transform: scale(1.2);
   transform: scale(1.2);
 }

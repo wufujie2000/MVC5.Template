@@ -18,15 +18,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     public class MvcGridExtensionsTests
     {
         private IGridColumns<AllTypesView> columns;
-        private IHtmlGrid<AllTypesView> options;
         private IGridColumn<AllTypesView> column;
+        private IHtmlGrid<AllTypesView> htmlGrid;
         private UrlHelper urlHelper;
 
         [SetUp]
         public void SetUp()
         {
             column = SubstituteColumn<AllTypesView>();
-            options = SubstituteHtmlGrid<AllTypesView>();
+            htmlGrid = SubstituteHtmlGrid<AllTypesView>();
             columns = SubstituteColumns<AllTypesView, DateTime?>(column);
 
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
@@ -509,49 +509,49 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void ApplyDefaults_SetsEmptyText()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Empty(MvcTemplate.Resources.Table.Resources.NoDataFound);
+            htmlGrid.Received().Empty(MvcTemplate.Resources.Table.Resources.NoDataFound);
         }
 
         [Test]
         public void ApplyDefaults_SetsNameByReplacingViewToEmpty()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Named("AllTypes");
+            htmlGrid.Received().Named("AllTypes");
         }
 
         [Test]
         public void ApplyDefaults_SetsCss()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Css("table-hover");
+            htmlGrid.Received().Css("table-hover");
         }
 
         [Test]
         public void ApplyDefaults_EnablesFiltering()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Filterable();
+            htmlGrid.Received().Filterable();
         }
 
         [Test]
         public void ApplyDefaults_EnablesSorting()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Sortable();
+            htmlGrid.Received().Sortable();
         }
 
         [Test]
-        public void ApplyDefaults_EnabledPaging()
+        public void ApplyDefaults_EnablesPaging()
         {
-            options.ApplyDefaults();
+            htmlGrid.ApplyDefaults();
 
-            options.Received().Pageable();
+            htmlGrid.Received().Pageable();
         }
 
         #endregion

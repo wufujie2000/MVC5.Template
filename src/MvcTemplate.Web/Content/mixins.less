@@ -18,29 +18,3 @@
     background-image: @image-url, -o-linear-gradient(@gradient-definition, @from-color, @to-color);
     background-image: @image-url, linear-gradient(@gradient-definition, @from-color, @to-color);
 }
-
-.transition-duration(@duration) {
-    -webkit-transition-duration: @duration;
-    -moz-transition-duration: @duration;
-    -o-transition-duration: @duration;
-    transition-duration: @duration;
-}
-
-.transition(@declaration) {
-    -webkit-transition: @declaration;
-    -moz-transition: @declaration;
-    -o-transition: @declaration;
-    transition: @declaration;
-}
-
-.transform(@transformation) {
-    -webkit-transform: @transformation;
-    -moz-transform: @transformation;
-    -ms-transform: @transformation;
-    -o-transform: @transformation;
-    transform: @transformation;
-}
-
-.box-shadow(@color) {
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px @color;
-}

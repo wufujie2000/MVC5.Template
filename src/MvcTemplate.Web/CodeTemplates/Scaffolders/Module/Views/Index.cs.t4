@@ -11,16 +11,15 @@
         </div>
     </div>
     <div class="widget-content">
-        @(
-            Html
-                .Grid(Model)
-                .Build(columns =>
-                {
-                    columns.AddActionLink("Details", "fa fa-info");
-                    columns.AddActionLink("Edit", "fa fa-pencil");
-                    columns.AddActionLink("Delete", "fa fa-times");
-                })
-                .ApplyDefaults()
+        @(Html
+            .Grid(Model)
+            .Build(columns =>
+            {
+                columns.AddActionLink("Details", "fa fa-info");
+                columns.AddActionLink("Edit", "fa fa-pencil");
+                columns.AddActionLink("Delete", "fa fa-times");
+            })
+            .ApplyDefaults()
         )
     </div>
 </div>

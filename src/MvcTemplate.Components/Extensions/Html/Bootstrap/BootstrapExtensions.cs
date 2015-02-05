@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Mvc;
@@ -49,17 +48,11 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
-
-            return html.FormTextBoxFor(expression, format, new { @class = "datepicker" });
+            return html.FormTextBoxFor(expression, "{0:d}", new { @class = "datepicker" });
         }
         public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            String format = String.Format("{{0:{0} {1}}}",
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
-
-            return html.FormTextBoxFor(expression, format, new { @class = "datetimepicker" });
+            return html.FormTextBoxFor(expression, "{0:g}", new { @class = "datetimepicker" });
         }
         public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
         {

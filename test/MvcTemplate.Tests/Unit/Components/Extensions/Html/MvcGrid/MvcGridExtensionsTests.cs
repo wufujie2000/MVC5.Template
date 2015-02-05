@@ -6,9 +6,7 @@ using NonFactors.Mvc.Grid;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Globalization;
 using System.Linq.Expressions;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -175,12 +173,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_FormatsGridColumn()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
-
             columns.AddDateProperty(model => model.DateTimeField);
 
-            column.Received().Formatted(format);
+            column.Received().Formatted("{0:d}");
         }
 
         #endregion
@@ -218,12 +213,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateProperty_Nullable_FormatsGridColumn()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String format = String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern);
-
             columns.AddDateProperty(model => model.NullableDateTimeField);
 
-            column.Received().Formatted(format);
+            column.Received().Formatted("{0:d}");
         }
 
         #endregion
@@ -261,14 +253,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_FormatsGridColumn()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String format = String.Format("{{0:{0} {1}}}",
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
-
             columns.AddDateTimeProperty(model => model.DateTimeField);
 
-            column.Received().Formatted(format);
+            column.Received().Formatted("{0:g}");
         }
 
         #endregion
@@ -306,14 +293,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Test]
         public void AddDateTimeProperty_Nullable_FormatsGridColumn()
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
-            String format = String.Format("{{0:{0} {1}}}",
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern);
-
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
-            column.Received().Formatted(format);
+            column.Received().Formatted("{0:g}");
         }
 
         #endregion

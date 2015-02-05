@@ -3,7 +3,6 @@ using MvcTemplate.Resources;
 using NonFactors.Mvc.Grid;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -49,31 +48,19 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
         {
-            return columns
-                .AddProperty(property)
-                .Formatted(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
+            return columns.AddProperty(property).Formatted("{0:d}");
         }
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {
-            return columns
-                .AddProperty(property)
-                .Formatted(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern));
+            return columns.AddProperty(property).Formatted("{0:d}");
         }
         public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
         {
-            return columns
-                .AddProperty(property)
-                .Formatted(String.Format("{{0:{0} {1}}}",
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern));
+            return columns.AddProperty(property).Formatted("{0:g}");
         }
         public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
         {
-            return columns
-                .AddProperty(property)
-                .Formatted(String.Format("{{0:{0} {1}}}",
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern));
+            return columns.AddProperty(property).Formatted("{0:g}");
         }
         public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> property)
         {

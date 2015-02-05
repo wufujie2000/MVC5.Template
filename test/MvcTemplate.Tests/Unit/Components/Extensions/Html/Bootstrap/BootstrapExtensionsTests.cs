@@ -488,15 +488,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormDatePickerFor_FormsDatePicker()
         {
             Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
             String actual = html.FormDatePickerFor(expression).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                String.Format(String.Format("{{0:{0}}}", CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern),
-                model.Relation.Date));
+                model.Relation.Date.Value.ToString("yyyy.MM.dd"));
 
             Assert.AreEqual(expected, actual);
         }
@@ -509,18 +508,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormDatePickerFor_FormsDateTimePicker()
         {
             Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
             String actual = html.FormDateTimePickerFor(expression).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
-                String.Format(String.Format(
-                    "{{0:{0} {1}}}",
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern,
-                    CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern),
-                model.Relation.Date));
+                model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
 
             Assert.AreEqual(expected, actual);
         }

@@ -1,5 +1,4 @@
-﻿using Datalist;
-using MvcTemplate.Components.Alerts;
+﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
@@ -28,7 +27,7 @@ namespace MvcTemplate.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Exclude = "Id")][DatalistColumn] AccountView account)
+        public ActionResult Register([Bind(Exclude = "Id")] AccountView account)
         {
             if (Service.IsLoggedIn())
                 return RedirectToDefault();

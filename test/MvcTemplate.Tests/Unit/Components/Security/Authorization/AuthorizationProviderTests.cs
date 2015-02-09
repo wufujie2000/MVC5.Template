@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Security
         [TestCase("NotAttributed", "PostName")]
         public void IsAuthorizedFor_AuthorizesNotAttributedActions(String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, controller, action));
         }
 
         #endregion
@@ -47,40 +47,49 @@ namespace MvcTemplate.Tests.Unit.Security
         #region Authorized without privileges
 
         [Test]
-        [TestCase("NotAttributed", "AuthorizedGet")]
-        [TestCase("NotAttributed", "AuthorizedPost")]
-        [TestCase("NotAttributed", "AuthorizedGetName")]
-        [TestCase("NotAttributed", "AuthorizedPostName")]
+        [TestCase(null, "NotAttributed", "AuthorizedGet")]
+        [TestCase(null, "NotAttributed", "AuthorizedPost")]
+        [TestCase(null, "NotAttributed", "AuthorizedGetName")]
+        [TestCase(null, "NotAttributed", "AuthorizedPostName")]
 
-        [TestCase("Authorized", "Get")]
-        [TestCase("Authorized", "Post")]
-        [TestCase("Authorized", "GetName")]
-        [TestCase("Authorized", "PostName")]
-        [TestCase("Authorized", "AuthorizedGet")]
-        [TestCase("Authorized", "AuthorizedPost")]
-        [TestCase("Authorized", "AuthorizedGetName")]
-        [TestCase("Authorized", "AuthorizedPostName")]
+        [TestCase(null, "Authorized", "Get")]
+        [TestCase(null, "Authorized", "Post")]
+        [TestCase(null, "Authorized", "GetName")]
+        [TestCase(null, "Authorized", "PostName")]
+        [TestCase(null, "Authorized", "AuthorizedGet")]
+        [TestCase(null, "Authorized", "AuthorizedPost")]
+        [TestCase(null, "Authorized", "AuthorizedGetName")]
+        [TestCase(null, "Authorized", "AuthorizedPostName")]
 
-        [TestCase("AllowAnonymous", "AuthorizedGet")]
-        [TestCase("AllowAnonymous", "AuthorizedPost")]
-        [TestCase("AllowAnonymous", "AuthorizedGetName")]
-        [TestCase("AllowAnonymous", "AuthorizedPostName")]
+        [TestCase("Area", "Authorized", "Get")]
+        [TestCase("Area", "Authorized", "Post")]
+        [TestCase("Area", "Authorized", "GetName")]
+        [TestCase("Area", "Authorized", "PostName")]
+        [TestCase("Area", "Authorized", "AuthorizedGet")]
+        [TestCase("Area", "Authorized", "AuthorizedPost")]
+        [TestCase("Area", "Authorized", "AuthorizedGetName")]
+        [TestCase("Area", "Authorized", "AuthorizedPostName")]
 
-        [TestCase("AllowUnauthorized", "AuthorizedGet")]
-        [TestCase("AllowUnauthorized", "AuthorizedPost")]
-        [TestCase("AllowUnauthorized", "AuthorizedGetName")]
-        [TestCase("AllowUnauthorized", "AuthorizedPostName")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedGet")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedPost")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedGetName")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedPostName")]
 
-        [TestCase("InheritedAuthorized", "InheritanceGet")]
-        [TestCase("InheritedAuthorized", "InheritancePost")]
-        [TestCase("InheritedAuthorized", "InheritanceGetName")]
-        [TestCase("InheritedAuthorized", "InheritancePostName")]
-        public void IsAuthorizedFor_DoesNotAuthorizeAuthorizedAction(String controller, String action)
+        [TestCase(null, "AllowUnauthorized", "AuthorizedGet")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedPost")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedGetName")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedPostName")]
+
+        [TestCase(null, "InheritedAuthorized", "InheritanceGet")]
+        [TestCase(null, "InheritedAuthorized", "InheritancePost")]
+        [TestCase(null, "InheritedAuthorized", "InheritanceGetName")]
+        [TestCase(null, "InheritedAuthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_DoesNotAuthorizeAuthorizedAction(String area, String controller, String action)
         {
             SetUpDependencyResolver();
             provider.Refresh();
 
-            Assert.IsFalse(provider.IsAuthorizedFor(null, "Security", controller, action));
+            Assert.IsFalse(provider.IsAuthorizedFor(null, area, controller, action));
         }
 
         #endregion
@@ -88,39 +97,48 @@ namespace MvcTemplate.Tests.Unit.Security
         #region Authorized with privileges
 
         [Test]
-        [TestCase("NotAttributed", "AuthorizedGet")]
-        [TestCase("NotAttributed", "AuthorizedPost")]
-        [TestCase("NotAttributed", "AuthorizedGetName")]
-        [TestCase("NotAttributed", "AuthorizedPostName")]
+        [TestCase(null, "NotAttributed", "AuthorizedGet")]
+        [TestCase(null, "NotAttributed", "AuthorizedPost")]
+        [TestCase(null, "NotAttributed", "AuthorizedGetName")]
+        [TestCase(null, "NotAttributed", "AuthorizedPostName")]
 
-        [TestCase("Authorized", "Get")]
-        [TestCase("Authorized", "Post")]
-        [TestCase("Authorized", "GetName")]
-        [TestCase("Authorized", "PostName")]
-        [TestCase("Authorized", "AuthorizedGet")]
-        [TestCase("Authorized", "AuthorizedPost")]
-        [TestCase("Authorized", "AuthorizedGetName")]
-        [TestCase("Authorized", "AuthorizedPostName")]
+        [TestCase(null, "Authorized", "Get")]
+        [TestCase(null, "Authorized", "Post")]
+        [TestCase(null, "Authorized", "GetName")]
+        [TestCase(null, "Authorized", "PostName")]
+        [TestCase(null, "Authorized", "AuthorizedGet")]
+        [TestCase(null, "Authorized", "AuthorizedPost")]
+        [TestCase(null, "Authorized", "AuthorizedGetName")]
+        [TestCase(null, "Authorized", "AuthorizedPostName")]
 
-        [TestCase("AllowAnonymous", "AuthorizedGet")]
-        [TestCase("AllowAnonymous", "AuthorizedPost")]
-        [TestCase("AllowAnonymous", "AuthorizedGetName")]
-        [TestCase("AllowAnonymous", "AuthorizedPostName")]
+        [TestCase("Area", "Authorized", "Get")]
+        [TestCase("Area", "Authorized", "Post")]
+        [TestCase("Area", "Authorized", "GetName")]
+        [TestCase("Area", "Authorized", "PostName")]
+        [TestCase("Area", "Authorized", "AuthorizedGet")]
+        [TestCase("Area", "Authorized", "AuthorizedPost")]
+        [TestCase("Area", "Authorized", "AuthorizedGetName")]
+        [TestCase("Area", "Authorized", "AuthorizedPostName")]
 
-        [TestCase("AllowUnauthorized", "AuthorizedGet")]
-        [TestCase("AllowUnauthorized", "AuthorizedPost")]
-        [TestCase("AllowUnauthorized", "AuthorizedGetName")]
-        [TestCase("AllowUnauthorized", "AuthorizedPostName")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedGet")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedPost")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedGetName")]
+        [TestCase(null, "AllowAnonymous", "AuthorizedPostName")]
 
-        [TestCase("InheritedAuthorized", "InheritanceGet")]
-        [TestCase("InheritedAuthorized", "InheritancePost")]
-        [TestCase("InheritedAuthorized", "InheritanceGetName")]
-        [TestCase("InheritedAuthorized", "InheritancePostName")]
-        public void IsAuthorizedFor_AuthorizesAuthorizedAction(String controller, String action)
+        [TestCase(null, "AllowUnauthorized", "AuthorizedGet")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedPost")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedGetName")]
+        [TestCase(null, "AllowUnauthorized", "AuthorizedPostName")]
+
+        [TestCase(null, "InheritedAuthorized", "InheritanceGet")]
+        [TestCase(null, "InheritedAuthorized", "InheritancePost")]
+        [TestCase(null, "InheritedAuthorized", "InheritanceGetName")]
+        [TestCase(null, "InheritedAuthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesAuthorizedAction(String area, String controller, String action)
         {
-            Account account = CreateAccountWithPrivilegeFor("Security", controller, action);
+            Account account = CreateAccountWithPrivilegeFor(area, controller, action);
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", controller, action));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, area, controller, action));
         }
 
         #endregion
@@ -128,37 +146,42 @@ namespace MvcTemplate.Tests.Unit.Security
         #region Allow anonymous
 
         [Test]
-        [TestCase("NotAttributed", "AnonymousGet")]
-        [TestCase("NotAttributed", "AnonymousPost")]
-        [TestCase("NotAttributed", "AnonymousGetName")]
-        [TestCase("NotAttributed", "AnonymousPostName")]
+        [TestCase(null, "NotAttributed", "AnonymousGet")]
+        [TestCase(null, "NotAttributed", "AnonymousPost")]
+        [TestCase(null, "NotAttributed", "AnonymousGetName")]
+        [TestCase(null, "NotAttributed", "AnonymousPostName")]
 
-        [TestCase("Authorized", "AnonymousGet")]
-        [TestCase("Authorized", "AnonymousPost")]
-        [TestCase("Authorized", "AnonymousGetName")]
-        [TestCase("Authorized", "AnonymousPostName")]
+        [TestCase(null, "Authorized", "AnonymousGet")]
+        [TestCase(null, "Authorized", "AnonymousPost")]
+        [TestCase(null, "Authorized", "AnonymousGetName")]
+        [TestCase(null, "Authorized", "AnonymousPostName")]
 
-        [TestCase("AllowAnonymous", "Get")]
-        [TestCase("AllowAnonymous", "Post")]
-        [TestCase("AllowAnonymous", "GetName")]
-        [TestCase("AllowAnonymous", "PostName")]
-        [TestCase("AllowAnonymous", "AnonymousGet")]
-        [TestCase("AllowAnonymous", "AnonymousPost")]
-        [TestCase("AllowAnonymous", "AnonymousGetName")]
-        [TestCase("AllowAnonymous", "AnonymousPostName")]
+        [TestCase("Area", "Authorized", "AnonymousGet")]
+        [TestCase("Area", "Authorized", "AnonymousPost")]
+        [TestCase("Area", "Authorized", "AnonymousGetName")]
+        [TestCase("Area", "Authorized", "AnonymousPostName")]
 
-        [TestCase("AllowUnauthorized", "AnonymousGet")]
-        [TestCase("AllowUnauthorized", "AnonymousPost")]
-        [TestCase("AllowUnauthorized", "AnonymousGetName")]
-        [TestCase("AllowUnauthorized", "AnonymousPostName")]
+        [TestCase(null, "AllowAnonymous", "Get")]
+        [TestCase(null, "AllowAnonymous", "Post")]
+        [TestCase(null, "AllowAnonymous", "GetName")]
+        [TestCase(null, "AllowAnonymous", "PostName")]
+        [TestCase(null, "AllowAnonymous", "AnonymousGet")]
+        [TestCase(null, "AllowAnonymous", "AnonymousPost")]
+        [TestCase(null, "AllowAnonymous", "AnonymousGetName")]
+        [TestCase(null, "AllowAnonymous", "AnonymousPostName")]
 
-        [TestCase("InheritedAllowAnonymous", "InheritanceGet")]
-        [TestCase("InheritedAllowAnonymous", "InheritancePost")]
-        [TestCase("InheritedAllowAnonymous", "InheritanceGetName")]
-        [TestCase("InheritedAllowAnonymous", "InheritancePostName")]
-        public void IsAuthorizedFor_AuthorizesAnonymousAction(String controller, String action)
+        [TestCase(null, "AllowUnauthorized", "AnonymousGet")]
+        [TestCase(null, "AllowUnauthorized", "AnonymousPost")]
+        [TestCase(null, "AllowUnauthorized", "AnonymousGetName")]
+        [TestCase(null, "AllowUnauthorized", "AnonymousPostName")]
+
+        [TestCase(null, "InheritedAllowAnonymous", "InheritanceGet")]
+        [TestCase(null, "InheritedAllowAnonymous", "InheritancePost")]
+        [TestCase(null, "InheritedAllowAnonymous", "InheritanceGetName")]
+        [TestCase(null, "InheritedAllowAnonymous", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesAnonymousAction(String area, String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, null, controller, action));
         }
 
         #endregion
@@ -166,37 +189,42 @@ namespace MvcTemplate.Tests.Unit.Security
         #region Allow unauthorized
 
         [Test]
-        [TestCase("NotAttributed", "UnauthorizedGet")]
-        [TestCase("NotAttributed", "UnauthorizedPost")]
-        [TestCase("NotAttributed", "UnauthorizedGetName")]
-        [TestCase("NotAttributed", "UnauthorizedPostName")]
+        [TestCase(null, "NotAttributed", "UnauthorizedGet")]
+        [TestCase(null, "NotAttributed", "UnauthorizedPost")]
+        [TestCase(null, "NotAttributed", "UnauthorizedGetName")]
+        [TestCase(null, "NotAttributed", "UnauthorizedPostName")]
 
-        [TestCase("Authorized", "UnauthorizedGet")]
-        [TestCase("Authorized", "UnauthorizedPost")]
-        [TestCase("Authorized", "UnauthorizedGetName")]
-        [TestCase("Authorized", "UnauthorizedPostName")]
+        [TestCase(null, "Authorized", "UnauthorizedGet")]
+        [TestCase(null, "Authorized", "UnauthorizedPost")]
+        [TestCase(null, "Authorized", "UnauthorizedGetName")]
+        [TestCase(null, "Authorized", "UnauthorizedPostName")]
 
-        [TestCase("AllowAnonymous", "UnauthorizedGet")]
-        [TestCase("AllowAnonymous", "UnauthorizedPost")]
-        [TestCase("AllowAnonymous", "UnauthorizedGetName")]
-        [TestCase("AllowAnonymous", "UnauthorizedPostName")]
+        [TestCase("Area", "Authorized", "UnauthorizedGet")]
+        [TestCase("Area", "Authorized", "UnauthorizedPost")]
+        [TestCase("Area", "Authorized", "UnauthorizedGetName")]
+        [TestCase("Area", "Authorized", "UnauthorizedPostName")]
 
-        [TestCase("AllowUnauthorized", "Get")]
-        [TestCase("AllowUnauthorized", "Post")]
-        [TestCase("AllowUnauthorized", "GetName")]
-        [TestCase("AllowUnauthorized", "PostName")]
-        [TestCase("AllowUnauthorized", "UnauthorizedGet")]
-        [TestCase("AllowUnauthorized", "UnauthorizedPost")]
-        [TestCase("AllowUnauthorized", "UnauthorizedGetName")]
-        [TestCase("AllowUnauthorized", "UnauthorizedPostName")]
+        [TestCase(null, "AllowAnonymous", "UnauthorizedGet")]
+        [TestCase(null, "AllowAnonymous", "UnauthorizedPost")]
+        [TestCase(null, "AllowAnonymous", "UnauthorizedGetName")]
+        [TestCase(null, "AllowAnonymous", "UnauthorizedPostName")]
 
-        [TestCase("InheritedAllowUnauthorized", "InheritanceGet")]
-        [TestCase("InheritedAllowUnauthorized", "InheritancePost")]
-        [TestCase("InheritedAllowUnauthorized", "InheritanceGetName")]
-        [TestCase("InheritedAllowUnauthorized", "InheritancePostName")]
-        public void IsAuthorizedFor_AuthorizesUnauthorizedAction(String controller, String action)
+        [TestCase(null, "AllowUnauthorized", "Get")]
+        [TestCase(null, "AllowUnauthorized", "Post")]
+        [TestCase(null, "AllowUnauthorized", "GetName")]
+        [TestCase(null, "AllowUnauthorized", "PostName")]
+        [TestCase(null, "AllowUnauthorized", "UnauthorizedGet")]
+        [TestCase(null, "AllowUnauthorized", "UnauthorizedPost")]
+        [TestCase(null, "AllowUnauthorized", "UnauthorizedGetName")]
+        [TestCase(null, "AllowUnauthorized", "UnauthorizedPostName")]
+
+        [TestCase(null, "InheritedAllowUnauthorized", "InheritanceGet")]
+        [TestCase(null, "InheritedAllowUnauthorized", "InheritancePost")]
+        [TestCase(null, "InheritedAllowUnauthorized", "InheritanceGetName")]
+        [TestCase(null, "InheritedAllowUnauthorized", "InheritancePostName")]
+        public void IsAuthorizedFor_AuthorizesUnauthorizedAction(String area, String controller, String action)
         {
-            Assert.IsTrue(provider.IsAuthorizedFor(null, "Security", controller, action));
+            Assert.IsTrue(provider.IsAuthorizedFor(null, area, controller, action));
         }
 
         #endregion
@@ -204,17 +232,17 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_CanBeAuthorizedAsOtherAction()
         {
-            Account account = CreateAccountWithPrivilegeFor("Security", "NotAttributed", "AuthorizedGetAction");
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizedGetName");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "NotAttributed", "AuthorizedAsOther"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizedAsOther"));
         }
 
         [Test]
         public void IsAuthorizedFor_CanBeAuthorizedAsOtherSelf()
         {
-            Account account = CreateAccountWithPrivilegeFor("Security", "NotAttributed", "AuthorizedAsSelf");
+            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizedAsSelf");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "NotAttributed", "AuthorizedAsSelf"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "AuthorizedAsSelf"));
         }
 
         [Test]
@@ -229,15 +257,15 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void IsAuthorizedFor_IgnoresCase()
         {
-            Account account = CreateAccountWithPrivilegeFor(null, "NotAttributed", "AuthorizedGet");
+            Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "AuthorizedGet");
 
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, null, "notattributed", "AUTHORIZEDGET"));
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "ArEa", "Authorized", "AUTHORIZEDGET"));
         }
 
         [Test]
         public void IsAuthorizedFor_OnNotExistingActionThrows()
         {
-            String actual = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, "Security", "NotAttributed", "Test")).Message;
+            String actual = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, null, "NotAttributed", "Test")).Message;
             String expected = "'NotAttributedController' does not have 'Test' action.";
 
             Assert.AreEqual(expected, actual);
@@ -250,15 +278,15 @@ namespace MvcTemplate.Tests.Unit.Security
         [Test]
         public void Refresh_RefreshesPrivileges()
         {
-            Account account = CreateAccountWithPrivilegeFor("Security", "Authorized", "AuthorizedGet");
-            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
+            Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "AuthorizedGet");
+            Assert.IsTrue(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGet"));
 
             TearDownData();
             SetUpDependencyResolver();
 
             provider.Refresh();
 
-            Assert.IsFalse(provider.IsAuthorizedFor(account.Id, "Security", "Authorized", "AuthorizedGet"));
+            Assert.IsFalse(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGet"));
         }
 
         #endregion

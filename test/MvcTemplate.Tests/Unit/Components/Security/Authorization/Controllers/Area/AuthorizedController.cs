@@ -1,9 +1,12 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Components.Security;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Tests.Unit.Components.Security
+namespace MvcTemplate.Tests.Unit.Components.Security.Area
 {
-    public abstract class NotAttributedController : Controller
+    [Area("Area")]
+    [GlobalizedAuthorize]
+    public abstract class AuthorizedController : Controller
     {
         [HttpGet]
         public abstract ViewResult Get();
@@ -72,15 +75,5 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         [AllowUnauthorized]
         [ActionName("UnauthorizedPostName")]
         public abstract ViewResult UnauthorizedPostAction();
-
-        [HttpGet]
-        [Authorize]
-        [AuthorizeAs("AuthorizedGetAction")]
-        public abstract ViewResult AuthorizedAsOther();
-
-        [HttpGet]
-        [Authorize]
-        [AuthorizeAs("AuthorizedAsSelf")]
-        public abstract ViewResult AuthorizedAsSelf();
     }
 }

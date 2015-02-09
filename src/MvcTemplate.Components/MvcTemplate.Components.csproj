@@ -71,6 +71,7 @@
     <Compile Include="Mvc\Adapters\RangeAdapter.cs" />
     <Compile Include="Mvc\Adapters\StringLengthAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
+    <Compile Include="Mvc\Attributes\AreaAttribute.cs" />
     <Compile Include="Mvc\Attributes\EqualToAttribute.cs" />
     <Compile Include="Mvc\Attributes\MaxValueAttribute.cs" />
     <Compile Include="Mvc\Attributes\MinValueAttribute.cs" />

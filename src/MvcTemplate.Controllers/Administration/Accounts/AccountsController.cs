@@ -1,3 +1,4 @@
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
+    [Area("Administration")]
     public class AccountsController : ValidatedController<IAccountValidator, IAccountService>
     {
         public AccountsController(IAccountValidator validator, IAccountService service)

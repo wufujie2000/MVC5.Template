@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Data.Core;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ namespace MvcTemplate.Components.Security
     public class AuthorizationProvider : IAuthorizationProvider
     {
         private Dictionary<String, IEnumerable<Privilege>> cache;
-        private Type[] controllers;
+        private Type[] controllerTypes;
         private Type controllerType;
 
         public AuthorizationProvider(Assembly controllersAssembly)
         {
             controllerType = typeof(Controller);
-            controllers = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToArray();
+            controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToArray();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -82,9 +83,19 @@ namespace MvcTemplate.Components.Security
         }
         private Type GetControllerType(String area, String controller)
         {
-            String fullNameEnding = (area + "." + controller + "Controller").ToLowerInvariant();
+            String controllerType = controller + "Controller";
+            IEnumerable<Type> controllers = controllerTypes
+                .Where(type => type.Name.Equals(controllerType, StringComparison.OrdinalIgnoreCase));
 
-            return controllers.First(type => type.FullName.ToLowerInvariant().EndsWith(fullNameEnding));
+            if (area == null)
+                controllers = controllers.Where(type =>
+                    type.GetCustomAttribute<AreaAttribute>() == null);
+            else
+                controllers = controllers.Where(type =>
+                    type.GetCustomAttribute<AreaAttribute>() != null &&
+                    String.Equals(type.GetCustomAttribute<AreaAttribute>().Name, area, StringComparison.OrdinalIgnoreCase));
+
+            return controllers.Single();
         }
         private MethodInfo GetMethod(Type controller, String action)
         {
@@ -92,11 +103,14 @@ namespace MvcTemplate.Components.Security
                 .GetMethods()
                 .Where(method =>
                     (
-                        method.GetCustomAttribute<ActionNameAttribute>() != null &&
-                        method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()
+                        method.GetCustomAttribute<ActionNameAttribute>() == null &&
+                        method.Name.ToLowerInvariant() == action.ToLowerInvariant()
                     )
                     ||
-                    method.Name.ToLowerInvariant() == action.ToLowerInvariant())
+                    (
+                        method.GetCustomAttribute<ActionNameAttribute>() != null &&
+                        method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()
+                    ))
                 .ToArray();
 
             MethodInfo getMethod = methods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);

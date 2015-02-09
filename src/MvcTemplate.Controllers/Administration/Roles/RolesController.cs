@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Objects;
+﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers.Administration
 {
+    [Area("Administration")]
     public class RolesController : ValidatedController<IRoleValidator, IRoleService>
     {
         public RolesController(IRoleValidator validator, IRoleService service)

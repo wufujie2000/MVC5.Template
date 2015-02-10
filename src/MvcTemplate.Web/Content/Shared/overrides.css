@@ -23,7 +23,9 @@
   background-image: linear-gradient(center top, #84b2ca, #67a0be);
   border: 1px solid #5997B8;
 }
-.btn-primary:hover {
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active {
   background-color: #5997b8;
   background-image: -webkit-linear-gradient(center top, #75a9c4, #5997b8);
   background-image: -moz-linear-gradient(center top, #75a9c4, #5997b8);

@@ -101,7 +101,7 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .SingleOrDefault();
 
-            Boolean isCorrect = passhash != null && hasher.Verify(password, passhash);
+            Boolean isCorrect = hasher.VerifyPassword(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError("", Validations.IncorrectUsernameOrPassword);
 
@@ -115,7 +115,7 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .Single();
 
-            Boolean isCorrect = hasher.Verify(password, passhash);
+            Boolean isCorrect = hasher.VerifyPassword(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
 

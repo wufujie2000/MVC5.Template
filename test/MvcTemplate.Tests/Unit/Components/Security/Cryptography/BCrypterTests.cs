@@ -44,12 +44,31 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         #region Method: Verify(String value, String hash)
 
         [Test]
+        public void Verify_OnNullHashAlwaysFails()
+        {
+            Assert.IsFalse(crypter.Verify("", null));
+        }
+
+        [Test]
         public void Verify_VerifiesHash()
         {
-            String value = "Test";
-            String hash = BCrypt.Net.BCrypt.HashString(value, 4);
+            Assert.IsTrue(crypter.Verify("Test", "$2a$04$tXfDH9cZGOqFbCV8CF1ik.kW8R7.UKpEi5G7P4K842As1DI1bwDxm"));
+        }
 
-            Assert.IsTrue(crypter.Verify(value, hash));
+        #endregion
+
+        #region Method: VerifyPassword(String value, String passhash)
+
+        [Test]
+        public void VerifyPassword_OnNullHashAlwaysFails()
+        {
+            Assert.IsFalse(crypter.VerifyPassword("", null));
+        }
+
+        [Test]
+        public void VerifyPassword_VerifiesPasshash()
+        {
+            Assert.IsTrue(crypter.VerifyPassword("Test", "$2a$13$g7QgmyFicKkyI4kiHM8XQ.LfBdpdcLUbw1tkr9.owCN5qY9eCj8Lq"));
         }
 
         #endregion

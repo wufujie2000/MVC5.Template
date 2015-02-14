@@ -14,10 +14,10 @@
     },
     Date: {
         Equals: 'Equals',
-        LessThan: 'Less than',
-        GreaterThan: 'Greater than',
-        LessThanOrEqual: 'Less than or equal',
-        GreaterThanOrEqual: 'Greater than or equal'
+        LessThan: 'Is before',
+        GreaterThan: 'Is after',
+        LessThanOrEqual: 'Is before or equal',
+        GreaterThanOrEqual: 'Is after or equal'
     },
     Boolean: {
         Yes: 'Yes',

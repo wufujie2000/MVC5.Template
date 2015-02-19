@@ -3,7 +3,6 @@ using MvcTemplate.Components.Security;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -14,7 +13,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     [TestFixture]
     public class MvcSiteMapProviderTests
     {
-        private IEnumerable<MvcSiteMapNode> siteMapTree;
         private RouteValueDictionary routeValues;
         private MvcSiteMapProvider provider;
         private MvcSiteMapParser parser;
@@ -28,8 +26,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             parser = new MvcSiteMapParser();
             siteMap = CreateSiteMap();
             siteMap.Save(siteMapPath);
-
-            siteMapTree = parser.GetNodeTree(siteMap);
         }
 
         [SetUp]

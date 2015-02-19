@@ -139,7 +139,7 @@ namespace MvcTemplate.Components.Mvc
         }
         private Boolean IsEmpty(MvcSiteMapNode node)
         {
-            return node.Action == null && node.Children.Count() == 0;
+            return node.Action == null && !node.Children.Any();
         }
     }
 }

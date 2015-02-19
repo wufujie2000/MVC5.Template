@@ -66,7 +66,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return columns
                 .Add(property)
-                .Css(GetCssClassFor(property))
+                .Css(GetCssClassFor<TProperty>())
                 .Titled(ResourceProvider.GetPropertyTitle(property));
         }
 
@@ -81,7 +81,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Pageable();
         }
 
-        private static String GetCssClassFor<T, TProperty>(Expression<Func<T, TProperty>> property)
+        private static String GetCssClassFor<TProperty>()
         {
             Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
             if (type.IsEnum) return "text-cell";
@@ -113,8 +113,8 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionTag.MergeAttribute("href", url.Action(action.ToString(), GetRouteValuesFor(model)));
-            actionTag.AddCssClass(String.Format("{0}-action", action.ToString().ToLower()));
+            actionTag.MergeAttribute("href", url.Action(action, GetRouteValuesFor(model)));
+            actionTag.AddCssClass(String.Format("{0}-action", action.ToLower()));
             icon.AddCssClass(iconClass);
 
             actionTag.InnerHtml = icon.ToString();

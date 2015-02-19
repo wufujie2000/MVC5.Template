@@ -21,13 +21,12 @@ namespace MvcTemplate.Data.Logging
         {
             foreach (DbEntityEntry<BaseModel> entry in entries)
             {
-                LoggableEntity entity;
                 switch (entry.State)
                 {
                     case EntityState.Added:
                     case EntityState.Deleted:
                     case EntityState.Modified:
-                        entity = new LoggableEntity(entry);
+                        LoggableEntity entity = new LoggableEntity(entry);
                         if (entity.Properties.Any())
                             Log(entity);
                         break;

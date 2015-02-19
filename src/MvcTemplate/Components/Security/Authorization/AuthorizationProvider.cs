@@ -122,7 +122,7 @@ namespace MvcTemplate.Components.Security
 
             return methods[0];
         }
-        private String GetAuthorizedAs(MethodInfo action)
+        private String GetAuthorizedAs(MemberInfo action)
         {
             AuthorizeAsAttribute authorizedAs = action.GetCustomAttribute<AuthorizeAsAttribute>();
             if (authorizedAs == null || authorizedAs.Action == action.Name)

@@ -5,7 +5,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Web.Mvc;
 
@@ -15,7 +14,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     public class BootstrapExtensionsTests
     {
         private HtmlHelper<BootstrapModel> html;
-        private StringBuilder htmlStringBuilder;
         private BootstrapModel model;
 
         [TestFixtureSetUp]
@@ -30,7 +28,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void SetUp()
         {
             html.ViewContext.Writer = new StringWriter();
-            htmlStringBuilder = (html.ViewContext.Writer as StringWriter).GetStringBuilder();
         }
 
         [TestFixtureTearDown]

@@ -26,7 +26,7 @@ namespace MvcTemplate.Components.Mvc
             PropertyInfo otherProperty = validationContext.ObjectType.GetProperty(OtherPropertyName);
             Object otherPropertyValue = otherProperty.GetValue(validationContext.ObjectInstance);
 
-            if (Object.Equals(value, otherPropertyValue))
+            if (Equals(value, otherPropertyValue))
                 return null;
 
             OtherPropertyDisplayName = ResourceProvider.GetPropertyTitle(validationContext.ObjectType, OtherPropertyName);

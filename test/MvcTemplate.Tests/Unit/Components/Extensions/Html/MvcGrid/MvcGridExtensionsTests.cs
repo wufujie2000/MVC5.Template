@@ -57,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
             columns
-                .Add<String>(Arg.Any<Expression<Func<AllTypesView, String>>>())
+                .Add(Arg.Any<Expression<Func<AllTypesView, String>>>())
                 .Returns(column)
                 .AndDoes(info =>
                 {
@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actionLink = "";
 
             columns
-                .Add<String>(Arg.Any<Expression<Func<AllTypesView, String>>>()).Returns(column)
+                .Add(Arg.Any<Expression<Func<AllTypesView, String>>>()).Returns(column)
                 .AndDoes(info => { actionLink = info.Arg<Expression<Func<AllTypesView, String>>>().Compile().Invoke(view); });
 
             columns.AddActionLink("Details", "fa fa-info");

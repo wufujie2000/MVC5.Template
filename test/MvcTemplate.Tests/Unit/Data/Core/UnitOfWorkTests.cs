@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel actual = context.Set<TestModel>().Local.Single();
             TestModel expected = model;
 
-            Assert.AreEqual(EntityState.Added, context.Entry<TestModel>(model).State);
+            Assert.AreEqual(EntityState.Added, context.Entry(model).State);
             Assert.AreSame(expected, actual);
         }
 
@@ -160,7 +160,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             unitOfWork.Update(model);
 
-            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(model);
+            DbEntityEntry<TestModel> actual = context.Entry(model);
             TestModel expected = model;
 
             Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
@@ -179,7 +179,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             unitOfWork.Update(model);
 
-            DbEntityEntry<TestModel> actual = context.Entry<TestModel>(attachedModel);
+            DbEntityEntry<TestModel> actual = context.Entry(attachedModel);
             TestModel expected = model;
 
             Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);

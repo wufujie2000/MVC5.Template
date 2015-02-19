@@ -20,12 +20,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         private ProfileEditView profileEdit;
         private IAccountValidator validator;
         private IAccountService service;
-        private AccountView account;
 
         [SetUp]
         public void SetUp()
         {
-            account = new AccountView();
             profileEdit = ObjectFactory.CreateProfileEditView("Edition");
             profileDelete = ObjectFactory.CreateProfileDeleteView("Edition");
 

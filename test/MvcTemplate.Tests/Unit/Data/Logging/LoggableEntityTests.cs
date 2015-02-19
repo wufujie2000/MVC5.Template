@@ -56,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.CurrentValues["Name"] = "Role";
             entry.OriginalValues["Name"] = "Role";
 
-            IEnumerator<LoggableProperty> expected = new List<LoggableProperty>() { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.CurrentValues["Name"] = "Role";
             entry.State = EntityState.Modified;
 
-            IEnumerator<LoggableProperty> expected = new List<LoggableProperty>() { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())

@@ -27,7 +27,7 @@ namespace MvcTemplate.Components.Extensions.Html
             textSpan.AddCssClass("text");
             icon.AddCssClass(iconClass);
 
-            actionLink.MergeAttribute("href", urlHelper.Action(action, new { id = idValue }).ToString());
+            actionLink.MergeAttribute("href", urlHelper.Action(action, new { id = idValue }));
             actionLink.InnerHtml = icon.ToString() + textSpan;
 
             return new MvcHtmlString(actionLink.ToString());

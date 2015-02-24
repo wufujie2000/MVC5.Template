@@ -1,3 +1,6 @@
+![Version](https://img.shields.io/github/release/NonFactors/MVC.Template.svg?style=plastic)
+![License](https://img.shields.io/badge/license-MIT-green.svg?style=plastic)
+
 # Installation
 1. Before opening project rename it using "Rename Project.exe".
 2. Build project or restore NuGet packages.

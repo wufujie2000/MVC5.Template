@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Routing;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Components.Mvc
@@ -12,35 +12,6 @@ namespace MvcTemplate.Components.Mvc
         private IEnumerable<MvcSiteMapNode> nodeTree;
         private IEnumerable<MvcSiteMapNode> nodeList;
 
-        private String CurrentAccountId
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.Name;
-            }
-        }
-        private String CurrentController
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
-            }
-        }
-        private String CurrentAction
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["action"] as String;
-            }
-        }
-        private String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
-
         public MvcSiteMapProvider(String path, IMvcSiteMapParser parser)
         {
             XElement siteMap = XElement.Load(path);
@@ -48,18 +19,28 @@ namespace MvcTemplate.Components.Mvc
             nodeList = ToList(nodeTree);
         }
 
-        public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus()
+        public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(RequestContext request)
         {
-            return GetAuthorizedMenus(CopyAndSetState(nodeTree));
-        }
-        public IEnumerable<MvcSiteMapNode> GetBreadcrumb()
-        {
-            List<MvcSiteMapNode> breadcrumb = new List<MvcSiteMapNode>();
-            MvcSiteMapNode currentNode = nodeList.SingleOrDefault(node =>
-                String.Equals(node.Area, CurrentArea, StringComparison.OrdinalIgnoreCase) &&
-                String.Equals(node.Action, CurrentAction, StringComparison.OrdinalIgnoreCase) &&
-                String.Equals(node.Controller, CurrentController, StringComparison.OrdinalIgnoreCase));
+            String account = request.HttpContext.User.Identity.Name;
+            String area = request.RouteData.Values["area"] as String;
+            String action = request.RouteData.Values["action"] as String;
+            String controller = request.RouteData.Values["controller"] as String;
+            IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(nodeTree, area, controller, action);
 
+            return GetAuthorizedMenus(account, nodes);
+        }
+        public IEnumerable<MvcSiteMapNode> GetBreadcrumb(RequestContext request)
+        {
+            String area = request.RouteData.Values["area"] as String;
+            String action = request.RouteData.Values["action"] as String;
+            String controller = request.RouteData.Values["controller"] as String;
+
+            MvcSiteMapNode currentNode = nodeList.SingleOrDefault(node =>
+                String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase));
+
+            List<MvcSiteMapNode> breadcrumb = new List<MvcSiteMapNode>();
             while (currentNode != null)
             {
                 breadcrumb.Insert(0, new MvcSiteMapNode
@@ -77,7 +58,7 @@ namespace MvcTemplate.Components.Mvc
             return breadcrumb;
         }
 
-        private IEnumerable<MvcSiteMapNode> CopyAndSetState(IEnumerable<MvcSiteMapNode> nodes)
+        private IEnumerable<MvcSiteMapNode> CopyAndSetState(IEnumerable<MvcSiteMapNode> nodes, String area, String controller, String action)
         {
             List<MvcSiteMapNode> copies = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
@@ -90,27 +71,27 @@ namespace MvcTemplate.Components.Mvc
                 copy.Action = node.Action;
                 copy.Area = node.Area;
 
-                copy.Children = CopyAndSetState(node.Children);
+                copy.Children = CopyAndSetState(node.Children, area, controller, action);
                 copy.HasActiveChildren = copy.Children.Any(child => child.IsActive || child.HasActiveChildren);
                 copy.IsActive =
                     copy.Children.Any(childNode => childNode.IsActive && !childNode.IsMenu) || (
-                    String.Equals(node.Area, CurrentArea, StringComparison.OrdinalIgnoreCase) &&
-                    String.Equals(node.Action, CurrentAction, StringComparison.OrdinalIgnoreCase) &&
-                    String.Equals(node.Controller, CurrentController, StringComparison.OrdinalIgnoreCase));
+                    String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
+                    String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
+                    String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase));
 
                 copies.Add(copy);
             }
 
             return copies;
         }
-        private IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(IEnumerable<MvcSiteMapNode> nodes)
+        private IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(String accountId, IEnumerable<MvcSiteMapNode> nodes)
         {
             List<MvcSiteMapNode> menuNodes = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
             {
-                node.Children = GetAuthorizedMenus(node.Children);
+                node.Children = GetAuthorizedMenus(accountId, node.Children);
 
-                if (node.IsMenu && IsAuthorizedToView(node) && !IsEmpty(node))
+                if (node.IsMenu && IsAuthorizedToView(accountId, node) && !IsEmpty(node))
                     menuNodes.Add(node);
                 else
                     menuNodes.AddRange(node.Children);
@@ -130,12 +111,12 @@ namespace MvcTemplate.Components.Mvc
 
             return list;
         }
-        private Boolean IsAuthorizedToView(MvcSiteMapNode menu)
+        private Boolean IsAuthorizedToView(String accountId, MvcSiteMapNode menu)
         {
             if (menu.Action == null) return true;
             if (Authorization.Provider == null) return true;
 
-            return Authorization.Provider.IsAuthorizedFor(CurrentAccountId, menu.Area, menu.Controller, menu.Action);
+            return Authorization.Provider.IsAuthorizedFor(accountId, menu.Area, menu.Controller, menu.Action);
         }
         private Boolean IsEmpty(MvcSiteMapNode node)
         {

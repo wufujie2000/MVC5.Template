@@ -21,7 +21,7 @@
         <div class="sidebar-search">
             @Html.TextBox("SearchInput", null, new { placeholder = Actions.Search + "..." })
         </div>
-        @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetAuthorizedMenus())
+        @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetAuthorizedMenus(Request.RequestContext))
     </div>
     <div class="content-container clear">
         <div class="separator"></div>

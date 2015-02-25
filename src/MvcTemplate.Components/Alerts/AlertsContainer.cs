@@ -5,7 +5,7 @@ namespace MvcTemplate.Components.Alerts
 {
     public class AlertsContainer : List<Alert>
     {
-        public const UInt32 DefaultFadeout = 4000;
+        public const Int32 DefaultFadeout = 4000;
 
         public void Add(AlertType type, String message)
         {

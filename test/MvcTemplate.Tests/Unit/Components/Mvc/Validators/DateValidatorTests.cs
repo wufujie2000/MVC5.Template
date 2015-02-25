@@ -1,21 +1,19 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Form;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class DateValidatorTests
     {
         private DateValidator validator;
         private ModelMetadata metadata;
 
-        [SetUp]
-        public void SetUp()
+        public DateValidatorTests()
         {
             metadata = new DisplayNameMetadataProvider().GetMetadataForProperty(null, typeof(AccountView), "Username");
             validator = new DateValidator(metadata, new ControllerContext());
@@ -23,17 +21,17 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Method: Validate(Object container)
 
-        [Test]
+        [Fact]
         public void Validate_DoesNotValidate()
         {
-            CollectionAssert.IsEmpty(validator.Validate(null));
+            Assert.Empty(validator.Validate(null));
         }
 
         #endregion
 
         #region Method: GetClientValidationRules()
 
-        [Test]
+        [Fact]
         public void GetClientValidationRules_ReturnsDateValidationRule()
         {
             ModelClientValidationRule actual = validator.GetClientValidationRules().Single();
@@ -43,9 +41,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 ErrorMessage = String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName())
             };
 
-            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
-            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
-            CollectionAssert.IsEmpty(actual.ValidationParameters);
+            Assert.Equal(expected.ValidationType, actual.ValidationType);
+            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Empty(actual.ValidationParameters);
         }
 
         #endregion

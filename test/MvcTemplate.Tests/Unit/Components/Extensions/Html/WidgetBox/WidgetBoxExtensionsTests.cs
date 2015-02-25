@@ -2,14 +2,13 @@
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
-    public class WidgetBoxExtensionsTests
+    public class WidgetBoxExtensionsTests : IDisposable
     {
         private UrlHelper urlHelper;
         private HtmlHelper html;
@@ -18,8 +17,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private String accountId;
         private String area;
 
-        [SetUp]
-        public void SetUp()
+        public WidgetBoxExtensionsTests()
         {
             html = HtmlHelperFactory.CreateHtmlHelper();
             urlHelper = new UrlHelper(html.ViewContext.RequestContext);
@@ -28,16 +26,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             accountId = html.ViewContext.HttpContext.User.Identity.Name;
             area = html.ViewContext.RouteData.Values["area"] as String;
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             Authorization.Provider = null;
         }
 
         #region Extension method: WidgetButton(this HtmlHelper html, String action, String iconClass)
 
-        [Test]
+        [Fact]
         public void WidgetButton_OnNotAuthorizedReturnsEmpty()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
@@ -46,10 +42,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.WidgetButton("Delete", "icon").ToString();
             String expected = "";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void WidgetButton_OnNullAuthorizationProviderFormsWidgetButton()
         {
             Authorization.Provider = null;
@@ -63,10 +59,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 urlHelper.Action("Create"),
                 ResourceProvider.GetActionTitle("Create"));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void WidgetButton_FormsAuthorizedWidgetButton()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
@@ -81,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 urlHelper.Action("Delete"),
                 ResourceProvider.GetActionTitle("Delete"));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

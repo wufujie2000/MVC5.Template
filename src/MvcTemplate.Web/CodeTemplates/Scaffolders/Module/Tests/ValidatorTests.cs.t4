@@ -4,27 +4,23 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
-using NUnit.Framework;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
-    [TestFixture]
     public class <#= Model.Validator #>Tests
     {
         private <#= Model.Validator #> validator;
         private TestingContext context;
 
-        [SetUp]
-        public void SetUp()
+        public <#= Model.Validator #>Tests()
         {
             context = new TestingContext();
             validator = new <#= Model.Validator #>(new UnitOfWork(context));
             validator.ModelState = new ModelStateDictionary();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             context.Dispose();
             validator.Dispose();
@@ -32,36 +28,36 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #region Method: CanCreate(<#= Model.View #> view)
 
-        [Test]
+        [Fact]
         public void CanCreate_CanNotCreateWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanCreate(new <#= Model.View #>()));
+            Assert.False(validator.CanCreate(new <#= Model.View #>()));
         }
 
-        [Test]
+        [Fact]
         public void CanCreate_CanCreateValid<#= Model.Model #>()
         {
-            Assert.IsTrue(validator.CanCreate(new <#= Model.View #>()));
+            Assert.True(validator.CanCreate(new <#= Model.View #>()));
         }
 
         #endregion
 
         #region Method: CanEdit(<#= Model.View #> view)
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanEdit(new <#= Model.View #>()));
+            Assert.False(validator.CanEdit(new <#= Model.View #>()));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditValid<#= Model.Model #>()
         {
-            Assert.IsTrue(validator.CanEdit(new <#= Model.View #>()));
+            Assert.True(validator.CanEdit(new <#= Model.View #>()));
         }
 
         #endregion

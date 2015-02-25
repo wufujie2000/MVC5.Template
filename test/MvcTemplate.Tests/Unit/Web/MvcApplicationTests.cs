@@ -5,22 +5,21 @@ using MvcTemplate.Controllers;
 using MvcTemplate.Tests.Objects;
 using MvcTemplate.Web;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Web
 {
-    [TestFixture]
-    public class MvcApplicationTests
+    public class MvcApplicationTests : IDisposable
     {
         private MvcApplication application;
 
-        [SetUp]
-        public void SetUp()
+        public MvcApplicationTests()
         {
             application = Substitute.ForPartsOf<MvcApplication>();
             application.When(app => app.RegisterAreas()).DoNotCallBase();
@@ -40,16 +39,14 @@ namespace MvcTemplate.Tests.Unit.Web
             MvcSiteMap.Provider = null;
             RouteTable.Routes.Clear();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             application.Dispose();
         }
 
         #region Method: Application_Start()
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersCurrentDependencyResolver()
         {
             application.Application_Start();
@@ -57,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterCurrentDependencyResolver();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersGlobalizationProvider()
         {
             application.Application_Start();
@@ -65,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterGlobalizationProvider();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersModelMetadataProvider()
         {
             application.Application_Start();
@@ -73,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterModelMetadataProvider();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersDataTypeValidator()
         {
             application.Application_Start();
@@ -81,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterDataTypeValidator();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersSiteMapProvider()
         {
             application.Application_Start();
@@ -89,7 +86,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterSiteMapProvider();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersAuthorization()
         {
             application.Application_Start();
@@ -97,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterAuthorization();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersModelBinders()
         {
             application.Application_Start();
@@ -105,7 +102,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterModelBinders();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersViewEngine()
         {
             application.Application_Start();
@@ -113,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterViewEngine();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersAdapters()
         {
             application.Application_Start();
@@ -121,7 +118,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterAdapters();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersFilters()
         {
             application.Application_Start();
@@ -129,7 +126,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterFilters();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersBundles()
         {
             application.Application_Start();
@@ -137,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterBundles();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersAreas()
         {
             application.Application_Start();
@@ -145,7 +142,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Received().RegisterAreas();
         }
 
-        [Test]
+        [Fact]
         public void Application_Start_RegistersRoute()
         {
             application.Application_Start();
@@ -157,8 +154,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region Method: Application_Error()
 
-        [Test]
-        [Ignore("Web configuration can not be edited.")]
+        [Fact(Skip = "Web configuration can not be edited.")]
         public void Application_Error()
         {
         }
@@ -167,24 +163,24 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region Method: RegisterCurrentDependencyResolver()
 
-        [Test]
+        [Fact]
         public void RegisterCurrentDependencyResolver_RegistersCurrentDependencyResolver()
         {
-            Assert.IsNotInstanceOf<LightInjectMvcDependencyResolver>(DependencyResolver.Current);
+            Assert.IsNotType<LightInjectMvcDependencyResolver>(DependencyResolver.Current);
 
             application.RegisterCurrentDependencyResolver();
 
             Type expected = typeof(LightInjectMvcDependencyResolver);
             Type actual = DependencyResolver.Current.GetType();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterGlobalizationProvider()
 
-        [Test]
+        [Fact]
         public void RegisterGlobalizationProvider_RegistersGlobalizationProvider()
         {
             IGlobalizationProvider globalization = Substitute.For<IGlobalizationProvider>();
@@ -196,14 +192,14 @@ namespace MvcTemplate.Tests.Unit.Web
             IGlobalizationProvider actual = GlobalizationManager.Provider;
             IGlobalizationProvider expected = globalization;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterModelMetadataProvider()
 
-        [Test]
+        [Fact]
         public void RegisterModelMetadataProvider_RegistersModelMetadataProvider()
         {
             application.RegisterModelMetadataProvider();
@@ -211,14 +207,14 @@ namespace MvcTemplate.Tests.Unit.Web
             Type actual = ModelMetadataProviders.Current.GetType();
             Type expected = typeof(DisplayNameMetadataProvider);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterDataTypeValidator()
 
-        [Test]
+        [Fact]
         public void RegisterDataTypeValidator_RemovesClientDataTypeModelValidatorProvider()
         {
             ClientDataTypeModelValidatorProvider provider = new ClientDataTypeModelValidatorProvider();
@@ -226,10 +222,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterDataTypeValidator();
 
-            CollectionAssert.DoesNotContain(ModelValidatorProviders.Providers, provider);
+            Assert.False(ModelValidatorProviders.Providers.Contains(provider));
         }
 
-        [Test]
+        [Fact]
         public void RegisterDataTypeValidator_RegistersDataTypeValidatorProvider()
         {
             application.RegisterDataTypeValidator();
@@ -237,14 +233,14 @@ namespace MvcTemplate.Tests.Unit.Web
             ModelValidatorProviderCollection providers = ModelValidatorProviders.Providers;
             Type expectedType = typeof(DataTypeValidatorProvider);
 
-            Assert.IsNotNull(providers.SingleOrDefault(provider => provider.GetType() == expectedType));
+            Assert.NotNull(providers.SingleOrDefault(provider => provider.GetType() == expectedType));
         }
 
         #endregion
 
         #region Method: RegisterSiteMapProvider()
 
-        [Test]
+        [Fact]
         public void RegisterSiteMapProvider_RegistersSiteMapProvider()
         {
             IMvcSiteMapProvider siteMap = Substitute.For<IMvcSiteMapProvider>();
@@ -256,14 +252,14 @@ namespace MvcTemplate.Tests.Unit.Web
             IMvcSiteMapProvider actual = MvcSiteMap.Provider;
             IMvcSiteMapProvider expected = siteMap;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterAuthorization()
 
-        [Test]
+        [Fact]
         public void RegisterAuthorization_RegistersAuthorization()
         {
             IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
@@ -274,10 +270,10 @@ namespace MvcTemplate.Tests.Unit.Web
             IAuthorizationProvider actual = Authorization.Provider;
             IAuthorizationProvider expected = provider;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void RegisterAuthorization_RefreshesAuthorizationProvider()
         {
             IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
@@ -292,24 +288,24 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region Method: RegisterModelBinders()
 
-        [Test]
+        [Fact]
         public void RegisterModelBinders_RegistersModelBinders()
         {
-            Assert.IsNull(ModelBinders.Binders[typeof(String)]);
+            Assert.Null(ModelBinders.Binders[typeof(String)]);
 
             application.RegisterModelBinders();
 
             Type actual = ModelBinders.Binders[typeof(String)].GetType();
             Type expected = typeof(TrimmingModelBinder);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterViewEngine()
 
-        [Test]
+        [Fact]
         public void RegisterViewEngine_RemovesUnnecessaryViewEngines()
         {
             IViewEngine engine = Substitute.For<IViewEngine>();
@@ -317,10 +313,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterViewEngine();
 
-            CollectionAssert.DoesNotContain(ViewEngines.Engines, engine);
+            Assert.False(ViewEngines.Engines.Contains(engine));
         }
 
-        [Test]
+        [Fact]
         public void RegisterViewEngine_RegistersViewEngine()
         {
             application.RegisterViewEngine();
@@ -328,22 +324,22 @@ namespace MvcTemplate.Tests.Unit.Web
             Type actual = ViewEngines.Engines.Single().GetType();
             Type expected = typeof(ViewEngine);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterAdapters()
 
-        [Test]
-        [TestCase("Range", typeof(RangeAdapter))]
-        [TestCase("EqualTo", typeof(EqualToAdapter))]
-        [TestCase("Required", typeof(RequiredAdapter))]
-        [TestCase("MinValue", typeof(MinValueAdapter))]
-        [TestCase("MaxValue", typeof(MaxValueAdapter))]
-        [TestCase("MinLength", typeof(MinLengthAdapter))]
-        [TestCase("EmailAddress", typeof(EmailAddressAdapter))]
-        [TestCase("StringLength", typeof(StringLengthAdapter))]
+        [Theory]
+        [InlineData("Range", typeof(RangeAdapter))]
+        [InlineData("EqualTo", typeof(EqualToAdapter))]
+        [InlineData("Required", typeof(RequiredAdapter))]
+        [InlineData("MinValue", typeof(MinValueAdapter))]
+        [InlineData("MaxValue", typeof(MaxValueAdapter))]
+        [InlineData("MinLength", typeof(MinLengthAdapter))]
+        [InlineData("EmailAddress", typeof(EmailAddressAdapter))]
+        [InlineData("StringLength", typeof(StringLengthAdapter))]
         public void RegisterAdapters_RegistersAdapter(String property, Type adapterType)
         {
             DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
@@ -356,14 +352,14 @@ namespace MvcTemplate.Tests.Unit.Web
                 .GetValidators(metadata, new ControllerContext())
                 .SingleOrDefault(validator => validator.GetType() == adapterType);
 
-            Assert.IsNotNull(adapter);
+            Assert.NotNull(adapter);
         }
 
         #endregion
 
         #region Method: RegisterFilters()
 
-        [Test]
+        [Fact]
         public void RegisterFilters_RegistersExceptionFilter()
         {
             IExceptionFilter filter = Substitute.For<IExceptionFilter>();
@@ -374,14 +370,14 @@ namespace MvcTemplate.Tests.Unit.Web
             Object actual = GlobalFilters.Filters.Single().Instance;
             Object expected = filter;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: RegisterBundles()
 
-        [Test]
+        [Fact]
         public void RegisterBundles_RegistersBundles()
         {
             IBundleConfig bundleConfig = Substitute.For<IBundleConfig>();
@@ -396,8 +392,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region Method: RegisterAreas()
 
-        [Test]
-        [Ignore("Cannot be called during the application's pre-start initialization stage.")]
+        [Fact(Skip = "Cannot be called during the application's pre-start initialization stage.")]
         public void RegisterAreas_RegistersAreas()
         {
         }
@@ -406,7 +401,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region Method: RegisterRoute()
 
-        [Test]
+        [Fact]
         public void RegisterRoute_RegistersLowercaseUrls()
         {
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
@@ -414,10 +409,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterRoute();
 
-            Assert.IsTrue(RouteTable.Routes.LowercaseUrls);
+            Assert.True(RouteTable.Routes.LowercaseUrls);
         }
 
-        [Test]
+        [Fact]
         public void RegisterRoute_RegistersRoute()
         {
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();

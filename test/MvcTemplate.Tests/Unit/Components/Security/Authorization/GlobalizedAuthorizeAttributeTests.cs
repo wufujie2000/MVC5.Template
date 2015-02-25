@@ -1,16 +1,15 @@
-﻿using NUnit.Framework;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    [TestFixture]
     public class GlobalizedAuthorizeAttributeTests
     {
         #region Method: HandleUnauthorizedRequest(AuthorizationContext context)
 
-        [Test]
+        [Fact]
         public void HandleUnauthorizedRequest_RedirectsToLogin()
         {
             GlobalizedAuthorizeAttributeProxy attribute = new GlobalizedAuthorizeAttributeProxy();
@@ -24,11 +23,11 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
             RouteValueDictionary actual = (context.Result as RedirectToRouteResult).RouteValues;
 
-            Assert.AreEqual(context.RouteData.Values["language"], actual["language"]);
-            Assert.AreEqual(context.HttpContext.Request.RawUrl, actual["returnUrl"]);
-            Assert.AreEqual("Auth", actual["controller"]);
-            Assert.AreEqual("Login", actual["action"]);
-            Assert.AreEqual("", actual["area"]);
+            Assert.Equal(context.RouteData.Values["language"], actual["language"]);
+            Assert.Equal(context.HttpContext.Request.RawUrl, actual["returnUrl"]);
+            Assert.Equal("Auth", actual["controller"]);
+            Assert.Equal("Login", actual["action"]);
+            Assert.Equal("", actual["area"]);
         }
 
         #endregion

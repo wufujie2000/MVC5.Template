@@ -1,21 +1,19 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.IO;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
     public class ContentExtensionsTests
     {
         private UrlHelper urlHelper;
         private HtmlHelper html;
         private String path;
 
-        [SetUp]
-        public void SetUp()
+        public ContentExtensionsTests()
         {
             path = "ContentExtensionsTests.txt";
             File.WriteAllText(path, "");
@@ -26,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: RenderControllerScript(this HtmlHelper html)
 
-        [Test]
+        [Fact]
         public void RenderControllerScript_RendersControllerScriptsWithArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
@@ -35,10 +33,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
             String actual = html.RenderControllerScript().ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void RenderControllerScript_RendersControllerScriptsWithoutArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/accounts/accounts.js");
@@ -48,10 +46,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
             String actual = html.RenderControllerScript().ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void RenderControllerScript_DoesNotRendersNotExistingScripts()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
@@ -59,14 +57,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.RenderControllerScript().ToString();
             String expected = "";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: RenderControllerStyle(this HtmlHelper html)
 
-        [Test]
+        [Fact]
         public void RenderControllerStyle_RendersControllerStylesWithArea()
         {
             String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
@@ -75,10 +73,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
             String actual = html.RenderControllerStyle().ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void RenderControllerStyle_RendersControllerStylesWithoutArea()
         {
             String styleRef = urlHelper.Content("~/Content/Shared/accounts/accounts.css");
@@ -88,10 +86,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
             String actual = html.RenderControllerStyle().ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void RenderControllerStyle_DoesNotRendersNotExistingStyles()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
@@ -99,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.RenderControllerStyle().ToString();
             String expected = "";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

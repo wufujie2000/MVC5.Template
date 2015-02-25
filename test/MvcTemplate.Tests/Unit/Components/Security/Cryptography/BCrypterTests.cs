@@ -1,74 +1,72 @@
 ﻿using MvcTemplate.Components.Security;
-using NUnit.Framework;
 using System;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    [TestFixture]
     public class BCrypterTests
     {
         private BCrypter crypter;
 
-        [SetUp]
-        public void SetUp()
+        public BCrypterTests()
         {
             crypter = new BCrypter();
         }
 
         #region Method: Hash(String value)
 
-        [Test]
+        [Fact]
         public void Hash_Hashes()
         {
             String value = "Test";
             String hash = crypter.Hash(value);
 
-            Assert.IsTrue(BCrypt.Net.BCrypt.Verify(value, hash));
+            Assert.True(BCrypt.Net.BCrypt.Verify(value, hash));
         }
 
         #endregion
 
         #region Method: HashPassword(String value)
 
-        [Test]
+        [Fact]
         public void HashPassword_Hashes()
         {
             String value = "Test";
             String hash = crypter.HashPassword(value);
 
-            Assert.IsTrue(BCrypt.Net.BCrypt.Verify(value, hash));
+            Assert.True(BCrypt.Net.BCrypt.Verify(value, hash));
         }
 
         #endregion
 
         #region Method: Verify(String value, String hash)
 
-        [Test]
+        [Fact]
         public void Verify_OnNullHashAlwaysFails()
         {
-            Assert.IsFalse(crypter.Verify("", null));
+            Assert.False(crypter.Verify("", null));
         }
 
-        [Test]
+        [Fact]
         public void Verify_VerifiesHash()
         {
-            Assert.IsTrue(crypter.Verify("Test", "$2a$04$tXfDH9cZGOqFbCV8CF1ik.kW8R7.UKpEi5G7P4K842As1DI1bwDxm"));
+            Assert.True(crypter.Verify("Test", "$2a$04$tXfDH9cZGOqFbCV8CF1ik.kW8R7.UKpEi5G7P4K842As1DI1bwDxm"));
         }
 
         #endregion
 
         #region Method: VerifyPassword(String value, String passhash)
 
-        [Test]
+        [Fact]
         public void VerifyPassword_OnNullHashAlwaysFails()
         {
-            Assert.IsFalse(crypter.VerifyPassword("", null));
+            Assert.False(crypter.VerifyPassword("", null));
         }
 
-        [Test]
+        [Fact]
         public void VerifyPassword_VerifiesPasshash()
         {
-            Assert.IsTrue(crypter.VerifyPassword("Test", "$2a$13$g7QgmyFicKkyI4kiHM8XQ.LfBdpdcLUbw1tkr9.owCN5qY9eCj8Lq"));
+            Assert.True(crypter.VerifyPassword("Test", "$2a$13$g7QgmyFicKkyI4kiHM8XQ.LfBdpdcLUbw1tkr9.owCN5qY9eCj8Lq"));
         }
 
         #endregion

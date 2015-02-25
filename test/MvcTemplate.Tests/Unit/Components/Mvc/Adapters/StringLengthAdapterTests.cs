@@ -1,19 +1,18 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Form;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class StringLengthAdapterTests
     {
         #region Constructor: StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
 
-        [Test]
+        [Fact]
         public void StringLengthAdapter_SetsMaxLengthErrorMessage()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
@@ -24,10 +23,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String expected = Validations.FieldMustNotExceedLength;
             String actual = attribute.ErrorMessage;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void StringLengthAdapter_SetsMinMaxLengthErrorMessage()
         {
             StringLengthAttribute attribute = new StringLengthAttribute(128) { MinimumLength = 4 };
@@ -38,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String expected = Validations.FieldMustBeInRangeOfLength;
             String actual = attribute.ErrorMessage;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

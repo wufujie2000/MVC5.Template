@@ -1,17 +1,15 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using NUnit.Framework;
 using System;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
     public class JsTreeViewExtensionsTests
     {
         private HtmlHelper<JsTreeView> html;
 
-        [SetUp]
-        public void SetUp()
+        public JsTreeViewExtensionsTests()
         {
             JsTreeView model = new JsTreeView();
 
@@ -25,7 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
 
-        [Test]
+        [Fact]
         public void JsTreeFor_FormsJsTreeFor()
         {
             String actual = html.JsTreeFor(model => model.JsTree).ToString();
@@ -44,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                     "</ul>" +
                 "</div>";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

@@ -3,15 +3,14 @@ using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    [TestFixture]
     public class RolesControllerTests : AControllerTests
     {
         private RolesController controller;
@@ -19,8 +18,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         private IRoleService service;
         private RoleView role;
 
-        [SetUp]
-        public void SetUp()
+        public RolesControllerTests()
         {
             validator = Substitute.For<IRoleValidator>();
             service = Substitute.For<IRoleService>();
@@ -33,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #region Method: Index()
 
-        [Test]
+        [Fact]
         public void Index_GetsRoleViews()
         {
             service.GetViews().Returns(new RoleView[0].AsQueryable());
@@ -41,23 +39,23 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Create()
 
-        [Test]
+        [Fact]
         public void Create_ReturnsNewRoleView()
         {
             RoleView actual = controller.Create().Model as RoleView;
 
-            Assert.IsNotNull(actual.PrivilegesTree);
-            Assert.IsNull(actual.Name);
+            Assert.NotNull(actual.PrivilegesTree);
+            Assert.Null(actual.Name);
         }
 
-        [Test]
+        [Fact]
         public void Create_SeedsPrivilegesTree()
         {
             RoleView view = controller.Create().Model as RoleView;
@@ -69,13 +67,13 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #region Method: Create(RoleView role)
 
-        [Test]
+        [Fact]
         public void Create_ProtectsFromOverpostingId()
         {
             ProtectsFromOverpostingId(controller, "Create");
         }
 
-        [Test]
+        [Fact]
         public void Create_SeedsPrivilegesTreeIfCanNotCreate()
         {
             validator.CanCreate(role).Returns(false);
@@ -85,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().SeedPrivilegesTree(role);
         }
 
-        [Test]
+        [Fact]
         public void Create_ReturnsSameModelIfCanNotCreate()
         {
             validator.CanCreate(role).Returns(false);
@@ -93,10 +91,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Create(role) as ViewResult).Model;
             Object expected = role;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Create_CreatesRoleView()
         {
             validator.CanCreate(role).Returns(true);
@@ -106,7 +104,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().Create(role);
         }
 
-        [Test]
+        [Fact]
         public void Create_AfterSuccessfulCreateRedirectsToIndex()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -115,14 +113,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Create(role);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Details(String id)
 
-        [Test]
+        [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView("").Returns((RoleView)null);
@@ -132,10 +130,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Details_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
@@ -143,14 +141,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Details(role.Id) as ViewResult).Model;
             Object expected = role;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(String id)
 
-        [Test]
+        [Fact]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView("").Returns((RoleView)null);
@@ -160,10 +158,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectToNotFound();
             ActionResult actual = controller.Edit("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
@@ -171,14 +169,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Edit(role.Id) as ViewResult).Model;
             Object expected = role;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(RoleView role)
 
-        [Test]
+        [Fact]
         public void Edit_SeedsPrivilegesTreeIfCanNotEdit()
         {
             validator.CanEdit(role).Returns(false);
@@ -188,7 +186,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().SeedPrivilegesTree(role);
         }
 
-        [Test]
+        [Fact]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
             validator.CanEdit(role).Returns(false);
@@ -196,10 +194,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Edit(role) as ViewResult).Model;
             Object expected = role;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_EditsRole()
         {
             validator.CanEdit(role).Returns(true);
@@ -209,7 +207,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().Edit(role);
         }
 
-        [Test]
+        [Fact]
         public void Edit_AfterSuccessfulEditRedirectsToIndex()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -218,14 +216,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Edit(role);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Delete(String id)
 
-        [Test]
+        [Fact]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
             service.GetView("").Returns((RoleView)null);
@@ -235,10 +233,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectToNotFound();
             ActionResult actual = controller.Delete("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Delete_GetsRoleView()
         {
             service.GetView(role.Id).Returns(role);
@@ -246,14 +244,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Delete(role.Id) as ViewResult).Model;
             Object expected = role;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: DeleteConfirmed(String id)
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_DeletesRoleView()
         {
             controller.DeleteConfirmed(role.Id);
@@ -261,7 +259,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().Delete(role.Id);
         }
 
-        [Test]
+        [Fact]
         public void Delete_AfterSuccessfulDeleteRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -269,7 +267,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.DeleteConfirmed(role.Id);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion

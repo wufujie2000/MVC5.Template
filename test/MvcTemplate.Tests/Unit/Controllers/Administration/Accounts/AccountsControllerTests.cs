@@ -3,15 +3,14 @@ using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    [TestFixture]
     public class AccountsControllerTests
     {
         private AccountsController controller;
@@ -20,8 +19,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         private IAccountService service;
         private AccountView account;
 
-        [SetUp]
-        public void SetUp()
+        public AccountsControllerTests()
         {
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
@@ -35,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #region Method: Index()
 
-        [Test]
+        [Fact]
         public void Index_GetsAccountViews()
         {
             service.GetViews().Returns(new AccountView[0].AsQueryable());
@@ -43,14 +41,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Details(String id)
 
-        [Test]
+        [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             service.Get<AccountView>("").Returns((AccountView)null);
@@ -60,10 +58,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Details_GetsAccountView()
         {
             service.Get<AccountView>(account.Id).Returns(account);
@@ -71,14 +69,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Details(account.Id) as ViewResult).Model;
             Object expected = account;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(String id)
 
-        [Test]
+        [Fact]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
@@ -88,10 +86,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object expected = controller.RedirectToNotFound();
             Object actual = controller.Edit("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_GetsAccountView()
         {
             service.Get<AccountEditView>(account.Id).Returns(accountEdit);
@@ -99,14 +97,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Edit(account.Id) as ViewResult).Model;
             Object expected = accountEdit;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(AccountEditView account)
 
-        [Test]
+        [Fact]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
             validator.CanEdit(accountEdit).Returns(false);
@@ -114,10 +112,10 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Object actual = (controller.Edit(accountEdit) as ViewResult).Model;
             Object expected = accountEdit;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_EditsAccount()
         {
             validator.CanEdit(accountEdit).Returns(true);
@@ -127,7 +125,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             service.Received().Edit(accountEdit);
         }
 
-        [Test]
+        [Fact]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -136,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Edit(accountEdit);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion

@@ -1,42 +1,39 @@
 ﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
+using System;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
-    [TestFixture]
-    public class BaseValidatorTests
+    public class BaseValidatorTests : IDisposable
     {
         private BaseValidator validator;
         private IUnitOfWork unitOfWork;
 
-        [SetUp]
-        public void SetUp()
+        public BaseValidatorTests()
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             validator = Substitute.ForPartsOf<BaseValidator>(unitOfWork);
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             validator.Dispose();
         }
 
         #region Constructor: BaseValidator(IUnitOfWork unitOfWork)
 
-        [Test]
+        [Fact]
         public void BaseValidator_CreateEmptyAlertsContainer()
         {
-            CollectionAssert.IsEmpty(validator.Alerts);
+            Assert.Empty(validator.Alerts);
         }
 
         #endregion
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesUnitOfWork()
         {
             validator.Dispose();
@@ -44,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Services
             unitOfWork.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             validator.Dispose();

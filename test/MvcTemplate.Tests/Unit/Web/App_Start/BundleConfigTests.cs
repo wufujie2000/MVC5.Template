@@ -1,24 +1,22 @@
 ﻿using MvcTemplate.Web;
-using NUnit.Framework;
 using System;
 using System.Web.Optimization;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Web
 {
-    [TestFixture]
     public class BundleConfigTests
     {
         public BundleConfig config;
 
-        [SetUp]
-        public void SetUp()
+        public BundleConfigTests()
         {
             config = new BundleConfig();
         }
 
         #region Method: RegisterBundles(BundleCollection bundles)
 
-        [Test]
+        [Fact]
         public void RegisterBundles_RegistersScriptBundles()
         {
             String[] expectedBundles =
@@ -36,10 +34,10 @@ namespace MvcTemplate.Tests.Unit.Web
             config.RegisterBundles(bundles);
 
             foreach (String path in expectedBundles)
-                Assert.IsInstanceOf<ScriptBundle>(bundles.GetBundleFor(path));
+                Assert.IsType<ScriptBundle>(bundles.GetBundleFor(path));
         }
 
-        [Test]
+        [Fact]
         public void RegisterBundles_RegistersStyleBundles()
         {
             String[] expectedBundles =
@@ -57,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Web
             config.RegisterBundles(bundles);
 
             foreach (String path in expectedBundles)
-                Assert.IsInstanceOf<StyleBundle>(bundles.GetBundleFor(path));
+                Assert.IsType<StyleBundle>(bundles.GetBundleFor(path));
         }
 
         #endregion

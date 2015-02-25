@@ -1,18 +1,17 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class MaxValueAdapterTests
     {
         #region Method: GetClientValidationRules()
 
-        [Test]
+        [Fact]
         public void GetClientValidationRules_ReturnsMaxRangeValidationRule()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "MaxValue");
@@ -25,9 +24,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             expected.ErrorMessage = errorMessage;
             expected.ValidationType = "range";
 
-            Assert.AreEqual(expected.ValidationParameters["max"], actual.ValidationParameters["max"]);
-            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
-            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal(expected.ValidationParameters["max"], actual.ValidationParameters["max"]);
+            Assert.Equal(expected.ValidationType, actual.ValidationType);
+            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
         }
 
         #endregion

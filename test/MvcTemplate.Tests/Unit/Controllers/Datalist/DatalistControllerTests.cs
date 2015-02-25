@@ -5,24 +5,22 @@ using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    [TestFixture]
-    public class DatalistControllerTests
+    public class DatalistControllerTests : IDisposable
     {
         private DatalistController controller;
         private AbstractDatalist datalist;
         private IUnitOfWork unitOfWork;
         private DatalistFilter filter;
 
-        [SetUp]
-        public void SetUp()
+        public DatalistControllerTests()
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             controller = Substitute.ForPartsOf<DatalistController>(unitOfWork);
@@ -31,9 +29,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             datalist = Substitute.For<AbstractDatalist>();
             filter = new DatalistFilter();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             GlobalizationManager.Provider = null;
             HttpContext.Current = null;
@@ -41,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Method: GetData(AbstractDatalist datalist, DatalistFilter filter, Dictionary<String, Object> additionalFilters = null)
 
-        [Test]
+        [Fact]
         public void GetData_SetsDatalistCurrentFilter()
         {
             controller.GetData(datalist, filter);
@@ -49,10 +45,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             DatalistFilter actual = datalist.CurrentFilter;
             DatalistFilter expected = filter;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetData_SetsEmptyAdditionalFilters()
         {
             controller.GetData(datalist, filter);
@@ -60,10 +56,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Int32 actual = filter.AdditionalFilters.Count;
             Int32 expected = 0;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetData_SetsAdditionalFilters()
         {
             Dictionary<String, Object> filters = new Dictionary<String, Object> { { "Key", "Value" } };
@@ -72,10 +68,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Dictionary<String, Object> actual = filter.AdditionalFilters;
             Dictionary<String, Object> expected = filters;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetData_ReturnsPublicJsonData()
         {
             datalist.GetData().Returns(new DatalistData());
@@ -83,15 +79,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
             JsonResult actual = controller.GetData(datalist, filter);
             DatalistData expectedData = datalist.GetData();
 
-            Assert.AreEqual(JsonRequestBehavior.AllowGet, actual.JsonRequestBehavior);
-            Assert.AreSame(expectedData, actual.Data);
+            Assert.Equal(JsonRequestBehavior.AllowGet, actual.JsonRequestBehavior);
+            Assert.Same(expectedData, actual.Data);
         }
 
         #endregion
 
         #region Method: Role(DatalistFilter filter)
 
-        [Test]
+        [Fact]
         public void Role_GetsRolesData()
         {
             controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
@@ -101,14 +97,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
             JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesUnitOfWork()
         {
             controller.Dispose();
@@ -116,7 +112,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             unitOfWork.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             controller.Dispose();

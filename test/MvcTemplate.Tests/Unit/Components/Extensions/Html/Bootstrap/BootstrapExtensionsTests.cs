@@ -1,51 +1,41 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Mvc;
-using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
-    public class BootstrapExtensionsTests
+    public class BootstrapExtensionsTests : IDisposable
     {
         private HtmlHelper<BootstrapModel> html;
         private BootstrapModel model;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        public BootstrapExtensionsTests()
         {
-            model = new BootstrapModel();
-            html = HtmlHelperFactory.CreateHtmlHelper(model);
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
+            html = HtmlHelperFactory.CreateHtmlHelper(new BootstrapModel());
+            model = html.ViewData.Model;
         }
-
-        [SetUp]
-        public void SetUp()
-        {
-            html.ViewContext.Writer = new StringWriter();
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
+        public void Dispose()
         {
             GlobalizationManager.Provider = null;
         }
 
         #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
-        [Test]
+        [Fact]
         public void FormLabelFor_OnNotMemberExpressionThrows()
         {
             Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType()));
-            Assert.AreEqual(expected.Message, "Expression must be a member expression.");
+            Assert.Equal(expected.Message, "Expression must be a member expression.");
         }
 
-        [Test]
+        [Fact]
         public void FormLabelFor_FormsRequiredLabel()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
@@ -57,10 +47,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</label>",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormLabelFor_FormsRequiredLabelOnValueTypes()
         {
             Expression<Func<BootstrapModel, Int64>> expression = (exp) => exp.Relation.RequiredValue;
@@ -72,10 +62,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</label>",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormLabelFor_FormsNotRequiredLabel()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -85,10 +75,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<label for=\"{0}\"></label>",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
         {
             Expression<Func<BootstrapModel, Int64?>> expression = (exp) => exp.Relation.NotRequiredNullableValue;
@@ -98,14 +88,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<label for=\"{0}\"></label>",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_FormsNotAutocompletableTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -117,10 +107,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
@@ -132,10 +122,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Editable);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
@@ -147,10 +137,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableTrue);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -162,14 +152,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format)
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_FormsNotAutocompletableTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -181,10 +171,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
@@ -196,10 +186,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Editable);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
@@ -211,10 +201,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableTrue);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -226,10 +216,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_FormatsTextBoxValue()
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
@@ -241,14 +231,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 String.Format("{0:0.00}", model.Relation.Number));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_MergesClassAttributes()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -260,10 +250,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_FormsNotAutocompletableTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -275,10 +265,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -290,10 +280,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -305,10 +295,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
@@ -320,10 +310,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Editable);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
@@ -335,10 +325,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableTrue);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -350,14 +340,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format, Object htmlAttributes)
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_MergesClassAttributes()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -369,10 +359,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_FormsNotAutocompletableTextBox()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -384,10 +374,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
@@ -399,10 +389,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.NotRequired);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -414,10 +404,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttribute()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
@@ -429,10 +419,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Editable);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
@@ -444,10 +434,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableTrue);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
@@ -459,10 +449,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.EditableFalse);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormTextBoxFor_Format_Attributes_FormatsTextBoxValue()
         {
             Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
@@ -474,14 +464,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 String.Format("{0:0.00}", model.Relation.Number));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
-        [Test]
+        [Fact]
         public void FormDatePickerFor_FormsDatePicker()
         {
             Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
@@ -494,14 +484,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.Date.Value.ToString("yyyy.MM.dd"));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
-        [Test]
+        [Fact]
         public void FormDatePickerFor_FormsDateTimePicker()
         {
             Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
@@ -514,14 +504,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Extension method: FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
-        [Test]
+        [Fact]
         public void FormPasswordFor_FormsNotAutocompletablePasswordInput()
         {
             Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
@@ -532,7 +522,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

@@ -1,52 +1,51 @@
 ﻿using MvcTemplate.Components.Mvc;
-using NUnit.Framework;
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class DataTypeValidatorProviderTests
     {
         private DataTypeValidatorProvider provider;
 
-        [SetUp]
-        public void SetUp()
+        public DataTypeValidatorProviderTests()
         {
             provider = new DataTypeValidatorProvider();
         }
 
         #region Method: GetValidators(ModelMetadata metadata, ControllerContext context)
 
-        [Test]
+        [Fact]
         public void GetValidators_GetsNoValidators()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Id");
 
-            CollectionAssert.IsEmpty(provider.GetValidators(metadata, new ControllerContext()));
+            Assert.Empty(provider.GetValidators(metadata, new ControllerContext()));
         }
 
-        [Test]
+        [Fact]
         public void GetValidators_GetsDateValidator()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Date");
 
-            IEnumerable actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
-            IEnumerable expected = new[] { typeof(DateValidator) };
+            IEnumerable<Type> actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
+            IEnumerable<Type> expected = new[] { typeof(DateValidator) };
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetValidators_GetsNumericValidator()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Numeric");
 
-            IEnumerable actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
-            IEnumerable expected = new[] { typeof(NumberValidator) };
+            IEnumerable<Type> actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
+            IEnumerable<Type> expected = new[] { typeof(NumberValidator) };
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

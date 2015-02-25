@@ -3,18 +3,17 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Data.Logging
 {
-    [TestFixture]
-    public class AuditLoggerTests
+    public class AuditLoggerTests : IDisposable
     {
         private TestingContext dataContext;
         private DbContext context;
@@ -22,8 +21,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         private DbEntityEntry<BaseModel> entry;
         private AuditLogger logger;
 
-        [SetUp]
-        public void SetUp()
+        public AuditLoggerTests()
         {
             context = new TestingContext();
             dataContext = new TestingContext();
@@ -35,9 +33,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
             dataContext.SaveChanges();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             HttpContext.Current = null;
             dataContext.Dispose();
@@ -46,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
 
-        [Test]
+        [Fact]
         public void Log_LogsAddedEntities()
         {
             entry.State = EntityState.Added;
@@ -54,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Logs(entry);
         }
 
-        [Test]
+        [Fact]
         public void Log_LogsModifiedEntities()
         {
             (entry.Entity as TestModel).Text += "?";
@@ -63,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Logs(entry);
         }
 
-        [Test]
+        [Fact]
         public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
         {
             entry.State = EntityState.Modified;
@@ -73,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.DidNotReceiveWithAnyArgs().Log((LoggableEntity)null);
         }
 
-        [Test]
+        [Fact]
         public void Log_LogsDeletedEntities()
         {
             entry.State = EntityState.Deleted;
@@ -81,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Logs(entry);
         }
 
-        [Test]
+        [Fact]
         public void Log_DoesNotLogUnsupportedEntityStates()
         {
             IEnumerable<EntityState> unsupportedStates = Enum
@@ -101,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.DidNotReceiveWithAnyArgs().Log((LoggableEntity)null);
         }
 
-        [Test]
+        [Fact]
         public void Log_DoesNotSaveLogs()
         {
             entry.State = EntityState.Added;
@@ -119,7 +115,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Log(LoggableEntity entity)
 
-        [Test]
+        [Fact]
         public void Log_AddsLogToTheSet()
         {
             LoggableEntity entity = new LoggableEntity(entry);
@@ -129,14 +125,14 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
             LoggableEntity expected = entity;
 
-            Assert.AreEqual(HttpContext.Current.User.Identity.Name, actual.AccountId);
-            Assert.AreEqual(expected.ToString(), actual.Changes);
-            Assert.AreEqual(expected.Name, actual.EntityName);
-            Assert.AreEqual(expected.Action, actual.Action);
-            Assert.AreEqual(expected.Id, actual.EntityId);
+            Assert.Equal(HttpContext.Current.User.Identity.Name, actual.AccountId);
+            Assert.Equal(expected.ToString(), actual.Changes);
+            Assert.Equal(expected.Name, actual.EntityName);
+            Assert.Equal(expected.Action, actual.Action);
+            Assert.Equal(expected.Id, actual.EntityId);
         }
 
-        [Test]
+        [Fact]
         public void Log_DoesNotSaveLog()
         {
             entry.State = EntityState.Added;
@@ -156,7 +152,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Save()
 
-        [Test]
+        [Fact]
         public void Save_SavesLogs()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -171,7 +167,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesContext()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -182,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             logger.Dispose();
@@ -201,10 +197,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             {
                 LoggableEntity actual = info.Arg<LoggableEntity>();
 
-                Assert.AreEqual(expected.ToString(), actual.ToString());
-                Assert.AreEqual(expected.Action, actual.Action);
-                Assert.AreEqual(expected.Name, actual.Name);
-                Assert.AreEqual(expected.Id, actual.Id);
+                Assert.Equal(expected.ToString(), actual.ToString());
+                Assert.Equal(expected.Action, actual.Action);
+                Assert.Equal(expected.Name, actual.Name);
+                Assert.Equal(expected.Id, actual.Id);
             });
 
             logger.Log(new[] { entry });

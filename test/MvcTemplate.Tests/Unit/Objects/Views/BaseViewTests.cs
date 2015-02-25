@@ -1,79 +1,78 @@
 ﻿using MvcTemplate.Objects;
 using NSubstitute;
-using NUnit.Framework;
 using System;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Objects
 {
-    [TestFixture]
     public class BaseViewTests
     {
         private BaseView view;
 
-        [SetUp]
-        public void SetUp()
+        public BaseViewTests()
         {
             view = Substitute.For<BaseView>();
         }
 
         #region Constructor: BaseView()
 
-        [Test]
+        [Fact]
         public void BaseView_SetsCreationDateToNow()
         {
             Int64 actual = Substitute.For<BaseView>().CreationDate.Ticks;
-            Int64 expected = DateTime.Now.Ticks;
+            Int64 from = DateTime.Now.Ticks - TimeSpan.TicksPerSecond;
+            Int64 to = DateTime.Now.Ticks + TimeSpan.TicksPerSecond;
 
-            Assert.AreEqual(expected, actual, 10000000);
+            Assert.InRange(actual, from, to);
         }
 
-        [Test]
+        [Fact]
         public void BaseView_TruncatesMicrosecondsFromCreationDate()
         {
             DateTime actual = Substitute.For<BaseView>().CreationDate;
             DateTime expected = new DateTime(actual.Year, actual.Month, actual.Day, actual.Hour, actual.Minute, actual.Second, actual.Millisecond);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void BaseView_KeepsCurrentDateKind()
         {
             DateTimeKind actual = Substitute.For<BaseView>().CreationDate.Kind;
             DateTimeKind expected = DateTime.Now.Kind;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Property: Id
 
-        [Test]
+        [Fact]
         public void Id_AlwaysGetsNotNull()
         {
             view.Id = null;
 
-            Assert.IsNotNull(view.Id);
+            Assert.NotNull(view.Id);
         }
 
-        [Test]
+        [Fact]
         public void Id_AlwaysGetsUniqueValue()
         {
             String expected = view.Id;
             view.Id = null;
             String actual = view.Id;
 
-            Assert.AreNotEqual(expected, actual);
+            Assert.NotEqual(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Id_AlwaysGetsSameValue()
         {
             String expected = view.Id;
             String actual = view.Id;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

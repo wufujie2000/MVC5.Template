@@ -1,13 +1,12 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 using System.Collections.Specialized;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class TrimmingModelBinderTests
     {
         private NameValueCollection nameValueCollection;
@@ -15,8 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         private ModelBindingContext bindingContext;
         private TrimmingModelBinder binder;
 
-        [SetUp]
-        public void SetUp()
+        public TrimmingModelBinderTests()
         {
             nameValueCollection = new NameValueCollection();
             controllerContext = new ControllerContext();
@@ -30,24 +28,24 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Method: BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
 
-        [Test]
+        [Fact]
         public void BindModel_ReturnNullThenThereIsNoValueProvider()
         {
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
 
-            Assert.IsNull(binder.BindModel(controllerContext, bindingContext));
+            Assert.Null(binder.BindModel(controllerContext, bindingContext));
         }
 
-        [Test]
+        [Fact]
         public void BindModel_OnNullValueReturnsNull()
         {
             nameValueCollection.Add(bindingContext.ModelName, null);
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
 
-            Assert.IsNull(binder.BindModel(controllerContext, bindingContext));
+            Assert.Null(binder.BindModel(controllerContext, bindingContext));
         }
 
-        [Test]
+        [Fact]
         public void BindModel_DoNotTrimPropertyWithNotTrimmedAttribute()
         {
             bindingContext.ModelName = "NotTrimmed";
@@ -59,10 +57,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Object actual = binder.BindModel(controllerContext, bindingContext);
             Object expected = "  Trimmed text  ";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void BindModel_TrimsBindedModelsProperty()
         {
             nameValueCollection.Add(bindingContext.ModelName, "  Trimmed text  ");
@@ -71,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Object actual = binder.BindModel(controllerContext, bindingContext);
             Object expected = "Trimmed text";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

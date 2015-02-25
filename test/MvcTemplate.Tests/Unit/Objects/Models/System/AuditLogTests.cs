@@ -1,85 +1,81 @@
 ﻿using MvcTemplate.Objects;
-using NUnit.Framework;
 using System;
 using System.Web;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Objects
 {
-    [TestFixture]
-    public class AuditLogTests
+    public class AuditLogTests : IDisposable
     {
-        [SetUp]
-        public void SetUp()
+        public AuditLogTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             HttpContext.Current = null;
         }
 
         #region Constructor: AuditLog()
 
-        [Test]
+        [Fact]
         public void AuditLog_CreatesEmptyInstance()
         {
             AuditLog actual = new AuditLog();
 
-            Assert.IsNull(actual.EntityName);
-            Assert.IsNull(actual.AccountId);
-            Assert.IsNull(actual.EntityId);
-            Assert.IsNull(actual.Changes);
+            Assert.Null(actual.EntityName);
+            Assert.Null(actual.AccountId);
+            Assert.Null(actual.EntityId);
+            Assert.Null(actual.Changes);
         }
 
         #endregion
 
         #region Constructor: AuditLog(String action, String entityName, String entityId, String changes)
 
-        [Test]
+        [Fact]
         public void AuditLog_SetsAccountId()
         {
             String expected = HttpContext.Current.User.Identity.Name;
             String actual = new AuditLog(null, null, null, null).AccountId;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AuditLog_SetsAction()
         {
             String actual = new AuditLog("Action", null, null, null).Action;
             String expected = "Action";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AuditLog_SetsEntityName()
         {
             String actual = new AuditLog(null, "Nameless", null, null).EntityName;
             String expected = "Nameless";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AuditLog_SetsEntityId()
         {
             String actual = new AuditLog(null, null, "Id", null).EntityId;
             String expected = "Id";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AuditLog_SetsChagnes()
         {
             String actual = new AuditLog(null, null, null, "Changes").Changes;
             String expected = "Changes";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

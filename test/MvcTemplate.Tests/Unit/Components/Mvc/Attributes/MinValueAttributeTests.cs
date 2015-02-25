@@ -1,50 +1,48 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Form;
-using NUnit.Framework;
 using System;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class MinValueAttributeTests
     {
         private MinValueAttribute attribute;
 
-        [SetUp]
-        public void SetUp()
+        public MinValueAttributeTests()
         {
             attribute = new MinValueAttribute(12.56);
         }
 
         #region Constructor: MinValueAttribute(Int32 minimum)
 
-        [Test]
+        [Fact]
         public void MinValueAttribute_SetsMinimumFromInteger()
         {
             Decimal actual = new MinValueAttribute(10).Minimum;
             Decimal expected = 10M;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Constructor: MinValueAttribute(Double minimum)
 
-        [Test]
+        [Fact]
         public void MinValueAttribute_SetsMinimumFromDouble()
         {
             Decimal actual = new MinValueAttribute(12.56).Minimum;
             Decimal expected = 12.56M;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: FormatErrorMessage(String name)
 
-        [Test]
+        [Fact]
         public void FormatErrorMessage_FormatsErrorMessageForInteger()
         {
             attribute = new MinValueAttribute(10);
@@ -52,10 +50,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
             String actual = attribute.FormatErrorMessage("Sum");
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void FormatErrorMessage_FormatsErrorMessageForDouble()
         {
             attribute = new MinValueAttribute(12.56);
@@ -63,53 +61,53 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String expected = String.Format(Validations.FieldMustBeGreaterOrEqualTo, "Sum", attribute.Minimum);
             String actual = attribute.FormatErrorMessage("Sum");
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: IsValid(Object value)
 
-        [Test]
+        [Fact]
         public void IsValid_NullValueIsValid()
         {
-            Assert.IsTrue(attribute.IsValid(null));
+            Assert.True(attribute.IsValid(null));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_StringValueIsValid()
         {
-            Assert.IsTrue(attribute.IsValid("100"));
+            Assert.True(attribute.IsValid("100"));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_StringValueIsNotValid()
         {
-            Assert.IsFalse(attribute.IsValid("1"));
+            Assert.False(attribute.IsValid("1"));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_LowerValueIsNotValid()
         {
-            Assert.IsFalse(attribute.IsValid(12.559));
+            Assert.False(attribute.IsValid(12.559));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_EqualValueIsValid()
         {
-            Assert.IsTrue(attribute.IsValid(12.56));
+            Assert.True(attribute.IsValid(12.56));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_GreaterValueIsValid()
         {
-            Assert.IsTrue(attribute.IsValid(13));
+            Assert.True(attribute.IsValid(13));
         }
 
-        [Test]
+        [Fact]
         public void IsValid_NotDecimalValueIsNotValid()
         {
-            Assert.IsFalse(attribute.IsValid("12.56M"));
+            Assert.False(attribute.IsValid("12.56M"));
         }
 
         #endregion

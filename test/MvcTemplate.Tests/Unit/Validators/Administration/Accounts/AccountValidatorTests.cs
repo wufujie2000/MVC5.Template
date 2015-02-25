@@ -5,22 +5,20 @@ using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
-    [TestFixture]
-    public class AccountValidatorTests
+    public class AccountValidatorTests : IDisposable
     {
         private AccountValidator validator;
         private TestingContext context;
         private IHasher hasher;
 
-        [SetUp]
-        public void SetUp()
+        public AccountValidatorTests()
         {
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
@@ -32,9 +30,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             TearDownData();
             SetUpData();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             validator.Dispose();
             context.Dispose();
@@ -42,43 +38,43 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #region Method: CanRecover(AccountRecoveryView view)
 
-        [Test]
+        [Fact]
         public void CanRecover_CanNotRecoverAccountWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
+            Assert.False(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
         }
 
-        [Test]
+        [Fact]
         public void CanRecover_CanRecoverValidAccount()
         {
-            Assert.IsTrue(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
+            Assert.True(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
         }
 
         #endregion
 
         #region Method: CanReset(AccountResetView view)
 
-        [Test]
+        [Fact]
         public void CanReset_CanNotResetAccountWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanReset(ObjectFactory.CreateAccountResetView()));
+            Assert.False(validator.CanReset(ObjectFactory.CreateAccountResetView()));
         }
 
-        [Test]
+        [Fact]
         public void CanReset_CanNotResetAccountWithExpiredToken()
         {
             Account account = context.Set<Account>().Single();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(-5);
             context.SaveChanges();
 
-            Assert.IsFalse(validator.CanReset(ObjectFactory.CreateAccountResetView()));
+            Assert.False(validator.CanReset(ObjectFactory.CreateAccountResetView()));
         }
 
-        [Test]
+        [Fact]
         public void CanReset_AddsErorrMessageThenCanNotResetAccountWithExpiredToken()
         {
             Account account = context.Set<Account>().Single();
@@ -90,37 +86,37 @@ namespace MvcTemplate.Tests.Unit.Validators
             String expected = Validations.RecoveryTokenExpired;
             String actual = validator.Alerts.Single().Message;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanReset_CanResetValidAccount()
         {
-            Assert.IsTrue(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
+            Assert.True(validator.CanRecover(ObjectFactory.CreateAccountRecoveryView()));
         }
 
         #endregion
 
         #region Method: CanLogin(AccountLoginView view)
 
-        [Test]
+        [Fact]
         public void CanLogin_CanNotLoginWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Key", "ErrorMesages");
 
-            Assert.IsFalse(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
+            Assert.False(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_CanNotLoginFromNonExistingAccount()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountLoginView account = new AccountLoginView();
 
-            Assert.IsFalse(validator.CanLogin(account));
+            Assert.False(validator.CanLogin(account));
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithNotExistingAccount()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
@@ -131,19 +127,19 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState[""].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
 
-            Assert.IsFalse(validator.CanLogin(account));
+            Assert.False(validator.CanLogin(account));
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_AddsErrorMessageThenCanNotLoginWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
@@ -155,47 +151,47 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState[""].Errors[0].ErrorMessage;
             String expected = Validations.IncorrectUsernameOrPassword;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
             account.Username = account.Username.ToUpper();
 
-            Assert.IsTrue(validator.CanLogin(account));
+            Assert.True(validator.CanLogin(account));
         }
 
-        [Test]
+        [Fact]
         public void CanLogin_CanLoginWithValidAccount()
         {
-            Assert.IsTrue(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
+            Assert.True(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
         }
 
         #endregion
 
         #region Method: CanRegister(AccountView view)
 
-        [Test]
+        [Fact]
         public void CanRegister_CanNotRegisterWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Key", "Error");
 
-            Assert.IsFalse(validator.CanRegister(ObjectFactory.CreateAccountView()));
+            Assert.False(validator.CanRegister(ObjectFactory.CreateAccountView()));
         }
 
-        [Test]
+        [Fact]
         public void CanRegister_CanNotRegisterWithAlreadyTakenUsername()
         {
             AccountView account = ObjectFactory.CreateAccountView();
             account.Username = account.Username.ToLower();
             account.Id += "DifferentValue";
 
-            Assert.IsFalse(validator.CanRegister(account));
+            Assert.False(validator.CanRegister(account));
         }
 
-        [Test]
+        [Fact]
         public void CanRegister_AddsErorrMessageThenCanNotRegisterWithAlreadyTakenUsername()
         {
             AccountView account = ObjectFactory.CreateAccountView();
@@ -206,19 +202,19 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
             String expected = Validations.UsernameIsAlreadyTaken;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
         {
             AccountView account = ObjectFactory.CreateAccountView();
             account.Id += "DifferentValue";
 
-            Assert.IsFalse(validator.CanRegister(account));
+            Assert.False(validator.CanRegister(account));
         }
 
-        [Test]
+        [Fact]
         public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
         {
             AccountView account = ObjectFactory.CreateAccountView();
@@ -228,38 +224,38 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
             String expected = Validations.EmailIsAlreadyUsed;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanRegister_CanRegisterValidAccount()
         {
-            Assert.IsTrue(validator.CanRegister(ObjectFactory.CreateAccountView("2")));
+            Assert.True(validator.CanRegister(ObjectFactory.CreateAccountView("2")));
         }
 
         #endregion
 
         #region Method: CanEdit(ProfileEditView view)
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Key", "ErrorMessages");
 
-            Assert.IsFalse(validator.CanEdit(ObjectFactory.CreateProfileEditView()));
+            Assert.False(validator.CanEdit(ObjectFactory.CreateProfileEditView()));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Password += "1";
 
-            Assert.IsFalse(validator.CanEdit(profile));
+            Assert.False(validator.CanEdit(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_AddsErrorMessageThenCanNotEditWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
@@ -270,10 +266,10 @@ namespace MvcTemplate.Tests.Unit.Validators
             String expected = Validations.IncorrectPassword;
             String actual = validator.ModelState["Password"].Errors[0].ErrorMessage;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditToAlreadyTakenUsername()
         {
             Account takenAccount = ObjectFactory.CreateAccount("2");
@@ -283,10 +279,10 @@ namespace MvcTemplate.Tests.Unit.Validators
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = takenAccount.Username;
 
-            Assert.IsFalse(validator.CanEdit(profile));
+            Assert.False(validator.CanEdit(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyTakenUsername()
         {
             Account takenAccount = ObjectFactory.CreateAccount("2");
@@ -300,19 +296,19 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
             String expected = Validations.UsernameIsAlreadyTaken;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditUsingItsOwnUsername()
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Username = profile.Username.ToUpper();
 
-            Assert.IsTrue(validator.CanEdit(profile));
+            Assert.True(validator.CanEdit(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditToAlreadyUsedEmail()
         {
             Account usedEmailAccount = ObjectFactory.CreateAccount("2");
@@ -323,10 +319,10 @@ namespace MvcTemplate.Tests.Unit.Validators
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Email = usedEmailAccount.Email;
 
-            Assert.IsFalse(validator.CanEdit(profile));
+            Assert.False(validator.CanEdit(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_AddsErorrMessageThenCanNotEditToAlreadyUsedEmail()
         {
             Account usedEmailAccount = ObjectFactory.CreateAccount("2");
@@ -341,65 +337,65 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
             String expected = Validations.EmailIsAlreadyUsed;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditUsingItsOwnEmail()
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             profile.Email = profile.Email.ToUpper();
 
-            Assert.IsTrue(validator.CanEdit(profile));
+            Assert.True(validator.CanEdit(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditValidProfile()
         {
-            Assert.IsTrue(validator.CanEdit(ObjectFactory.CreateProfileEditView()));
+            Assert.True(validator.CanEdit(ObjectFactory.CreateProfileEditView()));
         }
 
         #endregion
 
         #region Method: CanEdit(AccountEditView view)
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditAccountWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
+            Assert.False(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditValidAccount()
         {
-            Assert.IsTrue(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
+            Assert.True(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
         }
 
         #endregion
 
         #region Method: CanDelete(ProfileDeleteView view)
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotDeleteWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
+            Assert.False(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
         }
 
-        [Test]
+        [Fact]
         public void CanDelete_CanNotDeleteWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             ProfileDeleteView profile = ObjectFactory.CreateProfileDeleteView();
             profile.Password += "1";
 
-            Assert.IsFalse(validator.CanDelete(profile));
+            Assert.False(validator.CanDelete(profile));
         }
 
-        [Test]
+        [Fact]
         public void CanDelete_AddsErrorMessageThenCanNotDeleteWithIncorrectPassword()
         {
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
@@ -411,13 +407,13 @@ namespace MvcTemplate.Tests.Unit.Validators
             String expected = Validations.IncorrectPassword;
             String actual = validator.ModelState["Password"].Errors[0].ErrorMessage;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanDelete_CanDeleteValidProfileDeleteView()
         {
-            Assert.IsTrue(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
+            Assert.True(validator.CanDelete(ObjectFactory.CreateProfileDeleteView()));
         }
 
         #endregion

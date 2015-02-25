@@ -1,33 +1,29 @@
 ﻿using MvcTemplate.Components.Mvc;
-using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class GlobalizationProviderTests
     {
         private GlobalizationProvider provider;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        static GlobalizationProviderTests()
         {
             CreateGlobalizationXml("Globalization.xml");
         }
-
-        [SetUp]
-        public void SetUp()
+        public GlobalizationProviderTests()
         {
             provider = new GlobalizationProvider("Globalization.xml");
         }
 
         #region Property: CurrentLanguage
 
-        [Test]
+        [Fact]
         public void CurrentLanguage_GetsCurrentLanguage()
         {
             Thread.CurrentThread.CurrentUICulture = provider["en"].Culture;
@@ -35,10 +31,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Language actual = provider.CurrentLanguage;
             Language expected = provider["en"];
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CurrentLanguage_SetsCurrentLanguage()
         {
             provider.CurrentLanguage = provider.Languages.Last();
@@ -47,62 +43,62 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             CultureInfo actualUICulture = CultureInfo.CurrentUICulture;
             CultureInfo actualCulture = CultureInfo.CurrentCulture;
 
-            Assert.AreSame(expectedCulture, actualUICulture);
-            Assert.AreSame(expectedCulture, actualCulture);
+            Assert.Same(expectedCulture, actualUICulture);
+            Assert.Same(expectedCulture, actualCulture);
         }
 
         #endregion
 
         #region Constructor: GlobalizationProvider(String path)
 
-        [Test]
+        [Fact]
         public void GlobalizationProvider_LoadsAllLanguages()
         {
             Language enLanguage = provider.Languages.First();
             Language ltLanguage = provider.Languages.Last();
 
-            Assert.AreEqual(new CultureInfo("en-GB"), enLanguage.Culture);
-            Assert.AreEqual("en", enLanguage.Abbrevation);
-            Assert.AreEqual("English", enLanguage.Name);
-            Assert.IsTrue(enLanguage.IsDefault);
+            Assert.Equal(new CultureInfo("en-GB"), enLanguage.Culture);
+            Assert.Equal("en", enLanguage.Abbrevation);
+            Assert.Equal("English", enLanguage.Name);
+            Assert.True(enLanguage.IsDefault);
 
-            Assert.AreEqual(new CultureInfo("lt-LT"), ltLanguage.Culture);
-            Assert.AreEqual("lt", ltLanguage.Abbrevation);
-            Assert.AreEqual("Lietuvių", ltLanguage.Name);
-            Assert.IsFalse(ltLanguage.IsDefault);
+            Assert.Equal(new CultureInfo("lt-LT"), ltLanguage.Culture);
+            Assert.Equal("lt", ltLanguage.Abbrevation);
+            Assert.Equal("Lietuvių", ltLanguage.Name);
+            Assert.False(ltLanguage.IsDefault);
         }
 
-        [Test]
+        [Fact]
         public void GlobalizationProvider_SetsDefaultLanguage()
         {
             Language actual = provider.DefaultLanguage;
 
-            Assert.AreEqual(new CultureInfo("en-GB"), actual.Culture);
-            Assert.AreEqual("en", actual.Abbrevation);
-            Assert.AreEqual("English", actual.Name);
-            Assert.IsTrue(actual.IsDefault);
+            Assert.Equal(new CultureInfo("en-GB"), actual.Culture);
+            Assert.Equal("en", actual.Abbrevation);
+            Assert.Equal("English", actual.Name);
+            Assert.True(actual.IsDefault);
         }
 
         #endregion
 
         #region Indexer: this[String abbrevation]
 
-        [Test]
+        [Fact]
         public void Indexer_GetsLanguageByAbbrevation()
         {
             Language actual = provider["en"];
 
-            Assert.AreEqual(new CultureInfo("en-GB"), actual.Culture);
-            Assert.AreEqual("en", actual.Abbrevation);
-            Assert.AreEqual("English", actual.Name);
-            Assert.IsTrue(actual.IsDefault);
+            Assert.Equal(new CultureInfo("en-GB"), actual.Culture);
+            Assert.Equal("en", actual.Abbrevation);
+            Assert.Equal("English", actual.Name);
+            Assert.True(actual.IsDefault);
         }
 
         #endregion
 
         #region Test helpers
 
-        private void CreateGlobalizationXml(String path)
+        private static void CreateGlobalizationXml(String path)
         {
             XElement globalization = new XElement("globalization");
             XElement english = new XElement("language");

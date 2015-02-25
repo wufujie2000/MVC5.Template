@@ -6,21 +6,20 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
-using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
-    [TestFixture]
-    public class <#= Model.Service #>Tests
+    public class <#= Model.Service #>Tests : IDisposable
     {
         private <#= Model.Service #> service;
         private <#= Model.Model #> <#= Model.ModelName #>;
         private TestingContext context;
 
-        [SetUp]
-        public void SetUp()
+        public <#= Model.Service #>Tests()
         {
             context = new TestingContext();
             service = new <#= Model.Service #>(new UnitOfWork(context));
@@ -28,9 +27,7 @@ namespace MvcTemplate.Tests.Unit.Services
             TearDownData();
             SetUpData();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             service.Dispose();
             context.Dispose();
@@ -38,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Method: GetViews()
 
-        [Test]
+        [Fact]
         public void GetViews_Gets<#= Model.View #>s()
         {
             IEnumerator<<#= Model.View #>> actual = service.GetViews().GetEnumerator();
@@ -51,34 +48,34 @@ namespace MvcTemplate.Tests.Unit.Services
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.CreationDate, actual.Current.CreationDate);
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
 
-            Assert.Fail("Not all properties tested");
+            Assert.Equal("Not all", "properties tested");
         }
 
         #endregion
 
         #region Method: Get<TView>(String id)
 
-        [Test]
+        [Fact]
         public void GetView_GetsViewById()
         {
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
             <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Id, actual.Id);
 
-            Assert.Fail("Not all properties tested");
+            Assert.Equal("Not all", "properties tested");
         }
 
         #endregion
 
         #region Method: Create(<#= Model.View #> view)
 
-        [Test]
+        [Fact]
         public void Create_Creates<#= Model.Model #>()
         {
             <#= Model.View #> expected = new <#= Model.View #>();
@@ -86,44 +83,44 @@ namespace MvcTemplate.Tests.Unit.Services
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single(model => model.Id == expected.Id);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Id, actual.Id);
 
-            Assert.Fail("Not all properties tested");
+            Assert.Equal("Not all", "properties tested");
         }
 
         #endregion
 
         #region Method: Edit(<#= Model.View #> view)
 
-        [Test]
+        [Fact]
         public void Edit_Edits<#= Model.Model #>()
         {
             <#= Model.Model #> <#= Model.ModelName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
             <#= Model.View #> view = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
-            Assert.Fail("No update made");
+            Assert.Equal("No", "update made");
 
             service.Edit(view);
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
             <#= Model.Model #> expected = <#= Model.ModelName #>;
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Id, actual.Id);
 
-            Assert.Fail("Not all properties tested");
+            Assert.Equal("Not all", "properties tested");
         }
 
         #endregion
 
         #region Method: Delete(String id)
 
-        [Test]
+        [Fact]
         public void Delete_Deletes<#= Model.Model #>()
         {
             service.Delete(<#= Model.ModelName #>.Id);
 
-            CollectionAssert.IsEmpty(context.Set<<#= Model.Model #>>());
+            Assert.Empty(context.Set<<#= Model.Model #>>());
         }
 
         #endregion

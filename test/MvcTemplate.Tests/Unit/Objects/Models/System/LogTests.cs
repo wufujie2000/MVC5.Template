@@ -1,56 +1,52 @@
 ﻿using MvcTemplate.Objects;
-using NUnit.Framework;
 using System;
 using System.Web;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Objects
 {
-    [TestFixture]
-    public class LogTests
+    public class LogTests : IDisposable
     {
-        [SetUp]
-        public void SetUp()
+        public LogTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             HttpContext.Current = null;
         }
 
         #region Constructor: Log()
 
-        [Test]
+        [Fact]
         public void Log_CreatesEmptyInstance()
         {
             Log actual = new Log();
 
-            Assert.IsNull(actual.AccountId);
-            Assert.IsNull(actual.Message);
+            Assert.Null(actual.AccountId);
+            Assert.Null(actual.Message);
         }
 
         #endregion
 
         #region Constructor: Log(String message)
 
-        [Test]
+        [Fact]
         public void Log_SetsAccountId()
         {
             String expected = HttpContext.Current.User.Identity.Name;
             String actual = new Log(null).AccountId;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Log_SetsMessage()
         {
             String actual = new Log("Message").Message;
             String expected = "Message";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

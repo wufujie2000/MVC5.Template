@@ -1,25 +1,23 @@
 ﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Data.Logging
 {
-    [TestFixture]
-    public class LoggableEntityTests
+    public class LoggableEntityTests : IDisposable
     {
         private DbEntityEntry<BaseModel> entry;
         private TestingContext context;
         private Role model;
 
-        [SetUp]
-        public void SetUp()
+        public LoggableEntityTests()
         {
             using (context = new TestingContext())
             {
@@ -31,16 +29,14 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             model = context.Set<Role>().Single();
             entry = context.Entry<BaseModel>(model);
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             context.Dispose();
         }
 
         #region Constructor: LoggableEntity(DbEntityEntry<BaseModel> entry)
 
-        [Test]
+        [Fact]
         public void LoggableEntity_CreatesPropertiesForAddedEntity()
         {
             entry.State = EntityState.Added;
@@ -48,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             AsssertProperties(entry.CurrentValues);
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_CreatesPropertiesForModifiedEntity()
         {
             String roleName = model.Name;
@@ -61,12 +57,12 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
-                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+                Assert.Equal(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.Equal(expected.Current.ToString(), actual.Current.ToString());
             }
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_CreatesPropertiesForAttachedEntity()
         {
             context.Dispose();
@@ -84,12 +80,12 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
-                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+                Assert.Equal(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.Equal(expected.Current.ToString(), actual.Current.ToString());
             }
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_CreatesPropertiesForDeletedEntity()
         {
             entry.State = EntityState.Deleted;
@@ -97,7 +93,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             AsssertProperties(entry.GetDatabaseValues());
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_SetsAction()
         {
             entry.State = EntityState.Deleted;
@@ -105,20 +101,20 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             String actual = new LoggableEntity(entry).Action;
             String expected = entry.State.ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_SetsEntityBaseTypeNameThenEntityIsProxied()
         {
             String actual = new LoggableEntity(entry).Name;
             String expected = typeof(Role).Name;
 
-            Assert.AreEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
-            Assert.AreEqual(expected, actual);
+            Assert.Equal("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_SetsEntityTypeName()
         {
             entry = context.Entry<BaseModel>(context.Set<Role>().Add(new Role()));
@@ -126,24 +122,24 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             String actual = new LoggableEntity(entry).Name;
             String expected = typeof(Role).Name;
 
-            Assert.AreNotEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
-            Assert.AreEqual(expected, actual);
+            Assert.NotEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void LoggableEntity_SetsEntityId()
         {
             String actual = new LoggableEntity(entry).Id;
             String expected = model.Id;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: ToString()
 
-        [Test]
+        [Fact]
         public void ToString_FormsEntityChanges()
         {
             StringBuilder changes = new StringBuilder();
@@ -154,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             String actual = loggableEntity.ToString();
             String expected = changes.ToString();
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
@@ -183,8 +179,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.IsModified, actual.Current.IsModified);
-                Assert.AreEqual(expected.Current.ToString(), actual.Current.ToString());
+                Assert.Equal(expected.Current.IsModified, actual.Current.IsModified);
+                Assert.Equal(expected.Current.ToString(), actual.Current.ToString());
             }
         }
 

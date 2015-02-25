@@ -1,19 +1,18 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources.Form;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class MinLengthAdapterTests
     {
         #region Constructor: MinLengthAdapter(ModelMetadata metadata, ControllerContext context, MinLengthAttribute attribute)
 
-        [Test]
+        [Fact]
         public void MinLengthAdapter_SetsMinLengthErrorMessage()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
@@ -25,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String expected = Validations.FieldMustBeWithMinLengthOf;
             String actual = attribute.ErrorMessage;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

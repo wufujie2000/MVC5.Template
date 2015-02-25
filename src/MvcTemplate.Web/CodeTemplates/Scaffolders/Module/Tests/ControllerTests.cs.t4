@@ -5,15 +5,14 @@ using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Xunit;
 
 namespace <#= Model.ControllerTestNamespace #>
 {
-    [TestFixture]
     public class <#= Model.Controller #>Tests : AControllerTests
     {
         private <#= Model.Controller #> controller;
@@ -21,8 +20,7 @@ namespace <#= Model.ControllerTestNamespace #>
         private <#= Model.IService #> service;
         private <#= Model.View #> <#= Model.ModelName #>;
 
-        [SetUp]
-        public void SetUp()
+        public <#= Model.Controller #>Tests()
         {
             validator = Substitute.For<<#= Model.IValidator #>>();
             service = Substitute.For<<#= Model.IService #>>();
@@ -35,7 +33,7 @@ namespace <#= Model.ControllerTestNamespace #>
 
         #region Method: Index()
 
-        [Test]
+        [Fact]
         public void Index_Gets<#= Model.View #>s()
         {
             service.GetViews().Returns(new <#= Model.View #>[0].AsQueryable());
@@ -43,30 +41,30 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Create()
 
-        [Test]
+        [Fact]
         public void Create_ReturnsEmptyView()
         {
-            Assert.IsNull(controller.Create().Model);
+            Assert.Null(controller.Create().Model);
         }
 
         #endregion
 
         #region Method: Create(<#= Model.View #> <#= Model.ModelName #>)
 
-        [Test]
+        [Fact]
         public void Create_ProtectsFromOverpostingId()
         {
             ProtectsFromOverpostingId(controller, "Create");
         }
 
-        [Test]
+        [Fact]
         public void Create_ReturnsSameModelIfCanNotCreate()
         {
             validator.CanCreate(<#= Model.ModelName #>).Returns(false);
@@ -74,10 +72,10 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = (controller.Create(<#= Model.ModelName #>) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Create_Creates<#= Model.View #>()
         {
             validator.CanCreate(<#= Model.ModelName #>).Returns(true);
@@ -87,7 +85,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.Received().Create(<#= Model.ModelName #>);
         }
 
-        [Test]
+        [Fact]
         public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -96,14 +94,14 @@ namespace <#= Model.ControllerTestNamespace #>
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Create(<#= Model.ModelName #>);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Details(String id)
 
-        [Test]
+        [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
             service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
@@ -113,10 +111,10 @@ namespace <#= Model.ControllerTestNamespace #>
             Object expected = controller.RedirectToNotFound();
             Object actual = controller.Details("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Details_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
@@ -124,14 +122,14 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = (controller.Details(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(String id)
 
-        [Test]
+        [Fact]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
@@ -141,10 +139,10 @@ namespace <#= Model.ControllerTestNamespace #>
             ActionResult expected = controller.RedirectToNotFound();
             ActionResult actual = controller.Edit("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
@@ -152,14 +150,14 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = (controller.Edit(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(<#= Model.View #> <#= Model.ModelName #>)
 
-        [Test]
+        [Fact]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
             validator.CanEdit(<#= Model.ModelName #>).Returns(false);
@@ -167,10 +165,10 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = (controller.Edit(<#= Model.ModelName #>) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Edit_Edits<#= Model.Model #>()
         {
             validator.CanEdit(<#= Model.ModelName #>).Returns(true);
@@ -180,7 +178,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.Received().Edit(<#= Model.ModelName #>);
         }
 
-        [Test]
+        [Fact]
         public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -189,14 +187,14 @@ namespace <#= Model.ControllerTestNamespace #>
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Edit(<#= Model.ModelName #>);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Delete(String id)
 
-        [Test]
+        [Fact]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
             service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
@@ -206,10 +204,10 @@ namespace <#= Model.ControllerTestNamespace #>
             ActionResult expected = controller.RedirectToNotFound();
             ActionResult actual = controller.Delete("");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Delete_Gets<#= Model.View #>()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
@@ -217,14 +215,14 @@ namespace <#= Model.ControllerTestNamespace #>
             Object actual = (controller.Delete(<#= Model.ModelName #>.Id) as ViewResult).Model;
             Object expected = <#= Model.ModelName #>;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: DeleteConfirmed(String id)
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_Deletes<#= Model.View #>()
         {
             controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
@@ -232,7 +230,7 @@ namespace <#= Model.ControllerTestNamespace #>
             service.Received().Delete(<#= Model.ModelName #>.Id);
         }
 
-        [Test]
+        [Fact]
         public void Delete_AfterSuccessfulDeleteRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
@@ -240,7 +238,7 @@ namespace <#= Model.ControllerTestNamespace #>
             ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
             ActionResult expected = controller.RedirectIfAuthorized("Index");
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion

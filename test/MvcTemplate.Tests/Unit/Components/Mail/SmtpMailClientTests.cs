@@ -1,22 +1,20 @@
 ﻿using MvcTemplate.Components.Mail;
-using NUnit.Framework;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mail
 {
-    [TestFixture]
     public class SmtpMailClientTests
     {
         private SmtpMailClient client;
 
-        [SetUp]
-        public void SetUp()
+        public SmtpMailClientTests()
         {
             client = new SmtpMailClient();
         }
 
         #region Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             client.Dispose();

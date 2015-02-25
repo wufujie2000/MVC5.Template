@@ -8,18 +8,18 @@ using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
-    [TestFixture]
-    public class AccountServiceTests
+    public class AccountServiceTests : IDisposable
     {
         private TestingContext context;
         private AccountService service;
@@ -27,8 +27,7 @@ namespace MvcTemplate.Tests.Unit.Services
         private String accountId;
         private IHasher hasher;
 
-        [SetUp]
-        public void SetUp()
+        public AccountServiceTests()
         {
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
@@ -43,9 +42,7 @@ namespace MvcTemplate.Tests.Unit.Services
             TearDownData();
             SetUpData();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             Authorization.Provider = null;
             HttpContext.Current = null;
@@ -55,43 +52,43 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Method: IsLoggedIn()
 
-        [Test]
+        [Fact]
         public void IsLoggedIn_ReturnsTrueThenAccountIsAuthenticated()
         {
             HttpContext.Current.User.Identity.IsAuthenticated.Returns(true);
 
-            Assert.IsTrue(service.IsLoggedIn());
+            Assert.True(service.IsLoggedIn());
         }
 
-        [Test]
+        [Fact]
         public void IsLoggedIn_ReturnsFalseThenAccountIsNotAuthenticated()
         {
             HttpContext.Current.User.Identity.IsAuthenticated.Returns(false);
 
-            Assert.IsFalse(service.IsLoggedIn());
+            Assert.False(service.IsLoggedIn());
         }
 
         #endregion
 
         #region Method: AccountExists(String accountId)
 
-        [Test]
+        [Fact]
         public void AccountExists_ReturnsTrueIfAccountExists()
         {
-            Assert.IsTrue(service.AccountExists(accountId));
+            Assert.True(service.AccountExists(accountId));
         }
 
-        [Test]
+        [Fact]
         public void AccountExists_ReturnsFalseIfAccountDoesNotExist()
         {
-            Assert.IsFalse(service.AccountExists("Test"));
+            Assert.False(service.AccountExists("Test"));
         }
 
         #endregion
 
         #region Method: GetViews()
 
-        [Test]
+        [Fact]
         public void GetViews_GetsAccountViews()
         {
             IEnumerator<AccountView> actual = service.GetViews().GetEnumerator();
@@ -104,13 +101,13 @@ namespace MvcTemplate.Tests.Unit.Services
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.CreationDate, actual.Current.CreationDate);
-                Assert.AreEqual(expected.Current.Username, actual.Current.Username);
-                Assert.AreEqual(expected.Current.Password, actual.Current.Password);
-                Assert.AreEqual(expected.Current.RoleName, actual.Current.RoleName);
-                Assert.AreEqual(expected.Current.RoleId, actual.Current.RoleId);
-                Assert.AreEqual(expected.Current.Email, actual.Current.Email);
-                Assert.AreEqual(expected.Current.Id, actual.Current.Id);
+                Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.Equal(expected.Current.Username, actual.Current.Username);
+                Assert.Equal(expected.Current.Password, actual.Current.Password);
+                Assert.Equal(expected.Current.RoleName, actual.Current.RoleName);
+                Assert.Equal(expected.Current.RoleId, actual.Current.RoleId);
+                Assert.Equal(expected.Current.Email, actual.Current.Email);
+                Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
         }
 
@@ -118,7 +115,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Method: Get<TView>(String id)
 
-        [Test]
+        [Fact]
         public void GetView_GetsViewById()
         {
             Account account = context.Set<Account>().Single();
@@ -126,20 +123,20 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView actual = service.Get<AccountView>(accountId);
             AccountView expected = Mapper.Map<AccountView>(account);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Password, actual.Password);
-            Assert.AreEqual(expected.RoleName, actual.RoleName);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Password, actual.Password);
+            Assert.Equal(expected.RoleName, actual.RoleName);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion
 
         #region Method: Recover(AccountRecoveryView view)
 
-        [Test]
+        [Fact]
         public void Recover_DoesNotSendRecoveryInformation()
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
@@ -150,7 +147,7 @@ namespace MvcTemplate.Tests.Unit.Services
             mailClient.DidNotReceive().Send(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
         }
 
-        [Test]
+        [Fact]
         public void Recover_UpdatesAccountRecoveryInformation()
         {
             Account account = context.Set<Account>().AsNoTracking().Single();
@@ -164,18 +161,20 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate.Value.Ticks, actual.RecoveryTokenExpirationDate.Value.Ticks, TimeSpan.TicksPerSecond * 2);
-            Assert.AreNotEqual(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNotNull(actual.RecoveryToken);
+            Assert.InRange(actual.RecoveryTokenExpirationDate.Value.Ticks,
+                expected.RecoveryTokenExpirationDate.Value.Ticks - TimeSpan.TicksPerSecond,
+                expected.RecoveryTokenExpirationDate.Value.Ticks + TimeSpan.TicksPerSecond);
+            Assert.NotEqual(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Passhash, actual.Passhash);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.NotNull(actual.RecoveryToken);
         }
 
-        [Test]
+        [Fact]
         public void Recover_SendsRecoveryInformation()
         {
             HttpRequest request = HttpContext.Current.Request;
@@ -198,7 +197,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Method: Reset(AccountResetView view)
 
-        [Test]
+        [Fact]
         public void Reset_ResetsAccount()
         {
             AccountResetView accountReset = ObjectFactory.CreateAccountResetView();
@@ -213,21 +212,21 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Passhash, actual.Passhash);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion
 
         #region Method: Register(AccountView view)
 
-        [Test]
+        [Fact]
         public void Register_CreatesAccount()
         {
             AccountView account = ObjectFactory.CreateAccountView("2");
@@ -236,18 +235,18 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().AsNoTracking().Single(model => model.Id == account.Id);
             AccountView expected = account;
 
-            Assert.AreEqual(hasher.HashPassword(expected.Password), actual.Passhash);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.IsNull(actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
-            Assert.IsNull(actual.RecoveryToken);
-            Assert.IsNull(actual.RoleId);
-            Assert.IsNull(actual.Role);
+            Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Null(actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RecoveryToken);
+            Assert.Null(actual.RoleId);
+            Assert.Null(actual.Role);
         }
 
-        [Test]
+        [Fact]
         public void Register_LowersEmailValue()
         {
             AccountView view = ObjectFactory.CreateAccountView("2");
@@ -258,15 +257,15 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
 
-            Assert.AreEqual(expected, model.Email);
-            Assert.AreEqual(expected, view.Email);
+            Assert.Equal(expected, model.Email);
+            Assert.Equal(expected, view.Email);
         }
 
         #endregion
 
         #region Method: Edit(ProfileEditView view)
 
-        [Test]
+        [Fact]
         public void Edit_EditsProfile()
         {
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
@@ -280,17 +279,17 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.Passhash, actual.Passhash);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
-        [Test]
+        [Fact]
         public void Edit_LowersEmailValue()
         {
             ProfileEditView view = ObjectFactory.CreateProfileEditView();
@@ -301,14 +300,14 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Account model = context.Set<Account>().AsNoTracking().Single();
 
-            Assert.AreEqual(expected, model.Email);
-            Assert.AreEqual(expected, view.Email);
+            Assert.Equal(expected, model.Email);
+            Assert.Equal(expected, view.Email);
         }
 
-        [Test]
-        [TestCase("")]
-        [TestCase(null)]
-        [TestCase("   ")]
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        [InlineData("   ")]
         public void Edit_OnNotSpecifiedNewPasswordDoesNotEditPassword(String newPassword)
         {
             String expected = context.Set<Account>().AsNoTracking().Single().Passhash;
@@ -319,14 +318,14 @@ namespace MvcTemplate.Tests.Unit.Services
 
             String actual = context.Set<Account>().AsNoTracking().Single().Passhash;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(AccountEditView view)
 
-        [Test]
+        [Fact]
         public void Edit_EditsAccountsRoleOnly()
         {
             AccountEditView accountEdit = ObjectFactory.CreateAccountEditView();
@@ -339,17 +338,17 @@ namespace MvcTemplate.Tests.Unit.Services
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
 
-            Assert.AreEqual(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.AreEqual(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Username, actual.Username);
-            Assert.AreEqual(expected.Passhash, actual.Passhash);
-            Assert.AreEqual(expected.RoleId, actual.RoleId);
-            Assert.AreEqual(expected.Email, actual.Email);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.Passhash, actual.Passhash);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
-        [Test]
+        [Fact]
         public void Edit_RefreshesAuthorizationProvider()
         {
             AccountEditView account = ObjectFactory.CreateAccountEditView();
@@ -363,19 +362,19 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #region Method: Delete(String id)
 
-        [Test]
+        [Fact]
         public void Delete_DeletesAccount()
         {
             service.Delete(accountId);
 
-            CollectionAssert.IsEmpty(context.Set<Account>());
+            Assert.Empty(context.Set<Account>());
         }
 
         #endregion
 
         #region Method: Login(String username)
 
-        [Test]
+        [Fact]
         public void Login_IsCaseInsensitive()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
@@ -386,10 +385,10 @@ namespace MvcTemplate.Tests.Unit.Services
             String actual = ticket.Name;
             String expected = accountId;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Login_CreatesPersistentAuthenticationTicket()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
@@ -397,10 +396,10 @@ namespace MvcTemplate.Tests.Unit.Services
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
-            Assert.IsTrue(ticket.IsPersistent);
+            Assert.True(ticket.IsPersistent);
         }
 
-        [Test]
+        [Fact]
         public void Login_SetAccountIdAsAuthenticationTicketValue()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
@@ -411,14 +410,14 @@ namespace MvcTemplate.Tests.Unit.Services
             String expected = account.Id;
             String actual = ticket.Name;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: Logout()
 
-        [Test]
+        [Fact]
         public void Logout_MakesAccountCookieExpired()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
@@ -427,7 +426,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;
 
-            Assert.That(cookieExpirationDate, Is.LessThan(DateTime.Now));
+            Assert.True(cookieExpirationDate < DateTime.Now);
         }
 
         #endregion

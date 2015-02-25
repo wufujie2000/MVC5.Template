@@ -4,24 +4,22 @@ using MvcTemplate.Resources;
 using MvcTemplate.Tests.Objects;
 using NonFactors.Mvc.Grid;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
-    public class MvcGridExtensionsTests
+    public class MvcGridExtensionsTests : IDisposable
     {
         private IGridColumns<AllTypesView> columns;
         private IGridColumn<AllTypesView> column;
         private IHtmlGrid<AllTypesView> htmlGrid;
         private UrlHelper urlHelper;
 
-        [SetUp]
-        public void SetUp()
+        public MvcGridExtensionsTests()
         {
             column = SubstituteColumn<AllTypesView>();
             htmlGrid = SubstituteHtmlGrid<AllTypesView>();
@@ -30,9 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             Authorization.Provider = null;
             HttpContext.Current = null;
@@ -40,15 +36,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
 
-        [Test]
+        [Fact]
         public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
-            Assert.IsNull(columns.AddActionLink("Edit", "fa fa-pencil"));
+            Assert.Null(columns.AddActionLink("Edit", "fa fa-pencil"));
         }
 
-        [Test]
+        [Fact]
         public void AddActionLink_RendersAuthorizedActionLink()
         {
             String actionLink = "";
@@ -73,10 +69,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</a>",
                 urlHelper.Action("Details", new { id = view.Id }));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AddActionLink_OnNullAuthorizationProviderRendersActionLink()
         {
             AllTypesView view = new AllTypesView();
@@ -96,10 +92,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "</a>",
                 urlHelper.Action("Details", new { id = view.Id }));
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AddActionLink_OnModelWihoutKeyPropertyThrows()
         {
             Func<Object, String> renderer = null;
@@ -119,10 +115,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = Assert.Throws<Exception>(() => renderer.Invoke(new Object())).Message;
             String expected = "Object type does not have a key property.";
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void AddActionLink_SetsCssOnGridColumn()
         {
             columns.AddActionLink("Edit", "fa fa-pencil");
@@ -130,7 +126,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Css("action-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddActionLink_DoesNotEncodeGridColumn()
         {
             columns.AddActionLink("Edit", "fa fa-pencil");
@@ -142,7 +138,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
 
-        [Test]
+        [Fact]
         public void AddDateProperty_AddsGridColumn()
         {
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
@@ -152,7 +148,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.Received().Add(expression);
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_SetsGridColumnTitle()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
@@ -162,7 +158,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Titled(title);
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_SetsGridColumnCss()
         {
             columns.AddDateProperty(model => model.DateTimeField);
@@ -170,7 +166,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Css("date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_FormatsGridColumn()
         {
             columns.AddDateProperty(model => model.DateTimeField);
@@ -182,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
 
-        [Test]
+        [Fact]
         public void AddDateProperty_Nullable_AddsGridColumn()
         {
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
@@ -192,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.Received().Add(expression);
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_Nullable_SetsGridColumnTitle()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
@@ -202,7 +198,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Titled(title);
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_Nullable_SetsGridColumnCss()
         {
             columns.AddDateProperty(model => model.NullableDateTimeField);
@@ -210,7 +206,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Css("date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddDateProperty_Nullable_FormatsGridColumn()
         {
             columns.AddDateProperty(model => model.NullableDateTimeField);
@@ -222,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_AddsGridColumn()
         {
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
@@ -232,7 +228,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.Received().Add(expression);
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_SetsGridColumnTitle()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
@@ -242,7 +238,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Titled(title);
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_SetsGridColumnCss()
         {
             columns.AddDateTimeProperty(model => model.DateTimeField);
@@ -250,7 +246,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Css("date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_FormatsGridColumn()
         {
             columns.AddDateTimeProperty(model => model.DateTimeField);
@@ -262,7 +258,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_Nullable_AddsGridColumn()
         {
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
@@ -272,7 +268,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.Received().Add(expression);
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_Nullable_SetsGridColumnTitle()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
@@ -282,7 +278,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Titled(title);
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_Nullable_SetsGridColumnCss()
         {
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
@@ -290,7 +286,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Css("date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddDateTimeProperty_Nullable_FormatsGridColumn()
         {
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
@@ -302,7 +298,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> property)
 
-        [Test]
+        [Fact]
         public void AddProperty_AddsGridColumn()
         {
             Expression<Func<AllTypesView, String>> expression = (model) => model.Id;
@@ -312,7 +308,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.Received().Add(expression);
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsGridColumnTitle()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
@@ -322,163 +318,163 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             column.Received().Titled(title);
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsTextCellForEnum()
         {
             AssertCssClassFor(model => model.EnumField, "text-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForSByte()
         {
             AssertCssClassFor(model => model.SByteField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForByte()
         {
             AssertCssClassFor(model => model.ByteField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForInt16()
         {
             AssertCssClassFor(model => model.Int16Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForUInt16()
         {
             AssertCssClassFor(model => model.UInt16Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForInt32()
         {
             AssertCssClassFor(model => model.Int32Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForUInt32()
         {
             AssertCssClassFor(model => model.UInt32Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForInt64()
         {
             AssertCssClassFor(model => model.Int64Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForUInt64()
         {
             AssertCssClassFor(model => model.UInt64Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForSingle()
         {
             AssertCssClassFor(model => model.SingleField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForDouble()
         {
             AssertCssClassFor(model => model.DoubleField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForDecimal()
         {
             AssertCssClassFor(model => model.DecimalField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsDateCellForDateTime()
         {
             AssertCssClassFor(model => model.DateTimeField, "date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsTextCellForNullableEnum()
         {
             AssertCssClassFor(model => model.NullableEnumField, "text-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableSByte()
         {
             AssertCssClassFor(model => model.NullableSByteField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableByte()
         {
             AssertCssClassFor(model => model.NullableByteField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableInt16()
         {
             AssertCssClassFor(model => model.NullableInt16Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableUInt16()
         {
             AssertCssClassFor(model => model.NullableUInt16Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableInt32()
         {
             AssertCssClassFor(model => model.NullableInt32Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableUInt32()
         {
             AssertCssClassFor(model => model.NullableUInt32Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableInt64()
         {
             AssertCssClassFor(model => model.NullableInt64Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableUInt64()
         {
             AssertCssClassFor(model => model.NullableUInt64Field, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableSingle()
         {
             AssertCssClassFor(model => model.NullableSingleField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableDouble()
         {
             AssertCssClassFor(model => model.NullableDoubleField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsNumberCellForNullableDecimal()
         {
             AssertCssClassFor(model => model.NullableDecimalField, "number-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsDateCellForNullableDateTime()
         {
             AssertCssClassFor(model => model.NullableDateTimeField, "date-cell");
         }
 
-        [Test]
+        [Fact]
         public void AddProperty_SetsCssClassAsTextCellForOtherTypes()
         {
             AssertCssClassFor(model => model.StringField, "text-cell");
@@ -488,7 +484,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #region Extension method: ApplyDefaults<T>(this IHtmlGrid<T> grid)
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_SetsEmptyText()
         {
             htmlGrid.ApplyDefaults();
@@ -496,7 +492,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Empty(MvcTemplate.Resources.Table.Resources.NoDataFound);
         }
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_SetsNameByReplacingViewToEmpty()
         {
             htmlGrid.ApplyDefaults();
@@ -504,7 +500,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Named("AllTypes");
         }
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_SetsCss()
         {
             htmlGrid.ApplyDefaults();
@@ -512,7 +508,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Css("table-hover");
         }
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_EnablesFiltering()
         {
             htmlGrid.ApplyDefaults();
@@ -520,7 +516,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Filterable();
         }
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_EnablesSorting()
         {
             htmlGrid.ApplyDefaults();
@@ -528,7 +524,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Sortable();
         }
 
-        [Test]
+        [Fact]
         public void ApplyDefaults_EnablesPaging()
         {
             htmlGrid.ApplyDefaults();

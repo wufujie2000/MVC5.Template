@@ -1,18 +1,16 @@
 ﻿using MvcTemplate.Components.Mvc;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class MvcSiteMapParserTests
     {
-        private MvcSiteMapParser parser;
-        private XElement siteMap;
+        private static MvcSiteMapParser parser;
+        private static XElement siteMap;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        static MvcSiteMapParserTests()
         {
             parser = new MvcSiteMapParser();
             siteMap = CreateSiteMap();
@@ -20,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Method: GetNodeTree(XElement siteMap)
 
-        [Test]
+        [Fact]
         public void GetNodes_ReturnsAllSiteMapNodes()
         {
             IEnumerator<MvcSiteMapNode> actual = TreeToEnumerable(parser.GetNodeTree(siteMap)).GetEnumerator();
@@ -28,19 +26,19 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.AreEqual(expected.Current.Controller, actual.Current.Controller);
-                Assert.AreEqual(expected.Current.IconClass, actual.Current.IconClass);
-                Assert.AreEqual(expected.Current.IsMenu, actual.Current.IsMenu);
-                Assert.AreEqual(expected.Current.Action, actual.Current.Action);
-                Assert.AreEqual(expected.Current.Area, actual.Current.Area);
+                Assert.Equal(expected.Current.Controller, actual.Current.Controller);
+                Assert.Equal(expected.Current.IconClass, actual.Current.IconClass);
+                Assert.Equal(expected.Current.IsMenu, actual.Current.IsMenu);
+                Assert.Equal(expected.Current.Action, actual.Current.Action);
+                Assert.Equal(expected.Current.Area, actual.Current.Area);
 
                 if (expected.Current.Parent != null || actual.Current.Parent != null)
                 {
-                    Assert.AreEqual(expected.Current.Parent.Controller, actual.Current.Parent.Controller);
-                    Assert.AreEqual(expected.Current.Parent.IconClass, actual.Current.Parent.IconClass);
-                    Assert.AreEqual(expected.Current.Parent.IsMenu, actual.Current.Parent.IsMenu);
-                    Assert.AreEqual(expected.Current.Parent.Action, actual.Current.Parent.Action);
-                    Assert.AreEqual(expected.Current.Parent.Area, actual.Current.Parent.Area);
+                    Assert.Equal(expected.Current.Parent.Controller, actual.Current.Parent.Controller);
+                    Assert.Equal(expected.Current.Parent.IconClass, actual.Current.Parent.IconClass);
+                    Assert.Equal(expected.Current.Parent.IsMenu, actual.Current.Parent.IsMenu);
+                    Assert.Equal(expected.Current.Parent.Action, actual.Current.Parent.Action);
+                    Assert.Equal(expected.Current.Parent.Area, actual.Current.Parent.Area);
                 }
             }
         }
@@ -49,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Test helpers
 
-        private XElement CreateSiteMap()
+        private static XElement CreateSiteMap()
         {
             return XElement.Parse(
             @"<siteMap>

@@ -3,23 +3,21 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
 using NSubstitute;
-using NUnit.Framework;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Data.Core
 {
-    [TestFixture]
-    public class SelectTests
+    public class SelectTests : IDisposable
     {
         private Select<TestModel> select;
         private TestingContext context;
 
-        [SetUp]
-        public void SetUp()
+        public SelectTests()
         {
             context = new TestingContext();
             select = new Select<TestModel>(context.Set<TestModel>());
@@ -28,29 +26,27 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
             context.SaveChanges();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             context.Dispose();
         }
 
         #region Property: ElementType
 
-        [Test]
+        [Fact]
         public void ElementType_IsModelType()
         {
             Type actual = (select as IQueryable).ElementType;
             Type expected = typeof(TestModel);
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Property: Expression
 
-        [Test]
+        [Fact]
         public void Expression_IsSetsExpression()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -63,77 +59,77 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             Expression actual = (select as IQueryable).Expression;
             Expression expected = (set as IQueryable).Expression;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Property: Provider
 
-        [Test]
+        [Fact]
         public void Provider_IsSetsProvider()
         {
             IQueryProvider expected = (context.Set<TestModel>() as IQueryable).Provider;
             IQueryProvider actual = (select as IQueryable).Provider;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Where(Expression<Func<TModel, Boolean>> predicate)
 
-        [Test]
+        [Fact]
         public void Where_FiltersSelection()
         {
-            IQueryable<TestModel> expected = context.Set<TestModel>().Where(model => model.Id == null);
-            IQueryable<TestModel> actual = select.Where(model => model.Id == null);
+            IEnumerable<TestModel> expected = context.Set<TestModel>().Where(model => model.Id == null);
+            IEnumerable<TestModel> actual = select.Where(model => model.Id == null);
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void Where_ReturnsSameSelect()
         {
             ISelect<TestModel> actual = select.Where(model => model.Id == null);
             ISelect<TestModel> expected = select;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: To<TView>()
 
-        [Test]
+        [Fact]
         public void To_ProjectsSetTo()
         {
-            IEnumerable expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToArray();
-            IEnumerable actual = select.To<TestView>().Select(view => view.Id).ToArray();
+            IEnumerable<String> expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToArray();
+            IEnumerable<String> actual = select.To<TestView>().Select(view => view.Id).ToArray();
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: GetEnumerator()
 
-        [Test]
+        [Fact]
         public void GetEnumerator_ReturnsContextsSetsEnumerator()
         {
-            IEnumerable expected = context.Set<TestModel>();
-            IEnumerable actual = select.ToArray();
+            IEnumerable<TestModel> expected = context.Set<TestModel>();
+            IEnumerable<TestModel> actual = select.ToArray();
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetEnumerator_ReturnsSameEnumerator()
         {
-            IEnumerable expected = context.Set<TestModel>();
-            IEnumerable actual = select;
+            IEnumerable<TestModel> expected = context.Set<TestModel>();
+            IEnumerable<TestModel> actual = select;
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

@@ -3,20 +3,18 @@ using MvcTemplate.Controllers;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    [TestFixture]
     public class ValidatedControllerTests
     {
         private ValidatedController<IValidator, IService> controller;
         private IValidator validator;
         private IService service;
 
-        [SetUp]
-        public void SetUp()
+        public ValidatedControllerTests()
         {
             service = Substitute.For<IService>();
             validator = Substitute.For<IValidator>();
@@ -25,38 +23,38 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Constructor: ValidatedController(TService service, TValidator validator)
 
-        [Test]
+        [Fact]
         public void ValidatedController_SetsValidator()
         {
             IValidator actual = controller.Validator;
             IValidator expected = validator;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void ValidatedController_SetsValidatorAlerts()
         {
             AlertsContainer expected = controller.Alerts;
             AlertsContainer actual = validator.Alerts;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void ValidatedController_SetsModelState()
         {
             ModelStateDictionary expected = controller.ModelState;
             ModelStateDictionary actual = validator.ModelState;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesValidator()
         {
             controller.Dispose();
@@ -64,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             controller.Dispose();

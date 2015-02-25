@@ -5,14 +5,13 @@ using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    [TestFixture]
     public class ProfileControllerTests : AControllerTests
     {
         private ProfileDeleteView profileDelete;
@@ -21,8 +20,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         private IAccountValidator validator;
         private IAccountService service;
 
-        [SetUp]
-        public void SetUp()
+        public ProfileControllerTests()
         {
             profileEdit = ObjectFactory.CreateProfileEditView("Edition");
             profileDelete = ObjectFactory.CreateProfileDeleteView("Edition");
@@ -37,19 +35,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Method: Edit()
 
-        [Test]
+        [Fact]
         public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
 
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual(2, actual.RouteValues.Count);
+            Assert.Equal("Auth", actual.RouteValues["controller"]);
+            Assert.Equal("Logout", actual.RouteValues["action"]);
+            Assert.Equal(2, actual.RouteValues.Count);
         }
 
-        [Test]
+        [Fact]
         public void Edit_ReturnsCurrentProfileEditView()
         {
             service.Get<ProfileEditView>(controller.CurrentAccountId).Returns(new ProfileEditView());
@@ -58,32 +56,32 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Object expected = service.Get<ProfileEditView>(controller.CurrentAccountId);
             Object actual = (controller.Edit() as ViewResult).Model;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Edit(ProfileEditView profile)
 
-        [Test]
+        [Fact]
         public void Edit_ProtectsFromOverpostingId()
         {
             ProtectsFromOverpostingId(controller, "Edit");
         }
 
-        [Test]
+        [Fact]
         public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
 
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual(2, actual.RouteValues.Count);
+            Assert.Equal("Auth", actual.RouteValues["controller"]);
+            Assert.Equal("Logout", actual.RouteValues["action"]);
+            Assert.Equal(2, actual.RouteValues.Count);
         }
 
-        [Test]
+        [Fact]
         public void Edit_BeforeEditingSetsProfileIdToCurrentAccountId()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -96,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.Received().Edit(Arg.Is<ProfileEditView>(view => view == profileEdit && profileEdit.Id == controller.CurrentAccountId));
         }
 
-        [Test]
+        [Fact]
         public void Edit_EditsProfile()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -107,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.Received().Edit(profileEdit);
         }
 
-        [Test]
+        [Fact]
         public void Edit_AddsProfileUpdatedMessage()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -116,12 +114,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Edit(profileEdit);
             Alert actual = controller.Alerts.Single();
 
-            Assert.AreEqual(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.AreEqual(Messages.ProfileUpdated, actual.Message);
-            Assert.AreEqual(AlertType.Success, actual.Type);
+            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
+            Assert.Equal(Messages.ProfileUpdated, actual.Message);
+            Assert.Equal(AlertType.Success, actual.Type);
         }
 
-        [Test]
+        [Fact]
         public void Edit_DoesNotEditProfileIfCanNotEdit()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -132,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.DidNotReceive().Edit(profileEdit);
         }
 
-        [Test]
+        [Fact]
         public void Edit_ReturnsSameModel()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -141,26 +139,26 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Object actual = (controller.Edit(profileEdit) as ViewResult).Model;
             Object expected = profileEdit;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Delete()
 
-        [Test]
+        [Fact]
         public void Delete_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
 
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual(2, actual.RouteValues.Count);
+            Assert.Equal("Auth", actual.RouteValues["controller"]);
+            Assert.Equal("Logout", actual.RouteValues["action"]);
+            Assert.Equal(2, actual.RouteValues.Count);
         }
 
-        [Test]
+        [Fact]
         public void Delete_AddsDeleteDisclaimerMessage()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -168,44 +166,44 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Delete();
             Alert actual = controller.Alerts.Single();
 
-            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertType.Danger, actual.Type);
-            Assert.AreEqual(0, actual.FadeoutAfter);
+            Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal(0, actual.FadeoutAfter);
         }
 
-        [Test]
+        [Fact]
         public void Delete_ReturnsEmptyView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             Object model = (controller.Delete() as ViewResult).Model;
 
-            Assert.IsNull(model);
+            Assert.Null(model);
         }
 
         #endregion
 
         #region Method: DeleteConfirmed(AccountView profile)
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_ProtectsFromOverpostingId()
         {
             ProtectsFromOverpostingId(controller, "DeleteConfirmed");
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual(2, actual.RouteValues.Count);
+            Assert.Equal("Auth", actual.RouteValues["controller"]);
+            Assert.Equal("Logout", actual.RouteValues["action"]);
+            Assert.Equal(2, actual.RouteValues.Count);
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
         {
             validator.CanDelete(profileDelete).Returns(false);
@@ -214,12 +212,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.DeleteConfirmed(profileDelete);
             Alert actual = controller.Alerts.Single();
 
-            Assert.AreEqual(Messages.ProfileDeleteDisclaimer, actual.Message);
-            Assert.AreEqual(AlertType.Danger, actual.Type);
-            Assert.AreEqual(0, actual.FadeoutAfter);
+            Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal(0, actual.FadeoutAfter);
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_IfCanNotDeleteReturnsEmptyView()
         {
             validator.CanDelete(profileDelete).Returns(false);
@@ -227,10 +225,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Object model = (controller.DeleteConfirmed(profileDelete) as ViewResult).Model;
 
-            Assert.IsNull(model);
+            Assert.Null(model);
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_BeforeDeletingSetsProfileIdToCurrentAccountId()
         {
             validator.CanDelete(profileDelete).Returns(true);
@@ -242,7 +240,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.Received().CanDelete(Arg.Is<ProfileDeleteView>(view => view == profileDelete && profileDelete.Id == controller.CurrentAccountId));
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_DeletesProfile()
         {
             validator.CanDelete(profileDelete).Returns(true);
@@ -253,7 +251,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.Received().Delete(controller.CurrentAccountId);
         }
 
-        [Test]
+        [Fact]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
             validator.CanDelete(profileDelete).Returns(true);
@@ -261,9 +259,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 
-            Assert.AreEqual("Auth", actual.RouteValues["controller"]);
-            Assert.AreEqual("Logout", actual.RouteValues["action"]);
-            Assert.AreEqual(2, actual.RouteValues.Count);
+            Assert.Equal("Auth", actual.RouteValues["controller"]);
+            Assert.Equal("Logout", actual.RouteValues["action"]);
+            Assert.Equal(2, actual.RouteValues.Count);
         }
 
         #endregion

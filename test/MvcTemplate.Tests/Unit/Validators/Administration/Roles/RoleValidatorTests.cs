@@ -3,22 +3,20 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.RoleView;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
-    [TestFixture]
-    public class RoleValidatorTests
+    public class RoleValidatorTests : IDisposable
     {
         private RoleValidator validator;
         private TestingContext context;
         private Role role;
 
-        [SetUp]
-        public void SetUp()
+        public RoleValidatorTests()
         {
             context = new TestingContext();
             validator = new RoleValidator(new UnitOfWork(context));
@@ -27,9 +25,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             TearDownData();
             SetUpData();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             context.Dispose();
             validator.Dispose();
@@ -37,25 +33,25 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #region Method: CanCreate(RoleView view)
 
-        [Test]
+        [Fact]
         public void CanCreate_CanNotCreateWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanCreate(ObjectFactory.CreateRoleView()));
+            Assert.False(validator.CanCreate(ObjectFactory.CreateRoleView()));
         }
 
-        [Test]
+        [Fact]
         public void CanCreate_CanNotCreateWithAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
             roleView.Id += "1";
 
-            Assert.IsFalse(validator.CanCreate(roleView));
+            Assert.False(validator.CanCreate(roleView));
         }
 
-        [Test]
+        [Fact]
         public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
@@ -66,38 +62,38 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
             String expected = Validations.RoleNameIsAlreadyUsed;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanCreate_CanCreateValidRole()
         {
-            Assert.IsTrue(validator.CanCreate(ObjectFactory.CreateRoleView()));
+            Assert.True(validator.CanCreate(ObjectFactory.CreateRoleView()));
         }
 
         #endregion
 
         #region Method: CanEdit(RoleView view)
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditWithInvalidModelState()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
-            Assert.IsFalse(validator.CanEdit(ObjectFactory.CreateRoleView()));
+            Assert.False(validator.CanEdit(ObjectFactory.CreateRoleView()));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanNotEditToAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
             roleView.Id += "1";
 
-            Assert.IsFalse(validator.CanEdit(roleView));
+            Assert.False(validator.CanEdit(roleView));
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyUsedRoleName()
         {
             RoleView roleView = ObjectFactory.CreateRoleView();
@@ -108,13 +104,13 @@ namespace MvcTemplate.Tests.Unit.Validators
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
             String expected = Validations.RoleNameIsAlreadyUsed;
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void CanEdit_CanEditValidRole()
         {
-            Assert.IsTrue(validator.CanEdit(ObjectFactory.CreateRoleView()));
+            Assert.True(validator.CanEdit(ObjectFactory.CreateRoleView()));
         }
 
         #endregion

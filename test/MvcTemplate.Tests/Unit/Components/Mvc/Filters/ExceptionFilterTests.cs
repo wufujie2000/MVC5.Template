@@ -1,21 +1,19 @@
 ﻿using MvcTemplate.Components.Logging;
 using MvcTemplate.Components.Mvc;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class ExceptionFilterTests
     {
         private ExceptionFilter filter;
         private Exception exception;
         private ILogger logger;
 
-        [SetUp]
-        public void SetUp()
+        public ExceptionFilterTests()
         {
             exception = GenerateException();
             logger = Substitute.For<ILogger>();
@@ -24,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Method: OnException(ExceptionContext filterContext)
 
-        [Test]
+        [Fact]
         public void OnException_LogsFormattedException()
         {
             ExceptionContext exceptionContext = new ExceptionContext();
@@ -40,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             logger.Received().Log(expectedMessage);
         }
 
-        [Test]
+        [Fact]
         public void OnException_LogsOnlyInnerMostException()
         {
             ExceptionContext exceptionContext = new ExceptionContext();

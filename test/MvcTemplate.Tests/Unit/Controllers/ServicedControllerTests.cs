@@ -1,18 +1,16 @@
 ﻿using MvcTemplate.Controllers;
 using MvcTemplate.Services;
 using NSubstitute;
-using NUnit.Framework;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    [TestFixture]
     public class ServicedControllerTests
     {
         private ServicedController<IService> controller;
         private IService service;
 
-        [SetUp]
-        public void SetUp()
+        public ServicedControllerTests()
         {
             service = Substitute.For<IService>();
             controller = Substitute.ForPartsOf<ServicedController<IService>>(service);
@@ -20,20 +18,20 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Constructor: ServicedController(TService service)
 
-        [Test]
+        [Fact]
         public void ServicedController_SetsService()
         {
             IService actual = controller.Service;
             IService expected = service;
 
-            Assert.AreSame(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesService()
         {
             controller.Dispose();
@@ -41,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             controller.Dispose();

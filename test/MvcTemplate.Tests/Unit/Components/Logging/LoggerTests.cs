@@ -2,26 +2,24 @@
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Logging
 {
-    [TestFixture]
-    public class LoggerTests
+    public class LoggerTests : IDisposable
     {
-        [TestFixtureTearDown]
-        public void TearDown()
+        public void Dispose()
         {
             HttpContext.Current = null;
         }
 
         #region Method: Log(String message)
 
-        [Test]
+        [Fact]
         public void Log_Logs()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
@@ -35,8 +33,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
                 Log expected = new Log(new String('L', 10000));
                 Log actual = context.Set<Log>().Single();
 
-                Assert.AreEqual(expected.AccountId, actual.AccountId);
-                Assert.AreEqual(expected.Message, actual.Message);
+                Assert.Equal(expected.AccountId, actual.AccountId);
+                Assert.Equal(expected.Message, actual.Message);
             }
         }
 
@@ -44,7 +42,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesContext()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -55,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             context.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             DbContext context = Substitute.For<DbContext>();

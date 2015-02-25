@@ -1,91 +1,86 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Routing;
 using System.Xml.Linq;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
-    public class MvcSiteMapProviderTests
+    public class MvcSiteMapProviderTests : IDisposable
     {
+        private static MvcSiteMapParser parser;
+        private static String siteMapPath;
+        private static XElement siteMap;
+
         private RouteValueDictionary routeValues;
         private RequestContext requestContext;
         private MvcSiteMapProvider provider;
-        private MvcSiteMapParser parser;
-        private String siteMapPath;
-        private XElement siteMap;
 
-        [TestFixtureSetUp]
-        public void TestFixtureSetUp()
+        static MvcSiteMapProviderTests()
         {
             siteMapPath = "MvcSiteMapProviderTests.sitemap";
             parser = new MvcSiteMapParser();
             siteMap = CreateSiteMap();
             siteMap.Save(siteMapPath);
         }
-
-        [SetUp]
-        public void SetUp()
+        public MvcSiteMapProviderTests()
         {
             requestContext = HttpContextFactory.CreateHttpContext().Request.RequestContext;
             provider = new MvcSiteMapProvider(siteMapPath, parser);
             routeValues = requestContext.RouteData.Values;
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             Authorization.Provider = null;
         }
 
         #region Method: GetAuthorizedMenus(RequestContext request)
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_OnNullAuthorizationProviderReturnsAllMenus()
         {
             Authorization.Provider = null;
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
+            Assert.Equal(1, actual.Length);
 
-            Assert.AreEqual(null, actual[0].Action);
-            Assert.AreEqual(null, actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-gears", actual[0].IconClass);
+            Assert.Equal(null, actual[0].Action);
+            Assert.Equal(null, actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-gears", actual[0].IconClass);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(2, actual.Length);
+            Assert.Equal(2, actual.Length);
 
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(0, actual[0].Children.Count());
 
-            Assert.AreEqual("Index", actual[0].Action);
-            Assert.AreEqual("Accounts", actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-user", actual[0].IconClass);
+            Assert.Equal("Index", actual[0].Action);
+            Assert.Equal("Accounts", actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-user", actual[0].IconClass);
 
-            Assert.AreEqual(null, actual[1].Action);
-            Assert.AreEqual("Roles", actual[1].Controller);
-            Assert.AreEqual("Administration", actual[1].Area);
-            Assert.AreEqual("fa fa-users", actual[1].IconClass);
+            Assert.Equal(null, actual[1].Action);
+            Assert.Equal("Roles", actual[1].Controller);
+            Assert.Equal("Administration", actual[1].Area);
+            Assert.Equal("fa fa-users", actual[1].IconClass);
 
             actual = actual[1].Children.ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(1, actual.Length);
+            Assert.Equal(0, actual[0].Children.Count());
 
-            Assert.AreEqual("Create", actual[0].Action);
-            Assert.AreEqual("Roles", actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-file-o", actual[0].IconClass);
+            Assert.Equal("Create", actual[0].Action);
+            Assert.Equal("Roles", actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-file-o", actual[0].IconClass);
         }
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_ReturnsOnlyAuthorizedMenus()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
@@ -93,26 +88,26 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
+            Assert.Equal(1, actual.Length);
 
-            Assert.AreEqual(null, actual[0].Action);
-            Assert.AreEqual(null, actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-gears", actual[0].IconClass);
+            Assert.Equal(null, actual[0].Action);
+            Assert.Equal(null, actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-gears", actual[0].IconClass);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(1, actual.Length);
+            Assert.Equal(1, actual.Length);
 
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(0, actual[0].Children.Count());
 
-            Assert.AreEqual("Index", actual[0].Action);
-            Assert.AreEqual("Accounts", actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-user", actual[0].IconClass);
+            Assert.Equal("Index", actual[0].Action);
+            Assert.Equal("Accounts", actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-user", actual[0].IconClass);
         }
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_SetsActiveMenu()
         {
             Authorization.Provider = null;
@@ -122,24 +117,24 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.IsFalse(actual[0].IsActive);
+            Assert.Equal(1, actual.Length);
+            Assert.False(actual[0].IsActive);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(2, actual.Length);
-            Assert.IsFalse(actual[0].IsActive);
-            Assert.IsFalse(actual[1].IsActive);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(2, actual.Length);
+            Assert.False(actual[0].IsActive);
+            Assert.False(actual[1].IsActive);
+            Assert.Equal(0, actual[0].Children.Count());
 
             actual = actual[1].Children.ToArray();
 
-            Assert.IsTrue(actual[0].IsActive);
-            Assert.AreEqual(1, actual.Length);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.True(actual[0].IsActive);
+            Assert.Equal(1, actual.Length);
+            Assert.Equal(0, actual[0].Children.Count());
         }
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_SetsActiveMenuIfNonMenuChildrenNodeIsActive()
         {
             Authorization.Provider = null;
@@ -149,24 +144,24 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.IsFalse(actual[0].IsActive);
+            Assert.Equal(1, actual.Length);
+            Assert.False(actual[0].IsActive);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(2, actual.Length);
-            Assert.IsTrue(actual[0].IsActive);
-            Assert.IsFalse(actual[1].IsActive);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(2, actual.Length);
+            Assert.True(actual[0].IsActive);
+            Assert.False(actual[1].IsActive);
+            Assert.Equal(0, actual[0].Children.Count());
 
             actual = actual[1].Children.ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.IsFalse(actual[0].IsActive);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(1, actual.Length);
+            Assert.False(actual[0].IsActive);
+            Assert.Equal(0, actual[0].Children.Count());
         }
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_SetsHasActiveChildrenOnEveryActiveMenuParents()
         {
             Authorization.Provider = null;
@@ -176,24 +171,24 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.IsTrue(actual[0].HasActiveChildren);
+            Assert.Equal(1, actual.Length);
+            Assert.True(actual[0].HasActiveChildren);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(2, actual.Length);
-            Assert.IsTrue(actual[1].HasActiveChildren);
-            Assert.IsFalse(actual[0].HasActiveChildren);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(2, actual.Length);
+            Assert.True(actual[1].HasActiveChildren);
+            Assert.False(actual[0].HasActiveChildren);
+            Assert.Equal(0, actual[0].Children.Count());
 
             actual = actual[1].Children.ToArray();
 
-            Assert.AreEqual(1, actual.Length);
-            Assert.IsFalse(actual[0].HasActiveChildren);
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(1, actual.Length);
+            Assert.False(actual[0].HasActiveChildren);
+            Assert.Equal(0, actual[0].Children.Count());
         }
 
-        [Test]
+        [Fact]
         public void GetAuthorizedMenus_RemovesEmptyMenus()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
@@ -202,30 +197,30 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
 
-            Assert.AreEqual(1, actual.Length);
+            Assert.Equal(1, actual.Length);
 
-            Assert.AreEqual(null, actual[0].Action);
-            Assert.AreEqual(null, actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-gears", actual[0].IconClass);
+            Assert.Equal(null, actual[0].Action);
+            Assert.Equal(null, actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-gears", actual[0].IconClass);
 
             actual = actual[0].Children.ToArray();
 
-            Assert.AreEqual(1, actual.Length);
+            Assert.Equal(1, actual.Length);
 
-            Assert.AreEqual(0, actual[0].Children.Count());
+            Assert.Equal(0, actual[0].Children.Count());
 
-            Assert.AreEqual("Index", actual[0].Action);
-            Assert.AreEqual("Accounts", actual[0].Controller);
-            Assert.AreEqual("Administration", actual[0].Area);
-            Assert.AreEqual("fa fa-user", actual[0].IconClass);
+            Assert.Equal("Index", actual[0].Action);
+            Assert.Equal("Accounts", actual[0].Controller);
+            Assert.Equal("Administration", actual[0].Area);
+            Assert.Equal("fa fa-user", actual[0].IconClass);
         }
 
         #endregion
 
         #region Method: GetBreadcrumb(RequestContext request)
 
-        [Test]
+        [Fact]
         public void GetBreadcrumb_FormsBreadcrumbByIgnoringCase()
         {
             routeValues["controller"] = "profile";
@@ -234,39 +229,39 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = provider.GetBreadcrumb(requestContext).ToArray();
 
-            Assert.AreEqual(3, actual.Length);
+            Assert.Equal(3, actual.Length);
 
-            Assert.AreEqual("fa fa-home", actual[0].IconClass);
-            Assert.AreEqual("Home", actual[0].Controller);
-            Assert.AreEqual("Index", actual[0].Action);
-            Assert.AreEqual(null, actual[0].Area);
+            Assert.Equal("fa fa-home", actual[0].IconClass);
+            Assert.Equal("Home", actual[0].Controller);
+            Assert.Equal("Index", actual[0].Action);
+            Assert.Equal(null, actual[0].Area);
 
-            Assert.AreEqual("fa fa-user", actual[1].IconClass);
-            Assert.AreEqual("Profile", actual[1].Controller);
-            Assert.AreEqual(null, actual[1].Action);
-            Assert.AreEqual(null, actual[1].Area);
+            Assert.Equal("fa fa-user", actual[1].IconClass);
+            Assert.Equal("Profile", actual[1].Controller);
+            Assert.Equal(null, actual[1].Action);
+            Assert.Equal(null, actual[1].Area);
 
-            Assert.AreEqual("fa fa-pencil", actual[2].IconClass);
-            Assert.AreEqual("Profile", actual[2].Controller);
-            Assert.AreEqual("Edit", actual[2].Action);
-            Assert.AreEqual(null, actual[2].Area);
+            Assert.Equal("fa fa-pencil", actual[2].IconClass);
+            Assert.Equal("Profile", actual[2].Controller);
+            Assert.Equal("Edit", actual[2].Action);
+            Assert.Equal(null, actual[2].Area);
         }
 
-        [Test]
+        [Fact]
         public void GetBreadcrumb_OnNotFoundCurrentActionReturnsEmpty()
         {
             routeValues["controller"] = "profile";
             routeValues["action"] = "edit";
             routeValues["area"] = "area";
 
-            CollectionAssert.IsEmpty(provider.GetBreadcrumb(requestContext));
+            Assert.Empty(provider.GetBreadcrumb(requestContext));
         }
 
         #endregion
 
         #region Test helpers
 
-        private XElement CreateSiteMap()
+        private static XElement CreateSiteMap()
         {
             return XElement.Parse(
             @"<siteMap>

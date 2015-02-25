@@ -1,23 +1,22 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using NUnit.Framework;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
     public class JsTreeTests
     {
         #region Constructor: JsTree()
 
-        [Test]
+        [Fact]
         public void JsTree_CreatesEmptyTree()
         {
-            CollectionAssert.IsEmpty(new JsTree().Nodes);
+            Assert.Empty(new JsTree().Nodes);
         }
 
-        [Test]
+        [Fact]
         public void JsTree_CreatesUnselectedTree()
         {
-            CollectionAssert.IsEmpty(new JsTree().SelectedIds);
+            Assert.Empty(new JsTree().SelectedIds);
         }
 
         #endregion

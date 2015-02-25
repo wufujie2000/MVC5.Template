@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -23,8 +23,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .CustomAttributes
                 .Single(attr => attr.AttributeType == typeof(BindAttribute));
 
-            Assert.AreEqual("Exclude", actual.NamedArguments.Single().MemberName);
-            Assert.AreEqual("Id", actual.NamedArguments.Single().TypedValue.Value);
+            Assert.Equal("Exclude", actual.NamedArguments.Single().MemberName);
+            Assert.Equal("Id", actual.NamedArguments.Single().TypedValue.Value);
         }
     }
 }

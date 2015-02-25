@@ -5,24 +5,22 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
 using NSubstitute;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Data.Core
 {
-    [TestFixture]
-    public class UnitOfWorkTests
+    public class UnitOfWorkTests : IDisposable
     {
         private TestingContext context;
         private UnitOfWork unitOfWork;
         private IAuditLogger logger;
 
-        [SetUp]
-        public void SetUp()
+        public UnitOfWorkTests()
         {
             context = new TestingContext();
             logger = Substitute.For<IAuditLogger>();
@@ -31,16 +29,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
             context.SaveChanges();
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             unitOfWork.Dispose();
         }
 
         #region Method: Select<TModel>()
 
-        [Test]
+        [Fact]
         public void Select_CreatesSelectForSet()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -50,14 +46,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerable<TestModel> actual = unitOfWork.Select<TestModel>();
             IEnumerable<TestModel> expected = context.Set<TestModel>();
 
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         #endregion
 
         #region Method: To<TModel>(BaseView view)
 
-        [Test]
+        [Fact]
         public void ToModel_ConvertsViewToModel()
         {
             TestView view = ObjectFactory.CreateTestView();
@@ -65,16 +61,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel actual = unitOfWork.To<TestModel>(view);
             TestModel expected = Mapper.Map<TestModel>(view);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Text, actual.Text);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion
 
         #region Method: To<TView>(BaseModel model)
 
-        [Test]
+        [Fact]
         public void ToView_ConvertsModelToView()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -82,16 +78,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestView actual = unitOfWork.To<TestView>(model);
             TestView expected = Mapper.Map<TestView>(model);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Text, actual.Text);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion
 
         #region Method: Get<TModel>(String id)
 
-        [Test]
+        [Fact]
         public void Get_GetsModelById()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -101,22 +97,22 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel expected = context.Set<TestModel>().AsNoTracking().Single();
             TestModel actual = unitOfWork.Get<TestModel>(model.Id);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Text, actual.Text);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
-        [Test]
+        [Fact]
         public void Get_OnModelNotFoundReturnsNull()
         {
-            Assert.IsNull(unitOfWork.Get<TestModel>(""));
+            Assert.Null(unitOfWork.Get<TestModel>(""));
         }
 
         #endregion
 
         #region Method: GetAs<TModel, TView>(String id)
 
-        [Test]
+        [Fact]
         public void GetAs_ReturnsModelAsViewById()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -126,16 +122,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestView expected = Mapper.Map<TestView>(context.Set<TestModel>().AsNoTracking().Single());
             TestView actual = unitOfWork.GetAs<TestModel, TestView>(model.Id);
 
-            Assert.AreEqual(expected.CreationDate, actual.CreationDate);
-            Assert.AreEqual(expected.Text, actual.Text);
-            Assert.AreEqual(expected.Id, actual.Id);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Text, actual.Text);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion
 
         #region Method: Insert<TModel>(TModel model)
 
-        [Test]
+        [Fact]
         public void Insert_AddsModelToDbSet()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -144,15 +140,15 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel actual = context.Set<TestModel>().Local.Single();
             TestModel expected = model;
 
-            Assert.AreEqual(EntityState.Added, context.Entry(model).State);
-            Assert.AreSame(expected, actual);
+            Assert.Equal(EntityState.Added, context.Entry(model).State);
+            Assert.Same(expected, actual);
         }
 
         #endregion
 
         #region Method: Update(TModel model)
 
-        [Test]
+        [Fact]
         public void Update_UpdatesNotAttachedModel()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -163,13 +159,13 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             DbEntityEntry<TestModel> actual = context.Entry(model);
             TestModel expected = model;
 
-            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
-            Assert.AreEqual(EntityState.Modified, actual.State);
-            Assert.AreEqual(expected.Text, actual.Entity.Text);
-            Assert.AreEqual(expected.Id, actual.Entity.Id);
+            Assert.Equal(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.Equal(EntityState.Modified, actual.State);
+            Assert.Equal(expected.Text, actual.Entity.Text);
+            Assert.Equal(expected.Id, actual.Entity.Id);
         }
 
-        [Test]
+        [Fact]
         public void Update_UpdatesAttachedModel()
         {
             TestModel attachedModel = ObjectFactory.CreateTestModel();
@@ -182,27 +178,27 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             DbEntityEntry<TestModel> actual = context.Entry(attachedModel);
             TestModel expected = model;
 
-            Assert.AreEqual(expected.CreationDate, actual.Entity.CreationDate);
-            Assert.AreEqual(EntityState.Modified, actual.State);
-            Assert.AreEqual(expected.Text, actual.Entity.Text);
-            Assert.AreEqual(expected.Id, actual.Entity.Id);
+            Assert.Equal(expected.CreationDate, actual.Entity.CreationDate);
+            Assert.Equal(EntityState.Modified, actual.State);
+            Assert.Equal(expected.Text, actual.Entity.Text);
+            Assert.Equal(expected.Id, actual.Entity.Id);
         }
 
-        [Test]
+        [Fact]
         public void Update_DoesNotModifyCreationDate()
         {
             TestModel model = ObjectFactory.CreateTestModel();
 
             unitOfWork.Update(model);
 
-            Assert.IsFalse(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
+            Assert.False(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
         }
 
         #endregion
 
         #region Method: Delete(TModel model)
 
-        [Test]
+        [Fact]
         public void Delete_DeletesModel()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -212,14 +208,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Delete(model);
             context.SaveChanges();
 
-            CollectionAssert.IsEmpty(context.Set<TestModel>());
+            Assert.Empty(context.Set<TestModel>());
         }
 
         #endregion
 
         #region Method: Delete(String id)
 
-        [Test]
+        [Fact]
         public void Delete_DeletesModelById()
         {
             TestModel model = ObjectFactory.CreateTestModel();
@@ -229,14 +225,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Delete<TestModel>(model.Id);
             context.SaveChanges();
 
-            CollectionAssert.IsEmpty(context.Set<TestModel>());
+            Assert.Empty(context.Set<TestModel>());
         }
 
         #endregion
 
         #region Method: Rollback()
 
-        [Test]
+        [Fact]
         public void RollBack_RollbacksChanges()
         {
             context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
@@ -244,14 +240,14 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             unitOfWork.Rollback();
             unitOfWork.Commit();
 
-            CollectionAssert.IsEmpty(unitOfWork.Select<TestModel>());
+            Assert.Empty(unitOfWork.Select<TestModel>());
         }
 
         #endregion
 
         #region Method: Commit()
 
-        [Test]
+        [Fact]
         public void Commit_SavesChanges()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -262,7 +258,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Received().SaveChanges();
         }
 
-        [Test]
+        [Fact]
         public void Commit_LogsEntities()
         {
             unitOfWork.Commit();
@@ -271,7 +267,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             logger.Received().Save();
         }
 
-        [Test]
+        [Fact]
         public void Commit_DoesNotSaveLogsOnFailedCommit()
         {
             try
@@ -291,7 +287,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DiposesLogger()
         {
             unitOfWork.Dispose();
@@ -299,7 +295,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             logger.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_DiposesContext()
         {
             DbContext context = Substitute.For<DbContext>();
@@ -310,7 +306,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             unitOfWork.Dispose();

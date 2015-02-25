@@ -1,18 +1,16 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    [TestFixture]
     public class SecurityTests
     {
         #region ValidateAntiForgeryToken
 
-        [Test]
+        [Fact]
         public void AllControllerPostMethods_HasValidateAntiForgeryToken()
         {
             IEnumerable<MethodInfo> postMethods = Assembly
@@ -23,10 +21,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .Where(method => method.GetCustomAttribute<HttpPostAttribute>() != null);
 
             foreach (MethodInfo method in postMethods)
-                Assert.IsNotNull(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>(),
-                    String.Format("{0}.{1} does not have ValidateAntiForgeryToken attribute specified.",
-                        method.ReflectedType.Name,
-                        method.Name));
+                Assert.NotNull(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>());
         }
 
         #endregion

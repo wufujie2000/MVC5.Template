@@ -1,32 +1,29 @@
 ﻿using MvcTemplate.Data.Core;
 using MvcTemplate.Services;
 using NSubstitute;
-using NUnit.Framework;
+using System;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Services
 {
-    [TestFixture]
-    public class BaseServiceTests
+    public class BaseServiceTests : IDisposable
     {
         private IUnitOfWork unitOfWork;
         private BaseService service;
 
-        [SetUp]
-        public void SetUp()
+        public BaseServiceTests()
         {
             unitOfWork = Substitute.For<IUnitOfWork>();
             service = Substitute.ForPartsOf<BaseService>(unitOfWork);
         }
-
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
             service.Dispose();
         }
 
         #region Method: Dispose()
 
-        [Test]
+        [Fact]
         public void Dispose_DisposesUnitOfWork()
         {
             service.Dispose();
@@ -34,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Services
             unitOfWork.Received().Dispose();
         }
 
-        [Test]
+        [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
             service.Dispose();

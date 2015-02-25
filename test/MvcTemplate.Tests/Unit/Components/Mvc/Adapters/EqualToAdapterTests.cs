@@ -1,19 +1,18 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Resources;
 using MvcTemplate.Tests.Objects;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
-    [TestFixture]
     public class EqualToAdapterTests
     {
         #region Method: GetClientValidationRules()
 
-        [Test]
+        [Fact]
         public void GetClientValidationRules_SetsOtherPropertyDisplayName()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "EqualTo");
@@ -25,10 +24,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             String actual = attribute.OtherPropertyDisplayName;
             String expected = ResourceProvider.GetPropertyTitle(typeof(AdaptersModel), "EqualTo");
 
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
-        [Test]
+        [Fact]
         public void GetClientValidationRules_ReturnsEqualToValidationRule()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "EqualTo");
@@ -41,9 +40,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             expected.ErrorMessage = errorMessage;
             expected.ValidationType = "equalto";
 
-            Assert.AreEqual(expected.ValidationParameters["other"], actual.ValidationParameters["other"]);
-            Assert.AreEqual(expected.ValidationType, actual.ValidationType);
-            Assert.AreEqual(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal(expected.ValidationParameters["other"], actual.ValidationParameters["other"]);
+            Assert.Equal(expected.ValidationType, actual.ValidationType);
+            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
         }
 
         #endregion

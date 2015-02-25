@@ -1,17 +1,16 @@
 ﻿using MvcTemplate.Objects;
-using NUnit.Framework;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Objects
 {
-    [TestFixture]
     public class RoleViewTests
     {
         #region Constructor: RoleView()
 
-        [Test]
+        [Fact]
         public void RoleView_PrivilegesTreeIsNotNull()
         {
-            Assert.IsNotNull(new RoleView().PrivilegesTree);
+            Assert.NotNull(new RoleView().PrivilegesTree);
         }
 
         #endregion

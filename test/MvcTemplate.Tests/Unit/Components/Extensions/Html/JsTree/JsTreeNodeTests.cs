@@ -1,73 +1,72 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using NUnit.Framework;
+using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    [TestFixture]
     public class JsTreeNodeTests
     {
         #region Constructor: JsTreeNode()
 
-        [Test]
+        [Fact]
         public void JsTreeNode_SetsIdToNull()
         {
-            Assert.IsNull(new JsTreeNode().Id);
+            Assert.Null(new JsTreeNode().Id);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_SetsNameToNull()
         {
-            Assert.IsNull(new JsTreeNode().Name);
+            Assert.Null(new JsTreeNode().Name);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_CreatesEmptyTree()
         {
-            CollectionAssert.IsEmpty(new JsTreeNode().Nodes);
+            Assert.Empty(new JsTreeNode().Nodes);
         }
 
         #endregion
 
         #region Constructor: JsTreeNode(String name)
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Name_SetsIdToNull()
         {
-            Assert.IsNull(new JsTreeNode("Name").Id);
+            Assert.Null(new JsTreeNode("Name").Id);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Name_SetsName()
         {
-            Assert.AreEqual("Name", new JsTreeNode("Name").Name);
+            Assert.Equal("Name", new JsTreeNode("Name").Name);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Name_CreatesEmptyTree()
         {
-            CollectionAssert.IsEmpty(new JsTreeNode("Name").Nodes);
+            Assert.Empty(new JsTreeNode("Name").Nodes);
         }
 
         #endregion
 
         #region Constructor: JsTreeNode(String id, String name)
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Id_Name_SetsId()
         {
-            Assert.AreEqual("Id", new JsTreeNode("Id", null).Id);
+            Assert.Equal("Id", new JsTreeNode("Id", null).Id);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Id_Name_SetsName()
         {
-            Assert.AreEqual("Name", new JsTreeNode(null, "Name").Name);
+            Assert.Equal("Name", new JsTreeNode(null, "Name").Name);
         }
 
-        [Test]
+        [Fact]
         public void JsTreeNode_Id_Name_CreatesEmptyTree()
         {
-            CollectionAssert.IsEmpty(new JsTreeNode("Id", "Name").Nodes);
+            Assert.Empty(new JsTreeNode("Id", "Name").Nodes);
         }
 
         #endregion

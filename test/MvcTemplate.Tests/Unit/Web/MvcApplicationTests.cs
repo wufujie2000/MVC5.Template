@@ -170,10 +170,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterCurrentDependencyResolver();
 
-            Type expected = typeof(LightInjectMvcDependencyResolver);
-            Type actual = DependencyResolver.Current.GetType();
-
-            Assert.Equal(expected, actual);
+            Assert.IsType<LightInjectMvcDependencyResolver>(DependencyResolver.Current);
         }
 
         #endregion
@@ -204,10 +201,7 @@ namespace MvcTemplate.Tests.Unit.Web
         {
             application.RegisterModelMetadataProvider();
 
-            Type actual = ModelMetadataProviders.Current.GetType();
-            Type expected = typeof(DisplayNameMetadataProvider);
-
-            Assert.Equal(expected, actual);
+            Assert.IsType<DisplayNameMetadataProvider>(ModelMetadataProviders.Current);
         }
 
         #endregion
@@ -231,9 +225,9 @@ namespace MvcTemplate.Tests.Unit.Web
             application.RegisterDataTypeValidator();
 
             ModelValidatorProviderCollection providers = ModelValidatorProviders.Providers;
-            Type expectedType = typeof(DataTypeValidatorProvider);
+            Type type = typeof(DataTypeValidatorProvider);
 
-            Assert.NotNull(providers.SingleOrDefault(provider => provider.GetType() == expectedType));
+            Assert.Single(providers.Select(provider => provider.GetType()), type);
         }
 
         #endregion
@@ -295,10 +289,9 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterModelBinders();
 
-            Type actual = ModelBinders.Binders[typeof(String)].GetType();
-            Type expected = typeof(TrimmingModelBinder);
+            IModelBinder actual = ModelBinders.Binders[typeof(String)];
 
-            Assert.Equal(expected, actual);
+            Assert.IsType<TrimmingModelBinder>(actual);
         }
 
         #endregion
@@ -321,10 +314,9 @@ namespace MvcTemplate.Tests.Unit.Web
         {
             application.RegisterViewEngine();
 
-            Type actual = ViewEngines.Engines.Single().GetType();
-            Type expected = typeof(ViewEngine);
+            IViewEngine actual = ViewEngines.Engines.Single();
 
-            Assert.Equal(expected, actual);
+            Assert.IsType<ViewEngine>(actual);
         }
 
         #endregion

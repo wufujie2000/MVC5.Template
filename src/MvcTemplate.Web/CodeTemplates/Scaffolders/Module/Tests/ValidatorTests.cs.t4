@@ -4,12 +4,13 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
+using System;
 using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
 {
-    public class <#= Model.Validator #>Tests
+    public class <#= Model.Validator #>Tests : IDisposable
     {
         private <#= Model.Validator #> validator;
         private TestingContext context;

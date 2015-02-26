@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -21,7 +22,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .Where(method => method.GetCustomAttribute<HttpPostAttribute>() != null);
 
             foreach (MethodInfo method in postMethods)
-                Assert.NotNull(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>());
+                if (method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>() == null)
+                    Assert.Equal(null, String.Format("{0}.{1} does not have ValidateAntiForgeryToken attribute specified.",
+                        method.ReflectedType.Name,
+                        method.Name));
         }
 
         #endregion

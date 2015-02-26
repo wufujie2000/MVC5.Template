@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
             Object expected = container.GetInstance<IMvcSiteMapProvider>();
             Object actual = container.GetInstance<IMvcSiteMapProvider>();
 
-            Assert.IsType<MvcSiteMapProvider>(actual.GetType());
+            Assert.IsType<MvcSiteMapProvider>(actual);
             Assert.NotSame(expected, actual);
         }
 
@@ -90,7 +90,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
             Object expected = container.GetInstance<IGlobalizationProvider>();
             Object actual = container.GetInstance<IGlobalizationProvider>();
 
-            Assert.IsType<GlobalizationProvider>(actual.GetType());
+            Assert.IsType<GlobalizationProvider>(actual);
             Assert.NotSame(expected, actual);
         }
 

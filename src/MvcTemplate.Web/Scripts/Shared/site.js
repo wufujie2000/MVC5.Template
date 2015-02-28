@@ -105,6 +105,11 @@
     }
 }());
 
+// Mvc.Grid binding
+(function () {
+    $('.mvc-grid').mvcgrid();
+}());
+
 // NiceScroll binding
 (function () {
     $('body').niceScroll({

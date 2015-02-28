@@ -22,5 +22,10 @@
     Boolean: {
         Yes: 'Yes',
         No: 'No'
+    },
+    Operator: {
+        Select: '',
+        And: 'and',
+        Or: 'or'
     }
 };

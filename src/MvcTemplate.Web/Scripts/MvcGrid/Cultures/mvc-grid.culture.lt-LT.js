@@ -22,5 +22,10 @@
     Boolean: {
         Yes: 'Taip',
         No: 'Ne'
+    },
+    Operator: {
+        Select: '',
+        And: 'ir',
+        Or: 'arba'
     }
 };

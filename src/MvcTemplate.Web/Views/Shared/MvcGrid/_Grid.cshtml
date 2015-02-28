@@ -1,4 +1,5 @@
 ﻿@using NonFactors.Mvc.Grid;
+
 @model IGrid
 
 <div class="mvc-grid" data-name="@Model.Name">
@@ -14,20 +15,28 @@
                         data-name="@column.Name"
                         data-filterable="@column.IsFilterable"
                         data-filter-name="@column.FilterName"
-                        data-filter-type="@column.FilterType"
-                        data-filter-val="@column.FilterValue"
+                        data-filter-multi="@column.IsMultiFilterable"
+                        data-filter-first-type="@(column.Filter != null && column.Filter.First != null
+                            ? column.Filter.First.Type : "")"
+                        data-filter-first-val="@(column.Filter != null && column.Filter.First != null
+                            ? column.Filter.First.Value : "")"
+                        data-filter-operator="@(column.Filter != null ? column.Filter.Operator : "")"
+                        data-filter-second-type="@(column.Filter != null && column.Filter.Second != null
+                            ? column.Filter.Second.Type : "")"
+                        data-filter-second-val="@(column.Filter != null && column.Filter.Second != null
+                            ? column.Filter.Second.Value : "")"
                         data-sortable="@column.IsSortable"
                         data-sort-order="@column.SortOrder"
                         data-sort-first="@column.FirstSortOrder">
-                        @column.Title
+                        <span class="mvc-grid-header-title">@column.Title</span>
                         @if (column.IsSortable == true)
                         {
                             <span class="mvc-grid-sort @column.SortOrder.ToString().ToLower()"></span>
                         }
                         @if (column.IsFilterable == true)
                         {
-                            String filterApplied = column.FilterType != null ? "applied" : "";
-                            <span class="mvc-grid-filter @filterApplied" />
+                            String filterApplied = column.Filter != null && (column.Filter.First != null || column.Filter.Second != null) ? "applied" : "";
+                            <span class="mvc-grid-filter @filterApplied"></span>
                         }
                     </th>
                 }

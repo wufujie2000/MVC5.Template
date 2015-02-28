@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 1.0.1
+ * Mvc.Grid 2.0.0
  * https://github.com/NonFactors/MVC.Grid
  *
  * Copyright © NonFactors
@@ -9,6 +9,7 @@
  */
 
 .mvc-grid-header {
+    background-clip: padding-box;
     position: relative;
 }
 
@@ -68,10 +69,8 @@
     background-color: #FFFFFF;
     position: absolute;
     border-radius: 4px;
-    margin: 2px 0 0;
     z-index: 1000;
     display: none;
-    padding: 0;
 }
 
     .mvc-grid-popup.open {
@@ -87,23 +86,19 @@
     }
 
     .mvc-grid-popup .popup-content {
-        padding: 0 5px;
+        padding: 3px;
     }
 
-    .mvc-grid-popup select {
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
+    .mvc-grid-popup .popup-group {
+        padding: 5px 8px 0;
     }
 
-    .mvc-grid-popup .popup-group,
-    .mvc-grid-popup .popup-button-group {
-        border-bottom: 1px solid #EEEEEE;
-        border-top: 1px solid #FFFFFF;
-        padding: 10px;
-        margin: 0;
+    .mvc-grid-popup .popup-group-operator {
+        text-align: center;
     }
 
     .mvc-grid-popup .popup-button-group {
+        padding: 8px 8px 5px;
         text-align: center;
     }
 
@@ -121,8 +116,8 @@
 
         .mvc-grid-popup .mvc-grid-boolean-filter li {
             cursor: pointer;
-            padding: 0 5px;
             display: block;
+            padding: 3px;
             width: 100%;
         }
 
@@ -135,8 +130,22 @@
                 background-color: #DDDDDD;
             }
 
+    .mvc-grid-popup .mvc-grid-type,
+    .mvc-grid-popup .mvc-grid-input,
+    .mvc-grid-popup .mvc-grid-operator {
+        border: 1px solid #CCCCCC;
+        font-size: 13px;
+        padding: 5px;
+        width: 100%;
+    }
+
+    .mvc-grid-popup .mvc-grid-operator {
+        text-align: center;
+        width: auto;
+    }
+
     .mvc-grid-popup .mvc-grid-input {
-        font-size: 12px;
+        padding: 5px 8px;
     }
 
 .mvc-grid-table-empty {

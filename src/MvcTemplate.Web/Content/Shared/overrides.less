@@ -1,5 +1,4 @@
-﻿@import "../mixins";
-@import "../theme";
+﻿@import "../theme";
 
 /* Bootstrap */
 .pagination > .active > a,
@@ -8,20 +7,20 @@
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-    .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+    background: linear-gradient(@active-from-color, @active-to-color);
     color: @active-color;
 }
 
 .btn-primary {
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-    .linear-gradient-background(center top, #84b2ca, #67a0be, #67a0be);
-    border: 1px solid #5997B8;
+    background: linear-gradient(#84b2ca, #67a0be);
+    border: 1px solid #5997b8;
 
     &:focus,
     &:hover,
     &:active {
-        .linear-gradient-background(center top, #75a9c4, #5997b8, #5997b8);
-        border: 1px solid #5997B8;
+        background: linear-gradient(#75a9c4, #5997b8);
+        border: 1px solid #5997b8;
     }
 }
 
@@ -38,7 +37,7 @@
 
 .table-hover {
     > tbody > tr:hover > td {
-        .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
+        background: linear-gradient(@active-from-color, @active-to-color);
         color: @active-color;
     }
 }
@@ -54,7 +53,7 @@
     padding: 0;
 
     .ui-datepicker-header {
-        .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
+        background: linear-gradient(@active-from-color, @active-to-color);
         border-radius: 4px 4px 0 0;
         color: @active-color;
         border: none;
@@ -111,7 +110,7 @@
 
             .ui-state-active,
             .ui-state-hover {
-                .linear-gradient-background(bottom, @gradient-from-color 0, @gradient-to-color 100%, @active-background-color);
+                background: linear-gradient(@active-from-color, @active-to-color);
                 text-shadow: 1px 0 0 @content-color;
                 color: @active-color;
                 cursor: pointer;

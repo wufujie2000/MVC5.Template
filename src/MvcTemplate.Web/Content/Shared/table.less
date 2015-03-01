@@ -1,9 +1,9 @@
-﻿@import "../mixins";
-@import "../theme";
+﻿@import "../theme";
 
 table {
     thead {
-        .linear-gradient-background(bottom, @gradient-middle-color 0, @gradient-to-color 100%, @active-color);
+        background-image: linear-gradient(@active-color, @content-background-color);
+        background-color: @active-color;
     }
 
     th {

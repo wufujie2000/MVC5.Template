@@ -365,9 +365,6 @@
     <Content Include="Content\Shared\Auth\auth.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\mixins.less" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="CodeTemplates\Scaffolders\Module\Module.ps1" />
   </ItemGroup>
   <ItemGroup>

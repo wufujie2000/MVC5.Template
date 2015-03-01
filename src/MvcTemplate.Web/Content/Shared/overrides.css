@@ -5,34 +5,19 @@
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background: linear-gradient(#6f93a7, #2a4e62);
   color: #ffffff;
 }
 .btn-primary {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
-  background-color: #67a0be;
-  background-image: -webkit-linear-gradient(center top, #84b2ca, #67a0be);
-  background-image: -moz-linear-gradient(center top, #84b2ca, #67a0be);
-  background-image: -ms-linear-gradient(center top, #84b2ca, #67a0be);
-  background-image: -o-linear-gradient(center top, #84b2ca, #67a0be);
-  background-image: linear-gradient(center top, #84b2ca, #67a0be);
-  border: 1px solid #5997B8;
+  background: linear-gradient(#84b2ca, #67a0be);
+  border: 1px solid #5997b8;
 }
 .btn-primary:focus,
 .btn-primary:hover,
 .btn-primary:active {
-  background-color: #5997b8;
-  background-image: -webkit-linear-gradient(center top, #75a9c4, #5997b8);
-  background-image: -moz-linear-gradient(center top, #75a9c4, #5997b8);
-  background-image: -ms-linear-gradient(center top, #75a9c4, #5997b8);
-  background-image: -o-linear-gradient(center top, #75a9c4, #5997b8);
-  background-image: linear-gradient(center top, #75a9c4, #5997b8);
-  border: 1px solid #5997B8;
+  background: linear-gradient(#75a9c4, #5997b8);
+  border: 1px solid #5997b8;
 }
 .table {
   margin-bottom: 0;
@@ -44,12 +29,7 @@
   white-space: nowrap;
 }
 .table-hover > tbody > tr:hover > td {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background: linear-gradient(#6f93a7, #2a4e62);
   color: #ffffff;
 }
 .input-group .form-control {
@@ -62,12 +42,7 @@
   padding: 0;
 }
 .ui-datepicker .ui-datepicker-header {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background: linear-gradient(#6f93a7, #2a4e62);
   border-radius: 4px 4px 0 0;
   color: #ffffff;
   border: none;
@@ -113,12 +88,7 @@
 }
 .ui-datepicker table td .ui-state-active,
 .ui-datepicker table td .ui-state-hover {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27) 0, rgba(255, 255, 255, 0.27) 100%);
+  background: linear-gradient(#6f93a7, #2a4e62);
   text-shadow: 1px 0 0 #555555;
   color: #ffffff;
   cursor: pointer;

@@ -35,12 +35,7 @@
   float: left;
 }
 .widget-title .widget-title-buttons .btn:hover {
-  background-color: #396b86;
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.27), rgba(255, 255, 255, 0.27));
+  background: linear-gradient(#6f93a7, #2a4e62);
   color: #ffffff;
 }
 .widget-title .widget-title-buttons .btn > i {

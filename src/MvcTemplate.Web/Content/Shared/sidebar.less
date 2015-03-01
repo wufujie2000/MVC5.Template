@@ -1,5 +1,4 @@
-﻿@import "../mixins";
-@import "../theme";
+﻿@import "../theme";
 
 .sidebar {
     width: 200px;
@@ -33,7 +32,7 @@
             color: @color;
 
             &:hover {
-                .linear-gradient-background(bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+                background: linear-gradient(@active-from-color, @active-to-color);
                 color: @active-color;
             }
 
@@ -82,7 +81,7 @@
 
 @media (min-width: 768px) {
     .sidebar > ul:not(:hover) .active > a {
-        .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+        background-image: url("../../Images/Shared/menu-active.png"), linear-gradient(@active-from-color, @active-to-color);
         background-position: right center;
         background-repeat: no-repeat;
         color: @active-color;
@@ -99,7 +98,7 @@
 
         > ul {
             &:not(:hover) > .has-active > a {
-                .linear-gradient-background-image(url("../../Images/Shared/menu-active.png"), bottom, @gradient-from-color, @gradient-to-color, @active-background-color);
+                background-image: url("../../Images/Shared/menu-active.png"), linear-gradient(@active-from-color, @active-to-color);
                 background-position: right center;
                 background-repeat: no-repeat;
                 color: @active-color;

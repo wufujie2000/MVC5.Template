@@ -19,7 +19,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             return View();
@@ -29,7 +29,7 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Exclude = "Id")] AccountView account)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             if (!Validator.CanRegister(account))
@@ -44,7 +44,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Recover()
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             return View();
@@ -54,13 +54,13 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Recover(AccountRecoveryView account)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             if (!Validator.CanRecover(account))
                 return View(account);
 
-            Service.Recover(account);
+            Service.Recover(account, Request);
             Alerts.Add(AlertType.Info, Messages.RecoveryInformation, 0);
 
             return RedirectToAction("Login");
@@ -69,7 +69,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Reset(String token)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             AccountResetView account = new AccountResetView();
@@ -85,7 +85,7 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Reset(AccountResetView account)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
             if (!Validator.CanReset(account))
@@ -100,7 +100,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Login(String returnUrl)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToLocal(returnUrl);
 
             return View();
@@ -110,7 +110,7 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(AccountLoginView account, String returnUrl)
         {
-            if (Service.IsLoggedIn())
+            if (Service.IsLoggedIn(User))
                 return RedirectToLocal(returnUrl);
 
             if (!Validator.CanLogin(account))

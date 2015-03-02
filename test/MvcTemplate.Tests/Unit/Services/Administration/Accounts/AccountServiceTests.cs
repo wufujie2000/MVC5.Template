@@ -11,6 +11,7 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -34,9 +35,7 @@ namespace MvcTemplate.Tests.Unit.Services
             mailClient = Substitute.For<IMailClient>();
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
 
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-
             service = new AccountService(new UnitOfWork(context), mailClient, hasher);
 
             TearDownData();
@@ -50,22 +49,19 @@ namespace MvcTemplate.Tests.Unit.Services
             context.Dispose();
         }
 
-        #region Method: IsLoggedIn()
+        #region Method: IsLoggedIn(IPrincipal user)
 
-        [Fact]
-        public void IsLoggedIn_ReturnsTrueThenAccountIsAuthenticated()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsLoggedIn_ReturnsUserAuthenticationStatus(Boolean expected)
         {
-            HttpContext.Current.User.Identity.IsAuthenticated.Returns(true);
+            IPrincipal user = Substitute.For<IPrincipal>();
+            user.Identity.IsAuthenticated.Returns(expected);
 
-            Assert.True(service.IsLoggedIn());
-        }
+            Boolean actual = service.IsLoggedIn(user);
 
-        [Fact]
-        public void IsLoggedIn_ReturnsFalseThenAccountIsNotAuthenticated()
-        {
-            HttpContext.Current.User.Identity.IsAuthenticated.Returns(false);
-
-            Assert.False(service.IsLoggedIn());
+            Assert.Equal(expected, actual);
         }
 
         #endregion
@@ -134,15 +130,15 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Recover(AccountRecoveryView view)
+        #region Method: Recover(AccountRecoveryView view, HttpRequestBase request)
 
         [Fact]
-        public void Recover_DoesNotSendRecoveryInformation()
+        public void Recover_DoesNotSendRecoveryInformationForNonExistingAccount()
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
             account.Email = "not@existing.email";
 
-            service.Recover(account);
+            service.Recover(account, null);
 
             mailClient.DidNotReceive().Send(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
         }
@@ -152,11 +148,12 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Account account = context.Set<Account>().AsNoTracking().Single();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
+            HttpRequestBase request = HttpContextFactory.CreateHttpContextBase().Request;
 
             AccountRecoveryView recoveryAccount = ObjectFactory.CreateAccountRecoveryView();
             recoveryAccount.Email = recoveryAccount.Email.ToLower();
 
-            service.Recover(recoveryAccount);
+            service.Recover(recoveryAccount, request);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -177,17 +174,17 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Recover_SendsRecoveryInformation()
         {
-            HttpRequest request = HttpContext.Current.Request;
-            String scheme = HttpContext.Current.Request.Url.Scheme;
-            Account recoveredAccount = context.Set<Account>().Single();
-            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
+            HttpRequestBase request = HttpContextFactory.CreateHttpContextBase().Request;
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
+            Account recoveredAccount = context.Set<Account>().Single();
+            UrlHelper url = new UrlHelper(request.RequestContext);
+            String scheme = request.Url.Scheme;
 
-            service.Recover(account);
+            service.Recover(account, request);
 
             String expectedEmail = account.Email;
             String expectedEmailSubject = Messages.RecoveryEmailSubject;
-            String recoveryUrl = urlHelper.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, scheme);
+            String recoveryUrl = url.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, scheme);
             String expectedEmailBody = String.Format(Messages.RecoveryEmailBody, recoveryUrl);
 
             mailClient.Received().Send(expectedEmail, expectedEmailSubject, expectedEmailBody);
@@ -378,11 +375,11 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Login_IsCaseInsensitive()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+
             service.Login(account.Username.ToUpper());
 
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
-
-            String actual = ticket.Name;
+            String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
             String expected = accountId;
 
             Assert.Equal(expected, actual);
@@ -392,6 +389,8 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Login_CreatesPersistentAuthenticationTicket()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+
             service.Login(account.Username);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
@@ -403,12 +402,12 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Login_SetAccountIdAsAuthenticationTicketValue()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+
             service.Login(account.Username);
 
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
-
+            String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
             String expected = account.Id;
-            String actual = ticket.Name;
 
             Assert.Equal(expected, actual);
         }
@@ -421,12 +420,14 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Logout_MakesAccountCookieExpired()
         {
             AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+
             service.Login(account.Username);
             service.Logout();
 
-            DateTime cookieExpirationDate = HttpContext.Current.Response.Cookies[0].Expires;
+            DateTime expirationDate = HttpContext.Current.Response.Cookies[0].Expires;
 
-            Assert.True(cookieExpirationDate < DateTime.Now);
+            Assert.True(expirationDate < DateTime.Now);
         }
 
         #endregion

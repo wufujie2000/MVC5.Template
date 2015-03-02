@@ -5,6 +5,7 @@ using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -23,9 +24,9 @@ namespace MvcTemplate.Services
             this.hasher = hasher;
         }
 
-        public Boolean IsLoggedIn()
+        public Boolean IsLoggedIn(IPrincipal user)
         {
-            return HttpContext.Current.User.Identity.IsAuthenticated;
+            return user.Identity.IsAuthenticated;
         }
         public Boolean AccountExists(String accountId)
         {
@@ -44,7 +45,7 @@ namespace MvcTemplate.Services
             return UnitOfWork.GetAs<Account, TView>(id);
         }
 
-        public void Recover(AccountRecoveryView view)
+        public void Recover(AccountRecoveryView view, HttpRequestBase request)
         {
             Account account = UnitOfWork.Select<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
             if (account == null) return;
@@ -55,7 +56,6 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
 
-            HttpRequest request = HttpContext.Current.Request;
             UrlHelper urlHelper = new UrlHelper(request.RequestContext);
             String url = urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }, request.Url.Scheme);
             String recoveryEmailBody = String.Format(Messages.RecoveryEmailBody, url);

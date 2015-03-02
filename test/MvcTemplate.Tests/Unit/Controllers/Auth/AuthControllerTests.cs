@@ -25,16 +25,17 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         public AuthControllerTests()
         {
-            validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
+            validator = Substitute.For<IAccountValidator>();
+            controller = Substitute.ForPartsOf<AuthController>(validator, service);
 
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = new AccountView();
 
-            controller = Substitute.ForPartsOf<AuthController>(validator, service);
             controller.ControllerContext = new ControllerContext();
+            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
         }
 
         #region Method: Register()
@@ -42,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_RedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -55,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_IfNotLoggedInReturnsEmptyView()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
 
             Object model = (controller.Register() as ViewResult).Model;
 
@@ -75,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -88,8 +89,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_ReturnsSameModelIfCanNotRegister()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRegister(account).Returns(false);
-            service.IsLoggedIn().Returns(false);
 
             Object actual = (controller.Register(account) as ViewResult).Model;
             Object expected = account;
@@ -100,8 +101,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_RegistersAccount()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRegister(account).Returns(true);
-            service.IsLoggedIn().Returns(false);
 
             controller.Register(account);
 
@@ -111,8 +112,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_AddsSuccessfulRegistrationMessage()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRegister(account).Returns(true);
-            service.IsLoggedIn().Returns(false);
 
             controller.Register(account);
 
@@ -126,8 +127,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_RedirectsToLoginAfterSuccessfulRegistration()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRegister(account).Returns(true);
-            service.IsLoggedIn().Returns(false);
 
             RouteValueDictionary actual = (controller.Register(account) as RedirectToRouteResult).RouteValues;
 
@@ -144,7 +145,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_RedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -157,7 +158,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_IfNotLoggedInReturnsEmptyView()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
 
             Object model = (controller.Recover() as ViewResult).Model;
 
@@ -171,7 +172,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -184,8 +185,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_ReturnsSameModelIfCanNotRecover()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(false);
-            service.IsLoggedIn().Returns(false);
 
             Object actual = (controller.Recover(accountRecovery) as ViewResult).Model;
             Object expected = accountRecovery;
@@ -200,14 +201,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controller.Recover(accountRecovery);
 
-            service.Received().Recover(accountRecovery);
+            service.Received().Recover(accountRecovery, controller.Request);
         }
 
         [Fact]
         public void Recover_AddsRecoveryInformationMessage()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
-            service.IsLoggedIn().Returns(false);
 
             controller.Recover(accountRecovery);
 
@@ -221,8 +222,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_RedirectsToLoginAfterSuccessfulRecovery()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
-            service.IsLoggedIn().Returns(false);
 
             RouteValueDictionary actual = (controller.Recover(accountRecovery) as RedirectToRouteResult).RouteValues;
 
@@ -239,7 +240,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_RedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -252,7 +253,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_RedirectsToRecoverIfCanNotReset()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(false);
 
             Object actual = (controller.Reset("Token") as RedirectToRouteResult).RouteValues["action"];
@@ -264,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_IfCanResetReturnsEmptyView()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(true);
 
             Object model = (controller.Reset("") as ViewResult).Model;
@@ -279,7 +280,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -292,7 +293,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_OnPostRedirectsToRecoverIfCanNotReset()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(false);
 
             Object actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues["action"];
@@ -304,7 +305,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_ResetsAccount()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
 
             controller.Reset(accountReset);
@@ -315,7 +316,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_AddsSuccessfulResetMessage()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
 
             controller.Reset(accountReset);
@@ -330,7 +331,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Reset_AfterSuccesfulResetRedirectsToLogin()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
 
             RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
@@ -348,7 +349,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Login_RedirectsToUrlIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
             controller.RedirectToLocal("/").Returns(new RedirectResult("/"));
 
@@ -361,7 +362,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Login_IfNotLoggedInReturnsEmptyView()
         {
-            service.IsLoggedIn().Returns(false);
+            service.IsLoggedIn(controller.User).Returns(false);
 
             Object model = (controller.Login("/") as ViewResult).Model;
 
@@ -375,7 +376,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Login_OnPostRedirectsToUrlIfAlreadyLoggedIn()
         {
-            service.IsLoggedIn().Returns(true);
+            service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
             controller.RedirectToLocal("/").Returns(new RedirectResult("/"));
 

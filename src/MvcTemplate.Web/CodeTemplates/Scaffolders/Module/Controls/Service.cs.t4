@@ -14,16 +14,16 @@ namespace MvcTemplate.Services
         {
         }
 
+        public TView Get<TView>(String id) where TView : BaseView
+        {
+            return UnitOfWork.GetAs<<#= Model.Model #>, TView>(id);
+        }
         public IQueryable<<#= Model.View #>> GetViews()
         {
             return UnitOfWork
                 .Select<<#= Model.Model #>>()
                 .To<<#= Model.View #>>()
                 .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate);
-        }
-        public TView Get<TView>(String id) where TView : BaseView
-        {
-            return UnitOfWork.GetAs<<#= Model.Model #>, TView>(id);
         }
 
         public void Create(<#= Model.View #> view)

@@ -8,11 +8,11 @@ namespace MvcTemplate.Services
 {
     public interface IAccountService : IService
     {
-        Boolean IsLoggedIn(IPrincipal user);
-        Boolean AccountExists(String accountId);
-
-        IQueryable<AccountView> GetViews();
         TView Get<TView>(String id) where TView : BaseView;
+        IQueryable<AccountView> GetViews();
+
+        Boolean AccountExists(String accountId);
+        Boolean IsLoggedIn(IPrincipal user);
 
         void Recover(AccountRecoveryView view, HttpRequestBase request);
         void Reset(AccountResetView view);

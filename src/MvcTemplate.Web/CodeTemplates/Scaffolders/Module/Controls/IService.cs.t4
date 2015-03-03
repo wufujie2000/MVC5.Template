@@ -8,8 +8,8 @@ namespace MvcTemplate.Services
 {
     public interface <#= Model.IService #> : IService
     {
-        IQueryable<<#= Model.View #>> GetViews();
         TView Get<TView>(String id) where TView : BaseView;
+        IQueryable<<#= Model.View #>> GetViews();
 
         void Create(<#= Model.View #> view);
         void Edit(<#= Model.View #> view);

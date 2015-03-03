@@ -24,15 +24,10 @@ namespace MvcTemplate.Services
             this.hasher = hasher;
         }
 
-        public Boolean IsLoggedIn(IPrincipal user)
+        public TView Get<TView>(String id) where TView : BaseView
         {
-            return user.Identity.IsAuthenticated;
+            return UnitOfWork.GetAs<Account, TView>(id);
         }
-        public Boolean AccountExists(String accountId)
-        {
-            return UnitOfWork.Select<Account>().Any(account => account.Id == accountId);
-        }
-
         public IQueryable<AccountView> GetViews()
         {
             return UnitOfWork
@@ -40,9 +35,14 @@ namespace MvcTemplate.Services
                 .To<AccountView>()
                 .OrderByDescending(account => account.CreationDate);
         }
-        public TView Get<TView>(String id) where TView : BaseView
+
+        public Boolean AccountExists(String accountId)
         {
-            return UnitOfWork.GetAs<Account, TView>(id);
+            return UnitOfWork.Select<Account>().Any(account => account.Id == accountId);
+        }
+        public Boolean IsLoggedIn(IPrincipal user)
+        {
+            return user.Identity.IsAuthenticated;
         }
 
         public void Recover(AccountRecoveryView view, HttpRequestBase request)

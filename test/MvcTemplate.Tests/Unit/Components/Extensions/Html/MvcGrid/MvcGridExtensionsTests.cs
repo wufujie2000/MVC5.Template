@@ -525,11 +525,20 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void ApplyDefaults_EnablesPaging()
+        public void ApplyDefaults_SetsRowsPerPage()
         {
+            IGridPager<AllTypesView> pager = Substitute.For<IGridPager<AllTypesView>>();
+
+            htmlGrid
+                .When(sub => sub.Pageable(Arg.Any<Action<IGridPager<AllTypesView>>>()))
+                .Do(info => info.Arg<Action<IGridPager<AllTypesView>>>()(pager));
+
             htmlGrid.ApplyDefaults();
 
-            htmlGrid.Received().Pageable();
+            Int32 expected = pager.RowsPerPage;
+            Int32 actual = 16;
+
+            Assert.Equal(expected, actual);
         }
 
         #endregion
@@ -539,12 +548,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private IHtmlGrid<TModel> SubstituteHtmlGrid<TModel>()
         {
             IHtmlGrid<TModel> grid = Substitute.For<IHtmlGrid<TModel>>();
+            grid.Pageable(Arg.Any<Action<IGridPager<TModel>>>()).Returns(grid);
             grid.Empty(Arg.Any<String>()).Returns(grid);
             grid.Named(Arg.Any<String>()).Returns(grid);
             grid.Css(Arg.Any<String>()).Returns(grid);
             grid.Filterable().Returns(grid);
             grid.Sortable().Returns(grid);
-            grid.Pageable().Returns(grid);
 
             return grid;
         }

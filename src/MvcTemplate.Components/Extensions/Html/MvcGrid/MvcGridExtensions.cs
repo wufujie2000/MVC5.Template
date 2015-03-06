@@ -73,12 +73,12 @@ namespace MvcTemplate.Components.Extensions.Html
         public static IHtmlGrid<T> ApplyDefaults<T>(this IHtmlGrid<T> grid)
         {
             return grid
+                .Pageable(pager => { pager.RowsPerPage = 16; })
                 .Empty(Resources.Table.Resources.NoDataFound)
                 .Named(typeof(T).Name.Replace("View", ""))
                 .Css("table-hover")
                 .Filterable()
-                .Sortable()
-                .Pageable();
+                .Sortable();
         }
 
         private static String GetCssClassFor<TProperty>()

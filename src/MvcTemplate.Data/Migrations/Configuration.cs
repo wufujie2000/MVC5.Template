@@ -84,12 +84,6 @@ namespace MvcTemplate.Data.Migrations
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
                     RoleId = context.Set<Role>().Single(role => role.Name == "Sys_Admin").Id
-                },
-                new Account
-                {
-                    Username = "test",
-                    Passhash = "$2a$13$VLUUfSyotu8Ec.D4mZRCE.YuQ5i7CbTi84LGQp1aFb7xvVksPVLdm", // test
-                    Email = "test@tests.com"
                 }
             };
 

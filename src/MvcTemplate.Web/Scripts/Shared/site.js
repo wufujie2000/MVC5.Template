@@ -107,7 +107,10 @@
 
 // Mvc.Grid binding
 (function () {
-    $('.mvc-grid').mvcgrid();
+    var mvcGrids = $('.mvc-grid');
+    for (var i = 0; i < mvcGrids.length; i++) {
+        $(mvcGrids[i]).mvcgrid();
+    }
 }());
 
 // NiceScroll binding

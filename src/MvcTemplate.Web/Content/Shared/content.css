@@ -1,6 +1,7 @@
 ﻿body.public .content-container {
   text-align: center;
   margin: 50px auto;
+  min-height: 0;
   width: 330px;
 }
 body.public .text {
@@ -28,7 +29,7 @@ body.public .public-action {
   border-radius: 8px 0 0 8px;
   margin-left: 200px;
   margin-top: -40px;
-  min-height: 880px;
+  min-height: 870px;
   padding-top: 10px;
 }
 .content-breadcrumb {

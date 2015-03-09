@@ -37,13 +37,11 @@
 }
 /* JQuery-UI Datepicker */
 .ui-datepicker {
-  border-radius: 5px;
-  font-size: 1em;
   padding: 0;
 }
 .ui-datepicker .ui-datepicker-header {
   background: linear-gradient(#6f93a7, #2a4e62);
-  border-radius: 4px 4px 0 0;
+  border-radius: 3px 3px 0 0;
   color: #ffffff;
   border: none;
 }
@@ -63,19 +61,17 @@
 .ui-datepicker table {
   margin: 0;
 }
+.ui-datepicker table th {
+  font-size: 10px;
+}
 .ui-datepicker table tr:first-child td {
   padding-top: 3px;
 }
 .ui-datepicker table tr:last-child td {
   padding-bottom: 3px;
 }
-.ui-datepicker table th {
-  font-size: 10px;
-  border: none;
-}
 .ui-datepicker table td {
   padding-right: 3px;
-  border: none;
 }
 .ui-datepicker table td:first-child {
   padding-left: 3px;
@@ -123,7 +119,6 @@
   width: 100%;
 }
 .mvc-grid-pager {
-  border-top: 1px solid #dddddd;
   text-align: center;
 }
 .mvc-grid-pager ul {
@@ -133,7 +128,4 @@
 .js-tree-view {
   padding-top: 5px;
   display: none;
-}
-.jstree-themeicon {
-  display: none !important;
 }

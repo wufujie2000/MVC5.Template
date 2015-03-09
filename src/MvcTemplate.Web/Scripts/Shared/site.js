@@ -69,6 +69,11 @@
     var jsTrees = $('.js-tree-view');
     for (var i = 0; i < jsTrees.length; i++) {
         var jsTree = $(jsTrees[i]).jstree({
+            'core': {
+                'themes': {
+                    'icons': false
+                }
+            },
             'plugins': [
                 'checkbox'
             ],

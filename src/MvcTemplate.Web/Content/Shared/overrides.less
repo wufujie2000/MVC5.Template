@@ -48,13 +48,11 @@
 
 /* JQuery-UI Datepicker */
 .ui-datepicker {
-    border-radius: 5px;
-    font-size: 1em;
     padding: 0;
 
     .ui-datepicker-header {
         background: linear-gradient(@active-from-color, @active-to-color);
-        border-radius: 4px 4px 0 0;
+        border-radius: 3px 3px 0 0;
         color: @active-color;
         border: none;
 
@@ -77,6 +75,10 @@
 
     table {
         margin: 0;
+        
+        th {
+            font-size: 10px;
+        }
 
         tr {
             &:first-child td {
@@ -88,14 +90,8 @@
             }
         }
 
-        th {
-            font-size: 10px;
-            border: none;
-        }
-
         td {
             padding-right: 3px;
-            border: none;
 
             &:first-child {
                 padding-left: 3px;
@@ -155,7 +151,6 @@
 }
 
 .mvc-grid-pager {
-    border-top: 1px solid #dddddd;
     text-align: center;
 
     ul {
@@ -167,8 +162,4 @@
 .js-tree-view {
     padding-top: 5px;
     display: none;
-}
-
-.jstree-themeicon {
-    display: none !important;
 }

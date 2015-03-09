@@ -10,7 +10,10 @@ table tr + tr td {
 }
 table th + th,
 table td + td {
-  border-left: 1px solid #cdcdcd;
+  border-left: 1px solid #dddddd;
+}
+table td {
+  border-bottom: 1px solid #dddddd;
 }
 table td.text-cell {
   text-align: left;

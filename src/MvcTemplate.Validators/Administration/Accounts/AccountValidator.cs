@@ -88,7 +88,7 @@ namespace MvcTemplate.Validators
                     account.Email.ToLower() == email.ToLower());
 
             if (!isUnique)
-                ModelState.AddModelError<AccountView>(model => model.Email, Validations.EmailIsAlreadyUsed);
+                ModelState.AddModelError<AccountView>(account => account.Email, Validations.EmailIsAlreadyUsed);
 
             return isUnique;
         }
@@ -117,7 +117,7 @@ namespace MvcTemplate.Validators
 
             Boolean isCorrect = hasher.VerifyPassword(password, passhash);
             if (!isCorrect)
-                ModelState.AddModelError<ProfileEditView>(model => model.Password, Validations.IncorrectPassword);
+                ModelState.AddModelError<ProfileEditView>(account => account.Password, Validations.IncorrectPassword);
 
             return isCorrect;
         }

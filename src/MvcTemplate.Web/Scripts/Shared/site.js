@@ -118,21 +118,6 @@
     }
 }());
 
-// NiceScroll binding
-(function () {
-    $('body').niceScroll({
-        cursoropacitymin: 0.3,
-        cursorborderradius: 0,
-        cursorborder: "none",
-        zindex: 1000
-    });
-
-    $('.mvc-grid').niceScroll({
-        cursorborderradius: 0,
-        cursorborder: "none"
-    });
-}());
-
 // Bootstrap binding
 (function () {
     $('[rel=tooltip]').tooltip();

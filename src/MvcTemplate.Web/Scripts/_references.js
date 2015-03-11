@@ -2,7 +2,6 @@
 /// <reference path="bootstrap/bootstrap.js" />
 /// <reference path="datalist/datalist.js" />
 /// <reference path="jquery/jquery.js" />
-/// <reference path="jquery/jquery.nicescroll.js" />
 /// <reference path="jquery/jquery.validate.js" />
 /// <reference path="jquery/jquery.validate.unobtrusive.js" />
 /// <reference path="jqueryui/jquery-ui.js" />

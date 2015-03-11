@@ -17,8 +17,6 @@
 body {
   font-family: "PT Sans", consolas;
   color: #555555;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 body.private {
   background-image: url("../../Images/Shared/background.jpg");

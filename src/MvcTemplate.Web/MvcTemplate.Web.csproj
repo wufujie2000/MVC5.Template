@@ -243,10 +243,6 @@
     <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.min.js">
       <DependentUpon>jquery-ui.timepicker-addon.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQuery\jquery.nicescroll.js" />
-    <Content Include="Scripts\JQuery\jquery.nicescroll.min.js">
-      <DependentUpon>jquery.nicescroll.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\jquery.validate.js" />
     <Content Include="Scripts\JQuery\jquery.validate.min.js">
       <DependentUpon>jquery.validate.js</DependentUpon>

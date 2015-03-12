@@ -48,8 +48,8 @@ namespace MvcTemplate.Data.Migrations
                         CreationDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.Privileges", t => t.PrivilegeId, cascadeDelete: true)
-                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.Privileges", t => t.PrivilegeId)
+                .ForeignKey("dbo.Roles", t => t.RoleId)
                 .Index(t => t.RoleId)
                 .Index(t => t.PrivilegeId);
             

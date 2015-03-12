@@ -431,6 +431,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
         private void TearDownData()
         {
+            context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>());
             context.Set<Account>().RemoveRange(context.Set<Account>());
             context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();

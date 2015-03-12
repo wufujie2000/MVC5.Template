@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Data.Mapping;
 using MvcTemplate.Objects;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace MvcTemplate.Data.Core
 {
@@ -26,6 +27,11 @@ namespace MvcTemplate.Data.Core
         static Context()
         {
             ObjectMapper.MapObjects();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }
 }

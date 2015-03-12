@@ -337,7 +337,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Fact]
-        public void Delete_CascadesRolePrivileges()
+        public void Delete_DeletesRolePrivileges()
         {
             RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
             Privilege privilege = ObjectFactory.CreatePrivilege();
@@ -448,6 +448,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         private void TearDownData()
         {
+            context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>());
             context.Set<Privilege>().RemoveRange(context.Set<Privilege>());
             context.Set<Account>().RemoveRange(context.Set<Account>());
             context.Set<Role>().RemoveRange(context.Set<Role>());

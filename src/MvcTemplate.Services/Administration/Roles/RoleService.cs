@@ -43,6 +43,20 @@ namespace MvcTemplate.Services
                     rootNode.Nodes.Add(areaNode);
             }
         }
+        private IEnumerable<Privilege> GetAllPrivileges()
+        {
+            return UnitOfWork
+                .Select<Privilege>()
+                .ToList()
+                .Select(privilege => new Privilege
+                {
+                    Id = privilege.Id,
+                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
+                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Area, privilege.Controller),
+                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Area, privilege.Controller, privilege.Action)
+                })
+                .OrderBy(privilege => privilege.Area ?? privilege.Controller);
+        }
 
         public IQueryable<RoleView> GetViews()
         {
@@ -69,13 +83,15 @@ namespace MvcTemplate.Services
         {
             CreateRole(view);
             CreateRolePrivileges(view);
+
             UnitOfWork.Commit();
         }
         public void Edit(RoleView view)
         {
-            EditRole(view);
-            DeleteRolePrivileges(view);
+            DeleteRolePrivileges(view.Id);
             CreateRolePrivileges(view);
+            EditRole(view);
+
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
@@ -83,25 +99,12 @@ namespace MvcTemplate.Services
         public void Delete(String id)
         {
             RemoveRoleFromAccounts(id);
-            UnitOfWork.Delete<Role>(id);
+            DeleteRolePrivileges(id);
+            DeleteRole(id);
+
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
-        }
-
-        private IEnumerable<Privilege> GetAllPrivileges()
-        {
-            return UnitOfWork
-                .Select<Privilege>()
-                .ToList()
-                .Select(privilege => new Privilege
-                {
-                    Id = privilege.Id,
-                    Area = ResourceProvider.GetPrivilegeAreaTitle(privilege.Area),
-                    Controller = ResourceProvider.GetPrivilegeControllerTitle(privilege.Area, privilege.Controller),
-                    Action = ResourceProvider.GetPrivilegeActionTitle(privilege.Area, privilege.Controller, privilege.Action)
-                })
-                .OrderBy(privilege => privilege.Area ?? privilege.Controller);
         }
 
         private void CreateRole(RoleView view)
@@ -114,22 +117,26 @@ namespace MvcTemplate.Services
             Role role = UnitOfWork.To<Role>(view);
             UnitOfWork.Update(role);
         }
+        private void DeleteRole(String id)
+        {
+            UnitOfWork.Delete<Role>(id);
+        }
 
-        private void DeleteRolePrivileges(RoleView view)
+        private void DeleteRolePrivileges(String roleId)
         {
             IQueryable<RolePrivilege> rolePrivileges = UnitOfWork
                 .Select<RolePrivilege>()
-                .Where(rolePrivilege => rolePrivilege.RoleId == view.Id);
+                .Where(rolePrivilege => rolePrivilege.RoleId == roleId);
 
             foreach (RolePrivilege rolePrivilege in rolePrivileges)
                 UnitOfWork.Delete(rolePrivilege);
         }
-        private void CreateRolePrivileges(RoleView view)
+        private void CreateRolePrivileges(RoleView role)
         {
-            foreach (String privilegeId in view.PrivilegesTree.SelectedIds)
+            foreach (String privilegeId in role.PrivilegesTree.SelectedIds)
                 UnitOfWork.Insert(new RolePrivilege
                 {
-                    RoleId = view.Id,
+                    RoleId = role.Id,
                     PrivilegeId = privilegeId
                 });
         }

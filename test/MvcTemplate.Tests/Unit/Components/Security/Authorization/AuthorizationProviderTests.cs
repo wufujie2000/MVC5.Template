@@ -337,6 +337,7 @@ namespace MvcTemplate.Tests.Unit.Security
         {
             using (TestingContext context = new TestingContext())
             {
+                context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>());
                 context.Set<Privilege>().RemoveRange(context.Set<Privilege>());
                 context.Set<Account>().RemoveRange(context.Set<Account>());
                 context.Set<Role>().RemoveRange(context.Set<Role>());

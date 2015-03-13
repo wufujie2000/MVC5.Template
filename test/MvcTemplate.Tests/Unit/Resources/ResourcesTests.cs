@@ -36,11 +36,9 @@ namespace MvcTemplate.Tests.Unit.Resources
                 {
                     ResourceSet set = manager.GetResourceSet(language.Culture, true, true);
                     foreach (String key in resourceKeys)
-                        if (String.IsNullOrEmpty(set.GetString(key)))
-                        {
-                            Assert.Equal(null, String.Format("{0}, does not have translation for '{1}' in {2} language.",
+                        Assert.True(!String.IsNullOrEmpty(set.GetString(key)),
+                            String.Format("{0}, does not have translation for '{1}' in {2} language.",
                                 type.FullName, key, language.Culture.EnglishName));
-                        }
                 }
             }
         }

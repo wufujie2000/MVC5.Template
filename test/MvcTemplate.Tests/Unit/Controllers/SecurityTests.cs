@@ -22,8 +22,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .Where(method => method.GetCustomAttribute<HttpPostAttribute>() != null);
 
             foreach (MethodInfo method in postMethods)
-                if (method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>() == null)
-                    Assert.Equal(null, String.Format("{0}.{1} does not have ValidateAntiForgeryToken attribute specified.",
+                Assert.True(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>() != null,
+                    String.Format("{0}.{1} method does not have ValidateAntiForgeryToken attribute specified.",
                         method.ReflectedType.Name,
                         method.Name));
         }

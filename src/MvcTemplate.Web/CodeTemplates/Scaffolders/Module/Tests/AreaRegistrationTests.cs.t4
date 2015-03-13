@@ -36,6 +36,21 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: RegisterArea(AreaRegistrationContext context)
 
         [Fact]
+        public void RegisterArea_Registers<#= Model.Area #>MultilingualRoute()
+        {
+            Route actual = registrationContext.Routes["<#= Model.Area #>Multilingual"] as Route;
+
+            Assert.Equal(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
+            Assert.Equal("{language}/{area}/{controller}/{action}/{id}", actual.Url);
+            Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
+            Assert.Equal("<#= Model.Area #>", actual.Constraints["area"]);
+            Assert.Equal("<#= Model.Area #>", actual.DataTokens["area"]);
+            Assert.Equal("<#= Model.Area #>", actual.Defaults["area"]);
+            Assert.Equal("lt", actual.Constraints["language"]);
+            Assert.Equal("Index", actual.Defaults["action"]);
+        }
+
+        [Fact]
         public void RegisterArea_Registers<#= Model.Area #>Route()
         {
             Route actual = registrationContext.Routes["<#= Model.Area #>"] as Route;
@@ -49,21 +64,6 @@ namespace <#= Model.ControllerTestNamespace #>
             Assert.Equal("en", actual.Constraints["language"]);
             Assert.Equal("Index", actual.Defaults["action"]);
             Assert.Equal("en", actual.Defaults["language"]);
-        }
-
-        [Fact]
-        public void RegisterArea_Registers<#= Model.Area #>MultilingualRoute()
-        {
-            Route actual = registrationContext.Routes["<#= Model.Area #>Multilingual"] as Route;
-
-            Assert.Equal(new[] { "<#= Model.ControllerNamespace #>" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.Equal("{language}/{area}/{controller}/{action}/{id}", actual.Url);
-            Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.Equal("<#= Model.Area #>", actual.Constraints["area"]);
-            Assert.Equal("<#= Model.Area #>", actual.DataTokens["area"]);
-            Assert.Equal("<#= Model.Area #>", actual.Defaults["area"]);
-            Assert.Equal("lt", actual.Constraints["language"]);
-            Assert.Equal("Index", actual.Defaults["action"]);
         }
 
         #endregion

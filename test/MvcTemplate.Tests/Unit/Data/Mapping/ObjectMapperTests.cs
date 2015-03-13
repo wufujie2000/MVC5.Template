@@ -93,8 +93,8 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Id, actual.Id);
             Assert.NotNull(actual.PrivilegesTree);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         [Fact]

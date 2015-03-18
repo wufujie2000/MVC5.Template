@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Net;
+using System.Net.Configuration;
 using System.Net.Mail;
 using System.Text;
 using System.Web.Configuration;
@@ -14,17 +14,8 @@ namespace MvcTemplate.Components.Mail
 
         public SmtpMailClient()
         {
-            sender = WebConfigurationManager.AppSettings["MailSenderAddress"];
-            String password = WebConfigurationManager.AppSettings["MailSenderPassword"];
-
-            String host = WebConfigurationManager.AppSettings["MailSmtpHost"];
-            Int32 port = Int32.Parse(WebConfigurationManager.AppSettings["MailSmtpPort"]);
-
-            client = new SmtpClient(host, port)
-            {
-                Credentials = new NetworkCredential(sender, password),
-                EnableSsl = true
-            };
+            sender = ((SmtpSection)WebConfigurationManager.GetSection("system.net/mailSettings/smtp")).From;
+            client = new SmtpClient();
         }
 
         public void Send(String to, String subject, String body)

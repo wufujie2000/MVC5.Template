@@ -39,9 +39,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Route actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
 
             Assert.Equal(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.Equal("{language}/{area}/{controller}/{action}/{id}", actual.Url);
+            Assert.Equal("{language}/Administration/{controller}/{action}/{id}", actual.Url);
             Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.Equal("Administration", actual.Constraints["area"]);
             Assert.Equal("Administration", actual.DataTokens["area"]);
             Assert.Equal("Administration", actual.Defaults["area"]);
             Assert.Equal("lt", actual.Constraints["language"]);
@@ -54,9 +53,8 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Route actual = registrationContext.Routes["Administration"] as Route;
 
             Assert.Equal(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.Equal("{area}/{controller}/{action}/{id}", actual.Url);
+            Assert.Equal("Administration/{controller}/{action}/{id}", actual.Url);
             Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
-            Assert.Equal("Administration", actual.Constraints["area"]);
             Assert.Equal("Administration", actual.DataTokens["area"]);
             Assert.Equal("Administration", actual.Defaults["area"]);
             Assert.Equal("en", actual.Constraints["language"]);

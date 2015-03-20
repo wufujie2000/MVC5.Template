@@ -140,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Recover(account, null);
 
-            mailClient.DidNotReceive().Send(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
+            mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
         }
 
         [Fact]
@@ -187,7 +187,7 @@ namespace MvcTemplate.Tests.Unit.Services
             String recoveryUrl = url.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, scheme);
             String expectedEmailBody = String.Format(Messages.RecoveryEmailBody, recoveryUrl);
 
-            mailClient.Received().Send(expectedEmail, expectedEmailSubject, expectedEmailBody);
+            mailClient.Received().SendAsync(expectedEmail, expectedEmailSubject, expectedEmailBody);
         }
 
         #endregion

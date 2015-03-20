@@ -2,6 +2,7 @@
 using System.Net.Configuration;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Configuration;
 
 namespace MvcTemplate.Components.Mail
@@ -18,14 +19,14 @@ namespace MvcTemplate.Components.Mail
             client = new SmtpClient();
         }
 
-        public void Send(String to, String subject, String body)
+        public Task SendAsync(String to, String subject, String body)
         {
             MailMessage email = new MailMessage(sender, to, subject, body);
             email.SubjectEncoding = Encoding.UTF8;
             email.BodyEncoding = Encoding.UTF8;
             email.IsBodyHtml = true;
 
-            client.Send(email);
+            return client.SendMailAsync(email);
         }
 
         public void Dispose()

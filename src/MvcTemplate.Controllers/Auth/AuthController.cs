@@ -4,6 +4,7 @@ using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers
@@ -52,7 +53,7 @@ namespace MvcTemplate.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Recover(AccountRecoveryView account)
+        public async Task<ActionResult> Recover(AccountRecoveryView account)
         {
             if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
@@ -60,7 +61,7 @@ namespace MvcTemplate.Controllers
             if (!Validator.CanRecover(account))
                 return View(account);
 
-            Service.Recover(account, Request);
+            await Service.Recover(account, Request);
             Alerts.Add(AlertType.Info, Messages.RecoveryInformation, 0);
 
             return RedirectToAction("Login");

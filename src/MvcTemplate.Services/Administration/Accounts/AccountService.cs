@@ -6,6 +6,7 @@ using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -45,10 +46,10 @@ namespace MvcTemplate.Services
             return user.Identity.IsAuthenticated;
         }
 
-        public void Recover(AccountRecoveryView view, HttpRequestBase request)
+        public Task Recover(AccountRecoveryView view, HttpRequestBase request)
         {
             Account account = UnitOfWork.Select<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
-            if (account == null) return;
+            if (account == null) return Task.FromResult(0);
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();
@@ -60,7 +61,7 @@ namespace MvcTemplate.Services
             String url = urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }, request.Url.Scheme);
             String recoveryEmailBody = String.Format(Messages.RecoveryEmailBody, url);
 
-            mailClient.Send(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
+            return mailClient.SendAsync(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
         }
         public void Reset(AccountResetView view)
         {

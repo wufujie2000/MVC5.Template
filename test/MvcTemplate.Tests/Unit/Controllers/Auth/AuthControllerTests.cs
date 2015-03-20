@@ -177,7 +177,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectToDefault();
-            ActionResult actual = controller.Recover(null);
+            ActionResult actual = controller.Recover(null).Result;
 
             Assert.Same(expected, actual);
         }
@@ -188,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(false);
 
-            Object actual = (controller.Recover(accountRecovery) as ViewResult).Model;
+            Object actual = (controller.Recover(accountRecovery).Result as ViewResult).Model;
             Object expected = accountRecovery;
 
             Assert.Same(expected, actual);
@@ -199,7 +199,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             validator.CanRecover(accountRecovery).Returns(true);
 
-            controller.Recover(accountRecovery);
+            ActionResult result = controller.Recover(accountRecovery).Result;
 
             service.Received().Recover(accountRecovery, controller.Request);
         }
@@ -210,7 +210,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
 
-            controller.Recover(accountRecovery);
+            ActionResult result = controller.Recover(accountRecovery).Result;
 
             Alert actual = controller.Alerts.Single();
 
@@ -225,7 +225,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
 
-            RouteValueDictionary actual = (controller.Recover(accountRecovery) as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (controller.Recover(accountRecovery).Result as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Login", actual["action"]);
             Assert.Null(actual["controller"]);

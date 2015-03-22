@@ -25,6 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             expected.ValidationType = "range";
 
             Assert.Equal(expected.ValidationParameters["min"], actual.ValidationParameters["min"]);
+            Assert.Equal(expected.ValidationParameters.Count, actual.ValidationParameters.Count);
             Assert.Equal(expected.ValidationType, actual.ValidationType);
             Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
         }

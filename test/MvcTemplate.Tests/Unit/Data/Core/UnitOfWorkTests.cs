@@ -32,6 +32,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         public void Dispose()
         {
             unitOfWork.Dispose();
+            context.Dispose();
         }
 
         #region Method: Select<TModel>()

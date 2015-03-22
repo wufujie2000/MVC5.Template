@@ -21,8 +21,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             new EqualToAdapter(metadata, new ControllerContext(), attribute).GetClientValidationRules();
 
-            String actual = attribute.OtherPropertyDisplayName;
             String expected = ResourceProvider.GetPropertyTitle(typeof(AdaptersModel), "EqualTo");
+            String actual = attribute.OtherPropertyDisplayName;
 
             Assert.Equal(expected, actual);
         }
@@ -41,6 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             expected.ValidationType = "equalto";
 
             Assert.Equal(expected.ValidationParameters["other"], actual.ValidationParameters["other"]);
+            Assert.Equal(expected.ValidationParameters.Count, actual.ValidationParameters.Count);
             Assert.Equal(expected.ValidationType, actual.ValidationType);
             Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
         }

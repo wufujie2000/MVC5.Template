@@ -54,8 +54,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GlobalizationProvider_LoadsAllLanguages()
         {
-            Language enLanguage = provider.Languages.First();
-            Language ltLanguage = provider.Languages.Last();
+            Language ltLanguage = provider.Languages.First();
+            Language enLanguage = provider.Languages.Last();
 
             Assert.Equal(new CultureInfo("en-GB"), enLanguage.Culture);
             Assert.Equal("en", enLanguage.Abbrevation);
@@ -100,7 +100,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         private static void CreateGlobalizationXml(String path)
         {
-            XElement globalization = new XElement("globalization");
             XElement english = new XElement("language");
             english.SetAttributeValue("name", "English");
             english.SetAttributeValue("culture", "en-GB");
@@ -112,8 +111,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             lithuanian.SetAttributeValue("culture", "lt-LT");
             lithuanian.SetAttributeValue("abbrevation", "lt");
 
-            globalization.Add(english);
+            XElement globalization = new XElement("globalization");
             globalization.Add(lithuanian);
+            globalization.Add(english);
 
             globalization.Save(path);
         }

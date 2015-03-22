@@ -21,11 +21,15 @@ namespace MvcTemplate.Data.Migrations
         {
             this.context = context;
 
-            SeedAllPrivileges();
-            SeedAdministratorRole();
+            SeedPrivileges();
+            SeedRoles();
+
             SeedAccounts();
         }
-        private void SeedAllPrivileges()
+
+        #region Administration
+
+        private void SeedPrivileges()
         {
             Privilege[] allPrivileges =
             {
@@ -50,7 +54,7 @@ namespace MvcTemplate.Data.Migrations
 
             context.SaveChanges();
         }
-        private void SeedAdministratorRole()
+        private void SeedRoles()
         {
             if (!context.Set<Role>().Any(role => role.Name == "Sys_Admin"))
             {
@@ -74,6 +78,7 @@ namespace MvcTemplate.Data.Migrations
 
             context.SaveChanges();
         }
+
         private void SeedAccounts()
         {
             Account[] accounts =
@@ -93,6 +98,8 @@ namespace MvcTemplate.Data.Migrations
 
             context.SaveChanges();
         }
+
+        #endregion
 
         public void Dispose()
         {

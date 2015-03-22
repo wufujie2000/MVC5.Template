@@ -374,11 +374,10 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private JsTree CreatePrivilegesTree(Role role)
         {
+            JsTreeNode rootNode = new JsTreeNode(Titles.All);
             JsTree expectedTree = new JsTree();
-            expectedTree.Nodes.Add(new JsTreeNode());
-            JsTreeNode rootNode = expectedTree.Nodes[0];
 
-            rootNode.Name = Titles.All;
+            expectedTree.Nodes.Add(rootNode);
             expectedTree.SelectedIds = role.RolePrivileges.Select(rolePrivilege => rolePrivilege.PrivilegeId).ToList();
 
             IEnumerable<Privilege> allPrivileges = role

@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsLoggedIn_ReturnsUserAuthenticationStatus(Boolean expected)
+        public void IsLoggedIn_ReturnsUserAuthenticationState(Boolean expected)
         {
             IPrincipal user = Substitute.For<IPrincipal>();
             user.Identity.IsAuthenticated.Returns(expected);

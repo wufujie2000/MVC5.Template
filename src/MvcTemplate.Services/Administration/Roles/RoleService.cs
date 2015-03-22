@@ -19,9 +19,8 @@ namespace MvcTemplate.Services
 
         public virtual void SeedPrivilegesTree(RoleView view)
         {
-            JsTreeNode rootNode = new JsTreeNode();
+            JsTreeNode rootNode = new JsTreeNode(Titles.All);
             view.PrivilegesTree.Nodes.Add(rootNode);
-            rootNode.Name = Titles.All;
 
             IEnumerable<Privilege> privileges = GetAllPrivileges();
             foreach (IGrouping<String, Privilege> area in privileges.GroupBy(privilege => privilege.Area))

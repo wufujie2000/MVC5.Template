@@ -46,9 +46,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void BaseDatalist_SetsDatalistUrl()
         {
-            HttpRequest request = HttpContext.Current.Request;
             datalist = new BaseDatalistProxy<Role, RoleView>();
-            UrlHelper url = new UrlHelper(request.RequestContext);
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
             String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
             String actual = datalist.DatalistUrl;

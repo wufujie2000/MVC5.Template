@@ -5,28 +5,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class JsTreeNodeTests
     {
-        #region Constructor: JsTreeNode()
-
-        [Fact]
-        public void JsTreeNode_SetsIdToNull()
-        {
-            Assert.Null(new JsTreeNode().Id);
-        }
-
-        [Fact]
-        public void JsTreeNode_SetsNameToNull()
-        {
-            Assert.Null(new JsTreeNode().Name);
-        }
-
-        [Fact]
-        public void JsTreeNode_CreatesEmptyTree()
-        {
-            Assert.Empty(new JsTreeNode().Nodes);
-        }
-
-        #endregion
-
         #region Constructor: JsTreeNode(String name)
 
         [Fact]

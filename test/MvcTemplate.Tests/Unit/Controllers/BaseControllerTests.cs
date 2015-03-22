@@ -141,9 +141,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             RouteValueDictionary actual = controller.RedirectToNotFound().RouteValues;
 
-            Assert.Equal("", actual["area"]);
-            Assert.Equal("Home", actual["controller"]);
             Assert.Equal("NotFound", actual["action"]);
+            Assert.Equal("Home", actual["controller"]);
+            Assert.Equal("", actual["area"]);
         }
 
         #endregion

@@ -30,8 +30,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_OnNotMemberExpressionThrows()
         {
-            Exception expected = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType()));
-            Assert.Equal(expected.Message, "Expression must be a member expression.");
+            Exception exception = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType()));
+            
+            String expected = "Expression must be a member expression.";
+            String actual = exception.Message;
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

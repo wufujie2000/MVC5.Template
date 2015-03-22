@@ -57,6 +57,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
             roleView.Id += "OtherIdValue";
+
             validator.CanCreate(roleView);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
@@ -99,6 +100,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             RoleView roleView = ObjectFactory.CreateRoleView();
             roleView.Name = role.Name.ToLower();
             roleView.Id += "OtherIdValue";
+
             validator.CanEdit(roleView);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;

@@ -25,10 +25,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void OnException_LogsFormattedException()
         {
-            ExceptionContext exceptionContext = new ExceptionContext();
-            exceptionContext.Exception = exception;
+            ExceptionContext context = new ExceptionContext();
+            context.Exception = exception;
 
-            filter.OnException(exceptionContext);
+            filter.OnException(context);
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
                 exception.GetType(),
                 exception.Message,
@@ -41,15 +41,15 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void OnException_LogsOnlyInnerMostException()
         {
-            ExceptionContext exceptionContext = new ExceptionContext();
-            exceptionContext.Exception = new Exception("Outer exception", exception);
+            ExceptionContext context = new ExceptionContext();
+            context.Exception = new Exception("O", exception);
 
-            filter.OnException(exceptionContext);
+            filter.OnException(context);
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
-                exceptionContext.Exception.InnerException.GetType(),
-                exceptionContext.Exception.InnerException.Message,
+                context.Exception.InnerException.GetType(),
+                context.Exception.InnerException.Message,
                 Environment.NewLine,
-                exceptionContext.Exception.InnerException.StackTrace);
+                context.Exception.InnerException.StackTrace);
 
             logger.Received().Log(expectedMessage);
         }

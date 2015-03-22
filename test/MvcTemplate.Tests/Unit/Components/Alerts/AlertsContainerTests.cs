@@ -14,10 +14,10 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
             container = new AlertsContainer();
         }
 
-        #region Constanct: DefaultFadeout
+        #region Constant: DefaultFadeout
 
         [Fact]
-        public void DefaultFadeout_IsContant()
+        public void DefaultFadeout_IsConstant()
         {
             Assert.True(typeof(AlertsContainer).GetField("DefaultFadeout").IsLiteral);
             Assert.Equal(4000, AlertsContainer.DefaultFadeout);
@@ -66,8 +66,8 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
 
             Alert actual = container.Single();
 
-            Assert.Equal(AlertType.Danger, actual.Type);
             Assert.Equal("ErrorMessage", actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
             Assert.Equal(0, actual.FadeoutAfter);
         }
 
@@ -82,8 +82,8 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
 
             Alert actual = container.Single();
 
-            Assert.Equal(AlertType.Danger, actual.Type);
             Assert.Equal("ErrorMessage", actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
             Assert.Equal(1, actual.FadeoutAfter);
         }
 

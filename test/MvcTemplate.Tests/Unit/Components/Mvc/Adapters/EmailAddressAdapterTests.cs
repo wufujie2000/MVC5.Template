@@ -48,6 +48,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 ValidationType = "email"
             };
 
+            Assert.Equal(expected.ValidationParameters, actual.ValidationParameters);
             Assert.Equal(expected.ValidationType, actual.ValidationType);
             Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
         }

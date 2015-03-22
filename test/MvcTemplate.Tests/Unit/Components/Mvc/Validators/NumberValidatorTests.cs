@@ -41,9 +41,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 ErrorMessage = String.Format(Validations.FieldMustBeNumeric, metadata.GetDisplayName())
             };
 
+            Assert.Equal(expected.ValidationParameters, actual.ValidationParameters);
             Assert.Equal(expected.ValidationType, actual.ValidationType);
             Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
-            Assert.Empty(actual.ValidationParameters);
         }
 
         #endregion

@@ -20,9 +20,5 @@ namespace MvcTemplate.Components.Extensions.Html
             : this(null, name)
         {
         }
-        public JsTreeNode()
-            : this(null, null)
-        {
-        }
     }
 }

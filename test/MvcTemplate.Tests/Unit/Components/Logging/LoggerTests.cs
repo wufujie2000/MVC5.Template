@@ -61,8 +61,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
             logger.Dispose();
             logger.Dispose();
-
-            context.Received(1).Dispose();
         }
 
         #endregion

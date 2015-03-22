@@ -48,8 +48,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             Assert.Equal(1, actual.Length);
 
-            Assert.Equal(null, actual[0].Action);
-            Assert.Equal(null, actual[0].Controller);
+            Assert.Null(actual[0].Action);
+            Assert.Null(actual[0].Controller);
             Assert.Equal("Administration", actual[0].Area);
             Assert.Equal("fa fa-gears", actual[0].IconClass);
 
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Assert.Equal("Administration", actual[0].Area);
             Assert.Equal("fa fa-user", actual[0].IconClass);
 
-            Assert.Equal(null, actual[1].Action);
+            Assert.Null(actual[1].Action);
             Assert.Equal("Roles", actual[1].Controller);
             Assert.Equal("Administration", actual[1].Area);
             Assert.Equal("fa fa-users", actual[1].IconClass);
@@ -90,8 +90,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             Assert.Equal(1, actual.Length);
 
-            Assert.Equal(null, actual[0].Action);
-            Assert.Equal(null, actual[0].Controller);
+            Assert.Null(actual[0].Action);
+            Assert.Null(actual[0].Controller);
             Assert.Equal("Administration", actual[0].Area);
             Assert.Equal("fa fa-gears", actual[0].IconClass);
 
@@ -199,8 +199,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             Assert.Equal(1, actual.Length);
 
-            Assert.Equal(null, actual[0].Action);
-            Assert.Equal(null, actual[0].Controller);
+            Assert.Null(actual[0].Action);
+            Assert.Null(actual[0].Controller);
             Assert.Equal("Administration", actual[0].Area);
             Assert.Equal("fa fa-gears", actual[0].IconClass);
 
@@ -234,17 +234,17 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Assert.Equal("fa fa-home", actual[0].IconClass);
             Assert.Equal("Home", actual[0].Controller);
             Assert.Equal("Index", actual[0].Action);
-            Assert.Equal(null, actual[0].Area);
+            Assert.Null(actual[0].Area);
 
             Assert.Equal("fa fa-user", actual[1].IconClass);
             Assert.Equal("Profile", actual[1].Controller);
-            Assert.Equal(null, actual[1].Action);
-            Assert.Equal(null, actual[1].Area);
+            Assert.Null(actual[1].Action);
+            Assert.Null(actual[1].Area);
 
             Assert.Equal("fa fa-pencil", actual[2].IconClass);
             Assert.Equal("Profile", actual[2].Controller);
             Assert.Equal("Edit", actual[2].Action);
-            Assert.Equal(null, actual[2].Area);
+            Assert.Null(actual[2].Area);
         }
 
         [Fact]

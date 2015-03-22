@@ -12,21 +12,21 @@ namespace MvcTemplate.Data.Core
     {
         private IQueryable<TModel> set;
 
-        Type IQueryable.ElementType
+        public Type ElementType
         {
             get
             {
                 return set.ElementType;
             }
         }
-        Expression IQueryable.Expression
+        public Expression Expression
         {
             get
             {
                 return set.Expression;
             }
         }
-        IQueryProvider IQueryable.Provider
+        public IQueryProvider Provider
         {
             get
             {

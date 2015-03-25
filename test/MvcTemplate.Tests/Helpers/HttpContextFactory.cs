@@ -58,9 +58,9 @@ namespace MvcTemplate.Tests
             RouteValueDictionary dataTokens = RouteTable.Routes
                 .MapRoute(
                     "AdministrationMultilingual",
-                    "{language}/{area}/{controller}/{action}/{id}",
+                    "{language}/Administration/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt", area = "Administration" },
+                    new { language = "lt" },
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 
@@ -70,9 +70,9 @@ namespace MvcTemplate.Tests
             dataTokens = RouteTable.Routes
                 .MapRoute(
                     "Administration",
-                    "{area}/{controller}/{action}/{id}",
+                    "Administration/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en", area = "Administration" },
+                    new { language = "en" },
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 

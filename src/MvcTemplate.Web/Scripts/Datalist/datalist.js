@@ -1,8 +1,8 @@
 ﻿/*!
- * Datalist 3.2.0
+ * Datalist 3.3.0
  * https://github.com/NonFactors/MVC.Datalist
  *
- * Copyright © 2014 NonFactors
+ * Copyright © NonFactors
  *
  * Licensed under the terms of the MIT License
  * http://www.opensource.org/licenses/mit-license.php
@@ -280,9 +280,9 @@
 
             for (var i = 0; i < columns.length; i++) {
                 var column = columns[i];
-                header += '<th class="' + (column.CssClass != null ? column.CssClass : '') + '" data-column="' + column.Key + '">' + (column.Header != null ? column.Header : '');
+                header += '<th class="' + (column.CssClass != null ? column.CssClass : '') + '" data-column="' + column.Key + '"><span class="datalist-header-title">' + (column.Header != null ? column.Header : '') + '</span>';
                 if (that.options.sortColumn == column.Key || (that.options.sortColumn == '' && i == 0)) {
-                    header += '<span class="datalist-sort-arrow glyphicon glyphicon-sort-by-attributes' + (that.options.sortOrder == 'Asc' ? '' : '-alt') + '"></span></th>';
+                    header += '<span class="datalist-sort-arrow ' + (that.options.sortOrder == 'Asc' ? 'asc' : 'desc') + '"></span></th>';
                     that.options.sortColumn = column.Key;
                 } else {
                     header += '<span class="datalist-sort-arrow"></span></th>';
@@ -310,6 +310,7 @@
             if (data.Rows.length == 0) {
                 var columns = (data.Columns) ? data.Columns.length + 1 : 1;
                 datalist.find('.datalist-table-body').html('<tr><td colspan="' + columns + '" style="text-align: center">' + $.fn.datalist.lang.NoDataFound + '</td></tr>');
+
                 return;
             }
 
@@ -323,14 +324,14 @@
                     tableRow += '<td class="' + (column.CssClass != null ? column.CssClass : '') + '">' + (row[column.Key] != null ? row[column.Key] : '') + '</td>';
                 }
 
-                tableRow += '<td class="datalist-select-cell"><div class="datalist-select-container"><i class="glyphicon glyphicon-ok"></i></div></td></tr>';
+                tableRow += '<td class="datalist-select-cell"><div class="datalist-select-container"><i></i></div></td></tr>';
                 tableData += tableRow;
             }
 
             datalist.find('.datalist-table-body').html(tableData);
-            var selectCells = datalist.find('td.datalist-select-cell');
-            for (var k = 0; k < selectCells.length; k++) {
-                this._bindSelect(datalist, selectCells[k], data.Rows[k]);
+            var selectRows = datalist.find('.datalist-table-body tr');
+            for (var k = 0; k < selectRows.length; k++) {
+                this._bindSelect(datalist, selectRows[k], data.Rows[k]);
             }
         },
         _updateNavbar: function (datalist, filteredRecords) {
@@ -354,7 +355,7 @@
             var that = this;
 
             if (totalPages > 5 && currentPage > 0) {
-                pagination = '<li><a data-page="0">&laquo;</a></li><li><a data-page="' + (currentPage - 1) + '">&lsaquo;</a></li>';
+                pagination = '<li><a href="#" data-page="0">&laquo;</a></li><li><a data-page="' + (currentPage - 1) + '">&lsaquo;</a></li>';
             }
 
             while (page < totalPages && page < startingPage + 5) {
@@ -363,21 +364,22 @@
                     liClass = ' class="active"';
                 }
 
-                pagination += '<li' + liClass + '><a data-page="' + page + '">' + (++page) + '</a></li>';
+                pagination += '<li' + liClass + '><a href="#" data-page="' + page + '">' + (++page) + '</a></li>';
             }
 
             if (totalPages > 5 && currentPage < (totalPages - 1)) {
-                pagination += '<li><a data-page="' + (currentPage + 1) + '">&rsaquo;</a></li><li><a data-page="' + (totalPages - 1) + '">&raquo;</a></li>';
+                pagination += '<li><a href="#" data-page="' + (currentPage + 1) + '">&rsaquo;</a></li><li><a href="#" data-page="' + (totalPages - 1) + '">&raquo;</a></li>';
             }
 
-            datalist.find('.datalist-pager > .pagination').html(pagination).find('li:not(.active) > a').click(function () {
+            datalist.find('.datalist-pager > .pagination').html(pagination).find('li:not(.active) > a').click(function (e) {
                 that.options.page = parseInt($(this).data('page'));
                 that._update(datalist);
+                e.preventDefault();
             });
         },
-        _bindSelect: function (datalist, selectCell, data) {
+        _bindSelect: function (datalist, selectRow, data) {
             var that = this;
-            that._on(selectCell, {
+            that._on(selectRow, {
                 click: function () {
                     datalist.dialog('close');
                     that._select(data);

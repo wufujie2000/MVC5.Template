@@ -92,15 +92,12 @@
   color: #ffffff;
   cursor: pointer;
 }
-.ui-datepicker .ui-timepicker-div {
-  text-align: center;
-  padding: 0 10px;
-}
-.ui-datepicker .ui-timepicker-div dl {
+.ui-datepicker .ui-timepicker-div > dl {
   margin: 0;
 }
 .ui-datepicker .ui-timepicker-div .ui_tpicker_time {
-  margin-bottom: 5px;
+  text-align: center;
+  margin: 0 0 5px;
 }
 .ui-datepicker .ui-timepicker-div .ui_tpicker_time_label,
 .ui-datepicker .ui-timepicker-div .ui_tpicker_hour_label,
@@ -115,7 +112,11 @@
 .ui-datepicker .ui-timepicker-div .ui_tpicker_second,
 .ui-datepicker .ui-timepicker-div .ui_tpicker_millisec,
 .ui-datepicker .ui-timepicker-div .ui_tpicker_timezone {
-  margin-bottom: 10px;
+  margin: 0 15px 10px;
+}
+/* Datalist */
+.datalist-table-body tr:hover .datalist-select-container i::after {
+  color: #9AEA9A;
 }
 /* Mvc.Grid */
 .mvc-grid {

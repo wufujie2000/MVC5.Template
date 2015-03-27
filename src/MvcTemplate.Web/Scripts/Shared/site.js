@@ -80,14 +80,15 @@
             'checkbox': {
                 'keep_selected_style': false
             }
-        }).jstree();
+        });
 
-        var selectedNodes = jsTree.element.prev('.js-tree-view-ids').children();
-        for (var j = 0; j < selectedNodes.length; j++) {
-            jsTree.select_node(selectedNodes[j].value, false, true);
-        }
-
-        jsTree.element.show();
+        var selectedNodes = jsTree.prev('.js-tree-view-ids').children();
+        jsTree.on('ready.jstree', function (e, data) {
+            for (var j = 0; j < selectedNodes.length; j++) {
+                data.instance.select_node(selectedNodes[j].value, false, true);
+                data.instance.element.show();
+            }
+        });
     }
 
     if (jsTrees.length > 0) {

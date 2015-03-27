@@ -16,12 +16,12 @@ namespace MvcTemplate.Components.Extensions.Html
 
         private static MvcHtmlString JsTreeFor(String name, JsTree jsTree)
         {
-            return new MvcHtmlString(FormIdSpan(name, jsTree.SelectedIds) + FormTree(name, jsTree.Nodes));
+            return new MvcHtmlString(FormIdsDiv(name, jsTree.SelectedIds) + FormTree(name, jsTree.Nodes));
         }
-        private static String FormIdSpan(String name, IEnumerable<String> selectedIds)
+        private static String FormIdsDiv(String name, IEnumerable<String> selectedIds)
         {
-            TagBuilder idSpan = new TagBuilder("span");
-            idSpan.AddCssClass("js-tree-view-ids");
+            TagBuilder idsDiv = new TagBuilder("div");
+            idsDiv.AddCssClass("js-tree-view-ids");
 
             StringBuilder hiddenInputs = new StringBuilder();
             TagBuilder input = new TagBuilder("input");
@@ -34,9 +34,9 @@ namespace MvcTemplate.Components.Extensions.Html
                 hiddenInputs.Append(input.ToString(TagRenderMode.SelfClosing));
             }
 
-            idSpan.InnerHtml = hiddenInputs.ToString();
+            idsDiv.InnerHtml = hiddenInputs.ToString();
 
-            return idSpan.ToString();
+            return idsDiv.ToString();
         }
         private static String FormTree(String name, IList<JsTreeNode> nodes)
         {

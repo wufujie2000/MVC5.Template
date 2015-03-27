@@ -28,9 +28,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             String actual = html.JsTreeFor(model => model.JsTree).ToString();
             String expected =
-                "<span class=\"js-tree-view-ids\">" +
+                "<div class=\"js-tree-view-ids\">" +
                     "<input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"1\" />" +
-                "</span>" +
+                "</div>" +
                 "<div class=\"js-tree-view\" for=\"JsTree.SelectedIds\">" +
                     "<ul>" +
                         "<li>Test" +

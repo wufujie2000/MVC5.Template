@@ -138,6 +138,9 @@
   <data name="FieldMustBeInRangeOfLength" xml:space="preserve">
     <value>Laukas '{0}' turi būti sudarytas bent iš {2} , bet neviršyti {1} simbolių.</value>
   </data>
+  <data name="FieldMustBeInteger" xml:space="preserve">
+    <value>Laukas '{0}' turi būti sveikas skaičius.</value>
+  </data>
   <data name="FieldMustBeLessOrEqualTo" xml:space="preserve">
     <value>Laukas '{0}' turi būti mažesnis arba lygus {1}.</value>
   </data>

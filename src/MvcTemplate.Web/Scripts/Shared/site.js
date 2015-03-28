@@ -26,7 +26,7 @@
     });
 }());
 
-// Globalization binding
+// Globalized validation binding
 (function () {
     $.validator.methods.date = function (value, element) {
         return this.optional(element) || Globalize.parseDate(value);
@@ -49,6 +49,11 @@
     $.validator.methods.range = function (value, element, param) {
         return this.optional(element) || (Globalize.parseFloat(value) >= parseFloat(param[0]) && Globalize.parseFloat(value) <= parseFloat(param[1]));
     };
+
+    $.validator.addMethod('integer', function (value, element) {
+        return this.optional(element) || /^[+-]?\d+$/.test(value);
+    });
+    $.validator.unobtrusive.adapters.addBool("integer");
 }());
 
 // Datepicker binding

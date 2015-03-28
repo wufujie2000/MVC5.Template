@@ -138,6 +138,9 @@
   <data name="FieldMustBeInRangeOfLength" xml:space="preserve">
     <value>'{0}' field must contain between {2} and {1} symbols.</value>
   </data>
+  <data name="FieldMustBeInteger" xml:space="preserve">
+    <value>'{0}' field must be an integer.</value>
+  </data>
   <data name="FieldMustBeLessOrEqualTo" xml:space="preserve">
     <value>'{0}' field must be less or equal to {1}.</value>
   </data>

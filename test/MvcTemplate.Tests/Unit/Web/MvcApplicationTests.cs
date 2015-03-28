@@ -326,6 +326,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [Theory]
         [InlineData("Range", typeof(RangeAdapter))]
         [InlineData("EqualTo", typeof(EqualToAdapter))]
+        [InlineData("Integer", typeof(IntegerAdapter))]
         [InlineData("Required", typeof(RequiredAdapter))]
         [InlineData("MinValue", typeof(MinValueAdapter))]
         [InlineData("MaxValue", typeof(MaxValueAdapter))]

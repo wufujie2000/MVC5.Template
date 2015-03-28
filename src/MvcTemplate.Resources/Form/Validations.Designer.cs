@@ -124,6 +124,15 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be an integer..
+        /// </summary>
+        public static string FieldMustBeInteger {
+            get {
+                return ResourceManager.GetString("FieldMustBeInteger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must be less or equal to {1}..
         /// </summary>
         public static string FieldMustBeLessOrEqualTo {

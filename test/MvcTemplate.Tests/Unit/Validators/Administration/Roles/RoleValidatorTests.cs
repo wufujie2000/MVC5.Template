@@ -129,14 +129,14 @@ namespace MvcTemplate.Tests.Unit.Validators
 
             role.RolePrivileges = new List<RolePrivilege>();
 
-            Int32 privNumber = 1;
+            Int32 privilegeNumber = 1;
             IEnumerable<String> controllers = new[] { "Accounts", "Roles" };
             IEnumerable<String> actions = new[] { "Index", "Create", "Details", "Edit", "Delete" };
 
             foreach (String controller in controllers)
                 foreach (String action in actions)
                 {
-                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privilegeNumber++);
                     rolePrivilege.Privilege = new Privilege { Area = "Administration", Controller = controller, Action = action };
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;
                     rolePrivilege.PrivilegeId = rolePrivilege.Id;

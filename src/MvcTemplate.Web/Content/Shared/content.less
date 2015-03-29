@@ -41,6 +41,16 @@ body.public {
     margin-top: -40px;
     min-height: 870px;
     padding-top: 10px;
+
+    &::after,
+    &::before {
+        display: table;
+        content: "";
+    }
+
+    &::after {
+        clear: both;
+    }
 }
 
 .content-breadcrumb {

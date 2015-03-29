@@ -22,8 +22,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         public ProfileControllerTests()
         {
-            profileEdit = ObjectFactory.CreateProfileEditView("Edition");
-            profileDelete = ObjectFactory.CreateProfileDeleteView("Edition");
+            profileEdit = ObjectFactory.CreateProfileEditView(1);
+            profileDelete = ObjectFactory.CreateProfileDeleteView(2);
 
             service = Substitute.For<IAccountService>();
             validator = Substitute.For<IAccountValidator>();

@@ -32,6 +32,14 @@ body.public .public-action {
   min-height: 870px;
   padding-top: 10px;
 }
+.content-container::after,
+.content-container::before {
+  display: table;
+  content: "";
+}
+.content-container::after {
+  clear: both;
+}
 .content-breadcrumb {
   padding-left: 10px;
   cursor: default;

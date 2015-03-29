@@ -8,11 +8,11 @@ namespace MvcTemplate.Tests
     {
         #region Administration
 
-        public static Account CreateAccount(String id = "1")
+        public static Account CreateAccount(Int32 id = 1)
         {
             return new Account
             {
-                Id = id,
+                Id = "Id" + id,
                 Username = "Username" + id,
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
                 Email = id + "@tests.com",
@@ -21,106 +21,106 @@ namespace MvcTemplate.Tests
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5)
             };
         }
-        public static AccountView CreateAccountView(String id = "1")
+        public static AccountView CreateAccountView(Int32 id = 1)
         {
             return new AccountView
             {
-                Id = id,
+                Id = "Id" + id,
                 Username = "Username" + id,
                 Email = id + "@tests.com",
                 Password = "Password1"
             };
         }
 
-        public static ProfileEditView CreateProfileEditView(String id = "1")
+        public static ProfileEditView CreateProfileEditView(Int32 id = 1)
         {
             return new ProfileEditView
             {
-                Id = id,
+                Id = "Id" + id,
                 Username = "Username" + id,
                 Email = id + "@tests.com",
                 NewPassword = "NewPassword1",
                 Password = "Password1"
             };
         }
-        public static ProfileDeleteView CreateProfileDeleteView(String id = "1")
+        public static ProfileDeleteView CreateProfileDeleteView(Int32 id = 1)
         {
             return new ProfileDeleteView
             {
-                Id = id,
+                Id = "Id" + id,
                 Password = "Password1"
             };
         }
 
-        public static AccountRecoveryView CreateAccountRecoveryView(String id = "1")
+        public static AccountRecoveryView CreateAccountRecoveryView(Int32 id = 1)
         {
             return new AccountRecoveryView
             {
-                Id = id,
+                Id = "Id" + id,
                 Email = id + "@tests.com"
             };
         }
-        public static AccountResetView CreateAccountResetView(String id = "1")
+        public static AccountResetView CreateAccountResetView(Int32 id = 1)
         {
             return new AccountResetView
             {
-                Id = id,
+                Id = "Id" + id,
 
                 Token = "Token" + id,
                 NewPassword = "NewPassword1"
             };
         }
-        public static AccountLoginView CreateAccountLoginView(String id = "1")
+        public static AccountLoginView CreateAccountLoginView(Int32 id = 1)
         {
             return new AccountLoginView
             {
-                Id = id,
+                Id = "Id" + id,
                 Username = "Username" + id,
                 Password = "Password1"
             };
         }
-        public static AccountEditView CreateAccountEditView(String id = "1")
+        public static AccountEditView CreateAccountEditView(Int32 id = 1)
         {
             return new AccountEditView
             {
-                Id = id,
+                Id = "Id" + id,
                 Username = "Username" + id,
                 RoleName = "Name" + id
             };
         }
 
-        public static Role CreateRole(String id = "1")
+        public static Role CreateRole(Int32 id = 1)
         {
             return new Role
             {
-                Id = id,
+                Id = "Id" + id,
                 Name = "Name" + id
             };
         }
-        public static RoleView CreateRoleView(String id = "1")
+        public static RoleView CreateRoleView(Int32 id = 1)
         {
             return new RoleView
             {
-                Id = id,
+                Id = "Id" + id,
                 Name = "Name" + id
             };
         }
 
-        public static Privilege CreatePrivilege(String id = "1")
+        public static Privilege CreatePrivilege(Int32 id = 1)
         {
             return new Privilege
             {
-                Id = id,
+                Id = "Id" + id,
                 Area = "Area" + id,
                 Action = "Action" + id,
                 Controller = "Controller" + id
             };
         }
-        public static RolePrivilege CreateRolePrivilege(String id = "1")
+        public static RolePrivilege CreateRolePrivilege(Int32 id = 1)
         {
             return new RolePrivilege
             {
-                Id = id
+                Id = "Id" + id
             };
         }
 
@@ -128,19 +128,19 @@ namespace MvcTemplate.Tests
 
         #region Tests
 
-        public static TestModel CreateTestModel(String id = "1")
+        public static TestModel CreateTestModel(Int32 id = 1)
         {
             return new TestModel
             {
-                Id = id,
+                Id = "Id" + id,
                 Text = "Text" + id
             };
         }
-        public static TestView CreateTestView(String id = "1")
+        public static TestView CreateTestView(Int32 id = 1)
         {
             return new TestView
             {
-                Id = id,
+                Id = "Id" + id,
                 Text = "Text" + id
             };
         }

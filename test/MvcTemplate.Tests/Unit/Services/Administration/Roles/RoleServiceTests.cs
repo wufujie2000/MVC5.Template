@@ -141,8 +141,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void GetViews_GetsRoleViews()
         {
-            context.Set<Role>().Add(ObjectFactory.CreateRole("1"));
-            context.Set<Role>().Add(ObjectFactory.CreateRole("2"));
+            context.Set<Role>().Add(ObjectFactory.CreateRole(1));
+            context.Set<Role>().Add(ObjectFactory.CreateRole(2));
             context.SaveChanges();
 
             IEnumerator<RoleView> actual = service.GetViews().GetEnumerator();
@@ -417,14 +417,14 @@ namespace MvcTemplate.Tests.Unit.Services
             String[] actions = { "Edit", "Delete" };
             String[] controllers = { "Roles", "Profile" };
 
-            Int32 privNumber = 1;
+            Int32 privilegeNumber = 1;
             Role role = ObjectFactory.CreateRole();
             role.RolePrivileges = new List<RolePrivilege>();
 
             foreach (String controller in controllers)
                 foreach (String action in actions)
                 {
-                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege((privNumber++).ToString());
+                    RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privilegeNumber++);
                     rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
                     rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
                     rolePrivilege.Privilege.Id = rolePrivilege.Id;

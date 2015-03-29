@@ -3,9 +3,9 @@ using System.Resources;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
+[assembly: AssemblyCompany("NonFactors")]
 [assembly: AssemblyTitle("MvcTemplate")]
 [assembly: AssemblyProduct("MvcTemplate")]
-[assembly: AssemblyCompany("NonFactors")]
 [assembly: AssemblyCopyright("Copyright © NonFactors")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: AssemblyFileVersion("1.2.0.0")]

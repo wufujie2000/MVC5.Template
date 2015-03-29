@@ -226,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Register_CreatesAccount()
         {
-            AccountView account = ObjectFactory.CreateAccountView("2");
+            AccountView account = ObjectFactory.CreateAccountView(2);
             service.Register(account);
 
             Account actual = context.Set<Account>().AsNoTracking().Single(model => model.Id == account.Id);
@@ -246,7 +246,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Register_LowersEmailValue()
         {
-            AccountView view = ObjectFactory.CreateAccountView("2");
+            AccountView view = ObjectFactory.CreateAccountView(2);
             String expected = view.Email.ToLower();
             view.Email = view.Email.ToUpper();
 
@@ -268,8 +268,8 @@ namespace MvcTemplate.Tests.Unit.Services
             ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
             account.Passhash = hasher.HashPassword(profile.NewPassword);
-            account.Email = profile.Email = "test@tests.com";
-            account.Username = profile.Username += "1";
+            profile.Email = account.Email = "test@tests.com";
+            profile.Username = account.Username += "1";
 
             service.Edit(profile);
 
@@ -327,7 +327,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             AccountEditView accountEdit = ObjectFactory.CreateAccountEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
-            account.RoleId = accountEdit.RoleId = null;
+            accountEdit.RoleId = account.RoleId = null;
             accountEdit.Username += "Edition";
 
             service.Edit(accountEdit);

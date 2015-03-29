@@ -62,8 +62,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void GetView_GetsViewById()
         {
-            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
             <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
+            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Id, actual.Id);

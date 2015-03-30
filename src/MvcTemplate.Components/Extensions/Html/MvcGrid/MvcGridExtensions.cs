@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.Table;
 using NonFactors.Mvc.Grid;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -54,6 +55,30 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return columns.AddProperty(property).Formatted("{0:d}");
         }
+        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> property)
+        {
+            Func<T, Boolean> valueFor = property.Compile();
+
+            return columns
+                .AddProperty(property)
+                .RenderedAs(model =>
+                    valueFor(model) ?
+                        TableResources.Yes :
+                        TableResources.No);
+        }
+        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> property)
+        {
+            Func<T, Boolean?> valueFor = property.Compile();
+
+            return columns
+                .AddProperty(property)
+                .RenderedAs(model =>
+                    valueFor(model) != null ?
+                        valueFor(model) == true ?
+                            TableResources.Yes :
+                            TableResources.No
+                        : "");
+        }
         public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
         {
             return columns.AddProperty(property).Formatted("{0:g}");
@@ -74,37 +99,11 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return grid
                 .Pageable(pager => { pager.RowsPerPage = 16; })
-                .Empty(Resources.Table.Resources.NoDataFound)
                 .Named(typeof(T).Name.Replace("View", ""))
+                .Empty(TableResources.NoDataFound)
                 .Css("table-hover")
                 .Filterable()
                 .Sortable();
-        }
-
-        private static String GetCssClassFor<TProperty>()
-        {
-            Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
-            if (type.IsEnum) return "text-cell";
-
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.SByte:
-                case TypeCode.Byte:
-                case TypeCode.Int16:
-                case TypeCode.UInt16:
-                case TypeCode.Int32:
-                case TypeCode.UInt32:
-                case TypeCode.Int64:
-                case TypeCode.UInt64:
-                case TypeCode.Single:
-                case TypeCode.Double:
-                case TypeCode.Decimal:
-                    return "number-cell";
-                case TypeCode.DateTime:
-                    return "date-cell";
-                default:
-                    return "text-cell";
-            }
         }
 
         private static String GetLink<T>(T model, String action, String iconClass)
@@ -135,6 +134,31 @@ namespace MvcTemplate.Components.Extensions.Html
             routeValues.Add(key, keyProperty.GetValue(model));
 
             return routeValues;
+        }
+        private static String GetCssClassFor<TProperty>()
+        {
+            Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
+            if (type.IsEnum) return "text-cell";
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return "number-cell";
+                case TypeCode.DateTime:
+                    return "date-cell";
+                default:
+                    return "text-cell";
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ namespace MvcTemplate.Tests.Objects
         public Single SingleField { get; set; }
         public Double DoubleField { get; set; }
         public Decimal DecimalField { get; set; }
+        public Boolean BooleanField { get; set; }
         public DateTime DateTimeField { get; set; }
 
         public TestEnum? NullableEnumField { get; set; }
@@ -32,6 +33,7 @@ namespace MvcTemplate.Tests.Objects
         public Single? NullableSingleField { get; set; }
         public Double? NullableDoubleField { get; set; }
         public Decimal? NullableDecimalField { get; set; }
+        public Boolean? NullableBooleanField { get; set; }
         public DateTime? NullableDateTimeField { get; set; }
 
         public String StringField { get; set; }

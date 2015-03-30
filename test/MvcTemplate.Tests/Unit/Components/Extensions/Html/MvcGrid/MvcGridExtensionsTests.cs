@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources;
+using MvcTemplate.Resources.Table;
 using MvcTemplate.Tests.Objects;
 using NonFactors.Mvc.Grid;
 using NSubstitute;
@@ -212,6 +213,165 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             columns.AddDateProperty(model => model.NullableDateTimeField);
 
             column.Received().Formatted("{0:d}");
+        }
+
+        #endregion
+
+        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> property)
+
+        [Fact]
+        public void AddBooleanProperty_AddsGridColumn()
+        {
+            Expression<Func<AllTypesView, Boolean>> expression = (model) => model.BooleanField;
+
+            columns.AddBooleanProperty(expression);
+
+            columns.Received().Add(expression);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_SetsGridColumnTitle()
+        {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean>(model => model.BooleanField);
+
+            columns.AddBooleanProperty(model => model.BooleanField);
+
+            column.Received().Titled(title);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_SetsGridColumnCss()
+        {
+            columns.AddBooleanProperty(model => model.BooleanField);
+
+            column.Received().Css("text-cell");
+        }
+
+        [Fact]
+        public void AddBooleanProperty_RendersBooleanTrueValue()
+        {
+            AllTypesView view = new AllTypesView { BooleanField = true };
+            Func<AllTypesView, Object> valueFor = null;
+
+            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
+            {
+                valueFor = info.Arg<Func<AllTypesView, Object>>();
+            });
+
+            columns.AddBooleanProperty(model => model.BooleanField);
+
+            String actual = valueFor(view).ToString();
+            String expected = TableResources.Yes;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_RendersBooleanFalseValue()
+        {
+            AllTypesView view = new AllTypesView { BooleanField = false };
+            Func<AllTypesView, Object> valueFor = null;
+
+            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
+            {
+                valueFor = info.Arg<Func<AllTypesView, Object>>();
+            });
+
+            columns.AddBooleanProperty(model => model.BooleanField);
+
+            String actual = valueFor(view).ToString();
+            String expected = TableResources.No;
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> property)
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_AddsGridColumn()
+        {
+            Expression<Func<AllTypesView, Boolean?>> expression = (model) => model.NullableBooleanField;
+
+            columns.AddBooleanProperty(expression);
+
+            columns.Received().Add(expression);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_SetsGridColumnTitle()
+        {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean?>(model => model.NullableBooleanField);
+
+            columns.AddBooleanProperty(model => model.NullableBooleanField);
+
+            column.Received().Titled(title);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_SetsGridColumnCss()
+        {
+            columns.AddBooleanProperty(model => model.NullableBooleanField);
+
+            column.Received().Css("text-cell");
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_RendersBooleanTrueValue()
+        {
+            AllTypesView view = new AllTypesView { NullableBooleanField = true };
+            Func<AllTypesView, Object> valueFor = null;
+
+            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
+            {
+                valueFor = info.Arg<Func<AllTypesView, Object>>();
+            });
+
+            columns.AddBooleanProperty(model => model.NullableBooleanField);
+
+            String actual = valueFor(view).ToString();
+            String expected = TableResources.Yes;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_RendersBooleanFalseValue()
+        {
+            AllTypesView view = new AllTypesView { NullableBooleanField = false };
+            Func<AllTypesView, Object> valueFor = null;
+
+            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
+            {
+                valueFor = info.Arg<Func<AllTypesView, Object>>();
+            });
+
+            columns.AddBooleanProperty(model => model.NullableBooleanField);
+
+            String actual = valueFor(view).ToString();
+            String expected = TableResources.No;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_RendersBooleanNullValue()
+        {
+            AllTypesView view = new AllTypesView { NullableBooleanField = null };
+            Func<AllTypesView, Object> valueFor = null;
+
+            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
+            {
+                valueFor = info.Arg<Func<AllTypesView, Object>>();
+            });
+
+            columns.AddBooleanProperty(model => model.NullableBooleanField);
+
+            String actual = valueFor(view).ToString();
+            String expected = "";
+
+            Assert.Equal(expected, actual);
         }
 
         #endregion
@@ -485,11 +645,20 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: ApplyDefaults<T>(this IHtmlGrid<T> grid)
 
         [Fact]
-        public void ApplyDefaults_SetsEmptyText()
+        public void ApplyDefaults_SetsRowsPerPage()
         {
+            IGridPager<AllTypesView> pager = Substitute.For<IGridPager<AllTypesView>>();
+
+            htmlGrid
+                .When(sub => sub.Pageable(Arg.Any<Action<IGridPager<AllTypesView>>>()))
+                .Do(info => info.Arg<Action<IGridPager<AllTypesView>>>()(pager));
+
             htmlGrid.ApplyDefaults();
 
-            htmlGrid.Received().Empty(MvcTemplate.Resources.Table.Resources.NoDataFound);
+            Int32 expected = pager.RowsPerPage;
+            Int32 actual = 16;
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -498,6 +667,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.ApplyDefaults();
 
             htmlGrid.Received().Named("AllTypes");
+        }
+
+        [Fact]
+        public void ApplyDefaults_SetsEmptyText()
+        {
+            htmlGrid.ApplyDefaults();
+
+            htmlGrid.Received().Empty(TableResources.NoDataFound);
         }
 
         [Fact]
@@ -524,23 +701,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             htmlGrid.Received().Sortable();
         }
 
-        [Fact]
-        public void ApplyDefaults_SetsRowsPerPage()
-        {
-            IGridPager<AllTypesView> pager = Substitute.For<IGridPager<AllTypesView>>();
-
-            htmlGrid
-                .When(sub => sub.Pageable(Arg.Any<Action<IGridPager<AllTypesView>>>()))
-                .Do(info => info.Arg<Action<IGridPager<AllTypesView>>>()(pager));
-
-            htmlGrid.ApplyDefaults();
-
-            Int32 expected = pager.RowsPerPage;
-            Int32 actual = 16;
-
-            Assert.Equal(expected, actual);
-        }
-
         #endregion
 
         #region Test helpers
@@ -560,6 +720,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private IGridColumn<TModel> SubstituteColumn<TModel>()
         {
             IGridColumn<TModel> column = Substitute.For<IGridColumn<TModel>>();
+            column.RenderedAs(Arg.Any<Func<TModel, Object>>()).Returns(column);
             column.Formatted(Arg.Any<String>()).Returns(column);
             column.Encoded(Arg.Any<Boolean>()).Returns(column);
             column.Titled(Arg.Any<String>()).Returns(column);
@@ -571,6 +732,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             IGridColumns<TModel> columns = Substitute.For<IGridColumns<TModel>>();
             columns.Add(Arg.Any<Expression<Func<TModel, String>>>()).Returns(column);
+            columns.Add(Arg.Any<Expression<Func<TModel, Boolean>>>()).Returns(column);
+            columns.Add(Arg.Any<Expression<Func<TModel, Boolean?>>>()).Returns(column);
             columns.Add(Arg.Any<Expression<Func<TModel, DateTime>>>()).Returns(column);
             columns.Add(Arg.Any<Expression<Func<TModel, DateTime?>>>()).Returns(column);
             columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(column);

@@ -18,6 +18,8 @@
                 columns.AddActionLink("Delete", "fa fa-times");
 
                 columns.AddProperty(model => model.Name);
+                columns.AddBooleanProperty(model => model.MyProperty);
+                columns.AddBooleanProperty(model => !model.MyProperty);
             })
             .ApplyDefaults()
         )

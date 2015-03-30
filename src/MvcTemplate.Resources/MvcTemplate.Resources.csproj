@@ -135,15 +135,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Table\Resources.Designer.cs">
+    <Compile Include="Table\TableResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>TableResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Table\Resources.lt.Designer.cs">
+    <Compile Include="Table\TableResources.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.lt.resx</DependentUpon>
+      <DependentUpon>TableResources.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\AccountEditView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
@@ -359,13 +359,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Table\Resources.lt.resx">
+    <EmbeddedResource Include="Table\TableResources.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>TableResources.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Table\Resources.resx">
+    <EmbeddedResource Include="Table\TableResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>TableResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AccountEditView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

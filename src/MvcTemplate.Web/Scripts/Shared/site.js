@@ -91,8 +91,9 @@
         jsTree.on('ready.jstree', function (e, data) {
             for (var j = 0; j < selectedNodes.length; j++) {
                 data.instance.select_node(selectedNodes[j].value, false, true);
-                data.instance.element.show();
             }
+
+            data.instance.element.show();
         });
     }
 

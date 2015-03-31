@@ -78,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_Creates<#= Model.Model #>()
         {
-            <#= Model.View #> expected = new <#= Model.View #>();
+            <#= Model.View #> expected = ObjectFactory.Create<#= Model.View #>(2);
             service.Create(expected);
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single(model => model.Id == expected.Id);
@@ -129,7 +129,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private void SetUpData()
         {
-            <#= Model.ModelName #> = new <#= Model.Model #>();
+            <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
 
             context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
             context.SaveChanges();

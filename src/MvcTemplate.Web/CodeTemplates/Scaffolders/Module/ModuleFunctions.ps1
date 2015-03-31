@@ -77,6 +77,25 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         -Project $Project
 }
 
+Function Scaffold-ObjectCreation([String]$Project, [String]$Factory)
+{
+    if (!$Delete)
+    {
+        $FactoryClass = Get-ProjectType -Project $Project -Type $Factory
+
+        Add-ClassMemberViaTemplate `
+            -SuccessMessage "Added tests object creation functions to $Factory." `
+            -Template "Members\ObjectCreation" `
+            -TemplateFolders $TemplateFolders `
+            -CodeClass $FactoryClass `
+            -Model @{ `
+                View = $Model + "View"; `
+                Area = $ElementArea; `
+                Model = $Model; `
+            }
+    }
+}
+
 Function Scaffold-DbSet([String]$Project, [String]$Context)
 {
     if (!$Delete)
@@ -87,8 +106,8 @@ Function Scaffold-DbSet([String]$Project, [String]$Context)
         Add-ClassMemberViaTemplate `
             -SuccessMessage "Added DbSet<$Model> member to $Context." `
             -TemplateFolders $TemplateFolders `
-            -CodeClass $ContextClass `
             -Template "Members\DbSet" `
+            -CodeClass $ContextClass `
             -Model @{ `
                 Area = $ElementArea; `
                 Models = $Models; `

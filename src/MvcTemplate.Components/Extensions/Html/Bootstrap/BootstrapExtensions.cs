@@ -28,6 +28,7 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(label.ToString());
         }
+
         public static MvcHtmlString FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             return html.FormTextBoxFor(expression, null, null);
@@ -46,6 +47,19 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return html.TextBoxFor(expression, format, attributes);
         }
+
+        public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
+        {
+            return html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" });
+        }
+
+        public static MvcHtmlString FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        {
+            RouteValueDictionary attributes = FormHtmlAttributes(expression, new { rows = 6 }, "form-control");
+
+            return html.TextAreaFor(expression, attributes);
+        }
+
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             return html.FormTextBoxFor(expression, "{0:d}", new { @class = "datepicker" });
@@ -53,10 +67,6 @@ namespace MvcTemplate.Components.Extensions.Html
         public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             return html.FormTextBoxFor(expression, "{0:g}", new { @class = "datetimepicker" });
-        }
-        public static MvcHtmlString FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
-        {
-            return html.PasswordFor(expression, new { @class = "form-control", autocomplete = "off" });
         }
 
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)

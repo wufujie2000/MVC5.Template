@@ -59,7 +59,9 @@
 .widget-content .form-group:last-child {
   border-bottom: 0;
 }
+.widget-content .form-group textarea,
 .widget-content .form-group .input-group {
+  max-width: 100%;
   width: 100%;
 }
 .widget-content .control-label {

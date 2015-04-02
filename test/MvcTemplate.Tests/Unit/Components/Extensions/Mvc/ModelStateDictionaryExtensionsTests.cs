@@ -1,7 +1,7 @@
 ﻿using MvcTemplate.Components.Extensions.Mvc;
+using MvcTemplate.Tests.Objects;
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Web.Mvc;
 using Xunit;
 
@@ -9,12 +9,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
 {
     public class ModelStateDictionaryExtensionsTests
     {
-        Expression<Func<ModelStateView, Object>> expression;
         private ModelStateDictionary modelState;
 
         public ModelStateDictionaryExtensionsTests()
         {
-            expression = (model) => model.Relation.Id;
             modelState = new ModelStateDictionary();
         }
 
@@ -23,10 +21,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Fact]
         public void AddModelError_AddsModelExceptionKey()
         {
-            modelState.AddModelError(expression, new Exception());
+            modelState.AddModelError<AllTypesView>(model => model.Child.StringField, new Exception());
 
-            String expected = ExpressionHelper.GetExpressionText(expression);
             String actual = modelState.Single().Key;
+            String expected = "Child.StringField";
 
             Assert.Equal(expected, actual);
         }
@@ -35,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         public void AddModelError_AddsModelException()
         {
             Exception exception = new Exception();
-            modelState.AddModelError(expression, exception);
+            modelState.AddModelError<AllTypesView>(model => model.Child.StringField, exception);
 
             Exception actual = modelState.Single().Value.Errors.Single().Exception;
             Exception expected = exception;
@@ -50,9 +48,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Fact]
         public void AddModelError_AddsModelErrorKey()
         {
-            modelState.AddModelError(expression, "Test error");
+            modelState.AddModelError<AllTypesView>(model => model.Child.NullableByteField, "Test error");
 
-            String expected = ExpressionHelper.GetExpressionText(expression);
+            String expected = "Child.NullableByteField";
             String actual = modelState.Single().Key;
 
             Assert.Equal(expected, actual);
@@ -61,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Fact]
         public void AddModelError_AddsModelErrorMessage()
         {
-            modelState.AddModelError(expression, "Test error");
+            modelState.AddModelError<AllTypesView>(model => model.Child.NullableByteField, "Test error");
 
             String actual = modelState.Single().Value.Errors.Single().ErrorMessage;
             String expected = "Test error";
@@ -76,10 +74,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Fact]
         public void AddModelError_Format_AddsModelErrorKey()
         {
-            modelState.AddModelError(expression, "Test {0}", "error");
+            modelState.AddModelError<AllTypesView>(model => model.Int32Field, "Test {0}", "error");
 
-            String expected = ExpressionHelper.GetExpressionText(expression);
             String actual = modelState.Single().Key;
+            String expected = "Int32Field";
 
             Assert.Equal(expected, actual);
         }
@@ -87,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         [Fact]
         public void AddModelError_Format_AddsFormattedModelErrorMessage()
         {
-            modelState.AddModelError(expression, "Test {0}", "error");
+            modelState.AddModelError<AllTypesView>(model => model.Int32Field, "Test {0}", "error");
 
             String actual = modelState.Single().Value.Errors.Single().ErrorMessage;
             String expected = "Test error";

@@ -60,12 +60,20 @@
 (function () {
     var datePickers = $(".datepicker");
     for (var i = 0; i < datePickers.length; i++) {
-        $(datePickers[i]).datepicker();
+        $(datePickers[i]).datepicker({
+            beforeShow: function (e) {
+                return !$(e).attr('readonly');
+            }
+        });
     }
 
     var datetimePickers = $(".datetimepicker");
     for (i = 0; i < datetimePickers.length; i++) {
-        $(datetimePickers[i]).datetimepicker();
+        $(datetimePickers[i]).datetimepicker({
+            beforeShow: function (e) {
+                return !$(e).attr('readonly');
+            }
+        });
     }
 }());
 

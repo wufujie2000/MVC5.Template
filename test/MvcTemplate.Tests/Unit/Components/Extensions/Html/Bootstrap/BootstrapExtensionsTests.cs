@@ -574,6 +574,26 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
+        #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+
+        [Fact]
+        public void FormDatePickerFor_FormsDatePickerWtihAttributes()
+        {
+            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+
+            String actual = html.FormDatePickerFor(expression, new { @readonly = "readonly" }).ToString();
+            String expected = String.Format(
+                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                model.Relation.Date.Value.ToString("yyyy.MM.dd"));
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
         #region Extension method: FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
@@ -585,6 +605,26 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.FormDateTimePickerFor(expression).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
+                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
+                ExpressionHelper.GetExpressionText(expression),
+                model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region Extension method: FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+
+        [Fact]
+        public void FormDatePickerFor_FormsDateTimePickerWithAttributes()
+        {
+            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+
+            String actual = html.FormDateTimePickerFor(expression, new { @readonly = "readonly" }).ToString();
+            String expected = String.Format(
+                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
                 TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
                 ExpressionHelper.GetExpressionText(expression),
                 model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));

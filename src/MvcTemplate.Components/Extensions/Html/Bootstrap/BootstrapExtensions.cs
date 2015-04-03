@@ -62,11 +62,24 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return html.FormTextBoxFor(expression, "{0:d}", new { @class = "datepicker" });
+            return html.FormDatePickerFor(expression, null);
         }
+        public static MvcHtmlString FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+        {
+            RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control datepicker");
+
+            return html.TextBoxFor(expression, "{0:d}", attributes);
+        }
+
         public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            return html.FormTextBoxFor(expression, "{0:g}", new { @class = "datetimepicker" });
+            return html.FormDateTimePickerFor(expression, null);
+        }
+        public static MvcHtmlString FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+        {
+            RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control datetimepicker");
+
+            return html.TextBoxFor(expression, "{0:g}", attributes);
         }
 
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)

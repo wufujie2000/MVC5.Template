@@ -71,8 +71,14 @@ body.public .public-action {
 .control-label {
   padding: 8px 15px 0;
 }
+.control-label label {
+  margin-bottom: 6px;
+}
 .control-label .required {
   color: #d11919;
+}
+.control-content input[type="checkbox"] {
+  margin: 12px 0 9px 1px;
 }
 .input-validation-error {
   border-color: #d11919;

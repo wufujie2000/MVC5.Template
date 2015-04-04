@@ -131,6 +131,6 @@
 }
 /* JsTree */
 .js-tree-view {
-  padding-top: 5px;
+  padding: 7px 0 3px;
   display: none;
 }

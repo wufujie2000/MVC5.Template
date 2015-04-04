@@ -104,7 +104,6 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -132,7 +131,6 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
-            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -197,7 +195,6 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
-            service.Get<<#= Model.View #>>("").Returns((<#= Model.View #>)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 

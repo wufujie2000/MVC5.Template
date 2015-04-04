@@ -61,7 +61,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Account expected = model;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Role.Name, actual.RoleName);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Id, actual.Id);

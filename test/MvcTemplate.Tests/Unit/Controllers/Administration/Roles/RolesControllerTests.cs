@@ -123,7 +123,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -151,7 +150,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -226,7 +224,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Delete_OnModelNotFoundRedirectsToNotFound()
         {
-            service.GetView("").Returns((RoleView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 

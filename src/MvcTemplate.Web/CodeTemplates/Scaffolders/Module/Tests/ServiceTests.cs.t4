@@ -78,10 +78,12 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_Creates<#= Model.Model #>()
         {
-            <#= Model.View #> expected = ObjectFactory.Create<#= Model.View #>(2);
-            service.Create(expected);
+            <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(2);
 
-            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single(model => model.Id == expected.Id);
+            service.Create(view);
+
+            <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single(model => model.Id == view.Id);
+            <#= Model.View #> expected = view;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Id, actual.Id);

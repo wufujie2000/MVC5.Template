@@ -97,7 +97,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             JsonResult expected = controller.GetData(null, filter, null);
             JsonResult actual = controller.Role(filter);
 
-            Assert.Equal(expected, actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion

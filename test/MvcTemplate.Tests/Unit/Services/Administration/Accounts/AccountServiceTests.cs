@@ -265,11 +265,11 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_EditsProfile()
         {
-            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
             account.Passhash = hasher.HashPassword(profile.NewPassword);
-            profile.Email = account.Email = "test@tests.com";
-            profile.Username = account.Username += "1";
+            profile.Email = account.Email = "test@test.com";
+            profile.Username = account.Username = "Test";
 
             service.Edit(profile);
 

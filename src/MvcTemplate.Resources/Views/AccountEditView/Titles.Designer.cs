@@ -61,15 +61,6 @@ namespace MvcTemplate.Resources.Views.AccountEditView {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-mail.
-        /// </summary>
-        public static string Email {
-            get {
-                return ResourceManager.GetString("Email", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {

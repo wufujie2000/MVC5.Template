@@ -51,7 +51,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Details_OnModelNotFoundRedirectsToNotFound()
         {
-            service.Get<AccountView>("").Returns((AccountView)null);
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -80,7 +79,6 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Edit_OnModelNotFoundRedirectsToNotFound()
         {
             controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            service.Get<AccountView>("").Returns((AccountView)null);
             controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             Object expected = controller.RedirectToNotFound();

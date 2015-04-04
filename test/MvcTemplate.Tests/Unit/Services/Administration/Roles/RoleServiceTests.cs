@@ -217,12 +217,12 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_CreatesRole()
         {
-            RoleView roleView = ObjectFactory.CreateRoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
 
-            service.Create(roleView);
+            service.Create(view);
 
             Role actual = context.Set<Role>().AsNoTracking().SingleOrDefault();
-            RoleView expected = roleView;
+            RoleView expected = view;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Name, actual.Name);

@@ -37,8 +37,8 @@ namespace MvcTemplate.Tests
             return new ProfileEditView
             {
                 Id = "Id" + id,
-                Username = "Username" + id,
                 Email = id + "@tests.com",
+                Username = "Username" + id,
                 NewPassword = "NewPassword1",
                 Password = "Password1"
             };
@@ -84,8 +84,7 @@ namespace MvcTemplate.Tests
             return new AccountEditView
             {
                 Id = "Id" + id,
-                Username = "Username" + id,
-                RoleName = "Name" + id
+                Username = "Username" + id
             };
         }
 

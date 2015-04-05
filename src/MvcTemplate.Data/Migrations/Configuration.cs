@@ -31,7 +31,7 @@ namespace MvcTemplate.Data.Migrations
 
         private void SeedPrivileges()
         {
-            Privilege[] allPrivileges =
+            Privilege[] privileges =
             {
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Index" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Details" },
@@ -44,16 +44,32 @@ namespace MvcTemplate.Data.Migrations
                 new Privilege { Area = "Administration", Controller = "Roles", Action = "Delete" }
             };
 
-            Privilege[] privileges = context.Set<Privilege>().ToArray();
-            foreach (Privilege privilege in allPrivileges)
-                if (!privileges.Any(priv =>
-                        privilege.Area == priv.Area &&
-                        privilege.Action == priv.Action &&
-                        privilege.Controller == priv.Controller))
-                    context.Set<Privilege>().Add(privilege);
+            DeleteUnused(privileges);
+            CreateMissing(privileges);
+        }
+        private void DeleteUnused(Privilege[] privileges)
+        {
+            foreach (Privilege privilege in context.Set<Privilege>())
+                if (!privileges.Any(priv => privilege.Area == priv.Area && privilege.Action == priv.Action && privilege.Controller == priv.Controller))
+                {
+                    context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>().Where(rolePriv => rolePriv.PrivilegeId == privilege.Id));
+                    context.Set<Privilege>().Remove(privilege);
+                }
 
             context.SaveChanges();
         }
+        private void CreateMissing(Privilege[] privileges)
+        {
+            Privilege[] dbPrivileges = context.Set<Privilege>().ToArray();
+            foreach (Privilege privilege in privileges)
+                if (!dbPrivileges.Any(priv => privilege.Area == priv.Area && privilege.Action == priv.Action && privilege.Controller == priv.Controller))
+                {
+                    context.Set<Privilege>().Add(privilege);
+                }
+
+            context.SaveChanges();
+        }
+
         private void SeedRoles()
         {
             if (!context.Set<Role>().Any(role => role.Name == "Sys_Admin"))

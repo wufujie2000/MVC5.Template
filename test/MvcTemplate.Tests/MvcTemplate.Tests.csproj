@@ -232,7 +232,6 @@
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
     <Compile Include="Unit\Services\BaseServiceTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
-    <Compile Include="Unit\Objects\Models\System\LogTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeNodeTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />

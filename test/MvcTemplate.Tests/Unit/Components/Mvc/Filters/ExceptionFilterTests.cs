@@ -25,8 +25,11 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void OnException_LogsFormattedException()
         {
-            ExceptionContext context = new ExceptionContext();
-            context.Exception = exception;
+            ExceptionContext context = new ExceptionContext
+            {
+                HttpContext = HttpContextFactory.CreateHttpContextBase(),
+                Exception = exception
+            };
 
             filter.OnException(context);
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
@@ -35,14 +38,17 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 Environment.NewLine,
                 exception.StackTrace);
 
-            logger.Received().Log(expectedMessage);
+            logger.Received().Log(context.HttpContext.User.Identity.Name, expectedMessage);
         }
 
         [Fact]
         public void OnException_LogsOnlyInnerMostException()
         {
-            ExceptionContext context = new ExceptionContext();
-            context.Exception = new Exception("O", exception);
+            ExceptionContext context = new ExceptionContext
+            {
+                HttpContext = HttpContextFactory.CreateHttpContextBase(),
+                Exception = new Exception("O", exception)
+            };
 
             filter.OnException(context);
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
@@ -51,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 Environment.NewLine,
                 context.Exception.InnerException.StackTrace);
 
-            logger.Received().Log(expectedMessage);
+            logger.Received().Log(context.HttpContext.User.Identity.Name, expectedMessage);
         }
 
         #endregion

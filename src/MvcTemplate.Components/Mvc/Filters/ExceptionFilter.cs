@@ -25,7 +25,7 @@ namespace MvcTemplate.Components.Mvc
                     Environment.NewLine,
                     exception.StackTrace);
 
-            logger.Log(message);
+            logger.Log(filterContext.HttpContext.User.Identity.Name, message);
         }
     }
 }

@@ -5,24 +5,17 @@ using NSubstitute;
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Logging
 {
-    public class LoggerTests : IDisposable
+    public class LoggerTests
     {
-        public void Dispose()
-        {
-            HttpContext.Current = null;
-        }
-
         #region Method: Log(String message)
 
         [Fact]
-        public void Log_Logs()
+        public void Log_LogsMessage()
         {
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
             using (TestingContext context = new TestingContext())
             {
                 context.Set<Log>().RemoveRange(context.Set<Log>());
@@ -30,7 +23,29 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
                 new Logger(context).Log(new String('L', 10000));
 
-                Log expected = new Log(new String('L', 10000));
+                Log expected = new Log { Message = new String('L', 10000) };
+                Log actual = context.Set<Log>().Single();
+
+                Assert.Equal(expected.AccountId, actual.AccountId);
+                Assert.Equal(expected.Message, actual.Message);
+            }
+        }
+
+        #endregion
+
+        #region Method: Log(String accountId, String message)
+
+        [Fact]
+        public void Log_LogsAccountIdAndMessage()
+        {
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<Log>().RemoveRange(context.Set<Log>());
+                context.SaveChanges();
+
+                new Logger(context).Log("Test", new String('L', 10000));
+
+                Log expected = new Log { AccountId = "Test", Message = new String('L', 10000) };
                 Log actual = context.Set<Log>().Single();
 
                 Assert.Equal(expected.AccountId, actual.AccountId);

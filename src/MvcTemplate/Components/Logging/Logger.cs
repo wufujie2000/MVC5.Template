@@ -16,7 +16,11 @@ namespace MvcTemplate.Components.Logging
 
         public virtual void Log(String message)
         {
-            context.Set<Log>().Add(new Log(message));
+            Log(null, message);
+        }
+        public virtual void Log(String accountId, String message)
+        {
+            context.Set<Log>().Add(new Log { AccountId = accountId, Message = message });
             context.SaveChanges();
         }
 

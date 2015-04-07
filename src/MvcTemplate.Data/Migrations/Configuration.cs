@@ -14,7 +14,7 @@ namespace MvcTemplate.Data.Migrations
 
         public Configuration()
         {
-            ContextKey = "MvcTemplate.Data";
+            ContextKey = "Context";
         }
 
         protected override void Seed(Context context)

@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Data.Migrations
         public Configuration()
         {
             MigrationsDirectory = "Data\\Migrations";
-            ContextKey = "MvcTemplate.Tests.Data";
+            ContextKey = "TestingContext";
         }
     }
 }

@@ -191,7 +191,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Fact]
         public void GetPropertyTitle_GetsTitleFromExpressionRelation()
         {
-            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.RoleId);
+            String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.RoleName);
             String expected = MvcTemplate.Resources.Views.RoleView.Titles.Id;
 
             Assert.Equal(expected, actual);

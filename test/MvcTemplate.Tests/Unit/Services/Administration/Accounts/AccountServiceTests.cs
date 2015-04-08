@@ -101,7 +101,6 @@ namespace MvcTemplate.Tests.Unit.Services
                 Assert.Equal(expected.Current.Username, actual.Current.Username);
                 Assert.Equal(expected.Current.Password, actual.Current.Password);
                 Assert.Equal(expected.Current.RoleName, actual.Current.RoleName);
-                Assert.Equal(expected.Current.RoleId, actual.Current.RoleId);
                 Assert.Equal(expected.Current.Email, actual.Current.Email);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
@@ -123,7 +122,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.Password, actual.Password);
             Assert.Equal(expected.RoleName, actual.RoleName);
             Assert.Equal(expected.Username, actual.Username);
-            Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
         }

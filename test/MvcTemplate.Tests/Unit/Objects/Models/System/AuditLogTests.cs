@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Objects;
+using NSubstitute;
 using System;
 using System.Web;
 using Xunit;
@@ -27,6 +28,7 @@ namespace MvcTemplate.Tests.Unit.Objects
             Assert.Null(actual.AccountId);
             Assert.Null(actual.EntityId);
             Assert.Null(actual.Changes);
+            Assert.Null(actual.Action);
         }
 
         #endregion
@@ -36,10 +38,18 @@ namespace MvcTemplate.Tests.Unit.Objects
         [Fact]
         public void AuditLog_SetsAccountId()
         {
-            String expected = HttpContext.Current.User.Identity.Name;
             String actual = new AuditLog(null, null, null, null).AccountId;
+            String expected = HttpContext.Current.User.Identity.Name;
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void AuditLog_OnEmptyAccountIdSetsAccountIdToNull()
+        {
+            HttpContext.Current.User.Identity.Name.Returns("");
+
+            Assert.Null(new AuditLog(null, null, null, null).AccountId);
         }
 
         [Fact]

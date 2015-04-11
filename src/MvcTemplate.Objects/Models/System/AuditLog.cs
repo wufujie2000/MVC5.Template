@@ -30,6 +30,7 @@ namespace MvcTemplate.Objects
         public AuditLog(String action, String entityName, String entityId, String changes)
         {
             AccountId = HttpContext.Current.User.Identity.Name;
+            AccountId = AccountId != "" ? AccountId : null;
             EntityName = entityName;
             EntityId = entityId;
             Changes = changes;

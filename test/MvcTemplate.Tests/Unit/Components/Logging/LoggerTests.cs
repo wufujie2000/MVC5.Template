@@ -9,26 +9,36 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Logging
 {
-    public class LoggerTests
+    public class LoggerTests : IDisposable
     {
+        private TestingContext context;
+        private Logger logger;
+
+        public LoggerTests()
+        {
+            context = new TestingContext();
+            logger = new Logger(context);
+
+            context.Set<Log>().RemoveRange(context.Set<Log>());
+            context.SaveChanges();
+        }
+        public void Dispose()
+        {
+            context.Dispose();
+        }
+
         #region Method: Log(String message)
 
         [Fact]
         public void Log_LogsMessage()
         {
-            using (TestingContext context = new TestingContext())
-            {
-                context.Set<Log>().RemoveRange(context.Set<Log>());
-                context.SaveChanges();
+            logger.Log(new String('L', 10000));
 
-                new Logger(context).Log(new String('L', 10000));
+            Log expected = new Log { Message = new String('L', 10000) };
+            Log actual = context.Set<Log>().Single();
 
-                Log expected = new Log { Message = new String('L', 10000) };
-                Log actual = context.Set<Log>().Single();
-
-                Assert.Equal(expected.AccountId, actual.AccountId);
-                Assert.Equal(expected.Message, actual.Message);
-            }
+            Assert.Equal(expected.AccountId, actual.AccountId);
+            Assert.Equal(expected.Message, actual.Message);
         }
 
         #endregion
@@ -36,21 +46,27 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Method: Log(String accountId, String message)
 
         [Fact]
+        public void Log_LogsEmptyAccountIdAsNull()
+        {
+            logger.Log("", "Test");
+
+            Log expected = new Log { Message = "Test" };
+            Log actual = context.Set<Log>().Single();
+
+            Assert.Equal(expected.AccountId, actual.AccountId);
+            Assert.Equal(expected.Message, actual.Message);
+        }
+
+        [Fact]
         public void Log_LogsAccountIdAndMessage()
         {
-            using (TestingContext context = new TestingContext())
-            {
-                context.Set<Log>().RemoveRange(context.Set<Log>());
-                context.SaveChanges();
+            logger.Log("Test", new String('L', 10000));
 
-                new Logger(context).Log("Test", new String('L', 10000));
+            Log expected = new Log { AccountId = "Test", Message = new String('L', 10000) };
+            Log actual = context.Set<Log>().Single();
 
-                Log expected = new Log { AccountId = "Test", Message = new String('L', 10000) };
-                Log actual = context.Set<Log>().Single();
-
-                Assert.Equal(expected.AccountId, actual.AccountId);
-                Assert.Equal(expected.Message, actual.Message);
-            }
+            Assert.Equal(expected.AccountId, actual.AccountId);
+            Assert.Equal(expected.Message, actual.Message);
         }
 
         #endregion

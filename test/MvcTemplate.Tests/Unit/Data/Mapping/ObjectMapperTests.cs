@@ -62,6 +62,23 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Null(actual.Password);
         }
 
+        [Fact]
+        public void MapAccounts_MapsAccountsRegisterViewToAccount()
+        {
+            AccountRegisterView expected = ObjectFactory.CreateAccountRegisterView();
+            Account actual = Mapper.Map<Account>(expected);
+
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Null(actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RecoveryToken);
+            Assert.Null(actual.Passhash);
+            Assert.Null(actual.RoleId);
+            Assert.Null(actual.Role);
+        }
+
         #endregion
 
         #region Static method: MapRoles()

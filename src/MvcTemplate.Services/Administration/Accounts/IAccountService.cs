@@ -16,8 +16,8 @@ namespace MvcTemplate.Services
         Boolean IsLoggedIn(IPrincipal user);
 
         Task Recover(AccountRecoveryView view, HttpRequestBase request);
+        void Register(AccountRegisterView view);
         void Reset(AccountResetView view);
-        void Register(AccountView view);
         void Edit(ProfileEditView view);
         void Edit(AccountEditView view);
         void Delete(String accountId);

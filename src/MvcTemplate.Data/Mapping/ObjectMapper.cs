@@ -16,11 +16,12 @@ namespace MvcTemplate.Data.Mapping
         private static void MapAccounts()
         {
             Mapper.CreateMap<Account, AccountView>();
-            Mapper.CreateMap<AccountView, Account>();
 
             Mapper.CreateMap<Account, AccountEditView>();
 
             Mapper.CreateMap<Account, ProfileEditView>();
+
+            Mapper.CreateMap<AccountRegisterView, Account>();
         }
 
         private static void MapRoles()

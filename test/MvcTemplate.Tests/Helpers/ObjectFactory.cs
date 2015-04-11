@@ -27,6 +27,7 @@ namespace MvcTemplate.Tests
             {
                 Id = "Id" + id,
                 Username = "Username" + id,
+                RoleName = "RoleName" + id,
                 Email = id + "@tests.com",
                 Password = "Password1"
             };
@@ -52,6 +53,16 @@ namespace MvcTemplate.Tests
             };
         }
 
+        public static AccountRegisterView CreateAccountRegisterView(Int32 id = 1)
+        {
+            return new AccountRegisterView
+            {
+                Id = "Id" + id,
+                Username = "Username" + id,
+                Email = id + "@tests.com",
+                Password = "Password1"
+            };
+        }
         public static AccountRecoveryView CreateAccountRecoveryView(Int32 id = 1)
         {
             return new AccountRecoveryView

@@ -36,6 +36,72 @@ namespace MvcTemplate.Tests.Unit.Validators
             context.Dispose();
         }
 
+        #region Method: CanRegister(AccountRegisterView view)
+
+        [Fact]
+        public void CanRegister_CanNotRegisterWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Key", "Error");
+
+            Assert.False(validator.CanRegister(ObjectFactory.CreateAccountRegisterView()));
+        }
+
+        [Fact]
+        public void CanRegister_CanNotRegisterWithAlreadyTakenUsername()
+        {
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView();
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
+
+            Assert.False(validator.CanRegister(account));
+        }
+
+        [Fact]
+        public void CanRegister_AddsErorrMessageThenCanNotRegisterWithAlreadyTakenUsername()
+        {
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView();
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
+
+            validator.CanRegister(account);
+
+            String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
+            String expected = Validations.UsernameIsAlreadyTaken;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
+        {
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView();
+            account.Id += "DifferentValue";
+
+            Assert.False(validator.CanRegister(account));
+        }
+
+        [Fact]
+        public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
+        {
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView();
+            account.Id += "DifferentValue";
+
+            validator.CanRegister(account);
+
+            String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
+            String expected = Validations.EmailIsAlreadyUsed;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanRegister_CanRegisterValidAccount()
+        {
+            Assert.True(validator.CanRegister(ObjectFactory.CreateAccountRegisterView(2)));
+        }
+
+        #endregion
+
         #region Method: CanRecover(AccountRecoveryView view)
 
         [Fact]
@@ -167,70 +233,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanLogin_CanLoginWithValidAccount()
         {
             Assert.True(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
-        }
-
-        #endregion
-
-        #region Method: CanRegister(AccountView view)
-
-        [Fact]
-        public void CanRegister_CanNotRegisterWithInvalidModelState()
-        {
-            validator.ModelState.AddModelError("Key", "Error");
-
-            Assert.False(validator.CanRegister(ObjectFactory.CreateAccountView()));
-        }
-
-        [Fact]
-        public void CanRegister_CanNotRegisterWithAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "DifferentValue";
-
-            Assert.False(validator.CanRegister(account));
-        }
-
-        [Fact]
-        public void CanRegister_AddsErorrMessageThenCanNotRegisterWithAlreadyTakenUsername()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Username = account.Username.ToLower();
-            account.Id += "DifferentValue";
-            validator.CanRegister(account);
-
-            String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
-            String expected = Validations.UsernameIsAlreadyTaken;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Id += "DifferentValue";
-
-            Assert.False(validator.CanRegister(account));
-        }
-
-        [Fact]
-        public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
-        {
-            AccountView account = ObjectFactory.CreateAccountView();
-            account.Id += "DifferentValue";
-            validator.CanRegister(account);
-
-            String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
-            String expected = Validations.EmailIsAlreadyUsed;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void CanRegister_CanRegisterValidAccount()
-        {
-            Assert.True(validator.CanRegister(ObjectFactory.CreateAccountView(2)));
         }
 
         #endregion

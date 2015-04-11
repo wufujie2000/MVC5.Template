@@ -190,6 +190,45 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
+        #region Method: Register(AccountRegisterView view)
+
+        [Fact]
+        public void Register_CreatesAccount()
+        {
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView(2);
+            service.Register(account);
+
+            Account actual = context.Set<Account>().AsNoTracking().Single(model => model.Id == account.Id);
+            AccountRegisterView expected = account;
+
+            Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Null(actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RecoveryToken);
+            Assert.Null(actual.RoleId);
+            Assert.Null(actual.Role);
+        }
+
+        [Fact]
+        public void Register_LowersEmailValue()
+        {
+            AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
+            String expected = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
+
+            service.Register(view);
+
+            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
+
+            Assert.Equal(expected, model.Email);
+            Assert.Equal(expected, view.Email);
+        }
+
+        #endregion
+
         #region Method: Reset(AccountResetView view)
 
         [Fact]
@@ -215,45 +254,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
-        }
-
-        #endregion
-
-        #region Method: Register(AccountView view)
-
-        [Fact]
-        public void Register_CreatesAccount()
-        {
-            AccountView account = ObjectFactory.CreateAccountView(2);
-            service.Register(account);
-
-            Account actual = context.Set<Account>().AsNoTracking().Single(model => model.Id == account.Id);
-            AccountView expected = account;
-
-            Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
-            Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Username, actual.Username);
-            Assert.Null(actual.RecoveryTokenExpirationDate);
-            Assert.Equal(expected.Email, actual.Email);
-            Assert.Equal(expected.Id, actual.Id);
-            Assert.Null(actual.RecoveryToken);
-            Assert.Null(actual.RoleId);
-            Assert.Null(actual.Role);
-        }
-
-        [Fact]
-        public void Register_LowersEmailValue()
-        {
-            AccountView view = ObjectFactory.CreateAccountView(2);
-            String expected = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
-
-            service.Register(view);
-
-            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
-
-            Assert.Equal(expected, model.Email);
-            Assert.Equal(expected, view.Email);
         }
 
         #endregion

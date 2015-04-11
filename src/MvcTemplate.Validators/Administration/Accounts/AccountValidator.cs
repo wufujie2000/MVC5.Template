@@ -18,6 +18,14 @@ namespace MvcTemplate.Validators
             this.hasher = hasher;
         }
 
+        public Boolean CanRegister(AccountRegisterView view)
+        {
+            Boolean isValid = IsUniqueUsername(view.Id, view.Username);
+            isValid &= IsUniqueEmail(view.Id, view.Email);
+            isValid &= ModelState.IsValid;
+
+            return isValid;
+        }
         public Boolean CanRecover(AccountRecoveryView view)
         {
             return ModelState.IsValid;
@@ -32,14 +40,6 @@ namespace MvcTemplate.Validators
         public Boolean CanLogin(AccountLoginView view)
         {
             Boolean isValid = IsAuthenticated(view.Username, view.Password);
-            isValid &= ModelState.IsValid;
-
-            return isValid;
-        }
-        public Boolean CanRegister(AccountView view)
-        {
-            Boolean isValid = IsUniqueUsername(view.Id, view.Username);
-            isValid &= IsUniqueEmail(view.Id, view.Email);
             isValid &= ModelState.IsValid;
 
             return isValid;

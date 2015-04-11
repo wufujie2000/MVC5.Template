@@ -1,6 +1,7 @@
-﻿@using MvcTemplate.Resources.Views.AccountView
+﻿@using Links = MvcTemplate.Resources.Views.AccountView.Texts
+@using MvcTemplate.Resources.Views.AccountRegisterView
 
-@model AccountView
+@model AccountRegisterView
 
 <div class="title text">@ContentTitles.AuthRegister</div>
 <div class="separator"></div>
@@ -30,6 +31,6 @@
 
 <div class="separator"></div>
 <div class="auth-actions">
-    <a class="text fa fa-sign-in" href="@Url.Action("Login")" rel="tooltip" data-original-title="@Texts.Login"></a>
-    <a class="text fa fa-unlock-alt" href="@Url.Action("Recover")" rel="tooltip" data-original-title="@Texts.LostPassword"></a>
+    <a class="text fa fa-sign-in" href="@Url.Action("Login")" rel="tooltip" data-original-title="@Links.Login"></a>
+    <a class="text fa fa-unlock-alt" href="@Url.Action("Recover")" rel="tooltip" data-original-title="@Links.LostPassword"></a>
 </div>

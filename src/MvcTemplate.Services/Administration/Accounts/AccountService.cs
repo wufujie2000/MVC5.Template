@@ -63,6 +63,15 @@ namespace MvcTemplate.Services
 
             return mailClient.SendAsync(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
         }
+        public void Register(AccountRegisterView view)
+        {
+            Account account = UnitOfWork.To<Account>(view);
+            view.Email = account.Email = view.Email.ToLower();
+            account.Passhash = hasher.HashPassword(view.Password);
+
+            UnitOfWork.Insert(account);
+            UnitOfWork.Commit();
+        }
         public void Reset(AccountResetView view)
         {
             Account account = UnitOfWork.Select<Account>().Single(acc => acc.RecoveryToken == view.Token);
@@ -71,15 +80,6 @@ namespace MvcTemplate.Services
             account.RecoveryToken = null;
 
             UnitOfWork.Update(account);
-            UnitOfWork.Commit();
-        }
-        public void Register(AccountView view)
-        {
-            Account account = UnitOfWork.To<Account>(view);
-            view.Email = account.Email = view.Email.ToLower();
-            account.Passhash = hasher.HashPassword(view.Password);
-
-            UnitOfWork.Insert(account);
             UnitOfWork.Commit();
         }
         public void Edit(ProfileEditView view)

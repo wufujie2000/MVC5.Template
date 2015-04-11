@@ -15,6 +15,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class AuthControllerTests : AControllerTests
     {
+        private AccountRegisterView accountRegister;
         private AccountRecoveryView accountRecovery;
         private AccountResetView accountReset;
         private AccountLoginView accountLogin;
@@ -29,6 +30,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator = Substitute.For<IAccountValidator>();
             controller = Substitute.ForPartsOf<AuthController>(validator, service);
 
+            accountRegister = ObjectFactory.CreateAccountRegisterView();
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
@@ -65,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Register(AccountView account)
+        #region Method: Register(AccountRegisterView account)
 
         [Fact]
         public void Register_ProtectsFromOverpostingId()
@@ -89,11 +91,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_ReturnsSameModelIfCanNotRegister()
         {
+            validator.CanRegister(accountRegister).Returns(false);
             service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(account).Returns(false);
 
-            Object actual = (controller.Register(account) as ViewResult).Model;
-            Object expected = account;
+            Object actual = (controller.Register(accountRegister) as ViewResult).Model;
+            Object expected = accountRegister;
 
             Assert.Same(expected, actual);
         }
@@ -101,21 +103,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_RegistersAccount()
         {
+            validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(account).Returns(true);
 
-            controller.Register(account);
+            controller.Register(accountRegister);
 
-            service.Received().Register(account);
+            service.Received().Register(accountRegister);
         }
 
         [Fact]
         public void Register_AddsSuccessfulRegistrationMessage()
         {
+            validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(account).Returns(true);
 
-            controller.Register(account);
+            controller.Register(accountRegister);
 
             Alert actual = controller.Alerts.Single();
 
@@ -127,10 +129,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_RedirectsToLoginAfterSuccessfulRegistration()
         {
+            validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(account).Returns(true);
 
-            RouteValueDictionary actual = (controller.Register(account) as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (controller.Register(accountRegister) as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Login", actual["action"]);
             Assert.Null(actual["controller"]);

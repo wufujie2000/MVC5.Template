@@ -63,6 +63,26 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
         }
 
         [Fact]
+        public void MapAccounts_MapsAccountCreateViewToAccount()
+        {
+            AccountCreateView view = ObjectFactory.CreateAccountCreateView();
+            view.RoleId = "Test";
+
+            Account actual = Mapper.Map<Account>(view);
+            AccountCreateView expected = view;
+
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Null(actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RecoveryToken);
+            Assert.Null(actual.Passhash);
+            Assert.Null(actual.Role);
+        }
+
+        [Fact]
         public void MapAccounts_MapsAccountsRegisterViewToAccount()
         {
             AccountRegisterView expected = ObjectFactory.CreateAccountRegisterView();

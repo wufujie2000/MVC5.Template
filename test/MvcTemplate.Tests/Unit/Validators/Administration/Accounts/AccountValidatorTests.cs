@@ -237,6 +237,72 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #endregion
 
+        #region Method: CanCreate(AccountCreateView view)
+
+        [Fact]
+        public void CanCreate_CanNotCreateWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Key", "Error");
+
+            Assert.False(validator.CanCreate(ObjectFactory.CreateAccountCreateView()));
+        }
+
+        [Fact]
+        public void CanCreate_CanNotCreateWithAlreadyTakenUsername()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView();
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
+
+            Assert.False(validator.CanCreate(account));
+        }
+
+        [Fact]
+        public void CanCreate_AddsErorrMessageThenCanNotCreateWithAlreadyTakenUsername()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView();
+            account.Username = account.Username.ToLower();
+            account.Id += "DifferentValue";
+
+            validator.CanCreate(account);
+
+            String actual = validator.ModelState["Username"].Errors[0].ErrorMessage;
+            String expected = Validations.UsernameIsAlreadyTaken;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanCreate_CanNotCreateWithAlreadyUsedEmail()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView();
+            account.Id += "DifferentValue";
+
+            Assert.False(validator.CanCreate(account));
+        }
+
+        [Fact]
+        public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyUsedEmail()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView();
+            account.Id += "DifferentValue";
+
+            validator.CanCreate(account);
+
+            String actual = validator.ModelState["Email"].Errors[0].ErrorMessage;
+            String expected = Validations.EmailIsAlreadyUsed;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CanCreate_CanCreateValidAccount()
+        {
+            Assert.True(validator.CanCreate(ObjectFactory.CreateAccountCreateView(2)));
+        }
+
+        #endregion
+
         #region Method: CanEdit(ProfileEditView view)
 
         [Fact]

@@ -22,6 +22,24 @@ namespace MvcTemplate.Controllers.Administration
         }
 
         [HttpGet]
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Exclude = "Id")] AccountCreateView account)
+        {
+            if (!Validator.CanCreate(account))
+                return View(account);
+
+            Service.Create(account);
+
+            return RedirectIfAuthorized("Index");
+        }
+
+        [HttpGet]
         public ActionResult Details(String id)
         {
             return NotEmptyView(Service.Get<AccountView>(id));

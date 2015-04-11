@@ -71,6 +71,16 @@ namespace MvcTemplate.Tests
                 Email = id + "@tests.com"
             };
         }
+        public static AccountCreateView CreateAccountCreateView(Int32 id = 1)
+        {
+            return new AccountCreateView
+            {
+                Id = "Id" + id,
+                Username = "Username" + id,
+                Email = id + "@tests.com",
+                Password = "Password1"
+            };
+        }
         public static AccountResetView CreateAccountResetView(Int32 id = 1)
         {
             return new AccountResetView

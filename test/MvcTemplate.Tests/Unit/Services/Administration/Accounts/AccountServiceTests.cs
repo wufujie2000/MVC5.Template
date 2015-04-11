@@ -258,6 +258,46 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
+        #region Method: Create(AccountCreateView view)
+
+        [Fact]
+        public void Create_CreatesAccount()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView(2);
+            account.RoleId = ObjectFactory.CreateRoleView().Id;
+
+            service.Create(account);
+
+            Account actual = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
+            AccountCreateView expected = account;
+
+            Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Null(actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RecoveryToken);
+        }
+
+        [Fact]
+        public void Create_LowersEmailValue()
+        {
+            AccountCreateView account = ObjectFactory.CreateAccountCreateView(2);
+            String expected = account.Email.ToLower();
+            account.Email = account.Email.ToUpper();
+
+            service.Create(account);
+
+            Account model = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
+
+            Assert.Equal(expected, account.Email);
+            Assert.Equal(expected, model.Email);
+        }
+
+        #endregion
+
         #region Method: Edit(ProfileEditView view)
 
         [Fact]

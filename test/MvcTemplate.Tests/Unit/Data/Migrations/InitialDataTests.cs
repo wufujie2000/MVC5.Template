@@ -25,6 +25,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
 
         [Theory]
         [InlineData("Administration", "Accounts", "Index")]
+        [InlineData("Administration", "Accounts", "Create")]
         [InlineData("Administration", "Accounts", "Details")]
         [InlineData("Administration", "Accounts", "Edit")]
 
@@ -45,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         public void PrivilegesTable_HasExactNumberOfPrivileges()
         {
             Int32 actual = context.Set<Privilege>().Count();
-            Int32 expected = 8;
+            Int32 expected = 9;
 
             Assert.Equal(expected, actual);
         }

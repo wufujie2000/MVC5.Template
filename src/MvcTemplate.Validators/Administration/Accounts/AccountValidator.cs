@@ -45,6 +45,14 @@ namespace MvcTemplate.Validators
             return isValid;
         }
 
+        public Boolean CanCreate(AccountCreateView view)
+        {
+            Boolean isValid = IsUniqueUsername(view.Id, view.Username);
+            isValid &= IsUniqueEmail(view.Id, view.Email);
+            isValid &= ModelState.IsValid;
+
+            return isValid;
+        }
         public Boolean CanEdit(ProfileEditView view)
         {
             Boolean isValid = IsUniqueUsername(view.Id, view.Username);

@@ -11,11 +11,12 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    public class AccountsControllerTests
+    public class AccountsControllerTests : AControllerTests
     {
+        private AccountCreateView accountCreate;
         private AccountsController controller;
-        private AccountEditView accountEdit;
         private IAccountValidator validator;
+        private AccountEditView accountEdit;
         private IAccountService service;
         private AccountView account;
 
@@ -23,6 +24,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         {
             validator = Substitute.For<IAccountValidator>();
             service = Substitute.For<IAccountService>();
+            accountCreate = new AccountCreateView();
             accountEdit = new AccountEditView();
             account = new AccountView();
 
@@ -40,6 +42,59 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
             Object actual = controller.Index().Model;
             Object expected = service.GetViews();
+
+            Assert.Same(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: Create()
+
+        [Fact]
+        public void Create_ReturnsEmptyView()
+        {
+            Assert.Null(controller.Create().Model);
+        }
+
+        #endregion
+
+        #region Method: Create(AccountCreateView account)
+
+        [Fact]
+        public void Create_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverpostingId(controller, "Create");
+        }
+
+        [Fact]
+        public void Create_ReturnsSameModelIfCanNotCreate()
+        {
+            validator.CanCreate(accountCreate).Returns(false);
+
+            Object actual = (controller.Create(accountCreate) as ViewResult).Model;
+            Object expected = accountCreate;
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void Create_CreatesAccountView()
+        {
+            validator.CanCreate(accountCreate).Returns(true);
+
+            controller.Create(accountCreate);
+
+            service.Received().Create(accountCreate);
+        }
+
+        [Fact]
+        public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
+        {
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            validator.CanCreate(accountCreate).Returns(true);
+
+            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            ActionResult actual = controller.Create(accountCreate);
 
             Assert.Same(expected, actual);
         }

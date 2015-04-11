@@ -34,6 +34,7 @@ namespace MvcTemplate.Data.Migrations
             Privilege[] privileges =
             {
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Index" },
+                new Privilege { Area = "Administration", Controller = "Accounts", Action = "Create" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Details" },
                 new Privilege { Area = "Administration", Controller = "Accounts", Action = "Edit" },
 

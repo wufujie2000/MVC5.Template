@@ -82,6 +82,16 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
         }
+
+        public void Create(AccountCreateView view)
+        {
+            Account account = UnitOfWork.To<Account>(view);
+            view.Email = account.Email = view.Email.ToLower();
+            account.Passhash = hasher.HashPassword(view.Password);
+
+            UnitOfWork.Insert(account);
+            UnitOfWork.Commit();
+        }
         public void Edit(ProfileEditView view)
         {
             Account account = UnitOfWork.Get<Account>(view.Id);

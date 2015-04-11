@@ -18,6 +18,8 @@ namespace MvcTemplate.Services
         Task Recover(AccountRecoveryView view, HttpRequestBase request);
         void Register(AccountRegisterView view);
         void Reset(AccountResetView view);
+
+        void Create(AccountCreateView view);
         void Edit(ProfileEditView view);
         void Edit(AccountEditView view);
         void Delete(String accountId);

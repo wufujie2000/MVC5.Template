@@ -10,6 +10,7 @@ namespace MvcTemplate.Validators
         Boolean CanReset(AccountResetView view);
         Boolean CanLogin(AccountLoginView view);
 
+        Boolean CanCreate(AccountCreateView view);
         Boolean CanEdit(ProfileEditView view);
         Boolean CanEdit(AccountEditView view);
         Boolean CanDelete(ProfileDeleteView view);

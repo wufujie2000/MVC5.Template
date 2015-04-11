@@ -21,6 +21,8 @@ namespace MvcTemplate.Data.Mapping
 
             Mapper.CreateMap<Account, ProfileEditView>();
 
+            Mapper.CreateMap<AccountCreateView, Account>();
+
             Mapper.CreateMap<AccountRegisterView, Account>();
         }
 

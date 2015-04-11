@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MvcTemplate.Resources.Privilege.Action {
+namespace MvcTemplate.Resources.Views.AccountCreateView {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MvcTemplate.Resources.Privilege.Action {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Privilege.Action.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Views.AccountCreateView.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,83 +61,29 @@ namespace MvcTemplate.Resources.Privilege.Action {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create.
+        ///   Looks up a localized string similar to E-mail.
         /// </summary>
-        public static string AdministrationAccountsCreate {
+        public static string Email {
             get {
-                return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Details.
+        ///   Looks up a localized string similar to Password.
         /// </summary>
-        public static string AdministrationAccountsDetails {
+        public static string Password {
             get {
-                return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string AdministrationAccountsEdit {
+        public static string Username {
             get {
-                return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Index.
-        /// </summary>
-        public static string AdministrationAccountsIndex {
-            get {
-                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create.
-        /// </summary>
-        public static string AdministrationRolesCreate {
-            get {
-                return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string AdministrationRolesDelete {
-            get {
-                return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Details.
-        /// </summary>
-        public static string AdministrationRolesDetails {
-            get {
-                return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        public static string AdministrationRolesEdit {
-            get {
-                return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Index.
-        /// </summary>
-        public static string AdministrationRolesIndex {
-            get {
-                return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
     }

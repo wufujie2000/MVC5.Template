@@ -66,6 +66,7 @@
     <Compile Include="Views\Administration\Accounts\AccountRecoveryView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountResetView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountRegisterView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountCreateView.cs" />
     <Compile Include="Views\Administration\Accounts\ProfileDeleteView.cs" />
     <Compile Include="Views\Administration\Accounts\ProfileEditView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountEditView.cs" />

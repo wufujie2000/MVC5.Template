@@ -63,6 +63,15 @@ namespace MvcTemplate.Resources.Shared {
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
+        public static string AdministrationAccountsCreate {
+            get {
+                return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
         public static string AdministrationAccountsDetails {
             get {
                 return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);

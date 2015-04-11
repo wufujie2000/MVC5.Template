@@ -77,6 +77,26 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         -Project $Project
 }
 
+Function Scaffold-ObjectMappingTests([String]$Project, [String]$Tests)
+{
+    if (!$Delete)
+    {
+        $TestsClass = Get-ProjectType -Project $Project -Type $Tests
+        $Models = Get-PluralizedWord $Model
+
+        Add-ClassMemberViaTemplate `
+            -SuccessMessage "Added object mapper tests to $Tests." `
+            -Template "Members\ObjectMappingTests" `
+            -TemplateFolders $TemplateFolders `
+            -CodeClass $TestsClass `
+            -Model @{ `
+                View = $Model + "View"; `
+                Models = $Models; `
+                Model = $Model; `
+            }
+    }
+}
+
 Function Scaffold-ObjectCreation([String]$Project, [String]$Factory)
 {
     if (!$Delete)

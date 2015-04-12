@@ -54,6 +54,39 @@
         return this.optional(element) || /^[+-]?\d+$/.test(value);
     });
     $.validator.unobtrusive.adapters.addBool("integer");
+
+    $(document).on('change', '.datalist-hidden-input', function () {
+        var validator = $(this).parents('form').validate();
+
+        if (validator) {
+            var datalistInput = $(this).prevAll('.datalist-input:first');
+            if (validator.element('#' + this.id)) {
+                datalistInput.removeClass('input-validation-error');
+            } else {
+                datalistInput.addClass('input-validation-error');
+            }
+        }
+    });
+    $('form').on('invalid-form', function (form, validator) {
+        var hiddenInputs = $(this).find('.datalist-hidden-input');
+        for (var i = 0; i < hiddenInputs.length; i++) {
+            var hiddenInputId = hiddenInputs[i].id;
+            var datalistInput = $(hiddenInputs[i]).prevAll('.datalist-input:first');
+
+            if (validator.invalid[hiddenInputId]) {
+                datalistInput.addClass('input-validation-error');
+            } else {
+                datalistInput.removeClass('input-validation-error');
+            }
+        }
+    });
+
+    var currentIgnore = $.validator.defaults.ignore;
+    $.validator.setDefaults({
+        ignore: function () {
+            return $(this).is(currentIgnore) && !$(this).hasClass('datalist-hidden-input');
+        },
+    });
 }());
 
 // Datepicker binding

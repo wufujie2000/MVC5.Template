@@ -28,8 +28,7 @@ namespace MvcTemplate.Tests
                 Id = "Id" + id,
                 Username = "Username" + id,
                 RoleName = "RoleName" + id,
-                Email = id + "@tests.com",
-                Password = "Password1"
+                Email = id + "@tests.com"
             };
         }
 

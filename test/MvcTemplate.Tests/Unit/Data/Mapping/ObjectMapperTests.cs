@@ -29,7 +29,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
-            Assert.Null(actual.Password);
         }
 
         [Fact]
@@ -83,7 +82,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
         }
 
         [Fact]
-        public void MapAccounts_MapsAccountsRegisterViewToAccount()
+        public void MapAccounts_MapsAccountRegisterViewToAccount()
         {
             AccountRegisterView expected = ObjectFactory.CreateAccountRegisterView();
             Account actual = Mapper.Map<Account>(expected);

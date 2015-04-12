@@ -22,7 +22,7 @@ namespace MvcTemplate.Services
         void Create(AccountCreateView view);
         void Edit(ProfileEditView view);
         void Edit(AccountEditView view);
-        void Delete(String accountId);
+        void Delete(String id);
 
         void Login(String username);
         void Logout();

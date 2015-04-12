@@ -85,7 +85,7 @@ Function Scaffold-ObjectMappingTests([String]$Project, [String]$Tests)
         $Models = Get-PluralizedWord $Model
 
         Add-ClassMemberViaTemplate `
-            -SuccessMessage "Added object mapper tests to $Tests." `
+            -SuccessMessage "Added model/view mapping tests to $Tests." `
             -Template "Members\ObjectMappingTests" `
             -TemplateFolders $TemplateFolders `
             -CodeClass $TestsClass `

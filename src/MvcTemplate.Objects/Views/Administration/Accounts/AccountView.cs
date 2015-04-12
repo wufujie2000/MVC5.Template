@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Components.Mvc;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Objects
@@ -9,11 +8,6 @@ namespace MvcTemplate.Objects
         [Required]
         [StringLength(128)]
         public String Username { get; set; }
-
-        [Required]
-        [NotTrimmed]
-        [StringLength(128)]
-        public String Password { get; set; }
 
         [Required]
         [EmailAddress]

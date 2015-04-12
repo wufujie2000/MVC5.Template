@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Create_ProtectsFromOverpostingId()
         {
-            ProtectsFromOverpostingId(controller, "Create");
+            ProtectsFromOverposting(controller, "Create", "Id");
         }
 
         [Fact]
@@ -196,7 +196,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Edit_EditsRole()
+        public void Edit_EditsRoleView()
         {
             validator.CanEdit(role).Returns(true);
 

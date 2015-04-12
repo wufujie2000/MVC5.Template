@@ -99,7 +99,6 @@ namespace MvcTemplate.Tests.Unit.Services
             {
                 Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
                 Assert.Equal(expected.Current.Username, actual.Current.Username);
-                Assert.Equal(expected.Current.Password, actual.Current.Password);
                 Assert.Equal(expected.Current.RoleName, actual.Current.RoleName);
                 Assert.Equal(expected.Current.Email, actual.Current.Email);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
@@ -119,7 +118,6 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView expected = Mapper.Map<AccountView>(account);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Password, actual.Password);
             Assert.Equal(expected.RoleName, actual.RoleName);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
@@ -193,12 +191,12 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Register(AccountRegisterView view)
 
         [Fact]
-        public void Register_CreatesAccount()
+        public void Register_RegistersAccount()
         {
             AccountRegisterView account = ObjectFactory.CreateAccountRegisterView(2);
             service.Register(account);
 
-            Account actual = context.Set<Account>().AsNoTracking().Single(model => model.Id == account.Id);
+            Account actual = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
             AccountRegisterView expected = account;
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
@@ -215,16 +213,16 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Register_LowersEmailValue()
         {
-            AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
-            String expected = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
+            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView(2);
+            String expected = account.Email.ToLower();
+            account.Email = account.Email.ToUpper();
 
-            service.Register(view);
+            service.Register(account);
 
-            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
+            Account model = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
 
+            Assert.Equal(expected, account.Email);
             Assert.Equal(expected, model.Email);
-            Assert.Equal(expected, view.Email);
         }
 
         #endregion
@@ -327,16 +325,16 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_LowersEmailValue()
         {
-            ProfileEditView view = ObjectFactory.CreateProfileEditView();
-            String expected = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
+            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
+            String expected = profile.Email.ToLower();
+            profile.Email = profile.Email.ToUpper();
 
-            service.Edit(view);
+            service.Edit(profile);
 
             Account model = context.Set<Account>().AsNoTracking().Single();
 
+            Assert.Equal(expected, profile.Email);
             Assert.Equal(expected, model.Email);
-            Assert.Equal(expected, view.Email);
         }
 
         [Theory]

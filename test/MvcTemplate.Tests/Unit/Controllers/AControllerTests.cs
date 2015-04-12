@@ -8,7 +8,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public abstract class AControllerTests
     {
-        protected void ProtectsFromOverpostingId(Controller controller, String postMethod)
+        protected void ProtectsFromOverposting(Controller controller, String postMethod, String value)
         {
             MethodInfo methodInfo = controller
                 .GetType()
@@ -23,8 +23,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .CustomAttributes
                 .Single(attr => attr.AttributeType == typeof(BindAttribute));
 
+            Assert.Equal(value, actual.NamedArguments.Single().TypedValue.Value);
             Assert.Equal("Exclude", actual.NamedArguments.Single().MemberName);
-            Assert.Equal("Id", actual.NamedArguments.Single().TypedValue.Value);
         }
     }
 }

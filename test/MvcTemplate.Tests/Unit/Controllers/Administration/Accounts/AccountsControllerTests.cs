@@ -63,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Create_ProtectsFromOverpostingId()
         {
-            ProtectsFromOverpostingId(controller, "Create");
+            ProtectsFromOverposting(controller, "Create", "Id");
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Edit_EditsAccount()
+        public void Edit_EditsAccountView()
         {
             validator.CanEdit(accountEdit).Returns(true);
 

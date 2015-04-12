@@ -130,6 +130,6 @@
     <value>Atkūrimo galiojimo laikas yra pasibaigęs.</value>
   </data>
   <data name="UsernameIsAlreadyTaken" xml:space="preserve">
-    <value>Vartotojo vardas jau užimtas.</value>
+    <value>Vartotojo vardas jau yra naudojamas.</value>
   </data>
 </root>

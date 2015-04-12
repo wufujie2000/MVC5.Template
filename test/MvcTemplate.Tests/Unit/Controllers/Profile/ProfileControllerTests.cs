@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_ProtectsFromOverpostingId()
         {
-            ProtectsFromOverpostingId(controller, "Edit");
+            ProtectsFromOverposting(controller, "Edit", "Id");
         }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_EditsProfile()
+        public void Edit_EditsProfileView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
@@ -188,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_ProtectsFromOverpostingId()
         {
-            ProtectsFromOverpostingId(controller, "DeleteConfirmed");
+            ProtectsFromOverposting(controller, "DeleteConfirmed", "Id");
         }
 
         [Fact]
@@ -241,7 +241,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_DeletesProfile()
+        public void DeleteConfirmed_DeletesProfileView()
         {
             validator.CanDelete(profileDelete).Returns(true);
             service.AccountExists(controller.CurrentAccountId).Returns(true);

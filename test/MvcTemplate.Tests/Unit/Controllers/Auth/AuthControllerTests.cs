@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Register_ProtectsFromOverpostingId()
         {
-            ProtectsFromOverpostingId(controller, "Register");
+            ProtectsFromOverposting(controller, "Register", "Id");
         }
 
         [Fact]

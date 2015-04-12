@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.3.0
+ * Datalist 3.3.2
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © NonFactors
@@ -143,8 +143,8 @@
     }
 
     .datalist-table .datalist-sort-arrow {
-        vertical-align: middle;
         display: inline-block;
+        vertical-align: top;
         text-align: end;
         min-width: 10px;
     }

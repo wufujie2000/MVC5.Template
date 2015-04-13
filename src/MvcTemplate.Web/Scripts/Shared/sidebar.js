@@ -45,7 +45,7 @@
         var submenu = action.parent();
         var openSiblings = submenu.siblings('.open');
 
-        if ($(window).width() > 767) {
+        if ($('.sidebar').width() > 100) {
             openSiblings.toggleClass('changing');
             openSiblings.children('ul').slideUp(function () {
                 openSiblings.removeClass('changing open');

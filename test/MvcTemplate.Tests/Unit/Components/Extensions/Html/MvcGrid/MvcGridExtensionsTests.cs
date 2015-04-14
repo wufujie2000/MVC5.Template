@@ -38,11 +38,25 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
 
         [Fact]
-        public void AddActionLink_OnUnauthorizedActionLinkReturnsNull()
+        public void AddActionLink_OnUnauthorizedActionLinkDoesNotAddColumn()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
-            Assert.Null(columns.AddActionLink("Edit", "fa fa-pencil"));
+            columns.AddActionLink("Edit", "fa fa-pencil");
+
+            columns.DidNotReceive().Add(Arg.Any<Expression<Func<AllTypesView, String>>>());
+            columns.DidNotReceive().Insert(Arg.Any<Int32>(), Arg.Any<Expression<Func<AllTypesView, String>>>());
+        }
+
+        [Fact]
+        public void AddActionLink_OnUnauthorizedActionLinkReturnsGridColumn()
+        {
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+
+            IGridColumn<AllTypesView> column = columns.AddActionLink("Edit", "fa fa-pencil");
+
+            Assert.IsType<GridColumn<AllTypesView, String>>(column);
+            Assert.NotNull(column);
         }
 
         [Fact]

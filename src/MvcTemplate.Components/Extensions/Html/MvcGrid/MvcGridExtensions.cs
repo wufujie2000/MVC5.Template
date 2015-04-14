@@ -37,16 +37,17 @@ namespace MvcTemplate.Components.Extensions.Html
             }
         }
 
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass) where T : class
         {
             if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action))
-                return null;
+                return new GridColumn<T, String>(columns.Grid, model => "");
 
             return columns
                 .Add(model => GetLink(model, action, iconClass))
                 .Css("action-cell")
                 .Encoded(false);
         }
+
         public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
         {
             return columns.AddProperty(property).Formatted("{0:d}");

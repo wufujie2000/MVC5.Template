@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 2.0.0
+ * Mvc.Grid 2.1.0
  * https://github.com/NonFactors/MVC.Grid
  *
  * Copyright © NonFactors
@@ -20,8 +20,7 @@
 
 .mvc-grid-sort {
     display: inline-block;
-    text-align: center;
-    min-width: 10px;
+    min-width: 7px;
 }
 
     .mvc-grid-sort.asc:after {

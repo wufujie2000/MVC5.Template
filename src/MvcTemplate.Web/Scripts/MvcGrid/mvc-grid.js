@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 2.0.0
+ * Mvc.Grid 2.1.0
  * https://github.com/NonFactors/MVC.Grid
  *
  * Copyright © NonFactors
@@ -432,7 +432,7 @@ var MvcGridTextFilter = (function () {
             var firstValue = popup.find('.first-filter .mvc-grid-input');
             firstValue.bind('keyup.mvcgrid', function (e) {
                 column.filter.first.val = this.value;
-                if (e.keyCode == 13) {
+                if (e.which == 13) {
                     popup.find('.mvc-grid-apply').click();
                 }
             });
@@ -440,7 +440,7 @@ var MvcGridTextFilter = (function () {
             var secondValue = popup.find('.second-filter .mvc-grid-input');
             secondValue.bind('keyup.mvcgrid', function (e) {
                 column.filter.second.val = this.value;
-                if (e.keyCode == 13) {
+                if (e.which == 13) {
                     popup.find('.mvc-grid-apply').click();
                 }
             });
@@ -550,7 +550,7 @@ var MvcGridNumberFilter = (function () {
                 column.filter.first.val = this.value;
                 if (filter.isValid(this.value)) {
                     $(this).removeClass('invalid');
-                    if (e.keyCode == 13) {
+                    if (e.which == 13) {
                         popup.find('.mvc-grid-apply').click();
                     }
                 } else {
@@ -567,7 +567,7 @@ var MvcGridNumberFilter = (function () {
                 column.filter.second.val = this.value;
                 if (filter.isValid(this.value)) {
                     $(this).removeClass('invalid');
-                    if (e.keyCode == 13) {
+                    if (e.which == 13) {
                         popup.find('.mvc-grid-apply').click();
                     }
                 } else {
@@ -601,6 +601,7 @@ var MvcGridNumberFilter = (function () {
         },
 
         isValid: function (value) {
+            if (value == '') return true;
             var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[.,]?\\d*$');
 
             return pattern.test(value);
@@ -689,7 +690,7 @@ var MvcGridDateFilter = (function () {
 
             firstValue.bind('change.mvcgrid keyup.mvcgrid', function (e) {
                 column.filter.first.val = this.value;
-                if (e.keyCode == 13) {
+                if (e.which == 13) {
                     popup.find('.mvc-grid-apply').click();
                 }
             });
@@ -699,7 +700,7 @@ var MvcGridDateFilter = (function () {
 
             secondValue.bind('change.mvcgrid keyup.mvcgrid', function (e) {
                 column.filter.second.val = this.value;
-                if (e.keyCode == 13) {
+                if (e.which == 13) {
                     popup.find('.mvc-grid-apply').click();
                 }
             });

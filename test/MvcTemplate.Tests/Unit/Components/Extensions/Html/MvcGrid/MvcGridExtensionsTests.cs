@@ -7,7 +7,6 @@ using NonFactors.Mvc.Grid;
 using NSubstitute;
 using System;
 using System.Linq.Expressions;
-using System.Web;
 using System.Web.Mvc;
 using Xunit;
 
@@ -18,21 +17,16 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         private IGridColumns<AllTypesView> columns;
         private IGridColumn<AllTypesView> column;
         private IHtmlGrid<AllTypesView> htmlGrid;
-        private UrlHelper urlHelper;
 
         public MvcGridExtensionsTests()
         {
             column = SubstituteColumn<AllTypesView>();
             htmlGrid = SubstituteHtmlGrid<AllTypesView>();
             columns = SubstituteColumns<AllTypesView, DateTime?>(column);
-
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
         }
         public void Dispose()
         {
             Authorization.Provider = null;
-            HttpContext.Current = null;
         }
 
         #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
@@ -41,6 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddActionLink_OnUnauthorizedActionLinkDoesNotAddColumn()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
             columns.AddActionLink("Edit", "fa fa-pencil");
 
@@ -52,6 +47,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddActionLink_OnUnauthorizedActionLinkReturnsGridColumn()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
             IGridColumn<AllTypesView> column = columns.AddActionLink("Edit", "fa fa-pencil");
 
@@ -65,6 +61,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actionLink = "";
             AllTypesView view = new AllTypesView();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
+            UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
             columns
@@ -90,9 +88,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddActionLink_OnNullAuthorizationProviderRendersActionLink()
         {
-            AllTypesView view = new AllTypesView();
-            Authorization.Provider = null;
             String actionLink = "";
+            Authorization.Provider = null;
+            AllTypesView view = new AllTypesView();
+            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
+            UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
 
             columns
                 .Add(Arg.Any<Expression<Func<AllTypesView, String>>>()).Returns(column)

@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -15,35 +14,13 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class MvcGridExtensions
     {
-        private static String CurrentAccountId
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.Name;
-            }
-        }
-        private static String CurrentController
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["controller"] as String;
-            }
-        }
-        private static String CurrentArea
-        {
-            get
-            {
-                return HttpContext.Current.Request.RequestContext.RouteData.Values["area"] as String;
-            }
-        }
-
         public static IGridColumn<T> AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass) where T : class
         {
-            if (Authorization.Provider != null && !Authorization.Provider.IsAuthorizedFor(CurrentAccountId, CurrentArea, CurrentController, action))
+            if (!IsAuthorizedToView(columns.Grid, action))
                 return new GridColumn<T, String>(columns.Grid, model => "");
 
             return columns
-                .Add(model => GetLink(model, action, iconClass))
+                .Add(model => GetLink(columns.Grid, model, action, iconClass))
                 .Css("action-cell")
                 .Encoded(false);
         }
@@ -107,9 +84,9 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Sortable();
         }
 
-        private static String GetLink<T>(T model, String action, String iconClass)
+        private static String GetLink<T>(IGrid grid, T model, String action, String iconClass)
         {
-            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            UrlHelper url = new UrlHelper(grid.HttpContext.Request.RequestContext);
             TagBuilder actionTag = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
@@ -120,6 +97,17 @@ namespace MvcTemplate.Components.Extensions.Html
             actionTag.InnerHtml = icon.ToString();
 
             return actionTag.ToString();
+        }
+        private static Boolean IsAuthorizedToView(IGrid grid, String action)
+        {
+            if (Authorization.Provider == null)
+                return true;
+
+            String accountId = grid.HttpContext.User.Identity.Name;
+            String area = grid.HttpContext.Request.RequestContext.RouteData.Values["area"] as String;
+            String controller = grid.HttpContext.Request.RequestContext.RouteData.Values["controller"] as String;
+
+            return Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action);
         }
         private static RouteValueDictionary GetRouteValuesFor<T>(T model)
         {

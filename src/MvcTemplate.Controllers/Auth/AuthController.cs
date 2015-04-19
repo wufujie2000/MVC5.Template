@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
@@ -12,9 +13,12 @@ namespace MvcTemplate.Controllers
     [AllowAnonymous]
     public class AuthController : ValidatedController<IAccountValidator, IAccountService>
     {
-        public AuthController(IAccountValidator validator, IAccountService service)
+        public IMailClient MailClient { get; private set; }
+
+        public AuthController(IAccountValidator validator, IAccountService service, IMailClient mailClient)
             : base(validator, service)
         {
+            MailClient = mailClient;
         }
 
         [HttpGet]
@@ -61,7 +65,17 @@ namespace MvcTemplate.Controllers
             if (!Validator.CanRecover(account))
                 return View(account);
 
-            await Service.Recover(account, Request);
+            String token = Service.Recover(account);
+            if (token != null)
+            {
+                String url = Url.Action("Reset", "Auth", new { token }, Request.Url.Scheme);
+
+                await MailClient.SendAsync(
+                    account.Email,
+                    Messages.RecoveryEmailSubject,
+                    String.Format(Messages.RecoveryEmailBody, url));
+            }
+
             Alerts.Add(AlertType.Info, Messages.RecoveryInformation, 0);
 
             return RedirectToAction("Login");

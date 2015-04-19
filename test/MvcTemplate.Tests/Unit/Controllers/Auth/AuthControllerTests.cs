@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Mail;
 using MvcTemplate.Controllers;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
@@ -7,9 +8,11 @@ using MvcTemplate.Validators;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -22,13 +25,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
         private IAccountValidator validator;
         private AuthController controller;
         private IAccountService service;
+        private IMailClient mailClient;
         private AccountView account;
 
         public AuthControllerTests()
         {
+            mailClient = Substitute.For<IMailClient>();
             service = Substitute.For<IAccountService>();
             validator = Substitute.For<IAccountValidator>();
-            controller = Substitute.ForPartsOf<AuthController>(validator, service);
+            controller = Substitute.ForPartsOf<AuthController>(validator, service, mailClient);
 
             accountRegister = ObjectFactory.CreateAccountRegisterView();
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
@@ -36,8 +41,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             accountLogin = ObjectFactory.CreateAccountLoginView();
             account = new AccountView();
 
+            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
+            controller.Url = new UrlHelper(httpContext.Request.RequestContext);
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = HttpContextFactory.CreateHttpContextBase();
+            controller.ControllerContext.HttpContext = httpContext;
         }
 
         #region Method: Register()
@@ -172,9 +179,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Recover(AccountRecoveryView account)
 
         [Fact]
-        public void Recover_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
+        public void Recover_OnAlreadyLoggedInRedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
+            validator.CanRecover(accountRecovery).Returns(true);
             controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
             controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
@@ -199,18 +207,51 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Recover_RecoversAccount()
         {
+            service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
 
             ActionResult result = controller.Recover(accountRecovery).Result;
 
-            service.Received().Recover(accountRecovery, controller.Request);
+            service.Received().Recover(accountRecovery);
         }
 
         [Fact]
-        public void Recover_AddsRecoveryInformationMessage()
+        public void Recover_OnNotNullRecoveryTokenSendsRecoveryInformation()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
+            service.Recover(accountRecovery).Returns("TestToken");
+
+            ActionResult result = controller.Recover(accountRecovery).Result;
+
+            String url = controller.Url.Action("Reset", "Auth", new { token = "TestToken" }, controller.Request.Url.Scheme);
+            String body = String.Format(Messages.RecoveryEmailBody, url);
+            String subject = Messages.RecoveryEmailSubject;
+            String email = accountRecovery.Email;
+
+            mailClient.Received().SendAsync(email, subject, body);
+        }
+
+        [Fact]
+        public void Recover_OnNullRecoveryTokenDoesNotSendRecoveryInformation()
+        {
+            service.IsLoggedIn(controller.User).Returns(false);
+            validator.CanRecover(accountRecovery).Returns(true);
+            service.Recover(accountRecovery).Returns(null as String);
+
+            ActionResult result = controller.Recover(accountRecovery).Result;
+
+            mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("Token")]
+        public void Recover_AddsRecoveryInformationMessage(String recoveryToken)
+        {
+            service.IsLoggedIn(controller.User).Returns(false);
+            validator.CanRecover(accountRecovery).Returns(true);
+            service.Recover(accountRecovery).Returns(recoveryToken);
 
             ActionResult result = controller.Recover(accountRecovery).Result;
 
@@ -221,11 +262,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal(0, actual.FadeoutAfter);
         }
 
-        [Fact]
-        public void Recover_RedirectsToLoginAfterSuccessfulRecovery()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("Token")]
+        public void Recover_RedirectsToLoginAfterSuccessfulRecovery(String recoveryToken)
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
+            service.Recover(accountRecovery).Returns(recoveryToken);
 
             RouteValueDictionary actual = (controller.Recover(accountRecovery).Result as RedirectToRouteResult).RouteValues;
 

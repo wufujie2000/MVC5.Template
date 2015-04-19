@@ -2,8 +2,6 @@ using MvcTemplate.Objects;
 using System;
 using System.Linq;
 using System.Security.Principal;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace MvcTemplate.Services
 {
@@ -15,7 +13,7 @@ namespace MvcTemplate.Services
         Boolean AccountExists(String accountId);
         Boolean IsLoggedIn(IPrincipal user);
 
-        Task Recover(AccountRecoveryView view, HttpRequestBase request);
+        String Recover(AccountRecoveryView view);
         void Register(AccountRegisterView view);
         void Reset(AccountResetView view);
 

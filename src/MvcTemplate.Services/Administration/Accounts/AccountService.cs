@@ -1,27 +1,20 @@
-using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
-using MvcTemplate.Resources.Views.AccountView;
 using System;
 using System.Linq;
 using System.Security.Principal;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 using System.Web.Security;
 
 namespace MvcTemplate.Services
 {
     public class AccountService : BaseService, IAccountService
     {
-        private IMailClient mailClient;
         private IHasher hasher;
 
-        public AccountService(IUnitOfWork unitOfWork, IMailClient mailClient, IHasher hasher)
+        public AccountService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
-            this.mailClient = mailClient;
             this.hasher = hasher;
         }
 
@@ -46,10 +39,10 @@ namespace MvcTemplate.Services
             return user.Identity.IsAuthenticated;
         }
 
-        public Task Recover(AccountRecoveryView view, HttpRequestBase request)
+        public String Recover(AccountRecoveryView view)
         {
             Account account = UnitOfWork.Select<Account>().SingleOrDefault(acc => acc.Email.ToLower() == view.Email.ToLower());
-            if (account == null) return Task.FromResult(0);
+            if (account == null) return null;
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();
@@ -57,11 +50,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
 
-            UrlHelper urlHelper = new UrlHelper(request.RequestContext);
-            String url = urlHelper.Action("Reset", "Auth", new { token = account.RecoveryToken }, request.Url.Scheme);
-            String recoveryEmailBody = String.Format(Messages.RecoveryEmailBody, url);
-
-            return mailClient.SendAsync(account.Email, Messages.RecoveryEmailSubject, recoveryEmailBody);
+            return account.RecoveryToken;
         }
         public void Register(AccountRegisterView view)
         {

@@ -1,10 +1,8 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using MvcTemplate.Components.Mail;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
-using MvcTemplate.Resources.Views.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using NSubstitute;
@@ -13,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
-using System.Web.Mvc;
 using System.Web.Security;
 using Xunit;
 using Xunit.Extensions;
@@ -24,7 +21,6 @@ namespace MvcTemplate.Tests.Unit.Services
     {
         private TestingContext context;
         private AccountService service;
-        private IMailClient mailClient;
         private String accountId;
         private IHasher hasher;
 
@@ -32,11 +28,10 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
-            mailClient = Substitute.For<IMailClient>();
             hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
 
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            service = new AccountService(new UnitOfWork(context), mailClient, hasher);
+            service = new AccountService(new UnitOfWork(context), hasher);
 
             TearDownData();
             SetUpData();
@@ -126,17 +121,15 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Recover(AccountRecoveryView view, HttpRequestBase request)
+        #region Method: Recover(AccountRecoveryView view)
 
         [Fact]
-        public void Recover_DoesNotSendRecoveryInformationForNonExistingAccount()
+        public void Recover_OnNonExistingAccountReturnsNullToken()
         {
             AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
             account.Email = "not@existing.email";
 
-            service.Recover(account, null);
-
-            mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
+            Assert.Null(service.Recover(account));
         }
 
         [Fact]
@@ -144,12 +137,11 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Account account = context.Set<Account>().AsNoTracking().Single();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
-            HttpRequestBase request = HttpContextFactory.CreateHttpContextBase().Request;
 
             AccountRecoveryView recoveryAccount = ObjectFactory.CreateAccountRecoveryView();
             recoveryAccount.Email = recoveryAccount.Email.ToLower();
 
-            service.Recover(recoveryAccount, request);
+            String expectedToken = service.Recover(recoveryAccount);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -159,31 +151,13 @@ namespace MvcTemplate.Tests.Unit.Services
                 expected.RecoveryTokenExpirationDate.Value.Ticks + TimeSpan.TicksPerSecond);
             Assert.NotEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expectedToken, actual.RecoveryToken);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
             Assert.NotNull(actual.RecoveryToken);
-        }
-
-        [Fact]
-        public void Recover_SendsRecoveryInformation()
-        {
-            HttpRequestBase request = HttpContextFactory.CreateHttpContextBase().Request;
-            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
-            Account recoveredAccount = context.Set<Account>().Single();
-            UrlHelper url = new UrlHelper(request.RequestContext);
-            String scheme = request.Url.Scheme;
-
-            service.Recover(account, request);
-
-            String expectedEmail = account.Email;
-            String expectedEmailSubject = Messages.RecoveryEmailSubject;
-            String recoveryUrl = url.Action("Reset", "Auth", new { token = recoveredAccount.RecoveryToken }, scheme);
-            String expectedEmailBody = String.Format(Messages.RecoveryEmailBody, recoveryUrl);
-
-            mailClient.Received().SendAsync(expectedEmail, expectedEmailSubject, expectedEmailBody);
         }
 
         #endregion

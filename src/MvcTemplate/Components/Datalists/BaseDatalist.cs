@@ -26,6 +26,7 @@ namespace MvcTemplate.Components.Datalists
         {
             UnitOfWork = unitOfWork;
         }
+
         protected override String GetColumnHeader(PropertyInfo property)
         {
             DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);

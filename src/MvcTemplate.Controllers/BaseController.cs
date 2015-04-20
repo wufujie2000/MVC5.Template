@@ -91,7 +91,7 @@ namespace MvcTemplate.Controllers
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
             base.OnAuthorization(filterContext);
-            if (!HttpContext.User.Identity.IsAuthenticated) return;
+            if (!User.Identity.IsAuthenticated) return;
 
             String area = (String)filterContext.RouteData.Values["area"];
             String action = (String)filterContext.RouteData.Values["action"];

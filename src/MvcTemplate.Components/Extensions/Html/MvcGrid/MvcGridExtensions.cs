@@ -40,9 +40,9 @@ namespace MvcTemplate.Components.Extensions.Html
             return columns
                 .AddProperty(property)
                 .RenderedAs(model =>
-                    valueFor(model) ?
-                        TableResources.Yes :
-                        TableResources.No);
+                    valueFor(model)
+                        ? TableResources.Yes
+                        : TableResources.No);
         }
         public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> property)
         {
@@ -51,10 +51,10 @@ namespace MvcTemplate.Components.Extensions.Html
             return columns
                 .AddProperty(property)
                 .RenderedAs(model =>
-                    valueFor(model) != null ?
-                        valueFor(model) == true ?
-                            TableResources.Yes :
-                            TableResources.No
+                    valueFor(model) != null
+                        ? valueFor(model) == true
+                            ? TableResources.Yes
+                            : TableResources.No
                         : "");
         }
         public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)

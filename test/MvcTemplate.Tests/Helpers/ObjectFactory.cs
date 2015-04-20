@@ -21,16 +21,6 @@ namespace MvcTemplate.Tests
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5)
             };
         }
-        public static AccountView CreateAccountView(Int32 id = 1)
-        {
-            return new AccountView
-            {
-                Id = "Id" + id,
-                Username = "Username" + id,
-                RoleName = "RoleName" + id,
-                Email = id + "@tests.com"
-            };
-        }
 
         public static ProfileEditView CreateProfileEditView(Int32 id = 1)
         {

@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.AccountView;
@@ -149,10 +150,11 @@ namespace MvcTemplate.Tests.Unit.Validators
 
             validator.CanReset(ObjectFactory.CreateAccountResetView());
 
-            String expected = Validations.RecoveryTokenExpired;
-            String actual = validator.Alerts.Single().Message;
+            Alert actual = validator.Alerts.Single();
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(Validations.RecoveryTokenExpired, actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal(0, actual.FadeoutAfter);
         }
 
         [Fact]

@@ -19,9 +19,9 @@ namespace MvcTemplate.Tests.Unit.Services
 {
     public class AccountServiceTests : IDisposable
     {
-        private TestingContext context;
         private AccountService service;
-        private String accountId;
+        private TestingContext context;
+        private Account account;
         private IHasher hasher;
 
         public AccountServiceTests()
@@ -61,12 +61,12 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: AccountExists(String accountId)
+        #region Method: AccountExists(String id)
 
         [Fact]
         public void AccountExists_ReturnsTrueIfAccountExists()
         {
-            Assert.True(service.AccountExists(accountId));
+            Assert.True(service.AccountExists(account.Id));
         }
 
         [Fact]
@@ -107,9 +107,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void GetView_GetsViewById()
         {
-            Account account = context.Set<Account>().Single();
-
-            AccountView actual = service.Get<AccountView>(accountId);
+            AccountView actual = service.Get<AccountView>(account.Id);
             AccountView expected = Mapper.Map<AccountView>(account);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
@@ -126,10 +124,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Recover_OnNonExistingAccountReturnsNullToken()
         {
-            AccountRecoveryView account = ObjectFactory.CreateAccountRecoveryView();
-            account.Email = "not@existing.email";
+            AccountRecoveryView view = ObjectFactory.CreateAccountRecoveryView();
+            view.Email = "not@existing.email";
 
-            Assert.Null(service.Recover(account));
+            Assert.Null(service.Recover(view));
         }
 
         [Fact]
@@ -138,10 +136,10 @@ namespace MvcTemplate.Tests.Unit.Services
             Account account = context.Set<Account>().AsNoTracking().Single();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
 
-            AccountRecoveryView recoveryAccount = ObjectFactory.CreateAccountRecoveryView();
-            recoveryAccount.Email = recoveryAccount.Email.ToLower();
+            AccountRecoveryView view = ObjectFactory.CreateAccountRecoveryView();
+            view.Email = view.Email.ToLower();
 
-            String expectedToken = service.Recover(recoveryAccount);
+            String expectedToken = service.Recover(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -167,11 +165,11 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Register_RegistersAccount()
         {
-            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView(2);
-            service.Register(account);
+            AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
+            service.Register(view);
 
-            Account actual = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
-            AccountRegisterView expected = account;
+            Account actual = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
+            AccountRegisterView expected = view;
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
@@ -187,16 +185,16 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Register_LowersEmailValue()
         {
-            AccountRegisterView account = ObjectFactory.CreateAccountRegisterView(2);
-            String expected = account.Email.ToLower();
-            account.Email = account.Email.ToUpper();
+            AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
+            String lowerCaseEmail = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
 
-            service.Register(account);
+            service.Register(view);
 
-            Account model = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
+            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
 
-            Assert.Equal(expected, account.Email);
-            Assert.Equal(expected, model.Email);
+            Assert.Equal(lowerCaseEmail, view.Email);
+            Assert.Equal(lowerCaseEmail, model.Email);
         }
 
         #endregion
@@ -206,14 +204,14 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Reset_ResetsAccount()
         {
-            AccountResetView accountReset = ObjectFactory.CreateAccountResetView();
             Account account = context.Set<Account>().AsNoTracking().Single();
-            hasher.HashPassword(accountReset.NewPassword).Returns("Reset");
+            AccountResetView view = ObjectFactory.CreateAccountResetView();
+            hasher.HashPassword(view.NewPassword).Returns("Reset");
             account.RecoveryTokenExpirationDate = null;
             account.RecoveryToken = null;
             account.Passhash = "Reset";
 
-            service.Reset(accountReset);
+            service.Reset(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -235,13 +233,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_CreatesAccount()
         {
-            AccountCreateView account = ObjectFactory.CreateAccountCreateView(2);
-            account.RoleId = ObjectFactory.CreateRoleView().Id;
+            AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
+            view.RoleId = ObjectFactory.CreateRoleView().Id;
 
-            service.Create(account);
+            service.Create(view);
 
-            Account actual = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
-            AccountCreateView expected = account;
+            Account actual = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
+            AccountCreateView expected = view;
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
@@ -256,16 +254,16 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_LowersEmailValue()
         {
-            AccountCreateView account = ObjectFactory.CreateAccountCreateView(2);
-            String expected = account.Email.ToLower();
-            account.Email = account.Email.ToUpper();
+            AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
+            String lowerCaseEmail = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
 
-            service.Create(account);
+            service.Create(view);
 
-            Account model = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == account.Id);
+            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
 
-            Assert.Equal(expected, account.Email);
-            Assert.Equal(expected, model.Email);
+            Assert.Equal(lowerCaseEmail, view.Email);
+            Assert.Equal(lowerCaseEmail, model.Email);
         }
 
         #endregion
@@ -276,12 +274,12 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_EditsProfile()
         {
             Account account = context.Set<Account>().AsNoTracking().Single();
-            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            account.Passhash = hasher.HashPassword(profile.NewPassword);
-            profile.Email = account.Email = "test@test.com";
-            profile.Username = account.Username = "Test";
+            ProfileEditView view = ObjectFactory.CreateProfileEditView();
+            account.Passhash = hasher.HashPassword(view.NewPassword);
+            view.Email = account.Email = "test@test.com";
+            view.Username = account.Username = "Test";
 
-            service.Edit(profile);
+            service.Edit(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -299,15 +297,15 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_LowersEmailValue()
         {
-            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            String expected = profile.Email.ToLower();
-            profile.Email = profile.Email.ToUpper();
+            ProfileEditView view = ObjectFactory.CreateProfileEditView();
+            String expected = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
 
-            service.Edit(profile);
+            service.Edit(view);
 
             Account model = context.Set<Account>().AsNoTracking().Single();
 
-            Assert.Equal(expected, profile.Email);
+            Assert.Equal(expected, view.Email);
             Assert.Equal(expected, model.Email);
         }
 
@@ -317,13 +315,14 @@ namespace MvcTemplate.Tests.Unit.Services
         [InlineData("   ")]
         public void Edit_OnNotSpecifiedNewPasswordDoesNotEditPassword(String newPassword)
         {
-            String expected = context.Set<Account>().AsNoTracking().Single().Passhash;
-            ProfileEditView profile = ObjectFactory.CreateProfileEditView();
-            profile.NewPassword = newPassword;
+            String passhash = context.Set<Account>().AsNoTracking().Single().Passhash;
+            ProfileEditView view = ObjectFactory.CreateProfileEditView();
+            view.NewPassword = newPassword;
 
-            service.Edit(profile);
+            service.Edit(view);
 
             String actual = context.Set<Account>().AsNoTracking().Single().Passhash;
+            String expected = passhash;
 
             Assert.Equal(expected, actual);
         }
@@ -335,12 +334,12 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_EditsAccountsRoleOnly()
         {
-            AccountEditView accountEdit = ObjectFactory.CreateAccountEditView();
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
-            accountEdit.RoleId = account.RoleId = null;
-            accountEdit.Username += "Edition";
+            view.RoleId = account.RoleId = null;
+            view.Username += "Edition";
 
-            service.Edit(accountEdit);
+            service.Edit(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -358,9 +357,9 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_RefreshesAuthorizationProvider()
         {
-            AccountEditView account = ObjectFactory.CreateAccountEditView();
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
 
-            service.Edit(account);
+            service.Edit(view);
 
             Authorization.Provider.Received().Refresh();
         }
@@ -372,7 +371,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Delete_DeletesAccount()
         {
-            service.Delete(accountId);
+            service.Delete(account.Id);
 
             Assert.Empty(context.Set<Account>());
         }
@@ -384,13 +383,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Login_IsCaseInsensitive()
         {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(account.Username.ToUpper());
+            service.Login(view.Username.ToUpper());
 
             String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
-            String expected = accountId;
+            String expected = view.Id;
 
             Assert.Equal(expected, actual);
         }
@@ -398,10 +397,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Login_CreatesPersistentAuthenticationTicket()
         {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(account.Username);
+            service.Login(view.Username);
 
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
 
@@ -411,13 +410,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Login_SetAccountIdAsAuthenticationTicketValue()
         {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(account.Username);
+            service.Login(view.Username);
 
             String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
-            String expected = account.Id;
+            String expected = view.Id;
 
             Assert.Equal(expected, actual);
         }
@@ -429,10 +428,10 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Logout_MakesAccountCookieExpired()
         {
-            AccountLoginView account = ObjectFactory.CreateAccountLoginView();
+            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(account.Username);
+            service.Login(view.Username);
             service.Logout();
 
             DateTime expirationDate = HttpContext.Current.Response.Cookies[0].Expires;
@@ -446,10 +445,9 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private void SetUpData()
         {
-            Account account = ObjectFactory.CreateAccount();
+            account = ObjectFactory.CreateAccount();
             account.Role = ObjectFactory.CreateRole();
             account.RoleId = account.Role.Id;
-            accountId = account.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();

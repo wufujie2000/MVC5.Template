@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Services
     public class <#= Model.Service #>Tests : IDisposable
     {
         private <#= Model.Service #> service;
-        private String <#= Model.ModelName #>Id;
+        private <#= Model.Model #> <#= Model.ModelName #>;
         private TestingContext context;
 
         public <#= Model.Service #>Tests()
@@ -62,9 +62,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void GetView_GetsViewById()
         {
-            <#= Model.Model #> <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
-
-            <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>Id);
+            <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
@@ -122,7 +120,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Delete_Deletes<#= Model.Model #>()
         {
-            service.Delete(<#= Model.ModelName #>Id);
+            service.Delete(<#= Model.ModelName #>.Id);
 
             Assert.Empty(context.Set<<#= Model.Model #>>());
         }
@@ -133,8 +131,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private void SetUpData()
         {
-            <#= Model.Model #> <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
-            <#= Model.ModelName #>Id = <#= Model.ModelName #>.Id;
+            <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
 
             context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
             context.SaveChanges();

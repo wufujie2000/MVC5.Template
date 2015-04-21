@@ -30,13 +30,13 @@ namespace MvcTemplate.Services
                 .OrderByDescending(account => account.CreationDate);
         }
 
-        public Boolean AccountExists(String accountId)
-        {
-            return UnitOfWork.Select<Account>().Any(account => account.Id == accountId);
-        }
         public Boolean IsLoggedIn(IPrincipal user)
         {
             return user.Identity.IsAuthenticated;
+        }
+        public Boolean AccountExists(String id)
+        {
+            return UnitOfWork.Select<Account>().Any(account => account.Id == id);
         }
 
         public String Recover(AccountRecoveryView view)

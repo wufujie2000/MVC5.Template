@@ -6,6 +6,9 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
         Return;
     }
 
+    $ModelName = ([Regex] "(?=[A-Z])").Split($Model, 0, 0)[-1]
+    $ModelName = $ModelName.SubString(0, 1).ToLower() + $ModelName.SubString(1)
+
     $ControllerNamespace = "MvcTemplate.Controllers"
     $ControllerTestsNamespace = "MvcTemplate.Tests.Unit.Controllers"
     If ($Area) { $ControllerNamespace = "MvcTemplate.Controllers.$Area" }
@@ -15,10 +18,10 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
         -OutputPath $OutputPath `
         -Template $Template `
         -Model @{ `
-            ModelName = $Model.SubString(0, 1).ToLower() + $Model.SubString(1); `
             ControllerTestNamespace = $ControllerTestsNamespace; `
             AreaRegistration = $Area + "AreaRegistration"; `
             ControllerNamespace = $ControllerNamespace; `
+            ModelName = $ModelName; `
 
             Controller = $Controller + "Controller"; `
             IValidator = "I" + $Model + "Validator"; `

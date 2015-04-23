@@ -24,6 +24,9 @@ namespace MvcTemplate.Tests.Objects
         [MinLength(128)]
         public String MinLength { get; set; }
 
+        [GreaterThan(128)]
+        public String GreaterThan { get; set; }
+
         [EmailAddress]
         public String EmailAddress { get; set; }
 

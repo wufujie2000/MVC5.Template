@@ -132,6 +132,9 @@
   <data name="FieldMustBeGreaterOrEqualTo" xml:space="preserve">
     <value>Laukas '{0}' turi būti didesnis arba lygus {1}.</value>
   </data>
+  <data name="FieldMustBeGreaterThan" xml:space="preserve">
+    <value>Laukas '{0}' turi būti didesnis už {1}.</value>
+  </data>
   <data name="FieldMustBeInRange" xml:space="preserve">
     <value>Laukas '{0}' turi būti tarp {1} ir {2}.</value>
   </data>

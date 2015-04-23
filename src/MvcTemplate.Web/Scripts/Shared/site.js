@@ -50,6 +50,16 @@
         return this.optional(element) || (Globalize.parseFloat(value) >= parseFloat(param[0]) && Globalize.parseFloat(value) <= parseFloat(param[1]));
     };
 
+    $.validator.addMethod('greater', function (value, element, param) {
+        return this.optional(element) || Globalize.parseFloat(value) > parseFloat(param);
+    });
+    $.validator.unobtrusive.adapters.add("greater", ["min"], function (options) {
+        options.rules["greater"] = options.params.min;
+        if (options.message) {
+            options.messages["greater"] = options.message;
+        }
+    });
+
     $.validator.addMethod('integer', function (value, element) {
         return this.optional(element) || /^[+-]?\d+$/.test(value);
     });

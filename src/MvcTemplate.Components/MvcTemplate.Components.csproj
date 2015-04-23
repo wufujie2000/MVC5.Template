@@ -69,6 +69,7 @@
     <Compile Include="Mvc\Adapters\MinLengthAdapter.cs" />
     <Compile Include="Mvc\Adapters\MaxValueAdapter.cs" />
     <Compile Include="Mvc\Adapters\IntegerAdapter.cs" />
+    <Compile Include="Mvc\Adapters\GreaterThanAdapter.cs" />
     <Compile Include="Mvc\Adapters\MinValueAdapter.cs" />
     <Compile Include="Mvc\Adapters\RangeAdapter.cs" />
     <Compile Include="Mvc\Adapters\StringLengthAdapter.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Mvc\Attributes\EqualToAttribute.cs" />
     <Compile Include="Mvc\Attributes\MaxValueAttribute.cs" />
     <Compile Include="Mvc\Attributes\IntegerAttribute.cs" />
+    <Compile Include="Mvc\Attributes\GreaterThanAttribute.cs" />
     <Compile Include="Mvc\Attributes\MinValueAttribute.cs" />
     <Compile Include="Mvc\Binders\NotTrimmedAttribute.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />

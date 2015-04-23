@@ -106,6 +106,15 @@ namespace MvcTemplate.Resources.Form {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; field must be greater than {1}..
+        /// </summary>
+        public static string FieldMustBeGreaterThan {
+            get {
+                return ResourceManager.GetString("FieldMustBeGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; field must be between {1} and {2}..
         /// </summary>
         public static string FieldMustBeInRange {

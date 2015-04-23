@@ -154,6 +154,7 @@
     <Compile Include="Unit\Components\Extensions\Html\WidgetBox\WidgetBoxExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EqualToAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\IntegerAdapterTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Adapters\GreaterThanAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RangeAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MinLengthAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\MaxValueAdapterTests.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Unit\Components\Mvc\Attributes\EqualToAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\MaxValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\IntegerAttributeTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Attributes\GreaterThanAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\MinValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\Area\AuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AuthorizeAsAttributeTests.cs" />

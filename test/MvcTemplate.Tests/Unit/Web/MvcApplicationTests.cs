@@ -331,6 +331,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData("MinValue", typeof(MinValueAdapter))]
         [InlineData("MaxValue", typeof(MaxValueAdapter))]
         [InlineData("MinLength", typeof(MinLengthAdapter))]
+        [InlineData("GreaterThan", typeof(GreaterThanAdapter))]
         [InlineData("EmailAddress", typeof(EmailAddressAdapter))]
         [InlineData("StringLength", typeof(StringLengthAdapter))]
         public void RegisterAdapters_RegistersAdapter(String property, Type adapterType)

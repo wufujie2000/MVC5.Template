@@ -10,6 +10,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             return RedirectToAction(action);
         }
+        public RedirectToRouteResult BaseRedirectToAction(String action, Object routeValues)
+        {
+            return RedirectToAction(action, routeValues);
+        }
 
         public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
         {

@@ -193,6 +193,55 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
+        #region Method: RedirectIfAuthorized(String action, Object routeValues)
+
+        [Fact]
+        public void RedirectIfAuthorized_RouteValues_RedirectsToDefaultIfNotAuthorizedWithSpecifiedRoute()
+        {
+            controller.IsAuthorizedFor("Area", "Controller", "Action").Returns(false);
+
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            RedirectToRouteResult actual = controller.RedirectIfAuthorized("Action", new { controller = "Control", area = "Area" });
+            RedirectToRouteResult expected = controller.RedirectToDefault();
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void RedirectIfAuthorized_RouteValues_RedirectsToDefaultIfNotAuthorized()
+        {
+            String areaRoute = controller.RouteData.Values["area"] as String;
+            String controllerRoute = controller.RouteData.Values["controller"] as String;
+            controller.IsAuthorizedFor(areaRoute, controllerRoute, "Action").Returns(false);
+
+            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
+            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+
+            RedirectToRouteResult actual = controller.RedirectIfAuthorized("Action", new { id = "Id" });
+            RedirectToRouteResult expected = controller.RedirectToDefault();
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
+        public void RedirectIfAuthorized_RouteValues_RedirectsToActionIfAuthorized()
+        {
+            controller.IsAuthorizedFor("Area", "Control", "Action").Returns(true);
+
+            RouteValueDictionary expected = controller.BaseRedirectToAction("Action", new { controller = "Control", area = "Area", id = "Id" }).RouteValues;
+            RouteValueDictionary actual = controller.RedirectIfAuthorized("Action", new { controller = "Control", area = "Area", id = "Id" }).RouteValues;
+
+            Assert.Equal(expected["controller"], actual["controller"]);
+            Assert.Equal(expected["language"], actual["language"]);
+            Assert.Equal(expected["action"], actual["action"]);
+            Assert.Equal(expected["area"], actual["area"]);
+            Assert.Equal(expected["id"], actual["id"]);
+        }
+
+        #endregion
+
         #region Method: IsAuthorizedFor(String action)
 
         [Fact]

@@ -3,6 +3,7 @@ using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using System;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
 {
@@ -65,6 +66,17 @@ namespace MvcTemplate.Controllers
                 return RedirectToDefault();
 
             return RedirectToAction(action);
+        }
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String action, Object routeValues)
+        {
+            RouteValueDictionary values = HtmlHelper.AnonymousObjectToHtmlAttributes(routeValues);
+            String controller = (values["controller"] ?? RouteData.Values["controller"]) as String;
+            String area = (values["area"] ?? RouteData.Values["area"]) as String;
+
+            if (!IsAuthorizedFor(area, controller, action))
+                return RedirectToDefault();
+
+            return RedirectToAction(action, routeValues);
         }
 
         public virtual Boolean IsAuthorizedFor(String action)

@@ -44,21 +44,21 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Fact]
         public void CanCreate_CanNotCreateWithAlreadyUsedRoleName()
         {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "1";
+            RoleView view = ObjectFactory.CreateRoleView();
+            view.Name = role.Name.ToLower();
+            view.Id += "1";
 
-            Assert.False(validator.CanCreate(roleView));
+            Assert.False(validator.CanCreate(view));
         }
 
         [Fact]
         public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyUsedRoleName()
         {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "OtherIdValue";
+            RoleView view = ObjectFactory.CreateRoleView();
+            view.Name = role.Name.ToLower();
+            view.Id += "OtherIdValue";
 
-            validator.CanCreate(roleView);
+            validator.CanCreate(view);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
             String expected = Validations.RoleNameIsAlreadyUsed;
@@ -87,21 +87,21 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Fact]
         public void CanEdit_CanNotEditToAlreadyUsedRoleName()
         {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "1";
+            RoleView view = ObjectFactory.CreateRoleView();
+            view.Name = role.Name.ToLower();
+            view.Id += "1";
 
-            Assert.False(validator.CanEdit(roleView));
+            Assert.False(validator.CanEdit(view));
         }
 
         [Fact]
         public void CanEdit_AddsErrorMessageThenCanNotEditToAlreadyUsedRoleName()
         {
-            RoleView roleView = ObjectFactory.CreateRoleView();
-            roleView.Name = role.Name.ToLower();
-            roleView.Id += "OtherIdValue";
+            RoleView view = ObjectFactory.CreateRoleView();
+            view.Name = role.Name.ToLower();
+            view.Id += "OtherIdValue";
 
-            validator.CanEdit(roleView);
+            validator.CanEdit(view);
 
             String actual = validator.ModelState["Name"].Errors[0].ErrorMessage;
             String expected = Validations.RoleNameIsAlreadyUsed;

@@ -29,25 +29,6 @@ namespace MvcTemplate.Tests.Unit.Resources
 
         #endregion
 
-        #region Static method: GetActionTitle(String action)
-
-        [Fact]
-        public void GetActionTitle_GetsTitle()
-        {
-            String actual = ResourceProvider.GetActionTitle("Create");
-            String expected = Actions.Create;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void GetActionTitle_OnActionNotFoundReturnsNull()
-        {
-            Assert.Null(ResourceProvider.GetActionTitle(null));
-        }
-
-        #endregion
-
         #region Static method: GetContentTitle(RouteValueDictionary values)
 
         [Fact]

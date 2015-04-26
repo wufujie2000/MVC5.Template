@@ -7,7 +7,12 @@
         <span class="widget-title-icon fa fa-th"></span>
         <h5>@Headers.<#= Model.HeaderTitle #>Index</h5>
         <div class="widget-title-buttons">
-            @Html.WidgetButton("Create", "fa fa-file-o")
+            @if (Html.IsAuthorizedFor("Create"))
+            {
+                <a class="btn" href="@Url.Action("Create")">
+                    <i class="fa fa-file-o"></i><span class="text">@Actions.Create</span>
+                </a>
+            }
         </div>
     </div>
     <div class="widget-content">

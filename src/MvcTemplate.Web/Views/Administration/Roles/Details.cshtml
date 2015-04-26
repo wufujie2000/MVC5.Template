@@ -5,8 +5,18 @@
         <span class="widget-title-icon fa fa-th-list"></span>
         <h5>@Headers.AdministrationRolesDetails</h5>
         <div class="widget-title-buttons">
-            @Html.WidgetButton("Edit", "fa fa-pencil")
-            @Html.WidgetButton("Delete", "fa fa-times")
+            @if (Html.IsAuthorizedFor("Edit"))
+            {
+                <a class="btn" href="@Url.Action("Edit", new { id = Model.Id })">
+                    <i class="fa fa-pencil"></i><span class="text">@Actions.Edit</span>
+                </a>
+            }
+            @if (Html.IsAuthorizedFor("Delete"))
+            {
+                <a class="btn" href="@Url.Action("Delete", new { id = Model.Id })">
+                    <i class="fa fa-times"></i><span class="text">@Actions.Delete</span>
+                </a>
+            }
         </div>
     </div>
     <div class="widget-content">

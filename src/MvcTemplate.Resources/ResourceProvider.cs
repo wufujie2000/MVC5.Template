@@ -23,10 +23,6 @@ namespace MvcTemplate.Resources
         {
             return GetResource("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
         }
-        public static String GetActionTitle(String action)
-        {
-            return GetResource("MvcTemplate.Resources.Shared.Actions", action);
-        }
         public static String GetContentTitle(RouteValueDictionary values)
         {
             String key = String.Format("{0}{1}{2}", values["area"], values["controller"], values["action"]);

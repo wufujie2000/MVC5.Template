@@ -60,6 +60,7 @@
     <Compile Include="Extensions\Html\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\Html\MvcGrid\MvcGridExtensions.cs" />
     <Compile Include="Extensions\Html\Page\ContentExtensions.cs" />
+    <Compile Include="Extensions\Html\Page\AuthorizationExtensions.cs" />
     <Compile Include="Extensions\Mvc\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Mail\IMailClient.cs" />
@@ -100,7 +101,6 @@
     <Compile Include="Mvc\Adapters\RequiredAdapter.cs" />
     <Compile Include="Extensions\Html\Bootstrap\BootstrapExtensions.cs" />
     <Compile Include="Extensions\Html\JsTree\JsTreeExtensions.cs" />
-    <Compile Include="Extensions\Html\WidgetBox\WidgetBoxExtensions.cs" />
     <Compile Include="Mvc\ViewEngines\ViewEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\Authorization\AuthorizeAsAttribute.cs" />

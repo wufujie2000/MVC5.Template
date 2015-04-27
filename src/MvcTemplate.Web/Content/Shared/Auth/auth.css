@@ -1,5 +1,11 @@
-﻿.alerts .alert div {
+﻿.alerts {
+  padding: 10px 0;
+}
+.alerts .alert div {
   text-align: center;
+}
+form {
+  padding: 0 10px;
 }
 .auth-content {
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px inset, rgba(255, 255, 255, 0.4) 0 1px 0;

@@ -41,6 +41,7 @@ namespace MvcTemplate.Controllers
                 return View(account);
 
             Service.Register(account);
+
             Alerts.Add(AlertType.Success, Messages.SuccesfulRegistration);
 
             return RedirectToAction("Login");

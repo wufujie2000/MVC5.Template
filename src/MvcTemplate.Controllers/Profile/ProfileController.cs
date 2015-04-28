@@ -65,6 +65,7 @@ namespace MvcTemplate.Controllers
             if (!Validator.CanDelete(profile))
             {
                 Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);
+
                 return View();
             }
 

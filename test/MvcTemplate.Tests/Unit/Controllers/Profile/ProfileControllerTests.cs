@@ -183,7 +183,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: DeleteConfirmed(AccountView profile)
+        #region Method: DeleteConfirmed(ProfileDeleteView profile)
 
         [Fact]
         public void DeleteConfirmed_ProtectsFromOverpostingId()
@@ -210,6 +210,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             controller.DeleteConfirmed(profileDelete);
+
             Alert actual = controller.Alerts.Single();
 
             Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);

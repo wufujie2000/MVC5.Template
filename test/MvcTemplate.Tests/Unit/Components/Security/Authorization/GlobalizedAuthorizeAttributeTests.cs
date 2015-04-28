@@ -28,6 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             Assert.Equal("Auth", actual["controller"]);
             Assert.Equal("Login", actual["action"]);
             Assert.Equal("", actual["area"]);
+            Assert.Equal(5, actual.Count);
         }
 
         #endregion

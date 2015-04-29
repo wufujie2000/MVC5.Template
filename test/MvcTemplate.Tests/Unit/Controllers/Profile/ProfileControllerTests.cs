@@ -8,6 +8,7 @@ using NSubstitute;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -95,6 +96,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
+        public void Edit_ReturnsSameModelIfCanNotEdit()
+        {
+            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            validator.CanEdit(profileEdit).Returns(false);
+
+            Object actual = (controller.Edit(profileEdit) as ViewResult).Model;
+            Object expected = profileEdit;
+
+            Assert.Same(expected, actual);
+        }
+
+        [Fact]
         public void Edit_EditsProfileView()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
@@ -120,26 +133,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_DoesNotEditProfileIfCanNotEdit()
+        public void Edit_AfterSuccessfulEditRedirectsToEdit()
         {
             service.AccountExists(controller.CurrentAccountId).Returns(true);
-            validator.CanEdit(profileEdit).Returns(false);
+            validator.CanEdit(profileEdit).Returns(true);
 
-            controller.Edit(profileEdit);
+            RouteValueDictionary actual = (controller.Edit(profileEdit) as RedirectToRouteResult).RouteValues;
 
-            service.DidNotReceive().Edit(profileEdit);
-        }
-
-        [Fact]
-        public void Edit_ReturnsSameModel()
-        {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
-            validator.CanEdit(profileEdit).Returns(false);
-
-            Object actual = (controller.Edit(profileEdit) as ViewResult).Model;
-            Object expected = profileEdit;
-
-            Assert.Same(expected, actual);
+            Assert.Equal("Edit", actual["action"]);
+            Assert.Equal(1, actual.Count);
         }
 
         #endregion

@@ -33,13 +33,14 @@ namespace MvcTemplate.Controllers
                 return LogOut();
 
             profile.Id = CurrentAccountId;
-            if (Validator.CanEdit(profile))
-            {
-                Service.Edit(profile);
-                Alerts.Add(AlertType.Success, Messages.ProfileUpdated);
-            }
+            if (!Validator.CanEdit(profile))
+                return View(profile);
 
-            return View(profile);
+            Service.Edit(profile);
+
+            Alerts.Add(AlertType.Success, Messages.ProfileUpdated);
+
+            return RedirectToAction("Edit");
         }
 
         [HttpGet]

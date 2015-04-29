@@ -137,7 +137,7 @@ namespace MvcTemplate.Tests.Unit.Services
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
 
             AccountRecoveryView view = ObjectFactory.CreateAccountRecoveryView();
-            view.Email = view.Email.ToLower();
+            view.Email = view.Email.ToUpper();
 
             String expectedToken = service.Recover(view);
 
@@ -166,6 +166,8 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Register_RegistersAccount()
         {
             AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
+            view.Email = view.Email.ToUpper();
+
             service.Register(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
@@ -173,28 +175,13 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Email.ToLower(), actual.Email);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Null(actual.RecoveryTokenExpirationDate);
-            Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
             Assert.Null(actual.RoleId);
             Assert.Null(actual.Role);
-        }
-
-        [Fact]
-        public void Register_LowersEmailValue()
-        {
-            AccountRegisterView view = ObjectFactory.CreateAccountRegisterView(2);
-            String lowerCaseEmail = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
-
-            service.Register(view);
-
-            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
-
-            Assert.Equal(lowerCaseEmail, view.Email);
-            Assert.Equal(lowerCaseEmail, model.Email);
         }
 
         #endregion
@@ -235,6 +222,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
             view.RoleId = ObjectFactory.CreateRoleView().Id;
+            view.Email = view.Email.ToUpper();
 
             service.Create(view);
 
@@ -243,27 +231,12 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Email.ToLower(), actual.Email);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Null(actual.RecoveryTokenExpirationDate);
             Assert.Equal(expected.RoleId, actual.RoleId);
-            Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
-        }
-
-        [Fact]
-        public void Create_LowersEmailValue()
-        {
-            AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
-            String lowerCaseEmail = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
-
-            service.Create(view);
-
-            Account model = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
-
-            Assert.Equal(lowerCaseEmail, view.Email);
-            Assert.Equal(lowerCaseEmail, model.Email);
         }
 
         #endregion
@@ -276,7 +249,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Account account = context.Set<Account>().AsNoTracking().Single();
             ProfileEditView view = ObjectFactory.CreateProfileEditView();
             account.Passhash = hasher.HashPassword(view.NewPassword);
-            view.Email = account.Email = "test@test.com";
+            view.Email = account.Email = "TEST@TEST.com";
             view.Username = account.Username = "Test";
 
             service.Edit(view);
@@ -287,26 +260,11 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Email.ToLower(), actual.Email);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.RoleId, actual.RoleId);
-            Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
-        }
-
-        [Fact]
-        public void Edit_LowersEmailValue()
-        {
-            ProfileEditView view = ObjectFactory.CreateProfileEditView();
-            String expected = view.Email.ToLower();
-            view.Email = view.Email.ToUpper();
-
-            service.Edit(view);
-
-            Account model = context.Set<Account>().AsNoTracking().Single();
-
-            Assert.Equal(expected, view.Email);
-            Assert.Equal(expected, model.Email);
         }
 
         [Theory]

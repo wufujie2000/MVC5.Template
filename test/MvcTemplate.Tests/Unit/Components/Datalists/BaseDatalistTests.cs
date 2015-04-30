@@ -17,25 +17,26 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
     public class BaseDatalistTests : IDisposable
     {
         private BaseDatalistProxy<Role, RoleView> datalist;
-        private IUnitOfWork unitOfWork;
+        private UrlHelper urlHelper;
 
         public BaseDatalistTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            datalist = new BaseDatalistProxy<Role, RoleView>();
-            unitOfWork = Substitute.For<IUnitOfWork>();
+            urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+
+            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
         }
         public void Dispose()
         {
             HttpContext.Current = null;
         }
 
-        #region Constructor: BaseDatalist()
+        #region Constructor: BaseDatalist(UrlHelper url)
 
         [Fact]
         public void BaseDatalist_SetsDialogTitle()
         {
-            datalist = new BaseDatalistProxy<Role, RoleView>();
+            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
 
             String expected = ResourceProvider.GetDatalistTitle<Role>();
             String actual = datalist.DialogTitle;
@@ -46,10 +47,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void BaseDatalist_SetsDatalistUrl()
         {
-            datalist = new BaseDatalistProxy<Role, RoleView>();
-            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
 
-            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
+            String expected = urlHelper.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
             String actual = datalist.DatalistUrl;
 
             Assert.Equal(expected, actual);
@@ -62,6 +62,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void BaseDatalist_SetsUnitOfWork()
         {
+            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
             IUnitOfWork actual = datalist.BaseUnitOfWork;
@@ -145,8 +146,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void GetModels_ReturnsModelsFromUnitOfWork()
         {
-            unitOfWork.Select<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
+            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            unitOfWork.Select<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
 
             IQueryable expected = unitOfWork.Select<Role>().To<RoleView>();
             IQueryable actual = datalist.BaseGetModels();

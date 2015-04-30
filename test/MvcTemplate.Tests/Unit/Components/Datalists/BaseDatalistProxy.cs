@@ -4,6 +4,7 @@ using MvcTemplate.Objects;
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
@@ -19,11 +20,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             }
         }
 
-        public BaseDatalistProxy()
+        public BaseDatalistProxy(UrlHelper url) : base(url)
         {
         }
-        public BaseDatalistProxy(IUnitOfWork unitOfWork)
-            : base(unitOfWork)
+        public BaseDatalistProxy(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 

@@ -5,7 +5,6 @@ using MvcTemplate.Resources;
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Datalists
@@ -16,11 +15,10 @@ namespace MvcTemplate.Components.Datalists
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        public BaseDatalist()
+        public BaseDatalist(UrlHelper url)
         {
             DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
-            UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
-            DatalistUrl = urlHelper.Action(typeof(TModel).Name, Prefix, new { area = "" });
+            DatalistUrl = url.Action(typeof(TModel).Name, Prefix, new { area = "" });
         }
         public BaseDatalist(IUnitOfWork unitOfWork)
         {

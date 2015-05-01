@@ -100,14 +100,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Log_DoesNotSaveLogs()
         {
             entry.State = EntityState.Added;
-            DbContext context = Substitute.For<DbContext>();
-            logger = Substitute.ForPartsOf<AuditLogger>(context);
-            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
             logger.Log(new[] { entry });
 
-            logger.DidNotReceive().Save();
-            context.DidNotReceive().SaveChanges();
+            Assert.Empty(context.Set<AuditLog>());
         }
 
         #endregion
@@ -147,16 +144,12 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Log_DoesNotSaveLog()
         {
             entry.State = EntityState.Added;
-            DbContext context = Substitute.For<DbContext>();
             LoggableEntity entity = new LoggableEntity(entry);
-
-            logger = Substitute.ForPartsOf<AuditLogger>(context);
-            logger.When(sub => sub.Log(Arg.Any<LoggableEntity>())).DoNotCallBase();
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
             logger.Log(entity);
 
-            logger.DidNotReceive().Save();
-            context.DidNotReceive().SaveChanges();
+            Assert.Empty(context.Set<AuditLog>());
         }
 
         #endregion

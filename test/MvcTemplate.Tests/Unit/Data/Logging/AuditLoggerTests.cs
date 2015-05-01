@@ -10,16 +10,16 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Data.Logging
 {
     public class AuditLoggerTests : IDisposable
     {
-        private TestingContext dataContext;
-        private DbContext context;
-
         private DbEntityEntry<BaseModel> entry;
+        private TestingContext dataContext;
         private AuditLogger logger;
+        private DbContext context;
 
         public AuditLoggerTests()
         {
@@ -27,7 +27,6 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             dataContext = new TestingContext();
             TestModel model = ObjectFactory.CreateTestModel();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
             entry = dataContext.Entry<BaseModel>(dataContext.Set<TestModel>().Add(model));
             dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
@@ -115,17 +114,29 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Log(LoggableEntity entity)
 
-        [Fact]
-        public void Log_AddsLogToTheSet()
+        [Theory]
+        [InlineData("", "", null)]
+        [InlineData(null, "", null)]
+        [InlineData("", null, null)]
+        [InlineData(null, null, null)]
+        [InlineData("", "IdentityId", null)]
+        [InlineData("AccountId", "", "AccountId")]
+        [InlineData("AccountId", null, "AccountId")]
+        [InlineData(null, "IdentityId", "IdentityId")]
+        [InlineData("AccountId", "IdentityId", "AccountId")]
+        public void Log_AddsLogToTheSet(String accountId, String identityName, String expectedAccountId)
         {
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+            HttpContext.Current.User.Identity.Name.Returns(identityName);
             LoggableEntity entity = new LoggableEntity(entry);
+            logger = new AuditLogger(context, accountId);
 
             logger.Log(entity);
 
             AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
             LoggableEntity expected = entity;
 
-            Assert.Equal(HttpContext.Current.User.Identity.Name, actual.AccountId);
+            Assert.Equal(expectedAccountId, actual.AccountId);
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);

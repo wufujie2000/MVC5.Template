@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Web;
 
 namespace MvcTemplate.Data.Logging
 {
@@ -11,10 +12,15 @@ namespace MvcTemplate.Data.Logging
     {
         private DbContext context;
         private Boolean disposed;
+        private String accountId;
 
         public AuditLogger(DbContext context)
         {
             this.context = context;
+        }
+        public AuditLogger(DbContext context, String accountId) : this(context)
+        {
+            this.accountId = accountId;
         }
 
         public virtual void Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
@@ -35,7 +41,15 @@ namespace MvcTemplate.Data.Logging
         }
         public virtual void Log(LoggableEntity entity)
         {
-            context.Set<AuditLog>().Add(new AuditLog(entity.Action, entity.Name, entity.Id, entity.ToString()));
+            AuditLog log = new AuditLog();
+            log.AccountId = accountId ?? HttpContext.Current.User.Identity.Name;
+            log.AccountId = log.AccountId != "" ? log.AccountId : null;
+            log.Changes = entity.ToString();
+            log.EntityName = entity.Name;
+            log.Action = entity.Action;
+            log.EntityId = entity.Id;
+
+            context.Set<AuditLog>().Add(log);
         }
         public virtual void Save()
         {

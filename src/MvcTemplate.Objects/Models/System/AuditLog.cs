@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Web;
 
 namespace MvcTemplate.Objects
 {
@@ -23,18 +22,5 @@ namespace MvcTemplate.Objects
 
         [Required]
         public String Changes { get; set; }
-
-        public AuditLog()
-        {
-        }
-        public AuditLog(String action, String entityName, String entityId, String changes)
-        {
-            AccountId = HttpContext.Current.User.Identity.Name;
-            AccountId = AccountId != "" ? AccountId : null;
-            EntityName = entityName;
-            EntityId = entityId;
-            Changes = changes;
-            Action = action;
-        }
     }
 }

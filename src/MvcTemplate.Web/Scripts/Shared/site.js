@@ -170,6 +170,12 @@
 
 // Mvc.Grid binding
 (function () {
+    MvcGridNumberFilter.prototype.isValid = function (value) {
+        var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
+
+        return value == '' || pattern.test(value);
+    }
+
     var mvcGrids = $('.mvc-grid');
     for (var i = 0; i < mvcGrids.length; i++) {
         $(mvcGrids[i]).mvcgrid();

@@ -7,10 +7,12 @@ using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace MvcTemplate.Controllers
 {
     [AllowUnauthorized]
+    [SessionState(SessionStateBehavior.ReadOnly)]
     public class DatalistController : BaseController
     {
         private IUnitOfWork unitOfWork;

@@ -6,7 +6,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using Xunit;
@@ -35,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             HttpContext.Current = null;
         }
 
-        #region Method: GetData(AbstractDatalist datalist, DatalistFilter filter, Dictionary<String, Object> additionalFilters = null)
+        #region Method: GetData(AbstractDatalist datalist, DatalistFilter filter)
 
         [Fact]
         public void GetData_SetsDatalistCurrentFilter()
@@ -44,29 +43,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             DatalistFilter actual = datalist.CurrentFilter;
             DatalistFilter expected = filter;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void GetData_SetsEmptyAdditionalFilters()
-        {
-            controller.GetData(datalist, filter);
-
-            Int32 actual = filter.AdditionalFilters.Count;
-            Int32 expected = 0;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void GetData_SetsAdditionalFilters()
-        {
-            Dictionary<String, Object> filters = new Dictionary<String, Object> { { "Key", "Value" } };
-            controller.GetData(datalist, filter, filters);
-
-            Dictionary<String, Object> actual = filter.AdditionalFilters;
-            Dictionary<String, Object> expected = filters;
 
             Assert.Equal(expected, actual);
         }
@@ -90,11 +66,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Role_GetsRolesData()
         {
-            controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null)).DoNotCallBase();
-            controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter, null).Returns(new JsonResult());
+            controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter)).DoNotCallBase();
+            controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter).Returns(new JsonResult());
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
 
-            JsonResult expected = controller.GetData(null, filter, null);
+            JsonResult expected = controller.GetData(null, filter);
             JsonResult actual = controller.Role(filter);
 
             Assert.Same(expected, actual);

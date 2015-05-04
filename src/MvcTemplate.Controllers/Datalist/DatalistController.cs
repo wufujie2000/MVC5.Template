@@ -5,7 +5,6 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using System.Web.SessionState;
 
@@ -23,9 +22,8 @@ namespace MvcTemplate.Controllers
             this.unitOfWork = unitOfWork;
         }
 
-        public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter, Dictionary<String, Object> additionalFilters = null)
+        public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter)
         {
-            filter.AdditionalFilters = additionalFilters ?? filter.AdditionalFilters;
             datalist.CurrentFilter = filter;
 
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);

@@ -170,10 +170,12 @@
 
 // Mvc.Grid binding
 (function () {
-    MvcGridNumberFilter.prototype.isValid = function (value) {
-        var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
+    if (window.MvcGridNumberFilter) {
+        MvcGridNumberFilter.prototype.isValid = function (value) {
+            var pattern = new RegExp('^(?=.*\\d+.*)[-+]?\\d*[' + Globalize.culture().numberFormat['.'] + ']?\\d*$');
 
-        return value == '' || pattern.test(value);
+            return value == '' || pattern.test(value);
+        }
     }
 
     var mvcGrids = $('.mvc-grid');

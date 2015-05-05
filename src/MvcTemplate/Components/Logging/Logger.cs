@@ -6,12 +6,12 @@ namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {
-        private DbContext context;
-        private Boolean disposed;
+        private DbContext Context { get; set; }
+        private Boolean Disposed { get; set; }
 
         public Logger(DbContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public virtual void Log(String message)
@@ -24,8 +24,8 @@ namespace MvcTemplate.Components.Logging
             log.Message = message;
             log.AccountId = accountId != "" ? accountId : null;
 
-            context.Set<Log>().Add(log);
-            context.SaveChanges();
+            Context.Set<Log>().Add(log);
+            Context.SaveChanges();
         }
 
         public void Dispose()
@@ -35,11 +35,11 @@ namespace MvcTemplate.Components.Logging
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
-            context.Dispose();
+            Context.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

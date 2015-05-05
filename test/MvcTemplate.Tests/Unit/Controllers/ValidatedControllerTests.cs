@@ -55,10 +55,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Dispose()
 
         [Fact]
-        public void Dispose_DisposesValidator()
+        public void Dispose_DisposesValidatorAndService()
         {
             controller.Dispose();
 
+            service.Received().Dispose();
             validator.Received().Dispose();
         }
 

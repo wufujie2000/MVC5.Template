@@ -10,19 +10,19 @@ namespace MvcTemplate.Data.Core
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IAuditLogger logger;
-        private DbContext context;
-        private Boolean disposed;
+        private IAuditLogger Logger { get; set; }
+        private DbContext Context { get; set; }
+        private Boolean Disposed { get; set; }
 
         public UnitOfWork(DbContext context, IAuditLogger logger = null)
         {
-            this.context = context;
-            this.logger = logger;
+            Context = context;
+            Logger = logger;
         }
 
         public ISelect<TModel> Select<TModel>() where TModel : BaseModel
         {
-            return new Select<TModel>(context.Set<TModel>());
+            return new Select<TModel>(Context.Set<TModel>());
         }
 
         public TModel To<TModel>(BaseView view) where TModel : BaseModel
@@ -36,7 +36,7 @@ namespace MvcTemplate.Data.Core
 
         public TModel Get<TModel>(String id) where TModel : BaseModel
         {
-            return context.Set<TModel>().SingleOrDefault(model => model.Id == id);
+            return Context.Set<TModel>().SingleOrDefault(model => model.Id == id);
         }
         public TView GetAs<TModel, TView>(String id)
             where TModel : BaseModel
@@ -47,45 +47,45 @@ namespace MvcTemplate.Data.Core
 
         public void Insert<TModel>(TModel model) where TModel : BaseModel
         {
-            context.Set<TModel>().Add(model);
+            Context.Set<TModel>().Add(model);
         }
         public void Update<TModel>(TModel model) where TModel : BaseModel
         {
-            TModel attachedModel = context.Set<TModel>().Local.SingleOrDefault(localModel => localModel.Id == model.Id);
+            TModel attachedModel = Context.Set<TModel>().Local.SingleOrDefault(localModel => localModel.Id == model.Id);
             if (attachedModel == null)
-                attachedModel = context.Set<TModel>().Attach(model);
+                attachedModel = Context.Set<TModel>().Attach(model);
             else
-                context.Entry(attachedModel).CurrentValues.SetValues(model);
+                Context.Entry(attachedModel).CurrentValues.SetValues(model);
 
-            DbEntityEntry<TModel> entry = context.Entry(attachedModel);
+            DbEntityEntry<TModel> entry = Context.Entry(attachedModel);
             entry.State = EntityState.Modified;
             entry.Property(property => property.CreationDate).IsModified = false;
         }
         public void Delete<TModel>(TModel model) where TModel : BaseModel
         {
-            context.Set<TModel>().Remove(model);
+            Context.Set<TModel>().Remove(model);
         }
         public void Delete<TModel>(String id) where TModel : BaseModel
         {
-            Delete(context.Set<TModel>().Find(id));
+            Delete(Context.Set<TModel>().Find(id));
         }
 
         public void Rollback()
         {
-            DbContext newContext = Activator.CreateInstance(context.GetType()) as DbContext;
+            DbContext newContext = Activator.CreateInstance(Context.GetType()) as DbContext;
 
-            context.Dispose();
-            context = newContext;
+            Context.Dispose();
+            Context = newContext;
         }
         public void Commit()
         {
-            if (logger != null)
-                logger.Log(context.ChangeTracker.Entries<BaseModel>());
+            if (Logger != null)
+                Logger.Log(Context.ChangeTracker.Entries<BaseModel>());
 
-            context.SaveChanges();
+            Context.SaveChanges();
 
-            if (logger != null)
-                logger.Save();
+            if (Logger != null)
+                Logger.Save();
         }
 
         public void Dispose()
@@ -95,12 +95,12 @@ namespace MvcTemplate.Data.Core
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
-            if (logger != null) logger.Dispose();
-            context.Dispose();
+            if (Logger != null) Logger.Dispose();
+            Context.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

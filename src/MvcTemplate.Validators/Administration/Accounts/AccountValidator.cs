@@ -10,12 +10,12 @@ namespace MvcTemplate.Validators
 {
     public class AccountValidator : BaseValidator, IAccountValidator
     {
-        private IHasher hasher;
+        private IHasher Hasher { get; set; }
 
         public AccountValidator(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
-            this.hasher = hasher;
+            Hasher = hasher;
         }
 
         public Boolean CanRegister(AccountRegisterView view)
@@ -109,7 +109,7 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .SingleOrDefault();
 
-            Boolean isCorrect = hasher.VerifyPassword(password, passhash);
+            Boolean isCorrect = Hasher.VerifyPassword(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError("", Validations.IncorrectUsernameOrPassword);
 
@@ -123,7 +123,7 @@ namespace MvcTemplate.Validators
                 .Select(account => account.Passhash)
                 .Single();
 
-            Boolean isCorrect = hasher.VerifyPassword(password, passhash);
+            Boolean isCorrect = Hasher.VerifyPassword(password, passhash);
             if (!isCorrect)
                 ModelState.AddModelError<ProfileEditView>(account => account.Password, Validations.IncorrectPassword);
 

@@ -10,12 +10,12 @@ namespace MvcTemplate.Services
 {
     public class AccountService : BaseService, IAccountService
     {
-        private IHasher hasher;
+        private IHasher Hasher { get; set; }
 
         public AccountService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)
         {
-            this.hasher = hasher;
+            Hasher = hasher;
         }
 
         public TView Get<TView>(String id) where TView : BaseView
@@ -55,7 +55,7 @@ namespace MvcTemplate.Services
         public void Register(AccountRegisterView view)
         {
             Account account = UnitOfWork.To<Account>(view);
-            account.Passhash = hasher.HashPassword(view.Password);
+            account.Passhash = Hasher.HashPassword(view.Password);
             account.Email = view.Email.ToLower();
 
             UnitOfWork.Insert(account);
@@ -64,7 +64,7 @@ namespace MvcTemplate.Services
         public void Reset(AccountResetView view)
         {
             Account account = UnitOfWork.Select<Account>().Single(acc => acc.RecoveryToken == view.Token);
-            account.Passhash = hasher.HashPassword(view.NewPassword);
+            account.Passhash = Hasher.HashPassword(view.NewPassword);
             account.RecoveryTokenExpirationDate = null;
             account.RecoveryToken = null;
 
@@ -75,7 +75,7 @@ namespace MvcTemplate.Services
         public void Create(AccountCreateView view)
         {
             Account account = UnitOfWork.To<Account>(view);
-            account.Passhash = hasher.HashPassword(view.Password);
+            account.Passhash = Hasher.HashPassword(view.Password);
             account.Email = view.Email.ToLower();
 
             UnitOfWork.Insert(account);
@@ -88,7 +88,7 @@ namespace MvcTemplate.Services
             account.Username = view.Username;
 
             if (!String.IsNullOrWhiteSpace(view.NewPassword))
-                account.Passhash = hasher.HashPassword(view.NewPassword);
+                account.Passhash = Hasher.HashPassword(view.NewPassword);
 
             UnitOfWork.Update(account);
             UnitOfWork.Commit();

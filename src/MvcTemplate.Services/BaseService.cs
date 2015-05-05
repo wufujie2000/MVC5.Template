@@ -5,13 +5,8 @@ namespace MvcTemplate.Services
 {
     public abstract class BaseService : IService
     {
-        private Boolean disposed;
-
-        protected IUnitOfWork UnitOfWork
-        {
-            get;
-            private set;
-        }
+        protected IUnitOfWork UnitOfWork { get; private set; }
+        private Boolean Disposed { get; set; }
 
         protected BaseService(IUnitOfWork unitOfWork)
         {
@@ -25,11 +20,11 @@ namespace MvcTemplate.Services
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
             UnitOfWork.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

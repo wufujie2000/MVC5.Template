@@ -6,11 +6,11 @@ namespace MvcTemplate.Components.Mvc
 {
     public class DataTypeValidatorProvider : ClientDataTypeModelValidatorProvider
     {
-        private HashSet<Type> numericTypes;
+        private HashSet<Type> NumericTypes { get; set; }
 
         public DataTypeValidatorProvider()
         {
-            numericTypes = new HashSet<Type>
+            NumericTypes = new HashSet<Type>
             {
               typeof (Byte),
               typeof (SByte),
@@ -44,7 +44,7 @@ namespace MvcTemplate.Components.Mvc
         }
         private Boolean IsNumericType(Type type)
         {
-            return numericTypes.Contains(type);
+            return NumericTypes.Contains(type);
         }
     }
 }

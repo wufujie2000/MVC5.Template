@@ -10,50 +10,53 @@ namespace MvcTemplate.Data.Core
 {
     public class Select<TModel> : ISelect<TModel> where TModel : BaseModel
     {
-        private IQueryable<TModel> set;
-
         public Type ElementType
         {
             get
             {
-                return set.ElementType;
+                return Set.ElementType;
             }
         }
         public Expression Expression
         {
             get
             {
-                return set.Expression;
+                return Set.Expression;
             }
         }
         public IQueryProvider Provider
         {
             get
             {
-                return set.Provider;
+                return Set.Provider;
             }
+        }
+        private IQueryable<TModel> Set
+        {
+            get;
+            set;
         }
 
         public Select(IQueryable<TModel> set)
         {
-            this.set = set;
+            Set = set;
         }
 
         public ISelect<TModel> Where(Expression<Func<TModel, Boolean>> predicate)
         {
-            set = set.Where(predicate);
+            Set = Set.Where(predicate);
 
             return this;
         }
 
         public IQueryable<TView> To<TView>() where TView : BaseView
         {
-            return set.Project().To<TView>();
+            return Set.Project().To<TView>();
         }
 
         public IEnumerator<TModel> GetEnumerator()
         {
-            return set.GetEnumerator();
+            return Set.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {

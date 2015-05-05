@@ -6,11 +6,11 @@ namespace MvcTemplate.Components.Mvc
 {
     public class ExceptionFilter : IExceptionFilter
     {
-        private ILogger logger;
+        private ILogger Logger { get; set; }
 
         public ExceptionFilter(ILogger logger)
         {
-            this.logger = logger;
+            Logger = logger;
         }
 
         public void OnException(ExceptionContext filterContext)
@@ -25,7 +25,7 @@ namespace MvcTemplate.Components.Mvc
                     Environment.NewLine,
                     exception.StackTrace);
 
-            logger.Log(filterContext.HttpContext.User.Identity.Name, message);
+            Logger.Log(filterContext.HttpContext.User.Identity.Name, message);
         }
     }
 }

@@ -10,7 +10,6 @@ using MvcTemplate.Services;
 using MvcTemplate.Tests.Data;
 using NSubstitute;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

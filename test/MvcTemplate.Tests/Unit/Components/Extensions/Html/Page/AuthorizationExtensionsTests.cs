@@ -2,7 +2,6 @@
 using MvcTemplate.Components.Security;
 using NSubstitute;
 using System;
-using System.IO;
 using System.Web.Mvc;
 using Xunit;
 using Xunit.Extensions;

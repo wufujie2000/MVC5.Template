@@ -7,23 +7,10 @@ namespace MvcTemplate.Validators
 {
     public abstract class BaseValidator : IValidator
     {
-        private Boolean disposed;
-
-        public ModelStateDictionary ModelState
-        {
-            get;
-            set;
-        }
-        public AlertsContainer Alerts
-        {
-            get;
-            set;
-        }
-        protected IUnitOfWork UnitOfWork
-        {
-            get;
-            private set;
-        }
+        protected IUnitOfWork UnitOfWork { get; private set; }
+        public ModelStateDictionary ModelState { get; set; }
+        public AlertsContainer Alerts { get; set; }
+        private Boolean Disposed { get; set; }
 
         protected BaseValidator(IUnitOfWork unitOfWork)
         {
@@ -38,11 +25,11 @@ namespace MvcTemplate.Validators
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
             UnitOfWork.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

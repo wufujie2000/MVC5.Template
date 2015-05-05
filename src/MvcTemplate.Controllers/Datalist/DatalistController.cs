@@ -14,12 +14,12 @@ namespace MvcTemplate.Controllers
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class DatalistController : BaseController
     {
-        private IUnitOfWork unitOfWork;
-        private Boolean disposed;
+        private IUnitOfWork UnitOfWork { get; set; }
+        private Boolean Disposed { get; set; }
 
         public DatalistController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
+            UnitOfWork = unitOfWork;
         }
 
         public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter)
@@ -32,15 +32,15 @@ namespace MvcTemplate.Controllers
         [AjaxOnly]
         public JsonResult Role(DatalistFilter filter)
         {
-            return GetData(new BaseDatalist<Role, RoleView>(unitOfWork), filter);
+            return GetData(new BaseDatalist<Role, RoleView>(UnitOfWork), filter);
         }
 
         protected override void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
-            unitOfWork.Dispose();
-            disposed = true;
+            UnitOfWork.Dispose();
+            Disposed = true;
 
             base.Dispose(disposing);
         }

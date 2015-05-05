@@ -13,7 +13,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     {
         private static MvcSiteMapParser parser;
         private static String siteMapPath;
-        private static XElement siteMap;
 
         private RouteValueDictionary routeValues;
         private RequestContext requestContext;
@@ -23,8 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             siteMapPath = "MvcSiteMapProviderTests.sitemap";
             parser = new MvcSiteMapParser();
-            siteMap = CreateSiteMap();
-            siteMap.Save(siteMapPath);
+            CreateSiteMap(siteMapPath);
         }
         public MvcSiteMapProviderTests()
         {
@@ -261,27 +259,29 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #region Test helpers
 
-        private static XElement CreateSiteMap()
+        private static void CreateSiteMap(String path)
         {
-            return XElement.Parse(
-            @"<siteMap>
-                <siteMapNode icon=""fa fa-home"" controller=""Home"" action=""Index"">
-                    <siteMapNode icon=""fa fa-user"" controller=""Profile"">
-                        <siteMapNode icon=""fa fa-pencil"" controller=""Profile"" action=""Edit"" />
-                    </siteMapNode>
-                    <siteMapNode menu=""true"" icon=""fa fa-gears"" area=""Administration"">
-                        <siteMapNode menu=""true"" icon=""fa fa-user"" area=""Administration"" controller=""Accounts"" action=""Index"">
-                            <siteMapNode icon=""fa fa-info"" area=""Administration"" controller=""Accounts"" action=""Details"">
-                                <siteMapNode icon=""fa fa-pencil"" area=""Administration"" controller=""Accounts"" action=""Edit"" />
+            XElement
+                .Parse(
+                    @"<siteMap>
+                        <siteMapNode icon=""fa fa-home"" controller=""Home"" action=""Index"">
+                            <siteMapNode icon=""fa fa-user"" controller=""Profile"">
+                                <siteMapNode icon=""fa fa-pencil"" controller=""Profile"" action=""Edit"" />
+                            </siteMapNode>
+                            <siteMapNode menu=""true"" icon=""fa fa-gears"" area=""Administration"">
+                                <siteMapNode menu=""true"" icon=""fa fa-user"" area=""Administration"" controller=""Accounts"" action=""Index"">
+                                    <siteMapNode icon=""fa fa-info"" area=""Administration"" controller=""Accounts"" action=""Details"">
+                                        <siteMapNode icon=""fa fa-pencil"" area=""Administration"" controller=""Accounts"" action=""Edit"" />
+                                    </siteMapNode>
+                                </siteMapNode>
+                                <siteMapNode menu=""true"" icon=""fa fa-users"" area=""Administration"" controller=""Roles"">
+                                    <siteMapNode menu=""true"" icon=""fa fa-file-o"" area=""Administration"" controller=""Roles"" action=""Create"" />
+                                    <siteMapNode icon=""fa fa-pencil"" area=""Administration"" controller=""Roles"" action=""Edit"" />
+                                </siteMapNode>
                             </siteMapNode>
                         </siteMapNode>
-                        <siteMapNode menu=""true"" icon=""fa fa-users"" area=""Administration"" controller=""Roles"">
-                            <siteMapNode menu=""true"" icon=""fa fa-file-o"" area=""Administration"" controller=""Roles"" action=""Create"" />
-                            <siteMapNode icon=""fa fa-pencil"" area=""Administration"" controller=""Roles"" action=""Edit"" />
-                        </siteMapNode>
-                    </siteMapNode>
-                </siteMapNode>
-            </siteMap>");
+                    </siteMap>")
+                .Save(path);
         }
 
         #endregion

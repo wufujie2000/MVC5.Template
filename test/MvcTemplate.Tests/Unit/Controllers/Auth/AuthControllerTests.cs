@@ -26,7 +26,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         private AuthController controller;
         private IAccountService service;
         private IMailClient mailClient;
-        private AccountView account;
 
         public AuthControllerTests()
         {
@@ -39,7 +38,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
-            account = new AccountView();
 
             HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
             controller.Url = new UrlHelper(httpContext.Request.RequestContext);

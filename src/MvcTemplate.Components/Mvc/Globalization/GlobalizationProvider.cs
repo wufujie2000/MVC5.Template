@@ -9,14 +9,10 @@ namespace MvcTemplate.Components.Mvc
 {
     public class GlobalizationProvider : IGlobalizationProvider
     {
-        private Dictionary<String, Language> languages;
-
         public Language[] Languages
         {
-            get
-            {
-                return languages.Select(language => language.Value).ToArray();
-            }
+            get;
+            private set;
         }
         public Language DefaultLanguage
         {
@@ -35,11 +31,16 @@ namespace MvcTemplate.Components.Mvc
                 Thread.CurrentThread.CurrentUICulture = value.Culture;
             }
         }
+        private Dictionary<String, Language> LanguageDictionary
+        {
+            get;
+            set;
+        }
 
         public GlobalizationProvider(String path)
         {
             XElement languagesXml = XElement.Load(path);
-            languages = new Dictionary<String, Language>();
+            LanguageDictionary = new Dictionary<String, Language>();
 
             foreach (XElement languageNode in languagesXml.Elements("language"))
             {
@@ -49,17 +50,18 @@ namespace MvcTemplate.Components.Mvc
                 language.Abbrevation = (String)languageNode.Attribute("abbrevation");
                 language.Name = (String)languageNode.Attribute("name");
 
-                languages.Add(language.Abbrevation, language);
+                LanguageDictionary.Add(language.Abbrevation, language);
             }
 
-            DefaultLanguage = languages.Single(language => language.Value.IsDefault).Value;
+            Languages = LanguageDictionary.Select(language => language.Value).ToArray();
+            DefaultLanguage = Languages.Single(language => language.IsDefault);
         }
 
         public Language this[String abbrevation]
         {
             get
             {
-                return languages[abbrevation];
+                return LanguageDictionary[abbrevation];
             }
         }
     }

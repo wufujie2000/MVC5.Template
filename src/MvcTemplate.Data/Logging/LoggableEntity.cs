@@ -10,27 +10,11 @@ namespace MvcTemplate.Data.Logging
 {
     public class LoggableEntity
     {
-        public String Id
-        {
-            get;
-            private set;
-        }
-        public String Name
-        {
-            get;
-            private set;
-        }
-        public String Action
-        {
-            get;
-            private set;
-        }
+        public String Id { get; private set; }
+        public String Name { get; private set; }
+        public String Action { get; private set; }
 
-        public IEnumerable<LoggableProperty> Properties
-        {
-            get;
-            private set;
-        }
+        public IEnumerable<LoggableProperty> Properties { get; private set; }
 
         public LoggableEntity(DbEntityEntry<BaseModel> entry)
         {

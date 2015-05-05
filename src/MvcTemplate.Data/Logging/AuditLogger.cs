@@ -10,17 +10,17 @@ namespace MvcTemplate.Data.Logging
 {
     public class AuditLogger : IAuditLogger
     {
-        private DbContext context;
-        private Boolean disposed;
-        private String accountId;
+        private Boolean Disposed { get; set; }
+        private String AccountId { get; set; }
+        private DbContext Context { get; set; }
 
         public AuditLogger(DbContext context)
         {
-            this.context = context;
+            Context = context;
         }
         public AuditLogger(DbContext context, String accountId) : this(context)
         {
-            this.accountId = accountId;
+            AccountId = accountId;
         }
 
         public virtual void Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
@@ -42,18 +42,18 @@ namespace MvcTemplate.Data.Logging
         public virtual void Log(LoggableEntity entity)
         {
             AuditLog log = new AuditLog();
-            log.AccountId = accountId ?? HttpContext.Current.User.Identity.Name;
+            log.AccountId = AccountId ?? HttpContext.Current.User.Identity.Name;
             log.AccountId = log.AccountId != "" ? log.AccountId : null;
             log.Changes = entity.ToString();
             log.EntityName = entity.Name;
             log.Action = entity.Action;
             log.EntityId = entity.Id;
 
-            context.Set<AuditLog>().Add(log);
+            Context.Set<AuditLog>().Add(log);
         }
         public virtual void Save()
         {
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Dispose()
@@ -63,11 +63,11 @@ namespace MvcTemplate.Data.Logging
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
-            context.Dispose();
+            Context.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

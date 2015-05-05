@@ -10,13 +10,13 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
-        private static Assembly executingAssembly;
-        private static String[] resources;
+        private static Assembly ExecutingAssembly { get; set; }
+        private static String[] Resources { get; set; }
 
         static ResourceProvider()
         {
-            executingAssembly = Assembly.GetExecutingAssembly();
-            resources = executingAssembly.DefinedTypes.Select(type => type.FullName).ToArray();
+            ExecutingAssembly = Assembly.GetExecutingAssembly();
+            Resources = ExecutingAssembly.DefinedTypes.Select(type => type.FullName).ToArray();
         }
 
         public static String GetDatalistTitle<TModel>()
@@ -89,9 +89,9 @@ namespace MvcTemplate.Resources
         }
         private static String GetResource(String baseName, String key)
         {
-            if (!resources.Any(resourceName => resourceName == baseName)) return null;
+            if (!Resources.Any(resourceName => resourceName == baseName)) return null;
 
-            ResourceManager manager = new ResourceManager(baseName, executingAssembly);
+            ResourceManager manager = new ResourceManager(baseName, ExecutingAssembly);
             manager.IgnoreCase = true;
 
             return manager.GetString(key ?? "");

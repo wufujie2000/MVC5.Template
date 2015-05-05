@@ -9,24 +9,24 @@ namespace MvcTemplate.Components.Mail
 {
     public class SmtpMailClient : IMailClient
     {
-        private SmtpClient client;
-        private Boolean disposed;
-        private String sender;
+        private SmtpClient Client { get; set; }
+        private Boolean Disposed { get; set; }
+        private String Sender { get; set; }
 
         public SmtpMailClient()
         {
-            sender = ((SmtpSection)WebConfigurationManager.GetSection("system.net/mailSettings/smtp")).From;
-            client = new SmtpClient();
+            Sender = ((SmtpSection)WebConfigurationManager.GetSection("system.net/mailSettings/smtp")).From;
+            Client = new SmtpClient();
         }
 
         public Task SendAsync(String to, String subject, String body)
         {
-            MailMessage email = new MailMessage(sender, to, subject, body);
+            MailMessage email = new MailMessage(Sender, to, subject, body);
             email.SubjectEncoding = Encoding.UTF8;
             email.BodyEncoding = Encoding.UTF8;
             email.IsBodyHtml = true;
 
-            return client.SendMailAsync(email);
+            return Client.SendMailAsync(email);
         }
 
         public void Dispose()
@@ -36,11 +36,11 @@ namespace MvcTemplate.Components.Mail
         }
         protected virtual void Dispose(Boolean disposing)
         {
-            if (disposed) return;
+            if (Disposed) return;
 
-            client.Dispose();
+            Client.Dispose();
 
-            disposed = true;
+            Disposed = true;
         }
     }
 }

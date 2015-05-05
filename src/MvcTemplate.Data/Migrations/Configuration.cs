@@ -11,7 +11,7 @@ namespace MvcTemplate.Data.Migrations
     [ExcludeFromCodeCoverage]
     internal sealed class Configuration : DbMigrationsConfiguration<Context>, IDisposable
     {
-        private IUnitOfWork unitOfWork;
+        private IUnitOfWork UnitOfWork { get; set; }
 
         public Configuration()
         {
@@ -21,7 +21,7 @@ namespace MvcTemplate.Data.Migrations
         protected override void Seed(Context context)
         {
             IAuditLogger logger = new AuditLogger(new Context(), "sys_seeder");
-            unitOfWork = new UnitOfWork(context, logger);
+            UnitOfWork = new UnitOfWork(context, logger);
 
             SeedPrivileges();
             SeedRoles();
@@ -52,52 +52,52 @@ namespace MvcTemplate.Data.Migrations
         }
         private void DeleteUnused(Privilege[] privileges)
         {
-            foreach (Privilege privilege in unitOfWork.Select<Privilege>())
+            foreach (Privilege privilege in UnitOfWork.Select<Privilege>())
                 if (!privileges.Any(priv => privilege.Area == priv.Area && privilege.Action == priv.Action && privilege.Controller == priv.Controller))
                 {
-                    foreach (RolePrivilege rolePrivilege in unitOfWork.Select<RolePrivilege>().Where(rolePriv => rolePriv.PrivilegeId == privilege.Id))
-                        unitOfWork.Delete(rolePrivilege);
+                    foreach (RolePrivilege rolePrivilege in UnitOfWork.Select<RolePrivilege>().Where(rolePriv => rolePriv.PrivilegeId == privilege.Id))
+                        UnitOfWork.Delete(rolePrivilege);
 
-                    unitOfWork.Delete(privilege);
+                    UnitOfWork.Delete(privilege);
                 }
 
-            unitOfWork.Commit();
+            UnitOfWork.Commit();
         }
         private void CreateMissing(Privilege[] privileges)
         {
-            Privilege[] dbPrivileges = unitOfWork.Select<Privilege>().ToArray();
+            Privilege[] dbPrivileges = UnitOfWork.Select<Privilege>().ToArray();
             foreach (Privilege privilege in privileges)
                 if (!dbPrivileges.Any(priv => privilege.Area == priv.Area && privilege.Action == priv.Action && privilege.Controller == priv.Controller))
                 {
-                    unitOfWork.Insert(privilege);
+                    UnitOfWork.Insert(privilege);
                 }
 
-            unitOfWork.Commit();
+            UnitOfWork.Commit();
         }
 
         private void SeedRoles()
         {
-            if (!unitOfWork.Select<Role>().Any(role => role.Name == "Sys_Admin"))
+            if (!UnitOfWork.Select<Role>().Any(role => role.Name == "Sys_Admin"))
             {
-                unitOfWork.Insert(new Role { Name = "Sys_Admin" });
-                unitOfWork.Commit();
+                UnitOfWork.Insert(new Role { Name = "Sys_Admin" });
+                UnitOfWork.Commit();
             }
 
-            String adminRoleId = unitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id;
-            RolePrivilege[] adminPrivileges = unitOfWork
+            String adminRoleId = UnitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id;
+            RolePrivilege[] adminPrivileges = UnitOfWork
                 .Select<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
                 .ToArray();
 
-            foreach (Privilege privilege in unitOfWork.Select<Privilege>())
+            foreach (Privilege privilege in UnitOfWork.Select<Privilege>())
                 if (!adminPrivileges.Any(rolePrivilege => rolePrivilege.PrivilegeId == privilege.Id))
-                    unitOfWork.Insert(new RolePrivilege
+                    UnitOfWork.Insert(new RolePrivilege
                     {
                         RoleId = adminRoleId,
                         PrivilegeId = privilege.Id
                     });
 
-            unitOfWork.Commit();
+            UnitOfWork.Commit();
         }
 
         private void SeedAccounts()
@@ -109,22 +109,22 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
-                    RoleId = unitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id
+                    RoleId = UnitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id
                 }
             };
 
             foreach (Account account in accounts)
-                if (!unitOfWork.Select<Account>().Any(acc => acc.Username == account.Username))
-                    unitOfWork.Insert(account);
+                if (!UnitOfWork.Select<Account>().Any(acc => acc.Username == account.Username))
+                    UnitOfWork.Insert(account);
 
-            unitOfWork.Commit();
+            UnitOfWork.Commit();
         }
 
         #endregion
 
         public void Dispose()
         {
-            unitOfWork.Dispose();
+            UnitOfWork.Dispose();
         }
     }
 }

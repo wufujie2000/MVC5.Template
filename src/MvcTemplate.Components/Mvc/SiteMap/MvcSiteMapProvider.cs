@@ -9,14 +9,14 @@ namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
-        private IEnumerable<MvcSiteMapNode> nodeTree;
-        private IEnumerable<MvcSiteMapNode> nodeList;
+        private IEnumerable<MvcSiteMapNode> NodeTree { get; set; }
+        private IEnumerable<MvcSiteMapNode> NodeList { get; set; }
 
         public MvcSiteMapProvider(String path, IMvcSiteMapParser parser)
         {
             XElement siteMap = XElement.Load(path);
-            nodeTree = parser.GetNodeTree(siteMap);
-            nodeList = ToList(nodeTree);
+            NodeTree = parser.GetNodeTree(siteMap);
+            NodeList = ToList(NodeTree);
         }
 
         public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(RequestContext request)
@@ -25,7 +25,7 @@ namespace MvcTemplate.Components.Mvc
             String area = request.RouteData.Values["area"] as String;
             String action = request.RouteData.Values["action"] as String;
             String controller = request.RouteData.Values["controller"] as String;
-            IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(nodeTree, area, controller, action);
+            IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(NodeTree, area, controller, action);
 
             return GetAuthorizedMenus(account, nodes);
         }
@@ -35,7 +35,7 @@ namespace MvcTemplate.Components.Mvc
             String action = request.RouteData.Values["action"] as String;
             String controller = request.RouteData.Values["controller"] as String;
 
-            MvcSiteMapNode currentNode = nodeList.SingleOrDefault(node =>
+            MvcSiteMapNode currentNode = NodeList.SingleOrDefault(node =>
                 String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase));

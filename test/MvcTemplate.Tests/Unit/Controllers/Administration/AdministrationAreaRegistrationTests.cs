@@ -8,17 +8,15 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
     public class AdministrationAreaRegistrationTests
     {
-        private AdministrationAreaRegistration areaRegistration;
-        private AreaRegistrationContext registrationContext;
-        private RouteCollection routeCollection;
+        private AdministrationAreaRegistration registration;
+        private AreaRegistrationContext context;
 
         public AdministrationAreaRegistrationTests()
         {
-            routeCollection = new RouteCollection();
-            areaRegistration = new AdministrationAreaRegistration();
-            registrationContext = new AreaRegistrationContext(areaRegistration.AreaName, routeCollection);
+            registration = new AdministrationAreaRegistration();
+            context = new AreaRegistrationContext(registration.AreaName, new RouteCollection());
 
-            areaRegistration.RegisterArea(registrationContext);
+            registration.RegisterArea(context);
         }
 
         #region Property: AreaName
@@ -26,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void AreaName_IsAdministration()
         {
-            Assert.Equal("Administration", areaRegistration.AreaName);
+            Assert.Equal("Administration", registration.AreaName);
         }
 
         #endregion
@@ -36,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void RegisterArea_RegistersAdministrationMultilingualRoute()
         {
-            Route actual = registrationContext.Routes["AdministrationMultilingual"] as Route;
+            Route actual = context.Routes["AdministrationMultilingual"] as Route;
 
             Assert.Equal(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.Equal("{language}/Administration/{controller}/{action}/{id}", actual.Url);
@@ -50,7 +48,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void RegisterArea_RegistersAdministrationRoute()
         {
-            Route actual = registrationContext.Routes["Administration"] as Route;
+            Route actual = context.Routes["Administration"] as Route;
 
             Assert.Equal(new[] { "MvcTemplate.Controllers.Administration" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.Equal("Administration/{controller}/{action}/{id}", actual.Url);

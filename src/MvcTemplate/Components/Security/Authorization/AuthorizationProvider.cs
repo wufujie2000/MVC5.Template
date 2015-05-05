@@ -11,14 +11,14 @@ namespace MvcTemplate.Components.Security
 {
     public class AuthorizationProvider : IAuthorizationProvider
     {
-        private Dictionary<String, IEnumerable<Privilege>> cache;
-        private Type[] controllerTypes;
-        private Type controllerType;
+        private Type ControllerType { get; set; }
+        private Type[] ControllerTypes { get; set; }
+        private Dictionary<String, IEnumerable<Privilege>> Cache { get; set; }
 
         public AuthorizationProvider(Assembly controllersAssembly)
         {
-            controllerType = typeof(Controller);
-            controllerTypes = controllersAssembly.GetTypes().Where(type => controllerType.IsAssignableFrom(type)).ToArray();
+            ControllerType = typeof(Controller);
+            ControllerTypes = controllersAssembly.GetTypes().Where(type => ControllerType.IsAssignableFrom(type)).ToArray();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -33,10 +33,10 @@ namespace MvcTemplate.Components.Security
             if (AllowsUnauthorized(authorizedController, actionInfo))
                 return true;
 
-            if (!cache.ContainsKey(accountId ?? ""))
+            if (!Cache.ContainsKey(accountId ?? ""))
                 return false;
 
-            return cache[accountId]
+            return Cache[accountId]
                 .Any(privilege =>
                     String.Equals(privilege.Area, area, StringComparison.OrdinalIgnoreCase) &&
                     String.Equals(privilege.Action, action, StringComparison.OrdinalIgnoreCase) &&
@@ -47,7 +47,7 @@ namespace MvcTemplate.Components.Security
         {
             using (IUnitOfWork unitOfWork = DependencyResolver.Current.GetService<IUnitOfWork>())
             {
-                cache = unitOfWork
+                Cache = unitOfWork
                     .Select<Account>()
                     .Where(account => account.RoleId != null)
                     .Select(account => new
@@ -70,7 +70,7 @@ namespace MvcTemplate.Components.Security
             if (method.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
 
-            while (authorizedControllerType != controllerType)
+            while (authorizedControllerType != ControllerType)
             {
                 if (authorizedControllerType.IsDefined(typeof(AuthorizeAttribute), false)) return false;
                 if (authorizedControllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
@@ -84,7 +84,7 @@ namespace MvcTemplate.Components.Security
         private Type GetControllerType(String area, String controller)
         {
             String controllerType = controller + "Controller";
-            IEnumerable<Type> controllers = controllerTypes
+            IEnumerable<Type> controllers = ControllerTypes
                 .Where(type => type.Name.Equals(controllerType, StringComparison.OrdinalIgnoreCase));
 
             if (area == null)

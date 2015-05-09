@@ -69,7 +69,7 @@
         var validator = $(this).parents('form').validate();
 
         if (validator) {
-            var datalistInput = $(this).prevAll('.datalist-input:first');
+            var datalistInput = $(this).prevAll('[data-datalist-for="' + this.id + '"]');
             if (validator.element('#' + this.id)) {
                 datalistInput.removeClass('input-validation-error');
             } else {
@@ -78,16 +78,23 @@
         }
     });
     $('form').on('invalid-form', function (form, validator) {
-        var hiddenInputs = $(this).find('.datalist-hidden-input');
-        for (var i = 0; i < hiddenInputs.length; i++) {
-            var hiddenInputId = hiddenInputs[i].id;
-            var datalistInput = $(hiddenInputs[i]).prevAll('.datalist-input:first');
+        var datalists = $(this).find('.datalist-input');
+        for (var i = 0; i < datalists.length; i++) {
+            var datalistInput = $(datalists[i]);
+            var hiddenInputId = datalistInput.attr('data-datalist-for');
 
             if (validator.invalid[hiddenInputId]) {
                 datalistInput.addClass('input-validation-error');
             } else {
                 datalistInput.removeClass('input-validation-error');
             }
+        }
+    });
+    $(document).on('ready', function () {
+        var hiddenDatalistInputs = $('.datalist-hidden-input.input-validation-error');
+        for (var i = 0; i < hiddenDatalistInputs.length; i++) {
+            var hiddenInput = $(hiddenDatalistInputs[i])
+            hiddenInput.prevAll('[data-datalist-for="' + hiddenDatalistInputs[i].id + '"]').addClass('input-validation-error');
         }
     });
 

@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.3.2
+ * Datalist 3.4.0
  * https://github.com/NonFactors/MVC.Datalist
  *
  * Copyright © NonFactors
@@ -26,8 +26,8 @@
             var e = this.element;
             var o = this.options;
 
-            o.hiddenElement = $('#' + e.attr('data-datalist-hidden-input'))[0];
             o.recordsPerPage = e.attr('data-datalist-records-per-page');
+            o.hiddenElement = $('#' + e.attr('data-datalist-for'))[0];
             o.filters = e.attr('data-datalist-filters').split(',');
             o.sortColumn = e.attr('data-datalist-sort-column');
             o.sortOrder = e.attr('data-datalist-sort-order');
@@ -52,7 +52,7 @@
                     }
 
                     if (!event.isDefaultPrevented()) {
-                        that._select(null);
+                        that._select(null, false);
                     }
                 }
             });
@@ -75,14 +75,15 @@
                     });
                 },
                 select: function (e, selection) {
-                    that._select(selection.item.item);
+                    that._select(selection.item.item, false);
+                    e.preventDefault();
                 },
                 minLength: 1
             });
 
             this.element.bind('keyup.datalist', function (e) {
                 if (e.which != 9 && this.value.length == 0) {
-                    that._select(null);
+                    that._select(null, false);
                 }
             });
             this.element.prevAll('.ui-helper-hidden-accessible').remove();
@@ -177,13 +178,18 @@
             return additionaFilter;
         },
 
-        _defaultSelect: function (data) {
+        _defaultSelect: function (data, firstLoad) {
             if (data) {
-                $(this.options.hiddenElement).val(data.DatalistIdKey).change();
-                $(this.element).val(data.DatalistAcKey).change();
+                $(this.options.hiddenElement).val(data.DatalistIdKey);
+                $(this.element).val(data.DatalistAcKey);
             } else {
-                $(this.element).val(null).change();
-                $(this.options.hiddenElement).val(null).change();
+                $(this.options.hiddenElement).val(null);
+                $(this.element).val(null);
+            }
+
+            if (!firstLoad) {
+                $(this.options.hiddenElement).change();
+                $(this.element).change();
             }
         },
         _loadSelected: function () {
@@ -195,20 +201,20 @@
                     cache: false,
                     success: function (data) {
                         if (data.Rows.length > 0) {
-                            that._select(data.Rows[0]);
+                            that._select(data.Rows[0], true);
                         }
                     }
                 });
             }
         },
-        _select: function (data) {
+        _select: function (data, firstLoad) {
             var event = $.Event(this._defaultSelect);
             if (this.options.select) {
-                this.options.select(event, this.element[0], this.options.hiddenElement, data);
+                this.options.select(event, this.element[0], this.options.hiddenElement, data, firstLoad);
             }
 
             if (!event.isDefaultPrevented()) {
-                this._defaultSelect(data);
+                this._defaultSelect(data, firstLoad);
             }
         },
 
@@ -231,7 +237,6 @@
         _cleanUp: function () {
             this.element.removeAttr('data-datalist-records-per-page');
             this.element.removeAttr('data-datalist-dialog-title');
-            this.element.removeAttr('data-datalist-hidden-input');
             this.element.removeAttr('data-datalist-sort-column');
             this.element.removeAttr('data-datalist-sort-order');
             this.element.removeAttr('data-datalist-filters');
@@ -382,7 +387,7 @@
             that._on(selectRow, {
                 click: function () {
                     datalist.dialog('close');
-                    that._select(data);
+                    that._select(data, false);
                 }
             });
         },
@@ -392,7 +397,6 @@
             var o = this.options;
 
             e.attr('data-datalist-records-per-page', o.recordsPerPage);
-            e.attr('data-datalist-hidden-input', o.hiddenElement.id);
             e.attr('data-datalist-filters', o.filters.join());
             e.attr('data-datalist-sort-column', o.sortColumn);
             e.attr('data-datalist-sort-order', o.sortOrder);

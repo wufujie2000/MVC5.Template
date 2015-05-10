@@ -65,6 +65,7 @@
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Mail\IMailClient.cs" />
     <Compile Include="Mail\SmtpMailClient.cs" />
+    <Compile Include="Mvc\Adapters\DigitsAdapter.cs" />
     <Compile Include="Mvc\Adapters\EmailAddressAdapter.cs" />
     <Compile Include="Mvc\Adapters\EqualToAdapter.cs" />
     <Compile Include="Mvc\Adapters\MinLengthAdapter.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Mvc\Adapters\StringLengthAdapter.cs" />
     <Compile Include="Mvc\Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Mvc\Attributes\AreaAttribute.cs" />
+    <Compile Include="Mvc\Attributes\DigitsAttribute.cs" />
     <Compile Include="Mvc\Attributes\EqualToAttribute.cs" />
     <Compile Include="Mvc\Attributes\MaxValueAttribute.cs" />
     <Compile Include="Mvc\Attributes\IntegerAttribute.cs" />

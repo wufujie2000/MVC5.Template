@@ -150,6 +150,9 @@
   <data name="FieldMustBeNumeric" xml:space="preserve">
     <value>'{0}' field must be numeric.</value>
   </data>
+  <data name="FieldMustBeOnlyInDigits" xml:space="preserve">
+    <value>'{0}' field must only contain digits.</value>
+  </data>
   <data name="FieldMustBeWithMinLengthOf" xml:space="preserve">
     <value>'{0}' field must be at least {1} characters long.</value>
   </data>

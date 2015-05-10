@@ -150,6 +150,9 @@
   <data name="FieldMustBeNumeric" xml:space="preserve">
     <value>Laukas '{0}' turi būti skaičius.</value>
   </data>
+  <data name="FieldMustBeOnlyInDigits" xml:space="preserve">
+    <value>Laukas '{0}' turi būti sudarytas iš skaičių.</value>
+  </data>
   <data name="FieldMustBeWithMinLengthOf" xml:space="preserve">
     <value>Laukas '{0}' turi būti sudarytas bent iš {1} simbolių.</value>
   </data>

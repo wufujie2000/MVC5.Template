@@ -9,6 +9,9 @@ namespace MvcTemplate.Tests.Objects
         [Range(0, 128)]
         public Int32? Range { get; set; }
 
+        [Digits]
+        public String Digits { get; set; }
+
         [Integer]
         public Int32? Integer { get; set; }
 

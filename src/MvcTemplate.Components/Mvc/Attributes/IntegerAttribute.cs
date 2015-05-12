@@ -17,7 +17,7 @@ namespace MvcTemplate.Components.Mvc
             if (value == null)
                 return true;
 
-            return Regex.IsMatch(value.ToString(), "^[=-]?\\d+$");
+            return Regex.IsMatch(value.ToString(), "^[+-]?\\d+$");
         }
     }
 }

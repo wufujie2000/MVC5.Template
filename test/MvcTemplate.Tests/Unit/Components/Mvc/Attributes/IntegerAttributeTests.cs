@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void IsValid_VeryLongIntegerValue()
         {
-            Assert.True(attribute.IsValid("92233720368547758074878484887777"));
+            Assert.True(attribute.IsValid("+92233720368547758074878484887777"));
         }
 
         #endregion

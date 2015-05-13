@@ -130,11 +130,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         [InlineData("StringField", "text-cell")]
         [InlineData("Child", "text-cell")]
-        public void GetColumnCssClass_ReturnsCssClassForPropertyType(String propertyName, String expected)
+        public void GetColumnCssClass_ReturnsCssClassForPropertyType(String propertyName, String cssClass)
         {
             PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
             String actual = datalist.BaseGetColumnCssClass(property);
+            String expected = cssClass;
 
             Assert.Equal(expected, actual);
         }

@@ -9,9 +9,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class ContentExtensionsTests
     {
-        private UrlHelper urlHelper;
-        private HtmlHelper html;
         private String path;
+        private HtmlHelper html;
+        private UrlHelper urlHelper;
 
         public ContentExtensionsTests()
         {

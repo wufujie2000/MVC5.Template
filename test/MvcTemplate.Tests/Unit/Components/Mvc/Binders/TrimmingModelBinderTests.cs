@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void BindModel_DoNotTrimPropertyWithNotTrimmedAttribute()
+        public void BindModel_DoesNotTrimPropertyWithNotTrimmedAttribute()
         {
             bindingContext.ModelName = "NotTrimmed";
             nameValueCollection.Add(bindingContext.ModelName, "  Trimmed text  ");

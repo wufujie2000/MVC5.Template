@@ -37,6 +37,7 @@ namespace MvcTemplate.Controllers.Administration
             if (!Validator.CanCreate(role))
             {
                 Service.SeedPrivilegesTree(role);
+
                 return View(role);
             }
 
@@ -64,6 +65,7 @@ namespace MvcTemplate.Controllers.Administration
             if (!Validator.CanEdit(role))
             {
                 Service.SeedPrivilegesTree(role);
+
                 return View(role);
             }
 

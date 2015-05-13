@@ -2,7 +2,6 @@
 using MvcTemplate.Components.Mvc;
 using System;
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Web.Mvc;
 using Xunit;
@@ -41,14 +40,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsRequiredLabel()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
-
-            String actual = html.FormLabelFor(expression).ToString();
-            String expected = String.Format(
-                "<label for=\"{0}\">" +
+            String actual = html.FormLabelFor(x => x.Relation.Required).ToString();
+            String expected =
+                "<label for=\"Relation_Required\">" +
                     "<span class=\"required\"> *</span>" +
-                "</label>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+                "</label>";
 
             Assert.Equal(expected, actual);
         }
@@ -56,14 +52,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsRequiredLabelOnValueTypes()
         {
-            Expression<Func<BootstrapModel, Int64>> expression = (exp) => exp.Relation.RequiredValue;
-
-            String actual = html.FormLabelFor(expression).ToString();
-            String expected = String.Format(
-                "<label for=\"{0}\">" +
+            String actual = html.FormLabelFor(x => x.Relation.RequiredValue).ToString();
+            String expected =
+                "<label for=\"Relation_RequiredValue\">" +
                     "<span class=\"required\"> *</span>" +
-                "</label>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+                "</label>";
 
             Assert.Equal(expected, actual);
         }
@@ -71,12 +64,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsNotRequiredLabel()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormLabelFor(expression).ToString();
-            String expected = String.Format(
-                "<label for=\"{0}\"></label>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+            String actual = html.FormLabelFor(x => x.Relation.NotRequired).ToString();
+            String expected = "<label for=\"Relation_NotRequired\"></label>";
 
             Assert.Equal(expected, actual);
         }
@@ -84,12 +73,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
         {
-            Expression<Func<BootstrapModel, Int64?>> expression = (exp) => exp.Relation.NotRequiredNullableValue;
-
-            String actual = html.FormLabelFor(expression).ToString();
-            String expected = String.Format(
-                "<label for=\"{0}\"></label>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+            String actual = html.FormLabelFor(x => x.Relation.NotRequiredNullableValue).ToString();
+            String expected = "<label for=\"Relation_NotRequiredNullableValue\"></label>";
 
             Assert.Equal(expected, actual);
         }
@@ -101,13 +86,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_FormsNotAutocompletableTextBox()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -116,14 +97,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
-
-            String actual = html.FormTextBoxFor(expression).ToString();
+            String actual = html.FormTextBoxFor(x => x.NotEditable).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                model.Editable);
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
+                model.NotEditable);
 
             Assert.Equal(expected, actual);
         }
@@ -131,13 +108,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
-
-            String actual = html.FormTextBoxFor(expression).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -146,13 +119,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -165,13 +134,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_FormsNotAutocompletableTextBox()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -180,14 +145,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
-
-            String actual = html.FormTextBoxFor(expression, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.NotEditable, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                model.Editable);
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
+                model.NotEditable);
 
             Assert.Equal(expected, actual);
         }
@@ -195,13 +156,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
-
-            String actual = html.FormTextBoxFor(expression, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -210,13 +167,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -225,13 +178,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_FormatsTextBoxValue()
         {
-            Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
-
-            String actual = html.FormTextBoxFor(expression, "{0:0.00}").ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}").ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
                 String.Format("{0:0.00}", model.Relation.Number));
 
             Assert.Equal(expected, actual);
@@ -244,13 +193,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_MergesClassAttributes()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, new { @class = "test" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { @class = "test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control test\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -259,13 +204,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_FormsNotAutocompletableTextBox()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, (Object)null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -274,13 +215,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, new { autocomplete = "on" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { autocomplete = "on" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"on\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -289,13 +226,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression, new { @readonly = "false" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, new { @readonly = "false" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"false\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -304,14 +237,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
-
-            String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.NotEditable, (Object)null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                model.Editable);
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
+                model.NotEditable);
 
             Assert.Equal(expected, actual);
         }
@@ -319,13 +248,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
-
-            String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, (Object)null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -334,13 +259,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, (Object)null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -353,13 +274,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_MergesClassAttributes()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, null, new { @class = "test" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, new { @class = "test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control test\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -368,13 +285,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_FormsNotAutocompletableTextBox()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -383,13 +296,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextBoxFor(expression, null, new { autocomplete = "on" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, new { autocomplete = "on" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"on\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -398,13 +307,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression, null, new { @readonly = "false" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, null, new { @readonly = "false" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"false\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -413,14 +318,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
-
-            String actual = html.FormTextBoxFor(expression, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.NotEditable, null, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                model.Editable);
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
+                model.NotEditable);
 
             Assert.Equal(expected, actual);
         }
@@ -428,13 +329,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
-
-            String actual = html.FormTextBoxFor(expression, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, null, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -443,13 +340,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextBoxFor(expression, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, null, null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -458,13 +351,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_FormatsTextBoxValue()
         {
-            Expression<Func<BootstrapModel, Decimal>> expression = (exp) => exp.Relation.Number;
-
-            String actual = html.FormTextBoxFor(expression, "{0:0.00}", null).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}", null).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
                 String.Format("{0:0.00}", model.Relation.Number));
 
             Assert.Equal(expected, actual);
@@ -477,13 +366,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormPasswordFor_FormsNotAutocompletablePasswordInput()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.Required;
-
-            String actual = html.FormPasswordFor(expression).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"{0}\" name=\"{1}\" type=\"password\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression));
+            String expected = "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Required\" name=\"Relation.Required\" type=\"password\" />";
+            String actual = html.FormPasswordFor(x => x.Relation.Required).ToString();
 
             Assert.Equal(expected, actual);
         }
@@ -495,13 +379,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextAreaFor_FormsNotAutocompletableTextArea()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Relation.NotRequired;
-
-            String actual = html.FormTextAreaFor(expression).ToString();
+            String actual = html.FormTextAreaFor(x => x.Relation.NotRequired).ToString();
             String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"{0}\" name=\"{1}\" rows=\"6\">{2}</textarea>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" rows=\"6\">{0}</textarea>",
                 Environment.NewLine + model.Relation.NotRequired);
 
             Assert.Equal(expected, actual);
@@ -510,14 +390,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextAreaFor_DoesNotAddReadOnlyAttribute()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.Editable;
-
-            String actual = html.FormTextAreaFor(expression).ToString();
+            String actual = html.FormTextAreaFor(x => x.NotEditable).ToString();
             String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"{0}\" name=\"{1}\" rows=\"6\">{2}</textarea>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
-                Environment.NewLine + model.Editable);
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"NotEditable\" name=\"NotEditable\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.NotEditable);
 
             Assert.Equal(expected, actual);
         }
@@ -525,13 +401,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextAreaFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableTrue;
-
-            String actual = html.FormTextAreaFor(expression).ToString();
+            String actual = html.FormTextAreaFor(x => x.EditableTrue).ToString();
             String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"{0}\" name=\"{1}\" rows=\"6\">{2}</textarea>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{0}</textarea>",
                 Environment.NewLine + model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -540,13 +412,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextAreaFor_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            Expression<Func<BootstrapModel, String>> expression = (exp) => exp.EditableFalse;
-
-            String actual = html.FormTextAreaFor(expression).ToString();
+            String actual = html.FormTextAreaFor(x => x.EditableFalse).ToString();
             String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" rows=\"6\">{2}</textarea>",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{0}</textarea>",
                 Environment.NewLine + model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -559,14 +427,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDatePicker()
         {
-            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
-            String actual = html.FormDatePickerFor(expression).ToString();
+            String actual = html.FormDatePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
                 model.Relation.Date.Value.ToString("yyyy.MM.dd"));
 
             Assert.Equal(expected, actual);
@@ -579,14 +444,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDatePickerWtihAttributes()
         {
-            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
-            String actual = html.FormDatePickerFor(expression, new { @readonly = "readonly" }).ToString();
+            String actual = html.FormDatePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.Relation.Date.Value.ToString("yyyy.MM.dd"));
 
             Assert.Equal(expected, actual);
@@ -599,14 +461,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDateTimePicker()
         {
-            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
-            String actual = html.FormDateTimePickerFor(expression).ToString();
+            String actual = html.FormDateTimePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"{0}\" name=\"{1}\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
                 model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
 
             Assert.Equal(expected, actual);
@@ -619,14 +478,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDateTimePickerWithAttributes()
         {
-            Expression<Func<BootstrapModel, DateTime?>> expression = (exp) => exp.Relation.Date;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
 
-            String actual = html.FormDateTimePickerFor(expression, new { @readonly = "readonly" }).ToString();
+            String actual = html.FormDateTimePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"{0}\" name=\"{1}\" readonly=\"readonly\" type=\"text\" value=\"{2}\" />",
-                TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)),
-                ExpressionHelper.GetExpressionText(expression),
+                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
 
             Assert.Equal(expected, actual);

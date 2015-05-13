@@ -30,13 +30,13 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Fact]
         public void Add_AddsTypedMessage()
         {
-            container.Add(AlertType.Danger, "Test");
+            container.Add(AlertType.Success, "Message");
 
             Alert actual = container.Single();
 
             Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.Equal(AlertType.Danger, actual.Type);
-            Assert.Equal("Test", actual.Message);
+            Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal("Message", actual.Message);
         }
 
         #endregion
@@ -46,12 +46,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Fact]
         public void Add_AddsFadingTypedMessage()
         {
-            container.Add(AlertType.Danger, "TestMessage", 20);
+            container.Add(AlertType.Danger, "Message", 20);
 
             Alert actual = container.Single();
 
             Assert.Equal(AlertType.Danger, actual.Type);
-            Assert.Equal("TestMessage", actual.Message);
+            Assert.Equal("Message", actual.Message);
             Assert.Equal(20, actual.FadeoutAfter);
         }
 
@@ -62,12 +62,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Fact]
         public void AddError_AddsErrorMessage()
         {
-            container.AddError("ErrorMessage");
+            container.AddError("Message");
 
             Alert actual = container.Single();
 
-            Assert.Equal("ErrorMessage", actual.Message);
             Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal("Message", actual.Message);
             Assert.Equal(0, actual.FadeoutAfter);
         }
 
@@ -78,12 +78,12 @@ namespace MvcTemplate.Tests.Unit.Components.Alerts
         [Fact]
         public void AddError_AddsFadingErrorMessage()
         {
-            container.AddError("ErrorMessage", 1);
+            container.AddError("Message", 1);
 
             Alert actual = container.Single();
 
-            Assert.Equal("ErrorMessage", actual.Message);
             Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal("Message", actual.Message);
             Assert.Equal(1, actual.FadeoutAfter);
         }
 

@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public Decimal Number { get; set; }
         public DateTime? Date { get; set; }
 
-        public String Editable { get; set; }
+        public String NotEditable { get; set; }
 
         [Editable(true)]
         public String EditableTrue { get; set; }
@@ -30,9 +30,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             NotRequired = "NotRequired";
             Required = "Required";
             Date = DateTime.Now;
-            Editable = "Not";
-            EditableTrue = "T";
+            NotEditable = "Not";
             EditableFalse = "F";
+            EditableTrue = "T";
             Number = 10.7854M;
 
             Relation = new BootstrapModel(true)
@@ -41,10 +41,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 NotRequired = "NotRequiredRelation",
                 NotRequiredNullableValue = 5411,
                 Required = "RequiredRelation",
-                RequiredValue = 1020554544,
-                Editable = "NotRelation",
-                EditableTrue = "TRelation",
+                RequiredValue = 102055454422,
+                NotEditable = "NotRelation",
                 EditableFalse = "FRelation",
+                EditableTrue = "TRelation",
                 Number = 1.6666M
             };
         }

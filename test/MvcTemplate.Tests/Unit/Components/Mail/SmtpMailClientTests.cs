@@ -5,18 +5,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mail
 {
     public class SmtpMailClientTests
     {
-        private SmtpMailClient client;
-
-        public SmtpMailClientTests()
-        {
-            client = new SmtpMailClient();
-        }
-
         #region Dispose()
 
         [Fact]
         public void Dispose_CanBeCalledMultipleTimes()
         {
+            SmtpMailClient client = new SmtpMailClient();
+
             client.Dispose();
             client.Dispose();
         }

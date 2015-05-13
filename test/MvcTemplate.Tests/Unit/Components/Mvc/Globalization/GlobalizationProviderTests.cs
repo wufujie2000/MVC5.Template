@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Mvc;
-using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -14,7 +13,22 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         static GlobalizationProviderTests()
         {
-            CreateGlobalizationXml("Globalization.xml");
+            XElement english = new XElement("language");
+            english.SetAttributeValue("name", "English");
+            english.SetAttributeValue("culture", "en-GB");
+            english.SetAttributeValue("abbrevation", "en");
+            english.SetAttributeValue("default", "true");
+
+            XElement lithuanian = new XElement("language");
+            lithuanian.SetAttributeValue("name", "Lietuvių");
+            lithuanian.SetAttributeValue("culture", "lt-LT");
+            lithuanian.SetAttributeValue("abbrevation", "lt");
+
+            XElement globalization = new XElement("globalization");
+            globalization.Add(lithuanian);
+            globalization.Add(english);
+
+            globalization.Save("Globalization.xml");
         }
         public GlobalizationProviderTests()
         {
@@ -92,30 +106,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Assert.Equal("en", actual.Abbrevation);
             Assert.Equal("English", actual.Name);
             Assert.True(actual.IsDefault);
-        }
-
-        #endregion
-
-        #region Test helpers
-
-        private static void CreateGlobalizationXml(String path)
-        {
-            XElement english = new XElement("language");
-            english.SetAttributeValue("name", "English");
-            english.SetAttributeValue("culture", "en-GB");
-            english.SetAttributeValue("abbrevation", "en");
-            english.SetAttributeValue("default", "true");
-
-            XElement lithuanian = new XElement("language");
-            lithuanian.SetAttributeValue("name", "Lietuvių");
-            lithuanian.SetAttributeValue("culture", "lt-LT");
-            lithuanian.SetAttributeValue("abbrevation", "lt");
-
-            XElement globalization = new XElement("globalization");
-            globalization.Add(lithuanian);
-            globalization.Add(english);
-
-            globalization.Save(path);
         }
 
         #endregion

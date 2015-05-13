@@ -37,9 +37,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [InlineData(false)]
         public void IsAuthorizedFor_ReturnsAuthorizationProviderResult(Boolean isAuthorized)
         {
-            String controller = html.ViewContext.RouteData.Values["controller"] as String;
-            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
+            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
+            String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
             Authorization.Provider.IsAuthorizedFor(accountId, area, controller, "Create").Returns(isAuthorized);
 
@@ -66,10 +66,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [InlineData(false)]
         public void IsAuthorizedFor_Overload_ReturnsAuthorizationProviderResult(Boolean isAuthorized)
         {
-            String controller = html.ViewContext.RouteData.Values["controller"] as String;
-            String action = html.ViewContext.RouteData.Values["action"] as String;
-            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String area = html.ViewContext.RouteData.Values["area"] as String;
+            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
+            String action = html.ViewContext.RouteData.Values["action"] as String;
+            String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
             Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(isAuthorized);
 

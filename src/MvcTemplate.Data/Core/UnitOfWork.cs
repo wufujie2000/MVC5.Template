@@ -72,10 +72,8 @@ namespace MvcTemplate.Data.Core
 
         public void Rollback()
         {
-            DbContext newContext = Activator.CreateInstance(Context.GetType()) as DbContext;
-
             Context.Dispose();
-            Context = newContext;
+            Context = Activator.CreateInstance(Context.GetType()) as DbContext;
         }
         public void Commit()
         {

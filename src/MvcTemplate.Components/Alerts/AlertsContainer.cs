@@ -15,9 +15,9 @@ namespace MvcTemplate.Components.Alerts
         {
             Add(new Alert
             {
+                Type = type,
                 Message = message,
-                FadeoutAfter = fadeoutAfter,
-                Type = type
+                FadeoutAfter = fadeoutAfter
             });
         }
 

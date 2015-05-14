@@ -196,8 +196,8 @@
     <Content Include="Content\Shared\overrides.css">
       <DependentUpon>overrides.less</DependentUpon>
     </Content>
-    <Content Include="Content\Shared\sidebar.css">
-      <DependentUpon>sidebar.less</DependentUpon>
+    <Content Include="Content\Shared\menu.css">
+      <DependentUpon>menu.less</DependentUpon>
     </Content>
     <Content Include="Content\Shared\table.css">
       <DependentUpon>table.less</DependentUpon>
@@ -259,7 +259,7 @@
       <DependentUpon>jstree.js</DependentUpon>
     </Content>
     <Content Include="Scripts\Shared\site.js" />
-    <Content Include="Scripts\Shared\sidebar.js" />
+    <Content Include="Scripts\Shared\menu.js" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_PrivateLayout.cshtml" />
     <Content Include="Views\Web.config" />
@@ -352,7 +352,7 @@
     <Content Include="Content\Shared\overrides.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Shared\sidebar.less" />
+    <Content Include="Content\Shared\menu.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\table.less" />

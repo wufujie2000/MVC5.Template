@@ -1,12 +1,12 @@
 // Search
 (function () {
-    $(document).on('keyup', '#SearchInput', function () {
+    $(document).on('keyup', '#MenuSearchInput', function () {
         var searchString = this.value.toLowerCase();
-        if ($('.sidebar').width() < 100) {
+        if ($('.menu').width() < 100) {
             searchString = '';
         }
 
-        var menus = $('.sidebar li');
+        var menus = $('.menu li');
         for (var i = 0; i < menus.length; i++) {
             var menu = $(menus[i]);
             if (menu.text().toLowerCase().indexOf(searchString) >= 0) {
@@ -28,9 +28,9 @@
 
 // Hovering
 (function () {
-    $(document).on('mouseleave', '.sidebar > ul', function () {
-        if ($('.sidebar').width() < 100) {
-            var submenu = $('.sidebar li.open');
+    $(document).on('mouseleave', '.menu > ul', function () {
+        if ($('.menu').width() < 100) {
+            var submenu = $('.menu li.open');
             submenu.children('ul').fadeOut();
             submenu.toggleClass('open');
         }
@@ -45,7 +45,7 @@
         var submenu = action.parent();
         var openSiblings = submenu.siblings('.open');
 
-        if ($('.sidebar').width() > 100) {
+        if ($('.menu').width() > 100) {
             openSiblings.toggleClass('changing');
             openSiblings.children('ul').slideUp(function () {
                 openSiblings.removeClass('changing open');
@@ -69,14 +69,14 @@
 
 // Rendering on low resolutions
 (function () {
-    if ($('.sidebar').width() < 100) {
-        $('.sidebar li.open').removeClass('open');
+    if ($('.menu').width() < 100) {
+        $('.menu li.open').removeClass('open');
     }
 
     $(window).on('resize', function () {
-        if ($('.sidebar').width() < 100) {
-            $('.sidebar .open').removeClass('open').children('ul').hide();
-            $('#SearchInput').keyup();
+        if ($('.menu').width() < 100) {
+            $('.menu .open').removeClass('open').children('ul').hide();
+            $('#MenuSearchInput').keyup();
         }
     });
 }());

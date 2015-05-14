@@ -17,9 +17,9 @@
 <body class="private">
     @Html.Partial("_Header")
     @Html.Partial("_Datalist")
-    <div class="sidebar">
-        <div class="sidebar-search">
-            @Html.TextBox("SearchInput", null, new { placeholder = Actions.Search + "..." })
+    <div class="menu">
+        <div class="menu-search">
+            @Html.TextBox("MenuSearchInput", null, new { placeholder = Actions.Search + "..." })
         </div>
         @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetAuthorizedMenus(Request.RequestContext))
     </div>

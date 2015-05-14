@@ -1,10 +1,10 @@
 ﻿@import "../theme";
 
-.sidebar {
+.menu {
     width: 200px;
     float: left;
 
-    .sidebar-search {
+    .menu-search {
         border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         margin: 10px;
 
@@ -80,7 +80,7 @@
 }
 
 @media (min-width: 768px) {
-    .sidebar > ul:not(:hover) .active > a {
+    .menu > ul:not(:hover) .active > a {
         background-image: url("../../Images/Shared/menu-active.png"), linear-gradient(@active-from-color, @active-to-color);
         background-position: right center;
         background-repeat: no-repeat;
@@ -89,10 +89,10 @@
 }
 
 @media (max-width: 767px) {
-    .sidebar {
+    .menu {
         width: 45px;
 
-        .sidebar-search {
+        .menu-search {
             display: none;
         }
 

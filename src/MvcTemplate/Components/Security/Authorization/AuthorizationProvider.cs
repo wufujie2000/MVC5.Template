@@ -11,14 +11,12 @@ namespace MvcTemplate.Components.Security
 {
     public class AuthorizationProvider : IAuthorizationProvider
     {
-        private Type ControllerType { get; set; }
         private Type[] ControllerTypes { get; set; }
         private Dictionary<String, IEnumerable<Privilege>> Cache { get; set; }
 
         public AuthorizationProvider(Assembly controllersAssembly)
         {
-            ControllerType = typeof(Controller);
-            ControllerTypes = controllersAssembly.GetTypes().Where(type => ControllerType.IsAssignableFrom(type)).ToArray();
+            ControllerTypes = controllersAssembly.GetTypes().Where(type => typeof(Controller).IsAssignableFrom(type)).ToArray();
         }
 
         public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
@@ -70,7 +68,7 @@ namespace MvcTemplate.Components.Security
             if (method.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
             if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
 
-            while (authorizedControllerType != ControllerType)
+            while (authorizedControllerType != typeof(Controller))
             {
                 if (authorizedControllerType.IsDefined(typeof(AuthorizeAttribute), false)) return false;
                 if (authorizedControllerType.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;

@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Resources;
 using System.Text.RegularExpressions;
 using System.Web.Routing;
 
@@ -10,13 +10,11 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
-        private static Assembly ExecutingAssembly { get; set; }
-        private static String[] Resources { get; set; }
+        private static Dictionary<String, Type> Resources { get; set; }
 
         static ResourceProvider()
         {
-            ExecutingAssembly = Assembly.GetExecutingAssembly();
-            Resources = ExecutingAssembly.DefinedTypes.Select(type => type.FullName).ToArray();
+            Resources = Assembly.GetExecutingAssembly().GetTypes().ToDictionary(type => type.FullName);
         }
 
         public static String GetDatalistTitle<TModel>()
@@ -25,32 +23,28 @@ namespace MvcTemplate.Resources
         }
         public static String GetContentTitle(RouteValueDictionary values)
         {
-            String key = String.Format("{0}{1}{2}", values["area"], values["controller"], values["action"]);
+            String area = ToTitleCase(values["area"] as String);
+            String action = ToTitleCase(values["action"] as String);
+            String controller = ToTitleCase(values["controller"] as String);
 
-            return GetResource("MvcTemplate.Resources.Shared.ContentTitles", key);
+            return GetResource("MvcTemplate.Resources.Shared.ContentTitles", area + controller + action);
         }
         public static String GetSiteMapTitle(String area, String controller, String action)
         {
-            String key = String.Format("{0}{1}{2}", area, controller, action);
-
-            return GetResource("MvcTemplate.Resources.SiteMap.Titles", key);
+            return GetResource("MvcTemplate.Resources.SiteMap.Titles", area + controller + action);
         }
 
         public static String GetPrivilegeAreaTitle(String area)
         {
-            return GetResource("MvcTemplate.Resources.Privilege.Area.Titles", area);
+            return GetResource("MvcTemplate.Resources.Privilege.Area.Titles", area ?? "");
         }
         public static String GetPrivilegeControllerTitle(String area, String controller)
         {
-            String key = String.Format("{0}{1}", area, controller);
-
-            return GetResource("MvcTemplate.Resources.Privilege.Controller.Titles", key);
+            return GetResource("MvcTemplate.Resources.Privilege.Controller.Titles", area + controller);
         }
         public static String GetPrivilegeActionTitle(String area, String controller, String action)
         {
-            String key = String.Format("{0}{1}{2}", area, controller, action);
-
-            return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", key);
+            return GetResource("MvcTemplate.Resources.Privilege.Action.Titles", area + controller + action);
         }
 
         public static String GetPropertyTitle<TModel, TProperty>(Expression<Func<TModel, TProperty>> property)
@@ -62,7 +56,7 @@ namespace MvcTemplate.Resources
         }
         public static String GetPropertyTitle(Type view, String property)
         {
-            return GetPropertyTitle(view.Name, property);
+            return GetPropertyTitle(view.Name, property ?? "");
         }
 
         private static String GetPropertyTitle(String view, String property)
@@ -87,18 +81,28 @@ namespace MvcTemplate.Resources
 
             return null;
         }
-        private static String GetResource(String baseName, String key)
+        private static String GetResource(String type, String key)
         {
-            if (!Resources.Any(resourceName => resourceName == baseName)) return null;
+            if (!Resources.ContainsKey(type)) return null;
 
-            ResourceManager manager = new ResourceManager(baseName, ExecutingAssembly);
-            manager.IgnoreCase = true;
+            PropertyInfo resource = Resources[type].GetProperty(key, typeof(String));
+            if (resource == null) return null;
 
-            return manager.GetString(key ?? "");
+            return resource.GetValue(null) as String;
         }
         private static String[] SplitCamelCase(String value)
         {
             return Regex.Split(value, @"(?<!^)(?=[A-Z])");
+        }
+        private static String ToTitleCase(String value)
+        {
+            if (value == null)
+                return null;
+
+            if (value.Length > 0)
+                return Char.ToUpper(value[0]) + value.Substring(1);
+
+            return value;
         }
     }
 }

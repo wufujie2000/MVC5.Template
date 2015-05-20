@@ -5,6 +5,7 @@ using MvcTemplate.Tests.Objects;
 using System;
 using System.Web.Routing;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Resources
 {
@@ -46,12 +47,28 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Fact]
-        public void GetContentTitle_GetsTitleWithoutArea()
+        public void GetContentTitle_GetsTitleByIgnoringCase()
+        {
+            RouteValueDictionary values = new RouteValueDictionary();
+            values["area"] = "administration";
+            values["controller"] = "accounts";
+            values["action"] = "details";
+
+            String expected = ContentTitles.AdministrationAccountsDetails;
+            String actual = ResourceProvider.GetContentTitle(values);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void GetContentTitle_GetsTitleWithoutArea(String area)
         {
             RouteValueDictionary values = new RouteValueDictionary();
             values["controller"] = "Profile";
             values["action"] = "Edit";
-            values["area"] = null;
+            values["area"] = area;
 
             String actual = ResourceProvider.GetContentTitle(values);
             String expected = ContentTitles.ProfileEdit;
@@ -110,6 +127,12 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetPrivilegeAreaTitle_OnActionNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetPrivilegeAreaTitle("Test"));
+        }
+
+        [Fact]
+        public void GetPrivilegeAreaTitle_OnNullAreaReturnsNull()
+        {
+            Assert.Null(ResourceProvider.GetPrivilegeAreaTitle(null));
         }
 
         #endregion
@@ -231,6 +254,12 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetPropertyTitle_OnTypeNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetPropertyTitle(typeof(TestView), "Title"));
+        }
+
+        [Fact]
+        public void GetPropertyTitle_OnNullPropertyKeyReturnsNull()
+        {
+            Assert.Null(ResourceProvider.GetPropertyTitle(typeof(RoleView), null));
         }
 
         #endregion

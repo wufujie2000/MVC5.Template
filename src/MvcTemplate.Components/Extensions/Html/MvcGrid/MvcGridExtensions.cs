@@ -91,7 +91,7 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder icon = new TagBuilder("i");
 
             actionTag.MergeAttribute("href", url.Action(action, GetRouteValuesFor(model)));
-            actionTag.AddCssClass(String.Format("{0}-action", action.ToLower()));
+            actionTag.AddCssClass(action.ToLower() + "-action");
             icon.AddCssClass(iconClass);
 
             actionTag.InnerHtml = icon.ToString();

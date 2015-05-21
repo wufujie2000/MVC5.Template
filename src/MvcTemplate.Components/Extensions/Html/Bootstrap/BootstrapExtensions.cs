@@ -85,8 +85,8 @@ namespace MvcTemplate.Components.Extensions.Html
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
             RouteValueDictionary htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
-            htmlAttributes["class"] = String.Format("{0} {1}", cssClass, htmlAttributes["class"]).Trim();
             if (!htmlAttributes.ContainsKey("autocomplete")) htmlAttributes.Add("autocomplete", "off");
+            htmlAttributes["class"] = (cssClass + " " + htmlAttributes["class"]).Trim();
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;

@@ -61,7 +61,7 @@ namespace MvcTemplate.Resources
 
         private static String GetPropertyTitle(String view, String property)
         {
-            String baseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", view);
+            String baseName = "MvcTemplate.Resources.Views." + view + ".Titles";
             String title = GetResource(baseName, property);
             if (title != null) return title;
 
@@ -72,7 +72,7 @@ namespace MvcTemplate.Resources
                 {
                     String joinedView = String.Concat(camelCasedProperties.Skip(skippedProperties).Take(viewSize)) + "View";
                     String joinedProperty = String.Concat(camelCasedProperties.Skip(viewSize + skippedProperties));
-                    String joinedBaseName = String.Format("MvcTemplate.Resources.Views.{0}.Titles", joinedView);
+                    String joinedBaseName = "MvcTemplate.Resources.Views." + joinedView + ".Titles";
 
                     title = GetResource(joinedBaseName, joinedProperty);
                     if (title != null) return title;

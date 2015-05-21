@@ -15,7 +15,7 @@ namespace MvcTemplate.Components.Extensions.Html
             String scriptDir = controller;
 
             if (routeValues["Area"] != null)
-                scriptDir = String.Format("{0}/{1}", routeValues["Area"], scriptDir);
+                scriptDir = routeValues["Area"] + "/" + scriptDir;
 
             String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", scriptDir, controller.ToLower()));
             String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);
@@ -34,7 +34,7 @@ namespace MvcTemplate.Components.Extensions.Html
             String styleDir = controller;
 
             if (routeValues["Area"] != null)
-                styleDir = String.Format("{0}/{1}", routeValues["Area"], styleDir);
+                styleDir = routeValues["Area"] + "/" + styleDir;
 
             String virtualPath = urlHelper.Content(String.Format("~/Content/Shared/{0}/{1}.css", styleDir, controller.ToLower()));
             String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);

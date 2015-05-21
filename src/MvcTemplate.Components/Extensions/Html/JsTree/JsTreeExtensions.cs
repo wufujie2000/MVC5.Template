@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Extensions.Html
     {
         public static MvcHtmlString JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
         {
-            return JsTreeFor(String.Format("{0}.{1}", ExpressionHelper.GetExpressionText(expression), "SelectedIds"),
+            return JsTreeFor(ExpressionHelper.GetExpressionText(expression) + ".SelectedIds",
                 ModelMetadata.FromLambdaExpression(expression, html.ViewData).Model as JsTree);
         }
 

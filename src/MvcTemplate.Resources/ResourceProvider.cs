@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Resources;
 using System.Text.RegularExpressions;
 using System.Web.Routing;
 
@@ -10,11 +11,22 @@ namespace MvcTemplate.Resources
 {
     public static class ResourceProvider
     {
-        private static Dictionary<String, Type> Resources { get; set; }
+        private static Dictionary<String, ResourceManager> Resources { get; set; }
 
         static ResourceProvider()
         {
-            Resources = Assembly.GetExecutingAssembly().GetTypes().ToDictionary(type => type.FullName);
+            Resources = new Dictionary<String, ResourceManager>();
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                PropertyInfo property = type.GetProperty("ResourceManager", BindingFlags.Public | BindingFlags.Static);
+                if (property != null)
+                {
+                    ResourceManager manager = property.GetValue(null) as ResourceManager;
+                    manager.IgnoreCase = true;
+
+                    Resources.Add(type.FullName, manager);
+                }
+            }
         }
 
         public static String GetDatalistTitle<TModel>()
@@ -23,9 +35,9 @@ namespace MvcTemplate.Resources
         }
         public static String GetContentTitle(RouteValueDictionary values)
         {
-            String area = ToTitleCase(values["area"] as String);
-            String action = ToTitleCase(values["action"] as String);
-            String controller = ToTitleCase(values["controller"] as String);
+            String area = values["area"] as String;
+            String action = values["action"] as String;
+            String controller = values["controller"] as String;
 
             return GetResource("MvcTemplate.Resources.Shared.ContentTitles", area + controller + action);
         }
@@ -85,24 +97,11 @@ namespace MvcTemplate.Resources
         {
             if (!Resources.ContainsKey(type)) return null;
 
-            PropertyInfo resource = Resources[type].GetProperty(key, typeof(String));
-            if (resource == null) return null;
-
-            return resource.GetValue(null) as String;
+            return Resources[type].GetString(key);
         }
         private static String[] SplitCamelCase(String value)
         {
             return Regex.Split(value, @"(?<!^)(?=[A-Z])");
-        }
-        private static String ToTitleCase(String value)
-        {
-            if (value == null)
-                return null;
-
-            if (value.Length > 0)
-                return Char.ToUpper(value[0]) + value.Substring(1);
-
-            return value;
         }
     }
 }

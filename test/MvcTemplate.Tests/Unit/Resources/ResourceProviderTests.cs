@@ -33,28 +33,14 @@ namespace MvcTemplate.Tests.Unit.Resources
         #region Static method: GetContentTitle(RouteValueDictionary values)
 
         [Fact]
-        public void GetContentTitle_GetsTitle()
-        {
-            RouteValueDictionary values = new RouteValueDictionary();
-            values["area"] = "Administration";
-            values["controller"] = "Accounts";
-            values["action"] = "Details";
-
-            String expected = ContentTitles.AdministrationAccountsDetails;
-            String actual = ResourceProvider.GetContentTitle(values);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void GetContentTitle_GetsTitleByIgnoringCase()
         {
             RouteValueDictionary values = new RouteValueDictionary();
             values["area"] = "administration";
-            values["controller"] = "accounts";
+            values["controller"] = "roles";
             values["action"] = "details";
 
-            String expected = ContentTitles.AdministrationAccountsDetails;
+            String expected = ContentTitles.AdministrationRolesDetails;
             String actual = ResourceProvider.GetContentTitle(values);
 
             Assert.Equal(expected, actual);
@@ -66,8 +52,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetContentTitle_GetsTitleWithoutArea(String area)
         {
             RouteValueDictionary values = new RouteValueDictionary();
-            values["controller"] = "Profile";
-            values["action"] = "Edit";
+            values["controller"] = "profile";
+            values["action"] = "edit";
             values["area"] = area;
 
             String actual = ResourceProvider.GetContentTitle(values);
@@ -87,25 +73,25 @@ namespace MvcTemplate.Tests.Unit.Resources
         #region Static method: GetSiteMapTitle(String area, String controller, String action)
 
         [Fact]
-        public void GetMenuTitle_GetsTitle()
+        public void GetSiteMapTitle_GetsTitleByIgnoringCase()
         {
-            String actual = ResourceProvider.GetSiteMapTitle("Administration", "Roles", "Index");
+            String actual = ResourceProvider.GetSiteMapTitle("administration", "roles", "index");
             String expected = MvcTemplate.Resources.SiteMap.Titles.AdministrationRolesIndex;
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void GetMenuTitle_GetsTitleWithoutControllerAndAction()
+        public void GetSiteMapTitle_GetsTitleWithoutControllerAndAction()
         {
-            String actual = ResourceProvider.GetSiteMapTitle("Administration", null, null);
+            String actual = ResourceProvider.GetSiteMapTitle("administration", null, null);
             String expected = MvcTemplate.Resources.SiteMap.Titles.Administration;
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void GetMenuTitle_OnMenuNotFoundReturnsNull()
+        public void GetSiteMapTitle_OnMenuNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetSiteMapTitle("Test", "Test", "Test"));
         }
@@ -115,10 +101,10 @@ namespace MvcTemplate.Tests.Unit.Resources
         #region Static method: GetPrivilegeAreaTitle(String area)
 
         [Fact]
-        public void GetPrivilegeAreaTitle_GetsTitle()
+        public void GetPrivilegeAreaTitle_GetsTitleByIgnoringCase()
         {
             String expected = MvcTemplate.Resources.Privilege.Area.Titles.Administration;
-            String actual = ResourceProvider.GetPrivilegeAreaTitle("Administration");
+            String actual = ResourceProvider.GetPrivilegeAreaTitle("administration");
 
             Assert.Equal(expected, actual);
         }
@@ -161,8 +147,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Fact]
         public void GetPrivilegeActionTitle_GetsTitle()
         {
+            String actual = ResourceProvider.GetPrivilegeActionTitle("administration", "accounts", "index");
             String expected = MvcTemplate.Resources.Privilege.Action.Titles.AdministrationAccountsIndex;
-            String actual = ResourceProvider.GetPrivilegeActionTitle("Administration", "Accounts", "Index");
 
             Assert.Equal(expected, actual);
         }
@@ -218,9 +204,9 @@ namespace MvcTemplate.Tests.Unit.Resources
         #region Static method: GetPropertyTitle(Type view, String property)
 
         [Fact]
-        public void GetPropertyTitle_GetsTitle()
+        public void GetPropertyTitle_GetsTitleByIgnoringCase()
         {
-            String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "Username");
+            String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "username");
             String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.Equal(expected, actual);

@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
+using System;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security.Area
@@ -9,71 +10,43 @@ namespace MvcTemplate.Tests.Unit.Components.Security.Area
     public abstract class AuthorizedController : Controller
     {
         [HttpGet]
-        public abstract ViewResult Get();
+        public abstract ViewResult Action();
 
         [HttpPost]
-        public abstract ViewResult Post();
+        public abstract ViewResult Action(Object obj);
 
         [HttpGet]
-        [ActionName("GetName")]
-        public abstract ViewResult GetAction();
-
-        [HttpPost]
-        [ActionName("PostName")]
-        public abstract ViewResult PostAction();
-
-        [HttpGet]
-        [GlobalizedAuthorize]
-        public abstract ViewResult AuthorizedGet();
-
-        [HttpPost]
-        [GlobalizedAuthorize]
-        public abstract ViewResult AuthorizedPost();
-
-        [HttpGet]
-        [GlobalizedAuthorize]
-        [ActionName("AuthorizedGetName")]
         public abstract ViewResult AuthorizedGetAction();
 
         [HttpPost]
-        [GlobalizedAuthorize]
-        [ActionName("AuthorizedPostName")]
+        [AllowAnonymous]
+        public abstract ViewResult AuthorizedGetAction(Object obj);
+
+        [HttpPost]
         public abstract ViewResult AuthorizedPostAction();
 
         [HttpGet]
-        [AllowAnonymous]
-        public abstract ViewResult AnonymousGet();
+        [ActionName("AuthorizedNamedGetAction")]
+        public abstract ViewResult GetActionWithName();
 
         [HttpPost]
         [AllowAnonymous]
-        public abstract ViewResult AnonymousPost();
+        [ActionName("AuthorizedNamedGetAction")]
+        public abstract ViewResult GetActionWithName(Object obj);
+
+        [HttpPost]
+        [ActionName("AuthorizedNamedPostAction")]
+        public abstract ViewResult PostActionWithName();
 
         [HttpGet]
-        [AllowAnonymous]
-        [ActionName("AnonymousGetName")]
-        public abstract ViewResult AnonymousGetAction();
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ActionName("AnonymousPostName")]
-        public abstract ViewResult AnonymousPostAction();
+        public abstract ViewResult NotAuthorizedAs();
 
         [HttpGet]
-        [AllowUnauthorized]
-        public abstract ViewResult UnauthorizedGet();
-
-        [HttpPost]
-        [AllowUnauthorized]
-        public abstract ViewResult UnauthorizedPost();
+        [AuthorizeAs("AuthorizedAsItself")]
+        public abstract ViewResult AuthorizedAsItself();
 
         [HttpGet]
-        [AllowUnauthorized]
-        [ActionName("UnauthorizedGetName")]
-        public abstract ViewResult UnauthorizedGetAction();
-
-        [HttpPost]
-        [AllowUnauthorized]
-        [ActionName("UnauthorizedPostName")]
-        public abstract ViewResult UnauthorizedPostAction();
+        [AuthorizeAs("Action")]
+        public abstract ViewResult AuthorizedAsAction();
     }
 }

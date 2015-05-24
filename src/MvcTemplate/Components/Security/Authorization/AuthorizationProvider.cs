@@ -24,6 +24,7 @@ namespace MvcTemplate.Components.Security
             Type authorizedController = GetControllerType(area, controller);
             MethodInfo actionInfo = GetMethod(authorizedController, action);
             String authorizedAs = GetAuthorizedAs(actionInfo);
+            if (String.IsNullOrEmpty(area)) area = null;
 
             if (authorizedAs != null)
                 return IsAuthorizedFor(accountId, area, controller, authorizedAs);
@@ -85,7 +86,7 @@ namespace MvcTemplate.Components.Security
             IEnumerable<Type> controllers = ControllerTypes
                 .Where(type => type.Name.Equals(controllerType, StringComparison.OrdinalIgnoreCase));
 
-            if (area == null)
+            if (String.IsNullOrEmpty(area))
                 controllers = controllers.Where(type =>
                     type.GetCustomAttribute<AreaAttribute>() == null);
             else

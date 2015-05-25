@@ -88,11 +88,11 @@ namespace MvcTemplate.Components.Security
 
             if (String.IsNullOrEmpty(area))
                 controllers = controllers.Where(type =>
-                    type.GetCustomAttribute<AreaAttribute>() == null);
+                    !type.IsDefined(typeof(AreaAttribute), false));
             else
                 controllers = controllers.Where(type =>
-                    type.GetCustomAttribute<AreaAttribute>() != null &&
-                    String.Equals(type.GetCustomAttribute<AreaAttribute>().Name, area, StringComparison.OrdinalIgnoreCase));
+                    type.IsDefined(typeof(AreaAttribute), false) &&
+                    String.Equals(type.GetCustomAttribute<AreaAttribute>(false).Name, area, StringComparison.OrdinalIgnoreCase));
 
             return controllers.Single();
         }
@@ -102,17 +102,17 @@ namespace MvcTemplate.Components.Security
                 .GetMethods()
                 .Where(method =>
                     (
-                        method.GetCustomAttribute<ActionNameAttribute>() == null &&
+                        !method.IsDefined(typeof(ActionNameAttribute), false) &&
                         method.Name.ToLowerInvariant() == action.ToLowerInvariant()
                     )
                     ||
                     (
-                        method.GetCustomAttribute<ActionNameAttribute>() != null &&
-                        method.GetCustomAttribute<ActionNameAttribute>().Name.ToLowerInvariant() == action.ToLowerInvariant()
+                        method.IsDefined(typeof(ActionNameAttribute), false) &&
+                        method.GetCustomAttribute<ActionNameAttribute>(false).Name.ToLowerInvariant() == action.ToLowerInvariant()
                     ))
                 .ToArray();
 
-            MethodInfo getMethod = methods.FirstOrDefault(method => method.GetCustomAttribute<HttpGetAttribute>() != null);
+            MethodInfo getMethod = methods.FirstOrDefault(method => method.IsDefined(typeof(HttpGetAttribute), false));
             if (getMethod != null)
                 return getMethod;
 
@@ -123,8 +123,11 @@ namespace MvcTemplate.Components.Security
         }
         private String GetAuthorizedAs(MemberInfo action)
         {
-            AuthorizeAsAttribute authorizedAs = action.GetCustomAttribute<AuthorizeAsAttribute>();
-            if (authorizedAs == null || authorizedAs.Action == action.Name)
+            if (!action.IsDefined(typeof(AuthorizeAsAttribute), false))
+                return null;
+
+            AuthorizeAsAttribute authorizedAs = action.GetCustomAttribute<AuthorizeAsAttribute>(false);
+            if (authorizedAs.Action == action.Name)
                 return null;
 
             return authorizedAs.Action;

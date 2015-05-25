@@ -19,10 +19,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods())
-                .Where(method => method.GetCustomAttribute<HttpPostAttribute>() != null);
+                .Where(method => method.IsDefined(typeof(HttpPostAttribute), false));
 
             foreach (MethodInfo method in postMethods)
-                Assert.True(method.GetCustomAttribute<ValidateAntiForgeryTokenAttribute>() != null,
+                Assert.True(method.IsDefined(typeof(ValidateAntiForgeryTokenAttribute), false),
                     String.Format("{0}.{1} method does not have ValidateAntiForgeryToken attribute specified.",
                         method.ReflectedType.Name,
                         method.Name));

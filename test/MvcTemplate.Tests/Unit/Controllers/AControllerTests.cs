@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
                 .GetMethods()
                 .First(method =>
                     method.Name == postMethod &&
-                    method.GetCustomAttribute<HttpPostAttribute>() != null);
+                    method.IsDefined(typeof(HttpPostAttribute), false));
 
             CustomAttributeData actual = methodInfo
                 .GetParameters()

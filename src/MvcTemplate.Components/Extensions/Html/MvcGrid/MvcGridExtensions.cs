@@ -113,7 +113,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             PropertyInfo keyProperty = typeof(T)
                 .GetProperties()
-                .FirstOrDefault(property => property.GetCustomAttribute<KeyAttribute>() != null);
+                .FirstOrDefault(property => property.IsDefined(typeof(KeyAttribute), false));
 
             if (keyProperty == null)
                 throw new Exception(String.Format("{0} type does not have a key property.", typeof(T).Name));

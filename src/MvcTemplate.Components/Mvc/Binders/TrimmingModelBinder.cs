@@ -16,7 +16,7 @@ namespace MvcTemplate.Components.Mvc
             if (containerType != null)
             {
                 PropertyInfo property = containerType.GetProperty(bindingContext.ModelName);
-                if (property.GetCustomAttribute<NotTrimmedAttribute>() != null)
+                if (property.IsDefined(typeof(NotTrimmedAttribute), false))
                     return value.AttemptedValue;
             }
 

@@ -90,10 +90,10 @@ namespace MvcTemplate.Components.Extensions.Html
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
             MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression != null)
+            if (memberExpression != null && memberExpression.Member.IsDefined(typeof(EditableAttribute), false))
             {
-                EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>();
-                if (editable != null && !editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
+                EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>(false);
+                if (!editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
             }
 
             return htmlAttributes;
@@ -107,7 +107,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!AllowsNullValues(expression.ReturnType))
                 return true;
 
-            return memberExpression.Member.GetCustomAttribute<RequiredAttribute>() != null;
+            return memberExpression.Member.IsDefined(typeof(RequiredAttribute), false);
         }
         private static Boolean AllowsNullValues(Type type)
         {

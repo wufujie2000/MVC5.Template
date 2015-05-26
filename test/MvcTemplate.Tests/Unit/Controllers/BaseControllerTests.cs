@@ -355,7 +355,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: OnActionExecuted(ActionExecutedContext context)
+        #region Method: OnActionExecuted(ActionExecutedContext filterContext)
 
         [Fact]
         public void OnActionExecuted_SetsAlertsToTempDataThenAlertsInTempDataAreNull()

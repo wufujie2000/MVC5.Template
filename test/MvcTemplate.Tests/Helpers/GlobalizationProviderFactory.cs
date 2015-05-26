@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace MvcTemplate.Tests
 {
-    public class GlobalizationProviderFactory
+    public static class GlobalizationProviderFactory
     {
         public static IGlobalizationProvider CreateProvider()
         {
@@ -22,14 +22,14 @@ namespace MvcTemplate.Tests
                 new Language
                 {
                     Culture = new CultureInfo("en-GB"),
-                    Abbrevation = "en",
+                    Abbreviation = "en",
                     IsDefault = true,
                     Name = "English"
                 },
                 new Language
                 {
                     Culture = new CultureInfo("lt-LT"),
-                    Abbrevation = "lt",
+                    Abbreviation = "lt",
                     IsDefault = false,
                     Name = "Lietuvių"
                 }

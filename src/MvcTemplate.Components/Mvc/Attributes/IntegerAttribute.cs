@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace MvcTemplate.Components.Mvc
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class IntegerAttribute : ValidationAttribute
     {
         public IntegerAttribute() : base(() => Validations.FieldMustBeInteger)

@@ -25,6 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         public void Dispose()
         {
             context.Dispose();
+            logger.Dispose();
         }
 
         #region Method: Log(String message)

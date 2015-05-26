@@ -47,21 +47,21 @@ namespace MvcTemplate.Components.Mvc
                 Language language = new Language();
                 language.Culture = new CultureInfo((String)languageNode.Attribute("culture"));
                 language.IsDefault = (Boolean?)languageNode.Attribute("default") == true;
-                language.Abbrevation = (String)languageNode.Attribute("abbrevation");
+                language.Abbreviation = (String)languageNode.Attribute("abbreviation");
                 language.Name = (String)languageNode.Attribute("name");
 
-                LanguageDictionary.Add(language.Abbrevation, language);
+                LanguageDictionary.Add(language.Abbreviation, language);
             }
 
             Languages = LanguageDictionary.Select(language => language.Value).ToArray();
             DefaultLanguage = Languages.Single(language => language.IsDefault);
         }
 
-        public Language this[String abbrevation]
+        public Language this[String abbreviation]
         {
             get
             {
-                return LanguageDictionary[abbrevation];
+                return LanguageDictionary[abbreviation];
             }
         }
     }

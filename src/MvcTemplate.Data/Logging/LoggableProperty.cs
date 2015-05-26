@@ -17,7 +17,7 @@ namespace MvcTemplate.Data.Logging
             PropertyName = entry.Name;
             OriginalValue = originalValue;
             CurrentValue = entry.CurrentValue;
-            IsModified = entry.IsModified && !Equals(originalValue, entry.CurrentValue);
+            IsModified = entry.IsModified && !Equals(OriginalValue, CurrentValue);
         }
 
         public override String ToString()

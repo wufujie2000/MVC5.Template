@@ -14,15 +14,15 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         static GlobalizationProviderTests()
         {
             XElement english = new XElement("language");
+            english.SetAttributeValue("default", "true");
             english.SetAttributeValue("name", "English");
             english.SetAttributeValue("culture", "en-GB");
-            english.SetAttributeValue("abbrevation", "en");
-            english.SetAttributeValue("default", "true");
+            english.SetAttributeValue("abbreviation", "en");
 
             XElement lithuanian = new XElement("language");
             lithuanian.SetAttributeValue("name", "Lietuvių");
             lithuanian.SetAttributeValue("culture", "lt-LT");
-            lithuanian.SetAttributeValue("abbrevation", "lt");
+            lithuanian.SetAttributeValue("abbreviation", "lt");
 
             XElement globalization = new XElement("globalization");
             globalization.Add(lithuanian);
@@ -72,12 +72,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Language enLanguage = provider.Languages.Last();
 
             Assert.Equal(new CultureInfo("en-GB"), enLanguage.Culture);
-            Assert.Equal("en", enLanguage.Abbrevation);
+            Assert.Equal("en", enLanguage.Abbreviation);
             Assert.Equal("English", enLanguage.Name);
             Assert.True(enLanguage.IsDefault);
 
             Assert.Equal(new CultureInfo("lt-LT"), ltLanguage.Culture);
-            Assert.Equal("lt", ltLanguage.Abbrevation);
+            Assert.Equal("lt", ltLanguage.Abbreviation);
             Assert.Equal("Lietuvių", ltLanguage.Name);
             Assert.False(ltLanguage.IsDefault);
         }
@@ -88,22 +88,22 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Language actual = provider.DefaultLanguage;
 
             Assert.Equal(new CultureInfo("en-GB"), actual.Culture);
-            Assert.Equal("en", actual.Abbrevation);
+            Assert.Equal("en", actual.Abbreviation);
             Assert.Equal("English", actual.Name);
             Assert.True(actual.IsDefault);
         }
 
         #endregion
 
-        #region Indexer: this[String abbrevation]
+        #region Indexer: this[String abbreviation]
 
         [Fact]
-        public void Indexer_GetsLanguageByAbbrevation()
+        public void Indexer_GetsLanguageByAbbreviation()
         {
             Language actual = provider["en"];
 
             Assert.Equal(new CultureInfo("en-GB"), actual.Culture);
-            Assert.Equal("en", actual.Abbrevation);
+            Assert.Equal("en", actual.Abbreviation);
             Assert.Equal("English", actual.Name);
             Assert.True(actual.IsDefault);
         }

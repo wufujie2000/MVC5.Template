@@ -7,7 +7,7 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Tests
 {
-    public class HtmlHelperFactory
+    public static class HtmlHelperFactory
     {
         public static HtmlHelper CreateHtmlHelper()
         {

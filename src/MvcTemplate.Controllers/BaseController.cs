@@ -95,8 +95,8 @@ namespace MvcTemplate.Controllers
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
         {
-            String abbrevation = Request.RequestContext.RouteData.Values["language"].ToString();
-            GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbrevation];
+            String abbreviation = Request.RequestContext.RouteData.Values["language"].ToString();
+            GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbreviation];
 
             return base.BeginExecuteCore(callback, state);
         }
@@ -112,9 +112,9 @@ namespace MvcTemplate.Controllers
             if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();
         }
-        protected override void OnActionExecuted(ActionExecutedContext context)
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            base.OnActionExecuted(context);
+            base.OnActionExecuted(filterContext);
 
             AlertsContainer current = TempData["Alerts"] as AlertsContainer;
             if (current == null)

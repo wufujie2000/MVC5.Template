@@ -3,7 +3,7 @@ using MvcTemplate.Tests.Objects;
 
 namespace MvcTemplate.Tests.Data.Mapping
 {
-    public class TestObjectMapper
+    public static class TestObjectMapper
     {
         public static void MapObjects()
         {

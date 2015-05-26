@@ -2,10 +2,10 @@
 
 namespace MvcTemplate.Components.Mvc
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class AreaAttribute : Attribute
     {
-        public String Name { get; set; }
+        public String Name { get; private set; }
 
         public AreaAttribute(String name)
         {

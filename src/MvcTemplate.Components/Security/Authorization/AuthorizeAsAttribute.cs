@@ -2,10 +2,10 @@
 
 namespace MvcTemplate.Components.Security
 {
-    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    public sealed class AuthorizeAsAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Method)]
+    public class AuthorizeAsAttribute : Attribute
     {
-        public String Action { get; set; }
+        public String Action { get; private set; }
 
         public AuthorizeAsAttribute(String action)
         {

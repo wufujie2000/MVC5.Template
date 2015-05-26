@@ -8,6 +8,6 @@ namespace MvcTemplate.Components.Mvc
         Language DefaultLanguage { get; }
         Language CurrentLanguage { get; set; }
 
-        Language this[String abbrevation] { get; }
+        Language this[String abbreviation] { get; }
     }
 }

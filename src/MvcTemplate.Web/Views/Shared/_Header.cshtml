@@ -22,8 +22,8 @@
                     @foreach (Language language in GlobalizationManager.Provider.Languages)
                     {
                         <li>
-                            <a href="@(Url.Action(action, new { language = language.Abbrevation, id = id }) + query)">
-                                <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbrevation))" alt="">
+                            <a href="@(Url.Action(action, new { language = language.Abbreviation, id = id }) + query)">
+                                <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbreviation))" alt="">
                                 @language.Name
                             </a>
                         </li>

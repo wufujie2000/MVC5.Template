@@ -8,7 +8,7 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Tests
 {
-    public class HttpContextFactory
+    public static class HttpContextFactory
     {
         public static HttpContext CreateHttpContext()
         {

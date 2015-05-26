@@ -6,6 +6,7 @@ using System.Reflection;
 
 namespace MvcTemplate.Components.Mvc
 {
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class EqualToAttribute : ValidationAttribute
     {
         public String OtherPropertyName { get; private set; }

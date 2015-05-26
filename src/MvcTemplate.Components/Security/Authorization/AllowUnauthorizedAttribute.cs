@@ -2,8 +2,8 @@
 
 namespace MvcTemplate.Components.Security
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class AllowUnauthorizedAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class AllowUnauthorizedAttribute : Attribute
     {
     }
 }

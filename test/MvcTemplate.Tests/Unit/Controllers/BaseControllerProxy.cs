@@ -23,9 +23,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             OnAuthorization(filterContext);
         }
-        public void BaseOnActionExecuted(ActionExecutedContext context)
+        public void BaseOnActionExecuted(ActionExecutedContext filterContext)
         {
-            OnActionExecuted(context);
+            OnActionExecuted(filterContext);
         }
     }
 }

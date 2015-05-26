@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Unit.Web
 {
     public class BundleConfigTests
     {
-        public BundleConfig config;
+        private BundleConfig config;
 
         public BundleConfigTests()
         {

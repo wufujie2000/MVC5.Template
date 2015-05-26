@@ -4,7 +4,7 @@ using System;
 
 namespace MvcTemplate.Tests
 {
-    public class ObjectFactory
+    public static class ObjectFactory
     {
         #region Administration
 

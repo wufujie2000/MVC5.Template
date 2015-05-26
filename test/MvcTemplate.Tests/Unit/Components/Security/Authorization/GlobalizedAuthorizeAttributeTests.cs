@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class GlobalizedAuthorizeAttributeTests
     {
-        #region Method: HandleUnauthorizedRequest(AuthorizationContext context)
+        #region Method: HandleUnauthorizedRequest(AuthorizationContext filterContext)
 
         [Fact]
         public void HandleUnauthorizedRequest_RedirectsToLogin()

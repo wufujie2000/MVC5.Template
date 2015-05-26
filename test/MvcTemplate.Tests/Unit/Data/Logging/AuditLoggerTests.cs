@@ -37,6 +37,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             HttpContext.Current = null;
             dataContext.Dispose();
             context.Dispose();
+            logger.Dispose();
         }
 
         #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)

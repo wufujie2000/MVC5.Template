@@ -19,14 +19,14 @@ namespace MvcTemplate.Components.Mail
             Client = new SmtpClient();
         }
 
-        public Task SendAsync(String to, String subject, String body)
+        public Task SendAsync(String email, String subject, String body)
         {
-            MailMessage email = new MailMessage(Sender, to, subject, body);
-            email.SubjectEncoding = Encoding.UTF8;
-            email.BodyEncoding = Encoding.UTF8;
-            email.IsBodyHtml = true;
+            MailMessage mail = new MailMessage(Sender, email, subject, body);
+            mail.SubjectEncoding = Encoding.UTF8;
+            mail.BodyEncoding = Encoding.UTF8;
+            mail.IsBodyHtml = true;
 
-            return Client.SendMailAsync(email);
+            return Client.SendMailAsync(mail);
         }
 
         public void Dispose()

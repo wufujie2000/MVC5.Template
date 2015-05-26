@@ -111,10 +111,7 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         private static Boolean AllowsNullValues(Type type)
         {
-            if (type.IsValueType)
-                return Nullable.GetUnderlyingType(type) != null;
-
-            return true;
+            return !type.IsValueType || Nullable.GetUnderlyingType(type) != null;
         }
     }
 }

@@ -5,9 +5,9 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class GlobalizedAuthorizeAttributeProxy : GlobalizedAuthorizeAttribute
     {
-        public void BaseHandleUnauthorizedRequest(AuthorizationContext context)
+        public void BaseHandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            HandleUnauthorizedRequest(context);
+            HandleUnauthorizedRequest(filterContext);
         }
     }
 }

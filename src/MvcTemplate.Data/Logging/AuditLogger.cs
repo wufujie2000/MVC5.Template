@@ -43,7 +43,7 @@ namespace MvcTemplate.Data.Logging
         {
             AuditLog log = new AuditLog();
             log.AccountId = AccountId ?? HttpContext.Current.User.Identity.Name;
-            log.AccountId = log.AccountId != "" ? log.AccountId : null;
+            log.AccountId = !String.IsNullOrEmpty(log.AccountId) ? log.AccountId : null;
             log.Changes = entity.ToString();
             log.EntityName = entity.Name;
             log.Action = entity.Action;

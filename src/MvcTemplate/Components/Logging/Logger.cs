@@ -22,7 +22,7 @@ namespace MvcTemplate.Components.Logging
         {
             Log log = new Log();
             log.Message = message;
-            log.AccountId = accountId != "" ? accountId : null;
+            log.AccountId = !String.IsNullOrEmpty(accountId) ? accountId : null;
 
             Context.Set<Log>().Add(log);
             Context.SaveChanges();

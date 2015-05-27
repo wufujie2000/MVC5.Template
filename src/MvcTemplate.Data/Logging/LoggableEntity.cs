@@ -37,7 +37,7 @@ namespace MvcTemplate.Data.Logging
         {
             StringBuilder changes = new StringBuilder();
             foreach (LoggableProperty property in Properties)
-                changes.AppendFormat("{0}{1}", property, Environment.NewLine);
+                changes.Append(property + Environment.NewLine);
 
             return changes.ToString();
         }

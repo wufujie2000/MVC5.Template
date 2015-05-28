@@ -67,8 +67,8 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [InlineData(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
         public void RegisterServices_RegistersSingletonImplementation(Type abstraction, Type expectedType)
         {
-            IAuthorizationProvider expected = container.GetInstance<IAuthorizationProvider>();
-            IAuthorizationProvider actual = container.GetInstance<IAuthorizationProvider>();
+            Object expected = container.GetInstance(abstraction);
+            Object actual = container.GetInstance(abstraction);
 
             Assert.IsType(expectedType, actual);
             Assert.Same(expected, actual);

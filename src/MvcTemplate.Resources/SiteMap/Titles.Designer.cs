@@ -189,15 +189,6 @@ namespace MvcTemplate.Resources.SiteMap {
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        public static string Profile {
-            get {
-                return ResourceManager.GetString("Profile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
         public static string ProfileDelete {
             get {
                 return ResourceManager.GetString("ProfileDelete", resourceCulture);
@@ -205,7 +196,7 @@ namespace MvcTemplate.Resources.SiteMap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string ProfileEdit {
             get {

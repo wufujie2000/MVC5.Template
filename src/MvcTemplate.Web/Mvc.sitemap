@@ -4,10 +4,10 @@
         <siteMapNode icon="fa fa-ban" controller="Home" action="Error" />
         <siteMapNode icon="fa fa-search" controller="Home" action="NotFound" />
         <siteMapNode icon="fa fa-lock" controller="Home" action="Unauthorized" />
-        <siteMapNode icon="fa fa-user" controller="Profile">
-            <siteMapNode icon="fa fa-pencil" controller="Profile" action="Edit" />
-            <siteMapNode icon="fa fa-times" controller="Profile" action="Delete" />
-        </siteMapNode>
+        
+        <siteMapNode controller="Profile" action="Edit" />
+        <siteMapNode controller="Profile" action="Delete" />
+
         <siteMapNode menu="true" icon="fa fa-gears" area="Administration">
             <siteMapNode menu="true" icon="fa fa-user" area="Administration" controller="Accounts" action="Index">
                 <siteMapNode icon="fa fa-file-o" area="Administration" controller="Accounts" action="Create" />

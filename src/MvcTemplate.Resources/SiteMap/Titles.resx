@@ -159,13 +159,10 @@
   <data name="HomeUnauthorized" xml:space="preserve">
     <value>Unauthorized</value>
   </data>
-  <data name="Profile" xml:space="preserve">
+  <data name="ProfileDelete" xml:space="preserve">
     <value>Profile</value>
   </data>
-  <data name="ProfileDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
   <data name="ProfileEdit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Profile</value>
   </data>
 </root>

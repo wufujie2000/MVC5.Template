@@ -22,6 +22,7 @@ namespace MvcTemplate.Controllers
             UnitOfWork = unitOfWork;
         }
 
+        [NonAction]
         public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter)
         {
             datalist.CurrentFilter = filter;

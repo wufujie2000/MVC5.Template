@@ -1,7 +1,5 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
-#region <#= Model.Area #>
-
 public static <#= Model.Model #> Create<#= Model.Model #>(Int32 id = 1)
 {
     return new <#= Model.Model #>
@@ -16,5 +14,3 @@ public static <#= Model.View #> Create<#= Model.View #>(Int32 id = 1)
         Id = "Id" + id
     };
 }
-
-#endregion

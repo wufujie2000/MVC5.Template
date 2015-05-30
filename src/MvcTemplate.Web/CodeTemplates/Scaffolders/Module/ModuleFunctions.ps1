@@ -113,7 +113,6 @@ Function Scaffold-ObjectCreation([String]$Project, [String]$Factory)
             -CodeClass $FactoryClass `
             -Model @{ `
                 View = $Model + "View"; `
-                Area = $ElementArea; `
                 Model = $Model; `
             }
     }
@@ -132,7 +131,6 @@ Function Scaffold-DbSet([String]$Project, [String]$Context)
             -Template "Members\DbSet" `
             -CodeClass $ContextClass `
             -Model @{ `
-                Area = $ElementArea; `
                 Models = $Models; `
                 Model = $Model; `
             }

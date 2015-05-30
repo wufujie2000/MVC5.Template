@@ -239,6 +239,16 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Null(actual.RecoveryToken);
         }
 
+        [Fact]
+        public void Create_RefreshesAuthorizationProvider()
+        {
+            AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
+
+            service.Create(view);
+
+            Authorization.Provider.Received().Refresh();
+        }
+
         #endregion
 
         #region Method: Edit(ProfileEditView view)
@@ -332,6 +342,14 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Delete(account.Id);
 
             Assert.Empty(context.Set<Account>());
+        }
+
+        [Fact]
+        public void Delete_RefreshesAuthorizationProvider()
+        {
+            service.Delete(account.Id);
+
+            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

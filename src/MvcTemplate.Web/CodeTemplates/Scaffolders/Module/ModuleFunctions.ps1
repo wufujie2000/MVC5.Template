@@ -118,6 +118,26 @@ Function Scaffold-ObjectCreation([String]$Project, [String]$Factory)
     }
 }
 
+Function Scaffold-ObjectMapping([String]$Project, [String]$Mapper)
+{
+    if (!$Delete)
+    {
+        $MapperClass = Get-ProjectType -Project $Project -Type $Mapper
+        $Models = Get-PluralizedWord $Model
+
+        Add-ClassMemberViaTemplate `
+            -SuccessMessage "Added model/view mapping to $Mapper." `
+            -Template "Members\ObjectMapping" `
+            -TemplateFolders $TemplateFolders `
+            -CodeClass $MapperClass `
+            -Model @{ `
+                View = $Model + "View"; `
+                Models= $Models; `
+                Model = $Model; `
+            }
+    }
+}
+
 Function Scaffold-DbSet([String]$Project, [String]$Context)
 {
     if (!$Delete)

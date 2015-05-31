@@ -49,6 +49,7 @@ If ($Area)
 
 Scaffold-ObjectMappingTests $TestsProject "ObjectMapperTests"
 Scaffold-ObjectCreation $TestsProject "ObjectFactory"
+Scaffold-ObjectMapping $DataProject "ObjectMapper"
 Scaffold-DbSet $DataProject "Context"
 
 If ($Delete)

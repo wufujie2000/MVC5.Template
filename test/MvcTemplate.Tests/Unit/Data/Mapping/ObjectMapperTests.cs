@@ -12,6 +12,34 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             ObjectMapper.MapObjects();
         }
 
+        #region Static method: MapRoles()
+
+        [Fact]
+        public void MapRoles_MapsRoleToRoleView()
+        {
+            Role expected = ObjectFactory.CreateRole();
+            RoleView actual = Mapper.Map<RoleView>(expected);
+
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.NotNull(actual.PrivilegesTree);
+            Assert.Equal(expected.Id, actual.Id);
+        }
+
+        [Fact]
+        public void MapRoles_MapsRoleViewToRole()
+        {
+            RoleView expected = ObjectFactory.CreateRoleView();
+            Role actual = Mapper.Map<Role>(expected);
+
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Id, actual.Id);
+            Assert.Null(actual.RolePrivileges);
+        }
+
+        #endregion
+
         #region Static method: MapAccounts()
 
         [Fact]
@@ -96,34 +124,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Null(actual.Passhash);
             Assert.Null(actual.RoleId);
             Assert.Null(actual.Role);
-        }
-
-        #endregion
-
-        #region Static method: MapRoles()
-
-        [Fact]
-        public void MapRoles_MapsRoleToRoleView()
-        {
-            Role expected = ObjectFactory.CreateRole();
-            RoleView actual = Mapper.Map<RoleView>(expected);
-
-            Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.NotNull(actual.PrivilegesTree);
-            Assert.Equal(expected.Id, actual.Id);
-        }
-
-        [Fact]
-        public void MapRoles_MapsRoleViewToRole()
-        {
-            RoleView expected = ObjectFactory.CreateRoleView();
-            Role actual = Mapper.Map<Role>(expected);
-
-            Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Id, actual.Id);
-            Assert.Null(actual.RolePrivileges);
         }
 
         #endregion

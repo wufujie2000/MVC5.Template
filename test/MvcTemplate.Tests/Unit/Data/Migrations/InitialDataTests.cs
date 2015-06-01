@@ -21,6 +21,29 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
             context.Dispose();
         }
 
+        #region Table: Roles
+
+        [Fact]
+        public void RolesTable_HasSysAdminRole()
+        {
+            Assert.NotNull(context.Set<Role>().SingleOrDefault(role => role.Name == "Sys_Admin"));
+        }
+
+        #endregion
+
+        #region Table: Accounts
+
+        [Fact]
+        public void AccountsTable_HasSysAdminAccountWithAdminRole()
+        {
+            Assert.NotNull(context.Set<Account>()
+                .SingleOrDefault(account =>
+                    account.Username == "admin" &&
+                    account.Role.Name == "Sys_Admin"));
+        }
+
+        #endregion
+
         #region Table: Privileges
 
         [Theory]
@@ -53,16 +76,6 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
 
         #endregion
 
-        #region Table: Roles
-
-        [Fact]
-        public void RolesTable_HasSysAdminRole()
-        {
-            Assert.NotNull(context.Set<Role>().SingleOrDefault(role => role.Name == "Sys_Admin"));
-        }
-
-        #endregion
-
         #region Table: RolePrivileges
 
         [Fact]
@@ -80,19 +93,6 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
                 .OrderBy(privilegeId => privilegeId);
 
             Assert.Equal(expected, actual);
-        }
-
-        #endregion
-
-        #region Table: Accounts
-
-        [Fact]
-        public void AccountsTable_HasSysAdminAccountWithAdminRole()
-        {
-            Assert.NotNull(context.Set<Account>()
-                .SingleOrDefault(account =>
-                    account.Username == "admin" &&
-                    account.Role.Name == "Sys_Admin"));
         }
 
         #endregion

@@ -9,9 +9,8 @@ namespace MvcTemplate.Data.Core
     {
         #region Administration
 
-        protected DbSet<Account> Accounts { get; set; }
-
         protected DbSet<Role> Roles { get; set; }
+        protected DbSet<Account> Accounts { get; set; }
         protected DbSet<Privilege> Privileges { get; set; }
         protected DbSet<RolePrivilege> RolePrivileges { get; set; }
 

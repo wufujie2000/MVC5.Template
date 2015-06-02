@@ -10,9 +10,13 @@
   font-style: normal;
   font-weight: 700;
 }
-* {
-  text-decoration: none !important;
-  outline: none !important;
+a,
+a:focus,
+a:hover,
+a:visited,
+.btn-link:hover,
+.btn-link:focus {
+  text-decoration: none;
 }
 body {
   font-family: "PT Sans", consolas;

@@ -1,8 +1,10 @@
 ﻿<!doctype html>
 <html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@(ViewBag.Title ?? ResourceProvider.GetContentTitle(ViewContext.RouteData.Values))</title>
 
     @Styles.Render("~/Content/JQueryUI/Bundle")
@@ -30,9 +32,11 @@
 
         <div class="separator"></div>
 
-        <div class="content">
-            @Html.Partial("_Alerts")
-            @RenderBody()
+        <div class="container-fluid">
+            <div class="content row">
+                @Html.Partial("_Alerts")
+                @RenderBody()
+            </div>
         </div>
     </div>
     <div class="footer">

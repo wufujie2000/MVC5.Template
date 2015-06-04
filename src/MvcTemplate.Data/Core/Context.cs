@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Data.Mapping;
 using MvcTemplate.Objects;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -30,6 +31,7 @@ namespace MvcTemplate.Data.Core
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Properties<DateTime>().Configure(config => config.HasColumnType("datetime2"));
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }

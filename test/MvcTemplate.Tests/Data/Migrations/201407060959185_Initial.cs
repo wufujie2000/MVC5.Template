@@ -17,9 +17,9 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Passhash = c.String(nullable: false, maxLength: 512),
                         Email = c.String(nullable: false, maxLength: 256),
                         RecoveryToken = c.String(maxLength: 128),
-                        RecoveryTokenExpirationDate = c.DateTime(),
+                        RecoveryTokenExpirationDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         RoleId = c.String(maxLength: 128),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 128),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .Index(t => t.Name, unique: true);
@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         RoleId = c.String(nullable: false, maxLength: 128),
                         PrivilegeId = c.String(nullable: false, maxLength: 128),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
                 .ForeignKey("dbo.Privileges", t => t.PrivilegeId)
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Area = c.String(maxLength: 128),
                         Controller = c.String(nullable: false, maxLength: 128),
                         Action = c.String(nullable: false, maxLength: 128),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         EntityName = c.String(nullable: false, maxLength: 128),
                         EntityId = c.String(nullable: false, maxLength: 128),
                         Changes = c.String(nullable: false),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -86,7 +86,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                         Id = c.String(nullable: false, maxLength: 128),
                         AccountId = c.String(maxLength: 128),
                         Message = c.String(nullable: false),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             
@@ -96,7 +96,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Text = c.String(maxLength: 512),
-                        CreationDate = c.DateTime(nullable: false),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false);
             

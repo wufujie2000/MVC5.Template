@@ -5,32 +5,50 @@ namespace MvcTemplate.Objects
 {
     public abstract class BaseView
     {
-        private String id;
-
         [Key]
         [Required]
         public String Id
         {
             get
             {
-                return id ?? (id = Guid.NewGuid().ToString());
+                return InternalId ?? (InternalId = Guid.NewGuid().ToString());
             }
             set
             {
-                id = value;
+                InternalId = value;
             }
         }
-
-        public DateTime CreationDate
+        private String InternalId
         {
             get;
-            protected set;
+            set;
         }
 
-        protected BaseView()
+        [Required]
+        public DateTime CreationDate
         {
-            DateTime now = DateTime.Now;
-            CreationDate = new DateTime(now.Ticks / 100000 * 100000, now.Kind);
+            get
+            {
+                if (!IsCreationDateSet)
+                    CreationDate = DateTime.Now;
+
+                return InternalCreationDate;
+            }
+            protected set
+            {
+                IsCreationDateSet = true;
+                InternalCreationDate = value;
+            }
+        }
+        private Boolean IsCreationDateSet
+        {
+            get;
+            set;
+        }
+        private DateTime InternalCreationDate
+        {
+            get;
+            set;
         }
     }
 }

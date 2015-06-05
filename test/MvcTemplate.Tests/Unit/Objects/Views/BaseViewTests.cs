@@ -14,38 +14,6 @@ namespace MvcTemplate.Tests.Unit.Objects
             view = Substitute.For<BaseView>();
         }
 
-        #region Constructor: BaseView()
-
-        [Fact]
-        public void BaseView_SetsCreationDateToNow()
-        {
-            Int64 actual = Substitute.For<BaseView>().CreationDate.Ticks;
-            Int64 from = DateTime.Now.Ticks - TimeSpan.TicksPerSecond;
-            Int64 to = DateTime.Now.Ticks + TimeSpan.TicksPerSecond;
-
-            Assert.InRange(actual, from, to);
-        }
-
-        [Fact]
-        public void BaseView_TruncatesMicrosecondsFromCreationDate()
-        {
-            DateTime actual = Substitute.For<BaseView>().CreationDate;
-            DateTime expected = new DateTime(actual.Year, actual.Month, actual.Day, actual.Hour, actual.Minute, actual.Second, actual.Millisecond);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void BaseView_KeepsCurrentDateKind()
-        {
-            DateTimeKind actual = Substitute.For<BaseView>().CreationDate.Kind;
-            DateTimeKind expected = DateTime.Now.Kind;
-
-            Assert.Equal(expected, actual);
-        }
-
-        #endregion
-
         #region Property: Id
 
         [Fact]
@@ -71,6 +39,19 @@ namespace MvcTemplate.Tests.Unit.Objects
         {
             String expected = view.Id;
             String actual = view.Id;
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region Property: CreationDate
+
+        [Fact]
+        public void CreationDate_AlwaysGetsSameValue()
+        {
+            DateTime expected = view.CreationDate;
+            DateTime actual = view.CreationDate;
 
             Assert.Equal(expected, actual);
         }

@@ -1,24 +1,34 @@
-﻿using MvcTemplate.Components.Mvc;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class DisplayNameMetadataProviderTests
     {
-        #region Method: GetMetadataForProperty(Func<Object> modelAccessor, Type containerType, String propertyName)
+        #region Method: CreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
 
         [Fact]
-        public void GetMetadataForProperty_SetsDisplayProperty()
+        public void CreateMetadata_SetsDisplayName()
         {
-            DisplayNameMetadataProvider provider = new DisplayNameMetadataProvider();
+            DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
 
-            String actual = provider.GetMetadataForProperty(null, typeof(RoleView), "Name").DisplayName;
+            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), typeof(RoleView), null, typeof(String), "Name").DisplayName;
             String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
 
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CreateMetadata_OnNullContainerTypeDoesNotSetDisplayName()
+        {
+            DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
+
+            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), null, null, typeof(String), "Name").DisplayName;
+
+            Assert.Null(actual);
         }
 
         #endregion

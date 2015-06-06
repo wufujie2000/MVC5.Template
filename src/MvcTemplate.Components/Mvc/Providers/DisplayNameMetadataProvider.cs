@@ -1,15 +1,16 @@
 ﻿using MvcTemplate.Resources;
 using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
 {
     public class DisplayNameMetadataProvider : DataAnnotationsModelMetadataProvider
     {
-        public override ModelMetadata GetMetadataForProperty(Func<Object> modelAccessor, Type containerType, String propertyName)
+        protected override ModelMetadata CreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
         {
-            ModelMetadata metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
-            metadata.DisplayName = ResourceProvider.GetPropertyTitle(containerType, propertyName);
+            ModelMetadata metadata = base.CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
+            if (containerType != null) metadata.DisplayName = ResourceProvider.GetPropertyTitle(containerType, propertyName);
 
             return metadata;
         }

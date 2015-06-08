@@ -17,6 +17,7 @@ namespace MvcTemplate.Data.Logging
         public AuditLogger(DbContext context)
         {
             Context = context;
+            Context.Configuration.AutoDetectChangesEnabled = false;
         }
         public AuditLogger(DbContext context, String accountId) : this(context)
         {

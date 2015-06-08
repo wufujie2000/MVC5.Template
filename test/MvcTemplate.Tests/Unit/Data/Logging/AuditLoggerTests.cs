@@ -40,6 +40,34 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Dispose();
         }
 
+        #region Constructor: AuditLogger(DbContext context)
+
+        [Fact]
+        public void AuditLogger_DisablesChangesDetection()
+        {
+            TestingContext context = new TestingContext();
+            context.Configuration.AutoDetectChangesEnabled = true;
+
+            using (AuditLogger logger = new AuditLogger(context))
+                Assert.False(context.Configuration.AutoDetectChangesEnabled);
+        }
+
+        #endregion
+
+        #region Constructor: AuditLogger(DbContext context, String accountId)
+
+        [Fact]
+        public void AuditLogger_AccountId_DisablesChangesDetection()
+        {
+            TestingContext context = new TestingContext();
+            context.Configuration.AutoDetectChangesEnabled = true;
+
+            using (AuditLogger logger = new AuditLogger(context, "Test"))
+                Assert.False(context.Configuration.AutoDetectChangesEnabled);
+        }
+
+        #endregion
+
         #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
 
         [Fact]

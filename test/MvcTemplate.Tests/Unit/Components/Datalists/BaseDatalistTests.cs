@@ -158,5 +158,27 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         #endregion
+
+        #region Method: FilterById(IQueryable<TView> models)
+
+        [Fact]
+        public void FilterById_FiltersByCurrentFilterId()
+        {
+            RoleView firstRole = ObjectFactory.CreateRoleView(1);
+            RoleView secondRole = ObjectFactory.CreateRoleView(2);
+
+            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
+            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            IQueryable<RoleView> models = new[] { firstRole, secondRole }.AsQueryable();
+
+            datalist.CurrentFilter.Id = firstRole.Id;
+
+            IQueryable expected = models.Where(role => role.Id == firstRole.Id);
+            IQueryable actual = datalist.BaseFilterById(models);
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
     }
 }

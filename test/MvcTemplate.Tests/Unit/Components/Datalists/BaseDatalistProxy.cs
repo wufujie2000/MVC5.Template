@@ -40,5 +40,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             return GetModels();
         }
+
+        public IQueryable<TView> BaseFilterById(IQueryable<TView> models)
+        {
+            return base.FilterById(models);
+        }
     }
 }

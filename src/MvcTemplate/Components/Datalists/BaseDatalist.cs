@@ -63,5 +63,10 @@ namespace MvcTemplate.Components.Datalists
         {
             return UnitOfWork.Select<TModel>().To<TView>();
         }
+
+        protected override IQueryable<TView> FilterById(IQueryable<TView> models)
+        {
+            return models.Where(model => model.Id == CurrentFilter.Id);
+        }
     }
 }

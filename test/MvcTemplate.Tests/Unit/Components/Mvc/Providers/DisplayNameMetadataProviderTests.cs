@@ -15,8 +15,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
 
-            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), typeof(RoleView), null, typeof(String), "Name").DisplayName;
-            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
+            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), typeof(RoleView), null, typeof(String), "Title").DisplayName;
+            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Title");
 
             Assert.Equal(expected, actual);
         }

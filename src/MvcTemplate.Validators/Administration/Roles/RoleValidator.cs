@@ -35,10 +35,10 @@ namespace MvcTemplate.Validators
                 .Select<Role>()
                 .Any(role =>
                     role.Id != view.Id &&
-                    role.Name.ToLower() == view.Name.ToLower());
+                    role.Title.ToLower() == view.Title.ToLower());
 
             if (!isUnique)
-                ModelState.AddModelError<RoleView>(role => role.Name, Validations.RoleNameIsAlreadyUsed);
+                ModelState.AddModelError<RoleView>(role => role.Title, Validations.RoleTitleIsAlreadyUsed);
 
             return isUnique;
         }

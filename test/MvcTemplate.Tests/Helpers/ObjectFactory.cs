@@ -103,7 +103,7 @@ namespace MvcTemplate.Tests
             return new Role
             {
                 Id = "Id" + id,
-                Name = "Name" + id
+                Title = "Title" + id
             };
         }
         public static RoleView CreateRoleView(Int32 id = 1)
@@ -111,7 +111,7 @@ namespace MvcTemplate.Tests
             return new RoleView
             {
                 Id = "Id" + id,
-                Name = "Name" + id
+                Title = "Title" + id
             };
         }
 

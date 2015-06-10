@@ -77,13 +77,13 @@ namespace MvcTemplate.Data.Migrations
 
         private void SeedRoles()
         {
-            if (!UnitOfWork.Select<Role>().Any(role => role.Name == "Sys_Admin"))
+            if (!UnitOfWork.Select<Role>().Any(role => role.Title == "Sys_Admin"))
             {
-                UnitOfWork.Insert(new Role { Name = "Sys_Admin" });
+                UnitOfWork.Insert(new Role { Title = "Sys_Admin" });
                 UnitOfWork.Commit();
             }
 
-            String adminRoleId = UnitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id;
+            String adminRoleId = UnitOfWork.Select<Role>().Single(role => role.Title == "Sys_Admin").Id;
             RolePrivilege[] adminPrivileges = UnitOfWork
                 .Select<RolePrivilege>()
                 .Where(rolePrivilege => rolePrivilege.RoleId == adminRoleId)
@@ -109,7 +109,7 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
-                    RoleId = UnitOfWork.Select<Role>().Single(role => role.Name == "Sys_Admin").Id
+                    RoleId = UnitOfWork.Select<Role>().Single(role => role.Title == "Sys_Admin").Id
                 }
             };
 

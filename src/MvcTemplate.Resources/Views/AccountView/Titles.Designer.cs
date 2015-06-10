@@ -81,9 +81,9 @@ namespace MvcTemplate.Resources.Views.AccountView {
         /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
-        public static string RoleName {
+        public static string RoleTitle {
             get {
-                return ResourceManager.GetString("RoleName", resourceCulture);
+                return ResourceManager.GetString("RoleTitle", resourceCulture);
             }
         }
         

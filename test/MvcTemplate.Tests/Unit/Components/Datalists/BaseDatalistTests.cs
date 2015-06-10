@@ -78,8 +78,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void GetColumnHeader_ReturnsPropertyTitle()
         {
-            String actual = datalist.BaseGetColumnHeader(typeof(RoleView).GetProperty("Name"));
-            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Name");
+            String actual = datalist.BaseGetColumnHeader(typeof(RoleView).GetProperty("Title"));
+            String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Title");
 
             Assert.Equal(expected, actual);
         }

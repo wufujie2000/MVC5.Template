@@ -5,46 +5,46 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class JsTreeNodeTests
     {
-        #region Constructor: JsTreeNode(String name)
+        #region Constructor: JsTreeNode(String title)
 
         [Fact]
-        public void JsTreeNode_Name_SetsIdToNull()
+        public void JsTreeNode_Title_SetsIdToNull()
         {
-            Assert.Null(new JsTreeNode("Name").Id);
+            Assert.Null(new JsTreeNode("Title").Id);
         }
 
         [Fact]
-        public void JsTreeNode_Name_SetsName()
+        public void JsTreeNode_Title_SetsTitle()
         {
-            Assert.Equal("Name", new JsTreeNode("Name").Name);
+            Assert.Equal("Title", new JsTreeNode("Title").Title);
         }
 
         [Fact]
-        public void JsTreeNode_Name_CreatesEmptyTree()
+        public void JsTreeNode_Title_CreatesEmptyTree()
         {
-            Assert.Empty(new JsTreeNode("Name").Nodes);
+            Assert.Empty(new JsTreeNode("Title").Nodes);
         }
 
         #endregion
 
-        #region Constructor: JsTreeNode(String id, String name)
+        #region Constructor: JsTreeNode(String id, String title)
 
         [Fact]
-        public void JsTreeNode_Id_Name_SetsId()
+        public void JsTreeNode_Id_Title_SetsId()
         {
             Assert.Equal("Id", new JsTreeNode("Id", null).Id);
         }
 
         [Fact]
-        public void JsTreeNode_Id_Name_SetsName()
+        public void JsTreeNode_Id_Title_SetsTitle()
         {
-            Assert.Equal("Name", new JsTreeNode(null, "Name").Name);
+            Assert.Equal("Title", new JsTreeNode(null, "Title").Title);
         }
 
         [Fact]
-        public void JsTreeNode_Id_Name_CreatesEmptyTree()
+        public void JsTreeNode_Id_Title_CreatesEmptyTree()
         {
-            Assert.Empty(new JsTreeNode("Id", "Name").Nodes);
+            Assert.Empty(new JsTreeNode("Id", "Title").Nodes);
         }
 
         #endregion

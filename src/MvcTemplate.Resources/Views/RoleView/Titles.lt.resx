@@ -120,10 +120,10 @@
   <data name="Id" xml:space="preserve">
     <value>Rolė</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Pavadinimas</value>
-  </data>
   <data name="PrivilegesTree" xml:space="preserve">
     <value>Privilegijos</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Pavadinimas</value>
   </data>
 </root>

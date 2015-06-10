@@ -93,8 +93,8 @@ namespace MvcTemplate.Tests.Unit.Services
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.Equal(expected.Current.RoleTitle, actual.Current.RoleTitle);
                 Assert.Equal(expected.Current.Username, actual.Current.Username);
-                Assert.Equal(expected.Current.RoleName, actual.Current.RoleName);
                 Assert.Equal(expected.Current.Email, actual.Current.Email);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
@@ -111,7 +111,7 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountView expected = Mapper.Map<AccountView>(account);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.RoleName, actual.RoleName);
+            Assert.Equal(expected.RoleTitle, actual.RoleTitle);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);

@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             RoleView actual = Mapper.Map<RoleView>(expected);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Title, actual.Title);
             Assert.NotNull(actual.PrivilegesTree);
             Assert.Equal(expected.Id, actual.Id);
         }
@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Role actual = Mapper.Map<Role>(expected);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Title, actual.Title);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RolePrivileges);
         }
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Account expected = model;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Role.Name, actual.RoleName);
+            Assert.Equal(expected.Role.Title, actual.RoleTitle);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);

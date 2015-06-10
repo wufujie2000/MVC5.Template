@@ -59,7 +59,7 @@ namespace MvcTemplate.Components.Extensions.Html
             {
                 TagBuilder node = new TagBuilder("li");
                 node.MergeAttribute("id", treeNode.Id);
-                node.InnerHtml = treeNode.Name;
+                node.InnerHtml = treeNode.Title;
 
                 AddNodes(node, treeNode.Nodes);
                 leafBuilder.Append(node);

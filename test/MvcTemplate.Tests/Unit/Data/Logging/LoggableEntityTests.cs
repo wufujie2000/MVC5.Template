@@ -47,12 +47,12 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void LoggableEntity_CreatesPropertiesForModifiedEntity()
         {
-            String roleName = model.Name;
+            String title = model.Title;
             entry.State = EntityState.Modified;
-            entry.CurrentValues["Name"] = "Role";
-            entry.OriginalValues["Name"] = "Role";
+            entry.CurrentValues["Title"] = "Role";
+            entry.OriginalValues["Title"] = "Role";
 
-            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Title"), title) }.GetEnumerator();
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -66,16 +66,16 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void LoggableEntity_CreatesPropertiesForAttachedEntity()
         {
             context.Dispose();
-            String roleName = model.Name;
+            String title = model.Title;
             context = new TestingContext();
             context.Set<Role>().Attach(model);
 
             entry = context.Entry<BaseModel>(model);
-            entry.OriginalValues["Name"] = "Role";
-            entry.CurrentValues["Name"] = "Role";
+            entry.OriginalValues["Title"] = "Role";
+            entry.CurrentValues["Title"] = "Role";
             entry.State = EntityState.Modified;
 
-            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Name"), roleName) }.GetEnumerator();
+            IEnumerator<LoggableProperty> expected = new List<LoggableProperty> { new LoggableProperty(entry.Property("Title"), title) }.GetEnumerator();
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())

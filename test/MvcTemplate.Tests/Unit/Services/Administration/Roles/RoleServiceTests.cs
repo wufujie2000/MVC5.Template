@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Services
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
-                Assert.Equal(expected.Current.Name, actual.Current.Name);
+                Assert.Equal(expected.Current.Title, actual.Current.Title);
                 Assert.Equal(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
             }
         }
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Services
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
-                Assert.Equal(expected.Current.Name, actual.Current.Name);
+                Assert.Equal(expected.Current.Title, actual.Current.Title);
                 Assert.Equal(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
             }
         }
@@ -96,7 +96,7 @@ namespace MvcTemplate.Tests.Unit.Services
             while (expected.MoveNext() | actual.MoveNext())
             {
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
-                Assert.Equal(expected.Current.Name, actual.Current.Name);
+                Assert.Equal(expected.Current.Title, actual.Current.Title);
                 Assert.Equal(expected.Current.Nodes.Count, actual.Current.Nodes.Count);
             }
         }
@@ -156,7 +156,7 @@ namespace MvcTemplate.Tests.Unit.Services
             {
                 Assert.Equal(expected.Current.PrivilegesTree.SelectedIds, actual.Current.PrivilegesTree.SelectedIds);
                 Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
-                Assert.Equal(expected.Current.Name, actual.Current.Name);
+                Assert.Equal(expected.Current.Title, actual.Current.Title);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
         }
@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Assert.Equal(expected.PrivilegesTree.SelectedIds, actual.PrivilegesTree.SelectedIds);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Title, actual.Title);
             Assert.Equal(expected.Id, actual.Id);
         }
 
@@ -224,7 +224,7 @@ namespace MvcTemplate.Tests.Unit.Services
             RoleView expected = view;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Title, actual.Title);
             Assert.Equal(expected.Id, actual.Id);
         }
 
@@ -261,7 +261,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context.SaveChanges();
 
             RoleView roleView = Mapper.Map<RoleView>(role);
-            roleView.Name += "EditedName";
+            roleView.Title += "Test";
 
             service.Edit(roleView);
 
@@ -269,7 +269,7 @@ namespace MvcTemplate.Tests.Unit.Services
             RoleView expected = roleView;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Name, actual.Name);
+            Assert.Equal(expected.Title, actual.Title);
             Assert.Equal(expected.Id, actual.Id);
         }
 
@@ -399,13 +399,13 @@ namespace MvcTemplate.Tests.Unit.Services
                     foreach (IGrouping<String, Privilege> actionPrivilege in controllerPrivilege.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
                         controllerNode.Nodes.Add(new JsTreeNode(actionPrivilege.First().Id, actionPrivilege.Key));
 
-                    if (areaNode.Name == null)
+                    if (areaNode.Title == null)
                         rootNode.Nodes.Add(controllerNode);
                     else
                         areaNode.Nodes.Add(controllerNode);
                 }
 
-                if (areaNode.Name != null)
+                if (areaNode.Title != null)
                     rootNode.Nodes.Add(areaNode);
             }
 

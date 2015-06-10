@@ -10,7 +10,7 @@ namespace MvcTemplate.Objects
         [Required]
         [DatalistColumn]
         [StringLength(128)]
-        public String Name { get; set; }
+        public String Title { get; set; }
 
         public JsTree PrivilegesTree { get; set; }
 

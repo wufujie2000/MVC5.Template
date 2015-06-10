@@ -10,7 +10,7 @@ namespace MvcTemplate.Objects
         [Required]
         [StringLength(128)]
         [Index(IsUnique = true)]
-        public String Name { get; set; }
+        public String Title { get; set; }
 
         public virtual IList<RolePrivilege> RolePrivileges { get; set; }
     }

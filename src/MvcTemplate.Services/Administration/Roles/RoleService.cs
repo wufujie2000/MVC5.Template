@@ -32,13 +32,13 @@ namespace MvcTemplate.Services
                     foreach (IGrouping<String, Privilege> action in controller.GroupBy(privilege => privilege.Action).OrderBy(privilege => privilege.Key))
                         controllerNode.Nodes.Add(new JsTreeNode(action.First().Id, action.Key));
 
-                    if (areaNode.Name == null)
+                    if (areaNode.Title == null)
                         rootNode.Nodes.Add(controllerNode);
                     else
                         areaNode.Nodes.Add(controllerNode);
                 }
 
-                if (areaNode.Name != null)
+                if (areaNode.Title != null)
                     rootNode.Nodes.Add(areaNode);
             }
         }

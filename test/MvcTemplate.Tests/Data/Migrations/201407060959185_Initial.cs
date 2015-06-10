@@ -32,11 +32,11 @@ namespace MvcTemplate.Tests.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(nullable: false, maxLength: 128),
+                        Title = c.String(nullable: false, maxLength: 128),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
-                .Index(t => t.Name, unique: true);
+                .Index(t => t.Title, unique: true);
             
             CreateTable(
                 "dbo.RolePrivileges",
@@ -109,7 +109,7 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
             DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
             DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
-            DropIndex("dbo.Roles", new[] { "Name" });
+            DropIndex("dbo.Roles", new[] { "Title" });
             DropIndex("dbo.Accounts", new[] { "RoleId" });
             DropIndex("dbo.Accounts", new[] { "Email" });
             DropIndex("dbo.Accounts", new[] { "Username" });

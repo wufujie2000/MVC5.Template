@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             RoleView actual = controller.Create().Model as RoleView;
 
             Assert.NotNull(actual.PrivilegesTree);
-            Assert.Null(actual.Name);
+            Assert.Null(actual.Title);
         }
 
         [Fact]

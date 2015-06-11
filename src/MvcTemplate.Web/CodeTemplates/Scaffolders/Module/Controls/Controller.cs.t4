@@ -1,6 +1,8 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
+<# if (Model.Area != null && Model.Area != "") { #>
 using MvcTemplate.Components.Mvc;
+<# } #>
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
@@ -9,10 +11,10 @@ using System.Web.Mvc;
 
 namespace <#= Model.ControllerNamespace #>
 {
-    <# if (Model.Area != null && Model.Area != "") { #>
-[Area("<#= Model.Area #>")]
-    <# } #>
-public class <#= Model.Controller #> : ValidatedController<<#= Model.IValidator #>, <#= Model.IService #>>
+<# if (Model.Area != null && Model.Area != "") { #>
+    [Area("<#= Model.Area #>")]
+<# } #>
+    public class <#= Model.Controller #> : ValidatedController<<#= Model.IValidator #>, <#= Model.IService #>>
     {
         public <#= Model.Controller #>(<#= Model.IValidator #> validator, <#= Model.IService #> service)
             : base(validator, service)

@@ -191,6 +191,21 @@
     }
 }());
 
+// Input focus binding
+(function () {
+    var invalidInput = $('.content-container .input-validation-error:visible:not([readonly]):first');
+    if (invalidInput.length > 0) {
+        invalidInput.focus();
+        invalidInput.val(invalidInput.val());
+    } else {
+        var input = $('.content-container input:text:visible:not([readonly]):first');
+        if (input.length > 0) {
+            input.focus();
+            input.val(input.val());
+        }
+    }
+}());
+
 // Bootstrap binding
 (function () {
     $('[rel=tooltip]').tooltip();

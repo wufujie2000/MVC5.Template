@@ -264,18 +264,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_RendersBooleanTrueValue()
         {
+            Object renderedValue = null;
             AllTypesView view = new AllTypesView { BooleanField = true };
-            Func<AllTypesView, Object> valueFor = null;
 
-            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
-            {
-                valueFor = info.Arg<Func<AllTypesView, Object>>();
-            });
+            column
+                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
+                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
 
             columns.AddBooleanProperty(model => model.BooleanField);
 
-            String actual = valueFor(view).ToString();
-            String expected = TableResources.Yes;
+            Object expected = TableResources.Yes;
+            Object actual = renderedValue;
 
             Assert.Equal(expected, actual);
         }
@@ -283,18 +282,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_RendersBooleanFalseValue()
         {
+            Object renderedValue = null;
             AllTypesView view = new AllTypesView { BooleanField = false };
-            Func<AllTypesView, Object> valueFor = null;
 
-            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
-            {
-                valueFor = info.Arg<Func<AllTypesView, Object>>();
-            });
+            column
+                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
+                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
 
             columns.AddBooleanProperty(model => model.BooleanField);
 
-            String actual = valueFor(view).ToString();
-            String expected = TableResources.No;
+            Object expected = TableResources.No;
+            Object actual = renderedValue;
 
             Assert.Equal(expected, actual);
         }
@@ -334,18 +332,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanTrueValue()
         {
+            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = true };
-            Func<AllTypesView, Object> valueFor = null;
 
-            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
-            {
-                valueFor = info.Arg<Func<AllTypesView, Object>>();
-            });
+            column
+                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
+                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
 
             columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            String actual = valueFor(view).ToString();
-            String expected = TableResources.Yes;
+            Object expected = TableResources.Yes;
+            Object actual = renderedValue;
 
             Assert.Equal(expected, actual);
         }
@@ -353,18 +350,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanFalseValue()
         {
+            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = false };
-            Func<AllTypesView, Object> valueFor = null;
 
-            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
-            {
-                valueFor = info.Arg<Func<AllTypesView, Object>>();
-            });
+            column
+                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
+                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
 
             columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            String actual = valueFor(view).ToString();
-            String expected = TableResources.No;
+            Object expected = TableResources.No;
+            Object actual = renderedValue;
 
             Assert.Equal(expected, actual);
         }
@@ -372,18 +368,17 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanNullValue()
         {
+            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = null };
-            Func<AllTypesView, Object> valueFor = null;
 
-            column.When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>())).Do(info =>
-            {
-                valueFor = info.Arg<Func<AllTypesView, Object>>();
-            });
+            column
+                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
+                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
 
             columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            String actual = valueFor(view).ToString();
-            String expected = "";
+            Object expected = "";
+            Object actual = renderedValue;
 
             Assert.Equal(expected, actual);
         }

@@ -305,6 +305,24 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #endregion
 
+        #region Method: CanEdit(AccountEditView view)
+
+        [Fact]
+        public void CanEdit_CanNotEditAccountWithInvalidModelState()
+        {
+            validator.ModelState.AddModelError("Test", "Test");
+
+            Assert.False(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
+        }
+
+        [Fact]
+        public void CanEdit_CanEditValidAccount()
+        {
+            Assert.True(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
+        }
+
+        #endregion
+
         #region Method: CanEdit(ProfileEditView view)
 
         [Fact]
@@ -424,24 +442,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanEdit_CanEditValidProfile()
         {
             Assert.True(validator.CanEdit(ObjectFactory.CreateProfileEditView()));
-        }
-
-        #endregion
-
-        #region Method: CanEdit(AccountEditView view)
-
-        [Fact]
-        public void CanEdit_CanNotEditAccountWithInvalidModelState()
-        {
-            validator.ModelState.AddModelError("Test", "Test");
-
-            Assert.False(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
-        }
-
-        [Fact]
-        public void CanEdit_CanEditValidAccount()
-        {
-            Assert.True(validator.CanEdit(ObjectFactory.CreateAccountEditView()));
         }
 
         #endregion

@@ -83,6 +83,17 @@ namespace MvcTemplate.Services
 
             Authorization.Provider.Refresh();
         }
+        public void Edit(AccountEditView view)
+        {
+            Account account = UnitOfWork.Get<Account>(view.Id);
+            account.RoleId = view.RoleId;
+
+            UnitOfWork.Update(account);
+            UnitOfWork.Commit();
+
+            Authorization.Provider.Refresh();
+        }
+
         public void Edit(ProfileEditView view)
         {
             Account account = UnitOfWork.Get<Account>(view.Id);
@@ -94,16 +105,6 @@ namespace MvcTemplate.Services
 
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
-        }
-        public void Edit(AccountEditView view)
-        {
-            Account account = UnitOfWork.Get<Account>(view.Id);
-            account.RoleId = view.RoleId;
-
-            UnitOfWork.Update(account);
-            UnitOfWork.Commit();
-
-            Authorization.Provider.Refresh();
         }
         public void Delete(String id)
         {

@@ -18,8 +18,9 @@ namespace MvcTemplate.Services
         void Reset(AccountResetView view);
 
         void Create(AccountCreateView view);
-        void Edit(ProfileEditView view);
         void Edit(AccountEditView view);
+
+        void Edit(ProfileEditView view);
         void Delete(String id);
 
         void Login(String username);

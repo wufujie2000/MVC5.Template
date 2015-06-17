@@ -24,7 +24,6 @@ namespace MvcTemplate.Objects
             set;
         }
 
-        [Required]
         public DateTime CreationDate
         {
             get

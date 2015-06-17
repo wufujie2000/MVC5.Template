@@ -4,7 +4,7 @@
         <siteMapNode icon="fa fa-ban" controller="Home" action="Error" />
         <siteMapNode icon="fa fa-search" controller="Home" action="NotFound" />
         <siteMapNode icon="fa fa-lock" controller="Home" action="Unauthorized" />
-        
+
         <siteMapNode controller="Profile" action="Edit" />
         <siteMapNode controller="Profile" action="Delete" />
 

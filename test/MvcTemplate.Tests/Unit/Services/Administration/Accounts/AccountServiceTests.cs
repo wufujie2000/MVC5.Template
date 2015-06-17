@@ -251,6 +251,43 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
+        #region Method: Edit(AccountEditView view)
+
+        [Fact]
+        public void Edit_EditsAccountsRoleOnly()
+        {
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
+            Account account = context.Set<Account>().AsNoTracking().Single();
+            view.RoleId = account.RoleId = null;
+            view.Username += "Edition";
+
+            service.Edit(view);
+
+            Account actual = context.Set<Account>().AsNoTracking().Single();
+            Account expected = account;
+
+            Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
+            Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Username, actual.Username);
+            Assert.Equal(expected.Passhash, actual.Passhash);
+            Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
+            Assert.Equal(expected.Id, actual.Id);
+        }
+
+        [Fact]
+        public void Edit_RefreshesAuthorizationProvider()
+        {
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
+
+            service.Edit(view);
+
+            Authorization.Provider.Received().Refresh();
+        }
+
+        #endregion
+
         #region Method: Edit(ProfileEditView view)
 
         [Fact]
@@ -293,43 +330,6 @@ namespace MvcTemplate.Tests.Unit.Services
             String expected = passhash;
 
             Assert.Equal(expected, actual);
-        }
-
-        #endregion
-
-        #region Method: Edit(AccountEditView view)
-
-        [Fact]
-        public void Edit_EditsAccountsRoleOnly()
-        {
-            AccountEditView view = ObjectFactory.CreateAccountEditView();
-            Account account = context.Set<Account>().AsNoTracking().Single();
-            view.RoleId = account.RoleId = null;
-            view.Username += "Edition";
-
-            service.Edit(view);
-
-            Account actual = context.Set<Account>().AsNoTracking().Single();
-            Account expected = account;
-
-            Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
-            Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
-            Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expected.Username, actual.Username);
-            Assert.Equal(expected.Passhash, actual.Passhash);
-            Assert.Equal(expected.RoleId, actual.RoleId);
-            Assert.Equal(expected.Email, actual.Email);
-            Assert.Equal(expected.Id, actual.Id);
-        }
-
-        [Fact]
-        public void Edit_RefreshesAuthorizationProvider()
-        {
-            AccountEditView view = ObjectFactory.CreateAccountEditView();
-
-            service.Edit(view);
-
-            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

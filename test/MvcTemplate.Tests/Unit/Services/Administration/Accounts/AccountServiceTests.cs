@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             context = new TestingContext();
             hasher = Substitute.For<IHasher>();
-            hasher.HashPassword(Arg.Any<String>()).Returns("Hashed");
+            hasher.HashPassword(Arg.Any<String>()).Returns(info => info.Arg<String>() + "Hashed");
 
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             service = new AccountService(new UnitOfWork(context), hasher);

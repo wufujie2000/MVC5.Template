@@ -15,6 +15,9 @@ namespace MvcTemplate.Components.Security
 
         public Boolean Verify(String value, String hash)
         {
+            if (value == null)
+                return false;
+
             if (hash == null)
             {
                 BCrypt.Net.BCrypt.Verify("TakeSameTime", "$2a$06$L01HfIu56AJsQWhsvzbByujj9XtGht5qJ/rxjA4bsKEJzu7fxQxqu");
@@ -26,6 +29,9 @@ namespace MvcTemplate.Components.Security
         }
         public Boolean VerifyPassword(String value, String passhash)
         {
+            if (value == null)
+                return false;
+
             if (passhash == null)
             {
                 BCrypt.Net.BCrypt.Verify("TakeSameTime", "$2a$13$06DpsSNHCcSaVJ4cdSfLEeWXs2PYVXQ0bVXvShTt/g0I4t1pTwgTu");

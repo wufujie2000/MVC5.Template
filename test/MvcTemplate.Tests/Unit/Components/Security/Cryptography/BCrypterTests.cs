@@ -42,7 +42,13 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         #region Method: Verify(String value, String hash)
 
         [Fact]
-        public void Verify_OnNullHashAlwaysFails()
+        public void Verify_OnNullValueFails()
+        {
+            Assert.False(crypter.Verify(null, ""));
+        }
+
+        [Fact]
+        public void Verify_OnNullHashFails()
         {
             Assert.False(crypter.Verify("", null));
         }
@@ -58,7 +64,13 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         #region Method: VerifyPassword(String value, String passhash)
 
         [Fact]
-        public void VerifyPassword_OnNullHashAlwaysFails()
+        public void VerifyPassword_OnNullValueFails()
+        {
+            Assert.False(crypter.VerifyPassword(null, ""));
+        }
+
+        [Fact]
+        public void VerifyPassword_OnNullHashFails()
         {
             Assert.False(crypter.VerifyPassword("", null));
         }

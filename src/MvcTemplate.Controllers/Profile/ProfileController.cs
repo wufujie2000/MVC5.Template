@@ -19,7 +19,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Edit()
         {
-            if (!Service.AccountExists(CurrentAccountId))
+            if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
             return View(Service.Get<ProfileEditView>(CurrentAccountId));
@@ -29,7 +29,7 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Exclude = "Id")] ProfileEditView profile)
         {
-            if (!Service.AccountExists(CurrentAccountId))
+            if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
             profile.Id = CurrentAccountId;
@@ -46,7 +46,7 @@ namespace MvcTemplate.Controllers
         [HttpGet]
         public ActionResult Delete()
         {
-            if (!Service.AccountExists(CurrentAccountId))
+            if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
             Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);
@@ -59,7 +59,7 @@ namespace MvcTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed([Bind(Exclude = "Id")] ProfileDeleteView profile)
         {
-            if (!Service.AccountExists(CurrentAccountId))
+            if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
             profile.Id = CurrentAccountId;

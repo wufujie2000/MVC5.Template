@@ -37,9 +37,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Edit()
 
         [Fact]
-        public void Edit_OnGetRedirectsToLogoutIfAccountDoesNotExist()
+        public void Edit_OnGetRedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Edit() as RedirectToRouteResult;
 
@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void Edit_ReturnsCurrentProfileEditView()
         {
             service.Get<ProfileEditView>(controller.CurrentAccountId).Returns(new ProfileEditView());
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             Object expected = service.Get<ProfileEditView>(controller.CurrentAccountId);
             Object actual = (controller.Edit() as ViewResult).Model;
@@ -71,9 +71,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_RedirectsToLogoutIfAccountDoesNotExist()
+        public void Edit_RedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Edit(null) as RedirectToRouteResult;
 
@@ -85,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_BeforeEditingSetsProfileIdToCurrentAccountId()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
 
             profileEdit.Id = controller.CurrentAccountId + "Edition";
@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(false);
 
             Object actual = (controller.Edit(profileEdit) as ViewResult).Model;
@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_EditsProfileView()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
 
             controller.Edit(profileEdit);
@@ -121,7 +121,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_AddsProfileUpdatedMessage()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
 
             controller.Edit(profileEdit);
@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_AfterSuccessfulEditRedirectsToEdit()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
 
             RouteValueDictionary actual = (controller.Edit(profileEdit) as RedirectToRouteResult).RouteValues;
@@ -149,9 +149,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Delete()
 
         [Fact]
-        public void Delete_RedirectsToLogoutIfAccountDoesNotExist()
+        public void Delete_RedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Delete() as RedirectToRouteResult;
 
@@ -163,7 +163,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Delete_AddsDeleteDisclaimerMessage()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             controller.Delete();
             Alert actual = controller.Alerts.Single();
@@ -176,7 +176,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Delete_ReturnsEmptyView()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             Object model = (controller.Delete() as ViewResult).Model;
 
@@ -194,9 +194,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_RedirectsToLogoutIfAccountDoesNotExist()
+        public void DeleteConfirmed_RedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 
@@ -208,8 +208,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
         {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(false);
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             controller.DeleteConfirmed(profileDelete);
 
@@ -223,8 +223,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_IfCanNotDeleteReturnsEmptyView()
         {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(false);
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             Object model = (controller.DeleteConfirmed(profileDelete) as ViewResult).Model;
 
@@ -234,8 +234,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_BeforeDeletingSetsProfileIdToCurrentAccountId()
         {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(true);
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             profileDelete.Id = controller.CurrentAccountId + "Edition";
             controller.DeleteConfirmed(profileDelete);
@@ -246,8 +246,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_DeletesProfileView()
         {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(true);
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             controller.DeleteConfirmed(profileDelete);
 
@@ -257,8 +257,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
         {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(true);
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
 
             RedirectToRouteResult actual = controller.DeleteConfirmed(profileDelete) as RedirectToRouteResult;
 

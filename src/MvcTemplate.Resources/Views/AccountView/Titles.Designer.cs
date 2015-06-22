@@ -70,6 +70,15 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string IsLocked {
+            get {
+                return ResourceManager.GetString("IsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {

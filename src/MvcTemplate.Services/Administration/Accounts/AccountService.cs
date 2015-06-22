@@ -34,9 +34,9 @@ namespace MvcTemplate.Services
         {
             return user.Identity.IsAuthenticated;
         }
-        public Boolean AccountExists(String id)
+        public Boolean IsActive(String id)
         {
-            return UnitOfWork.Select<Account>().Any(account => account.Id == id);
+            return UnitOfWork.Select<Account>().Any(account => account.Id == id && !account.IsLocked);
         }
 
         public String Recover(AccountRecoveryView view)
@@ -86,6 +86,7 @@ namespace MvcTemplate.Services
         public void Edit(AccountEditView view)
         {
             Account account = UnitOfWork.Get<Account>(view.Id);
+            account.IsLocked = view.IsLocked;
             account.RoleId = view.RoleId;
 
             UnitOfWork.Update(account);

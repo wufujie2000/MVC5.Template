@@ -11,7 +11,7 @@ namespace MvcTemplate.Services
         IQueryable<AccountView> GetViews();
 
         Boolean IsLoggedIn(IPrincipal user);
-        Boolean AccountExists(String id);
+        Boolean IsActive(String id);
 
         String Recover(AccountRecoveryView view);
         void Register(AccountRegisterView view);

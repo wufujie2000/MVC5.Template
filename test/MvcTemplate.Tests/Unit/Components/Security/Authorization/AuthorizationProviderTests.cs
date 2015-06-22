@@ -323,6 +323,22 @@ namespace MvcTemplate.Tests.Unit.Security
         }
 
         [Fact]
+        public void IsAuthorizedFor_DoesNotAuthorizeNotExistingAccount()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "Action");
+
+            Assert.False(provider.IsAuthorizedFor("Test", "Area", "Authorized", "Action"));
+        }
+
+        [Fact]
+        public void IsAuthorizedFor_DoesNotAuthorizeLockedAccount()
+        {
+            Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "Action", isLocked: true);
+
+            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+        }
+
+        [Fact]
         public void IsAuthorizedFor_DoesNotAuthorizeNullAccount()
         {
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "Action");
@@ -377,12 +393,13 @@ namespace MvcTemplate.Tests.Unit.Security
 
         #region Test helpers
 
-        private Account CreateAccountWithPrivilegeFor(String area, String controller, String action)
+        private Account CreateAccountWithPrivilegeFor(String area, String controller, String action, Boolean isLocked = false)
         {
             using (TestingContext context = new TestingContext())
             {
                 Account account = ObjectFactory.CreateAccount();
                 Role role = ObjectFactory.CreateRole();
+                account.IsLocked = isLocked;
                 account.RoleId = role.Id;
                 account.Role = role;
 

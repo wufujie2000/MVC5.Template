@@ -222,12 +222,54 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
+        public void CanLogin_DoesNotAddErrorMessageThenLockedAccountCanNotLoginWithIncorrectPassword()
+        {
+            Account account = context.Set<Account>().Single();
+            account.IsLocked = true;
+            context.SaveChanges();
+
+            hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
+            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
+            view.Password += "Incorrect";
+
+            validator.CanLogin(view);
+
+            Assert.Empty(validator.Alerts);
+        }
+
+        [Fact]
         public void CanLogin_CanLoginWithCaseInsensitiveUsername()
         {
             AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             view.Username = view.Username.ToUpper();
 
             Assert.True(validator.CanLogin(view));
+        }
+
+        [Fact]
+        public void CanLogin_CanNotLoginWithLockedAccount()
+        {
+            Account account = context.Set<Account>().Single();
+            account.IsLocked = true;
+            context.SaveChanges();
+
+            Assert.False(validator.CanLogin(ObjectFactory.CreateAccountLoginView()));
+        }
+
+        [Fact]
+        public void CanLogin_AddsErrorMessageThenCanNotLoginWithLockedAccount()
+        {
+            Account account = context.Set<Account>().Single();
+            account.IsLocked = true;
+            context.SaveChanges();
+
+            validator.CanLogin(ObjectFactory.CreateAccountLoginView());
+
+            Alert actual = validator.Alerts.Single();
+
+            Assert.Equal(Validations.AccountIsLocked, actual.Message);
+            Assert.Equal(AlertType.Danger, actual.Type);
+            Assert.Equal(0, actual.FadeoutAfter);
         }
 
         [Fact]
@@ -491,6 +533,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             Account account = ObjectFactory.CreateAccount();
             account.Role = ObjectFactory.CreateRole();
             account.RoleId = account.Role.Id;
+            account.IsLocked = false;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();

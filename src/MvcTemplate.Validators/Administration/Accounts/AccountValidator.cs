@@ -40,6 +40,7 @@ namespace MvcTemplate.Validators
         public Boolean CanLogin(AccountLoginView view)
         {
             Boolean isValid = IsAuthenticated(view.Username, view.Password);
+            isValid = isValid && IsActive(view.Username);
             isValid &= ModelState.IsValid;
 
             return isValid;
@@ -143,6 +144,19 @@ namespace MvcTemplate.Validators
                 Alerts.AddError(Validations.RecoveryTokenExpired);
 
             return isValid;
+        }
+        private Boolean IsActive(String username)
+        {
+            Boolean isActive = UnitOfWork
+                .Select<Account>()
+                .Any(account =>
+                    !account.IsLocked &&
+                    account.Username.ToLower() == username.ToLower());
+
+            if (!isActive)
+                Alerts.AddError(Validations.AccountIsLocked);
+
+            return isActive;
         }
     }
 }

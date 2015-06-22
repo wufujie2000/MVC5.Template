@@ -21,6 +21,8 @@ namespace MvcTemplate.Objects
         [Index(IsUnique = true)]
         public String Email { get; set; }
 
+        public Boolean IsLocked { get; set; }
+
         [StringLength(128)]
         public String RecoveryToken { get; set; }
         public DateTime? RecoveryTokenExpirationDate { get; set; }

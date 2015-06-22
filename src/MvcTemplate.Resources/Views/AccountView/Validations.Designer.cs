@@ -61,6 +61,15 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your account is locked..
+        /// </summary>
+        public static string AccountIsLocked {
+            get {
+                return ResourceManager.GetString("AccountIsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail address is already being used..
         /// </summary>
         public static string EmailIsAlreadyUsed {

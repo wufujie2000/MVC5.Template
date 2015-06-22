@@ -14,6 +14,8 @@ namespace MvcTemplate.Objects
         [StringLength(256)]
         public String Email { get; set; }
 
+        public Boolean IsLocked { get; set; }
+
         public String RoleTitle { get; set; }
     }
 }

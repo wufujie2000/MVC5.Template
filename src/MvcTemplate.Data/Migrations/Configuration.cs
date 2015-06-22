@@ -114,8 +114,18 @@ namespace MvcTemplate.Data.Migrations
             };
 
             foreach (Account account in accounts)
-                if (!UnitOfWork.Select<Account>().Any(acc => acc.Username == account.Username))
+            {
+                Account dbAccount = UnitOfWork.Select<Account>().FirstOrDefault(acc => acc.Username == account.Username);
+                if (dbAccount != null)
+                {
+                    dbAccount.IsLocked = false;
+                    UnitOfWork.Update(dbAccount);
+                }
+                else
+                {
                     UnitOfWork.Insert(account);
+                }
+            }
 
             UnitOfWork.Commit();
         }

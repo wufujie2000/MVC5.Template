@@ -24,9 +24,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Index()
 
         [Fact]
-        public void Index_RedirectsToLogoutIfAccountDoesNotExist()
+        public void Index_RedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Index() as RedirectToRouteResult;
 
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Index_ReturnsEmptyView()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             Object model = (controller.Index() as ViewResult).Model;
 
@@ -74,9 +74,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Unauthorized()
 
         [Fact]
-        public void Unauthorized_RedirectsToLogoutIfAccountDoesNotExist()
+        public void Unauthorized_RedirectsToLogoutIfAccountIsNotActive()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(false);
+            service.IsActive(controller.CurrentAccountId).Returns(false);
 
             RedirectToRouteResult actual = controller.Unauthorized() as RedirectToRouteResult;
 
@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Unauthorized_ReturnsEmptyView()
         {
-            service.AccountExists(controller.CurrentAccountId).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             Object model = (controller.Unauthorized() as ViewResult).Model;
 

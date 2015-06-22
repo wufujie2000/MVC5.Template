@@ -48,7 +48,9 @@ namespace MvcTemplate.Components.Security
             {
                 Cache = unitOfWork
                     .Select<Account>()
-                    .Where(account => account.RoleId != null)
+                    .Where(account =>
+                        !account.IsLocked &&
+                        account.RoleId != null)
                     .Select(account => new
                     {
                         Id = account.Id,

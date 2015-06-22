@@ -61,6 +61,15 @@ namespace MvcTemplate.Resources.Views.AccountEditView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Locked.
+        /// </summary>
+        public static string IsLocked {
+            get {
+                return ResourceManager.GetString("IsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {

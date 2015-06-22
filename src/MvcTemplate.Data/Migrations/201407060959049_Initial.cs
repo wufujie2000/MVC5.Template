@@ -16,6 +16,7 @@ namespace MvcTemplate.Data.Migrations
                         Username = c.String(nullable: false, maxLength: 128),
                         Passhash = c.String(nullable: false, maxLength: 512),
                         Email = c.String(nullable: false, maxLength: 256),
+                        IsLocked = c.Boolean(nullable: false),
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         RoleId = c.String(maxLength: 128),

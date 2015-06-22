@@ -13,6 +13,7 @@ namespace MvcTemplate.Tests
             return new Account
             {
                 Id = "Id" + id,
+                IsLocked = true,
                 Username = "Username" + id,
                 Passhash = "$2a$04$zNgYw403HgH1N69j4kj/peGI7SUvGiR5awIPZ2Yh/6O5BwyUO3qZe", // Password1
                 Email = id + "@tests.com",
@@ -94,6 +95,7 @@ namespace MvcTemplate.Tests
             return new AccountEditView
             {
                 Id = "Id" + id,
+                IsLocked = true,
                 Username = "Username" + id
             };
         }

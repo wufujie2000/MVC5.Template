@@ -61,18 +61,25 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: AccountExists(String id)
+        #region Method: IsActive(String id)
 
-        [Fact]
-        public void AccountExists_ReturnsTrueIfAccountExists()
+        [Theory]
+        [InlineData(true, false)]
+        [InlineData(false, true)]
+        public void IsActive_ReturnsAccountState(Boolean isLocked, Boolean expected)
         {
-            Assert.True(service.AccountExists(account.Id));
+            account.IsLocked = isLocked;
+            context.SaveChanges();
+
+            Boolean actual = service.IsActive(account.Id);
+
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AccountExists_ReturnsFalseIfAccountDoesNotExist()
+        public void IsActive_IsNotActiveThenAccountDoesNotExist()
         {
-            Assert.False(service.AccountExists("Test"));
+            Assert.False(service.IsActive("Test"));
         }
 
         #endregion
@@ -94,6 +101,7 @@ namespace MvcTemplate.Tests.Unit.Services
             {
                 Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
                 Assert.Equal(expected.Current.RoleTitle, actual.Current.RoleTitle);
+                Assert.Equal(expected.Current.IsLocked, actual.Current.IsLocked);
                 Assert.Equal(expected.Current.Username, actual.Current.Username);
                 Assert.Equal(expected.Current.Email, actual.Current.Email);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
@@ -112,6 +120,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.RoleTitle, actual.RoleTitle);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
@@ -150,6 +159,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.NotEqual(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expectedToken, actual.RecoveryToken);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
@@ -180,6 +190,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Null(actual.RecoveryTokenExpirationDate);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
+            Assert.False(actual.IsLocked);
             Assert.Null(actual.RoleId);
             Assert.Null(actual.Role);
         }
@@ -206,6 +217,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
@@ -237,6 +249,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
+            Assert.False(actual.IsLocked);
         }
 
         [Fact]
@@ -254,10 +267,11 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Edit(AccountEditView view)
 
         [Fact]
-        public void Edit_EditsAccountsRoleOnly()
+        public void Edit_EditsAccount()
         {
             AccountEditView view = ObjectFactory.CreateAccountEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
+            view.IsLocked = account.IsLocked = !account.IsLocked;
             view.RoleId = account.RoleId = null;
             view.Username += "Edition";
 
@@ -269,6 +283,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RecoveryTokenExpirationDate, actual.RecoveryTokenExpirationDate);
             Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.RoleId, actual.RoleId);
@@ -308,6 +323,7 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Email.ToLower(), actual.Email);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.RoleId, actual.RoleId);

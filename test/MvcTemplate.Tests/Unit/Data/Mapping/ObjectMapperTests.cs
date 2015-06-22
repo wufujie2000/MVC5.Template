@@ -48,12 +48,14 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Account model = ObjectFactory.CreateAccount();
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
+            model.IsLocked = true;
 
             AccountView actual = Mapper.Map<AccountView>(model);
             Account expected = model;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Role.Title, actual.RoleTitle);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
@@ -65,11 +67,13 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Account model = ObjectFactory.CreateAccount();
             model.Role = ObjectFactory.CreateRole();
             model.RoleId = model.Role.Id;
+            model.IsLocked = true;
 
             AccountEditView actual = Mapper.Map<AccountEditView>(model);
             Account expected = model;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Id, actual.Id);
@@ -105,6 +109,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
+            Assert.False(actual.IsLocked);
             Assert.Null(actual.Passhash);
             Assert.Null(actual.Role);
         }
@@ -121,6 +126,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
             Assert.Null(actual.RecoveryToken);
+            Assert.False(actual.IsLocked);
             Assert.Null(actual.Passhash);
             Assert.Null(actual.RoleId);
             Assert.Null(actual.Role);

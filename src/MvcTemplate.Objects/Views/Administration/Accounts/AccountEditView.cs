@@ -5,6 +5,7 @@ namespace MvcTemplate.Objects
 {
     public class AccountEditView : BaseView
     {
+        [Required]
         [Editable(false)]
         public String Username { get; set; }
 

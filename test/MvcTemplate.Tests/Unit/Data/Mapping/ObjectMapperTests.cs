@@ -76,6 +76,7 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
             Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Username, actual.Username);
             Assert.Equal(expected.RoleId, actual.RoleId);
+            Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
         }
 

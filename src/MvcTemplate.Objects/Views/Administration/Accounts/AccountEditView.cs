@@ -9,6 +9,10 @@ namespace MvcTemplate.Objects
         [Editable(false)]
         public String Username { get; set; }
 
+        [Required]
+        [Editable(false)]
+        public String Email { get; set; }
+
         public Boolean IsLocked { get; set; }
 
         public String RoleId { get; set; }

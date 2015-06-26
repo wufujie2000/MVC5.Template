@@ -273,7 +273,8 @@ namespace MvcTemplate.Tests.Unit.Services
             Account account = context.Set<Account>().AsNoTracking().Single();
             view.IsLocked = account.IsLocked = !account.IsLocked;
             view.RoleId = account.RoleId = null;
-            view.Username += "Edition";
+            view.Username += "Test";
+            view.Email += "s";
 
             service.Edit(view);
 

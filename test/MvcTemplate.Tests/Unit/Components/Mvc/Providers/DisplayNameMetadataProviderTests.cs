@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
@@ -15,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
 
-            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), typeof(RoleView), null, typeof(String), "Title").DisplayName;
+            String actual = provider.BaseCreateMetadata(new Attribute[0], typeof(RoleView), null, typeof(String), "Title").DisplayName;
             String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Title");
 
             Assert.Equal(expected, actual);
@@ -26,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
 
-            String actual = provider.BaseCreateMetadata(Enumerable.Empty<Attribute>(), null, null, typeof(String), "Name").DisplayName;
+            String actual = provider.BaseCreateMetadata(new Attribute[0], null, null, typeof(String), "Name").DisplayName;
 
             Assert.Null(actual);
         }

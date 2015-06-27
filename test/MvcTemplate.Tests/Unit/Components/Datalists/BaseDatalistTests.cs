@@ -149,7 +149,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
-            unitOfWork.Select<Role>().To<RoleView>().Returns(Enumerable.Empty<RoleView>().AsQueryable());
+            unitOfWork.Select<Role>().To<RoleView>().Returns(new RoleView[0].AsQueryable());
 
             IQueryable expected = unitOfWork.Select<Role>().To<RoleView>();
             IQueryable actual = datalist.BaseGetModels();

@@ -1,6 +1,5 @@
 ﻿using Datalist;
 using MvcTemplate.Components.Datalists;
-using MvcTemplate.Components.Mvc;
 using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
@@ -30,7 +29,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
         public void Dispose()
         {
-            GlobalizationManager.Provider = null;
             HttpContext.Current = null;
         }
 
@@ -68,7 +66,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter)).DoNotCallBase();
             controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter).Returns(new JsonResult());
-            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
 
             JsonResult expected = controller.GetData(null, filter);
             JsonResult actual = controller.Role(filter);

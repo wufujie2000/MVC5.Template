@@ -1,7 +1,6 @@
 ﻿using MvcTemplate.Resources.Form;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
@@ -15,7 +14,7 @@ namespace MvcTemplate.Components.Mvc
 
         public override IEnumerable<ModelValidationResult> Validate(Object container)
         {
-            return Enumerable.Empty<ModelValidationResult>();
+            return new ModelValidationResult[0];
         }
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {

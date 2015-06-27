@@ -65,9 +65,8 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
         public void MapAccounts_MapsAccountToAccountEditView()
         {
             Account model = ObjectFactory.CreateAccount();
-            model.Role = ObjectFactory.CreateRole();
-            model.RoleId = model.Role.Id;
             model.IsLocked = true;
+            model.RoleId = "Test";
 
             AccountEditView actual = Mapper.Map<AccountEditView>(model);
             Account expected = model;

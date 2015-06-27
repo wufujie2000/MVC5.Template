@@ -109,6 +109,8 @@ namespace MvcTemplate.Data.Migrations
                     Username = "admin",
                     Passhash = "$2a$13$yTgLCqGqgH.oHmfboFCjyuVUy5SJ2nlyckPFEZRJQrMTZWN.f1Afq", // Admin123?
                     Email = "admin@admins.com",
+                    IsLocked = false,
+
                     RoleId = UnitOfWork.Select<Role>().Single(role => role.Title == "Sys_Admin").Id
                 }
             };
@@ -118,7 +120,8 @@ namespace MvcTemplate.Data.Migrations
                 Account dbAccount = UnitOfWork.Select<Account>().FirstOrDefault(acc => acc.Username == account.Username);
                 if (dbAccount != null)
                 {
-                    dbAccount.IsLocked = false;
+                    dbAccount.IsLocked = account.IsLocked;
+
                     UnitOfWork.Update(dbAccount);
                 }
                 else

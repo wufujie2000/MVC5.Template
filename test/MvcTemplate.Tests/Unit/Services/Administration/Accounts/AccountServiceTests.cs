@@ -233,12 +233,12 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Create_CreatesAccount()
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
-            view.RoleId = ObjectFactory.CreateRoleView().Id;
             view.Email = view.Email.ToUpper();
+            view.RoleId = account.RoleId;
 
             service.Create(view);
 
-            Account actual = context.Set<Account>().AsNoTracking().Single(account => account.Id == view.Id);
+            Account actual = context.Set<Account>().AsNoTracking().Single(acc => acc.Id == view.Id);
             AccountCreateView expected = view;
 
             Assert.Equal(hasher.HashPassword(expected.Password), actual.Passhash);
@@ -272,9 +272,9 @@ namespace MvcTemplate.Tests.Unit.Services
             AccountEditView view = ObjectFactory.CreateAccountEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
             view.IsLocked = account.IsLocked = !account.IsLocked;
+            view.Username = account.Username + "Test";
             view.RoleId = account.RoleId = null;
-            view.Username += "Test";
-            view.Email += "s";
+            view.Email = account.Email + "s";
 
             service.Edit(view);
 
@@ -312,8 +312,8 @@ namespace MvcTemplate.Tests.Unit.Services
             Account account = context.Set<Account>().AsNoTracking().Single();
             ProfileEditView view = ObjectFactory.CreateProfileEditView();
             account.Passhash = hasher.HashPassword(view.NewPassword);
-            view.Email = account.Email = "TEST@TEST.com";
-            view.Username = account.Username = "Test";
+            view.Username = account.Username += "Test";
+            view.Email = account.Email += "S";
 
             service.Edit(view);
 

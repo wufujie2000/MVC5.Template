@@ -78,8 +78,8 @@ namespace MvcTemplate.Tests.Unit.Resources
 
             foreach (Type type in resourceTypes)
             {
-                IEnumerable<String> resourceKeys = Enumerable.Empty<String>();
                 ResourceManager manager = new ResourceManager(type);
+                IEnumerable<String> resourceKeys = new String[0];
 
                 foreach (Language language in languages)
                 {

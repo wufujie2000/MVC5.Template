@@ -13,18 +13,15 @@ namespace MvcTemplate.Components.Extensions.Html
     {
         public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
+            TagBuilder requiredSpan = new TagBuilder("span");
             TagBuilder label = new TagBuilder("label");
-            if (expression.IsRequired())
-            {
-                TagBuilder requiredSpan = new TagBuilder("span");
-                requiredSpan.AddCssClass("required");
-                requiredSpan.InnerHtml = " *";
+            requiredSpan.AddCssClass("require");
 
-                label.InnerHtml = requiredSpan.ToString();
-            }
+            if (expression.IsRequired())
+                requiredSpan.InnerHtml = "*";
 
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + label.InnerHtml;
+            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + requiredSpan.ToString();
 
             return new MvcHtmlString(label.ToString());
         }

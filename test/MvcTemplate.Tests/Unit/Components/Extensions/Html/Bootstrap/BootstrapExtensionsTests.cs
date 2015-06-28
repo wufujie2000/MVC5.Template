@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.FormLabelFor(x => x.Relation.Required).ToString();
             String expected =
                 "<label for=\"Relation_Required\">" +
-                    "<span class=\"required\"> *</span>" +
+                    "<span class=\"require\">*</span>" +
                 "</label>";
 
             Assert.Equal(expected, actual);
@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.FormLabelFor(x => x.Relation.RequiredValue).ToString();
             String expected =
                 "<label for=\"Relation_RequiredValue\">" +
-                    "<span class=\"required\"> *</span>" +
+                    "<span class=\"require\">*</span>" +
                 "</label>";
 
             Assert.Equal(expected, actual);
@@ -65,7 +65,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormLabelFor_FormsNotRequiredLabel()
         {
             String actual = html.FormLabelFor(x => x.Relation.NotRequired).ToString();
-            String expected = "<label for=\"Relation_NotRequired\"></label>";
+            String expected =
+                "<label for=\"Relation_NotRequired\">" +
+                    "<span class=\"require\"></span>" +
+                "</label>";
 
             Assert.Equal(expected, actual);
         }
@@ -74,7 +77,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
         {
             String actual = html.FormLabelFor(x => x.Relation.NotRequiredNullableValue).ToString();
-            String expected = "<label for=\"Relation_NotRequiredNullableValue\"></label>";
+            String expected =
+                "<label for=\"Relation_NotRequiredNullableValue\">" +
+                    "<span class=\"require\"></span>" +
+                "</label>";
 
             Assert.Equal(expected, actual);
         }

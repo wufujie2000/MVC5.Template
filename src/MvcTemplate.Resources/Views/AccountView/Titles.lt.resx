@@ -130,6 +130,6 @@
     <value>Rolė</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Vartotojo vardas</value>
+    <value>Prisijungimo vardas</value>
   </data>
 </root>

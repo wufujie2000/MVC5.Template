@@ -130,7 +130,7 @@
     <value>Redagavimas</value>
   </data>
   <data name="AdministrationAccountsIndex" xml:space="preserve">
-    <value>Vartotojai</value>
+    <value>Naudotojai</value>
   </data>
   <data name="AdministrationRolesCreate" xml:space="preserve">
     <value>Kūrimas</value>

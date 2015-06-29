@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdministrationAccountsCreate" xml:space="preserve">
-    <value>Vartotojo kūrimas</value>
+    <value>Naudotojo kūrimas</value>
   </data>
   <data name="AdministrationAccountsDetails" xml:space="preserve">
-    <value>Vartotojo peržiūra</value>
+    <value>Naudotojo peržiūra</value>
   </data>
   <data name="AdministrationAccountsEdit" xml:space="preserve">
-    <value>Vartotojo redagavimas</value>
+    <value>Naudotojo redagavimas</value>
   </data>
   <data name="AdministrationAccountsIndex" xml:space="preserve">
-    <value>Vartotojai</value>
+    <value>Naudotojai</value>
   </data>
   <data name="AdministrationRolesCreate" xml:space="preserve">
     <value>Rolės kūrimas</value>

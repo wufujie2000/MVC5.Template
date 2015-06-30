@@ -47,7 +47,6 @@ namespace MvcTemplate.Tests.Unit.Data.Mapping
         {
             Account model = ObjectFactory.CreateAccount();
             model.Role = ObjectFactory.CreateRole();
-            model.RoleId = model.Role.Id;
             model.IsLocked = true;
 
             AccountView actual = Mapper.Map<AccountView>(model);

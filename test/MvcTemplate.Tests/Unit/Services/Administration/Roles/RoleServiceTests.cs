@@ -261,7 +261,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context.SaveChanges();
 
             RoleView roleView = Mapper.Map<RoleView>(role);
-            roleView.Title += "Test";
+            roleView.Title = role.Title += "Test";
 
             service.Edit(roleView);
 

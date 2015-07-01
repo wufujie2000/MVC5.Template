@@ -159,6 +159,10 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.en-GB.js" />
     <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.lt-LT.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.js" />
+    <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.min.js">
+      <DependentUpon>jquery-ui.no-conflict.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\JQuery\Cultures\globalize.culture.en-GB.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.culture.lt-LT.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.culture.lt-LT.js" />

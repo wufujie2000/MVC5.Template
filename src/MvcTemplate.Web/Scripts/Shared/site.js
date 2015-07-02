@@ -208,5 +208,5 @@
 
 // Bootstrap binding
 (function () {
-    $('[rel=tooltip]').tooltip();
+    $('[data-toggle=tooltip]').tooltip();
 }());

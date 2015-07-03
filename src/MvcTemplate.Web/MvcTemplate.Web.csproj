@@ -142,6 +142,10 @@
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.jpg" />
     <Content Include="Images\Shared\content-background.jpg" />
+    <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.min.js">
+      <DependentUpon>bootstrap.no-conflict.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
     <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
     <Content Include="Scripts\Datalist\datalist.js" />

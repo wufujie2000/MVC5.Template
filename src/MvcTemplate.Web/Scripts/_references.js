@@ -17,3 +17,4 @@
 /// <reference path="mvcgrid/cultures/mvc-grid.culture.en-gb.js" />
 /// <reference path="mvcgrid/cultures/mvc-grid.culture.lt-lt.js" />
 /// <reference path="jqueryui/jquery-ui.no-conflict.js" />
+/// <reference path="bootstrap/bootstrap.no-conflict.js" />

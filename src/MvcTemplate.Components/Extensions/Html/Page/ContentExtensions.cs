@@ -18,7 +18,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 scriptDir = routeValues["Area"] + "/" + scriptDir;
 
             String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", scriptDir, controller.ToLower()));
-            String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);
+            String physicalPath = html.ViewContext.HttpContext.Server.MapPath(virtualPath);
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder script = new TagBuilder("script");
@@ -37,7 +37,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 styleDir = routeValues["Area"] + "/" + styleDir;
 
             String virtualPath = urlHelper.Content(String.Format("~/Content/Shared/{0}/{1}.css", styleDir, controller.ToLower()));
-            String physicalPath = html.ViewContext.RequestContext.HttpContext.Server.MapPath(virtualPath);
+            String physicalPath = html.ViewContext.HttpContext.Server.MapPath(virtualPath);
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder link = new TagBuilder("link");

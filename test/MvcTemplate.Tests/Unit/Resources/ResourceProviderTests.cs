@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Fact]
-        public void GetSiteMapTitle_OnMenuNotFoundReturnsNull()
+        public void GetSiteMapTitle_OnSiteMapNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetSiteMapTitle("Test", "Test", "Test"));
         }
@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Fact]
-        public void GetPrivilegeAreaTitle_OnActionNotFoundReturnsNull()
+        public void GetPrivilegeAreaTitle_OnAreaNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetPrivilegeAreaTitle("Test"));
         }
@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         }
 
         [Fact]
-        public void GetPrivilegeControllerTitle_OnActionNotFoundReturnsNull()
+        public void GetPrivilegeControllerTitle_OnControllerNotFoundReturnsNull()
         {
             Assert.Null(ResourceProvider.GetPrivilegeControllerTitle("", ""));
         }

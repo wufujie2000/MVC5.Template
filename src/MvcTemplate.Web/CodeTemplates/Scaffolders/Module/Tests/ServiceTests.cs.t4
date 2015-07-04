@@ -99,7 +99,7 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_Edits<#= Model.Model #>()
         {
             <#= Model.Model #> <#= Model.ModelName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
-            <#= Model.View #> view = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
+            <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>();
             Assert.True(false, "No update made");
 
             service.Edit(view);

@@ -269,8 +269,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_EditsAccount()
         {
-            AccountEditView view = ObjectFactory.CreateAccountEditView();
             Account account = context.Set<Account>().AsNoTracking().Single();
+            AccountEditView view = ObjectFactory.CreateAccountEditView();
             view.IsLocked = account.IsLocked = !account.IsLocked;
             view.Username = account.Username + "Test";
             view.RoleId = account.RoleId = null;

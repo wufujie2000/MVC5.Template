@@ -1,7 +1,6 @@
-/TestResults
-/packages
-bin
-obj
+/packages/
+bin/
+obj/
 
 *.user
 *.suo

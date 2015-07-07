@@ -29,9 +29,9 @@ namespace MvcTemplate.Resources
             }
         }
 
-        public static String GetDatalistTitle<TModel>()
+        public static String GetDatalistTitle(String datalist)
         {
-            return GetResource("MvcTemplate.Resources.Datalist.Titles", typeof(TModel).Name);
+            return GetResource("MvcTemplate.Resources.Datalist.Titles", datalist ?? "");
         }
         public static String GetContentTitle(RouteValueDictionary values)
         {

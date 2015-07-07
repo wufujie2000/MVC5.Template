@@ -17,8 +17,9 @@ namespace MvcTemplate.Components.Datalists
 
         public BaseDatalist(UrlHelper url)
         {
-            DialogTitle = ResourceProvider.GetDatalistTitle<TModel>();
-            DatalistUrl = url.Action(typeof(TModel).Name, Prefix, new { area = "" });
+            String view = typeof(TView).Name.Replace("View", "");
+            DialogTitle = ResourceProvider.GetDatalistTitle(view);
+            DatalistUrl = url.Action(view, Prefix, new { area = "" });
         }
         public BaseDatalist(IUnitOfWork unitOfWork)
         {

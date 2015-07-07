@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
 
-            String expected = ResourceProvider.GetDatalistTitle<Role>();
+            String expected = ResourceProvider.GetDatalistTitle(typeof(RoleView).Name.Replace("View", ""));
             String actual = datalist.DialogTitle;
 
             Assert.Equal(expected, actual);

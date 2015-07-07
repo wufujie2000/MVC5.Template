@@ -11,21 +11,27 @@ namespace MvcTemplate.Tests.Unit.Resources
 {
     public class ResourceProviderTests
     {
-        #region Static method: GetDatalistTitle<TModel>()
+        #region Static method: GetDatalistTitle(String datalist)
 
         [Fact]
-        public void GetDatalistTitle_GetsTitle()
+        public void GetDatalistTitle_GetsTitleByIgnoringCase()
         {
             String expected = MvcTemplate.Resources.Datalist.Titles.Role;
-            String actual = ResourceProvider.GetDatalistTitle<Role>();
+            String actual = ResourceProvider.GetDatalistTitle("role");
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void GetDatalistTitle_OnTypeNotFoundReturnsNull()
+        public void GetDatalistTitle_OnDatalistNotFoundReturnsNull()
         {
-            Assert.Null(ResourceProvider.GetDatalistTitle<Object>());
+            Assert.Null(ResourceProvider.GetDatalistTitle("Test"));
+        }
+
+        [Fact]
+        public void GetDatalistTitle_OnNullDatalistReturnsNull()
+        {
+            Assert.Null(ResourceProvider.GetDatalistTitle(null));
         }
 
         #endregion

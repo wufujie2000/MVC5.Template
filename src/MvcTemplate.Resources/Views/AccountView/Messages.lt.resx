@@ -132,10 +132,10 @@
   <data name="RecoveryInformation" xml:space="preserve">
     <value>Paskyros atkūrimo informacija išsiūsta į jūsų elektroninį paštą</value>
   </data>
-  <data name="SuccesfulRegistration" xml:space="preserve">
+  <data name="SuccessfulRegistration" xml:space="preserve">
     <value>Jūsų paskyra sukurta sėkmingai</value>
   </data>
-  <data name="SuccesfulReset" xml:space="preserve">
+  <data name="SuccessfulReset" xml:space="preserve">
     <value>Jūsų paskyros slaptažodis pakeistas sėkmingai</value>
   </data>
 </root>

@@ -123,11 +123,11 @@
   <data name="EmailIsAlreadyUsed" xml:space="preserve">
     <value>Elektroninis paštas jau yra naudojamas.</value>
   </data>
+  <data name="IncorrectAuthentication" xml:space="preserve">
+    <value>Prisijungimo vardas arba slaptažodis yra neteisingas.</value>
+  </data>
   <data name="IncorrectPassword" xml:space="preserve">
     <value>Neteisingas slaptažodis.</value>
-  </data>
-  <data name="IncorrectUsernameOrPassword" xml:space="preserve">
-    <value>Prisijungimo vardas arba slaptažodis yra neteisingas.</value>
   </data>
   <data name="RecoveryTokenExpired" xml:space="preserve">
     <value>Atkūrimo galiojimo laikas yra pasibaigęs.</value>

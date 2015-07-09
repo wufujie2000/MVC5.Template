@@ -42,7 +42,7 @@ namespace MvcTemplate.Controllers
 
             Service.Register(account);
 
-            Alerts.Add(AlertType.Success, Messages.SuccesfulRegistration);
+            Alerts.Add(AlertType.Success, Messages.SuccessfulRegistration);
 
             return RedirectToAction("Login");
         }
@@ -108,7 +108,7 @@ namespace MvcTemplate.Controllers
                 return RedirectToAction("Recover");
 
             Service.Reset(account);
-            Alerts.Add(AlertType.Success, Messages.SuccesfulReset);
+            Alerts.Add(AlertType.Success, Messages.SuccessfulReset);
 
             return RedirectToAction("Login");
         }

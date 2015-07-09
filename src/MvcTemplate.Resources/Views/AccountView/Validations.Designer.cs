@@ -79,20 +79,20 @@ namespace MvcTemplate.Resources.Views.AccountView {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The username or password is incorrect..
+        /// </summary>
+        public static string IncorrectAuthentication {
+            get {
+                return ResourceManager.GetString("IncorrectAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password is incorrect..
         /// </summary>
         public static string IncorrectPassword {
             get {
                 return ResourceManager.GetString("IncorrectPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The username or password is incorrect..
-        /// </summary>
-        public static string IncorrectUsernameOrPassword {
-            get {
-                return ResourceManager.GetString("IncorrectUsernameOrPassword", resourceCulture);
             }
         }
         

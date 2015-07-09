@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: RegisterArea(AreaRegistrationContext context)
 
         [Fact]
-        public void RegisterArea_RegistersAdministrationMultilingualRoute()
+        public void RegisterArea_RegistersMultilingualAdministrationRoute()
         {
             Route actual = context.Routes["AdministrationMultilingual"] as Route;
 

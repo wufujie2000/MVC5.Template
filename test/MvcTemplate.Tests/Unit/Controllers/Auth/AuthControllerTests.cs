@@ -127,12 +127,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Alert actual = controller.Alerts.Single();
 
             Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.Equal(Messages.SuccesfulRegistration, actual.Message);
+            Assert.Equal(Messages.SuccessfulRegistration, actual.Message);
             Assert.Equal(AlertType.Success, actual.Type);
         }
 
         [Fact]
-        public void Register_RedirectsToLoginAfterSuccessfulRegistration()
+        public void Register_AfterRegistrationRedirectsToLogin()
         {
             validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
@@ -261,7 +261,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Theory]
         [InlineData(null)]
         [InlineData("Token")]
-        public void Recover_RedirectsToLoginAfterSuccessfulRecovery(String recoveryToken)
+        public void Recover_AfterRecoveryRedirectsToLogin(String recoveryToken)
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -364,12 +364,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Alert actual = controller.Alerts.Single();
 
             Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.Equal(Messages.SuccesfulReset, actual.Message);
+            Assert.Equal(Messages.SuccessfulReset, actual.Message);
             Assert.Equal(AlertType.Success, actual.Type);
         }
 
         [Fact]
-        public void Reset_AfterSuccesfulResetRedirectsToLogin()
+        public void Reset_AfterResetRedirectsToLogin()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);

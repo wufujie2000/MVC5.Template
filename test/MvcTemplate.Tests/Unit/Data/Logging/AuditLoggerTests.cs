@@ -81,7 +81,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void Log_LogsModifiedEntities()
         {
-            (entry.Entity as TestModel).Text += "?";
+            (entry.Entity as TestModel).Text += "Test";
             entry.State = EntityState.Modified;
 
             Logs(entry);

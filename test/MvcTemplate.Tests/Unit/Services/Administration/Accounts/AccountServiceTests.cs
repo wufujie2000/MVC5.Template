@@ -313,7 +313,7 @@ namespace MvcTemplate.Tests.Unit.Services
             ProfileEditView view = ObjectFactory.CreateProfileEditView();
             account.Passhash = hasher.HashPassword(view.NewPassword);
             view.Username = account.Username += "Test";
-            view.Email = account.Email += "S";
+            view.Email = account.Email += "Test";
 
             service.Edit(view);
 

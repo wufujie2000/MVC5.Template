@@ -133,7 +133,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_AfterSuccessfulEditRedirectsToEdit()
+        public void Edit_AfterEditRedirectsToEdit()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
@@ -255,7 +255,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_AfterSuccessfulDeleteRedirectsToAuthLogout()
+        public void DeleteConfirmed_AfterDeleteRedirectsToAuthLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(true);

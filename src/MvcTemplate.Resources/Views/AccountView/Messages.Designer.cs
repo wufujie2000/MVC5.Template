@@ -108,18 +108,18 @@ namespace MvcTemplate.Resources.Views.AccountView {
         /// <summary>
         ///   Looks up a localized string similar to Your account has been created.
         /// </summary>
-        public static string SuccesfulRegistration {
+        public static string SuccessfulRegistration {
             get {
-                return ResourceManager.GetString("SuccesfulRegistration", resourceCulture);
+                return ResourceManager.GetString("SuccessfulRegistration", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Your account password has been changed successfully.
         /// </summary>
-        public static string SuccesfulReset {
+        public static string SuccessfulReset {
             get {
-                return ResourceManager.GetString("SuccesfulReset", resourceCulture);
+                return ResourceManager.GetString("SuccessfulReset", resourceCulture);
             }
         }
     }

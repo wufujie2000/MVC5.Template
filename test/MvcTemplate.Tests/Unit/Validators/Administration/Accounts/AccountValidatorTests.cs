@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             AccountRegisterView view = ObjectFactory.CreateAccountRegisterView();
             view.Username = view.Username.ToLower();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             Assert.False(validator.CanRegister(view));
         }
@@ -62,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             AccountRegisterView view = ObjectFactory.CreateAccountRegisterView();
             view.Username = view.Username.ToLower();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             validator.CanRegister(view);
 
@@ -76,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanRegister_CanNotRegisterWithAlreadyUsedEmail()
         {
             AccountRegisterView view = ObjectFactory.CreateAccountRegisterView();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             Assert.False(validator.CanRegister(view));
         }
@@ -85,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanRegister_AddsErrorMessageThenCanNotRegisterWithAlreadyUsedEmail()
         {
             AccountRegisterView view = ObjectFactory.CreateAccountRegisterView();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             validator.CanRegister(view);
 
@@ -193,7 +193,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.CanLogin(view);
 
             String actual = validator.ModelState[""].Errors[0].ErrorMessage;
-            String expected = Validations.IncorrectUsernameOrPassword;
+            String expected = Validations.IncorrectAuthentication;
 
             Assert.Equal(expected, actual);
         }
@@ -216,7 +216,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.CanLogin(view);
 
             String actual = validator.ModelState[""].Errors[0].ErrorMessage;
-            String expected = Validations.IncorrectUsernameOrPassword;
+            String expected = Validations.IncorrectAuthentication;
 
             Assert.Equal(expected, actual);
         }
@@ -230,7 +230,7 @@ namespace MvcTemplate.Tests.Unit.Validators
 
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(false);
             AccountLoginView view = ObjectFactory.CreateAccountLoginView();
-            view.Password += "Incorrect";
+            view.Password += "Test";
 
             validator.CanLogin(view);
 
@@ -295,7 +295,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView();
             view.Username = view.Username.ToLower();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             Assert.False(validator.CanCreate(view));
         }
@@ -305,7 +305,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView();
             view.Username = view.Username.ToLower();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             validator.CanCreate(view);
 
@@ -319,7 +319,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanCreate_CanNotCreateWithAlreadyUsedEmail()
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             Assert.False(validator.CanCreate(view));
         }
@@ -328,7 +328,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanCreate_AddsErrorMessageThenCanNotCreateWithAlreadyUsedEmail()
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView();
-            view.Id += "DifferentValue";
+            view.Id += "Test";
 
             validator.CanCreate(view);
 

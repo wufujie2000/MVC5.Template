@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Create_AfterSuccessfulCreateRedirectsToIndexIfAuthorized()
+        public void Create_AfterCreateRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(accountCreate).Returns(true);
@@ -180,7 +180,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Edit_AfterSuccessfulEditRedirectsToIndexIfAuthorized()
+        public void Edit_AfterEditRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(accountEdit).Returns(true);

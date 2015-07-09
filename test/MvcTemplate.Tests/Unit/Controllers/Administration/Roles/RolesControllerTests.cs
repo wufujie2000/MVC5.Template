@@ -105,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Create_AfterSuccessfulCreateRedirectsToIndex()
+        public void Create_AfterCreateRedirectsToIndex()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(role).Returns(true);
@@ -206,7 +206,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Edit_AfterSuccessfulEditRedirectsToIndex()
+        public void Edit_AfterEditRedirectsToIndex()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(role).Returns(true);
@@ -257,7 +257,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Delete_AfterSuccessfulDeleteRedirectsToIndexIfAuthorized()
+        public void Delete_AfterDeleteRedirectsToIndexIfAuthorized()
         {
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 

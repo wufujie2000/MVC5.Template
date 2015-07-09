@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             RoleView view = ObjectFactory.CreateRoleView();
             view.Title = role.Title.ToLower();
-            view.Id += "1";
+            view.Id += "Test";
 
             Assert.False(validator.CanCreate(view));
         }
@@ -56,12 +56,12 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             RoleView view = ObjectFactory.CreateRoleView();
             view.Title = role.Title.ToLower();
-            view.Id += "OtherIdValue";
+            view.Id += "Test";
 
             validator.CanCreate(view);
 
             String actual = validator.ModelState["Title"].Errors[0].ErrorMessage;
-            String expected = Validations.RoleTitleIsAlreadyUsed;
+            String expected = Validations.TitleIsAlreadyUsed;
 
             Assert.Equal(expected, actual);
         }
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             RoleView view = ObjectFactory.CreateRoleView();
             view.Title = role.Title.ToLower();
-            view.Id += "1";
+            view.Id += "Test";
 
             Assert.False(validator.CanEdit(view));
         }
@@ -99,12 +99,12 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             RoleView view = ObjectFactory.CreateRoleView();
             view.Title = role.Title.ToLower();
-            view.Id += "OtherIdValue";
+            view.Id += "Test";
 
             validator.CanEdit(view);
 
             String actual = validator.ModelState["Title"].Errors[0].ErrorMessage;
-            String expected = Validations.RoleTitleIsAlreadyUsed;
+            String expected = Validations.TitleIsAlreadyUsed;
 
             Assert.Equal(expected, actual);
         }

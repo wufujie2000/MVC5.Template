@@ -123,11 +123,11 @@
   <data name="EmailIsAlreadyUsed" xml:space="preserve">
     <value>E-mail address is already being used.</value>
   </data>
+  <data name="IncorrectAuthentication" xml:space="preserve">
+    <value>The username or password is incorrect.</value>
+  </data>
   <data name="IncorrectPassword" xml:space="preserve">
     <value>Password is incorrect.</value>
-  </data>
-  <data name="IncorrectUsernameOrPassword" xml:space="preserve">
-    <value>The username or password is incorrect.</value>
   </data>
   <data name="RecoveryTokenExpired" xml:space="preserve">
     <value>Recovery token is already expired.</value>

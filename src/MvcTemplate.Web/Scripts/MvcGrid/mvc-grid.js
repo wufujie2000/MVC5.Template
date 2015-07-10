@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 2.1.2
+ * Mvc.Grid 2.2.0
  * https://github.com/NonFactors/MVC.Grid
  *
  * Copyright © NonFactors
@@ -374,6 +374,7 @@ var MvcGridTextFilter = (function () {
 
     MvcGridTextFilter.prototype = {
         render: function (popup, filter) {
+            var filterLang = $.fn.mvcgrid.lang.Filter || $.fn.mvcgrid.defaultLang.Filter;
             var operator = $.fn.mvcgrid.lang.Operator;
             var lang = $.fn.mvcgrid.lang.Text;
 
@@ -412,8 +413,8 @@ var MvcGridTextFilter = (function () {
                      '</div>' :
                      '') +
                      '<div class="popup-button-group">' +
-                        '<button class="btn btn-success mvc-grid-apply" type="button">&#10004;</button>' +
-                        '<button class="btn btn-danger mvc-grid-cancel" type="button">&#10008;</button>' +
+                        '<button class="btn btn-success mvc-grid-apply" type="button">' + filterLang.Apply + '</button>' +
+                        '<button class="btn btn-danger mvc-grid-cancel" type="button">' + filterLang.Remove + '</button>' +
                      '</div>' +
                  '</div>');
         },
@@ -486,6 +487,7 @@ var MvcGridNumberFilter = (function () {
 
     MvcGridNumberFilter.prototype = {
         render: function (popup, filter) {
+            var filterLang = $.fn.mvcgrid.lang.Filter || $.fn.mvcgrid.defaultLang.Filter;
             var operator = $.fn.mvcgrid.lang.Operator;
             var lang = $.fn.mvcgrid.lang.Number;
 
@@ -526,8 +528,8 @@ var MvcGridNumberFilter = (function () {
                     '</div>' :
                      '') +
                     '<div class="popup-button-group">' +
-                        '<button class="btn btn-success mvc-grid-apply" type="button">&#10004;</button>' +
-                        '<button class="btn btn-danger mvc-grid-cancel" type="button">&#10008;</button>' +
+                        '<button class="btn btn-success mvc-grid-apply" type="button">' + filterLang.Apply + '</button>' +
+                        '<button class="btn btn-danger mvc-grid-cancel" type="button">' + filterLang.Remove + '</button>' +
                     '</div>' +
                 '</div>');
         },
@@ -628,6 +630,7 @@ var MvcGridDateFilter = (function () {
     MvcGridDateFilter.prototype = {
         render: function (popup, filter) {
             var filterInput = '<input class="mvc-grid-input" type="text" value="' + filter.first.val + '">';
+            var filterLang = $.fn.mvcgrid.lang.Filter || $.fn.mvcgrid.defaultLang.Filter;
             var operator = $.fn.mvcgrid.lang.Operator;
             var lang = $.fn.mvcgrid.lang.Date;
 
@@ -668,8 +671,8 @@ var MvcGridDateFilter = (function () {
                     '</div>' :
                      '') +
                     '<div class="popup-button-group">' +
-                        '<button class="btn btn-success mvc-grid-apply" type="button">&#10004;</button>' +
-                        '<button class="btn btn-danger mvc-grid-cancel" type="button">&#10008;</button>' +
+                        '<button class="btn btn-success mvc-grid-apply" type="button">' + filterLang.Apply + '</button>' +
+                        '<button class="btn btn-danger mvc-grid-cancel" type="button">' + filterLang.Remove + '</button>' +
                     '</div>' +
                 '</div>');
         },
@@ -746,6 +749,7 @@ var MvcGridBooleanFilter = (function () {
 
     MvcGridBooleanFilter.prototype = {
         render: function (popup, filter) {
+            var filterLang = $.fn.mvcgrid.lang.Filter || $.fn.mvcgrid.defaultLang.Filter;
             var operator = $.fn.mvcgrid.lang.Operator;
             var lang = $.fn.mvcgrid.lang.Boolean;
 
@@ -774,8 +778,8 @@ var MvcGridBooleanFilter = (function () {
                     '</div>' :
                      '') +
                     '<div class="popup-button-group">' +
-                        '<button class="btn btn-success mvc-grid-apply" type="button">&#10004;</button>' +
-                        '<button class="btn btn-danger mvc-grid-cancel" type="button">&#10008;</button>' +
+                        '<button class="btn btn-success mvc-grid-apply" type="button">' + filterLang.Apply + '</button>' +
+                        '<button class="btn btn-danger mvc-grid-cancel" type="button">' + filterLang.Remove + '</button>' +
                     '</div>' +
                 '</div>');
         },
@@ -843,7 +847,7 @@ $.fn.mvcgrid = function (options) {
         }
     });
 };
-$.fn.mvcgrid.lang = {
+$.fn.mvcgrid.defaultLang = {
     Text: {
         Contains: 'Contains',
         Equals: 'Equals',
@@ -868,12 +872,17 @@ $.fn.mvcgrid.lang = {
         Yes: 'Yes',
         No: 'No'
     },
+    Filter: {
+        Apply: '&#10004;',
+        Remove: '&#10008;'
+    },
     Operator: {
         Select: '',
         And: 'and',
         Or: 'or'
     }
 };
+$.fn.mvcgrid.lang = $.fn.mvcgrid.defaultLang;
 $(function () {
     $('body').append('<div class="mvc-grid-popup"></div>');
     $(window).resize(function () {

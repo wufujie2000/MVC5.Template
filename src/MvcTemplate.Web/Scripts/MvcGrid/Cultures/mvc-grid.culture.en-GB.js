@@ -23,6 +23,10 @@
         Yes: 'Yes',
         No: 'No'
     },
+    Filter: {
+        Apply: '&#10004;',
+        Remove: '&#10008;'
+    },
     Operator: {
         Select: '',
         And: 'and',

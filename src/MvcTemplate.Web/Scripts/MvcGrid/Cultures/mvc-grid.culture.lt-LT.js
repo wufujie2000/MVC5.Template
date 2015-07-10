@@ -23,6 +23,10 @@
         Yes: 'Taip',
         No: 'Ne'
     },
+    Filter: {
+        Apply: '&#10004;',
+        Remove: '&#10008;'
+    },
     Operator: {
         Select: '',
         And: 'ir',

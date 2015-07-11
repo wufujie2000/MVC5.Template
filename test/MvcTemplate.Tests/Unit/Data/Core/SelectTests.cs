@@ -49,15 +49,15 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Expression_IsSetsExpression()
         {
-            DbContext context = Substitute.For<DbContext>();
             DbSet<TestModel> set = Substitute.For<DbSet<TestModel>, IQueryable>();
-            (set as IQueryable).Expression.Returns(Expression.Constant(0));
+            ((IQueryable)set).Expression.Returns(Expression.Constant(0));
+            DbContext context = Substitute.For<DbContext>();
             context.Set<TestModel>().Returns(set);
 
             select = new Select<TestModel>(context.Set<TestModel>());
 
-            Expression actual = (select as IQueryable).Expression;
-            Expression expected = (set as IQueryable).Expression;
+            Expression actual = ((IQueryable)select).Expression;
+            Expression expected = ((IQueryable)set).Expression;
 
             Assert.Same(expected, actual);
         }

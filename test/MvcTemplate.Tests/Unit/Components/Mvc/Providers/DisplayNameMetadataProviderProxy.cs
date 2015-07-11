@@ -9,7 +9,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
     {
         public ModelMetadata BaseCreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
         {
-            return base.CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
+            return CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
         }
     }
 }

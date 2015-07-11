@@ -12,13 +12,11 @@ namespace <#= Model.ControllerTestNamespace #>
     {
         private <#= Model.AreaRegistration #> areaRegistration;
         private AreaRegistrationContext registrationContext;
-        private RouteCollection routeCollection;
 
         public <#= Model.AreaRegistration #>Tests()
         {
-            routeCollection = new RouteCollection();
             areaRegistration = new <#= Model.AreaRegistration #>();
-            registrationContext = new AreaRegistrationContext(areaRegistration.AreaName, routeCollection);
+            registrationContext = new AreaRegistrationContext(areaRegistration.AreaName, new RouteCollection());
 
             areaRegistration.RegisterArea(registrationContext);
         }

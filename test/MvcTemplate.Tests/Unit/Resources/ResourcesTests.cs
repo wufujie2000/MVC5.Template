@@ -81,9 +81,8 @@ namespace MvcTemplate.Tests.Unit.Resources
                 ResourceManager manager = new ResourceManager(type);
                 IEnumerable<String> resourceKeys = new String[0];
 
-                foreach (Language language in languages)
+                foreach (ResourceSet set in languages.Select(language => manager.GetResourceSet(language.Culture, true, true)))
                 {
-                    ResourceSet set = manager.GetResourceSet(language.Culture, true, true);
                     resourceKeys = resourceKeys.Union(set.Cast<DictionaryEntry>().Select(resource => resource.Key.ToString()));
                     resourceKeys = resourceKeys.Distinct();
                 }

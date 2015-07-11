@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         public IQueryable<TView> BaseFilterById(IQueryable<TView> models)
         {
-            return base.FilterById(models);
+            return FilterById(models);
         }
     }
 }

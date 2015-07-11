@@ -21,7 +21,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 requiredSpan.InnerHtml = "*";
 
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
-            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + requiredSpan.ToString();
+            label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + requiredSpan;
 
             return new MvcHtmlString(label.ToString());
         }

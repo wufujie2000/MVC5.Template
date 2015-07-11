@@ -93,7 +93,7 @@
     $(document).on('ready', function () {
         var hiddenDatalistInputs = $('.datalist-hidden-input.input-validation-error');
         for (var i = 0; i < hiddenDatalistInputs.length; i++) {
-            var hiddenInput = $(hiddenDatalistInputs[i])
+            var hiddenInput = $(hiddenDatalistInputs[i]);
             hiddenInput.prevAll('[data-datalist-for="' + hiddenDatalistInputs[i].id + '"]').addClass('input-validation-error');
         }
     });
@@ -102,7 +102,7 @@
     $.validator.setDefaults({
         ignore: function () {
             return $(this).is(currentIgnore) && !$(this).hasClass('datalist-hidden-input');
-        },
+        }
     });
 }());
 

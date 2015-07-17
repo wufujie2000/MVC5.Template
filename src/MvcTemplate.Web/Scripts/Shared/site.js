@@ -145,8 +145,8 @@
             }
         });
 
-        var selectedNodes = jsTree.prev('.js-tree-view-ids').children();
         jsTree.on('ready.jstree', function (e, data) {
+            var selectedNodes = $(this).prev('.js-tree-view-ids').children();
             for (var j = 0; j < selectedNodes.length; j++) {
                 data.instance.select_node(selectedNodes[j].value, false, true);
             }

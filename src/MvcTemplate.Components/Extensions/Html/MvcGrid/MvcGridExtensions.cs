@@ -127,7 +127,7 @@ namespace MvcTemplate.Components.Extensions.Html
         private static String GetCssClassFor<TProperty>()
         {
             Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
-            if (type.IsEnum) return "text-cell";
+            if (type.IsEnum) return "text-left";
 
             switch (Type.GetTypeCode(type))
             {
@@ -142,11 +142,11 @@ namespace MvcTemplate.Components.Extensions.Html
                 case TypeCode.Single:
                 case TypeCode.Double:
                 case TypeCode.Decimal:
-                    return "number-cell";
+                    return "text-right";
                 case TypeCode.DateTime:
-                    return "date-cell";
+                    return "text-center";
                 default:
-                    return "text-cell";
+                    return "text-left";
             }
         }
     }

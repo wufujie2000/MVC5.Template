@@ -15,15 +15,6 @@ table td + td {
 table td {
   border-bottom: 1px solid #dddddd;
 }
-table td.text-cell {
-  text-align: left;
-}
-table td.date-cell {
-  text-align: center;
-}
-table td.number-cell {
-  text-align: right;
-}
 table .action-cell {
   text-align: center;
   width: 20px;

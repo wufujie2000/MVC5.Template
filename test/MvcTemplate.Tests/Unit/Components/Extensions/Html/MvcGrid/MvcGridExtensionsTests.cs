@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddDateProperty(model => model.DateTimeField);
 
-            column.Received().Css("date-cell");
+            column.Received().Css("text-center");
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddDateProperty(model => model.NullableDateTimeField);
 
-            column.Received().Css("date-cell");
+            column.Received().Css("text-center");
         }
 
         [Fact]
@@ -258,7 +258,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddBooleanProperty(model => model.BooleanField);
 
-            column.Received().Css("text-cell");
+            column.Received().Css("text-left");
         }
 
         [Fact]
@@ -326,7 +326,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            column.Received().Css("text-cell");
+            column.Received().Css("text-left");
         }
 
         [Fact]
@@ -412,7 +412,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddDateTimeProperty(model => model.DateTimeField);
 
-            column.Received().Css("date-cell");
+            column.Received().Css("text-center");
         }
 
         [Fact]
@@ -452,7 +452,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         {
             columns.AddDateTimeProperty(model => model.NullableDateTimeField);
 
-            column.Received().Css("date-cell");
+            column.Received().Css("text-center");
         }
 
         [Fact]
@@ -488,165 +488,165 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsTextCellForEnum()
+        public void AddProperty_SetsCssClassForEnum()
         {
-            AssertCssClassFor(model => model.EnumField, "text-cell");
+            AssertCssClassFor(model => model.EnumField, "text-left");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForSByte()
+        public void AddProperty_SetsCssClassForSByte()
         {
-            AssertCssClassFor(model => model.SByteField, "number-cell");
+            AssertCssClassFor(model => model.SByteField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForByte()
+        public void AddProperty_SetsCssClassForByte()
         {
-            AssertCssClassFor(model => model.ByteField, "number-cell");
+            AssertCssClassFor(model => model.ByteField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForInt16()
+        public void AddProperty_SetsCssClassForInt16()
         {
-            AssertCssClassFor(model => model.Int16Field, "number-cell");
+            AssertCssClassFor(model => model.Int16Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForUInt16()
+        public void AddProperty_SetsCssClassForUInt16()
         {
-            AssertCssClassFor(model => model.UInt16Field, "number-cell");
+            AssertCssClassFor(model => model.UInt16Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForInt32()
+        public void AddProperty_SetsCssClassForInt32()
         {
-            AssertCssClassFor(model => model.Int32Field, "number-cell");
+            AssertCssClassFor(model => model.Int32Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForUInt32()
+        public void AddProperty_SetsCssClassForUInt32()
         {
-            AssertCssClassFor(model => model.UInt32Field, "number-cell");
+            AssertCssClassFor(model => model.UInt32Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForInt64()
+        public void AddProperty_SetsCssClassForInt64()
         {
-            AssertCssClassFor(model => model.Int64Field, "number-cell");
+            AssertCssClassFor(model => model.Int64Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForUInt64()
+        public void AddProperty_SetsCssClassForUInt64()
         {
-            AssertCssClassFor(model => model.UInt64Field, "number-cell");
+            AssertCssClassFor(model => model.UInt64Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForSingle()
+        public void AddProperty_SetsCssClassForSingle()
         {
-            AssertCssClassFor(model => model.SingleField, "number-cell");
+            AssertCssClassFor(model => model.SingleField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForDouble()
+        public void AddProperty_SetsCssClassForDouble()
         {
-            AssertCssClassFor(model => model.DoubleField, "number-cell");
+            AssertCssClassFor(model => model.DoubleField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForDecimal()
+        public void AddProperty_SetsCssClassForDecimal()
         {
-            AssertCssClassFor(model => model.DecimalField, "number-cell");
+            AssertCssClassFor(model => model.DecimalField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsDateCellForDateTime()
+        public void AddProperty_SetsCssClassForDateTime()
         {
-            AssertCssClassFor(model => model.DateTimeField, "date-cell");
+            AssertCssClassFor(model => model.DateTimeField, "text-center");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsTextCellForNullableEnum()
+        public void AddProperty_SetsCssClassForNullableEnum()
         {
-            AssertCssClassFor(model => model.NullableEnumField, "text-cell");
+            AssertCssClassFor(model => model.NullableEnumField, "text-left");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableSByte()
+        public void AddProperty_SetsCssClassForNullableSByte()
         {
-            AssertCssClassFor(model => model.NullableSByteField, "number-cell");
+            AssertCssClassFor(model => model.NullableSByteField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableByte()
+        public void AddProperty_SetsCssClassForNullableByte()
         {
-            AssertCssClassFor(model => model.NullableByteField, "number-cell");
+            AssertCssClassFor(model => model.NullableByteField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableInt16()
+        public void AddProperty_SetsCssClassForNullableInt16()
         {
-            AssertCssClassFor(model => model.NullableInt16Field, "number-cell");
+            AssertCssClassFor(model => model.NullableInt16Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableUInt16()
+        public void AddProperty_SetsCssClassForNullableUInt16()
         {
-            AssertCssClassFor(model => model.NullableUInt16Field, "number-cell");
+            AssertCssClassFor(model => model.NullableUInt16Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableInt32()
+        public void AddProperty_SetsCssClassForNullableInt32()
         {
-            AssertCssClassFor(model => model.NullableInt32Field, "number-cell");
+            AssertCssClassFor(model => model.NullableInt32Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableUInt32()
+        public void AddProperty_SetsCssClassForNullableUInt32()
         {
-            AssertCssClassFor(model => model.NullableUInt32Field, "number-cell");
+            AssertCssClassFor(model => model.NullableUInt32Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableInt64()
+        public void AddProperty_SetsCssClassForNullableInt64()
         {
-            AssertCssClassFor(model => model.NullableInt64Field, "number-cell");
+            AssertCssClassFor(model => model.NullableInt64Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableUInt64()
+        public void AddProperty_SetsCssClassForNullableUInt64()
         {
-            AssertCssClassFor(model => model.NullableUInt64Field, "number-cell");
+            AssertCssClassFor(model => model.NullableUInt64Field, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableSingle()
+        public void AddProperty_SetsCssClassForNullableSingle()
         {
-            AssertCssClassFor(model => model.NullableSingleField, "number-cell");
+            AssertCssClassFor(model => model.NullableSingleField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableDouble()
+        public void AddProperty_SetsCssClassForNullableDouble()
         {
-            AssertCssClassFor(model => model.NullableDoubleField, "number-cell");
+            AssertCssClassFor(model => model.NullableDoubleField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsNumberCellForNullableDecimal()
+        public void AddProperty_SetsCssClassForNullableDecimal()
         {
-            AssertCssClassFor(model => model.NullableDecimalField, "number-cell");
+            AssertCssClassFor(model => model.NullableDecimalField, "text-right");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsDateCellForNullableDateTime()
+        public void AddProperty_SetsCssClassForNullableDateTime()
         {
-            AssertCssClassFor(model => model.NullableDateTimeField, "date-cell");
+            AssertCssClassFor(model => model.NullableDateTimeField, "text-center");
         }
 
         [Fact]
-        public void AddProperty_SetsCssClassAsTextCellForOtherTypes()
+        public void AddProperty_SetsCssClassForOtherTypes()
         {
-            AssertCssClassFor(model => model.StringField, "text-cell");
+            AssertCssClassFor(model => model.StringField, "text-left");
         }
 
         #endregion

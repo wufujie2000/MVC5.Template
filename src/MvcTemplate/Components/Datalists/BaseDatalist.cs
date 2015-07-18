@@ -37,7 +37,7 @@ namespace MvcTemplate.Components.Datalists
         protected override String GetColumnCssClass(PropertyInfo property)
         {
             Type type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
-            if (type.IsEnum) return "text-cell";
+            if (type.IsEnum) return "text-left";
 
             switch (Type.GetTypeCode(type))
             {
@@ -52,11 +52,11 @@ namespace MvcTemplate.Components.Datalists
                 case TypeCode.Single:
                 case TypeCode.Double:
                 case TypeCode.Decimal:
-                    return "number-cell";
+                    return "text-right";
                 case TypeCode.DateTime:
-                    return "date-cell";
+                    return "text-center";
                 default:
-                    return "text-cell";
+                    return "text-left";
             }
         }
 

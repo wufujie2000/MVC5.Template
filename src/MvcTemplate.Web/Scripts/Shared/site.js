@@ -155,24 +155,22 @@
         });
     }
 
-    if (jsTrees.length > 0) {
-        $(document).on('submit', 'form', function () {
-            var jsTrees = $(this).find('.js-tree-view');
-            for (var i = 0; i < jsTrees.length; i++) {
-                var jsTree = $(jsTrees[i]).jstree();
-                var treeIdSpan = jsTree.element.prev('.js-tree-view-ids');
+    $(document).on('submit', 'form', function () {
+        var jsTrees = $(this).find('.js-tree-view');
+        for (var i = 0; i < jsTrees.length; i++) {
+            var jsTree = $(jsTrees[i]).jstree();
+            var treeIdSpan = jsTree.element.prev('.js-tree-view-ids');
 
-                treeIdSpan.empty();
-                var selectedNodes = jsTree.get_selected();
-                for (var j = 0; j < selectedNodes.length; j++) {
-                    var node = jsTree.get_node(selectedNodes[j]);
-                    if (node.li_attr.id) {
-                        treeIdSpan.append('<input type="hidden" value="' + node.li_attr.id + '" name="' + jsTree.element.attr('for') + '" />');
-                    }
+            treeIdSpan.empty();
+            var selectedNodes = jsTree.get_selected();
+            for (var j = 0; j < selectedNodes.length; j++) {
+                var node = jsTree.get_node(selectedNodes[j]);
+                if (node.li_attr.id) {
+                    treeIdSpan.append('<input type="hidden" value="' + node.li_attr.id + '" name="' + jsTree.element.attr('for') + '" />');
                 }
             }
-        });
-    }
+        }
+    });
 }());
 
 // Mvc.Grid binding

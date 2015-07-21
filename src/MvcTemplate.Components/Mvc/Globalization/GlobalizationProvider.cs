@@ -23,7 +23,7 @@ namespace MvcTemplate.Components.Mvc
         {
             get
             {
-                return Languages.Single(language => language.Culture == CultureInfo.CurrentUICulture);
+                return Languages.Single(language => language.Culture.Equals(CultureInfo.CurrentUICulture));
             }
             set
             {

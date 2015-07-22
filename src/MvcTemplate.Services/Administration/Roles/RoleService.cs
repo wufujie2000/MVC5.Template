@@ -67,13 +67,16 @@ namespace MvcTemplate.Services
         public RoleView GetView(String id)
         {
             RoleView role = UnitOfWork.GetAs<Role, RoleView>(id);
-            role.PrivilegesTree.SelectedIds = UnitOfWork
-                .Select<RolePrivilege>()
-                .Where(rolePrivilege => rolePrivilege.RoleId == role.Id)
-                .Select(rolePrivilege => rolePrivilege.PrivilegeId)
-                .ToList();
+            if (role != null)
+            {
+                role.PrivilegesTree.SelectedIds = UnitOfWork
+                    .Select<RolePrivilege>()
+                    .Where(rolePrivilege => rolePrivilege.RoleId == role.Id)
+                    .Select(rolePrivilege => rolePrivilege.PrivilegeId)
+                    .ToList();
 
-            SeedPrivilegesTree(role);
+                SeedPrivilegesTree(role);
+            }
 
             return role;
         }

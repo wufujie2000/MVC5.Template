@@ -1,5 +1,5 @@
 ﻿@{
-    IEnumerable<MvcSiteMapNode> breadcrumb = MvcSiteMap.Provider.GetBreadcrumb(Request.RequestContext);
+    IEnumerable<MvcSiteMapNode> breadcrumb = MvcSiteMap.Provider.GetBreadcrumb(ViewContext);
     MvcSiteMapNode current = breadcrumb.LastOrDefault();
 }
 

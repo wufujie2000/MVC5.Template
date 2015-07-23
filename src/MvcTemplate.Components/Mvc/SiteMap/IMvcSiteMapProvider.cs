@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Web.Routing;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
 {
     public interface IMvcSiteMapProvider
     {
-        IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(RequestContext request);
-        IEnumerable<MvcSiteMapNode> GetBreadcrumb(RequestContext request);
+        IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(ViewContext context);
+        IEnumerable<MvcSiteMapNode> GetBreadcrumb(ViewContext context);
     }
 }

@@ -3,6 +3,7 @@ using MvcTemplate.Components.Security;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 using System.Xml.Linq;
 using Xunit;
@@ -15,8 +16,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         private static String siteMapPath;
 
         private RouteValueDictionary routeValues;
-        private RequestContext requestContext;
         private MvcSiteMapProvider provider;
+        private ViewContext viewContext;
 
         static MvcSiteMapProviderTests()
         {
@@ -26,23 +27,23 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
         public MvcSiteMapProviderTests()
         {
-            requestContext = HttpContextFactory.CreateHttpContext().Request.RequestContext;
+            viewContext = HtmlHelperFactory.CreateHtmlHelper().ViewContext;
             provider = new MvcSiteMapProvider(siteMapPath, parser);
-            routeValues = requestContext.RouteData.Values;
+            routeValues = viewContext.RouteData.Values;
         }
         public void Dispose()
         {
             Authorization.Provider = null;
         }
 
-        #region Method: GetAuthorizedMenus(RequestContext request)
+        #region Method: GetAuthorizedMenus(ViewContext context)
 
         [Fact]
         public void GetAuthorizedMenus_OnNullAuthorizationProviderReturnsAllMenus()
         {
             Authorization.Provider = null;
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 
@@ -82,9 +83,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetAuthorizedMenus_ReturnsOnlyAuthorizedMenus()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            Authorization.Provider.IsAuthorizedFor(requestContext.HttpContext.User.Identity.Name, "Administration", "Accounts", "Index").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Accounts", "Index").Returns(true);
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 
@@ -113,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["controller"] = "Roles";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.False(actual[0].IsActive);
@@ -140,7 +141,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["controller"] = "Accounts";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.False(actual[0].IsActive);
@@ -167,7 +168,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["controller"] = "Roles";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.True(actual[0].HasActiveChildren);
@@ -191,9 +192,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
-            Authorization.Provider.IsAuthorizedFor(requestContext.HttpContext.User.Identity.Name, "Administration", "Roles", "Create").Returns(false);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Roles", "Create").Returns(false);
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 
@@ -216,7 +217,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: GetBreadcrumb(RequestContext request)
+        #region Method: GetBreadcrumb(ViewContext context)
 
         [Fact]
         public void GetBreadcrumb_FormsBreadcrumbByIgnoringCase()
@@ -225,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["action"] = "edit";
             routeValues["area"] = null;
 
-            MvcSiteMapNode[] actual = provider.GetBreadcrumb(requestContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetBreadcrumb(viewContext).ToArray();
 
             Assert.Equal(3, actual.Length);
 
@@ -252,7 +253,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             routeValues["action"] = "edit";
             routeValues["area"] = "area";
 
-            Assert.Empty(provider.GetBreadcrumb(requestContext));
+            Assert.Empty(provider.GetBreadcrumb(viewContext));
         }
 
         #endregion

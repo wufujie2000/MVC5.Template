@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Routing;
+using System.Web.Mvc;
 using System.Xml.Linq;
 
 namespace MvcTemplate.Components.Mvc
@@ -19,21 +19,21 @@ namespace MvcTemplate.Components.Mvc
             NodeList = ToList(NodeTree);
         }
 
-        public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(RequestContext request)
+        public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(ViewContext context)
         {
-            String account = request.HttpContext.User.Identity.Name;
-            String area = request.RouteData.Values["area"] as String;
-            String action = request.RouteData.Values["action"] as String;
-            String controller = request.RouteData.Values["controller"] as String;
+            String account = context.HttpContext.User.Identity.Name;
+            String area = context.RouteData.Values["area"] as String;
+            String action = context.RouteData.Values["action"] as String;
+            String controller = context.RouteData.Values["controller"] as String;
             IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(NodeTree, area, controller, action);
 
             return GetAuthorizedMenus(account, nodes);
         }
-        public IEnumerable<MvcSiteMapNode> GetBreadcrumb(RequestContext request)
+        public IEnumerable<MvcSiteMapNode> GetBreadcrumb(ViewContext context)
         {
-            String area = request.RouteData.Values["area"] as String;
-            String action = request.RouteData.Values["action"] as String;
-            String controller = request.RouteData.Values["controller"] as String;
+            String area = context.RouteData.Values["area"] as String;
+            String action = context.RouteData.Values["action"] as String;
+            String controller = context.RouteData.Values["controller"] as String;
 
             MvcSiteMapNode currentNode = NodeList.SingleOrDefault(node =>
                 String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&

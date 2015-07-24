@@ -19,7 +19,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             context = new TestingContext();
             validator = new <#= Model.Validator #>(new UnitOfWork(context));
-            validator.ModelState = new ModelStateDictionary();
         }
         public void Dispose()
         {

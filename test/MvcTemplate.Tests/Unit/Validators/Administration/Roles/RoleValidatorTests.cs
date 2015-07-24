@@ -5,7 +5,6 @@ using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
@@ -20,7 +19,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         {
             context = new TestingContext();
             validator = new RoleValidator(new UnitOfWork(context));
-            validator.ModelState = new ModelStateDictionary();
 
             TearDownData();
             SetUpData();

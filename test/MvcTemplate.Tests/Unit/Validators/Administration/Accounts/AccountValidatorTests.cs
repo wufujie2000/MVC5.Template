@@ -8,7 +8,6 @@ using MvcTemplate.Validators;
 using NSubstitute;
 using System;
 using System.Linq;
-using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators
@@ -26,7 +25,6 @@ namespace MvcTemplate.Tests.Unit.Validators
             hasher.VerifyPassword(Arg.Any<String>(), Arg.Any<String>()).Returns(true);
 
             validator = new AccountValidator(new UnitOfWork(context), hasher);
-            validator.ModelState = new ModelStateDictionary();
 
             TearDownData();
             SetUpData();

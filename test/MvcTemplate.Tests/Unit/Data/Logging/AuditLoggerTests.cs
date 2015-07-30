@@ -48,7 +48,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             TestingContext context = new TestingContext();
             context.Configuration.AutoDetectChangesEnabled = true;
 
-            using (AuditLogger logger = new AuditLogger(context))
+            using (new AuditLogger(context))
                 Assert.False(context.Configuration.AutoDetectChangesEnabled);
         }
 
@@ -62,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             TestingContext context = new TestingContext();
             context.Configuration.AutoDetectChangesEnabled = true;
 
-            using (AuditLogger logger = new AuditLogger(context, "Test"))
+            using (new AuditLogger(context, "Test"))
                 Assert.False(context.Configuration.AutoDetectChangesEnabled);
         }
 

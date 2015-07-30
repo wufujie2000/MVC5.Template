@@ -102,24 +102,14 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Details(String id)
 
         [Fact]
-        public void Details_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            Object expected = controller.RedirectToNotFound();
-            Object actual = controller.Details("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Details_Gets<#= Model.View #>()
+        public void Details_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Details(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            Object expected = <#= Model.ModelName #>;
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
+            ActionResult actual = controller.Details(<#= Model.ModelName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -129,24 +119,14 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Edit(String id)
 
         [Fact]
-        public void Edit_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Edit("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Edit_Gets<#= Model.View #>()
+        public void Edit_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Edit(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            Object expected = <#= Model.ModelName #>;
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
+            ActionResult actual = controller.Edit(<#= Model.ModelName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -193,24 +173,14 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Delete(String id)
 
         [Fact]
-        public void Delete_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Delete("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Delete_Gets<#= Model.View #>()
+        public void Delete_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Delete(<#= Model.ModelName #>.Id) as ViewResult).Model;
-            Object expected = <#= Model.ModelName #>;
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
+            ActionResult actual = controller.Delete(<#= Model.ModelName #>.Id);
 
             Assert.Same(expected, actual);
         }

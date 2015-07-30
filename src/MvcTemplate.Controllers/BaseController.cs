@@ -102,7 +102,6 @@ namespace MvcTemplate.Controllers
         }
         protected override void OnAuthorization(AuthorizationContext filterContext)
         {
-            base.OnAuthorization(filterContext);
             if (!User.Identity.IsAuthenticated) return;
 
             String area = (String)filterContext.RouteData.Values["area"];
@@ -114,8 +113,6 @@ namespace MvcTemplate.Controllers
         }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            base.OnActionExecuted(filterContext);
-
             AlertsContainer current = TempData["Alerts"] as AlertsContainer;
             if (current == null)
                 TempData["Alerts"] = Alerts;

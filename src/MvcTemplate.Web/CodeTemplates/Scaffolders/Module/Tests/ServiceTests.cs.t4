@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Get<TView>(String id)
 
         [Fact]
-        public void GetView_GetsViewById()
+        public void Get_GetsViewById()
         {
             <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);

@@ -166,13 +166,13 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: GetView(String id)
 
         [Fact]
-        public void GetView_OnNotFoundRoleReturnsNull()
+        public void GetView_OnNotExistingRoleReturnsNull()
         {
             Assert.Null(service.GetView(""));
         }
 
         [Fact]
-        public void GetView_GetsViewById()
+        public void Get_GetsViewById()
         {
             service.When(sub => sub.SeedPrivilegesTree(Arg.Any<RoleView>())).DoNotCallBase();
             Role role = ObjectFactory.CreateRole();

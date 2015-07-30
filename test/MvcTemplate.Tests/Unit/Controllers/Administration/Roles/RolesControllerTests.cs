@@ -121,24 +121,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Details(String id)
 
         [Fact]
-        public void Details_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            Object expected = controller.RedirectToNotFound();
-            Object actual = controller.Details("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Details_GetsRoleView()
+        public void Details_ReturnsNotEmptyView()
         {
             service.GetView(role.Id).Returns(role);
+            controller.When(sub => sub.NotEmptyView(role)).DoNotCallBase();
+            controller.NotEmptyView(role).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Details(role.Id) as ViewResult).Model;
-            Object expected = role;
+            ActionResult expected = controller.NotEmptyView(role);
+            ActionResult actual = controller.Details(role.Id);
 
             Assert.Same(expected, actual);
         }
@@ -148,24 +138,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Edit(String id)
 
         [Fact]
-        public void Edit_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Edit("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Edit_GetsRoleView()
+        public void Edit_ReturnsNotEmptyView()
         {
             service.GetView(role.Id).Returns(role);
+            controller.When(sub => sub.NotEmptyView(role)).DoNotCallBase();
+            controller.NotEmptyView(role).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Edit(role.Id) as ViewResult).Model;
-            Object expected = role;
+            ActionResult expected = controller.NotEmptyView(role);
+            ActionResult actual = controller.Edit(role.Id);
 
             Assert.Same(expected, actual);
         }
@@ -222,24 +202,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Method: Delete(String id)
 
         [Fact]
-        public void Delete_OnModelNotFoundRedirectsToNotFound()
-        {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.Delete("");
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Delete_GetsRoleView()
+        public void Delete_ReturnsNotEmptyView()
         {
             service.GetView(role.Id).Returns(role);
+            controller.When(sub => sub.NotEmptyView(role)).DoNotCallBase();
+            controller.NotEmptyView(role).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            Object actual = (controller.Delete(role.Id) as ViewResult).Model;
-            Object expected = role;
+            ActionResult expected = controller.NotEmptyView(role);
+            ActionResult actual = controller.Delete(role.Id);
 
             Assert.Same(expected, actual);
         }

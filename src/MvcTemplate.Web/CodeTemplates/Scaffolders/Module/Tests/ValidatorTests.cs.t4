@@ -14,11 +14,15 @@ namespace MvcTemplate.Tests.Unit.Validators
     {
         private <#= Model.Validator #> validator;
         private TestingContext context;
+        private <#= Model.Model #> <#= Model.ModelName #>;
 
         public <#= Model.Validator #>Tests()
         {
             context = new TestingContext();
             validator = new <#= Model.Validator #>(new UnitOfWork(context));
+
+			TearDownData();
+			SetUpData();
         }
         public void Dispose()
         {
@@ -58,6 +62,23 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanEdit_CanEditValid<#= Model.Model #>()
         {
             Assert.True(validator.CanEdit(ObjectFactory.Create<#= Model.View #>()));
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private void SetUpData()
+        {
+            <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
+
+            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
+            context.SaveChanges();
+        }
+        private void TearDownData()
+        {
+            context.Set<<#= Model.Model #>>().RemoveRange(context.Set<<#= Model.Model #>>());
+            context.SaveChanges();
         }
 
         #endregion

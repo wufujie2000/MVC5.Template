@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetClientValidationRules_ReturnsMinRangeValidationRule()
         {
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "Integer");
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "Digits");
             DigitsAdapter adapter = new DigitsAdapter(metadata, new ControllerContext(), new DigitsAttribute());
             String errorMessage = new DigitsAttribute().FormatErrorMessage(metadata.GetDisplayName());
 

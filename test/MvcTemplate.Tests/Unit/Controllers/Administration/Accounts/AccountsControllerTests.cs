@@ -91,8 +91,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Create_AfterCreateRedirectsToIndexIfAuthorized()
         {
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(accountCreate).Returns(true);
+            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Create(accountCreate);
@@ -162,8 +163,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         [Fact]
         public void Edit_AfterEditRedirectsToIndexIfAuthorized()
         {
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(accountEdit).Returns(true);
+            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Edit(accountEdit);

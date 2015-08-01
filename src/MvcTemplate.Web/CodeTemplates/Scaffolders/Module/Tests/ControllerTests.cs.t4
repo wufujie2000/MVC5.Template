@@ -88,8 +88,9 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Create_AfterCreateRedirectsToIndexIfAuthorized()
         {
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanCreate(<#= Model.ModelName #>).Returns(true);
+            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Create(<#= Model.ModelName #>);
@@ -159,8 +160,9 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Edit_AfterEditRedirectsToIndexIfAuthorized()
         {
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
             validator.CanEdit(<#= Model.ModelName #>).Returns(true);
+            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
+            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
             ActionResult actual = controller.Edit(<#= Model.ModelName #>);
@@ -200,6 +202,7 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Delete_AfterDeleteRedirectsToIndexIfAuthorized()
         {
+            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id);

@@ -135,8 +135,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Edit_AfterEditRedirectsToEdit()
         {
-            service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
+            service.IsActive(controller.CurrentAccountId).Returns(true);
 
             RouteValueDictionary actual = (controller.Edit(profileEdit) as RedirectToRouteResult).RouteValues;
 

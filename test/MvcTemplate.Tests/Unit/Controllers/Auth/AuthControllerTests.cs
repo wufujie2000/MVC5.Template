@@ -475,10 +475,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Logout_RedirectsToLogin()
         {
-            Object actual = controller.Logout().RouteValues["action"];
-            Object expected = "Login";
+            RouteValueDictionary actual = controller.Logout().RouteValues;
 
-            Assert.Equal(expected, actual);
+            Assert.Equal("Login", actual["action"]);
+            Assert.Single(actual);
         }
 
         #endregion

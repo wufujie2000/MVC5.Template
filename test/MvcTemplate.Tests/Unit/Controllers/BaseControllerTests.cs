@@ -130,6 +130,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal("", actual["controller"]);
             Assert.Equal("", actual["action"]);
             Assert.Equal("", actual["area"]);
+            Assert.Equal(3, actual.Count);
         }
 
         #endregion
@@ -144,6 +145,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal("NotFound", actual["action"]);
             Assert.Equal("Home", actual["controller"]);
             Assert.Equal("", actual["area"]);
+            Assert.Equal(3, actual.Count);
         }
 
         #endregion
@@ -291,7 +293,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: BeginExecuteCore(AsyncCallback callback, Object state)
 
         [Fact]
-        public void BeginExecuteCore_SetsLangaugeFromRequestsRouteValues()
+        public void BeginExecuteCore_SetsLangaugeFromRouteValues()
         {
             controller.RouteData.Values["language"] = "lt";
             GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();

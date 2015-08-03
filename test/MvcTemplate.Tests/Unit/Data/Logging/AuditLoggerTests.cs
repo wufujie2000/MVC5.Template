@@ -18,8 +18,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     {
         private DbEntityEntry<BaseModel> entry;
         private TestingContext dataContext;
+        private TestingContext context;
         private AuditLogger logger;
-        private DbContext context;
 
         public AuditLoggerTests()
         {
@@ -188,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void Save_SavesLogs()
         {
-            DbContext context = Substitute.For<DbContext>();
+            TestingContext context = Substitute.For<TestingContext>();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
 
             logger.Save();
@@ -203,8 +203,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void Dispose_DisposesContext()
         {
-            DbContext context = Substitute.For<DbContext>();
-            logger = Substitute.ForPartsOf<AuditLogger>(context);
+            TestingContext context = Substitute.For<TestingContext>();
+            logger = new AuditLogger(context);
 
             logger.Dispose();
 

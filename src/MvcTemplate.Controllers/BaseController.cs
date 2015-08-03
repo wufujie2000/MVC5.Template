@@ -95,7 +95,7 @@ namespace MvcTemplate.Controllers
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
         {
-            String abbreviation = Request.RequestContext.RouteData.Values["language"].ToString();
+            String abbreviation = RouteData.Values["language"].ToString();
             GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbreviation];
 
             return base.BeginExecuteCore(callback, state);

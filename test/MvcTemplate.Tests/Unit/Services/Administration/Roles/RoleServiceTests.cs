@@ -172,7 +172,7 @@ namespace MvcTemplate.Tests.Unit.Services
         }
 
         [Fact]
-        public void Get_GetsViewById()
+        public void GetView_GetsRoleViewById()
         {
             service.When(sub => sub.SeedPrivilegesTree(Arg.Any<RoleView>())).DoNotCallBase();
             Role role = ObjectFactory.CreateRole();

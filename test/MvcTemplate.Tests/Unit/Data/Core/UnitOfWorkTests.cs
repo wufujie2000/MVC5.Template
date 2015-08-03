@@ -138,7 +138,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             TestModel model = ObjectFactory.CreateTestModel();
             unitOfWork.Insert(model);
 
-            TestModel actual = context.Set<TestModel>().Local.Single();
+            TestModel actual = context.ChangeTracker.Entries<TestModel>().Single().Entity;
             TestModel expected = model;
 
             Assert.Equal(EntityState.Added, context.Entry(model).State);
@@ -251,7 +251,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Commit_SavesChanges()
         {
-            DbContext context = Substitute.For<DbContext>();
+            TestingContext context = Substitute.For<TestingContext>();
             unitOfWork = new UnitOfWork(context);
 
             unitOfWork.Commit();
@@ -299,7 +299,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Dispose_DiposesContext()
         {
-            DbContext context = Substitute.For<DbContext>();
+            TestingContext context = Substitute.For<TestingContext>();
             UnitOfWork unitOfWork = new UnitOfWork(context);
 
             unitOfWork.Dispose();

@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetClientValidationRules_ReturnsMinRangeValidationRule()
         {
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "MinValue");
+            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "GreaterThan");
             GreaterThanAdapter adapter = new GreaterThanAdapter(metadata, new ControllerContext(), new GreaterThanAttribute(128));
             String errorMessage = new GreaterThanAttribute(128).FormatErrorMessage(metadata.GetDisplayName());
 

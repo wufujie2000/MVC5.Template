@@ -32,7 +32,6 @@ namespace MvcTemplate.Controllers
             if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
-            profile.Id = CurrentAccountId;
             if (!Validator.CanEdit(profile))
                 return View(profile);
 
@@ -62,7 +61,6 @@ namespace MvcTemplate.Controllers
             if (!Service.IsActive(CurrentAccountId))
                 return LogOut();
 
-            profile.Id = CurrentAccountId;
             if (!Validator.CanDelete(profile))
             {
                 Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);

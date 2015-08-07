@@ -170,6 +170,8 @@
     <Compile Include="Unit\Components\Mvc\Providers\DisplayNameMetadataProviderProxy.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\Area\AuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\AuthorizeAsAttributeTests.cs" />
+    <Compile Include="Unit\Controllers\ValidatedControllerProxy.cs" />
+    <Compile Include="Unit\Controllers\ServicedControllerProxy.cs" />
     <Compile Include="Unit\Data\Logging\LoggablePropertyTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
     <Compile Include="Unit\Components\Mail\SmtpMailClientTests.cs" />

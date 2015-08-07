@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Services;
 using System;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers
 {
@@ -12,6 +13,13 @@ namespace MvcTemplate.Controllers
         protected ServicedController(TService service)
         {
             Service = service;
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            Service.CurrentAccountId = CurrentAccountId;
         }
 
         protected override void Dispose(Boolean disposing)

@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Controllers
 {
@@ -17,6 +18,13 @@ namespace MvcTemplate.Controllers
             Validator = validator;
             Validator.Alerts = Alerts;
             Validator.ModelState = ModelState;
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            Validator.CurrentAccountId = Service.CurrentAccountId;
         }
 
         protected override void Dispose(Boolean disposing)

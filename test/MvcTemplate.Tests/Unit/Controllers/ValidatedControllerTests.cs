@@ -1,8 +1,8 @@
 ﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Controllers;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
+using System;
 using System.Web.Mvc;
 using Xunit;
 
@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class ValidatedControllerTests
     {
-        private ValidatedController<IValidator, IService> controller;
+        private ValidatedControllerProxy controller;
         private IValidator validator;
         private IService service;
 
@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service = Substitute.For<IService>();
             validator = Substitute.For<IValidator>();
-            controller = Substitute.ForPartsOf<ValidatedController<IValidator, IService>>(validator, service);
+            controller = Substitute.ForPartsOf<ValidatedControllerProxy>(validator, service);
         }
 
         #region Constructor: ValidatedController(TService service, TValidator validator)
@@ -48,6 +48,42 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ModelStateDictionary actual = validator.ModelState;
 
             Assert.Same(expected, actual);
+        }
+
+        #endregion
+
+        #region Method: OnActionExecuting(ActionExecutingContext filterContext)
+
+        [Fact]
+        public void OnActionExecuting_SetsServiceCurrentAccountId()
+        {
+            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
+            controller.CurrentAccountId.Returns("Test");
+            validator.CurrentAccountId = null;
+            service.CurrentAccountId = null;
+
+            controller.BaseOnActionExecuting(null);
+
+            String expected = controller.CurrentAccountId;
+            String actual = service.CurrentAccountId;
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void OnActionExecuting_SetsValidatorCurrentAccountId()
+        {
+            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
+            controller.CurrentAccountId.Returns("Test");
+            validator.CurrentAccountId = null;
+            service.CurrentAccountId = null;
+
+            controller.BaseOnActionExecuting(null);
+
+            String expected = controller.CurrentAccountId;
+            String actual = validator.CurrentAccountId;
+
+            Assert.Equal(expected, actual);
         }
 
         #endregion

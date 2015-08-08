@@ -140,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Register(accountRegister) as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Login", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         #endregion
@@ -270,7 +270,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Recover(accountRecovery).Result as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Login", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         #endregion
@@ -299,7 +299,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Reset("Token") as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Recover", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         [Fact]
@@ -339,7 +339,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Recover", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         [Fact]
@@ -377,7 +377,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Login", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         #endregion

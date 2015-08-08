@@ -128,7 +128,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RouteValueDictionary actual = (controller.Edit(profileEdit) as RedirectToRouteResult).RouteValues;
 
             Assert.Equal("Edit", actual["action"]);
-            Assert.Equal(1, actual.Count);
+            Assert.Single(actual);
         }
 
         #endregion

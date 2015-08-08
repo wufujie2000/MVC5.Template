@@ -2,9 +2,9 @@
 using MvcTemplate.Resources.Form;
 using MvcTemplate.Tests.Objects;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Xunit;
-using DataAnnotations = System.ComponentModel.DataAnnotations;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void RangeAdapter_SetsRangeErrorMessage()
         {
-            DataAnnotations.RangeAttribute attribute = new DataAnnotations.RangeAttribute(0, 128);
+            RangeAttribute attribute = new RangeAttribute(0, 128);
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "Range");
             new RangeAdapter(metadata, new ControllerContext(), attribute);

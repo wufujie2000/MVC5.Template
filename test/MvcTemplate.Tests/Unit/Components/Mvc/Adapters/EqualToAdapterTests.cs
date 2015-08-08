@@ -32,18 +32,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "EqualTo");
             EqualToAdapter adapter = new EqualToAdapter(metadata, new ControllerContext(), new EqualToAttribute("StringLength"));
-            String errorMessage = new EqualToAttribute("StringLength").FormatErrorMessage(metadata.GetDisplayName());
 
+            String expectedMessage = new EqualToAttribute("StringLength").FormatErrorMessage(metadata.GetDisplayName());
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
-            ModelClientValidationRule expected = new ModelClientValidationRule();
-            expected.ValidationParameters.Add("other", "*.StringLength");
-            expected.ErrorMessage = errorMessage;
-            expected.ValidationType = "equalto";
 
-            Assert.Equal(expected.ValidationParameters["other"], actual.ValidationParameters["other"]);
-            Assert.Equal(expected.ValidationParameters.Count, actual.ValidationParameters.Count);
-            Assert.Equal(expected.ValidationType, actual.ValidationType);
-            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal("*.StringLength", actual.ValidationParameters["other"]);
+            Assert.Equal(expectedMessage, actual.ErrorMessage);
+            Assert.Equal("equalto", actual.ValidationType);
+            Assert.Single(actual.ValidationParameters);
         }
 
         #endregion

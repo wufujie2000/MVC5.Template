@@ -204,7 +204,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         public void Dispose_DisposesContext()
         {
             TestingContext context = Substitute.For<TestingContext>();
-            logger = new AuditLogger(context);
+            AuditLogger logger = new AuditLogger(context);
 
             logger.Dispose();
 

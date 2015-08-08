@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetClientValidationRules()
 
         [Fact]
-        public void GetClientValidationRules_ReturnsDateValidationRule()
+        public void GetClientValidationRules_ReturnsNumberValidationRule()
         {
             ModelClientValidationRule actual = validator.GetClientValidationRules().Single();
             ModelClientValidationRule expected = new ModelClientValidationRule

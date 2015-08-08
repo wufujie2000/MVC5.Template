@@ -41,16 +41,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetClientValidationRules_ReturnsEmailValidationRule()
         {
+            String expectedMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName());
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
-            ModelClientValidationRule expected = new ModelClientValidationRule
-            {
-                ErrorMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName()),
-                ValidationType = "email"
-            };
 
-            Assert.Equal(expected.ValidationParameters, actual.ValidationParameters);
-            Assert.Equal(expected.ValidationType, actual.ValidationType);
-            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal(expectedMessage, actual.ErrorMessage);
+            Assert.Equal("email", actual.ValidationType);
+            Assert.Empty(actual.ValidationParameters);
         }
 
         #endregion

@@ -252,7 +252,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         public void Commit_SavesChanges()
         {
             TestingContext context = Substitute.For<TestingContext>();
-            unitOfWork = new UnitOfWork(context);
+            UnitOfWork unitOfWork = new UnitOfWork(context);
 
             unitOfWork.Commit();
 

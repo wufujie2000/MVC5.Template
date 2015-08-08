@@ -12,22 +12,18 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetClientValidationRules()
 
         [Fact]
-        public void GetClientValidationRules_ReturnsMinRangeValidationRule()
+        public void GetClientValidationRules_ReturnsGreaterValidationRule()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "GreaterThan");
             GreaterThanAdapter adapter = new GreaterThanAdapter(metadata, new ControllerContext(), new GreaterThanAttribute(128));
-            String errorMessage = new GreaterThanAttribute(128).FormatErrorMessage(metadata.GetDisplayName());
 
+            String expectedMessage = new GreaterThanAttribute(128).FormatErrorMessage(metadata.GetDisplayName());
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
-            ModelClientValidationRule expected = new ModelClientValidationRule();
-            expected.ValidationParameters.Add("min", 128M);
-            expected.ErrorMessage = errorMessage;
-            expected.ValidationType = "greater";
 
-            Assert.Equal(expected.ValidationParameters["min"], actual.ValidationParameters["min"]);
-            Assert.Equal(expected.ValidationParameters.Count, actual.ValidationParameters.Count);
-            Assert.Equal(expected.ValidationType, actual.ValidationType);
-            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal(128M, actual.ValidationParameters["min"]);
+            Assert.Equal(expectedMessage, actual.ErrorMessage);
+            Assert.Equal("greater", actual.ValidationType);
+            Assert.Single(actual.ValidationParameters);
         }
 
         #endregion

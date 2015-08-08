@@ -16,18 +16,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "MaxValue");
             MaxValueAdapter adapter = new MaxValueAdapter(metadata, new ControllerContext(), new MaxValueAttribute(128));
-            String errorMessage = new MaxValueAttribute(128).FormatErrorMessage(metadata.GetDisplayName());
 
+            String expectedMessage = new MaxValueAttribute(128).FormatErrorMessage(metadata.GetDisplayName());
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
-            ModelClientValidationRule expected = new ModelClientValidationRule();
-            expected.ValidationParameters.Add("max", 128M);
-            expected.ErrorMessage = errorMessage;
-            expected.ValidationType = "range";
 
-            Assert.Equal(expected.ValidationParameters["max"], actual.ValidationParameters["max"]);
-            Assert.Equal(expected.ValidationParameters.Count, actual.ValidationParameters.Count);
-            Assert.Equal(expected.ValidationType, actual.ValidationType);
-            Assert.Equal(expected.ErrorMessage, actual.ErrorMessage);
+            Assert.Equal(128M, actual.ValidationParameters["max"]);
+            Assert.Equal(expectedMessage, actual.ErrorMessage);
+            Assert.Equal("range", actual.ValidationType);
+            Assert.Single(actual.ValidationParameters);
         }
 
         #endregion

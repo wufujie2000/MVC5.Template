@@ -179,7 +179,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetPropertyTitle_GetsTitleFromExpression()
         {
             String actual = ResourceProvider.GetPropertyTitle<AccountView, String>(account => account.Username);
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
+            String expected = MvcTemplate.Resources.Views.Administration.Accounts.AccountView.Titles.Username;
 
             Assert.Equal(expected, actual);
         }
@@ -188,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Resources
         public void GetPropertyTitle_GetsTitleFromExpressionRelation()
         {
             String actual = ResourceProvider.GetPropertyTitle<AccountEditView, String>(account => account.RoleId);
-            String expected = MvcTemplate.Resources.Views.RoleView.Titles.Id;
+            String expected = MvcTemplate.Resources.Views.Administration.Roles.RoleView.Titles.Id;
 
             Assert.Equal(expected, actual);
         }
@@ -212,8 +212,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Fact]
         public void GetPropertyTitle_GetsTitleByIgnoringCase()
         {
+            String expected = MvcTemplate.Resources.Views.Administration.Accounts.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(AccountView), "username");
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.Equal(expected, actual);
         }
@@ -221,8 +221,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Fact]
         public void GetPropertyTitle_GetsTitleFromRelation()
         {
+            String expected = MvcTemplate.Resources.Views.Administration.Accounts.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountUsername");
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.Equal(expected, actual);
         }
@@ -230,8 +230,8 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Fact]
         public void GetPropertyTitle_GetsTitleFromMultipleRelations()
         {
+            String expected = MvcTemplate.Resources.Views.Administration.Accounts.AccountView.Titles.Username;
             String actual = ResourceProvider.GetPropertyTitle(typeof(RoleView), "AccountRoleAccountUsername");
-            String expected = MvcTemplate.Resources.Views.AccountView.Titles.Username;
 
             Assert.Equal(expected, actual);
         }

@@ -1,7 +1,7 @@
 ﻿using MvcTemplate.Components.Alerts;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Objects;
-using MvcTemplate.Resources.Views.AccountView;
+using MvcTemplate.Resources.Views.Administration.Accounts.AccountView;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System.Web.Mvc;

@@ -145,104 +145,104 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TableResources.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountCreateView\Titles.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountCreateView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountCreateView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountCreateView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountEditView\Titles.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountEditView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountEditView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountEditView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountLoginView\Titles.Designer.cs">
+    <Compile Include="Views\Auth\AccountLoginView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountLoginView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Auth\AccountLoginView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountRecoveryView\Titles.Designer.cs">
+    <Compile Include="Views\Auth\AccountRecoveryView\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountRecoveryView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Auth\AccountRecoveryView\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountResetView\Titles.Designer.cs">
+    <Compile Include="Views\Auth\AccountResetView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountResetView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Auth\AccountResetView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountRegisterView\Titles.Designer.cs">
+    <Compile Include="Views\Auth\AccountRegisterView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountRegisterView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Auth\AccountRegisterView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\AccountView\Messages.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Messages.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Messages.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Messages.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Texts.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Texts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Texts.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Texts.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Texts.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Texts.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Titles.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\AccountView\Validations.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Validations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceProvider.cs" />
-    <Compile Include="Views\AccountView\Validations.lt.Designer.cs">
+    <Compile Include="Views\Administration\Accounts\AccountView\Validations.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.lt.resx</DependentUpon>
@@ -257,42 +257,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProfileDeleteView\Titles.Designer.cs">
+    <Compile Include="Views\Profile\ProfileDeleteView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\ProfileDeleteView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Profile\ProfileDeleteView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\ProfileEditView\Titles.Designer.cs">
+    <Compile Include="Views\Profile\ProfileEditView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\ProfileEditView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Profile\ProfileEditView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\RoleView\Titles.Designer.cs">
+    <Compile Include="Views\Administration\Roles\RoleView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\RoleView\Titles.lt.Designer.cs">
+    <Compile Include="Views\Administration\Roles\RoleView\Titles.lt.Designer.cs">
       <DependentUpon>Titles.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\RoleView\Validations.Designer.cs">
+    <Compile Include="Views\Administration\Roles\RoleView\Validations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\RoleView\Validations.lt.Designer.cs">
+    <Compile Include="Views\Administration\Roles\RoleView\Validations.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Validations.lt.resx</DependentUpon>
@@ -387,83 +387,83 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TableResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountCreateView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountCreateView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountCreateView\Titles.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountCreateView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountEditView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountEditView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountEditView\Titles.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountEditView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountLoginView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Auth\AccountLoginView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountLoginView\Titles.resx">
+    <EmbeddedResource Include="Views\Auth\AccountLoginView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountRecoveryView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Auth\AccountRecoveryView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountRecoveryView\Titles.resx">
+    <EmbeddedResource Include="Views\Auth\AccountRecoveryView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountResetView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Auth\AccountResetView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountResetView\Titles.resx">
+    <EmbeddedResource Include="Views\Auth\AccountResetView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountRegisterView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Auth\AccountRegisterView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountRegisterView\Titles.resx">
+    <EmbeddedResource Include="Views\Auth\AccountRegisterView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Messages.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Messages.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Messages.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Texts.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Texts.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Texts.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Texts.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Texts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Titles.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Validations.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\AccountView\Validations.resx">
+    <EmbeddedResource Include="Views\Administration\Accounts\AccountView\Validations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -475,35 +475,35 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileDeleteView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Profile\ProfileDeleteView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileDeleteView\Titles.resx">
+    <EmbeddedResource Include="Views\Profile\ProfileDeleteView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileEditView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Profile\ProfileEditView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProfileEditView\Titles.resx">
+    <EmbeddedResource Include="Views\Profile\ProfileEditView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RoleView\Titles.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Roles\RoleView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RoleView\Titles.resx">
+    <EmbeddedResource Include="Views\Administration\Roles\RoleView\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RoleView\Validations.lt.resx">
+    <EmbeddedResource Include="Views\Administration\Roles\RoleView\Validations.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RoleView\Validations.resx">
+    <EmbeddedResource Include="Views\Administration\Roles\RoleView\Validations.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Validations.Designer.cs</LastGenOutput>
     </EmbeddedResource>

@@ -63,99 +63,45 @@ namespace MvcTemplate.Resources.Shared {
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
-        public static string AdministrationAccountsCreate {
+        public static string AdministrationAccount {
             get {
-                return ResourceManager.GetString("AdministrationAccountsCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Account.
-        /// </summary>
-        public static string AdministrationAccountsDetails {
-            get {
-                return ResourceManager.GetString("AdministrationAccountsDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Account.
-        /// </summary>
-        public static string AdministrationAccountsEdit {
-            get {
-                return ResourceManager.GetString("AdministrationAccountsEdit", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccount", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string AdministrationAccountsIndex {
+        public static string AdministrationAccounts {
             get {
-                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
-        public static string AdministrationRolesCreate {
+        public static string AdministrationRole {
             get {
-                return ResourceManager.GetString("AdministrationRolesCreate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Role.
-        /// </summary>
-        public static string AdministrationRolesDelete {
-            get {
-                return ResourceManager.GetString("AdministrationRolesDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Role.
-        /// </summary>
-        public static string AdministrationRolesDetails {
-            get {
-                return ResourceManager.GetString("AdministrationRolesDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Role.
-        /// </summary>
-        public static string AdministrationRolesEdit {
-            get {
-                return ResourceManager.GetString("AdministrationRolesEdit", resourceCulture);
+                return ResourceManager.GetString("AdministrationRole", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
-        public static string AdministrationRolesIndex {
+        public static string AdministrationRoles {
             get {
-                return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
+                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        public static string ProfileDelete {
+        public static string Profile {
             get {
-                return ResourceManager.GetString("ProfileDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Profile.
-        /// </summary>
-        public static string ProfileEdit {
-            get {
-                return ResourceManager.GetString("ProfileEdit", resourceCulture);
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
     }

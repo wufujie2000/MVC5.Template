@@ -63,15 +63,6 @@ namespace MvcTemplate.Resources.Shared {
         /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
-        public static string AdministrationAccount {
-            get {
-                return ResourceManager.GetString("AdministrationAccount", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Accounts.
-        /// </summary>
         public static string AdministrationAccounts {
             get {
                 return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
@@ -79,20 +70,29 @@ namespace MvcTemplate.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accounts.
+        /// </summary>
+        public static string AdministrationAccountsIndex {
+            get {
+                return ResourceManager.GetString("AdministrationAccountsIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
-        public static string AdministrationRole {
+        public static string AdministrationRoles {
             get {
-                return ResourceManager.GetString("AdministrationRole", resourceCulture);
+                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
-        public static string AdministrationRoles {
+        public static string AdministrationRolesIndex {
             get {
-                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
+                return ResourceManager.GetString("AdministrationRolesIndex", resourceCulture);
             }
         }
         

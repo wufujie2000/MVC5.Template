@@ -1,6 +1,6 @@
 ﻿/*!
- * Mvc.Grid 2.2.0
- * https://github.com/NonFactors/MVC.Grid
+ * Mvc.Grid 2.2.2
+ * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
  *
@@ -8,13 +8,13 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-.mvc-grid-header {
+.mvc-grid-table .mvc-grid-header {
     background-clip: padding-box;
     position: relative;
 }
 
-    .mvc-grid-header.sortable,
-    .mvc-grid-header .mvc-grid-filter {
+    .mvc-grid-table .mvc-grid-header.sortable,
+    .mvc-grid-table .mvc-grid-header .mvc-grid-filter {
         cursor: pointer;
     }
 

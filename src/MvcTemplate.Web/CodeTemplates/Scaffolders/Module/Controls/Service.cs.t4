@@ -23,21 +23,21 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Select<<#= Model.Model #>>()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate);
+                .OrderByDescending(<#= Model.ModelVarName #> => <#= Model.ModelVarName #>.CreationDate);
         }
 
         public void Create(<#= Model.View #> view)
         {
-            <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
+            <#= Model.Model #> <#= Model.ModelVarName #> = UnitOfWork.To<<#= Model.Model #>>(view);
 
-            UnitOfWork.Insert(<#= Model.ModelName #>);
+            UnitOfWork.Insert(<#= Model.ModelVarName #>);
             UnitOfWork.Commit();
         }
         public void Edit(<#= Model.View #> view)
         {
-            <#= Model.Model #> <#= Model.ModelName #> = UnitOfWork.To<<#= Model.Model #>>(view);
+            <#= Model.Model #> <#= Model.ModelVarName #> = UnitOfWork.To<<#= Model.Model #>>(view);
 
-            UnitOfWork.Update(<#= Model.ModelName #>);
+            UnitOfWork.Update(<#= Model.ModelVarName #>);
             UnitOfWork.Commit();
         }
         public void Delete(String id)

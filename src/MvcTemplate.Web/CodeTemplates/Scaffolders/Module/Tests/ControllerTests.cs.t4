@@ -18,13 +18,13 @@ namespace <#= Model.ControllerTestNamespace #>
         private <#= Model.Controller #> controller;
         private <#= Model.IValidator #> validator;
         private <#= Model.IService #> service;
-        private <#= Model.View #> <#= Model.ModelName #>;
+        private <#= Model.View #> <#= Model.ModelVarName #>;
 
         public <#= Model.Controller #>Tests()
         {
             validator = Substitute.For<<#= Model.IValidator #>>();
             service = Substitute.For<<#= Model.IService #>>();
-            <#= Model.ModelName #> = new <#= Model.View #>();
+            <#= Model.ModelVarName #> = new <#= Model.View #>();
 
             controller = Substitute.ForPartsOf<<#= Model.Controller #>>(validator, service);
             controller.ControllerContext = new ControllerContext();
@@ -56,7 +56,7 @@ namespace <#= Model.ControllerTestNamespace #>
 
         #endregion
 
-        #region Method: Create(<#= Model.View #> <#= Model.ModelName #>)
+        #region Method: Create(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
         public void Create_ProtectsFromOverpostingId()
@@ -67,33 +67,33 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Create_ReturnsSameModelIfCanNotCreate()
         {
-            validator.CanCreate(<#= Model.ModelName #>).Returns(false);
+            validator.CanCreate(<#= Model.ModelVarName #>).Returns(false);
 
-            Object actual = (controller.Create(<#= Model.ModelName #>) as ViewResult).Model;
-            Object expected = <#= Model.ModelName #>;
+            Object actual = (controller.Create(<#= Model.ModelVarName #>) as ViewResult).Model;
+            Object expected = <#= Model.ModelVarName #>;
 
             Assert.Same(expected, actual);
         }
 
         [Fact]
-        public void Create_Creates<#= Model.View #>()
+        public void Create_Creates<#= Model.ShortModel #>()
         {
-            validator.CanCreate(<#= Model.ModelName #>).Returns(true);
+            validator.CanCreate(<#= Model.ModelVarName #>).Returns(true);
 
-            controller.Create(<#= Model.ModelName #>);
+            controller.Create(<#= Model.ModelVarName #>);
 
-            service.Received().Create(<#= Model.ModelName #>);
+            service.Received().Create(<#= Model.ModelVarName #>);
         }
 
         [Fact]
-        public void Create_AfterCreateRedirectsToIndexIfAuthorized()
+        public void Create_AfterCreateRedirectsToIndex()
         {
-            validator.CanCreate(<#= Model.ModelName #>).Returns(true);
+            validator.CanCreate(<#= Model.ModelVarName #>).Returns(true);
             controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Create(<#= Model.ModelName #>);
+            ActionResult actual = controller.Create(<#= Model.ModelVarName #>);
 
             Assert.Same(expected, actual);
         }
@@ -105,12 +105,12 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Details_ReturnsNotEmptyView()
         {
-            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
-            ActionResult actual = controller.Details(<#= Model.ModelName #>.Id);
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
+            ActionResult actual = controller.Details(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -122,50 +122,50 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Edit_ReturnsNotEmptyView()
         {
-            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
-            ActionResult actual = controller.Edit(<#= Model.ModelName #>.Id);
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
+            ActionResult actual = controller.Edit(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
 
         #endregion
 
-        #region Method: Edit(<#= Model.View #> <#= Model.ModelName #>)
+        #region Method: Edit(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
         public void Edit_ReturnsSameModelIfCanNotEdit()
         {
-            validator.CanEdit(<#= Model.ModelName #>).Returns(false);
+            validator.CanEdit(<#= Model.ModelVarName #>).Returns(false);
 
-            Object actual = (controller.Edit(<#= Model.ModelName #>) as ViewResult).Model;
-            Object expected = <#= Model.ModelName #>;
+            Object actual = (controller.Edit(<#= Model.ModelVarName #>) as ViewResult).Model;
+            Object expected = <#= Model.ModelVarName #>;
 
             Assert.Same(expected, actual);
         }
 
         [Fact]
-        public void Edit_Edits<#= Model.View #>()
+        public void Edit_Edits<#= Model.ShortModel #>()
         {
-            validator.CanEdit(<#= Model.ModelName #>).Returns(true);
+            validator.CanEdit(<#= Model.ModelVarName #>).Returns(true);
 
-            controller.Edit(<#= Model.ModelName #>);
+            controller.Edit(<#= Model.ModelVarName #>);
 
-            service.Received().Edit(<#= Model.ModelName #>);
+            service.Received().Edit(<#= Model.ModelVarName #>);
         }
 
         [Fact]
-        public void Edit_AfterEditRedirectsToIndexIfAuthorized()
+        public void Edit_AfterEditRedirectsToIndex()
         {
-            validator.CanEdit(<#= Model.ModelName #>).Returns(true);
+            validator.CanEdit(<#= Model.ModelVarName #>).Returns(true);
             controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
             ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Edit(<#= Model.ModelName #>);
+            ActionResult actual = controller.Edit(<#= Model.ModelVarName #>);
 
             Assert.Same(expected, actual);
         }
@@ -177,12 +177,12 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Delete_ReturnsNotEmptyView()
         {
-            service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id).Returns(<#= Model.ModelName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
+            service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
+            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
+            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelName #>);
-            ActionResult actual = controller.Delete(<#= Model.ModelName #>.Id);
+            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
+            ActionResult actual = controller.Delete(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -192,20 +192,20 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: DeleteConfirmed(String id)
 
         [Fact]
-        public void DeleteConfirmed_Deletes<#= Model.View #>()
+        public void DeleteConfirmed_Deletes<#= Model.ShortModel #>()
         {
-            controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
+            controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);
 
-            service.Received().Delete(<#= Model.ModelName #>.Id);
+            service.Received().Delete(<#= Model.ModelVarName #>.Id);
         }
 
         [Fact]
-        public void Delete_AfterDeleteRedirectsToIndexIfAuthorized()
+        public void Delete_AfterDeleteRedirectsToIndex()
         {
             controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelName #>.Id);
+            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);
             ActionResult expected = controller.RedirectIfAuthorized("Index");
 
             Assert.Same(expected, actual);

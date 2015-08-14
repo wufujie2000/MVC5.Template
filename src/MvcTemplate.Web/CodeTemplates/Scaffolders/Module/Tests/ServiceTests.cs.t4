@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Services
     {
         private <#= Model.Service #> service;
         private TestingContext context;
-        private <#= Model.Model #> <#= Model.ModelName #>;
+        private <#= Model.Model #> <#= Model.ModelVarName #>;
 
         public <#= Model.Service #>Tests()
         {
@@ -38,8 +38,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Get_GetsViewById()
         {
-            <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelName #>.Id);
-            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelName #>);
+            <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id);
+            <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelVarName #>);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Id, actual.Id);
@@ -52,14 +52,14 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: GetViews()
 
         [Fact]
-        public void GetViews_Gets<#= Model.View #>s()
+        public void GetViews_Gets<#= Model.ShortModel #>Views()
         {
             IEnumerator<<#= Model.View #>> actual = service.GetViews().GetEnumerator();
             IEnumerator<<#= Model.View #>> expected = context
                 .Set<<#= Model.Model #>>()
                 .Project()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(<#= Model.ModelName #> => <#= Model.ModelName #>.CreationDate)
+                .OrderByDescending(<#= Model.ModelVarName #> => <#= Model.ModelVarName #>.CreationDate)
                 .GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -76,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Create(<#= Model.View #> view)
 
         [Fact]
-        public void Create_Creates<#= Model.Model #>()
+        public void Create_Creates<#= Model.ShortModel #>()
         {
             <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(2);
 
@@ -96,16 +96,16 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Edit(<#= Model.View #> view)
 
         [Fact]
-        public void Edit_Edits<#= Model.Model #>()
+        public void Edit_Edits<#= Model.ShortModel #>()
         {
-            <#= Model.Model #> <#= Model.ModelName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
+            <#= Model.Model #> <#= Model.ModelVarName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
             <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>();
             Assert.True(false, "No update made");
 
             service.Edit(view);
 
             <#= Model.Model #> actual = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
-            <#= Model.Model #> expected = <#= Model.ModelName #>;
+            <#= Model.Model #> expected = <#= Model.ModelVarName #>;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Id, actual.Id);
@@ -118,9 +118,9 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Delete(String id)
 
         [Fact]
-        public void Delete_Deletes<#= Model.Model #>()
+        public void Delete_Deletes<#= Model.ShortModel #>()
         {
-            service.Delete(<#= Model.ModelName #>.Id);
+            service.Delete(<#= Model.ModelVarName #>.Id);
 
             Assert.Empty(context.Set<<#= Model.Model #>>());
         }
@@ -131,9 +131,9 @@ namespace MvcTemplate.Tests.Unit.Services
 
         private void SetUpData()
         {
-            <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
+            <#= Model.ModelVarName #> = ObjectFactory.Create<#= Model.Model #>();
 
-            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
+            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelVarName #>);
             context.SaveChanges();
         }
         private void TearDownData()

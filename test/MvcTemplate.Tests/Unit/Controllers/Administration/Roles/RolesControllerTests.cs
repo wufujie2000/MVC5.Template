@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Create_CreatesRoleView()
+        public void Create_CreatesRole()
         {
             validator.CanCreate(role).Returns(true);
 
@@ -177,7 +177,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Edit_EditsRoleView()
+        public void Edit_EditsRole()
         {
             validator.CanEdit(role).Returns(true);
 
@@ -229,7 +229,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Delete_AfterDeleteRedirectsToIndexIfAuthorized()
+        public void Delete_AfterDeleteRedirectsToIndex()
         {
             controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
             controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));

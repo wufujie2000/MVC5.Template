@@ -14,15 +14,15 @@ namespace MvcTemplate.Tests.Unit.Validators
     {
         private <#= Model.Validator #> validator;
         private TestingContext context;
-        private <#= Model.Model #> <#= Model.ModelName #>;
+        private <#= Model.Model #> <#= Model.ModelVarName #>;
 
         public <#= Model.Validator #>Tests()
         {
             context = new TestingContext();
             validator = new <#= Model.Validator #>(new UnitOfWork(context));
 
-			TearDownData();
-			SetUpData();
+            TearDownData();
+            SetUpData();
         }
         public void Dispose()
         {
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
-        public void CanCreate_CanCreateValid<#= Model.Model #>()
+        public void CanCreate_CanCreateValid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanCreate(ObjectFactory.Create<#= Model.View #>()));
         }
@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
-        public void CanEdit_CanEditValid<#= Model.Model #>()
+        public void CanEdit_CanEditValid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanEdit(ObjectFactory.Create<#= Model.View #>()));
         }
@@ -70,9 +70,9 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         private void SetUpData()
         {
-            <#= Model.ModelName #> = ObjectFactory.Create<#= Model.Model #>();
+            <#= Model.ModelVarName #> = ObjectFactory.Create<#= Model.Model #>();
 
-            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelName #>);
+            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelVarName #>);
             context.SaveChanges();
         }
         private void TearDownData()

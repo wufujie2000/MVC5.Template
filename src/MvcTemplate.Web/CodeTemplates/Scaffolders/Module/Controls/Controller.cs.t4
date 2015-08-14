@@ -35,12 +35,12 @@ namespace <#= Model.ControllerNamespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelName #>)
+        public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelVarName #>)
         {
-            if (!Validator.CanCreate(<#= Model.ModelName #>))
-                return View(<#= Model.ModelName #>);
+            if (!Validator.CanCreate(<#= Model.ModelVarName #>))
+                return View(<#= Model.ModelVarName #>);
 
-            Service.Create(<#= Model.ModelName #>);
+            Service.Create(<#= Model.ModelVarName #>);
 
             return RedirectIfAuthorized("Index");
         }
@@ -59,12 +59,12 @@ namespace <#= Model.ControllerNamespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(<#= Model.View #> <#= Model.ModelName #>)
+        public ActionResult Edit(<#= Model.View #> <#= Model.ModelVarName #>)
         {
-            if (!Validator.CanEdit(<#= Model.ModelName #>))
-                return View(<#= Model.ModelName #>);
+            if (!Validator.CanEdit(<#= Model.ModelVarName #>))
+                return View(<#= Model.ModelVarName #>);
 
-            Service.Edit(<#= Model.ModelName #>);
+            Service.Edit(<#= Model.ModelVarName #>);
 
             return RedirectIfAuthorized("Index");
         }

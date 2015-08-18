@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
-        public void Create_AfterCreateRedirectsToIndexIf()
+        public void Create_AfterCreateRedirectsToIndex()
         {
             validator.CanCreate(accountCreate).Returns(true);
             controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();

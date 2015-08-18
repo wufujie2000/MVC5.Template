@@ -142,7 +142,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
-        public void CanReset_AddsErorrMessageThenCanNotResetAccountWithExpiredToken()
+        public void CanReset_AddsErorrMessageThenCanNotResetWithExpiredToken()
         {
             Account account = context.Set<Account>().Single();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(-5);

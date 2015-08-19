@@ -138,7 +138,6 @@
     <Compile Include="Data\Migrations\201407060959185_Initial.Designer.cs">
       <DependentUpon>201407060959185_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\GlobalizationProviderFactory.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Objects\Models\AttributesModel.cs" />

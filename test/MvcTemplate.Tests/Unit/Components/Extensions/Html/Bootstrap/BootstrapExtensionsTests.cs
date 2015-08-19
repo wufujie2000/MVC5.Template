@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
-using MvcTemplate.Components.Mvc;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -8,20 +7,15 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
-    public class BootstrapExtensionsTests : IDisposable
+    public class BootstrapExtensionsTests
     {
         private HtmlHelper<BootstrapModel> html;
         private BootstrapModel model;
 
         public BootstrapExtensionsTests()
         {
-            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
             html = HtmlHelperFactory.CreateHtmlHelper(new BootstrapModel());
             model = html.ViewData.Model;
-        }
-        public void Dispose()
-        {
-            GlobalizationManager.Provider = null;
         }
 
         #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)

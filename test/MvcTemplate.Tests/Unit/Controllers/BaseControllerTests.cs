@@ -295,9 +295,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void BeginExecuteCore_SetsLangaugeFromRouteValues()
         {
+            GlobalizationManager.Provider = Substitute.For<IGlobalizationProvider>();
+            GlobalizationManager.Provider["lt"].Returns(new Language());
             controller.RouteData.Values["language"] = "lt";
-            GlobalizationManager.Provider = GlobalizationProviderFactory.CreateProvider();
-            GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider["en"];
 
             controller.BaseBeginExecuteCore(asyncResult => { }, null);
 

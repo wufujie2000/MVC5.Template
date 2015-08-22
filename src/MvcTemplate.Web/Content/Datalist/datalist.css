@@ -1,6 +1,6 @@
 ﻿/*!
- * Datalist 3.4.0
- * https://github.com/NonFactors/MVC.Datalist
+ * Datalist 3.5.0
+ * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
  *
@@ -27,6 +27,10 @@
 .datalist-open-span {
     cursor: pointer;
 }
+
+    .datalist-open-span .datalist-open-icon::before {
+        content: "\e003";
+    }
 
 .datalist.ui-dialog-content {
     min-width: 425px;

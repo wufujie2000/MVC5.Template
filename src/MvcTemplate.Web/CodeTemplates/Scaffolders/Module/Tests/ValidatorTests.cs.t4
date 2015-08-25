@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             context = new TestingContext();
             validator = new <#= Model.Validator #>(new UnitOfWork(context));
 
-            TearDownData();
+            context.DropData();
             SetUpData();
         }
         public void Dispose()
@@ -73,11 +73,6 @@ namespace MvcTemplate.Tests.Unit.Validators
             <#= Model.ModelVarName #> = ObjectFactory.Create<#= Model.Model #>();
 
             context.Set<<#= Model.Model #>>().Add(<#= Model.ModelVarName #>);
-            context.SaveChanges();
-        }
-        private void TearDownData()
-        {
-            context.Set<<#= Model.Model #>>().RemoveRange(context.Set<<#= Model.Model #>>());
             context.SaveChanges();
         }
 

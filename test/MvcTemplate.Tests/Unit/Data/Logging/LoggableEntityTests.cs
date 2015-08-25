@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             using (context = new TestingContext())
             {
-                TearDownData();
+                context.DropData();
                 SetUpData();
             }
 
@@ -160,13 +160,6 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         private void SetUpData()
         {
             context.Set<Role>().Add(ObjectFactory.CreateRole());
-            context.SaveChanges();
-        }
-        private void TearDownData()
-        {
-            context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>());
-            context.Set<Account>().RemoveRange(context.Set<Account>());
-            context.Set<Role>().RemoveRange(context.Set<Role>());
             context.SaveChanges();
         }
 

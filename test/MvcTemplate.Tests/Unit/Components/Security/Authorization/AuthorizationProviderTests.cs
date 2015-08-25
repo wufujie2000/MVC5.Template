@@ -19,8 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         public AuthorizationProviderTests()
         {
             provider = new AuthorizationProvider(Assembly.GetExecutingAssembly());
-
-            TearDownData();
+            using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
         {
@@ -350,7 +349,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         public void IsAuthorizedFor_CachesAccountPrivileges()
         {
             Account account = CreateAccountWithPrivilegeFor(null, "Authorized", "Action");
-            TearDownData();
+            using (TestingContext context = new TestingContext()) context.DropData();
 
             Assert.True(provider.IsAuthorizedFor(account.Id, null, "Authorized", "Action"));
         }
@@ -365,7 +364,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "Action");
             Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
 
-            TearDownData();
+            using (TestingContext context = new TestingContext()) context.DropData();
             SetUpDependencyResolver();
 
             provider.Refresh();
@@ -417,18 +416,6 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             resolver.GetService<IUnitOfWork>().Returns(new UnitOfWork(new TestingContext()));
 
             DependencyResolver.SetResolver(resolver);
-        }
-
-        private void TearDownData()
-        {
-            using (TestingContext context = new TestingContext())
-            {
-                context.Set<RolePrivilege>().RemoveRange(context.Set<RolePrivilege>());
-                context.Set<Privilege>().RemoveRange(context.Set<Privilege>());
-                context.Set<Account>().RemoveRange(context.Set<Account>());
-                context.Set<Role>().RemoveRange(context.Set<Role>());
-                context.SaveChanges();
-            }
         }
 
         #endregion

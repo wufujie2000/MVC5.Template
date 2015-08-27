@@ -71,8 +71,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerator<AccountView> actual = service.GetViews().GetEnumerator();
             IEnumerator<AccountView> expected = context
                 .Set<Account>()
-                .Project()
-                .To<AccountView>()
+                .ProjectTo<AccountView>()
                 .OrderByDescending(account => account.CreationDate)
                 .GetEnumerator();
 

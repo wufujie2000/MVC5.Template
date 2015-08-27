@@ -147,8 +147,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerator<RoleView> actual = service.GetViews().GetEnumerator();
             IEnumerator<RoleView> expected = context
                 .Set<Role>()
-                .Project()
-                .To<RoleView>()
+                .ProjectTo<RoleView>()
                 .OrderByDescending(role => role.CreationDate)
                 .GetEnumerator();
 
@@ -345,18 +344,10 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Delete_DeletesRolePrivileges()
         {
             RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege();
-            Privilege privilege = ObjectFactory.CreatePrivilege();
-            Role role = ObjectFactory.CreateRole();
-
-            rolePrivilege.PrivilegeId = privilege.Id;
-            rolePrivilege.Privilege = privilege;
-            rolePrivilege.RoleId = role.Id;
-            rolePrivilege.Role = role;
-
             context.Set<RolePrivilege>().Add(rolePrivilege);
             context.SaveChanges();
 
-            service.Delete(role.Id);
+            service.Delete(rolePrivilege.RoleId);
 
             Assert.Empty(context.Set<RolePrivilege>());
         }
@@ -419,21 +410,17 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         private Role CreateRoleWithPrivileges()
         {
-            String[] actions = { "Edit", "Delete" };
-            String[] controllers = { "Roles", "Profile" };
-
             Int32 privilegeNumber = 1;
             Role role = ObjectFactory.CreateRole();
             role.RolePrivileges = new List<RolePrivilege>();
 
-            foreach (String controller in controllers)
-                foreach (String action in actions)
+            foreach (String controller in new[] { "Roles", "Profile" })
+                foreach (String action in new[] { "Edit", "Delete" })
                 {
                     RolePrivilege rolePrivilege = ObjectFactory.CreateRolePrivilege(privilegeNumber++);
-                    rolePrivilege.Privilege = new Privilege { Controller = controller, Action = action };
-                    rolePrivilege.Privilege.Area = controller != "Roles" ? "Administration" : null;
-                    rolePrivilege.Privilege.Id = rolePrivilege.Id;
-                    rolePrivilege.PrivilegeId = rolePrivilege.Id;
+                    rolePrivilege.Privilege.Area = controller == "Roles" ? "Administration" : null;
+                    rolePrivilege.Privilege.Controller = controller;
+                    rolePrivilege.Privilege.Action = action;
                     rolePrivilege.RoleId = role.Id;
                     rolePrivilege.Role = role;
 

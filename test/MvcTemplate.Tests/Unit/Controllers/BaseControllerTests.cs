@@ -12,7 +12,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class BaseControllerTests : IDisposable
+    public class BaseControllerTests : AControllerTests, IDisposable
     {
         private BaseControllerProxy controller;
 
@@ -72,11 +72,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void NotEmptyView_RedirectsToNotFoundIfModelIsNull()
         {
-            controller.When(sub => sub.RedirectToNotFound()).DoNotCallBase();
-            controller.RedirectToNotFound().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult expected = controller.RedirectToNotFound();
-            ActionResult actual = controller.NotEmptyView(null);
+            Object expected = RedirectToNotFound(controller);
+            Object actual = controller.NotEmptyView(null);
 
             Assert.Same(expected, actual);
         }
@@ -98,11 +95,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectToLocal_RedirectsToDefaultIfUrlIsNotLocal()
         {
             controller.Url.IsLocalUrl("www.test.com").Returns(false);
-            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult actual = controller.RedirectToLocal("www.test.com");
-            ActionResult expected = controller.RedirectToDefault();
+            Object expected = RedirectToDefault(controller);
+            Object actual = controller.RedirectToLocal("www.test.com");
 
             Assert.Same(expected, actual);
         }
@@ -170,11 +165,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void RedirectIfAuthorized_RedirectsToDefaultIfNotAuthorized()
         {
             controller.IsAuthorizedFor("Action").Returns(false);
-            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            RedirectToRouteResult actual = controller.RedirectIfAuthorized("Action");
-            RedirectToRouteResult expected = controller.RedirectToDefault();
+            Object expected = RedirectToDefault(controller);
+            Object actual = controller.RedirectIfAuthorized("Action");
 
             Assert.Same(expected, actual);
         }
@@ -202,11 +195,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.IsAuthorizedFor("Area", "Controller", "Action").Returns(false);
 
-            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            RedirectToRouteResult actual = controller.RedirectIfAuthorized("Action", new { controller = "Control", area = "Area" });
-            RedirectToRouteResult expected = controller.RedirectToDefault();
+            Object expected = RedirectToDefault(controller);
+            Object actual = controller.RedirectIfAuthorized("Action", new { controller = "Control", area = "Area" });
 
             Assert.Same(expected, actual);
         }
@@ -218,11 +208,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
             String controllerRoute = controller.RouteData.Values["controller"] as String;
             controller.IsAuthorizedFor(areaRoute, controllerRoute, "Action").Returns(false);
 
-            controller.When(sub => sub.RedirectToDefault()).DoNotCallBase();
-            controller.RedirectToDefault().Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            RedirectToRouteResult actual = controller.RedirectIfAuthorized("Action", new { id = "Id" });
-            RedirectToRouteResult expected = controller.RedirectToDefault();
+            Object expected = RedirectToDefault(controller);
+            Object actual = controller.RedirectIfAuthorized("Action", new { id = "Id" });
 
             Assert.Same(expected, actual);
         }

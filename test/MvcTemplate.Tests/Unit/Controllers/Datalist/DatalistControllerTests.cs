@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             datalist.GetData().Returns(new DatalistData());
 
             JsonResult actual = controller.GetData(datalist, filter);
-            DatalistData expectedData = datalist.GetData();
+            Object expectedData = datalist.GetData();
 
             Assert.Equal(JsonRequestBehavior.AllowGet, actual.JsonRequestBehavior);
             Assert.Same(expectedData, actual.Data);
@@ -64,11 +64,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Role_GetsRolesData()
         {
-            controller.When(sub => sub.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter)).DoNotCallBase();
-            controller.GetData(Arg.Any<BaseDatalist<Role, RoleView>>(), filter).Returns(new JsonResult());
-
-            JsonResult expected = controller.GetData(null, filter);
-            JsonResult actual = controller.Role(filter);
+            Object expected = GetData<BaseDatalist<Role, RoleView>>(controller);
+            Object actual = controller.Role(filter);
 
             Assert.Same(expected, actual);
         }
@@ -90,6 +87,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.Dispose();
             controller.Dispose();
+        }
+
+        #endregion
+
+        #region Test helpers
+
+        private JsonResult GetData<TDatalist>(DatalistController controller) where TDatalist : AbstractDatalist
+        {
+            controller.When(sub => sub.GetData(Arg.Any<TDatalist>(), filter)).DoNotCallBase();
+            controller.GetData(Arg.Any<TDatalist>(), filter).Returns(new JsonResult());
+
+            return controller.GetData(null, filter);
         }
 
         #endregion

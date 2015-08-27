@@ -8,7 +8,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class ValidatedControllerTests
+    public class ValidatedControllerTests : AControllerTests
     {
         private ValidatedControllerProxy controller;
         private IValidator validator;
@@ -26,8 +26,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void ValidatedController_SetsValidator()
         {
-            IValidator actual = controller.Validator;
-            IValidator expected = validator;
+            Object actual = controller.Validator;
+            Object expected = validator;
 
             Assert.Same(expected, actual);
         }
@@ -35,8 +35,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void ValidatedController_SetsValidatorAlerts()
         {
-            AlertsContainer expected = controller.Alerts;
-            AlertsContainer actual = validator.Alerts;
+            Object expected = controller.Alerts;
+            Object actual = validator.Alerts;
 
             Assert.Same(expected, actual);
         }
@@ -44,8 +44,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void ValidatedController_SetsModelState()
         {
-            ModelStateDictionary expected = controller.ModelState;
-            ModelStateDictionary actual = validator.ModelState;
+            Object expected = controller.ModelState;
+            Object actual = validator.ModelState;
 
             Assert.Same(expected, actual);
         }
@@ -57,10 +57,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()
         {
-            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
-            controller.CurrentAccountId.Returns("Test");
-            validator.CurrentAccountId = null;
-            service.CurrentAccountId = null;
+            ReturnsCurrentAccountId(controller, "Test");
 
             controller.BaseOnActionExecuting(null);
 
@@ -73,10 +70,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsValidatorCurrentAccountId()
         {
-            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
-            controller.CurrentAccountId.Returns("Test");
-            validator.CurrentAccountId = null;
-            service.CurrentAccountId = null;
+            ReturnsCurrentAccountId(controller, "Test");
 
             controller.BaseOnActionExecuting(null);
 

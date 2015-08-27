@@ -92,11 +92,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Create_AfterCreateRedirectsToIndex()
         {
             validator.CanCreate(accountCreate).Returns(true);
-            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Create(accountCreate);
+            Object expected = RedirectIfAuthorized(controller, "Index");
+            Object actual = controller.Create(accountCreate);
 
             Assert.Same(expected, actual);
         }
@@ -109,11 +107,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Details_ReturnsNotEmptyView()
         {
             service.Get<AccountView>(account.Id).Returns(account);
-            controller.When(sub => sub.NotEmptyView(account)).DoNotCallBase();
-            controller.NotEmptyView(account).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(account);
-            ActionResult actual = controller.Details(account.Id);
+            Object expected = NotEmptyView(controller, account);
+            Object actual = controller.Details(account.Id);
 
             Assert.Same(expected, actual);
         }
@@ -126,11 +122,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Edit_ReturnsNotEmptyView()
         {
             service.Get<AccountEditView>(accountEdit.Id).Returns(accountEdit);
-            controller.When(sub => sub.NotEmptyView(accountEdit)).DoNotCallBase();
-            controller.NotEmptyView(accountEdit).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(accountEdit);
-            ActionResult actual = controller.Edit(accountEdit.Id);
+            Object expected = NotEmptyView(controller, accountEdit);
+            Object actual = controller.Edit(accountEdit.Id);
 
             Assert.Same(expected, actual);
         }
@@ -164,11 +158,9 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         public void Edit_AfterEditRedirectsToIndex()
         {
             validator.CanEdit(accountEdit).Returns(true);
-            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Edit(accountEdit);
+            Object expected = RedirectIfAuthorized(controller, "Index");
+            Object actual = controller.Edit(accountEdit);
 
             Assert.Same(expected, actual);
         }

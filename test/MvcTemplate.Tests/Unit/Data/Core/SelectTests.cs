@@ -36,8 +36,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void ElementType_IsModelType()
         {
-            Type actual = (select as IQueryable).ElementType;
-            Type expected = typeof(TestModel);
+            Object actual = (select as IQueryable).ElementType;
+            Object expected = typeof(TestModel);
 
             Assert.Same(expected, actual);
         }
@@ -56,8 +56,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
             select = new Select<TestModel>(context.Set<TestModel>());
 
-            Expression actual = ((IQueryable)select).Expression;
-            Expression expected = ((IQueryable)set).Expression;
+            Object actual = ((IQueryable)select).Expression;
+            Object expected = ((IQueryable)set).Expression;
 
             Assert.Same(expected, actual);
         }
@@ -69,8 +69,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Provider_IsSetsProvider()
         {
-            IQueryProvider expected = (context.Set<TestModel>() as IQueryable).Provider;
-            IQueryProvider actual = (select as IQueryable).Provider;
+            Object expected = (context.Set<TestModel>() as IQueryable).Provider;
+            Object actual = (select as IQueryable).Provider;
 
             Assert.Same(expected, actual);
         }
@@ -91,8 +91,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Where_ReturnsSameSelect()
         {
-            ISelect<TestModel> actual = select.Where(model => model.Id == null);
-            ISelect<TestModel> expected = select;
+            Object actual = select.Where(model => model.Id == null);
+            Object expected = select;
 
             Assert.Same(expected, actual);
         }
@@ -104,7 +104,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void To_ProjectsSetTo()
         {
-            IEnumerable<String> expected = context.Set<TestModel>().Project().To<TestView>().Select(view => view.Id).ToArray();
+            IEnumerable<String> expected = context.Set<TestModel>().ProjectTo<TestView>().Select(view => view.Id).ToArray();
             IEnumerable<String> actual = select.To<TestView>().Select(view => view.Id).ToArray();
 
             Assert.Equal(expected, actual);

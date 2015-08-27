@@ -89,11 +89,9 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Create_AfterCreateRedirectsToIndex()
         {
             validator.CanCreate(<#= Model.ModelVarName #>).Returns(true);
-            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Create(<#= Model.ModelVarName #>);
+            Object expected = RedirectIfAuthorized(controller, "Index");
+            Object actual = controller.Create(<#= Model.ModelVarName #>);
 
             Assert.Same(expected, actual);
         }
@@ -106,11 +104,9 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Details_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
-            ActionResult actual = controller.Details(<#= Model.ModelVarName #>.Id);
+            Object expected = NotEmptyView(controller, <#= Model.ModelVarName #>);
+            Object actual = controller.Details(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -123,11 +119,9 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Edit_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
-            ActionResult actual = controller.Edit(<#= Model.ModelVarName #>.Id);
+            Object expected = NotEmptyView(controller, <#= Model.ModelVarName #>);
+            Object actual = controller.Edit(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -161,11 +155,9 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Edit_AfterEditRedirectsToIndex()
         {
             validator.CanEdit(<#= Model.ModelVarName #>).Returns(true);
-            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.RedirectIfAuthorized("Index");
-            ActionResult actual = controller.Edit(<#= Model.ModelVarName #>);
+            Object expected = RedirectIfAuthorized(controller, "Index");
+            Object actual = controller.Edit(<#= Model.ModelVarName #>);
 
             Assert.Same(expected, actual);
         }
@@ -178,11 +170,9 @@ namespace <#= Model.ControllerTestNamespace #>
         public void Delete_ReturnsNotEmptyView()
         {
             service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id).Returns(<#= Model.ModelVarName #>);
-            controller.When(sub => sub.NotEmptyView(<#= Model.ModelVarName #>)).DoNotCallBase();
-            controller.NotEmptyView(<#= Model.ModelVarName #>).Returns(new RedirectToRouteResult(new RouteValueDictionary()));
 
-            ActionResult expected = controller.NotEmptyView(<#= Model.ModelVarName #>);
-            ActionResult actual = controller.Delete(<#= Model.ModelVarName #>.Id);
+            Object expected = NotEmptyView(controller, <#= Model.ModelVarName #>);
+            Object actual = controller.Delete(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }
@@ -202,11 +192,8 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Delete_AfterDeleteRedirectsToIndex()
         {
-            controller.When(sub => sub.RedirectIfAuthorized("Index")).DoNotCallBase();
-            controller.RedirectIfAuthorized("Index").Returns(new RedirectToRouteResult(new RouteValueDictionary()));
-
-            ActionResult actual = controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);
-            ActionResult expected = controller.RedirectIfAuthorized("Index");
+            Object expected = RedirectIfAuthorized(controller, "Index");
+            Object actual = controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);
 
             Assert.Same(expected, actual);
         }

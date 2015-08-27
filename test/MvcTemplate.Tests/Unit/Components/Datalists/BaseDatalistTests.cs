@@ -65,8 +65,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
 
-            IUnitOfWork actual = datalist.BaseUnitOfWork;
-            IUnitOfWork expected = unitOfWork;
+            Object actual = datalist.BaseUnitOfWork;
+            Object expected = unitOfWork;
 
             Assert.Same(expected, actual);
         }
@@ -151,8 +151,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
             unitOfWork.Select<Role>().To<RoleView>().Returns(new RoleView[0].AsQueryable());
 
-            IQueryable expected = unitOfWork.Select<Role>().To<RoleView>();
-            IQueryable actual = datalist.BaseGetModels();
+            Object expected = unitOfWork.Select<Role>().To<RoleView>();
+            Object actual = datalist.BaseGetModels();
 
             Assert.Same(expected, actual);
         }

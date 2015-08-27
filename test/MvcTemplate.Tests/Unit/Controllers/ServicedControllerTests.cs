@@ -1,12 +1,11 @@
-﻿using MvcTemplate.Controllers;
-using MvcTemplate.Services;
+﻿using MvcTemplate.Services;
 using NSubstitute;
 using System;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class ServicedControllerTests
+    public class ServicedControllerTests : AControllerTests
     {
         private ServicedControllerProxy controller;
         private IService service;
@@ -22,8 +21,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void ServicedController_SetsService()
         {
-            IService actual = controller.Service;
-            IService expected = service;
+            Object actual = controller.Service;
+            Object expected = service;
 
             Assert.Same(expected, actual);
         }
@@ -35,9 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()
         {
-            controller.When(sub => { String get = sub.CurrentAccountId; }).DoNotCallBase();
-            controller.CurrentAccountId.Returns("Test");
-            service.CurrentAccountId = null;
+            ReturnsCurrentAccountId(controller, "Test");
 
             controller.BaseOnActionExecuting(null);
 

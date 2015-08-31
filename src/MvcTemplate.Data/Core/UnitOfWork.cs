@@ -2,6 +2,7 @@
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -38,10 +39,15 @@ namespace MvcTemplate.Data.Core
             return new Select<TModel>(Context.Set<TModel>());
         }
 
+        public void InsertRange<TModel>(IEnumerable<TModel> models) where TModel : BaseModel
+        {
+            Context.Set<TModel>().AddRange(models);
+        }
         public void Insert<TModel>(TModel model) where TModel : BaseModel
         {
             Context.Set<TModel>().Add(model);
         }
+
         public void Update<TModel>(TModel model) where TModel : BaseModel
         {
             TModel attachedModel = Context.Set<TModel>().Local.SingleOrDefault(localModel => localModel.Id == model.Id);
@@ -53,6 +59,11 @@ namespace MvcTemplate.Data.Core
             DbEntityEntry<TModel> entry = Context.Entry(attachedModel);
             entry.State = EntityState.Modified;
             entry.Property(property => property.CreationDate).IsModified = false;
+        }
+
+        public void DeleteRange<TModel>(IEnumerable<TModel> models) where TModel : BaseModel
+        {
+            Context.Set<TModel>().RemoveRange(models);
         }
         public void Delete<TModel>(TModel model) where TModel : BaseModel
         {

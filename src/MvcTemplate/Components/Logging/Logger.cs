@@ -1,18 +1,14 @@
-﻿using MvcTemplate.Objects;
-using System;
-using System.Data.Entity;
+﻿using System;
+using System.IO;
+using System.Text;
+using System.Web.Configuration;
+using System.Web.Hosting;
 
 namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {
-        private DbContext Context { get; set; }
-        private Boolean Disposed { get; set; }
-
-        public Logger(DbContext context)
-        {
-            Context = context;
-        }
+        private static Object LogWriting = new Object();
 
         public virtual void Log(String message)
         {
@@ -20,26 +16,35 @@ namespace MvcTemplate.Components.Logging
         }
         public virtual void Log(String accountId, String message)
         {
-            Log log = new Log();
-            log.Message = message;
-            log.AccountId = !String.IsNullOrEmpty(accountId) ? accountId : null;
+            try
+            {
+                Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
+                String logDirectoryPath = WebConfigurationManager.AppSettings["LogsDir"];
+                String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
+                logDirectoryPath = Path.Combine(basePath, logDirectoryPath);
+                String logPath = Path.Combine(logDirectoryPath, "Log.txt");
 
-            Context.Set<Log>().Add(log);
-            Context.SaveChanges();
-        }
+                lock (LogWriting)
+                {
+                    StringBuilder log = new StringBuilder();
+                    log.AppendLine("Time   : " + DateTime.Now);
+                    log.AppendLine("Account: " + accountId);
+                    log.AppendLine("Message: " + message);
+                    log.AppendLine();
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(Boolean disposing)
-        {
-            if (Disposed) return;
+                    Directory.CreateDirectory(logDirectoryPath);
+                    File.AppendAllText(logPath, log.ToString());
 
-            Context.Dispose();
-
-            Disposed = true;
+                    if (new FileInfo(logPath).Length >= backupSize)
+                    {
+                        String backupLog = Path.Combine(logDirectoryPath, String.Format("Log {0}.txt", DateTime.Now.ToString("yyyy-MM-dd HHmmss")));
+                        File.Move(logPath, backupLog);
+                    }
+                }
+            }
+            catch
+            {
+            }
         }
     }
 }

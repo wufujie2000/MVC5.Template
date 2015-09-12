@@ -19,7 +19,6 @@ namespace MvcTemplate.Data.Core
 
         #region System
 
-        protected DbSet<Log> Logs { get; set; }
         protected DbSet<AuditLog> AuditLogs { get; set; }
 
         #endregion

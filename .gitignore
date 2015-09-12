@@ -1,4 +1,5 @@
 /packages/
+App_Data/
 /.vs/
 bin/
 obj/

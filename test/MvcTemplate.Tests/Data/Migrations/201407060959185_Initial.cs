@@ -81,17 +81,6 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
-                "dbo.Logs",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        AccountId = c.String(maxLength: 128),
-                        Message = c.String(nullable: false),
-                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
-                    })
-                .PrimaryKey(t => t.Id, clustered: false);
-            
-            CreateTable(
                 "dbo.TestModels",
                 c => new
                     {
@@ -115,7 +104,6 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropIndex("dbo.Accounts", new[] { "Email" });
             DropIndex("dbo.Accounts", new[] { "Username" });
             DropTable("dbo.TestModels");
-            DropTable("dbo.Logs");
             DropTable("dbo.AuditLogs");
             DropTable("dbo.Privileges");
             DropTable("dbo.RolePrivileges");

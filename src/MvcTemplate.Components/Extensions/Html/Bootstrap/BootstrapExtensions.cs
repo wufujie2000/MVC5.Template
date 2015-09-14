@@ -52,7 +52,12 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public static MvcHtmlString FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
-            RouteValueDictionary attributes = FormHtmlAttributes(expression, new { rows = 6 }, "form-control");
+            return html.FormTextAreaFor(expression, null);
+        }
+        public static MvcHtmlString FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+        {
+            RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control");
+            if (!attributes.ContainsKey("rows")) attributes["rows"] = 6;
 
             return html.TextAreaFor(expression, attributes);
         }

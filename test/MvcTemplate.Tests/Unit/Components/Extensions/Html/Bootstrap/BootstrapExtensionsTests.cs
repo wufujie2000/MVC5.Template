@@ -422,6 +422,65 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
+        #region Extension method: FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
+
+        [Fact]
+        public void FormTextAreaFor_Attributes_FormsNotAutocompletableTextArea()
+        {
+            String actual = html.FormTextAreaFor(x => x.Relation.NotRequired, new { @class = "test" }).ToString();
+            String expected = String.Format(
+                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.Relation.NotRequired);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FormTextAreaFor_Attributes_DoesNotAddReadOnlyAttribute()
+        {
+            String actual = html.FormTextAreaFor(x => x.NotEditable, new { @class = "test" }).ToString();
+            String expected = String.Format(
+                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"NotEditable\" name=\"NotEditable\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.NotEditable);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FormTextAreaFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        {
+            String actual = html.FormTextAreaFor(x => x.EditableTrue, new { @class = "test" }).ToString();
+            String expected = String.Format(
+                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.EditableTrue);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FormTextAreaFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
+        {
+            String actual = html.FormTextAreaFor(x => x.EditableFalse, new { @class = "test" }).ToString();
+            String expected = String.Format(
+                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.EditableFalse);
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FormTextAreaFor_Attributes_DoesNotOverrideSpecifiedRows()
+        {
+            String actual = html.FormTextAreaFor(x => x.NotRequired, new { rows = "12" }).ToString();
+            String expected = String.Format(
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"NotRequired\" name=\"NotRequired\" rows=\"12\">{0}</textarea>",
+                Environment.NewLine + model.NotRequired);
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
         #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]

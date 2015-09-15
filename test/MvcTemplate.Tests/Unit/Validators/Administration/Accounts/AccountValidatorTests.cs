@@ -112,7 +112,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Fact]
         public void CanReset_CanNotResetWithExpiredToken()
         {
-            Account account = context.Set<Account>().Single();
+            account = context.Set<Account>().Single();
             AccountResetView view = ObjectFactory.CreateAccountResetView();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(-5);
             context.SaveChanges();
@@ -162,7 +162,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         [Fact]
         public void CanLogin_CanNotLoginWithIncorrectPassword()
         {
-            Account account = context.Set<Account>().Single();
+            account = context.Set<Account>().Single();
             account.IsLocked = true;
             context.SaveChanges();
 
@@ -190,7 +190,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanLogin_CanNotLoginWithLockedAccount()
         {
             AccountLoginView view = ObjectFactory.CreateAccountLoginView();
-            Account account = context.Set<Account>().Single();
+            account = context.Set<Account>().Single();
             account.IsLocked = true;
             context.SaveChanges();
 

@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
-            IGridColumn<AllTypesView> column = columns.AddActionLink("Edit", "fa fa-pencil");
+            column = columns.AddActionLink("Edit", "fa fa-pencil");
 
             Assert.IsType<GridColumn<AllTypesView, String>>(column);
             Assert.NotNull(column);

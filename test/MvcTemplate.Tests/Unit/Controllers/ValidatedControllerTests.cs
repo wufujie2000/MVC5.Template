@@ -1,9 +1,7 @@
-﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Services;
+﻿using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
 using System;
-using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers

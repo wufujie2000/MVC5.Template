@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         {
             Directory.CreateDirectory(logDirectory);
 
-            using (FileStream file = File.Create(logPath))
+            using (File.Create(logPath))
                 logger.Log("Test");
 
             Assert.Empty(File.ReadAllText(logPath));

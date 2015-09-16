@@ -11,13 +11,16 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class BootstrapExtensions
     {
-        public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Boolean? required = null)
         {
             TagBuilder requiredSpan = new TagBuilder("span");
             TagBuilder label = new TagBuilder("label");
             requiredSpan.AddCssClass("require");
 
-            if (expression.IsRequired())
+            if (required == true)
+                requiredSpan.InnerHtml = "*";
+
+            if (!required.HasValue && expression.IsRequired())
                 requiredSpan.InnerHtml = "*";
 
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));

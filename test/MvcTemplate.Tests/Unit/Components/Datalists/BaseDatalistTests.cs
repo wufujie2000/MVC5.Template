@@ -2,6 +2,7 @@
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
+using MvcTemplate.Tests.Data;
 using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using System;
@@ -25,6 +26,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
             datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
+            using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
         {
@@ -162,21 +164,24 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: FilterById(IQueryable<TView> models)
 
         [Fact]
-        public void FilterById_FiltersByCurrentFilterId()
+        public void FilterById_FiltersUnitOfWorkByCurrentFilterId()
         {
-            RoleView firstRole = ObjectFactory.CreateRoleView(1);
-            RoleView secondRole = ObjectFactory.CreateRoleView(2);
+            TestingContext context = new TestingContext();
+            Role role = ObjectFactory.CreateRole();
+            context.Set<Role>().Add(role);
+            context.SaveChanges();
 
-            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
+            IUnitOfWork unitOfWork = new UnitOfWork(context);
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
-            IQueryable<RoleView> models = new[] { firstRole, secondRole }.AsQueryable();
 
-            datalist.CurrentFilter.Id = firstRole.Id;
+            datalist.CurrentFilter.Id = role.Id;
 
-            IQueryable expected = models.Where(role => role.Id == firstRole.Id);
-            IQueryable actual = datalist.BaseFilterById(models);
+            RoleView expected = unitOfWork.Select<Role>().To<RoleView>().Single();
+            RoleView actual = datalist.BaseFilterById(null).Single();
 
-            Assert.Equal(expected, actual);
+            Assert.Equal(expected.CreationDate, actual.CreationDate);
+            Assert.Equal(expected.Title, actual.Title);
+            Assert.Equal(expected.Id, actual.Id);
         }
 
         #endregion

@@ -16,8 +16,6 @@ namespace MvcTemplate.Controllers
             : base(service)
         {
             Validator = validator;
-            Validator.Alerts = Alerts;
-            Validator.ModelState = ModelState;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -25,6 +23,8 @@ namespace MvcTemplate.Controllers
             base.OnActionExecuting(filterContext);
 
             Validator.CurrentAccountId = Service.CurrentAccountId;
+            Validator.ModelState = ModelState;
+            Validator.Alerts = Alerts;
         }
 
         protected override void Dispose(Boolean disposing)

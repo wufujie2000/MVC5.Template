@@ -52,7 +52,8 @@ namespace MvcTemplate.Data.Migrations
         }
         private void DeleteUnused(Privilege[] privileges)
         {
-            foreach (Privilege privilege in UnitOfWork.Select<Privilege>())
+            Privilege[] dbPrivileges = UnitOfWork.Select<Privilege>().ToArray();
+            foreach (Privilege privilege in dbPrivileges)
                 if (!privileges.Any(priv => privilege.Area == priv.Area && privilege.Action == priv.Action && privilege.Controller == priv.Controller))
                 {
                     foreach (RolePrivilege rolePrivilege in UnitOfWork.Select<RolePrivilege>().Where(rolePriv => rolePriv.PrivilegeId == privilege.Id))

@@ -1,24 +1,38 @@
 ﻿using MvcTemplate.Components.Security;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
     [GlobalizedAuthorize]
-    public abstract class AuthorizedController : Controller
+    [ExcludeFromCodeCoverage]
+    public class AuthorizedController : Controller
     {
         [HttpGet]
-        public abstract ViewResult Action();
+        public ViewResult Action()
+        {
+            return null;
+        }
 
         [HttpPost]
-        public abstract ViewResult Action(Object obj);
+        public ViewResult Action(Object obj)
+        {
+            return null;
+        }
 
         [HttpGet]
         [AllowAnonymous]
-        public abstract ViewResult AllowAnonymousAction();
+        public ViewResult AllowAnonymousAction()
+        {
+            return null;
+        }
 
         [HttpGet]
         [AllowUnauthorized]
-        public abstract ViewResult AllowUnauthorizedAction();
+        public ViewResult AllowUnauthorizedAction()
+        {
+            return null;
+        }
     }
 }

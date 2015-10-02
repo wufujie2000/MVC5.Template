@@ -1,10 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    public abstract class InheritedAuthorizedController : AuthorizedController
+    [ExcludeFromCodeCoverage]
+    public class InheritedAuthorizedController : AuthorizedController
     {
         [HttpGet]
-        public abstract ViewResult InheritanceAction();
+        public ViewResult InheritanceAction()
+        {
+            return null;
+        }
     }
 }

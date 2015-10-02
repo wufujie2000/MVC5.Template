@@ -1,10 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    public abstract class NotAttributedController : Controller
+    public class NotAttributedController : Controller
     {
         [HttpGet]
-        public abstract ViewResult Action();
+        [ExcludeFromCodeCoverage]
+        public ViewResult Action()
+        {
+            return null;
+        }
     }
 }

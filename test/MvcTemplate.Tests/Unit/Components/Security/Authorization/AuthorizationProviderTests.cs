@@ -112,12 +112,9 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         }
 
         [Fact]
-        public void IsAuthorizedFor_OnNotExistingActionThrows()
+        public void IsAuthorizedFor_AuthorizesNotExistingAction()
         {
-            String actual = Assert.Throws<Exception>(() => provider.IsAuthorizedFor(null, null, "Authorized", "Test")).Message;
-            String expected = "'AuthorizedController' does not have 'Test' action.";
-
-            Assert.Equal(expected, actual);
+            Assert.True(provider.IsAuthorizedFor(null, null, "Authorized", "Test"));
         }
 
         [Fact]

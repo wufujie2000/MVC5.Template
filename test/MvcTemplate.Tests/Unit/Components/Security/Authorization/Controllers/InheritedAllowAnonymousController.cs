@@ -1,10 +1,15 @@
-﻿using System.Web.Mvc;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    public abstract class InheritedAllowAnonymousController : AllowAnonymousController
+    [ExcludeFromCodeCoverage]
+    public class InheritedAllowAnonymousController : AllowAnonymousController
     {
         [HttpGet]
-        public abstract ViewResult InheritanceAction();
+        public ViewResult InheritanceAction()
+        {
+            return null;
+        }
     }
 }

@@ -187,7 +187,7 @@
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAllowAnonymousController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\NotAttributedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\AuthorizedController.cs" />
-    <Compile Include="Unit\Controllers\AControllerTests.cs" />
+    <Compile Include="Unit\Controllers\ControllerTests.cs" />
     <Compile Include="Unit\Controllers\ValidatedControllerTests.cs" />
     <Compile Include="Unit\Data\Migrations\InitialDataTests.cs" />
     <Compile Include="Objects\Models\TestModel.cs" />

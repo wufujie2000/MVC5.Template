@@ -133,7 +133,7 @@ namespace MvcTemplate.Tests
             {
                 Id = "Id" + id,
 
-                RoleId = "Id" +id,
+                RoleId = "Id" + id,
                 Role = CreateRole(id),
 
                 PrivilegeId = "Id" + id,

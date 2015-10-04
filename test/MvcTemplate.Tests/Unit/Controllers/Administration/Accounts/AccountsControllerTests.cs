@@ -11,7 +11,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    public class AccountsControllerTests : AControllerTests
+    public class AccountsControllerTests : ControllerTests
     {
         private AccountCreateView accountCreate;
         private AccountsController controller;

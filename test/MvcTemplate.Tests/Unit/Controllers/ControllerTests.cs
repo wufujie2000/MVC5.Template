@@ -9,7 +9,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public abstract class AControllerTests
+    public abstract class ControllerTests
     {
         protected void ReturnsCurrentAccountId(BaseController controller, String id)
         {
@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.CurrentAccountId.Returns(id);
         }
 
-        protected void ProtectsFromOverposting(Controller controller, String postMethod, String value)
+        protected void ProtectsFromOverposting(Controller controller, String postMethod, String properties)
         {
             MethodInfo methodInfo = controller
                 .GetType()
@@ -26,14 +26,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
                     method.Name == postMethod &&
                     method.IsDefined(typeof(HttpPostAttribute), false));
 
-            CustomAttributeData actual = methodInfo
+            BindAttribute actual = methodInfo
                 .GetParameters()
                 .First()
-                .CustomAttributes
-                .Single(attr => attr.AttributeType == typeof(BindAttribute));
+                .GetCustomAttribute<BindAttribute>(false);
 
-            Assert.Equal(value, actual.NamedArguments.Single().TypedValue.Value);
-            Assert.Equal("Exclude", actual.NamedArguments.Single().MemberName);
+            Assert.Equal(properties, actual.Exclude);
         }
 
         protected RedirectToRouteResult NotEmptyView(BaseController controller, Object model)

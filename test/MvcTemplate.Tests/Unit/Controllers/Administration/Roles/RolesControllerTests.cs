@@ -11,7 +11,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    public class RolesControllerTests : AControllerTests
+    public class RolesControllerTests : ControllerTests
     {
         private RolesController controller;
         private IRoleValidator validator;

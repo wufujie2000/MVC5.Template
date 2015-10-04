@@ -16,7 +16,7 @@ using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class AuthControllerTests : AControllerTests
+    public class AuthControllerTests : ControllerTests
     {
         private AccountRegisterView accountRegister;
         private AccountRecoveryView accountRecovery;

@@ -208,7 +208,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             IEnumerable<TestModel> models = new[] { ObjectFactory.CreateTestModel(1), ObjectFactory.CreateTestModel(2) };
             foreach (TestModel model in models)
                 context.Set<TestModel>().Add(model);
-            
+
             context.SaveChanges();
 
             unitOfWork.DeleteRange(models);

@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (required == true)
                 requiredSpan.InnerHtml = "*";
 
-            if (!required.HasValue && expression.IsRequired())
+            if (expression.IsRequired() && !required.HasValue)
                 requiredSpan.InnerHtml = "*";
 
             label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));

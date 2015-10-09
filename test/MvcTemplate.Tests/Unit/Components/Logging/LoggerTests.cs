@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Logging;
 using System;
 using System.IO;
+using System.Linq;
 using System.Web.Configuration;
 using Xunit;
 
@@ -55,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new String('T', backupSize));
 
             String expected = "Account: " + Environment.NewLine + "Message: " + new String('T', backupSize) + Environment.NewLine + Environment.NewLine;
-            String actual = File.ReadAllText(Path.Combine(logDirectory, String.Format("Log {0}.txt", DateTime.Now.ToString("yyyy-MM-dd HHmmss"))));
+            String actual = File.ReadAllText(Directory.GetFiles(logDirectory, "Log *.txt").Single());
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));

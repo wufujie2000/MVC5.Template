@@ -510,12 +510,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDatePicker()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy.MM.dd"));
+                model.Relation.Date.Value.ToString("yyyy/MM/dd"));
 
             Assert.Equal(expected, actual);
         }
@@ -527,12 +527,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDatePickerWtihAttributes()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy.MM.dd"));
+                model.Relation.Date.Value.ToString("yyyy/MM/dd"));
 
             Assert.Equal(expected, actual);
         }
@@ -544,12 +544,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDateTimePicker()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
+                model.Relation.Date.Value.ToString("yyyy/MM/dd H:mm"));
 
             Assert.Equal(expected, actual);
         }
@@ -561,12 +561,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormDatePickerFor_FormsDateTimePickerWithAttributes()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("lt-LT");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy.MM.dd HH:mm"));
+                model.Relation.Date.Value.ToString("yyyy/MM/dd H:mm"));
 
             Assert.Equal(expected, actual);
         }

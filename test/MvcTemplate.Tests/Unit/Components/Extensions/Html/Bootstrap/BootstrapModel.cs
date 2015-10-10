@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             Relation = new BootstrapModel(true)
             {
-                Date = new DateTime(2011, 01, 01, 1, 1, 1),
+                Date = new DateTime(2011, 3, 5, 8, 6, 4),
                 NotRequired = "NotRequiredRelation",
                 NotRequiredNullableValue = 5411,
                 Required = "RequiredRelation",

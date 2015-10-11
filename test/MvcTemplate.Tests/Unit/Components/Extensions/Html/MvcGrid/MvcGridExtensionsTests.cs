@@ -15,14 +15,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
     public class MvcGridExtensionsTests : IDisposable
     {
         private IGridColumns<AllTypesView> columns;
-        private IGridColumn<AllTypesView> column;
-        private IHtmlGrid<AllTypesView> htmlGrid;
+        private IHtmlGrid<AllTypesView> html;
 
         public MvcGridExtensionsTests()
         {
-            column = SubstituteColumn<AllTypesView>();
-            htmlGrid = SubstituteHtmlGrid<AllTypesView>();
-            columns = SubstituteColumns<AllTypesView, DateTime?>(column);
+            Grid<AllTypesView> grid = new Grid<AllTypesView>(new AllTypesView[0]);
+            HtmlHelper htmlHelper = HtmlHelperFactory.CreateHtmlHelper();
+            html = new HtmlGrid<AllTypesView>(htmlHelper, grid);
+            columns = new GridColumns<AllTypesView>(grid);
         }
         public void Dispose()
         {
@@ -37,45 +37,24 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
-            columns.AddActionLink("Edit", "fa fa-pencil");
+            IGridColumn<AllTypesView> actual = columns.AddActionLink("Edit", "fa fa-pencil");
 
-            columns.DidNotReceive().Add(Arg.Any<Expression<Func<AllTypesView, String>>>());
-            columns.DidNotReceive().Insert(Arg.Any<Int32>(), Arg.Any<Expression<Func<AllTypesView, String>>>());
-        }
-
-        [Fact]
-        public void AddActionLink_OnUnauthorizedActionLinkReturnsGridColumn()
-        {
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
-
-            column = columns.AddActionLink("Edit", "fa fa-pencil");
-
-            Assert.IsType<GridColumn<AllTypesView, String>>(column);
-            Assert.NotNull(column);
+            Assert.Empty(actual.ValueFor(null).ToString());
+            Assert.Empty(columns);
         }
 
         [Fact]
         public void AddActionLink_RendersAuthorizedActionLink()
         {
-            String actionLink = "";
             AllTypesView view = new AllTypesView();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
             UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
-            columns
-                .Add(Arg.Any<Expression<Func<AllTypesView, String>>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    actionLink = info.Arg<Expression<Func<AllTypesView, String>>>().Compile().Invoke(view);
-                });
+            IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 
-            columns.AddActionLink("Details", "fa fa-info");
-
-            String actual = actionLink;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
             String expected = String.Format(
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
@@ -88,19 +67,14 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddActionLink_OnNullAuthorizationProviderRendersActionLink()
         {
-            String actionLink = "";
             Authorization.Provider = null;
             AllTypesView view = new AllTypesView();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
             UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
 
-            columns
-                .Add(Arg.Any<Expression<Func<AllTypesView, String>>>()).Returns(column)
-                .AndDoes(info => { actionLink = info.Arg<Expression<Func<AllTypesView, String>>>().Compile().Invoke(view); });
+            IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 
-            columns.AddActionLink("Details", "fa fa-info");
-
-            String actual = actionLink;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
             String expected = String.Format(
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
@@ -113,168 +87,92 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddActionLink_OnModelWihoutKeyPropertyThrows()
         {
-            Func<Object, String> renderer = null;
-            IGridColumn<Object> column = SubstituteColumn<Object>();
-            IGridColumns<Object> columns = SubstituteColumns<Object, String>(column);
+            IGrid<Object> grid = new Grid<Object>(new Object[0]);
+            IGridColumns<Object> columns = new GridColumns<Object>(grid);
+            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
-            columns
-                .Add(Arg.Any<Expression<Func<Object, String>>>())
-                .Returns(column)
-                .AndDoes(info =>
-                {
-                    renderer = info.Arg<Expression<Func<Object, String>>>().Compile();
-                });
+            IGridColumn<Object> column = columns.AddActionLink("Delete", "fa fa-times");
 
-            columns.AddActionLink("Delete", "fa fa-times");
-
-            String actual = Assert.Throws<Exception>(() => renderer.Invoke(new Object())).Message;
+            String actual = Assert.Throws<Exception>(() => column.ValueFor(new GridRow(new Object()))).Message;
             String expected = "Object type does not have a key property.";
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AddActionLink_SetsCssOnGridColumn()
+        public void AddActionLink_Column()
         {
-            columns.AddActionLink("Edit", "fa fa-pencil");
+            IGridColumn<AllTypesView> actual = columns.AddActionLink("Edit", "fa fa-pencil");
 
-            column.Received().Css("action-cell");
-        }
-
-        [Fact]
-        public void AddActionLink_DoesNotEncodeGridColumn()
-        {
-            columns.AddActionLink("Edit", "fa fa-pencil");
-
-            column.Received().Encoded(false);
+            Assert.Equal("action-cell", actual.CssClasses);
+            Assert.False(actual.IsEncoded);
+            Assert.Single(columns);
         }
 
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
+        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
+            Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
 
-            columns.AddDateProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddDateProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddDateProperty_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
-
-            columns.AddDateProperty(model => model.DateTimeField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddDateProperty_SetsGridColumnCss()
-        {
-            columns.AddDateProperty(model => model.DateTimeField);
-
-            column.Received().Css("text-center");
-        }
-
-        [Fact]
-        public void AddDateProperty_FormatsGridColumn()
-        {
-            columns.AddDateProperty(model => model.DateTimeField);
-
-            column.Received().Formatted("{0:d}");
+            Assert.Equal("text-center", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal("{0:d}", actual.Format);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateProperty_Nullable_AddsGridColumn()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
-            columns.AddDateProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddDateProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddDateProperty_Nullable_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
-
-            columns.AddDateProperty(model => model.NullableDateTimeField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddDateProperty_Nullable_SetsGridColumnCss()
-        {
-            columns.AddDateProperty(model => model.NullableDateTimeField);
-
-            column.Received().Css("text-center");
-        }
-
-        [Fact]
-        public void AddDateProperty_Nullable_FormatsGridColumn()
-        {
-            columns.AddDateProperty(model => model.NullableDateTimeField);
-
-            column.Received().Formatted("{0:d}");
+            Assert.Equal("text-center", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal("{0:d}", actual.Format);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         #endregion
 
-        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> property)
+        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
 
         [Fact]
         public void AddBooleanProperty_AddsGridColumn()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean>(model => model.BooleanField);
             Expression<Func<AllTypesView, Boolean>> expression = (model) => model.BooleanField;
 
-            columns.AddBooleanProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddBooleanProperty_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean>(model => model.BooleanField);
-
-            columns.AddBooleanProperty(model => model.BooleanField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddBooleanProperty_SetsGridColumnCss()
-        {
-            columns.AddBooleanProperty(model => model.BooleanField);
-
-            column.Received().Css("text-left");
+            Assert.Equal("text-left", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         [Fact]
         public void AddBooleanProperty_RendersBooleanTrueValue()
         {
-            Object renderedValue = null;
             AllTypesView view = new AllTypesView { BooleanField = true };
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
 
-            column
-                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
-                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
-
-            columns.AddBooleanProperty(model => model.BooleanField);
-
-            Object expected = TableResources.Yes;
-            Object actual = renderedValue;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String expected = TableResources.Yes;
 
             Assert.Equal(expected, actual);
         }
@@ -282,67 +180,41 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_RendersBooleanFalseValue()
         {
-            Object renderedValue = null;
             AllTypesView view = new AllTypesView { BooleanField = false };
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
 
-            column
-                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
-                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
-
-            columns.AddBooleanProperty(model => model.BooleanField);
-
-            Object expected = TableResources.No;
-            Object actual = renderedValue;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String expected = TableResources.No;
 
             Assert.Equal(expected, actual);
         }
 
         #endregion
 
-        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> property)
+        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
 
         [Fact]
         public void AddBooleanProperty_Nullable_AddsGridColumn()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean?>(model => model.NullableBooleanField);
             Expression<Func<AllTypesView, Boolean?>> expression = (model) => model.NullableBooleanField;
 
-            columns.AddBooleanProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddBooleanProperty_Nullable_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean?>(model => model.NullableBooleanField);
-
-            columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddBooleanProperty_Nullable_SetsGridColumnCss()
-        {
-            columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            column.Received().Css("text-left");
+            Assert.Equal("text-left", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanTrueValue()
         {
-            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = true };
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            column
-                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
-                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
-
-            columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            Object expected = TableResources.Yes;
-            Object actual = renderedValue;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String expected = TableResources.Yes;
 
             Assert.Equal(expected, actual);
         }
@@ -350,17 +222,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanFalseValue()
         {
-            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = false };
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            column
-                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
-                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
-
-            columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            Object expected = TableResources.No;
-            Object actual = renderedValue;
+            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String expected = TableResources.No;
 
             Assert.Equal(expected, actual);
         }
@@ -368,123 +234,68 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_RendersBooleanNullValue()
         {
-            Object renderedValue = null;
             AllTypesView view = new AllTypesView { NullableBooleanField = null };
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
 
-            column
-                .When(sub => sub.RenderedAs(Arg.Any<Func<AllTypesView, Object>>()))
-                .Do(info => renderedValue = info.Arg<Func<AllTypesView, Object>>()(view));
+            String actual = column.ValueFor(new GridRow(view)).ToString();
 
-            columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            Object expected = "";
-            Object actual = renderedValue;
-
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> property)
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateTimeProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.DateTimeField;
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
+            Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
 
-            columns.AddDateTimeProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddDateTimeProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.DateTimeField);
-
-            columns.AddDateTimeProperty(model => model.DateTimeField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_SetsGridColumnCss()
-        {
-            columns.AddDateTimeProperty(model => model.DateTimeField);
-
-            column.Received().Css("text-center");
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_FormatsGridColumn()
-        {
-            columns.AddDateTimeProperty(model => model.DateTimeField);
-
-            column.Received().Formatted("{0:g}");
+            Assert.Equal("text-center", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal("{0:g}", actual.Format);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> property)
+        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Nullable_AddsGridColumn()
         {
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
-            columns.AddDateTimeProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddDateTimeProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_Nullable_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
-
-            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
-
-            column.Received().Titled(title);
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_Nullable_SetsGridColumnCss()
-        {
-            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
-
-            column.Received().Css("text-center");
-        }
-
-        [Fact]
-        public void AddDateTimeProperty_Nullable_FormatsGridColumn()
-        {
-            columns.AddDateTimeProperty(model => model.NullableDateTimeField);
-
-            column.Received().Formatted("{0:g}");
+            Assert.Equal("text-center", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal("{0:g}", actual.Format);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         #endregion
 
-        #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> property)
+        #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
 
         [Fact]
         public void AddProperty_AddsGridColumn()
         {
-            Expression<Func<AllTypesView, String>> expression = (model) => model.Id;
+            String title = ResourceProvider.GetPropertyTitle<AllTypesView, AllTypesView>(model => model);
+            Expression<Func<AllTypesView, AllTypesView>> expression = (model) => model;
 
-            columns.AddProperty(expression);
+            IGridColumn<AllTypesView> actual = columns.AddProperty(expression);
 
-            columns.Received().Add(expression);
-        }
-
-        [Fact]
-        public void AddProperty_SetsGridColumnTitle()
-        {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
-
-            columns.AddProperty(model => model.NullableDateTimeField);
-
-            column.Received().Titled(title);
+            Assert.Equal("text-left", actual.CssClasses);
+            Assert.Equal(expression, actual.Expression);
+            Assert.Equal(title, actual.Title);
+            Assert.Single(columns);
         }
 
         [Fact]
@@ -654,108 +465,34 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: ApplyDefaults<T>(this IHtmlGrid<T> grid)
 
         [Fact]
-        public void ApplyDefaults_SetsRowsPerPage()
+        public void ApplyDefaults_Values()
         {
-            IGridPager<AllTypesView> pager = Substitute.For<IGridPager<AllTypesView>>();
+            IGridColumn column = html.Grid.Columns.Add(model => model.ByteField);
+            column.IsFilterable = null;
+            column.IsSortable = null;
 
-            htmlGrid
-                .When(sub => sub.Pageable(Arg.Any<Action<IGridPager<AllTypesView>>>()))
-                .Do(info => info.Arg<Action<IGridPager<AllTypesView>>>()(pager));
+            IGrid actual = html.ApplyDefaults().Grid;
 
-            htmlGrid.ApplyDefaults();
-
-            Int32 expected = pager.RowsPerPage;
-            Int32 actual = 16;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void ApplyDefaults_SetsNameByReplacingViewToEmpty()
-        {
-            htmlGrid.ApplyDefaults();
-
-            htmlGrid.Received().Named("AllTypes");
-        }
-
-        [Fact]
-        public void ApplyDefaults_SetsEmptyText()
-        {
-            htmlGrid.ApplyDefaults();
-
-            htmlGrid.Received().Empty(TableResources.NoDataFound);
-        }
-
-        [Fact]
-        public void ApplyDefaults_SetsCss()
-        {
-            htmlGrid.ApplyDefaults();
-
-            htmlGrid.Received().Css("table-hover");
-        }
-
-        [Fact]
-        public void ApplyDefaults_EnablesFiltering()
-        {
-            htmlGrid.ApplyDefaults();
-
-            htmlGrid.Received().Filterable();
-        }
-
-        [Fact]
-        public void ApplyDefaults_EnablesSorting()
-        {
-            htmlGrid.ApplyDefaults();
-
-            htmlGrid.Received().Sortable();
+            Assert.Equal(TableResources.NoDataFound, actual.EmptyText);
+            Assert.Equal("table-hover", actual.CssClasses);
+            Assert.Equal(true, column.IsFilterable);
+            Assert.Equal(true, column.IsSortable);
+            Assert.Equal("AllTypes", actual.Name);
+            Assert.NotEmpty(actual.Columns);
         }
 
         #endregion
 
         #region Test helpers
 
-        private IHtmlGrid<TModel> SubstituteHtmlGrid<TModel>()
+        private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String cssClasses)
         {
-            IHtmlGrid<TModel> grid = Substitute.For<IHtmlGrid<TModel>>();
-            grid.Pageable(Arg.Any<Action<IGridPager<TModel>>>()).Returns(grid);
-            grid.Empty(Arg.Any<String>()).Returns(grid);
-            grid.Named(Arg.Any<String>()).Returns(grid);
-            grid.Css(Arg.Any<String>()).Returns(grid);
-            grid.Filterable().Returns(grid);
-            grid.Sortable().Returns(grid);
+            IGridColumn<AllTypesView> column = columns.AddProperty(property);
 
-            return grid;
-        }
-        private IGridColumn<TModel> SubstituteColumn<TModel>()
-        {
-            IGridColumn<TModel> column = Substitute.For<IGridColumn<TModel>>();
-            column.RenderedAs(Arg.Any<Func<TModel, Object>>()).Returns(column);
-            column.Formatted(Arg.Any<String>()).Returns(column);
-            column.Encoded(Arg.Any<Boolean>()).Returns(column);
-            column.Titled(Arg.Any<String>()).Returns(column);
-            column.Css(Arg.Any<String>()).Returns(column);
+            String actual = column.CssClasses;
+            String expected = cssClasses;
 
-            return column;
-        }
-        private IGridColumns<TModel> SubstituteColumns<TModel, TProperty>(IGridColumn<TModel> column)
-        {
-            IGridColumns<TModel> columns = Substitute.For<IGridColumns<TModel>>();
-            columns.Add(Arg.Any<Expression<Func<TModel, String>>>()).Returns(column);
-            columns.Add(Arg.Any<Expression<Func<TModel, Boolean>>>()).Returns(column);
-            columns.Add(Arg.Any<Expression<Func<TModel, Boolean?>>>()).Returns(column);
-            columns.Add(Arg.Any<Expression<Func<TModel, DateTime>>>()).Returns(column);
-            columns.Add(Arg.Any<Expression<Func<TModel, DateTime?>>>()).Returns(column);
-            columns.Add(Arg.Any<Expression<Func<TModel, TProperty>>>()).Returns(column);
-
-            return columns;
-        }
-
-        private void AssertCssClassFor<TProperty>(Expression<Func<AllTypesView, TProperty>> property, String expected)
-        {
-            columns = SubstituteColumns<AllTypesView, TProperty>(column);
-            columns.AddProperty(property);
-
-            column.Received().Css(expected);
+            Assert.Equal(expected, actual);
         }
 
         #endregion

@@ -70,9 +70,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsRequiredLabelOnValueTypes()
         {
-            String actual = html.FormLabelFor(x => x.Relation.RequiredValue).ToString();
+            String actual = html.FormLabelFor(x => x.Relation.Number).ToString();
             String expected =
-                "<label for=\"Relation_RequiredValue\">" +
+                "<label for=\"Relation_Number\">" +
                     "<span class=\"require\">*</span>" +
                 "</label>";
 
@@ -94,9 +94,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
         {
-            String actual = html.FormLabelFor(x => x.Relation.NotRequiredNullableValue).ToString();
+            String actual = html.FormLabelFor(x => x.Relation.Date).ToString();
             String expected =
-                "<label for=\"Relation_NotRequiredNullableValue\">" +
+                "<label for=\"Relation_Date\">" +
                     "<span class=\"require\"></span>" +
                 "</label>";
 
@@ -108,23 +108,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormTextBoxFor_FormsNotAutocompletableTextBox()
-        {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
         {
-            String actual = html.FormTextBoxFor(x => x.NotEditable).ToString();
+            String actual = html.FormTextBoxFor(x => x.Number).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
-                model.NotEditable);
+                "<input autocomplete=\"off\" class=\"form-control\" id=\"Number\" name=\"Number\" type=\"text\" value=\"{0}\" />",
+                model.Number);
 
             Assert.Equal(expected, actual);
         }
@@ -156,31 +145,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format)
 
         [Fact]
-        public void FormTextBoxFor_Format_FormsNotAutocompletableTextBox()
-        {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttribute()
-        {
-            String actual = html.FormTextBoxFor(x => x.NotEditable, null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
-                model.NotEditable);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableTrue, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}").ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
@@ -191,7 +158,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableFalse, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}").ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
@@ -226,17 +193,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_FormsNotAutocompletableTextBox()
-        {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, (Object)null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { autocomplete = "on" }).ToString();
@@ -259,22 +215,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttribute()
-        {
-            String actual = html.FormTextBoxFor(x => x.NotEditable, (Object)null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
-                model.NotEditable);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableTrue, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, new { data_tab = "Test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
+                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -283,9 +228,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableFalse, (Object)null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, new { data_tab = "Test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
+                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
 
             Assert.Equal(expected, actual);
@@ -298,21 +243,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_MergesClassAttributes()
         {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, new { @class = "test" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}", new { @class = "test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void FormTextBoxFor_Format_Attributes_FormsNotAutocompletableTextBox()
-        {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
+                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
+                String.Format("{0:0.00}", model.Relation.Number));
 
             Assert.Equal(expected, actual);
         }
@@ -320,7 +254,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteAutocompleteAttribute()
         {
-            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, null, new { autocomplete = "on" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, "{0}", new { autocomplete = "on" }).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
                 model.Relation.NotRequired);
@@ -331,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteReadOnlyAttribute()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableFalse, null, new { @readonly = "false" }).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { @readonly = "false" }).ToString();
             String expected = String.Format(
                 "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
@@ -340,22 +274,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttribute()
-        {
-            String actual = html.FormTextBoxFor(x => x.NotEditable, null, null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"NotEditable\" name=\"NotEditable\" type=\"text\" value=\"{0}\" />",
-                model.NotEditable);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableTrue, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}", new { data_tab = "Test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
+                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
                 model.EditableTrue);
 
             Assert.Equal(expected, actual);
@@ -364,21 +287,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
         {
-            String actual = html.FormTextBoxFor(x => x.EditableFalse, null, null).ToString();
+            String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { data_tab = "Test" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
+                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
                 model.EditableFalse);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void FormTextBoxFor_Format_Attributes_FormatsTextBoxValue()
-        {
-            String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}", null).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
-                String.Format("{0:0.00}", model.Relation.Number));
 
             Assert.Equal(expected, actual);
         }
@@ -401,23 +313,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormTextAreaFor_FormsNotAutocompletableTextArea()
-        {
-            String actual = html.FormTextAreaFor(x => x.Relation.NotRequired).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormTextAreaFor_DoesNotAddReadOnlyAttribute()
         {
-            String actual = html.FormTextAreaFor(x => x.NotEditable).ToString();
+            String actual = html.FormTextAreaFor(x => x.Number).ToString();
             String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"NotEditable\" name=\"NotEditable\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.NotEditable);
+                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"Number\" name=\"Number\" rows=\"6\">{0}</textarea>",
+                Environment.NewLine + model.Number);
 
             Assert.Equal(expected, actual);
         }
@@ -447,28 +348,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #endregion
 
         #region Extension method: FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
-
-        [Fact]
-        public void FormTextAreaFor_Attributes_FormsNotAutocompletableTextArea()
-        {
-            String actual = html.FormTextAreaFor(x => x.Relation.NotRequired, new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.Relation.NotRequired);
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void FormTextAreaFor_Attributes_DoesNotAddReadOnlyAttribute()
-        {
-            String actual = html.FormTextAreaFor(x => x.NotEditable, new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"NotEditable\" name=\"NotEditable\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.NotEditable);
-
-            Assert.Equal(expected, actual);
-        }
 
         [Fact]
         public void FormTextAreaFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()

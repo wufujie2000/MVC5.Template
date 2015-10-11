@@ -108,6 +108,7 @@ namespace MvcTemplate.Controllers
                 return RedirectToAction("Recover");
 
             Service.Reset(account);
+
             Alerts.Add(AlertType.Success, Messages.SuccessfulReset);
 
             return RedirectToAction("Login");

@@ -90,7 +90,7 @@ namespace MvcTemplate.Components.Extensions.Html
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
             RouteValueDictionary htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
-            if (!htmlAttributes.ContainsKey("autocomplete")) htmlAttributes.Add("autocomplete", "off");
+            if (!htmlAttributes.ContainsKey("autocomplete")) htmlAttributes["autocomplete"] = "off";
             htmlAttributes["class"] = (cssClass + " " + htmlAttributes["class"]).Trim();
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
@@ -98,7 +98,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (memberExpression != null && memberExpression.Member.IsDefined(typeof(EditableAttribute), false))
             {
                 EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>(false);
-                if (!editable.AllowEdit) htmlAttributes.Add("readonly", "readonly");
+                if (!editable.AllowEdit) htmlAttributes["readonly"] = "readonly";
             }
 
             return htmlAttributes;

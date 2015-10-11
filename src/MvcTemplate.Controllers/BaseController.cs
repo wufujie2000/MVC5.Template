@@ -81,8 +81,8 @@ namespace MvcTemplate.Controllers
 
         public virtual Boolean IsAuthorizedFor(String action)
         {
-            String area = (String)RouteData.Values["area"];
-            String controller = (String)RouteData.Values["controller"];
+            String area = RouteData.Values["area"] as String;
+            String controller = RouteData.Values["controller"] as String;
 
             return IsAuthorizedFor(area, controller, action);
         }
@@ -104,9 +104,9 @@ namespace MvcTemplate.Controllers
         {
             if (!User.Identity.IsAuthenticated) return;
 
-            String area = (String)filterContext.RouteData.Values["area"];
-            String action = (String)filterContext.RouteData.Values["action"];
-            String controller = (String)filterContext.RouteData.Values["controller"];
+            String area = filterContext.RouteData.Values["area"] as String;
+            String action = filterContext.RouteData.Values["action"] as String;
+            String controller = filterContext.RouteData.Values["controller"] as String;
 
             if (!IsAuthorizedFor(area, controller, action))
                 filterContext.Result = RedirectToUnauthorized();

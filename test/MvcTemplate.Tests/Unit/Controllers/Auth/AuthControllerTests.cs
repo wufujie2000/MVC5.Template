@@ -12,7 +12,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -198,7 +197,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
 
-            ActionResult result = controller.Recover(accountRecovery).Result;
+            controller.Recover(accountRecovery).Wait();
 
             service.Received().Recover(accountRecovery);
         }
@@ -210,7 +209,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns("TestToken");
 
-            ActionResult result = controller.Recover(accountRecovery).Result;
+            controller.Recover(accountRecovery).Wait();
 
             String url = controller.Url.Action("Reset", "Auth", new { token = "TestToken" }, controller.Request.Url.Scheme);
             String body = String.Format(Messages.RecoveryEmailBody, url);
@@ -227,21 +226,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns(null as String);
 
-            ActionResult result = controller.Recover(accountRecovery).Result;
+            controller.Recover(accountRecovery).Wait();
 
             mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("Token")]
-        public void Recover_AddsRecoveryInformationMessage(String recoveryToken)
+        [Fact]
+        public void Recover_AddsRecoveryInformationMessage()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
-            service.Recover(accountRecovery).Returns(recoveryToken);
+            service.Recover(accountRecovery).Returns("RecoryToken");
 
-            ActionResult result = controller.Recover(accountRecovery).Result;
+            controller.Recover(accountRecovery).Wait();
 
             Alert actual = controller.Alerts.Single();
 
@@ -250,14 +247,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal(0, actual.FadeoutAfter);
         }
 
-        [Theory]
-        [InlineData(null)]
-        [InlineData("Token")]
-        public void Recover_AfterRecoveryRedirectsToLogin(String recoveryToken)
+        [Fact]
+        public void Recover_AfterRecoveryRedirectsToLogin()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
-            service.Recover(accountRecovery).Returns(recoveryToken);
+            service.Recover(accountRecovery).Returns("RecoveryToken");
 
             RouteValueDictionary actual = (controller.Recover(accountRecovery).Result as RedirectToRouteResult).RouteValues;
 

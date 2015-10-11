@@ -3,10 +3,10 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
+    [ExcludeFromCodeCoverage]
     public class NotAttributedController : Controller
     {
         [HttpGet]
-        [ExcludeFromCodeCoverage]
         public ViewResult Action()
         {
             return null;

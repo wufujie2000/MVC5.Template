@@ -10,13 +10,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void JsTree_CreatesEmptyTree()
         {
-            Assert.Empty(new JsTree().Nodes);
-        }
+            JsTree actual = new JsTree();
 
-        [Fact]
-        public void JsTree_CreatesUnselectedTree()
-        {
-            Assert.Empty(new JsTree().SelectedIds);
+            Assert.Empty(actual.Nodes);
+            Assert.Empty(actual.SelectedIds);
         }
 
         #endregion

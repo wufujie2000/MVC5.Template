@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Method: Log(String message)
 
         [Fact]
-        public void Log_OnLoggingExceptionDoesNotThrow()
+        public void Log_DoesNotThrow()
         {
             Directory.CreateDirectory(logDirectory);
 
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Fact]
-        public void Log_LogsMessage()
+        public void Log_Message()
         {
             logger.Log("Test");
 
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         }
 
         [Fact]
-        public void Log_OnExceededLogSizeCreatesABackupFile()
+        public void Log_CreatesBackupFile()
         {
             logger.Log(new String('T', backupSize));
 
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Method: Log(String accountId, String message)
 
         [Fact]
-        public void Log_LogsAccountIdAndMessage()
+        public void Log_AccountIdAndMessage()
         {
             logger.Log("AccountTest", "MessageTest");
 

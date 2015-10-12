@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
 
         [Fact]
-        public void JsTreeFor_FormsJsTreeFor()
+        public void JsTreeFor_Expression()
         {
             JsTreeView tree = new JsTreeView();
             tree.JsTree.SelectedIds.Add("12345");

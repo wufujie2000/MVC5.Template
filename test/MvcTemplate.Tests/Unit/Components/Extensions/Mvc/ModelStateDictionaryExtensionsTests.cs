@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
 
         [Fact]
-        public void AddModelError_AddsModelExceptionKey()
+        public void AddModelError_ExceptionKey()
         {
             modelState.AddModelError<AllTypesView>(model => model.Child.StringField, new Exception());
 
@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         }
 
         [Fact]
-        public void AddModelError_AddsModelException()
+        public void AddModelError_ExceptionValue()
         {
             Exception exception = new Exception();
             modelState.AddModelError<AllTypesView>(model => model.Child.StringField, exception);
@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
 
         [Fact]
-        public void AddModelError_AddsModelErrorKey()
+        public void AddModelError_Key()
         {
             modelState.AddModelError<AllTypesView>(model => model.Child.NullableByteField, "Test error");
 
@@ -57,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         }
 
         [Fact]
-        public void AddModelError_AddsModelErrorMessage()
+        public void AddModelError_Message()
         {
             modelState.AddModelError<AllTypesView>(model => model.Child.NullableByteField, "Test error");
 
@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         #region Extension method: AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String format, Object[] args)
 
         [Fact]
-        public void AddModelError_Format_AddsModelErrorKey()
+        public void AddModelError_FormattedKey()
         {
             modelState.AddModelError<AllTypesView>(model => model.Int32Field, "Test {0}", "error");
 
@@ -83,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
         }
 
         [Fact]
-        public void AddModelError_Format_AddsFormattedModelErrorMessage()
+        public void AddModelError_FormattedMessage()
         {
             modelState.AddModelError<AllTypesView>(model => model.Int32Field, "Test {0}", "error");
 

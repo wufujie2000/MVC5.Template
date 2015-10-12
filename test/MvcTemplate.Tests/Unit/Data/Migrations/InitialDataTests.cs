@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         #region Table: Roles
 
         [Fact]
-        public void RolesTable_HasSysAdminRole()
+        public void RolesTable_HasSysAdmin()
         {
             Assert.NotNull(context.Set<Role>().SingleOrDefault(role => role.Title == "Sys_Admin"));
         }
@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         #region Table: Accounts
 
         [Fact]
-        public void AccountsTable_HasSysAdminAccountWithAdminRole()
+        public void AccountsTable_HasSysAdmin()
         {
             Assert.NotNull(context.Set<Account>()
                 .SingleOrDefault(account =>
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
         #region Table: RolePrivileges
 
         [Fact]
-        public void RolesPrivilegesTable_HasAllPrivilegesForAdminRole()
+        public void RolesPrivilegesTable_HasAllSysAdminPrivileges()
         {
             IEnumerable<String> expected = context
                 .Set<Privilege>()

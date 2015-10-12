@@ -30,13 +30,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
             profileEdit = new ProfileEditView();
 
             controller = Substitute.ForPartsOf<ProfileController>(validator, service);
-            ReturnsCurrentAccountId(controller, "Test");
+            ReturnCurrentAccountId(controller, "Test");
         }
 
         #region Method: Edit()
 
         [Fact]
-        public void Edit_OnGetRedirectsToLogoutIfAccountIsNotActive()
+        public void Edit_NotActive_RedirectsToLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(false);
 
@@ -48,13 +48,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_ReturnsCurrentProfileView()
+        public void Edit_ReturnsProfileView()
         {
-            service.Get<ProfileEditView>(controller.CurrentAccountId).Returns(new ProfileEditView());
+            service.Get<ProfileEditView>(controller.CurrentAccountId).Returns(profileEdit);
             service.IsActive(controller.CurrentAccountId).Returns(true);
 
-            Object expected = service.Get<ProfileEditView>(controller.CurrentAccountId);
             Object actual = (controller.Edit() as ViewResult).Model;
+            Object expected = profileEdit;
 
             Assert.Same(expected, actual);
         }
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_RedirectsToLogoutIfAccountIsNotActive()
+        public void Edit_Post_NotActive_RedirectsToLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(false);
 
@@ -82,7 +82,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_ReturnsSameModelIfCanNotEdit()
+        public void Edit_CanNotEdit_ReturnsSameView()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(false);
@@ -94,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_EditsProfile()
+        public void Edit_Profile()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
@@ -105,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_AddsProfileUpdatedMessage()
+        public void Edit_AddsUpdatedMessage()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanEdit(profileEdit).Returns(true);
@@ -119,7 +119,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Edit_AfterEditRedirectsToEdit()
+        public void Edit_RedirectsToEdit()
         {
             validator.CanEdit(profileEdit).Returns(true);
             service.IsActive(controller.CurrentAccountId).Returns(true);
@@ -135,7 +135,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Delete()
 
         [Fact]
-        public void Delete_RedirectsToLogoutIfAccountIsNotActive()
+        public void Delete_NotActive_RedirectsToLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(false);
 
@@ -147,11 +147,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Delete_AddsDeleteDisclaimerMessage()
+        public void Delete_AddsDisclaimerMessage()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
 
             controller.Delete();
+
             Alert actual = controller.Alerts.Single();
 
             Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);
@@ -164,9 +165,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
 
-            Object model = (controller.Delete() as ViewResult).Model;
+            ViewResult actual = controller.Delete() as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -180,7 +181,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_RedirectsToLogoutIfAccountIsNotActive()
+        public void DeleteConfirmed_NotActive_RedirectsToLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(false);
 
@@ -192,7 +193,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_AddsDeleteDisclaimerMessageIfCanNotDelete()
+        public void DeleteConfirmed_CanNotDelete_AddsDisclaimerMessage()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(false);
@@ -207,14 +208,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_IfCanNotDeleteReturnsEmptyView()
+        public void DeleteConfirmed_CanNotDelete_ReturnsEmptyView()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(false);
 
-            Object model = (controller.DeleteConfirmed(profileDelete) as ViewResult).Model;
+            ViewResult actual = controller.DeleteConfirmed(profileDelete) as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         [Fact]
@@ -229,7 +230,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void DeleteConfirmed_AfterDeleteRedirectsToAuthLogout()
+        public void DeleteConfirmed_RedirectsToAuthLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(true);
             validator.CanDelete(profileDelete).Returns(true);

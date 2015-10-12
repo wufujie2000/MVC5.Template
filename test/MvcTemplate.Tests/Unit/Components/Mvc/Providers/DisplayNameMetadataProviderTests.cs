@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void CreateMetadata_OnNullContainerTypeDoesNotSetDisplayName()
+        public void CreateMetadata_NullContainer_DoesNotSetDisplayName()
         {
             DisplayNameMetadataProviderProxy provider = new DisplayNameMetadataProviderProxy();
 

@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: RegisterRoutes(RouteCollection routes)
 
         [Fact]
-        public void RegisterRoutes_IgnoresAxdRoute()
+        public void RegisterRoutes_IgnoresAxd()
         {
             RouteCollection routes = new RouteCollection();
             config.RegisterRoutes(routes);
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void RegisterRoutes_RegistersDefaultMultilingualRoute()
+        public void RegisterRoutes_DefaultMultilingual()
         {
             RouteCollection routes = new RouteCollection();
             config.RegisterRoutes(routes);
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void RegisterRoutes_RegistersDefaultRoute()
+        public void RegisterRoutes_Default()
         {
             RouteCollection routes = new RouteCollection();
             config.RegisterRoutes(routes);

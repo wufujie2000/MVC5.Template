@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: MinValueAttribute(Int32 minimum)
 
         [Fact]
-        public void MinValueAttribute_SetsMinimumFromInteger()
+        public void MinValueAttribute_ForInteger()
         {
             Decimal actual = new MinValueAttribute(10).Minimum;
             Decimal expected = 10M;
@@ -31,7 +31,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: MinValueAttribute(Double minimum)
 
         [Fact]
-        public void MinValueAttribute_SetsMinimumFromDouble()
+        public void MinValueAttribute_ForDouble()
         {
             Decimal actual = new MinValueAttribute(12.56).Minimum;
             Decimal expected = 12.56M;
@@ -44,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: FormatErrorMessage(String name)
 
         [Fact]
-        public void FormatErrorMessage_FormatsErrorMessageForInteger()
+        public void FormatErrorMessage_ForInteger()
         {
             attribute = new MinValueAttribute(10);
 
@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void FormatErrorMessage_FormatsErrorMessageForDouble()
+        public void FormatErrorMessage_ForDouble()
         {
             attribute = new MinValueAttribute(12.56);
 
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: IsValid(Object value)
 
         [Fact]
-        public void IsValid_NullValueIsValid()
+        public void IsValid_Null()
         {
             Assert.True(attribute.IsValid(null));
         }
@@ -78,13 +78,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Theory]
         [InlineData(12.56)]
         [InlineData("12.561")]
-        public void IsValid_GreaterOrEqualValueIsValid(Object value)
+        public void IsValid_GreaterOrEqualValue(Object value)
         {
             Assert.True(attribute.IsValid(value));
         }
 
         [Fact]
-        public void IsValid_GreaterValueIsNotValid()
+        public void IsValid_LowerValue_ReturnsFalse()
         {
             Assert.False(attribute.IsValid(12.559));
         }

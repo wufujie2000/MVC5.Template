@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Fact]
-        public void RequiredAdapter_SetsRequiredErrorMessage()
+        public void RequiredAdapter_SetsErrorMessage()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "Required");

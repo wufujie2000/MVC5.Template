@@ -13,7 +13,7 @@ using Xunit;
 
 namespace <#= Model.ControllerTestNamespace #>
 {
-    public class <#= Model.Controller #>Tests : AControllerTests
+    public class <#= Model.Controller #>Tests : ControllerTests
     {
         private <#= Model.Controller #> controller;
         private <#= Model.IValidator #> validator;
@@ -34,7 +34,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Index()
 
         [Fact]
-        public void Index_Gets<#= Model.View #>s()
+        public void Index_Returns<#= Model.ShortModel #>Views()
         {
             service.GetViews().Returns(new <#= Model.View #>[0].AsQueryable());
 
@@ -51,7 +51,9 @@ namespace <#= Model.ControllerTestNamespace #>
         [Fact]
         public void Create_ReturnsEmptyView()
         {
-            Assert.Null(controller.Create().Model);
+            ViewResult actual = controller.Create();
+
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -65,7 +67,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Create_ReturnsSameModelIfCanNotCreate()
+        public void Create_CanNotCreate_ReturnsSameView()
         {
             validator.CanCreate(<#= Model.ModelVarName #>).Returns(false);
 
@@ -76,7 +78,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Create_Creates<#= Model.ShortModel #>()
+        public void Create_<#= Model.ShortModel #>()
         {
             validator.CanCreate(<#= Model.ModelVarName #>).Returns(true);
 
@@ -86,7 +88,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Create_AfterCreateRedirectsToIndex()
+        public void Create_RedirectsToIndex()
         {
             validator.CanCreate(<#= Model.ModelVarName #>).Returns(true);
 
@@ -131,7 +133,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: Edit(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
-        public void Edit_ReturnsSameModelIfCanNotEdit()
+        public void Edit_CanNotEdit_ReturnsSameView()
         {
             validator.CanEdit(<#= Model.ModelVarName #>).Returns(false);
 
@@ -142,7 +144,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Edit_Edits<#= Model.ShortModel #>()
+        public void Edit_<#= Model.ShortModel #>()
         {
             validator.CanEdit(<#= Model.ModelVarName #>).Returns(true);
 
@@ -152,7 +154,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Edit_AfterEditRedirectsToIndex()
+        public void Edit_RedirectsToIndex()
         {
             validator.CanEdit(<#= Model.ModelVarName #>).Returns(true);
 
@@ -190,7 +192,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void Delete_AfterDeleteRedirectsToIndex()
+        public void Delete_RedirectsToIndex()
         {
             Object expected = RedirectIfAuthorized(controller, "Index");
             Object actual = controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);

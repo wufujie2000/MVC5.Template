@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()
         {
-            ReturnsCurrentAccountId(controller, "Test");
+            ReturnCurrentAccountId(controller, "Test");
 
             controller.BaseOnActionExecuting(null);
 
@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Dispose()
 
         [Fact]
-        public void Dispose_DisposesService()
+        public void Dispose_Service()
         {
             controller.Dispose();
 
@@ -57,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Dispose_CanBeCalledMultipleTimes()
+        public void Dispose_MultipleTimes()
         {
             controller.Dispose();
             controller.Dispose();

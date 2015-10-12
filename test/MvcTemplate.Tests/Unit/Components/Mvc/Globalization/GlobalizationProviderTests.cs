@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Property: CurrentLanguage
 
         [Fact]
-        public void CurrentLanguage_GetsCurrentLanguage()
+        public void CurrentLanguage_ReturnsCurrentCulture()
         {
             Thread.CurrentThread.CurrentUICulture = provider["en"].Culture;
 
@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void CurrentLanguage_SetsCurrentLanguage()
+        public void CurrentLanguage_SetsCurrentCulture()
         {
             provider.CurrentLanguage = provider.Languages.Last();
 
@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Indexer: this[String abbreviation]
 
         [Fact]
-        public void Indexer_GetsLanguageByAbbreviation()
+        public void Indexer_ReturnsLanguage()
         {
             Language actual = provider["en"];
 

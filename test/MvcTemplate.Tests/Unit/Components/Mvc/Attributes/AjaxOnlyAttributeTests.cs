@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Theory]
         [InlineData("", false)]
         [InlineData("XMLHttpRequest", true)]
-        public void IsValidForRequest_ValidatesAjaxRequests(String headerValue, Boolean expected)
+        public void IsValidForRequest_Ajax(String headerValue, Boolean expected)
         {
             ControllerContext context = new ControllerContext();
             context.HttpContext = HttpContextFactory.CreateHttpContextBase();

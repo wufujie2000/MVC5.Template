@@ -9,16 +9,16 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class TrimmingModelBinderTests
     {
-        private NameValueCollection nameValueCollection;
         private ControllerContext controllerContext;
         private ModelBindingContext bindingContext;
+        private NameValueCollection collection;
         private TrimmingModelBinder binder;
 
         public TrimmingModelBinderTests()
         {
-            nameValueCollection = new NameValueCollection();
             controllerContext = new ControllerContext();
             bindingContext = new ModelBindingContext();
+            collection = new NameValueCollection();
             bindingContext.ModelName = "Trimmed";
             binder = new TrimmingModelBinder();
 
@@ -29,28 +29,28 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
 
         [Fact]
-        public void BindModel_ReturnNullThenThereIsNoValueProvider()
+        public void BindModel_NullValue_ReturnsNull()
         {
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
+            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
             Assert.Null(binder.BindModel(controllerContext, bindingContext));
         }
 
         [Fact]
-        public void BindModel_OnNullValueReturnsNull()
+        public void BindModel_NullAttemptedValue_ReturnsNull()
         {
-            nameValueCollection.Add(bindingContext.ModelName, null);
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
+            collection.Add(bindingContext.ModelName, null);
+            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
             Assert.Null(binder.BindModel(controllerContext, bindingContext));
         }
 
         [Fact]
-        public void BindModel_DoesNotTrimPropertyWithNotTrimmedAttribute()
+        public void BindModel_DoesNotTrimValue()
         {
             bindingContext.ModelName = "NotTrimmed";
-            nameValueCollection.Add(bindingContext.ModelName, "  Trimmed text  ");
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
+            collection.Add(bindingContext.ModelName, "  Trimmed text  ");
+            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
             bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(BindersModel), "NotTrimmed");
 
@@ -61,10 +61,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void BindModel_TrimsBindedModelsProperty()
+        public void BindModel_TrimsValue()
         {
-            nameValueCollection.Add(bindingContext.ModelName, "  Trimmed text  ");
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(nameValueCollection, null);
+            collection.Add(bindingContext.ModelName, "  Trimmed text  ");
+            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
             Object actual = binder.BindModel(controllerContext, bindingContext);
             Object expected = "Trimmed text";

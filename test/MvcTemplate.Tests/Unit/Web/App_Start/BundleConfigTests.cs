@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterBundles(BundleCollection bundles)
 
         [Fact]
-        public void RegisterBundles_RegistersScriptBundles()
+        public void RegisterBundles_ForScripts()
         {
             String[] expectedBundles =
             {
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void RegisterBundles_RegistersStyleBundles()
+        public void RegisterBundles_ForStyles()
         {
             String[] expectedBundles =
             {

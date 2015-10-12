@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetValidators(ModelMetadata metadata, ControllerContext context)
 
         [Fact]
-        public void GetValidators_GetsNoValidators()
+        public void GetValidators_ReturnsEmpty()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Id");
 
@@ -27,7 +27,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetValidators_GetsDateValidator()
+        public void GetValidators_ReturnsDateValidator()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Date");
 
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetValidators_GetsNumericValidator()
+        public void GetValidators_ReturnsNumericValidator()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Numeric");
 

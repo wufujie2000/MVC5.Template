@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: Validate(Object container)
 
         [Fact]
-        public void Validate_DoesNotValidate()
+        public void Validate_ReturnsEmpty()
         {
             Assert.Empty(validator.Validate(null));
         }

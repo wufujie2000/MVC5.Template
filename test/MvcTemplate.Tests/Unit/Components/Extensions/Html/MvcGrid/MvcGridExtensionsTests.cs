@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
 
         [Fact]
-        public void AddActionLink_OnUnauthorizedActionLinkDoesNotAddColumn()
+        public void AddActionLink_Unauthorized_Empty()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
@@ -44,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddActionLink_RendersAuthorizedActionLink()
+        public void AddActionLink_Authorized_Renders()
         {
             AllTypesView view = new AllTypesView();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
@@ -65,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddActionLink_OnNullAuthorizationProviderRendersActionLink()
+        public void AddActionLink_NullAuthorization_Renders()
         {
             Authorization.Provider = null;
             AllTypesView view = new AllTypesView();
@@ -85,7 +85,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddActionLink_OnModelWihoutKeyPropertyThrows()
+        public void AddActionLink_NoKey_Throws()
         {
             IGrid<Object> grid = new Grid<Object>(new Object[0]);
             IGridColumns<Object> columns = new GridColumns<Object>(grid);
@@ -114,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
-        public void AddDateProperty_AddsGridColumn()
+        public void AddDateProperty_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
             Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
@@ -133,7 +133,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
-        public void AddDateProperty_Nullable_AddsGridColumn()
+        public void AddDateProperty_Nullable_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
@@ -152,7 +152,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
 
         [Fact]
-        public void AddBooleanProperty_AddsGridColumn()
+        public void AddBooleanProperty_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean>(model => model.BooleanField);
             Expression<Func<AllTypesView, Boolean>> expression = (model) => model.BooleanField;
@@ -166,7 +166,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddBooleanProperty_RendersBooleanTrueValue()
+        public void AddBooleanProperty_RendersYes()
         {
             AllTypesView view = new AllTypesView { BooleanField = true };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddBooleanProperty_RendersBooleanFalseValue()
+        public void AddBooleanProperty_RendersNo()
         {
             AllTypesView view = new AllTypesView { BooleanField = false };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
@@ -194,7 +194,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
 
         [Fact]
-        public void AddBooleanProperty_Nullable_AddsGridColumn()
+        public void AddBooleanProperty_Nullable_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean?>(model => model.NullableBooleanField);
             Expression<Func<AllTypesView, Boolean?>> expression = (model) => model.NullableBooleanField;
@@ -208,7 +208,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddBooleanProperty_Nullable_RendersBooleanTrueValue()
+        public void AddBooleanProperty_Nullable_RendersYes()
         {
             AllTypesView view = new AllTypesView { NullableBooleanField = true };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
@@ -220,7 +220,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddBooleanProperty_Nullable_RendersBooleanFalseValue()
+        public void AddBooleanProperty_Nullable_RendersNo()
         {
             AllTypesView view = new AllTypesView { NullableBooleanField = false };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
@@ -232,7 +232,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void AddBooleanProperty_Nullable_RendersBooleanNullValue()
+        public void AddBooleanProperty_Nullable_RendersEmpty()
         {
             AllTypesView view = new AllTypesView { NullableBooleanField = null };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
@@ -247,7 +247,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
-        public void AddDateTimeProperty_AddsGridColumn()
+        public void AddDateTimeProperty_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
             Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
@@ -266,7 +266,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
-        public void AddDateTimeProperty_Nullable_AddsGridColumn()
+        public void AddDateTimeProperty_Nullable_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
@@ -285,7 +285,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
 
         [Fact]
-        public void AddProperty_AddsGridColumn()
+        public void AddProperty_Column()
         {
             String title = ResourceProvider.GetPropertyTitle<AllTypesView, AllTypesView>(model => model);
             Expression<Func<AllTypesView, AllTypesView>> expression = (model) => model;

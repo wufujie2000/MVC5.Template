@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Register()
 
         [Fact]
-        public void Register_RedirectsToDefaultIfAlreadyLoggedIn()
+        public void Register_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
 
@@ -58,13 +58,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Register_IfNotLoggedInReturnsEmptyView()
+        public void Register_ReturnsEmptyView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
 
-            Object model = (controller.Register() as ViewResult).Model;
+            ViewResult actual = controller.Register() as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -78,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Register_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
+        public void Register_IsLoggenIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
 
@@ -89,10 +89,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Register_ReturnsSameModelIfCanNotRegister()
+        public void Register_CanNotRegister_ReturnsSameView()
         {
-            validator.CanRegister(accountRegister).Returns(false);
             service.IsLoggedIn(controller.User).Returns(false);
+            validator.CanRegister(accountRegister).Returns(false);
 
             Object actual = (controller.Register(accountRegister) as ViewResult).Model;
             Object expected = accountRegister;
@@ -101,10 +101,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Register_RegistersAccount()
+        public void Register_Account()
         {
-            validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
+            validator.CanRegister(accountRegister).Returns(true);
 
             controller.Register(accountRegister);
 
@@ -112,22 +112,22 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Register_AddsSuccessfulRegistrationMessage()
+        public void Register_AddsRegistrationMessage()
         {
-            validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
+            validator.CanRegister(accountRegister).Returns(true);
 
             controller.Register(accountRegister);
 
             Alert actual = controller.Alerts.Single();
 
-            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.Equal(Messages.SuccessfulRegistration, actual.Message);
             Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal(Messages.SuccessfulRegistration, actual.Message);
+            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
         }
 
         [Fact]
-        public void Register_AfterRegistrationRedirectsToLogin()
+        public void Register_RedirectsToLogin()
         {
             validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
@@ -143,7 +143,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Recover()
 
         [Fact]
-        public void Recover_RedirectsToDefaultIfAlreadyLoggedIn()
+        public void Recover_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
 
@@ -154,13 +154,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_IfNotLoggedInReturnsEmptyView()
+        public void Recover_ReturnsEmptyView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
 
-            Object model = (controller.Recover() as ViewResult).Model;
+            ViewResult actual = controller.Recover() as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -168,7 +168,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Recover(AccountRecoveryView account)
 
         [Fact]
-        public void Recover_OnAlreadyLoggedInRedirectsToDefault()
+        public void Recover_Post_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -180,7 +180,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_ReturnsSameModelIfCanNotRecover()
+        public void Recover_CanNotRecover_ReturnsSameView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(false);
@@ -192,7 +192,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_RecoversAccount()
+        public void Recover_Account()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -203,7 +203,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_OnNotNullRecoveryTokenSendsRecoveryInformation()
+        public void Recover_SendsRecoveryInformation()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -220,7 +220,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_OnNullRecoveryTokenDoesNotSendRecoveryInformation()
+        public void Recover_NullToken_DoesNotSendRecoveryInformation()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -232,7 +232,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_AddsRecoveryInformationMessage()
+        public void Recover_AddsRecoveryMessage()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -248,7 +248,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_AfterRecoveryRedirectsToLogin()
+        public void Recover_RedirectsToLogin()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
@@ -265,7 +265,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Reset(String token)
 
         [Fact]
-        public void Reset_RedirectsToDefaultIfAlreadyLoggedIn()
+        public void Reset_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
 
@@ -276,7 +276,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Reset_RedirectsToRecoverIfCanNotReset()
+        public void Reset_CanNotReset_RedirectsToRecover()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(false);
@@ -288,14 +288,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Reset_IfCanResetReturnsEmptyView()
+        public void Reset_ReturnsEmptyView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(true);
 
-            Object model = (controller.Reset("") as ViewResult).Model;
+            ViewResult actual = controller.Reset("") as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -303,7 +303,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Reset(AccountResetView account)
 
         [Fact]
-        public void Reset_OnPostRedirectsToDefaultIfAlreadyLoggedIn()
+        public void Reset_Post_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
 
@@ -314,7 +314,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Reset_OnPostRedirectsToRecoverIfCanNotReset()
+        public void Reset_Post_CanNotReset_RedirectsToRecover()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(false);
@@ -326,7 +326,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Reset_ResetsAccount()
+        public void Reset_Account()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
@@ -337,7 +337,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Reset_AddsSuccessfulResetMessage()
+        public void Reset_AddsResetMessage()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
@@ -346,13 +346,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Alert actual = controller.Alerts.Single();
 
-            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
-            Assert.Equal(Messages.SuccessfulReset, actual.Message);
             Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal(Messages.SuccessfulReset, actual.Message);
+            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
         }
 
         [Fact]
-        public void Reset_AfterResetRedirectsToLogin()
+        public void Reset_RedirectsToLogin()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
@@ -368,7 +368,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Login(String returnUrl)
 
         [Fact]
-        public void Login_RedirectsToUrlIfAlreadyLoggedIn()
+        public void Login_IsLoggedIn_RedirectsToUrl()
         {
             service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
@@ -381,13 +381,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Login_IfNotLoggedInReturnsEmptyView()
+        public void Login_NotLoggedIn_ReturnsEmptyView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
 
-            Object model = (controller.Login("/") as ViewResult).Model;
+            ViewResult actual = controller.Login("/") as ViewResult;
 
-            Assert.Null(model);
+            Assert.Null(actual.Model);
         }
 
         #endregion
@@ -395,7 +395,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Login(AccountLoginView account, String returnUrl)
 
         [Fact]
-        public void Login_OnPostRedirectsToUrlIfAlreadyLoggedIn()
+        public void Login_Post_IsLoggedIn_RedirectsToUrl()
         {
             service.IsLoggedIn(controller.User).Returns(true);
             controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
@@ -408,7 +408,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Login_ReturnsSameModelIfCanNotLogin()
+        public void Login_CanNotLogin_ReturnsSameView()
         {
             validator.CanLogin(accountLogin).Returns(false);
 
@@ -419,7 +419,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Login_LogsInAccount()
+        public void Login_Account()
         {
             validator.CanLogin(accountLogin).Returns(true);
             controller.When(sub => sub.RedirectToLocal(null)).DoNotCallBase();
@@ -431,7 +431,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Login_RedirectsToUrlIfCanLogin()
+        public void Login_RedirectsToUrl()
         {
             validator.CanLogin(accountLogin).Returns(true);
             controller.When(sub => sub.RedirectToLocal("/")).DoNotCallBase();
@@ -448,7 +448,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Logout()
 
         [Fact]
-        public void Logout_LogsOut()
+        public void Logout_Account()
         {
             controller.Logout();
 

@@ -71,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
 
         [Fact]
-        public void Log_LogsAddedEntities()
+        public void Log_Added()
         {
             entry.State = EntityState.Added;
 
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_LogsModifiedEntities()
+        public void Log_Modified()
         {
             (entry.Entity as TestModel).Text += "Test";
             entry.State = EntityState.Modified;
@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_DoesNotLogModifiedEntitiesWithoutChanges()
+        public void Log_NoChanges_DoesNotLog()
         {
             entry.State = EntityState.Modified;
 
@@ -98,7 +98,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_LogsDeletedEntities()
+        public void Log_Deleted()
         {
             entry.State = EntityState.Deleted;
 
@@ -106,7 +106,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_DoesNotLogUnsupportedEntityStates()
+        public void Log_UnsupportedState_DoesNotLog()
         {
             IEnumerable<EntityState> unsupportedStates = Enum
                 .GetValues(typeof(EntityState))
@@ -126,7 +126,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_DoesNotSaveLogs()
+        public void Log_DoesNotSaveChanges()
         {
             entry.State = EntityState.Added;
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
@@ -170,7 +170,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Log_DoesNotSaveLog()
+        public void Log_DoesNotSave()
         {
             entry.State = EntityState.Added;
             LoggableEntity entity = new LoggableEntity(entry);
@@ -186,7 +186,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         #region Method: Save()
 
         [Fact]
-        public void Save_SavesLogs()
+        public void Save_Logs()
         {
             TestingContext context = Substitute.For<TestingContext>();
             logger = Substitute.ForPartsOf<AuditLogger>(context);
@@ -201,7 +201,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         #region Method: Dispose()
 
         [Fact]
-        public void Dispose_DisposesContext()
+        public void Dispose_Context()
         {
             TestingContext context = Substitute.For<TestingContext>();
             AuditLogger logger = new AuditLogger(context);
@@ -212,7 +212,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void Dispose_CanBeCalledMultipleTimes()
+        public void Dispose_MultipleTimes()
         {
             logger.Dispose();
             logger.Dispose();

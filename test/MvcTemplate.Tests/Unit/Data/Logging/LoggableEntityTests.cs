@@ -105,7 +105,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         }
 
         [Fact]
-        public void LoggableEntity_SetsEntityBaseTypeNameThenEntityIsProxied()
+        public void LoggableEntity_SetsEntityTypeNameFromProxy()
         {
             String actual = new LoggableEntity(entry).Name;
             String expected = typeof(Role).Name;

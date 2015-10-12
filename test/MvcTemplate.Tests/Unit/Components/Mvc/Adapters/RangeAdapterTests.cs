@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: RangeAdapter(ModelMetadata metadata, ControllerContext context, RangeAttribute attribute)
 
         [Fact]
-        public void RangeAdapter_SetsRangeErrorMessage()
+        public void RangeAdapter_SetsErrorMessage()
         {
             RangeAttribute attribute = new RangeAttribute(0, 128);
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()

@@ -355,7 +355,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         #region Method: Refresh()
 
         [Fact]
-        public void Refresh_RefreshesPrivileges()
+        public void Refresh_Privileges()
         {
             Account account = CreateAccountWithPrivilegeFor("Area", "Authorized", "Action");
             Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));

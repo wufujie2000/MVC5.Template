@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Get<TView>(String id)
 
         [Fact]
-        public void Get_GetsViewById()
+        public void Get_ReturnsViewById()
         {
             <#= Model.View #> actual = service.Get<<#= Model.View #>>(<#= Model.ModelVarName #>.Id);
             <#= Model.View #> expected = Mapper.Map<<#= Model.View #>>(<#= Model.ModelVarName #>);
@@ -52,7 +52,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: GetViews()
 
         [Fact]
-        public void GetViews_Gets<#= Model.ShortModel #>Views()
+        public void GetViews_Returns<#= Model.ShortModel #>Views()
         {
             IEnumerator<<#= Model.View #>> actual = service.GetViews().GetEnumerator();
             IEnumerator<<#= Model.View #>> expected = context
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Create(<#= Model.View #> view)
 
         [Fact]
-        public void Create_Creates<#= Model.ShortModel #>()
+        public void Create_<#= Model.ShortModel #>()
         {
             <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(2);
 
@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Edit(<#= Model.View #> view)
 
         [Fact]
-        public void Edit_Edits<#= Model.ShortModel #>()
+        public void Edit_<#= Model.ShortModel #>()
         {
             <#= Model.Model #> <#= Model.ModelVarName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
             <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>();
@@ -117,7 +117,7 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Method: Delete(String id)
 
         [Fact]
-        public void Delete_Deletes<#= Model.ShortModel #>()
+        public void Delete_<#= Model.ShortModel #>()
         {
             service.Delete(<#= Model.ModelVarName #>.Id);
 

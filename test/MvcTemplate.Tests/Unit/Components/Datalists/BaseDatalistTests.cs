@@ -147,7 +147,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: GetModels()
 
         [Fact]
-        public void GetModels_ReturnsModelsFromUnitOfWork()
+        public void GetModels_FromUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
             datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
@@ -164,7 +164,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: FilterById(IQueryable<TView> models)
 
         [Fact]
-        public void FilterById_FiltersUnitOfWorkByCurrentFilterId()
+        public void FilterById_FromCurrentFilter()
         {
             TestingContext context = new TestingContext();
             Role role = ObjectFactory.CreateRole();

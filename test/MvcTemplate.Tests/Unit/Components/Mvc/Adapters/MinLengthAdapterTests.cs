@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Constructor: MinLengthAdapter(ModelMetadata metadata, ControllerContext context, MinLengthAttribute attribute)
 
         [Fact]
-        public void MinLengthAdapter_SetsMinLengthErrorMessage()
+        public void MinLengthAdapter_SetsErrorMessage()
         {
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");

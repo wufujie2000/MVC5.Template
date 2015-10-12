@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: RenderControllerScript(this HtmlHelper html)
 
         [Fact]
-        public void RenderControllerScript_RendersControllerScriptsWithArea()
+        public void RenderControllerScript_WithArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void RenderControllerScript_RendersControllerScriptsWithoutArea()
+        public void RenderControllerScript_WithoutArea()
         {
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/accounts/accounts.js");
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void RenderControllerScript_DoesNotRendersNotExistingScripts()
+        public void RenderControllerScript_NoScripts_DoesNotRender()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
 
@@ -65,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: RenderControllerStyle(this HtmlHelper html)
 
         [Fact]
-        public void RenderControllerStyle_RendersControllerStylesWithArea()
+        public void RenderControllerStyle_WithArea()
         {
             String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
@@ -77,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void RenderControllerStyle_RendersControllerStylesWithoutArea()
+        public void RenderControllerStyle_WithoutArea()
         {
             String styleRef = urlHelper.Content("~/Content/Shared/accounts/accounts.css");
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
@@ -90,7 +90,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void RenderControllerStyle_DoesNotRendersNotExistingStyles()
+        public void RenderControllerStyle_NoStyles_DoesNotRender()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
 

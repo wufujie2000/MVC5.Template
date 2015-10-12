@@ -8,7 +8,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Constructor: JsTree()
 
         [Fact]
-        public void JsTree_CreatesEmptyTree()
+        public void JsTree_CreatesEmpty()
         {
             JsTree actual = new JsTree();
 

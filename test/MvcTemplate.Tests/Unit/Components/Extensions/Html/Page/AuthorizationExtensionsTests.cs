@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action)
 
         [Fact]
-        public void IsAuthorizedFor_OnNullAuthorizationProviderReturnsTrue()
+        public void IsAuthorizedFor_NullProvider_ReturnsTrue()
         {
             Authorization.Provider = null;
 
@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsAuthorizedFor_ReturnsAuthorizationProviderResult(Boolean isAuthorized)
+        public void IsAuthorizedFor_ReturnsAuthorizationResult(Boolean isAuthorized)
         {
             String area = html.ViewContext.RouteData.Values["area"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: IsAuthorizedFor(this HtmlHelper html, String area, String controller, String action)
 
         [Fact]
-        public void IsAuthorizedFor_Overload_OnNullAuthorizationProviderReturnsTrue()
+        public void IsAuthorizedFor_OverloadedNullProvider_ReturnsTrue()
         {
             Authorization.Provider = null;
 
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsAuthorizedFor_Overload_ReturnsAuthorizationProviderResult(Boolean isAuthorized)
+        public void IsAuthorizedFor_ReturnsOverloadedProviderResult(Boolean isAuthorized)
         {
             String area = html.ViewContext.RouteData.Values["area"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;

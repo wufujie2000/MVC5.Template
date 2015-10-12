@@ -152,19 +152,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: Application_Error()
-
-        [Fact(Skip = "Web configuration can not be edited.")]
-        public void Application_Error()
-        {
-        }
-
-        #endregion
-
         #region Method: RegisterCurrentDependencyResolver()
 
         [Fact]
-        public void RegisterCurrentDependencyResolver_RegistersCurrentDependencyResolver()
+        public void RegisterCurrentDependencyResolver_Implementation()
         {
             Assert.IsNotType<LightInjectMvcDependencyResolver>(DependencyResolver.Current);
 
@@ -178,7 +169,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterGlobalizationProvider()
 
         [Fact]
-        public void RegisterGlobalizationProvider_RegistersGlobalizationProvider()
+        public void RegisterGlobalizationProvider_Implementation()
         {
             IGlobalizationProvider globalization = Substitute.For<IGlobalizationProvider>();
             DependencyResolver.Current.GetService<IGlobalizationProvider>().Returns(globalization);
@@ -197,7 +188,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterModelMetadataProvider()
 
         [Fact]
-        public void RegisterModelMetadataProvider_RegistersModelMetadataProvider()
+        public void RegisterModelMetadataProvider_Implementation()
         {
             application.RegisterModelMetadataProvider();
 
@@ -220,7 +211,7 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void RegisterDataTypeValidator_RegistersDataTypeValidatorProvider()
+        public void RegisterDataTypeValidator_Provider()
         {
             application.RegisterDataTypeValidator();
 
@@ -235,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterSiteMapProvider()
 
         [Fact]
-        public void RegisterSiteMapProvider_RegistersSiteMapProvider()
+        public void RegisterSiteMapProvider_Implementation()
         {
             IMvcSiteMapProvider siteMap = Substitute.For<IMvcSiteMapProvider>();
             DependencyResolver.Current.GetService<IMvcSiteMapProvider>().Returns(siteMap);
@@ -268,7 +259,7 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void RegisterAuthorization_RefreshesAuthorizationProvider()
+        public void RegisterAuthorization_RefreshesAuthorization()
         {
             IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
             DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(provider);
@@ -283,7 +274,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterModelBinders()
 
         [Fact]
-        public void RegisterModelBinders_RegistersModelBinders()
+        public void RegisterModelBinders_Implementations()
         {
             Assert.Null(ModelBinders.Binders[typeof(String)]);
 
@@ -310,7 +301,7 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void RegisterViewEngine_RegistersViewEngine()
+        public void RegisterViewEngine_Implementation()
         {
             application.RegisterViewEngine();
 
@@ -355,7 +346,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterFilters()
 
         [Fact]
-        public void RegisterFilters_RegistersExceptionFilter()
+        public void RegisterFilters_ForExceptions()
         {
             IExceptionFilter filter = Substitute.For<IExceptionFilter>();
             DependencyResolver.Current.GetService<IExceptionFilter>().Returns(filter);
@@ -385,19 +376,10 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterAreas()
-
-        [Fact(Skip = "Cannot be called during the application's pre-start initialization stage.")]
-        public void RegisterAreas_RegistersAreas()
-        {
-        }
-
-        #endregion
-
         #region Method: RegisterRoute()
 
         [Fact]
-        public void RegisterRoute_RegistersLowercaseUrls()
+        public void RegisterRoute_ForLowercaseUrls()
         {
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
             DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);
@@ -408,7 +390,7 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void RegisterRoute_RegistersRoute()
+        public void RegisterRoute()
         {
             IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
             DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);

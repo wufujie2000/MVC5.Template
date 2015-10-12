@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [InlineData(typeof(IRoleValidator), typeof(RoleValidator))]
         [InlineData(typeof(IAccountValidator), typeof(AccountValidator))]
-        public void RegisterServices_RegistersTransientImplementation(Type abstraction, Type expectedType)
+        public void RegisterServices_Transient(Type abstraction, Type expectedType)
         {
             Object expected = container.GetInstance(abstraction);
             Object actual = container.GetInstance(abstraction);
@@ -65,33 +65,13 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [Theory]
         [InlineData(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
-        public void RegisterServices_RegistersSingletonImplementation(Type abstraction, Type expectedType)
+        public void RegisterServices_Singleton(Type abstraction, Type expectedType)
         {
             Object expected = container.GetInstance(abstraction);
             Object actual = container.GetInstance(abstraction);
 
             Assert.IsType(expectedType, actual);
             Assert.Same(expected, actual);
-        }
-
-        [Fact(Skip = "Site map provider uses virtual server path.")]
-        public void RegisterServices_RegistersMvcSiteMapProvider()
-        {
-            Object expected = container.GetInstance<IMvcSiteMapProvider>();
-            Object actual = container.GetInstance<IMvcSiteMapProvider>();
-
-            Assert.IsType<MvcSiteMapProvider>(actual);
-            Assert.NotSame(expected, actual);
-        }
-
-        [Fact(Skip = "Globalization provider uses virtual server path.")]
-        public void RegisterServices_RegistersGlobalizationProvider()
-        {
-            Object expected = container.GetInstance<IGlobalizationProvider>();
-            Object actual = container.GetInstance<IGlobalizationProvider>();
-
-            Assert.IsType<GlobalizationProvider>(actual);
-            Assert.NotSame(expected, actual);
         }
 
         #endregion

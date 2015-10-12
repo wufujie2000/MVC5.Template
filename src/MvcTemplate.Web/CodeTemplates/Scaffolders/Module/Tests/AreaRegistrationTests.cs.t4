@@ -34,7 +34,7 @@ namespace <#= Model.ControllerTestNamespace #>
         #region Method: RegisterArea(AreaRegistrationContext context)
 
         [Fact]
-        public void RegisterArea_MapsMultilingualRoute()
+        public void RegisterArea_MultilingualRoute()
         {
             Route actual = registrationContext.Routes["<#= Model.Area #>Multilingual"] as Route;
 
@@ -48,7 +48,7 @@ namespace <#= Model.ControllerTestNamespace #>
         }
 
         [Fact]
-        public void RegisterArea_MapsDefaultRoute()
+        public void RegisterArea_DefaultRoute()
         {
             Route actual = registrationContext.Routes["<#= Model.Area #>"] as Route;
 

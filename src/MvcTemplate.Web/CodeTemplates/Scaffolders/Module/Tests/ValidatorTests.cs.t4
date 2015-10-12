@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         #region Method: CanCreate(<#= Model.View #> view)
 
         [Fact]
-        public void CanCreate_CanNotCreateWithInvalidModelState()
+        public void CanCreate_InvalidState_ReturnsFalse()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
-        public void CanCreate_CanCreateValid<#= Model.ShortModel #>()
+        public void CanCreate_Valid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanCreate(ObjectFactory.Create<#= Model.View #>()));
         }
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         #region Method: CanEdit(<#= Model.View #> view)
 
         [Fact]
-        public void CanEdit_CanNotEditWithInvalidModelState()
+        public void CanEdit_InvalidState_ReturnsFalse()
         {
             validator.ModelState.AddModelError("Test", "Test");
 
@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Validators
         }
 
         [Fact]
-        public void CanEdit_CanEditValid<#= Model.ShortModel #>()
+        public void CanEdit_Valid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanEdit(ObjectFactory.Create<#= Model.View #>()));
         }

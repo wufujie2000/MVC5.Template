@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: GetData(AbstractDatalist datalist, DatalistFilter filter)
 
         [Fact]
-        public void GetData_SetsDatalistCurrentFilter()
+        public void GetData_SetsCurrentFilter()
         {
             controller.GetData(datalist, filter);
 
@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void GetData_ReturnsPublicJsonData()
+        public void GetData_ReturnsPublicJson()
         {
             datalist.GetData().Returns(new DatalistData());
 
@@ -62,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Role(DatalistFilter filter)
 
         [Fact]
-        public void Role_GetsRolesData()
+        public void Role_ReturnsRolesData()
         {
             Object expected = GetData<BaseDatalist<Role, RoleView>>(controller);
             Object actual = controller.Role(filter);
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Method: Dispose()
 
         [Fact]
-        public void Dispose_DisposesUnitOfWork()
+        public void Dispose_UnitOfWork()
         {
             controller.Dispose();
 
@@ -83,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Dispose_CanBeCalledMultipleTimes()
+        public void Dispose_MultipleTimes()
         {
             controller.Dispose();
             controller.Dispose();

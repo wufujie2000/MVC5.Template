@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetAuthorizedMenus(ViewContext context)
 
         [Fact]
-        public void GetAuthorizedMenus_OnNullAuthorizationProviderReturnsAllMenus()
+        public void GetAuthorizedMenus_NullAuthorization_ReturnsAllMenus()
         {
             Authorization.Provider = null;
 
@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_ReturnsOnlyAuthorizedMenus()
+        public void GetAuthorizedMenus_ReturnsAuthorizedMenus()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Accounts", "Index").Returns(true);
@@ -134,7 +134,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_SetsActiveMenuIfNonMenuChildrenNodeIsActive()
+        public void GetAuthorizedMenus_NonMenuChildrenNodeIsActive_SetsActiveMenu()
         {
             Authorization.Provider = null;
             routeValues["action"] = "Edit";
@@ -161,7 +161,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_SetsHasActiveChildrenOnEveryActiveMenuParents()
+        public void GetAuthorizedMenus_ActiveMenuParents_SetsHasActiveChildren()
         {
             Authorization.Provider = null;
             routeValues["action"] = "Create";
@@ -220,7 +220,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region Method: GetBreadcrumb(ViewContext context)
 
         [Fact]
-        public void GetBreadcrumb_FormsBreadcrumbByIgnoringCase()
+        public void GetBreadcrumb_IsCaseInsensitive()
         {
             routeValues["controller"] = "profile";
             routeValues["action"] = "edit";
@@ -247,7 +247,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetBreadcrumb_OnNotFoundCurrentActionReturnsEmpty()
+        public void GetBreadcrumb_NoAction_ReturnsEmpty()
         {
             routeValues["controller"] = "profile";
             routeValues["action"] = "edit";

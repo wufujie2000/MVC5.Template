@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: Where(Expression<Func<TModel, Boolean>> predicate)
 
         [Fact]
-        public void Where_FiltersSelection()
+        public void Where_Filters()
         {
             IEnumerable<TestModel> expected = context.Set<TestModel>().Where(model => model.Id == null);
             IEnumerable<TestModel> actual = select.Where(model => model.Id == null);
@@ -89,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         }
 
         [Fact]
-        public void Where_ReturnsSameSelect()
+        public void Where_ReturnsItself()
         {
             Object actual = select.Where(model => model.Id == null);
             Object expected = select;
@@ -102,7 +102,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: To<TView>()
 
         [Fact]
-        public void To_ProjectsSetTo()
+        public void To_ProjectsSet()
         {
             IEnumerable<String> expected = context.Set<TestModel>().ProjectTo<TestView>().Select(view => view.Id).ToArray();
             IEnumerable<String> actual = select.To<TestView>().Select(view => view.Id).ToArray();
@@ -115,7 +115,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: GetEnumerator()
 
         [Fact]
-        public void GetEnumerator_ReturnsContextsSetsEnumerator()
+        public void GetEnumerator_ReturnsSetEnumerator()
         {
             IEnumerable<TestModel> expected = context.Set<TestModel>();
             IEnumerable<TestModel> actual = select.ToArray();

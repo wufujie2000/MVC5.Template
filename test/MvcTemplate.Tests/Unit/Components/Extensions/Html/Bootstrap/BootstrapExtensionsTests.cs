@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Boolean? required = null)
 
         [Fact]
-        public void FormLabelFor_OnNotMemberExpressionThrows()
+        public void FormLabelFor_NotMemberExpression_Throws()
         {
             Exception exception = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType(), required: true));
 
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsOverwrittenRequiredLabel()
+        public void FormLabelFor_OverwrittenNotRequiredExpression()
         {
             String actual = html.FormLabelFor(x => x.Relation.NotRequired, required: true).ToString();
             String expected =
@@ -44,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsOverwrittenNotRequiredLabel()
+        public void FormLabelFor_OverwrittenRequiredExpression()
         {
             String actual = html.FormLabelFor(x => x.Relation.Required, required: false).ToString();
             String expected =
@@ -56,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsRequiredLabel()
+        public void FormLabelFor_RequiredExpression()
         {
             String actual = html.FormLabelFor(x => x.Relation.Required).ToString();
             String expected =
@@ -68,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsRequiredLabelOnValueTypes()
+        public void FormLabelFor_ValueType()
         {
             String actual = html.FormLabelFor(x => x.Relation.Number).ToString();
             String expected =
@@ -80,7 +80,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsNotRequiredLabel()
+        public void FormLabelFor_NotRequiredExpression()
         {
             String actual = html.FormLabelFor(x => x.Relation.NotRequired).ToString();
             String expected =
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormLabelFor_FormsNotRequiredLabelOnNullableValueTypes()
+        public void FormLabelFor_NullableValueType()
         {
             String actual = html.FormLabelFor(x => x.Relation.Date).ToString();
             String expected =
@@ -108,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormTextBoxFor_DoesNotAddReadOnlyAttribute()
+        public void FormTextBoxFor_Expression()
         {
             String actual = html.FormTextBoxFor(x => x.Number).ToString();
             String expected = String.Format(
@@ -119,7 +119,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextBoxFor_EditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue).ToString();
             String expected = String.Format(
@@ -130,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextBoxFor_NotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse).ToString();
             String expected = String.Format(
@@ -145,7 +145,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format)
 
         [Fact]
-        public void FormTextBoxFor_Format_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextBoxFor_FormattedEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}").ToString();
             String expected = String.Format(
@@ -156,7 +156,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextBoxFor_FormattedNotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}").ToString();
             String expected = String.Format(
@@ -167,7 +167,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_FormatsTextBoxValue()
+        public void FormTextBoxFor_FormattedExpression()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}").ToString();
             String expected = String.Format(
@@ -182,7 +182,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
 
         [Fact]
-        public void FormTextBoxFor_Attributes_MergesClassAttributes()
+        public void FormTextBoxFor_MergesClassAttributes()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { @class = "test" }).ToString();
             String expected = String.Format(
@@ -193,7 +193,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_DoesNotOverwriteAutocompleteAttribute()
+        public void FormTextBoxFor_OverwrittenAutocompleteAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { autocomplete = "on" }).ToString();
             String expected = String.Format(
@@ -204,7 +204,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_DoesNotOverwriteReadOnlyAttribute()
+        public void FormTextBoxFor_OverwrittenReadOnlyAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, new { @readonly = "false" }).ToString();
             String expected = String.Format(
@@ -215,7 +215,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextBoxFor_AttributedEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, new { data_tab = "Test" }).ToString();
             String expected = String.Format(
@@ -226,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextBoxFor_AttributedNotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, new { data_tab = "Test" }).ToString();
             String expected = String.Format(
@@ -241,7 +241,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextBoxFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, String format, Object htmlAttributes)
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_MergesClassAttributes()
+        public void FormTextBoxFor_AttributedFormat_MergesClassAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}", new { @class = "test" }).ToString();
             String expected = String.Format(
@@ -252,7 +252,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteAutocompleteAttribute()
+        public void FormTextBoxFor_AttributedFormat_OverwritesAutocompleteAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, "{0}", new { autocomplete = "on" }).ToString();
             String expected = String.Format(
@@ -263,7 +263,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_DoesNotOverwriteReadOnlyAttribute()
+        public void FormTextBoxFor_AttributedFormat_OverwritesReadOnlyAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { @readonly = "false" }).ToString();
             String expected = String.Format(
@@ -274,7 +274,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextBoxFor_AttributedFormat_EditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}", new { data_tab = "Test" }).ToString();
             String expected = String.Format(
@@ -285,7 +285,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextBoxFor_Format_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextBoxFor_AttributedFormat_NotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { data_tab = "Test" }).ToString();
             String expected = String.Format(
@@ -300,7 +300,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormPasswordFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression)
 
         [Fact]
-        public void FormPasswordFor_FormsNotAutocompletablePasswordInput()
+        public void FormPasswordFor_Expression()
         {
             String expected = "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Required\" name=\"Relation.Required\" type=\"password\" />";
             String actual = html.FormPasswordFor(x => x.Relation.Required).ToString();
@@ -313,7 +313,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormTextAreaFor_DoesNotAddReadOnlyAttribute()
+        public void FormTextAreaFor_Expression()
         {
             String actual = html.FormTextAreaFor(x => x.Number).ToString();
             String expected = String.Format(
@@ -324,7 +324,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextAreaFor_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextAreaFor_EditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableTrue).ToString();
             String expected = String.Format(
@@ -335,7 +335,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextAreaFor_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextAreaFor_NotEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableFalse).ToString();
             String expected = String.Format(
@@ -350,7 +350,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
 
         [Fact]
-        public void FormTextAreaFor_Attributes_DoesNotAddReadOnlyAttributeOnEditableProperty()
+        public void FormTextAreaFor_AttributedEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableTrue, new { @class = "test" }).ToString();
             String expected = String.Format(
@@ -361,7 +361,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextAreaFor_Attributes_AddsReadOnlyAttributeOnNotEditableProperty()
+        public void FormTextAreaFor_AttributedNotEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableFalse, new { @class = "test" }).ToString();
             String expected = String.Format(
@@ -372,7 +372,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
-        public void FormTextAreaFor_Attributes_DoesNotOverrideSpecifiedRows()
+        public void FormTextAreaFor_OverwrittenRows()
         {
             String actual = html.FormTextAreaFor(x => x.NotRequired, new { rows = "12" }).ToString();
             String expected = String.Format(
@@ -387,7 +387,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormDatePickerFor_FormsDatePicker()
+        public void FormDatePickerFor_Expression()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
@@ -404,7 +404,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormDatePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
 
         [Fact]
-        public void FormDatePickerFor_FormsDatePickerWtihAttributes()
+        public void FormDatePickerFor_AttributedExpression()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
@@ -421,7 +421,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
 
         [Fact]
-        public void FormDatePickerFor_FormsDateTimePicker()
+        public void FormDateTimePickerFor_Expression()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
@@ -438,7 +438,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: FormDateTimePickerFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
 
         [Fact]
-        public void FormDatePickerFor_FormsDateTimePickerWithAttributes()
+        public void FormDateTimePickerFor_AttributedExpression()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 

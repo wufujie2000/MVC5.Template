@@ -236,7 +236,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
-            service.Recover(accountRecovery).Returns("RecoryToken");
+            service.Recover(accountRecovery).Returns("RecoveryToken");
 
             controller.Recover(accountRecovery).Wait();
 

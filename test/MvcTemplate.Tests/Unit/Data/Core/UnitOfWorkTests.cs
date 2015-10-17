@@ -256,7 +256,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         #region Method: Rollback()
 
         [Fact]
-        public void RollBack_Changes()
+        public void Rollback_Changes()
         {
             context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
 

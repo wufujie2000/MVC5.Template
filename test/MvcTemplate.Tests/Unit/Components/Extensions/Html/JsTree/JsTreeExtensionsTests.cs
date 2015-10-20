@@ -13,6 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void JsTreeFor_Expression()
         {
             JsTreeView tree = new JsTreeView();
+            tree.JsTree.SelectedIds.Add("4567");
             tree.JsTree.SelectedIds.Add("12345");
             tree.JsTree.Nodes.Add(new JsTreeNode("Test"));
             tree.JsTree.Nodes[0].Nodes.Add(new JsTreeNode("12345", "Test1"));
@@ -22,6 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String actual = html.JsTreeFor(model => model.JsTree).ToString();
             String expected =
                 "<div class=\"js-tree-view-ids\">" +
+                    "<input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"4567\" />" +
                     "<input name=\"JsTree.SelectedIds\" type=\"hidden\" value=\"12345\" />" +
                 "</div>" +
                 "<div class=\"js-tree-view\" for=\"JsTree.SelectedIds\">" +

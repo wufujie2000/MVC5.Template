@@ -11,10 +11,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void ViewEngine_SetsAreaViewLocationFormats()
         {
-            ViewEngine viewEngine = new ViewEngine();
-
-            String[] actual = viewEngine.AreaViewLocationFormats;
-            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml", "~/Views/{2}/Shared/{0}.cshtml" };
+            String[] actual = new ViewEngine().AreaViewLocationFormats;
 
             Assert.Equal(expected, actual);
         }
@@ -22,10 +20,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void ViewEngine_SetsAreaMasterLocationFormats()
         {
-            ViewEngine viewEngine = new ViewEngine();
-
-            String[] actual = viewEngine.AreaMasterLocationFormats;
-            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml", "~/Views/{2}/Shared/{0}.cshtml" };
+            String[] actual = new ViewEngine().AreaMasterLocationFormats;
 
             Assert.Equal(expected, actual);
         }
@@ -33,10 +29,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void ViewEngine_SetsAreaPartialViewLocationFormats()
         {
-            ViewEngine viewEngine = new ViewEngine();
-
-            String[] actual = viewEngine.AreaPartialViewLocationFormats;
-            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml" };
+            String[] expected = { "~/Views/{2}/{1}/{0}.cshtml", "~/Views/{2}/Shared/{0}.cshtml" };
+            String[] actual = new ViewEngine().AreaPartialViewLocationFormats;
 
             Assert.Equal(expected, actual);
         }

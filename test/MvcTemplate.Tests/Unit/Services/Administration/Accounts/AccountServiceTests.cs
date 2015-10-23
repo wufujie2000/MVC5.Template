@@ -205,10 +205,9 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Account account = context.Set<Account>().AsNoTracking().Single();
             AccountResetView view = ObjectFactory.CreateAccountResetView();
-            hasher.HashPassword(view.NewPassword).Returns("Reset");
+            account.Passhash = hasher.HashPassword(view.NewPassword);
             account.RecoveryTokenExpirationDate = null;
             account.RecoveryToken = null;
-            account.Passhash = "Reset";
 
             service.Reset(view);
 
@@ -257,6 +256,7 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Create_RefreshesAuthorization()
         {
             AccountCreateView view = ObjectFactory.CreateAccountCreateView(2);
+            view.RoleId = null;
 
             service.Create(view);
 
@@ -377,13 +377,12 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Login_IsCaseInsensitive()
         {
-            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(view.Username.ToUpper());
+            service.Login(account.Username.ToUpper());
 
             String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
-            String expected = view.Id;
+            String expected = account.Id;
 
             Assert.Equal(expected, actual);
         }
@@ -391,13 +390,12 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Login_CreatesCookie()
         {
-            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(view.Username);
+            service.Login(account.Username);
 
             FormsAuthenticationTicket actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
-            FormsAuthenticationTicket expected = new FormsAuthenticationTicket(view.Id, true, 0);
+            FormsAuthenticationTicket expected = new FormsAuthenticationTicket(account.Id, true, 0);
 
             Assert.Equal(expected.IsPersistent, actual.IsPersistent);
             Assert.Equal(expected.Name, actual.Name);
@@ -410,10 +408,9 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Logout_ExpiresCookie()
         {
-            AccountLoginView view = ObjectFactory.CreateAccountLoginView();
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
-            service.Login(view.Username);
+            service.Login(account.Username);
             service.Logout();
 
             DateTime expirationDate = HttpContext.Current.Response.Cookies[0].Expires;
@@ -428,8 +425,6 @@ namespace MvcTemplate.Tests.Unit.Services
         private void SetUpData()
         {
             account = ObjectFactory.CreateAccount();
-            account.Role = ObjectFactory.CreateRole();
-            account.RoleId = account.Role.Id;
 
             context.Set<Account>().Add(account);
             context.SaveChanges();

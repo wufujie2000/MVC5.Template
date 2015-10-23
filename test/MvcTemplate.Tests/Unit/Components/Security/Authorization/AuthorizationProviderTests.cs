@@ -380,6 +380,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
                 Account account = ObjectFactory.CreateAccount();
                 account.RoleId = rolePrivilege.RoleId;
                 account.IsLocked = isLocked;
+                account.Role = null;
 
                 rolePrivilege.Privilege.Controller = controller;
                 rolePrivilege.Privilege.Action = action;

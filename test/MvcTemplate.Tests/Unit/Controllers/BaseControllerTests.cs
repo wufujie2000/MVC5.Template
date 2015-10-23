@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -232,24 +233,19 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Method: IsAuthorizedFor(String action)
 
-        [Fact]
-        public void IsAuthorizedFor_True()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsAuthorizedFor_Action(Boolean isAuthorized)
         {
-            controller.IsAuthorizedFor("Area", "Controller", "Action").Returns(true);
+            controller.IsAuthorizedFor("Area", "Controller", "Action").Returns(isAuthorized);
             controller.RouteData.Values["controller"] = "Controller";
             controller.RouteData.Values["area"] = "Area";
 
-            Assert.True(controller.IsAuthorizedFor("Action"));
-        }
+            Boolean actual = controller.IsAuthorizedFor("Action");
+            Boolean expected = isAuthorized;
 
-        [Fact]
-        public void IsAuthorizedFor_False()
-        {
-            controller.IsAuthorizedFor("Area", "Controller", "Action").Returns(false);
-            controller.RouteData.Values["controller"] = "Controller";
-            controller.RouteData.Values["area"] = "Area";
-
-            Assert.False(controller.IsAuthorizedFor("Action"));
+            Assert.Equal(expected, actual);
         }
 
         #endregion

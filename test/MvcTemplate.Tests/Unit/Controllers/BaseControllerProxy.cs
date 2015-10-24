@@ -6,13 +6,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class BaseControllerProxy : BaseController
     {
-        public RedirectToRouteResult BaseRedirectToAction(String action)
+        public RedirectToRouteResult BaseRedirectToAction(String actionName)
         {
-            return RedirectToAction(action);
+            return RedirectToAction(actionName);
         }
-        public RedirectToRouteResult BaseRedirectToAction(String action, Object routeValues)
+        public RedirectToRouteResult BaseRedirectToAction(String actionName, Object routeValues)
         {
-            return RedirectToAction(action, routeValues);
+            return RedirectToAction(actionName, routeValues);
+        }
+        public RedirectToRouteResult BaseRedirectToAction(String actionName, String controllerName)
+        {
+            return RedirectToAction(actionName, controllerName);
+        }
+        public RedirectToRouteResult BaseRedirectToAction(String actionName, String controllerName, Object routeValues)
+        {
+            return RedirectToAction(actionName, controllerName, routeValues);
         }
 
         public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)

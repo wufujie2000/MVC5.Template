@@ -50,7 +50,7 @@ namespace MvcTemplate.Controllers
         }
         public virtual RedirectToRouteResult RedirectToDefault()
         {
-            return RedirectToAction("", "", new { area = "" });
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
         public virtual RedirectToRouteResult RedirectToNotFound()
         {
@@ -60,33 +60,31 @@ namespace MvcTemplate.Controllers
         {
             return RedirectToAction("Unauthorized", "Home", new { area = "" });
         }
-        public virtual RedirectToRouteResult RedirectIfAuthorized(String action)
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String actionName)
         {
-            if (!IsAuthorizedFor(action))
-                return RedirectToDefault();
-
-            return RedirectToAction(action);
+            return RedirectIfAuthorized(actionName, null, null);
         }
-        public virtual RedirectToRouteResult RedirectIfAuthorized(String action, Object routeValues)
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String actionName, Object routeValues)
         {
-            RouteValueDictionary values = HtmlHelper.AnonymousObjectToHtmlAttributes(routeValues);
-            String controller = (values["controller"] ?? RouteData.Values["controller"]) as String;
+            return RedirectIfAuthorized(actionName, null, routeValues);
+        }
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String actionName, String controllerName)
+        {
+            return RedirectIfAuthorized(actionName, controllerName, null);
+        }
+        public virtual RedirectToRouteResult RedirectIfAuthorized(String actionName, String controllerName, Object routeValues)
+        {
+            RouteValueDictionary values = new RouteValueDictionary(routeValues);
             String area = (values["area"] ?? RouteData.Values["area"]) as String;
+            String controller = (controllerName ?? values["controller"] ?? RouteData.Values["controller"]) as String;
 
-            if (!IsAuthorizedFor(area, controller, action))
+            if (!IsAuthorizedFor(actionName, controller, area))
                 return RedirectToDefault();
 
-            return RedirectToAction(action, routeValues);
+            return RedirectToAction(actionName, controllerName, values);
         }
 
-        public virtual Boolean IsAuthorizedFor(String action)
-        {
-            String area = RouteData.Values["area"] as String;
-            String controller = RouteData.Values["controller"] as String;
-
-            return IsAuthorizedFor(area, controller, action);
-        }
-        public virtual Boolean IsAuthorizedFor(String area, String controller, String action)
+        public virtual Boolean IsAuthorizedFor(String action, String controller, String area)
         {
             if (AuthorizationProvider == null) return true;
 
@@ -108,7 +106,7 @@ namespace MvcTemplate.Controllers
             String action = filterContext.RouteData.Values["action"] as String;
             String controller = filterContext.RouteData.Values["controller"] as String;
 
-            if (!IsAuthorizedFor(area, controller, action))
+            if (!IsAuthorizedFor(action, controller, area))
                 filterContext.Result = RedirectToUnauthorized();
         }
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

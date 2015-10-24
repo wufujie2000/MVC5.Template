@@ -67,6 +67,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             return result;
         }
+        protected RedirectToRouteResult RedirectIfAuthorized(BaseController controller, String actionName, String controllerName)
+        {
+            RedirectToRouteResult result = new RedirectToRouteResult(new RouteValueDictionary());
+            controller.When(sub => sub.RedirectIfAuthorized(actionName, controllerName)).DoNotCallBase();
+            controller.RedirectIfAuthorized(actionName, controllerName).Returns(result);
 
             return result;
         }

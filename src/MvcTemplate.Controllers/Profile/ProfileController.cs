@@ -20,7 +20,7 @@ namespace MvcTemplate.Controllers
         public ActionResult Edit()
         {
             if (!Service.IsActive(CurrentAccountId))
-                return RedirectToAction("Logout", "Auth");
+                return RedirectIfAuthorized("Logout", "Auth");
 
             return View(Service.Get<ProfileEditView>(CurrentAccountId));
         }
@@ -30,7 +30,7 @@ namespace MvcTemplate.Controllers
         public ActionResult Edit([Bind(Exclude = "Id")] ProfileEditView profile)
         {
             if (!Service.IsActive(CurrentAccountId))
-                return RedirectToAction("Logout", "Auth");
+                return RedirectIfAuthorized("Logout", "Auth");
 
             if (!Validator.CanEdit(profile))
                 return View(profile);
@@ -39,14 +39,14 @@ namespace MvcTemplate.Controllers
 
             Alerts.Add(AlertType.Success, Messages.ProfileUpdated);
 
-            return RedirectToAction("Edit");
+            return RedirectIfAuthorized("Edit");
         }
 
         [HttpGet]
         public ActionResult Delete()
         {
             if (!Service.IsActive(CurrentAccountId))
-                return RedirectToAction("Logout", "Auth");
+                return RedirectIfAuthorized("Logout", "Auth");
 
             Alerts.Add(AlertType.Danger, Messages.ProfileDeleteDisclaimer, 0);
 
@@ -59,7 +59,7 @@ namespace MvcTemplate.Controllers
         public ActionResult DeleteConfirmed([Bind(Exclude = "Id")] ProfileDeleteView profile)
         {
             if (!Service.IsActive(CurrentAccountId))
-                return RedirectToAction("Logout", "Auth");
+                return RedirectIfAuthorized("Logout", "Auth");
 
             if (!Validator.CanDelete(profile))
             {
@@ -70,7 +70,7 @@ namespace MvcTemplate.Controllers
 
             Service.Delete(CurrentAccountId);
 
-            return RedirectToAction("Logout", "Auth");
+            return RedirectIfAuthorized("Logout", "Auth");
         }
     }
 }

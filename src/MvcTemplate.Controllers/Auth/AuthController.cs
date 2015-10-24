@@ -44,7 +44,7 @@ namespace MvcTemplate.Controllers
 
             Alerts.Add(AlertType.Success, Messages.SuccessfulRegistration);
 
-            return RedirectToAction("Login");
+            return RedirectIfAuthorized("Login");
         }
 
         [HttpGet]
@@ -79,7 +79,7 @@ namespace MvcTemplate.Controllers
 
             Alerts.Add(AlertType.Info, Messages.RecoveryInformation, 0);
 
-            return RedirectToAction("Login");
+            return RedirectIfAuthorized("Login");
         }
 
         [HttpGet]
@@ -92,7 +92,7 @@ namespace MvcTemplate.Controllers
             account.Token = token;
 
             if (!Validator.CanReset(account))
-                return RedirectToAction("Recover");
+                return RedirectIfAuthorized("Recover");
 
             return View();
         }
@@ -105,13 +105,13 @@ namespace MvcTemplate.Controllers
                 return RedirectToDefault();
 
             if (!Validator.CanReset(account))
-                return RedirectToAction("Recover");
+                return RedirectIfAuthorized("Recover");
 
             Service.Reset(account);
 
             Alerts.Add(AlertType.Success, Messages.SuccessfulReset);
 
-            return RedirectToAction("Login");
+            return RedirectIfAuthorized("Login");
         }
 
         [HttpGet]
@@ -143,7 +143,7 @@ namespace MvcTemplate.Controllers
         {
             Service.Logout();
 
-            return RedirectToAction("Login");
+            return RedirectIfAuthorized("Login");
         }
     }
 }

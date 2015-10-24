@@ -10,7 +10,6 @@ using System;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
@@ -132,10 +131,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanRegister(accountRegister).Returns(true);
             service.IsLoggedIn(controller.User).Returns(false);
 
-            RouteValueDictionary actual = (controller.Register(accountRegister) as RedirectToRouteResult).RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Login");
+            Object actual = controller.Register(accountRegister);
 
-            Assert.Equal("Login", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
@@ -254,10 +253,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns("RecoveryToken");
 
-            RouteValueDictionary actual = (controller.Recover(accountRecovery).Result as RedirectToRouteResult).RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Login");
+            Object actual = controller.Recover(accountRecovery).Result;
 
-            Assert.Equal("Login", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
@@ -281,10 +280,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(Arg.Any<AccountResetView>()).Returns(false);
 
-            RouteValueDictionary actual = (controller.Reset("Token") as RedirectToRouteResult).RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Recover");
+            Object actual = controller.Reset("Token");
 
-            Assert.Equal("Recover", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         [Fact]
@@ -319,10 +318,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(false);
 
-            RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Recover");
+            Object actual = controller.Reset(accountReset);
 
-            Assert.Equal("Recover", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         [Fact]
@@ -357,10 +356,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanReset(accountReset).Returns(true);
 
-            RouteValueDictionary actual = (controller.Reset(accountReset) as RedirectToRouteResult).RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Login");
+            Object actual = controller.Reset(accountReset);
 
-            Assert.Equal("Login", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion
@@ -458,10 +457,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Logout_RedirectsToLogin()
         {
-            RouteValueDictionary actual = controller.Logout().RouteValues;
+            Object expected = RedirectIfAuthorized(controller, "Login");
+            Object actual = controller.Logout();
 
-            Assert.Equal("Login", actual["action"]);
-            Assert.Single(actual);
+            Assert.Same(expected, actual);
         }
 
         #endregion

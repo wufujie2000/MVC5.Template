@@ -115,6 +115,9 @@
         $(datePickers[i]).datepicker({
             beforeShow: function (e) {
                 return !$(e).attr('readonly');
+            },
+            onSelect: function () {
+                $(this).focusout();
             }
         });
     }
@@ -124,6 +127,9 @@
         $(datetimePickers[j]).datetimepicker({
             beforeShow: function (e) {
                 return !$(e).attr('readonly');
+            },
+            onSelect: function () {
+                $(this).focusout();
             }
         });
     }

@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             controllerName = controller.RouteData.Values["controller"] as String;
             actionName = controller.RouteData.Values["action"] as String;
-            areaName = controller.RouteData.Values["area"] as String; ;
+            areaName = controller.RouteData.Values["area"] as String;
         }
         public void Dispose()
         {

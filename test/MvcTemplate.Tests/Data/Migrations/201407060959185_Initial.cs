@@ -9,7 +9,7 @@ namespace MvcTemplate.Tests.Data.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.Accounts",
+                "dbo.Account",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -23,13 +23,13 @@ namespace MvcTemplate.Tests.Data.Migrations
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.Roles", t => t.RoleId)
+                .ForeignKey("dbo.Role", t => t.RoleId)
                 .Index(t => t.Username, unique: true)
                 .Index(t => t.Email, unique: true)
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.Roles",
+                "dbo.Role",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .Index(t => t.Title, unique: true);
             
             CreateTable(
-                "dbo.RolePrivileges",
+                "dbo.RolePrivilege",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -49,13 +49,13 @@ namespace MvcTemplate.Tests.Data.Migrations
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.Privileges", t => t.PrivilegeId)
-                .ForeignKey("dbo.Roles", t => t.RoleId)
+                .ForeignKey("dbo.Privilege", t => t.PrivilegeId)
+                .ForeignKey("dbo.Role", t => t.RoleId)
                 .Index(t => t.RoleId)
                 .Index(t => t.PrivilegeId);
             
             CreateTable(
-                "dbo.Privileges",
+                "dbo.Privilege",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
-                "dbo.AuditLogs",
+                "dbo.AuditLog",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -81,7 +81,7 @@ namespace MvcTemplate.Tests.Data.Migrations
                 .PrimaryKey(t => t.Id, clustered: false);
             
             CreateTable(
-                "dbo.TestModels",
+                "dbo.TestModel",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -94,21 +94,21 @@ namespace MvcTemplate.Tests.Data.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Accounts", "RoleId", "dbo.Roles");
-            DropForeignKey("dbo.RolePrivileges", "RoleId", "dbo.Roles");
-            DropForeignKey("dbo.RolePrivileges", "PrivilegeId", "dbo.Privileges");
-            DropIndex("dbo.RolePrivileges", new[] { "PrivilegeId" });
-            DropIndex("dbo.RolePrivileges", new[] { "RoleId" });
-            DropIndex("dbo.Roles", new[] { "Title" });
-            DropIndex("dbo.Accounts", new[] { "RoleId" });
-            DropIndex("dbo.Accounts", new[] { "Email" });
-            DropIndex("dbo.Accounts", new[] { "Username" });
-            DropTable("dbo.TestModels");
-            DropTable("dbo.AuditLogs");
-            DropTable("dbo.Privileges");
-            DropTable("dbo.RolePrivileges");
-            DropTable("dbo.Roles");
-            DropTable("dbo.Accounts");
+            DropForeignKey("dbo.Account", "RoleId", "dbo.Role");
+            DropForeignKey("dbo.RolePrivilege", "RoleId", "dbo.Role");
+            DropForeignKey("dbo.RolePrivilege", "PrivilegeId", "dbo.Privilege");
+            DropIndex("dbo.RolePrivilege", new[] { "PrivilegeId" });
+            DropIndex("dbo.RolePrivilege", new[] { "RoleId" });
+            DropIndex("dbo.Role", new[] { "Title" });
+            DropIndex("dbo.Account", new[] { "RoleId" });
+            DropIndex("dbo.Account", new[] { "Email" });
+            DropIndex("dbo.Account", new[] { "Username" });
+            DropTable("dbo.TestModel");
+            DropTable("dbo.AuditLog");
+            DropTable("dbo.Privilege");
+            DropTable("dbo.RolePrivilege");
+            DropTable("dbo.Role");
+            DropTable("dbo.Account");
         }
     }
 }

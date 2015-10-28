@@ -30,6 +30,7 @@ namespace MvcTemplate.Data.Core
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Properties<DateTime>().Configure(config => config.HasColumnType("datetime2"));
         }

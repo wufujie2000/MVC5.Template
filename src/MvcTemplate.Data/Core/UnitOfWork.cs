@@ -50,13 +50,12 @@ namespace MvcTemplate.Data.Core
 
         public void Update<TModel>(TModel model) where TModel : BaseModel
         {
-            TModel attachedModel = Context.Set<TModel>().Local.SingleOrDefault(localModel => localModel.Id == model.Id);
-            if (attachedModel == null)
-                attachedModel = Context.Set<TModel>().Attach(model);
+            DbEntityEntry<TModel> entry = Context.ChangeTracker.Entries<TModel>().FirstOrDefault(local => local.Entity.Id == model.Id);
+            if (entry != null)
+                entry.CurrentValues.SetValues(model);
             else
-                Context.Entry(attachedModel).CurrentValues.SetValues(model);
+                entry = Context.Entry(model);
 
-            DbEntityEntry<TModel> entry = Context.Entry(attachedModel);
             entry.State = EntityState.Modified;
             entry.Property(property => property.CreationDate).IsModified = false;
         }

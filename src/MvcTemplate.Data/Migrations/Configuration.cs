@@ -44,7 +44,7 @@ namespace MvcTemplate.Data.Migrations
                 new Privilege { Id = "00000000-0000-0000-0000-000000000006", Area = "Administration", Controller = "Roles", Action = "Create" },
                 new Privilege { Id = "00000000-0000-0000-0000-000000000007", Area = "Administration", Controller = "Roles", Action = "Details" },
                 new Privilege { Id = "00000000-0000-0000-0000-000000000008", Area = "Administration", Controller = "Roles", Action = "Edit" },
-                new Privilege { Id = "00000000-0000-0000-0000-000000000009", Area = "Administration", Controller = "Roles", Action = "Delete" },
+                new Privilege { Id = "00000000-0000-0000-0000-000000000009", Area = "Administration", Controller = "Roles", Action = "Delete" }
             };
 
             Privilege[] currentPrivileges = UnitOfWork.Select<Privilege>().ToArray();

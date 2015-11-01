@@ -16,7 +16,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
     {
         private BaseControllerProxy controller;
         private String controllerName;
-        private String actionName;
         private String areaName;
 
         public BaseControllerTests()
@@ -33,7 +32,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Url = Substitute.For<UrlHelper>();
 
             controllerName = controller.RouteData.Values["controller"] as String;
-            actionName = controller.RouteData.Values["action"] as String;
             areaName = controller.RouteData.Values["area"] as String;
         }
         public void Dispose()

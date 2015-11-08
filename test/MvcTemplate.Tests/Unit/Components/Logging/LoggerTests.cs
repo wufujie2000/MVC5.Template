@@ -21,11 +21,13 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logPath = Path.Combine(logDirectory, "Log.txt");
             logger = new Logger();
 
-            String[] files = Directory.GetFiles(logDirectory);
-            foreach (String file in files) File.Delete(file);
-
             if (Directory.Exists(logDirectory))
+            {
+                String[] files = Directory.GetFiles(logDirectory);
+                foreach (String file in files) File.Delete(file);
+
                 Directory.Delete(logDirectory);
+            }
         }
 
         #region Method: Log(String message)

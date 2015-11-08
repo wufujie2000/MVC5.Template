@@ -53,6 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void RenderControllerScript_NoScripts_DoesNotRender()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
+            html.ViewContext.RouteData.Values["Controller"] = "Test";
 
             String actual = html.RenderControllerScript().ToString();
             String expected = "";
@@ -93,6 +94,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void RenderControllerStyle_NoStyles_DoesNotRender()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
+            html.ViewContext.RouteData.Values["Controller"] = "Test";
 
             String actual = html.RenderControllerStyle().ToString();
             String expected = "";

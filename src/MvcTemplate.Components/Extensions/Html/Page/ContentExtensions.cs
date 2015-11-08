@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,17 +8,43 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class ContentExtensions
     {
+        private static Dictionary<String, MvcHtmlString> Scripts = new Dictionary<String, MvcHtmlString>();
+        private static Dictionary<String, MvcHtmlString> Styles = new Dictionary<String, MvcHtmlString>();
+
         public static MvcHtmlString RenderControllerScript(this HtmlHelper html)
         {
             RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
-            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
             String controller = routeValues["controller"].ToString();
-            String scriptDir = controller;
+            String path = controller;
 
             if (routeValues["Area"] != null)
-                scriptDir = routeValues["Area"] + "/" + scriptDir;
+                path = routeValues["Area"] + "/" + path;
 
-            String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", scriptDir, controller.ToLower()));
+            if (Scripts.ContainsKey(path))
+                return Scripts[path];
+
+            return Scripts[path] = GenerateScriptLink(path, controller, html);
+        }
+        public static MvcHtmlString RenderControllerStyle(this HtmlHelper html)
+        {
+            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
+            String controller = routeValues["controller"].ToString();
+            String path = controller;
+
+            if (routeValues["Area"] != null)
+                path = routeValues["Area"] + "/" + path;
+
+            if (Styles.ContainsKey(path))
+                return Styles[path];
+
+            return Styles[path] = GenerateStyleLink(path, controller, html);
+        }
+
+        private static MvcHtmlString GenerateScriptLink(String path, String controller, HtmlHelper html)
+        {
+            UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
+
+            String virtualPath = urlHelper.Content(String.Format("~/Scripts/Shared/{0}/{1}.js", path, controller.ToLower()));
             String physicalPath = html.ViewContext.HttpContext.Server.MapPath(virtualPath);
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
@@ -26,17 +53,11 @@ namespace MvcTemplate.Components.Extensions.Html
 
             return new MvcHtmlString(script.ToString());
         }
-        public static MvcHtmlString RenderControllerStyle(this HtmlHelper html)
+        private static MvcHtmlString GenerateStyleLink(String path, String controller, HtmlHelper html)
         {
-            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
             UrlHelper urlHelper = new UrlHelper(html.ViewContext.RequestContext);
-            String controller = routeValues["controller"].ToString();
-            String styleDir = controller;
 
-            if (routeValues["Area"] != null)
-                styleDir = routeValues["Area"] + "/" + styleDir;
-
-            String virtualPath = urlHelper.Content(String.Format("~/Content/Shared/{0}/{1}.css", styleDir, controller.ToLower()));
+            String virtualPath = urlHelper.Content(String.Format("~/Content/Shared/{0}/{1}.css", path, controller.ToLower()));
             String physicalPath = html.ViewContext.HttpContext.Server.MapPath(virtualPath);
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 

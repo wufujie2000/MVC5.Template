@@ -22,7 +22,7 @@
         </div>
         @if (GlobalizationManager.Provider.Languages.Length > 1)
         {
-            String query = (Request.QueryString.Count > 0) ? "?" + Request.QueryString : "";
+            String query = Request.QueryString.Count > 0 ? "?" + Request.QueryString : "";
 
             <div class="input-group">
                 <span class="fa fa-globe"></span>

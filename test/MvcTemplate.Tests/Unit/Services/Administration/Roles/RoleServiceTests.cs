@@ -148,7 +148,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerator<RoleView> expected = context
                 .Set<Role>()
                 .ProjectTo<RoleView>()
-                .OrderByDescending(role => role.CreationDate)
+                .OrderByDescending(view => view.CreationDate)
                 .GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -325,7 +325,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
             service.Delete(role.Id);
 
-            Assert.NotEmpty(context.Set<Account>().Where(acc => acc.Id == account.Id && acc.RoleId == null));
+            Assert.NotEmpty(context.Set<Account>().Where(model => model.Id == account.Id && model.RoleId == null));
         }
 
         [Fact]

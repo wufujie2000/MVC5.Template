@@ -8,7 +8,7 @@
         </li>
         @if (GlobalizationManager.Provider.Languages.Length > 1)
         {
-            String query = (Request.QueryString.Count > 0) ? "?" + Request.QueryString : "";
+            String query = Request.QueryString.Count > 0 ? "?" + Request.QueryString : "";
             String action = ViewContext.RouteData.Values["action"] as String;
             String id = ViewContext.RouteData.Values["id"] as String;
 

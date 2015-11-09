@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerator<<#= Model.View #>> expected = context
                 .Set<<#= Model.Model #>>()
                 .ProjectTo<<#= Model.View #>>()
-                .OrderByDescending(<#= Model.ModelVarName #> => <#= Model.ModelVarName #>.CreationDate)
+                .OrderByDescending(view => view.CreationDate)
                 .GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())

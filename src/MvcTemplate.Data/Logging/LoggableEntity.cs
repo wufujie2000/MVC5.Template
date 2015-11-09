@@ -19,7 +19,7 @@ namespace MvcTemplate.Data.Logging
         public LoggableEntity(DbEntityEntry<BaseModel> entry)
         {
             DbPropertyValues originalValues =
-                (entry.State == EntityState.Modified || entry.State == EntityState.Deleted)
+                entry.State == EntityState.Modified || entry.State == EntityState.Deleted
                     ? entry.GetDatabaseValues()
                     : entry.CurrentValues;
 

@@ -12,17 +12,17 @@ namespace MvcTemplate.Components.Mvc
         {
             NumericTypes = new HashSet<Type>
             {
-              typeof (Byte),
-              typeof (SByte),
-              typeof (Int16),
-              typeof (UInt16),
-              typeof (Int32),
-              typeof (UInt32),
-              typeof (Int64),
-              typeof (UInt64),
-              typeof (Single),
-              typeof (Double),
-              typeof (Decimal)
+              typeof(Byte),
+              typeof(SByte),
+              typeof(Int16),
+              typeof(UInt16),
+              typeof(Int32),
+              typeof(UInt32),
+              typeof(Int64),
+              typeof(UInt64),
+              typeof(Single),
+              typeof(Double),
+              typeof(Decimal)
             };
         }
 
@@ -32,6 +32,7 @@ namespace MvcTemplate.Components.Mvc
 
             if (IsDateTimeType(type, metadata))
                 yield return new DateValidator(metadata, context);
+
             if (IsNumericType(type))
                 yield return new NumberValidator(metadata, context);
         }

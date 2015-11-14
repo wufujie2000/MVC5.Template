@@ -8,7 +8,7 @@
             <div class="widget-title-buttons">
                 @if (Html.IsAuthorizedFor("Edit"))
                 {
-                    <a class="btn" href="@Url.Action("Edit", new { id = Model.Id })">
+                    <a class="btn" href="@Url.Action("Edit", new { Model.Id })">
                         <i class="fa fa-pencil"></i><span class="text">@Actions.Edit</span>
                     </a>
                 }

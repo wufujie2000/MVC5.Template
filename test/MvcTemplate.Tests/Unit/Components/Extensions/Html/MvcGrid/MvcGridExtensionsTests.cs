@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                 "</a>",
-                urlHelper.Action("Details", new { id = view.Id }));
+                urlHelper.Action("Details", new { view.Id }));
 
             Assert.Equal(expected, actual);
         }
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                 "</a>",
-                urlHelper.Action("Details", new { id = view.Id }));
+                urlHelper.Action("Details", new { view.Id }));
 
             Assert.Equal(expected, actual);
         }

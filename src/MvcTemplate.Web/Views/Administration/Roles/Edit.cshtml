@@ -8,13 +8,13 @@
             <div class="widget-title-buttons">
                 @if (Html.IsAuthorizedFor("Details"))
                 {
-                    <a class="btn" href="@Url.Action("Details", new { id = Model.Id })">
+                    <a class="btn" href="@Url.Action("Details", new { Model.Id })">
                         <i class="fa fa-info"></i><span class="text">@Actions.Details</span>
                     </a>
                 }
                 @if (Html.IsAuthorizedFor("Delete"))
                 {
-                    <a class="btn" href="@Url.Action("Delete", new { id = Model.Id })">
+                    <a class="btn" href="@Url.Action("Delete", new { Model.Id })">
                         <i class="fa fa-times"></i><span class="text">@Actions.Delete</span>
                     </a>
                 }

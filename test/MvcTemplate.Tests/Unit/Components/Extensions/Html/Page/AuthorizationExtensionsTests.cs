@@ -25,25 +25,25 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action)
 
         [Fact]
-        public void IsAuthorizedFor_NullProvider_ReturnsTrue()
+        public void IsAuthorizedFor_Action_NullProvider_ReturnsTrue()
         {
             Authorization.Provider = null;
 
-            Assert.True(html.IsAuthorizedFor("Create"));
+            Assert.True(html.IsAuthorizedFor("Action"));
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsAuthorizedFor_ReturnsAuthorizationResult(Boolean isAuthorized)
+        public void IsAuthorizedFor_Action_ReturnsAuthorizationResult(Boolean isAuthorized)
         {
             String area = html.ViewContext.RouteData.Values["area"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
-            Authorization.Provider.IsAuthorizedFor(accountId, area, controller, "Create").Returns(isAuthorized);
+            Authorization.Provider.IsAuthorizedFor(accountId, area, controller, "Action").Returns(isAuthorized);
 
-            Boolean actual = html.IsAuthorizedFor("Create");
+            Boolean actual = html.IsAuthorizedFor("Action");
             Boolean expected = isAuthorized;
 
             Assert.Equal(expected, actual);
@@ -51,29 +51,54 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String area, String controller, String action)
+        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action, String controller)
 
         [Fact]
-        public void IsAuthorizedFor_OverloadedNullProvider_ReturnsTrue()
+        public void IsAuthorizedFor_Controller_NullProvider_ReturnsTrue()
         {
             Authorization.Provider = null;
 
-            Assert.True(html.IsAuthorizedFor("Area", "Controller", "Action"));
+            Assert.True(html.IsAuthorizedFor("Action", "Controller"));
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsAuthorizedFor_ReturnsOverloadedProviderResult(Boolean isAuthorized)
+        public void IsAuthorizedFor_Controller_ReturnsProviderResult(Boolean isAuthorized)
         {
             String area = html.ViewContext.RouteData.Values["area"] as String;
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
-            String action = html.ViewContext.RouteData.Values["action"] as String;
-            String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
-            Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action).Returns(isAuthorized);
+            Authorization.Provider.IsAuthorizedFor(accountId, area, "Controller", "Action").Returns(isAuthorized);
 
-            Boolean actual = html.IsAuthorizedFor(area, controller, action);
+            Boolean actual = html.IsAuthorizedFor("Action", "Controller");
+            Boolean expected = isAuthorized;
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
+
+        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action, String controller, String area)
+
+        [Fact]
+        public void IsAuthorizedFor_Area_NullProvider_ReturnsTrue()
+        {
+            Authorization.Provider = null;
+
+            Assert.True(html.IsAuthorizedFor("Action", "Controller", "Area"));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsAuthorizedFor_Area_ReturnsProviderResult(Boolean isAuthorized)
+        {
+            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
+
+            Authorization.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(isAuthorized);
+
+            Boolean actual = html.IsAuthorizedFor("Action", "Controller", "Area");
             Boolean expected = isAuthorized;
 
             Assert.Equal(expected, actual);

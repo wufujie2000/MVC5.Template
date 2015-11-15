@@ -8,19 +8,19 @@ namespace MvcTemplate.Components.Extensions.Html
     {
         public static Boolean IsAuthorizedFor(this HtmlHelper html, String action)
         {
-            if (Authorization.Provider == null)
-                return true;
-
-            String area = html.ViewContext.RouteData.Values["area"] as String;
-            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
-            return Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action);
+            return html.IsAuthorizedFor(action, controller);
         }
-        public static Boolean IsAuthorizedFor(this HtmlHelper html, String area, String controller, String action)
+        public static Boolean IsAuthorizedFor(this HtmlHelper html, String action, String controller)
         {
-            if (Authorization.Provider == null)
-                return true;
+            String area = html.ViewContext.RouteData.Values["area"] as String;
+
+            return html.IsAuthorizedFor(action, controller, area);
+        }
+        public static Boolean IsAuthorizedFor(this HtmlHelper html, String action, String controller, String area)
+        {
+            if (Authorization.Provider == null) return true;
 
             String accountId = html.ViewContext.HttpContext.User.Identity.Name;
 

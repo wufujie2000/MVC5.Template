@@ -17,18 +17,14 @@ using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 {
-    public class MainContainerTests : IDisposable
+    public class MainContainerTests
     {
-        private MainContainer container;
+        private static MainContainer container;
 
-        public MainContainerTests()
+        static MainContainerTests()
         {
             container = new MainContainer();
             container.RegisterServices();
-        }
-        public void Dispose()
-        {
-            container.Dispose();
         }
 
         #region Method: RegisterServices()

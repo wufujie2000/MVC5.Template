@@ -281,17 +281,21 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_RolePrivileges()
         {
+            Privilege privilege = ObjectFactory.CreatePrivilege(100);
             Role role = CreateRoleWithPrivileges();
+
+            context.Set<Privilege>().Add(privilege);
             context.Set<Role>().Add(role);
             context.SaveChanges();
 
             RoleView roleView = CreateRoleView();
             roleView.PrivilegesTree.SelectedIds.RemoveAt(0);
+            roleView.PrivilegesTree.SelectedIds.Add(privilege.Id);
 
             service.Edit(roleView);
 
-            IEnumerable<String> actual = context.Set<RolePrivilege>().AsNoTracking().Select(rolePriv => rolePriv.PrivilegeId);
-            IEnumerable<String> expected = CreateRoleView().PrivilegesTree.SelectedIds.Skip(1);
+            IEnumerable<String> actual = context.Set<RolePrivilege>().AsNoTracking().Select(rolePriv => rolePriv.PrivilegeId).OrderBy(privilegeId => privilegeId);
+            IEnumerable<String> expected = roleView.PrivilegesTree.SelectedIds.OrderBy(privilegeId => privilegeId);
 
             Assert.Equal(expected, actual);
         }
@@ -412,7 +416,6 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             Int32 privilegeNumber = 1;
             Role role = ObjectFactory.CreateRole();
-            role.RolePrivileges = new List<RolePrivilege>();
 
             foreach (String controller in new[] { "Roles", "Profile" })
                 foreach (String action in new[] { "Edit", "Delete" })

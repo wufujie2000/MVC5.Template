@@ -50,6 +50,21 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
+        public void RenderControllerScript_CachesResultPath()
+        {
+            String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
+            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
+
+            html.RenderControllerScript();
+            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns("Test");
+
+            String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
+            String actual = html.RenderControllerScript().ToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void RenderControllerScript_NoScripts_DoesNotRender()
         {
             html.ViewContext.HttpContext.Server.MapPath(Arg.Any<String>()).Returns("");
@@ -83,6 +98,21 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String styleRef = urlHelper.Content("~/Content/Shared/accounts/accounts.css");
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
+
+            String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
+            String actual = html.RenderControllerStyle().ToString();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void RenderControllerStyle_CachesResultPath()
+        {
+            String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
+            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
+
+            html.RenderControllerStyle();
+            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns("Test");
 
             String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
             String actual = html.RenderControllerStyle().ToString();

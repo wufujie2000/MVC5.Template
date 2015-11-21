@@ -98,18 +98,6 @@ namespace MvcTemplate.Services
 
             Authorization.Provider.Refresh();
         }
-
-        private void EditRolePrivileges(Role role, RoleView view)
-        {
-            List<String> selectedPrivileges = view.PrivilegesTree.SelectedIds.ToList();
-
-            foreach (RolePrivilege rolePrivilege in role.RolePrivileges.ToArray())
-                if (!selectedPrivileges.Remove(rolePrivilege.PrivilegeId))
-                    UnitOfWork.Delete(rolePrivilege);
-
-            foreach (String privilegeId in selectedPrivileges)
-                UnitOfWork.Insert(new RolePrivilege { RoleId = role.Id, PrivilegeId = privilegeId });
-        }
         public void Delete(String id)
         {
             RemoveRoleFromAccounts(id);
@@ -138,6 +126,17 @@ namespace MvcTemplate.Services
             role.Title = view.Title;
 
             UnitOfWork.Update(role);
+        }
+        private void EditRolePrivileges(Role role, RoleView view)
+        {
+            List<String> selectedPrivileges = view.PrivilegesTree.SelectedIds.ToList();
+
+            foreach (RolePrivilege rolePrivilege in role.RolePrivileges.ToArray())
+                if (!selectedPrivileges.Remove(rolePrivilege.PrivilegeId))
+                    UnitOfWork.Delete(rolePrivilege);
+
+            foreach (String privilegeId in selectedPrivileges)
+                UnitOfWork.Insert(new RolePrivilege { RoleId = role.Id, PrivilegeId = privilegeId });
         }
 
         private void DeleteRole(String id)

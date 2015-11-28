@@ -391,7 +391,6 @@ namespace MvcTemplate.Tests.Unit.Validators
         private void SetUpData()
         {
             account = ObjectFactory.CreateAccount();
-            account.Role = ObjectFactory.CreateRole();
             account.RoleId = account.Role.Id;
             account.IsLocked = false;
 

@@ -18,14 +18,14 @@ namespace MvcTemplate.Data.Logging
 
         public LoggableEntity(DbEntityEntry<BaseModel> entry)
         {
-            DbPropertyValues originalValues =
+            DbPropertyValues values =
                 entry.State == EntityState.Modified || entry.State == EntityState.Deleted
                     ? entry.GetDatabaseValues()
                     : entry.CurrentValues;
 
             Type entityType = entry.Entity.GetType();
             if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
-            Properties = originalValues.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), originalValues[name]));
+            Properties = values.PropertyNames.Select(name => new LoggableProperty(entry.Property(name), values[name]));
             Properties = entry.State == EntityState.Modified ? Properties.Where(property => property.IsModified) : Properties;
             Properties = Properties.ToArray();
             Action = entry.State.ToString();

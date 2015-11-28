@@ -50,7 +50,9 @@ namespace MvcTemplate.Data.Core
 
         public void Update<TModel>(TModel model) where TModel : BaseModel
         {
-            DbEntityEntry<TModel> entry = Context.ChangeTracker.Entries<TModel>().FirstOrDefault(local => local.Entity.Id == model.Id);
+            IEnumerable<DbEntityEntry<TModel>> entries = Context.ChangeTracker.Entries<TModel>();
+            DbEntityEntry<TModel> entry = entries.FirstOrDefault(local => local.Entity.Id == model.Id);
+
             if (entry != null)
                 entry.CurrentValues.SetValues(model);
             else

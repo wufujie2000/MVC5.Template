@@ -33,7 +33,7 @@ namespace MvcTemplate.Controllers
         [AjaxOnly]
         public JsonResult Role(DatalistFilter filter)
         {
-            return GetData(new BaseDatalist<Role, RoleView>(UnitOfWork), filter);
+            return GetData(new Datalist<Role, RoleView>(UnitOfWork), filter);
         }
 
         protected override void Dispose(Boolean disposing)

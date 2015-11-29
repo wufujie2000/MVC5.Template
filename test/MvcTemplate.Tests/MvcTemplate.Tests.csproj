@@ -198,7 +198,7 @@
     <Compile Include="Unit\Components\Extensions\Mvc\ModelStateDictionaryExtensionsTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerProxy.cs" />
-    <Compile Include="Unit\Components\Datalists\BaseDatalistProxy.cs" />
+    <Compile Include="Unit\Components\Datalists\DatalistProxy.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Resources\ResourcesTests.cs" />
@@ -223,7 +223,7 @@
     <Compile Include="Helpers\HttpContextFactory.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\ProviderModel.cs" />
     <Compile Include="Unit\Components\Alerts\AlertsContainerTests.cs" />
-    <Compile Include="Unit\Components\Datalists\BaseDatalistTests.cs" />
+    <Compile Include="Unit\Components\Datalists\DatalistTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RequiredAdapterTests.cs" />

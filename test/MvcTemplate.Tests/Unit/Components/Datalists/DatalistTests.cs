@@ -15,17 +15,17 @@ using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
-    public class BaseDatalistTests : IDisposable
+    public class DatalistTests : IDisposable
     {
-        private BaseDatalistProxy<Role, RoleView> datalist;
+        private DatalistProxy<Role, RoleView> datalist;
         private UrlHelper urlHelper;
 
-        public BaseDatalistTests()
+        public DatalistTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
             using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
@@ -33,12 +33,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             HttpContext.Current = null;
         }
 
-        #region Constructor: BaseDatalist(UrlHelper url)
+        #region Constructor: Datalist(UrlHelper url)
 
         [Fact]
-        public void BaseDatalist_SetsDialogTitle()
+        public void Datalist_SetsDialogTitle()
         {
-            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
 
             String expected = ResourceProvider.GetDatalistTitle(typeof(RoleView).Name.Replace("View", ""));
             String actual = datalist.DialogTitle;
@@ -47,9 +47,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         [Fact]
-        public void BaseDatalist_SetsDatalistUrl()
+        public void Datalist_SetsDatalistUrl()
         {
-            datalist = new BaseDatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
 
             String expected = urlHelper.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
             String actual = datalist.DatalistUrl;
@@ -59,13 +59,13 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Constructor: BaseDatalist(IUnitOfWork unitOfWork)
+        #region Constructor: Datalist(IUnitOfWork unitOfWork)
 
         [Fact]
-        public void BaseDatalist_SetsUnitOfWork()
+        public void Datalist_SetsUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
 
             Object actual = datalist.BaseUnitOfWork;
             Object expected = unitOfWork;
@@ -150,7 +150,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public void GetModels_FromUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
             unitOfWork.Select<Role>().To<RoleView>().Returns(new RoleView[0].AsQueryable());
 
             Object expected = unitOfWork.Select<Role>().To<RoleView>();
@@ -172,7 +172,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             context.SaveChanges();
 
             IUnitOfWork unitOfWork = new UnitOfWork(context);
-            datalist = new BaseDatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
 
             datalist.CurrentFilter.Id = role.Id;
 

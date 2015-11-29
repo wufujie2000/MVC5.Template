@@ -9,19 +9,19 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Datalists
 {
-    public class BaseDatalist<TModel, TView> : GenericDatalist<TView>
+    public class Datalist<TModel, TView> : GenericDatalist<TView>
         where TModel : BaseModel
         where TView : BaseView
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        public BaseDatalist(UrlHelper url)
+        public Datalist(UrlHelper url)
         {
             String view = typeof(TView).Name.Replace("View", "");
             DialogTitle = ResourceProvider.GetDatalistTitle(view);
             DatalistUrl = url.Action(view, Prefix, new { area = "" });
         }
-        public BaseDatalist(IUnitOfWork unitOfWork)
+        public Datalist(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }

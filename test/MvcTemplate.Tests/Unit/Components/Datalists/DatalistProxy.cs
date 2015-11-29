@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
-    public class BaseDatalistProxy<TModel, TView> : BaseDatalist<TModel, TView>
+    public class DatalistProxy<TModel, TView> : Datalist<TModel, TView>
         where TModel : BaseModel
         where TView : BaseView
     {
@@ -20,10 +20,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             }
         }
 
-        public BaseDatalistProxy(UrlHelper url) : base(url)
+        public DatalistProxy(UrlHelper url) : base(url)
         {
         }
-        public BaseDatalistProxy(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public DatalistProxy(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 

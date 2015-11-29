@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Role_ReturnsRolesData()
         {
-            Object expected = GetData<BaseDatalist<Role, RoleView>>(controller);
+            Object expected = GetData<Datalist<Role, RoleView>>(controller);
             Object actual = controller.Role(filter);
 
             Assert.Same(expected, actual);

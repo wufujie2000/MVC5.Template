@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.5.0
+ * Datalist 3.5.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -8,9 +8,9 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-.ui-dialog,
-.ui-dialog:after,
-.ui-dialog:before {
+.datalist-dialog,
+.datalist-dialog:after,
+.datalist-dialog:before {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;

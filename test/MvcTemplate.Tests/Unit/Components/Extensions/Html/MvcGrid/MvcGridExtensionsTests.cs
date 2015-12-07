@@ -159,7 +159,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
-            Assert.Equal("text-left", actual.CssClasses);
+            Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal(title, actual.Title);
             Assert.Single(columns);
@@ -201,7 +201,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
-            Assert.Equal("text-left", actual.CssClasses);
+            Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal(title, actual.Title);
             Assert.Single(columns);
@@ -371,6 +371,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         }
 
         [Fact]
+        public void AddProperty_SetsCssClassForBoolean()
+        {
+            AssertCssClassFor(model => model.BooleanField, "text-center");
+        }
+
+        [Fact]
         public void AddProperty_SetsCssClassForDateTime()
         {
             AssertCssClassFor(model => model.DateTimeField, "text-center");
@@ -446,6 +452,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddProperty_SetsCssClassForNullableDecimal()
         {
             AssertCssClassFor(model => model.NullableDecimalField, "text-right");
+        }
+
+        [Fact]
+        public void AddProperty_SetsCssClassForNullableBoolean()
+        {
+            AssertCssClassFor(model => model.NullableBooleanField, "text-center");
         }
 
         [Fact]

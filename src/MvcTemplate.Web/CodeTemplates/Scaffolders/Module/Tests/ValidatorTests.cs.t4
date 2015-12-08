@@ -5,7 +5,6 @@ using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
 using MvcTemplate.Validators;
 using System;
-using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Validators

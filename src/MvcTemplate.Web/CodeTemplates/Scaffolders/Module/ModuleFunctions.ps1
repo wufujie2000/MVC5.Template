@@ -18,7 +18,7 @@ Function Scaffold-CsTemplate([String]$Template, [String]$Project, [String]$Outpu
         -OutputPath $OutputPath `
         -Template $Template `
         -Model @{ `
-            ControllerTestNamespace = $ControllerTestsNamespace; `
+            ControllerTestsNamespace = $ControllerTestsNamespace; `
             AreaRegistration = $Area + "AreaRegistration"; `
             ControllerNamespace = $ControllerNamespace; `
             ModelVarName = $ModelVarName; `
@@ -48,7 +48,7 @@ Function Scaffold-AreaRegistration([String]$Template, [String]$Project, [String]
             -OutputPath $OutputPath `
             -Template $Template `
             -Model @{ `
-                ControllerTestNamespace = $ControllerTestsNamespace; `
+                ControllerTestsNamespace = $ControllerTestsNamespace; `
                 AreaRegistration = $Area + "AreaRegistration"; `
                 ControllerNamespace = $ControllerNamespace; `
                 Area = $Area; `

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Xunit;
 
-namespace <#= Model.ControllerTestNamespace #>
+namespace <#= Model.ControllerTestsNamespace #>
 {
     public class <#= Model.Controller #>Tests : ControllerTests
     {

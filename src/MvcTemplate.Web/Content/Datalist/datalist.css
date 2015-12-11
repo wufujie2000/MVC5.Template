@@ -17,10 +17,6 @@
     width: 100%;
 }
 
-.datalist-dialog .ui-dialog-title {
-    min-height: 21px;
-}
-
 .datalist {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;

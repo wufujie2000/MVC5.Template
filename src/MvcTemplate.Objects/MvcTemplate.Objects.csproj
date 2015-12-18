@@ -56,9 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Administration\Accounts\Account.cs" />
-    <Compile Include="Models\Administration\Roles\Privilege.cs" />
+    <Compile Include="Models\Administration\Roles\Permission.cs" />
     <Compile Include="Models\Administration\Roles\Role.cs" />
-    <Compile Include="Models\Administration\Roles\RolePrivilege.cs" />
+    <Compile Include="Models\Administration\Roles\RolePermission.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\System\AuditLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

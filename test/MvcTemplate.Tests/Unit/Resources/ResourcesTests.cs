@@ -14,56 +14,56 @@ namespace MvcTemplate.Tests.Unit.Resources
     public class ResourcesTests
     {
         [Fact]
-        public void Resources_HasAllPrivilegeAreaTitles()
+        public void Resources_HasAllPermissionAreaTitles()
         {
-            ResourceManager manager = MvcTemplate.Resources.Privilege.Area.Titles.ResourceManager;
+            ResourceManager manager = MvcTemplate.Resources.Permission.Area.Titles.ResourceManager;
             using (Context context = new Context())
             {
                 String[] areas = context
-                    .Set<Privilege>()
-                    .Select(priv => priv.Area)
+                    .Set<Permission>()
+                    .Select(permission => permission.Area)
                     .Distinct()
                     .ToArray();
 
                 foreach (String area in areas)
                     Assert.True(!String.IsNullOrEmpty(manager.GetString(area)),
-                        String.Format("Privilege area '{0}', does not have a title.", area));
+                        String.Format("Permission area '{0}', does not have a title.", area));
             }
         }
 
         [Fact]
-        public void Resources_HasAllPrivilegeControllerTitles()
+        public void Resources_HasAllPermissionControllerTitles()
         {
-            ResourceManager manager = MvcTemplate.Resources.Privilege.Controller.Titles.ResourceManager;
+            ResourceManager manager = MvcTemplate.Resources.Permission.Controller.Titles.ResourceManager;
             using (Context context = new Context())
             {
                 String[] controllers = context
-                    .Set<Privilege>()
-                    .Select(priv => priv.Area + priv.Controller)
+                    .Set<Permission>()
+                    .Select(permission => permission.Area + permission.Controller)
                     .Distinct()
                     .ToArray();
 
                 foreach (String controller in controllers)
                     Assert.True(!String.IsNullOrEmpty(manager.GetString(controller)),
-                        String.Format("Privilege controller '{0}', does not have a title.", controller));
+                        String.Format("Permission controller '{0}', does not have a title.", controller));
             }
         }
 
         [Fact]
-        public void Resources_HasAllPrivilegeActionTitles()
+        public void Resources_HasAllPermissionActionTitles()
         {
-            ResourceManager manager = MvcTemplate.Resources.Privilege.Action.Titles.ResourceManager;
+            ResourceManager manager = MvcTemplate.Resources.Permission.Action.Titles.ResourceManager;
             using (Context context = new Context())
             {
                 String[] actions = context
-                    .Set<Privilege>()
-                    .Select(priv => priv.Area + priv.Controller + priv.Action)
+                    .Set<Permission>()
+                    .Select(permission => permission.Area + permission.Controller + permission.Action)
                     .Distinct()
                     .ToArray();
 
                 foreach (String action in actions)
                     Assert.True(!String.IsNullOrEmpty(manager.GetString(action)),
-                        String.Format("Privilege action '{0}', does not have a title.", action));
+                        String.Format("Permission action '{0}', does not have a title.", action));
             }
         }
 

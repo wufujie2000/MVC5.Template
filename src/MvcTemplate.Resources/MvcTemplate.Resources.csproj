@@ -77,42 +77,42 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Headers.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Action\Titles.Designer.cs">
+    <Compile Include="Permission\Action\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Action\Titles.lt.Designer.cs">
+    <Compile Include="Permission\Action\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Area\Titles.Designer.cs">
+    <Compile Include="Permission\Area\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Area\Titles.lt.Designer.cs">
+    <Compile Include="Permission\Area\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Controller\Titles.Designer.cs">
+    <Compile Include="Permission\Controller\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Controller\Titles.lt.Designer.cs">
+    <Compile Include="Permission\Controller\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Titles.Designer.cs">
+    <Compile Include="Permission\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="Privilege\Titles.lt.Designer.cs">
+    <Compile Include="Permission\Titles.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
@@ -333,35 +333,35 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Headers.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Action\Titles.lt.resx">
+    <EmbeddedResource Include="Permission\Action\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Action\Titles.resx">
+    <EmbeddedResource Include="Permission\Action\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Area\Titles.lt.resx">
+    <EmbeddedResource Include="Permission\Area\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Area\Titles.resx">
+    <EmbeddedResource Include="Permission\Area\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Controller\Titles.lt.resx">
+    <EmbeddedResource Include="Permission\Controller\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Controller\Titles.resx">
+    <EmbeddedResource Include="Permission\Controller\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Titles.lt.resx">
+    <EmbeddedResource Include="Permission\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Privilege\Titles.resx">
+    <EmbeddedResource Include="Permission\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>

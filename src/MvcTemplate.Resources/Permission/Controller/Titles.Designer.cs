@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MvcTemplate.Resources.Privilege.Area {
+namespace MvcTemplate.Resources.Permission.Controller {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MvcTemplate.Resources.Privilege.Area {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Privilege.Area.Titles", typeof(Titles).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MvcTemplate.Resources.Permission.Controller.Titles", typeof(Titles).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace MvcTemplate.Resources.Privilege.Area {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administration.
+        ///   Looks up a localized string similar to Accounts.
         /// </summary>
-        public static string Administration {
+        public static string AdministrationAccounts {
             get {
-                return ResourceManager.GetString("Administration", resourceCulture);
+                return ResourceManager.GetString("AdministrationAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string AdministrationRoles {
+            get {
+                return ResourceManager.GetString("AdministrationRoles", resourceCulture);
             }
         }
     }

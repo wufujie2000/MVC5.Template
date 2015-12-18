@@ -40,22 +40,22 @@ namespace MvcTemplate.Data.Migrations
                 .Index(t => t.Title, unique: true);
             
             CreateTable(
-                "dbo.RolePrivilege",
+                "dbo.RolePermission",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         RoleId = c.String(nullable: false, maxLength: 128),
-                        PrivilegeId = c.String(nullable: false, maxLength: 128),
+                        PermissionId = c.String(nullable: false, maxLength: 128),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id, clustered: false)
-                .ForeignKey("dbo.Privilege", t => t.PrivilegeId)
+                .ForeignKey("dbo.Permission", t => t.PermissionId)
                 .ForeignKey("dbo.Role", t => t.RoleId)
                 .Index(t => t.RoleId)
-                .Index(t => t.PrivilegeId);
+                .Index(t => t.PermissionId);
             
             CreateTable(
-                "dbo.Privilege",
+                "dbo.Permission",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -85,17 +85,17 @@ namespace MvcTemplate.Data.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Account", "RoleId", "dbo.Role");
-            DropForeignKey("dbo.RolePrivilege", "RoleId", "dbo.Role");
-            DropForeignKey("dbo.RolePrivilege", "PrivilegeId", "dbo.Privilege");
-            DropIndex("dbo.RolePrivilege", new[] { "PrivilegeId" });
-            DropIndex("dbo.RolePrivilege", new[] { "RoleId" });
+            DropForeignKey("dbo.RolePermission", "RoleId", "dbo.Role");
+            DropForeignKey("dbo.RolePermission", "PermissionId", "dbo.Permission");
+            DropIndex("dbo.RolePermission", new[] { "PermissionId" });
+            DropIndex("dbo.RolePermission", new[] { "RoleId" });
             DropIndex("dbo.Role", new[] { "Title" });
             DropIndex("dbo.Account", new[] { "RoleId" });
             DropIndex("dbo.Account", new[] { "Email" });
             DropIndex("dbo.Account", new[] { "Username" });
             DropTable("dbo.AuditLog");
-            DropTable("dbo.Privilege");
-            DropTable("dbo.RolePrivilege");
+            DropTable("dbo.Permission");
+            DropTable("dbo.RolePermission");
             DropTable("dbo.Role");
             DropTable("dbo.Account");
         }

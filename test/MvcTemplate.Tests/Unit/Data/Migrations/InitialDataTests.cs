@@ -88,7 +88,7 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
             IEnumerable<String> actual = context
                 .Set<Role>()
                 .Single(role => role.Title == "Sys_Admin")
-                .RolePermissions
+                .Permissions
                 .Select(rolePermission => rolePermission.PermissionId)
                 .OrderBy(permissionId => permissionId);
 

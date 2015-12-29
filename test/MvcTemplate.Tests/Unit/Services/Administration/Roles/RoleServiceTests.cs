@@ -167,7 +167,7 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             service.When(sub => sub.SeedPermissions(Arg.Any<RoleView>())).DoNotCallBase();
 
-            IEnumerable<String> expected = role.RolePermissions.Select(rolePermission => rolePermission.PermissionId);
+            IEnumerable<String> expected = role.Permissions.Select(rolePermission => rolePermission.PermissionId);
             IEnumerable<String> actual = service.GetView(role.Id).Permissions.SelectedIds;
 
             Assert.Equal(expected, actual);
@@ -215,7 +215,7 @@ namespace MvcTemplate.Tests.Unit.Services
                 .Set<Role>()
                 .AsNoTracking()
                 .Single(model => model.Id == view.Id)
-                .RolePermissions
+                .Permissions
                 .Select(rolePermission => rolePermission.PermissionId)
                 .OrderBy(permissionId => permissionId);
 
@@ -324,14 +324,14 @@ namespace MvcTemplate.Tests.Unit.Services
             foreach (String controller in new[] { "Roles", "Profile" })
                 foreach (String action in new[] { "Edit", "Delete" })
                 {
-                    RolePermission rolePermission = ObjectFactory.CreateRolePermission(role.RolePermissions.Count + 1);
+                    RolePermission rolePermission = ObjectFactory.CreateRolePermission(role.Permissions.Count + 1);
                     rolePermission.Permission.Area = controller == "Roles" ? "Administration" : null;
                     rolePermission.Permission.Controller = controller;
                     rolePermission.Permission.Action = action;
                     rolePermission.RoleId = role.Id;
                     rolePermission.Role = null;
 
-                    role.RolePermissions.Add(rolePermission);
+                    role.Permissions.Add(rolePermission);
                 }
 
             context.Set<Role>().Add(role);
@@ -344,10 +344,10 @@ namespace MvcTemplate.Tests.Unit.Services
             JsTree expectedTree = new JsTree();
 
             expectedTree.Nodes.Add(rootNode);
-            expectedTree.SelectedIds = role.RolePermissions.Select(rolePermission => rolePermission.PermissionId).ToList();
+            expectedTree.SelectedIds = role.Permissions.Select(rolePermission => rolePermission.PermissionId).ToList();
 
             IEnumerable<Permission> permissions = role
-                .RolePermissions
+                .Permissions
                 .Select(rolePermission => rolePermission.Permission)
                 .Select(permission => new Permission
                 {

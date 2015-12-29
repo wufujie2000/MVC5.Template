@@ -133,7 +133,7 @@ namespace MvcTemplate.Services
         {
             List<String> selectedPermissions = view.Permissions.SelectedIds.ToList();
 
-            foreach (RolePermission rolePermission in role.RolePermissions.ToArray())
+            foreach (RolePermission rolePermission in role.Permissions.ToArray())
                 if (!selectedPermissions.Remove(rolePermission.PermissionId))
                     UnitOfWork.Delete(rolePermission);
 

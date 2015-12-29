@@ -24,7 +24,7 @@ namespace MvcTemplate.Data.Logging
             AccountId = accountId;
         }
 
-        public virtual void Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
+        public void Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
         {
             foreach (DbEntityEntry<BaseModel> entry in entries)
             {
@@ -40,7 +40,7 @@ namespace MvcTemplate.Data.Logging
                 }
             }
         }
-        public virtual void Log(LoggableEntity entity)
+        public void Log(LoggableEntity entity)
         {
             AuditLog log = new AuditLog();
             log.AccountId = AccountId ?? HttpContext.Current.User.Identity.Name;
@@ -52,7 +52,7 @@ namespace MvcTemplate.Data.Logging
 
             Context.Set<AuditLog>().Add(log);
         }
-        public virtual void Save()
+        public void Save()
         {
             Context.SaveChanges();
         }

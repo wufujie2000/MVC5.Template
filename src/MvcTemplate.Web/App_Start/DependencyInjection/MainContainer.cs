@@ -16,7 +16,7 @@ namespace MvcTemplate.Web.DependencyInjection
 {
     public class MainContainer : ServiceContainer
     {
-        public virtual void RegisterServices()
+        public void RegisterServices()
         {
             Register<DbContext, Context>();
             Register<IUnitOfWork, UnitOfWork>();

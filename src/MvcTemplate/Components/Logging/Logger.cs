@@ -10,11 +10,11 @@ namespace MvcTemplate.Components.Logging
     {
         private static Object LogWriting = new Object();
 
-        public virtual void Log(String message)
+        public void Log(String message)
         {
             Log(null, message);
         }
-        public virtual void Log(String accountId, String message)
+        public void Log(String accountId, String message)
         {
             try
             {

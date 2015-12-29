@@ -34,7 +34,7 @@ namespace MvcTemplate.Components.Security
             }
         }
 
-        public virtual Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
+        public Boolean IsAuthorizedFor(String accountId, String area, String controller, String action)
         {
             String permission = (area + "/" + controller + "/" + action).ToLower();
             if (!Required.ContainsKey(permission))
@@ -46,7 +46,7 @@ namespace MvcTemplate.Components.Security
             return Permissions[accountId].Contains(Required[permission]);
         }
 
-        public virtual void Refresh()
+        public void Refresh()
         {
             using (IUnitOfWork unitOfWork = DependencyResolver.Current.GetService<IUnitOfWork>())
             {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using System;
@@ -23,7 +24,7 @@ namespace MvcTemplate.Data.Core
 
         public TDestination GetAs<TModel, TDestination>(String id) where TModel : BaseModel
         {
-            return To<TDestination>(Get<TModel>(id));
+            return Context.Set<TModel>().Where(model => model.Id == id).ProjectTo<TDestination>().FirstOrDefault();
         }
         public TModel Get<TModel>(String id) where TModel : BaseModel
         {

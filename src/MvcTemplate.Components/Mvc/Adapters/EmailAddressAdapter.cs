@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Mvc
         public EmailAddressAdapter(ModelMetadata metadata, ControllerContext context, EmailAddressAttribute attribute)
             : base(metadata, context, attribute)
         {
-            Attribute.ErrorMessage = Validations.FieldIsNotValidEmail;
+            Attribute.ErrorMessage = Validations.Email;
         }
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()

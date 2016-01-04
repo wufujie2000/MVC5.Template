@@ -9,7 +9,7 @@ namespace MvcTemplate.Components.Mvc
         public RangeAdapter(ModelMetadata metadata, ControllerContext context, RangeAttribute attribute)
             : base(metadata, context, attribute)
         {
-            Attribute.ErrorMessage = Validations.FieldMustBeInRange;
+            Attribute.ErrorMessage = Validations.Range;
         }
     }
 }

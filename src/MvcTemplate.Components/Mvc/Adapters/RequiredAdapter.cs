@@ -9,7 +9,7 @@ namespace MvcTemplate.Components.Mvc
         public RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
             : base(metadata, context, attribute)
         {
-            Attribute.ErrorMessage = Validations.FieldIsRequired;
+            Attribute.ErrorMessage = Validations.Required;
         }
     }
 }

@@ -20,8 +20,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "Range");
             new RangeAdapter(metadata, new ControllerContext(), attribute);
 
-            String expected = Validations.FieldMustBeInRange;
             String actual = attribute.ErrorMessage;
+            String expected = Validations.Range;
 
             Assert.Equal(expected, actual);
         }

@@ -21,7 +21,7 @@ namespace MvcTemplate.Components.Mvc
             yield return new ModelClientValidationRule
             {
                 ValidationType = "date",
-                ErrorMessage = String.Format(Validations.FieldMustBeDate, Metadata.GetDisplayName())
+                ErrorMessage = String.Format(Validations.Date, Metadata.GetDisplayName())
             };
         }
     }

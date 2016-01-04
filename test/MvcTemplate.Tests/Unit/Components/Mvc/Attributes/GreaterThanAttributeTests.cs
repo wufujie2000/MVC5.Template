@@ -48,7 +48,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new GreaterThanAttribute(10);
 
-            String expected = String.Format(Validations.FieldMustBeGreaterThan, "Sum", attribute.Minimum);
+            String expected = String.Format(Validations.GreaterThan, "Sum", attribute.Minimum);
             String actual = attribute.FormatErrorMessage("Sum");
 
             Assert.Equal(expected, actual);
@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             attribute = new GreaterThanAttribute(12.56);
 
-            String expected = String.Format(Validations.FieldMustBeGreaterThan, "Sum", attribute.Minimum);
+            String expected = String.Format(Validations.GreaterThan, "Sum", attribute.Minimum);
             String actual = attribute.FormatErrorMessage("Sum");
 
             Assert.Equal(expected, actual);

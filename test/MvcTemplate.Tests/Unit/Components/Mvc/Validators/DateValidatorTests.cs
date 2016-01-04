@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             ModelClientValidationRule expected = new ModelClientValidationRule
             {
                 ValidationType = "date",
-                ErrorMessage = String.Format(Validations.FieldMustBeDate, metadata.GetDisplayName())
+                ErrorMessage = String.Format(Validations.Date, metadata.GetDisplayName())
             };
 
             Assert.Equal(expected.ValidationParameters, actual.ValidationParameters);

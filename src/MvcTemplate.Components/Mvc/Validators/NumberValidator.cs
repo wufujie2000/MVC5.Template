@@ -21,7 +21,7 @@ namespace MvcTemplate.Components.Mvc
             yield return new ModelClientValidationRule
             {
                 ValidationType = "number",
-                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, Metadata.GetDisplayName())
+                ErrorMessage = String.Format(Validations.Numeric, Metadata.GetDisplayName())
             };
         }
     }

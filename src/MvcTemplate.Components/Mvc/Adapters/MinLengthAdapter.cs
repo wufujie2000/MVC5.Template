@@ -9,7 +9,7 @@ namespace MvcTemplate.Components.Mvc
         public MinLengthAdapter(ModelMetadata metadata, ControllerContext context, MinLengthAttribute attribute)
             : base(metadata, context, attribute)
         {
-            Attribute.ErrorMessage = Validations.FieldMustBeWithMinLengthOf;
+            Attribute.ErrorMessage = Validations.MinLength;
         }
     }
 }

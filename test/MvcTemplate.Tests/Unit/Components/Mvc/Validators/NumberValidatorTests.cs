@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             ModelClientValidationRule expected = new ModelClientValidationRule
             {
                 ValidationType = "number",
-                ErrorMessage = String.Format(Validations.FieldMustBeNumeric, metadata.GetDisplayName())
+                ErrorMessage = String.Format(Validations.Numeric, metadata.GetDisplayName())
             };
 
             Assert.Equal(expected.ValidationParameters, actual.ValidationParameters);

@@ -20,7 +20,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             StringLengthAttribute attribute = new StringLengthAttribute(128);
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
-            String expected = Validations.FieldMustNotExceedLength;
+            String expected = Validations.StringLength;
             String actual = attribute.ErrorMessage;
 
             Assert.Equal(expected, actual);
@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
-            String expected = Validations.FieldMustBeInRangeOfLength;
+            String expected = Validations.StringLengthRange;
             String actual = attribute.ErrorMessage;
 
             Assert.Equal(expected, actual);

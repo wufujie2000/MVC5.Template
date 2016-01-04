@@ -28,8 +28,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void EmailAddressAdapter_SetsErrorMessage()
         {
-            String expected = Validations.FieldIsNotValidEmail;
             String actual = attribute.ErrorMessage;
+            String expected = Validations.Email;
 
             Assert.Equal(expected, actual);
         }
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetClientValidationRules_ReturnsEmailValidationRule()
         {
-            String expectedMessage = String.Format(Validations.FieldIsNotValidEmail, metadata.GetDisplayName());
+            String expectedMessage = String.Format(Validations.Email, metadata.GetDisplayName());
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
 
             Assert.Equal(expectedMessage, actual.ErrorMessage);

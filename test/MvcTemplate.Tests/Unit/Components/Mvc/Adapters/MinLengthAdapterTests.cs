@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             MinLengthAttribute attribute = new MinLengthAttribute(128);
             new MinLengthAdapter(metadata, new ControllerContext(), attribute);
 
-            String expected = Validations.FieldMustBeWithMinLengthOf;
+            String expected = Validations.MinLength;
             String actual = attribute.ErrorMessage;
 
             Assert.Equal(expected, actual);

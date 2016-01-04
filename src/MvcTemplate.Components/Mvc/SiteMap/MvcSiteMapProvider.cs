@@ -19,7 +19,7 @@ namespace MvcTemplate.Components.Mvc
             NodeList = ToList(NodeTree);
         }
 
-        public IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(ViewContext context)
+        public IEnumerable<MvcSiteMapNode> GetSiteMap(ViewContext context)
         {
             String account = context.HttpContext.User.Identity.Name;
             String area = context.RouteData.Values["area"] as String;
@@ -27,7 +27,7 @@ namespace MvcTemplate.Components.Mvc
             String controller = context.RouteData.Values["controller"] as String;
             IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(NodeTree, area, controller, action);
 
-            return GetAuthorizedMenus(account, nodes);
+            return GetAuthorizedSiteMap(account, nodes);
         }
         public IEnumerable<MvcSiteMapNode> GetBreadcrumb(ViewContext context)
         {
@@ -86,12 +86,12 @@ namespace MvcTemplate.Components.Mvc
 
             return copies;
         }
-        private IEnumerable<MvcSiteMapNode> GetAuthorizedMenus(String accountId, IEnumerable<MvcSiteMapNode> nodes)
+        private IEnumerable<MvcSiteMapNode> GetAuthorizedSiteMap(String accountId, IEnumerable<MvcSiteMapNode> nodes)
         {
             List<MvcSiteMapNode> menuNodes = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
             {
-                node.Children = GetAuthorizedMenus(accountId, node.Children);
+                node.Children = GetAuthorizedSiteMap(accountId, node.Children);
 
                 if (node.IsMenu && IsAuthorizedToView(accountId, node) && !IsEmpty(node))
                     menuNodes.Add(node);

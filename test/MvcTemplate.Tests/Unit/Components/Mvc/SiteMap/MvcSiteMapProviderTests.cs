@@ -36,14 +36,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Authorization.Provider = null;
         }
 
-        #region Method: GetAuthorizedMenus(ViewContext context)
+        #region Method: GetSiteMap(ViewContext context)
 
         [Fact]
-        public void GetAuthorizedMenus_NullAuthorization_ReturnsAllMenus()
+        public void GetSiteMap_NullAuthorization_ReturnsAllNodes()
         {
             Authorization.Provider = null;
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 
@@ -80,12 +80,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_ReturnsAuthorizedMenus()
+        public void GetSiteMap_ReturnsAuthorizedNodes()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Accounts", "Index").Returns(true);
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 
@@ -107,14 +107,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_SetsActiveMenu()
+        public void GetSiteMap_SetsActiveMenu()
         {
             Authorization.Provider = null;
             routeValues["action"] = "Create";
             routeValues["controller"] = "Roles";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.False(actual[0].IsActive);
@@ -134,14 +134,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_NonMenuChildrenNodeIsActive_SetsActiveMenu()
+        public void GetSiteMap_NonMenuChildrenNodeIsActive_SetsActiveMenu()
         {
             Authorization.Provider = null;
             routeValues["action"] = "Edit";
             routeValues["controller"] = "Accounts";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.False(actual[0].IsActive);
@@ -161,14 +161,14 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_ActiveMenuParents_SetsHasActiveChildren()
+        public void GetSiteMap_ActiveMenuParents_SetsHasActiveChildren()
         {
             Authorization.Provider = null;
             routeValues["action"] = "Create";
             routeValues["controller"] = "Roles";
             routeValues["area"] = "Administration";
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
             Assert.True(actual[0].HasActiveChildren);
@@ -188,13 +188,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
-        public void GetAuthorizedMenus_RemovesEmptyMenus()
+        public void GetSiteMap_RemovesEmptyNodes()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
             Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Roles", "Create").Returns(false);
 
-            MvcSiteMapNode[] actual = provider.GetAuthorizedMenus(viewContext).ToArray();
+            MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
             Assert.Equal(1, actual.Length);
 

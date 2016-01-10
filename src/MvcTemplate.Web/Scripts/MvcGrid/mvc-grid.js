@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 2.2.2
+ * Mvc.Grid 2.2.3
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -224,6 +224,7 @@ var MvcGrid = (function () {
             var operatorValue = encodeURIComponent(column.filter.operator);
             var secondValue = encodeURIComponent(column.filter.second.val);
             var firstValue = encodeURIComponent(column.filter.first.val);
+            var pageKey = encodeURIComponent(this.name + '-Page');
             var params = this.gridQuery.split('&');
             var secondParamExists = false;
             var firstParamExists = false;
@@ -231,15 +232,15 @@ var MvcGrid = (function () {
             var newParams = [];
 
             for (var i = 0; i < params.length; i++) {
-                if (params[i] !== '') {
-                    var paramKey = params[i].split('=')[0];
-                    if (paramKey.indexOf(columnKey) == 0) {
-                        if (paramKey == operatorKey && !operatorExists) {
+                var key = params[i].split('=')[0];
+                if (params[i] != '' && key != pageKey) {
+                    if (key.indexOf(columnKey) == 0) {
+                        if (key == operatorKey && !operatorExists) {
                             if (!column.filter.isMulti) {
                                 continue;
                             }
 
-                            params[i] = paramKey + '=' + operatorValue;
+                            params[i] = key + '=' + operatorValue;
                             operatorExists = true;
                         } else if (!firstParamExists) {
                             params[i] = firstKey + '=' + firstValue;
@@ -307,7 +308,7 @@ var MvcGrid = (function () {
             var newParams = [];
 
             for (var i = 0; i < params.length; i++) {
-                if (params[i] !== '') {
+                if (params[i] != '') {
                     var paramKey = params[i].split('=')[0];
                     if (paramKey == key) {
                         params[i] = key + '=' + value;

@@ -274,7 +274,7 @@ namespace MvcTemplate.Tests.Unit.Web
         #region Method: RegisterModelBinders()
 
         [Fact]
-        public void RegisterModelBinders_Implementations()
+        public void RegisterModelBinders_TrimmingModelBinder()
         {
             Assert.Null(ModelBinders.Binders[typeof(String)]);
 

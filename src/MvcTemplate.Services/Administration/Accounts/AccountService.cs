@@ -117,20 +117,17 @@ namespace MvcTemplate.Services
 
         public void Login(String username)
         {
-            FormsAuthentication.SetAuthCookie(GetAccountId(username), true);
-        }
-        public void Logout()
-        {
-            FormsAuthentication.SignOut();
-        }
-
-        private String GetAccountId(String username)
-        {
-            return UnitOfWork
+            String accountId  = UnitOfWork
                 .Select<Account>()
                 .Where(account => account.Username.ToLower() == username.ToLower())
                 .Select(account => account.Id)
                 .Single();
+
+            FormsAuthentication.SetAuthCookie(accountId, true);
+        }
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
         }
     }
 }

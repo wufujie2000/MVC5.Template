@@ -356,8 +356,8 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnAuthorization_NotAuthenticated_SetsNullResult()
         {
-            ActionDescriptor describtor = Substitute.ForPartsOf<ActionDescriptor>();
-            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, describtor);
+            ActionDescriptor descriptor = Substitute.ForPartsOf<ActionDescriptor>();
+            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, descriptor);
             controller.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(false);
 
             controller.BaseOnAuthorization(filterContext);

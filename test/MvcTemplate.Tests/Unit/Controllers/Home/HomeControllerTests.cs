@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Error_ReturnsEmptyView()
         {
-            ViewResult actual = controller.Error() as ViewResult;
+            ViewResult actual = controller.Error();
 
             Assert.Null(actual.Model);
         }
@@ -62,7 +62,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void NotFound_ReturnsEmptyView()
         {
-            ViewResult actual = controller.NotFound() as ViewResult;
+            ViewResult actual = controller.NotFound();
 
             Assert.Null(actual.Model);
         }

@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Components.Extensions.Mvc;
+﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.Administration.Roles.RoleView;

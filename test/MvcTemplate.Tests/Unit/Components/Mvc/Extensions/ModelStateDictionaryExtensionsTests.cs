@@ -1,11 +1,11 @@
-﻿using MvcTemplate.Components.Extensions.Mvc;
+﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Objects;
 using System;
 using System.Linq;
 using System.Web.Mvc;
 using Xunit;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Mvc
+namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class ModelStateDictionaryExtensionsTests
     {

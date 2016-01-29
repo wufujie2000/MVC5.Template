@@ -17,17 +17,21 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     public class AuditLoggerTests : IDisposable
     {
         private DbEntityEntry<BaseModel> entry;
+        private TestingContext dataContext;
         private TestingContext context;
         private AuditLogger logger;
 
         public AuditLoggerTests()
         {
             context = new TestingContext();
+            dataContext = new TestingContext();
+            logger = new AuditLogger(context, "Test");
             TestModel model = ObjectFactory.CreateTestModel();
-            logger = Substitute.ForPartsOf<AuditLogger>(context, "Test");
 
-            entry = context.Entry<BaseModel>(context.Set<TestModel>().Add(model));
-            context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
+            entry = dataContext.Entry<BaseModel>(dataContext.Set<TestModel>().Add(model));
+            dataContext.Set<TestModel>().RemoveRange(dataContext.Set<TestModel>());
+            context.Set<AuditLog>().RemoveRange(context.Set<AuditLog>());
+            dataContext.SaveChanges();
             context.SaveChanges();
         }
         public void Dispose()
@@ -73,9 +77,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.State = EntityState.Added;
 
             logger.Log(new[] { entry });
+            logger.Save();
 
-            AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
             LoggableEntity expected = new LoggableEntity(entry);
+            AuditLog actual = context.Set<AuditLog>().Single();
 
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
@@ -91,9 +96,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.State = EntityState.Modified;
 
             logger.Log(new[] { entry });
+            logger.Save();
 
-            AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
             LoggableEntity expected = new LoggableEntity(entry);
+            AuditLog actual = context.Set<AuditLog>().Single();
 
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
@@ -108,8 +114,9 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.State = EntityState.Modified;
 
             logger.Log(new[] { entry });
+            logger.Save();
 
-            Assert.Empty(context.ChangeTracker.Entries<AuditLog>());
+            Assert.Empty(context.Set<AuditLog>());
         }
 
         [Fact]
@@ -118,9 +125,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             entry.State = EntityState.Deleted;
 
             logger.Log(new[] { entry });
+            logger.Save();
 
-            AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
             LoggableEntity expected = new LoggableEntity(entry);
+            AuditLog actual = context.Set<AuditLog>().Single();
 
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
@@ -163,33 +171,22 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Log(LoggableEntity entity)
 
-        [Theory]
-        [InlineData("", "", null)]
-        [InlineData(null, "", null)]
-        [InlineData("", null, null)]
-        [InlineData(null, null, null)]
-        [InlineData("", "IdentityId", null)]
-        [InlineData("AccountId", "", "AccountId")]
-        [InlineData("AccountId", null, "AccountId")]
-        [InlineData(null, "IdentityId", "IdentityId")]
-        [InlineData("AccountId", "IdentityId", "AccountId")]
-        public void Log_AddsLogToTheSet(String accountId, String identityName, String expectedAccountId)
+        [Fact]
+        public void Log_Entity()
         {
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            HttpContext.Current.User.Identity.Name.Returns(identityName);
             LoggableEntity entity = new LoggableEntity(entry);
-            logger = new AuditLogger(context, accountId);
 
             logger.Log(entity);
+            logger.Save();
 
-            AuditLog actual = context.ChangeTracker.Entries<AuditLog>().First().Entity;
+            AuditLog actual = context.Set<AuditLog>().Single();
             LoggableEntity expected = entity;
 
-            Assert.Equal(expectedAccountId, actual.AccountId);
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
             Assert.Equal(expected.Id, actual.EntityId);
+            Assert.Equal("Test", actual.AccountId);
         }
 
         [Fact]
@@ -206,15 +203,35 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #region Method: Save()
 
-        [Fact]
-        public void Save_Logs()
+        [Theory]
+        [InlineData("", "", null)]
+        [InlineData(null, "", null)]
+        [InlineData("", null, null)]
+        [InlineData(null, null, null)]
+        [InlineData("", "IdentityId", null)]
+        [InlineData("AccountId", "", "AccountId")]
+        [InlineData("AccountId", null, "AccountId")]
+        [InlineData(null, "IdentityId", "IdentityId")]
+        [InlineData("AccountId", "IdentityId", "AccountId")]
+        public void Save_LogsOnce(String accountId, String identityName, String expectedAccountId)
         {
-            TestingContext context = Substitute.For<TestingContext>();
-            logger = Substitute.ForPartsOf<AuditLogger>(context);
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+            HttpContext.Current.User.Identity.Name.Returns(identityName);
+            LoggableEntity entity = new LoggableEntity(entry);
+            logger = new AuditLogger(context, accountId);
 
+            logger.Log(entity);
+            logger.Save();
             logger.Save();
 
-            context.Received().SaveChanges();
+            AuditLog actual = context.Set<AuditLog>().Single();
+            LoggableEntity expected = entity;
+
+            Assert.Equal(expectedAccountId, actual.AccountId);
+            Assert.Equal(expected.ToString(), actual.Changes);
+            Assert.Equal(expected.Name, actual.EntityName);
+            Assert.Equal(expected.Action, actual.Action);
+            Assert.Equal(expected.Id, actual.EntityId);
         }
 
         #endregion

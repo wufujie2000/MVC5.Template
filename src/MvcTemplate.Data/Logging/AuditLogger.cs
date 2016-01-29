@@ -10,6 +10,7 @@ namespace MvcTemplate.Data.Logging
 {
     public class AuditLogger : IAuditLogger
     {
+        private List<LoggableEntity> Entities { get; set; }
         private DbContext Context { get; set; }
         private String AccountId { get; set; }
         private Boolean Disposed { get; set; }
@@ -17,6 +18,7 @@ namespace MvcTemplate.Data.Logging
         public AuditLogger(DbContext context)
         {
             Context = context;
+            Entities = new List<LoggableEntity>();
             Context.Configuration.AutoDetectChangesEnabled = false;
         }
         public AuditLogger(DbContext context, String accountId) : this(context)
@@ -42,19 +44,27 @@ namespace MvcTemplate.Data.Logging
         }
         public void Log(LoggableEntity entity)
         {
-            AuditLog log = new AuditLog();
-            log.AccountId = AccountId ?? HttpContext.Current.User.Identity.Name;
-            log.AccountId = !String.IsNullOrEmpty(log.AccountId) ? log.AccountId : null;
-            log.Changes = entity.ToString();
-            log.EntityName = entity.Name;
-            log.Action = entity.Action;
-            log.EntityId = entity.Id;
-
-            Context.Set<AuditLog>().Add(log);
+            Entities.Add(entity);
         }
         public void Save()
         {
+            String accountId = AccountId ?? HttpContext.Current.User.Identity.Name;
+            accountId = !String.IsNullOrEmpty(accountId) ? accountId : null;
+
+            foreach (LoggableEntity entity in Entities)
+            {
+                AuditLog log = new AuditLog();
+                log.Changes = entity.ToString();
+                log.EntityName = entity.Name;
+                log.Action = entity.Action;
+                log.AccountId = accountId;
+                log.EntityId = entity.Id;
+
+                Context.Set<AuditLog>().Add(log);
+            }
+
             Context.SaveChanges();
+            Entities.Clear();
         }
 
         public void Dispose()

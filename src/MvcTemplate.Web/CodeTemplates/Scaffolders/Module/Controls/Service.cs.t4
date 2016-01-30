@@ -14,7 +14,7 @@ namespace MvcTemplate.Services
         {
         }
 
-        public TView Get<TView>(String id) where TView : BaseView
+        public TView Get<TView>(Int32 id) where TView : BaseView
         {
             return UnitOfWork.GetAs<<#= Model.Model #>, TView>(id);
         }
@@ -23,7 +23,7 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Select<<#= Model.Model #>>()
                 .To<<#= Model.View #>>()
-                .OrderByDescending(<#= Model.ModelVarName #> => <#= Model.ModelVarName #>.CreationDate);
+                .OrderByDescending(<#= Model.ModelVarName #> => <#= Model.ModelVarName #>.Id);
         }
 
         public void Create(<#= Model.View #> view)
@@ -40,7 +40,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(<#= Model.ModelVarName #>);
             UnitOfWork.Commit();
         }
-        public void Delete(String id)
+        public void Delete(Int32 id)
         {
             UnitOfWork.Delete<<#= Model.Model #>>(id);
             UnitOfWork.Commit();

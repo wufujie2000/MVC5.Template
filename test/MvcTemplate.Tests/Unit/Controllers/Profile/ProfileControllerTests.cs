@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             profileEdit = ObjectFactory.CreateProfileEditView();
 
             controller = Substitute.ForPartsOf<ProfileController>(validator, service);
-            ReturnCurrentAccountId(controller, "Test");
+            ReturnCurrentAccountId(controller, 1);
         }
 
         #region Method: Edit()

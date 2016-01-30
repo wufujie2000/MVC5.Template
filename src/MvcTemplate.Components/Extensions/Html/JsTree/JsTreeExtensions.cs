@@ -18,7 +18,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             return new MvcHtmlString(FormIdsDiv(name, jsTree.SelectedIds) + FormTree(name, jsTree.Nodes));
         }
-        private static String FormIdsDiv(String name, IEnumerable<String> selectedIds)
+        private static String FormIdsDiv(String name, IEnumerable<Int32> selectedIds)
         {
             TagBuilder idsDiv = new TagBuilder("div");
             idsDiv.AddCssClass("js-tree-view-ids");
@@ -28,9 +28,9 @@ namespace MvcTemplate.Components.Extensions.Html
             input.MergeAttribute("type", "hidden");
             input.MergeAttribute("name", name);
 
-            foreach (String id in selectedIds)
+            foreach (Int32 id in selectedIds)
             {
-                input.MergeAttribute("value", id, true);
+                input.MergeAttribute("value", id.ToString(), true);
                 hiddenInputs.Append(input.ToString(TagRenderMode.SelfClosing));
             }
 
@@ -58,8 +58,9 @@ namespace MvcTemplate.Components.Extensions.Html
             foreach (JsTreeNode treeNode in nodes)
             {
                 TagBuilder node = new TagBuilder("li");
-                node.MergeAttribute("id", treeNode.Id);
+                String id = treeNode.Id.ToString();
                 node.InnerHtml = treeNode.Title;
+                node.MergeAttribute("id", id);
 
                 AddNodes(node, treeNode.Nodes);
                 leafBuilder.Append(node);

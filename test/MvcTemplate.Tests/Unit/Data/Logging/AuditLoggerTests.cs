@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             context = new TestingContext();
             dataContext = new TestingContext();
-            logger = new AuditLogger(context, "Test");
+            logger = new AuditLogger(context, 1);
             TestModel model = ObjectFactory.CreateTestModel();
 
             entry = dataContext.Entry<BaseModel>(dataContext.Set<TestModel>().Add(model));
@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Constructor: AuditLogger(DbContext context, String accountId)
+        #region Constructor: AuditLogger(DbContext context, Int32? accountId)
 
         [Fact]
         public void AuditLogger_AccountId_DisablesChangesDetection()
@@ -63,7 +63,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             TestingContext context = new TestingContext();
             context.Configuration.AutoDetectChangesEnabled = true;
 
-            using (new AuditLogger(context, "Test"))
+            using (new AuditLogger(context, 1))
                 Assert.False(context.Configuration.AutoDetectChangesEnabled);
         }
 
@@ -85,8 +85,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
-            Assert.Equal(expected.Id, actual.EntityId);
-            Assert.Equal("Test", actual.AccountId);
+            Assert.Equal(expected.Id(), actual.EntityId);
+            Assert.Equal(1, actual.AccountId);
         }
 
         [Fact]
@@ -104,8 +104,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
-            Assert.Equal(expected.Id, actual.EntityId);
-            Assert.Equal("Test", actual.AccountId);
+            Assert.Equal(expected.Id(), actual.EntityId);
+            Assert.Equal(1, actual.AccountId);
         }
 
         [Fact]
@@ -133,8 +133,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
-            Assert.Equal(expected.Id, actual.EntityId);
-            Assert.Equal("Test", actual.AccountId);
+            Assert.Equal(expected.Id(), actual.EntityId);
+            Assert.Equal(1, actual.AccountId);
         }
 
         [Fact]
@@ -185,8 +185,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
-            Assert.Equal(expected.Id, actual.EntityId);
-            Assert.Equal("Test", actual.AccountId);
+            Assert.Equal(expected.Id(), actual.EntityId);
+            Assert.Equal(1, actual.AccountId);
         }
 
         [Fact]
@@ -204,16 +204,13 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         #region Method: Save()
 
         [Theory]
-        [InlineData("", "", null)]
+        [InlineData(1, "", 1)]
+        [InlineData(1, "2", 1)]
+        [InlineData(1, null, 1)]
+        [InlineData(null, "2", 2)]
         [InlineData(null, "", null)]
-        [InlineData("", null, null)]
         [InlineData(null, null, null)]
-        [InlineData("", "IdentityId", null)]
-        [InlineData("AccountId", "", "AccountId")]
-        [InlineData("AccountId", null, "AccountId")]
-        [InlineData(null, "IdentityId", "IdentityId")]
-        [InlineData("AccountId", "IdentityId", "AccountId")]
-        public void Save_LogsOnce(String accountId, String identityName, String expectedAccountId)
+        public void Save_LogsOnce(Int32? accountId, String identityName, Int32? expectedAccountId)
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             HttpContext.Current.User.Identity.Name.Returns(identityName);
@@ -231,7 +228,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             Assert.Equal(expected.ToString(), actual.Changes);
             Assert.Equal(expected.Name, actual.EntityName);
             Assert.Equal(expected.Action, actual.Action);
-            Assert.Equal(expected.Id, actual.EntityId);
+            Assert.Equal(expected.Id(), actual.EntityId);
         }
 
         #endregion

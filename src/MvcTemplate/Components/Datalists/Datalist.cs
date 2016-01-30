@@ -67,7 +67,11 @@ namespace MvcTemplate.Components.Datalists
 
         protected override IQueryable<TView> FilterById(IQueryable<TView> models)
         {
-            return UnitOfWork.Select<TModel>().Where(model => model.Id == CurrentFilter.Id).To<TView>();
+            Int32 id = 0;
+            if (!Int32.TryParse(CurrentFilter.Id, out id))
+                return Enumerable.Empty<TView>().AsQueryable();
+
+            return UnitOfWork.Select<TModel>().Where(model => model.Id == id).To<TView>();
         }
     }
 }

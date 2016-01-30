@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
             UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<Int32?>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
             IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
@@ -39,19 +40,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             GlobalizationManager.Provider = null;
             Authorization.Provider = null;
         }
-
-        #region Property: CurrentAccountId
-
-        [Fact]
-        public void CurrentAccountId_ReturnsIdentityName()
-        {
-            String expected = controller.User.Identity.Name;
-            String actual = controller.CurrentAccountId;
-
-            Assert.Equal(expected, actual);
-        }
-
-        #endregion
 
         #region Constructor: BaseController()
 
@@ -333,6 +321,23 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #endregion
 
         #region Method: BeginExecuteCore(AsyncCallback callback, Object state)
+
+        [Theory]
+        [InlineData("", 0)]
+        [InlineData("1", 1)]
+        [InlineData(null, 0)]
+        public void BeginExecuteCore_SetsCurrentAccountId(String identityName, Int32 accountId)
+        {
+            controller.ControllerContext.HttpContext.User.Identity.Name.Returns(identityName);
+            GlobalizationManager.Provider = Substitute.For<IGlobalizationProvider>();
+
+            controller.BaseBeginExecuteCore(asyncResult => { }, null);
+
+            Int32? actual = controller.CurrentAccountId;
+            Int32? expected = accountId;
+
+            Assert.Equal(expected, actual);
+        }
 
         [Fact]
         public void BeginExecuteCore_SetsCurrentLanguage()

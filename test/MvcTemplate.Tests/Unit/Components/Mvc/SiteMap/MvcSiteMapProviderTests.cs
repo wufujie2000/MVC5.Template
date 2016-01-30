@@ -83,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_ReturnsAuthorizedNodes()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Accounts", "Index").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Id(), "Administration", "Accounts", "Index").Returns(true);
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
@@ -191,8 +191,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_RemovesEmptyNodes()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            Authorization.Provider.IsAuthorizedFor(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
-            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Name, "Administration", "Roles", "Create").Returns(false);
+            Authorization.Provider.IsAuthorizedFor(Arg.Any<Int32?>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Id(), "Administration", "Roles", "Create").Returns(false);
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 

@@ -18,7 +18,7 @@ namespace MvcTemplate.Services
             Hasher = hasher;
         }
 
-        public TView Get<TView>(String id) where TView : BaseView
+        public TView Get<TView>(Int32 id) where TView : BaseView
         {
             return UnitOfWork.GetAs<Account, TView>(id);
         }
@@ -27,14 +27,14 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Select<Account>()
                 .To<AccountView>()
-                .OrderByDescending(account => account.CreationDate);
+                .OrderByDescending(account => account.Id);
         }
 
         public Boolean IsLoggedIn(IPrincipal user)
         {
             return user.Identity.IsAuthenticated;
         }
-        public Boolean IsActive(String id)
+        public Boolean IsActive(Int32 id)
         {
             return UnitOfWork.Select<Account>().Any(account => account.Id == id && !account.IsLocked);
         }
@@ -107,7 +107,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
         }
-        public void Delete(String id)
+        public void Delete(Int32 id)
         {
             UnitOfWork.Delete<Account>(id);
             UnitOfWork.Commit();
@@ -121,7 +121,8 @@ namespace MvcTemplate.Services
                 .Select<Account>()
                 .Where(account => account.Username.ToLower() == username.ToLower())
                 .Select(account => account.Id)
-                .Single();
+                .Single()
+                .ToString();
 
             FormsAuthentication.SetAuthCookie(accountId, true);
         }

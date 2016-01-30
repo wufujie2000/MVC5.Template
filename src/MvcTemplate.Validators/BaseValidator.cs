@@ -9,7 +9,7 @@ namespace MvcTemplate.Validators
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
         public ModelStateDictionary ModelState { get; set; }
-        public String CurrentAccountId { get; set; }
+        public Int32 CurrentAccountId { get; set; }
         public AlertsContainer Alerts { get; set; }
         private Boolean Disposed { get; set; }
 

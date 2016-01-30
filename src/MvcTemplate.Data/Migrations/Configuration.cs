@@ -20,7 +20,7 @@ namespace MvcTemplate.Data.Migrations
 
         protected override void Seed(Context context)
         {
-            IAuditLogger logger = new AuditLogger(new Context(), "sys_seeder");
+            IAuditLogger logger = new AuditLogger(new Context(), 0);
             UnitOfWork = new UnitOfWork(context, logger);
 
             SeedPermissions();
@@ -35,25 +35,16 @@ namespace MvcTemplate.Data.Migrations
         {
             Permission[] permissions =
             {
-                new Permission { Id = "00000000-0000-0000-0000-000000000001",
-                    Area = "Administration", Controller = "Accounts", Action = "Index" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000002",
-                    Area = "Administration", Controller = "Accounts", Action = "Create" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000003",
-                    Area = "Administration", Controller = "Accounts", Action = "Details" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000004",
-                    Area = "Administration", Controller = "Accounts", Action = "Edit" },
+                new Permission { Id = 1, Area = "Administration", Controller = "Accounts", Action = "Index" },
+                new Permission { Id = 2, Area = "Administration", Controller = "Accounts", Action = "Create" },
+                new Permission { Id = 3, Area = "Administration", Controller = "Accounts", Action = "Details" },
+                new Permission { Id = 4, Area = "Administration", Controller = "Accounts", Action = "Edit" },
 
-                new Permission { Id = "00000000-0000-0000-0000-000000000005",
-                    Area = "Administration", Controller = "Roles", Action = "Index" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000006",
-                    Area = "Administration", Controller = "Roles", Action = "Create" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000007",
-                    Area = "Administration", Controller = "Roles", Action = "Details" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000008",
-                    Area = "Administration", Controller = "Roles", Action = "Edit" },
-                new Permission { Id = "00000000-0000-0000-0000-000000000009",
-                    Area = "Administration", Controller = "Roles", Action = "Delete" }
+                new Permission { Id = 5, Area = "Administration", Controller = "Roles", Action = "Index" },
+                new Permission { Id = 6, Area = "Administration", Controller = "Roles", Action = "Create" },
+                new Permission { Id = 7, Area = "Administration", Controller = "Roles", Action = "Details" },
+                new Permission { Id = 8, Area = "Administration", Controller = "Roles", Action = "Edit" },
+                new Permission { Id = 9, Area = "Administration", Controller = "Roles", Action = "Delete" }
             };
 
             Permission[] currentPermissions = UnitOfWork.Select<Permission>().ToArray();
@@ -94,7 +85,7 @@ namespace MvcTemplate.Data.Migrations
                 UnitOfWork.Commit();
             }
 
-            String adminRoleId = UnitOfWork.Select<Role>().Single(role => role.Title == "Sys_Admin").Id;
+            Int32 adminRoleId = UnitOfWork.Select<Role>().Single(role => role.Title == "Sys_Admin").Id;
             RolePermission[] adminPermissions = UnitOfWork
                 .Select<RolePermission>()
                 .Where(rolePermission => rolePermission.RoleId == adminRoleId)

@@ -1,24 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MvcTemplate.Objects
 {
     public abstract class BaseModel
     {
         [Key]
-        [Required]
-        public String Id
-        {
-            get
-            {
-                return InternalId ?? (InternalId = Guid.NewGuid().ToString());
-            }
-            set
-            {
-                InternalId = value;
-            }
-        }
-        private String InternalId
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Int32 Id
         {
             get;
             set;

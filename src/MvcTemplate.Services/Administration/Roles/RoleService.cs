@@ -64,9 +64,9 @@ namespace MvcTemplate.Services
             return UnitOfWork
                 .Select<Role>()
                 .To<RoleView>()
-                .OrderByDescending(role => role.CreationDate);
+                .OrderByDescending(role => role.Id);
         }
-        public RoleView GetView(String id)
+        public RoleView GetView(Int32 id)
         {
             RoleView role = UnitOfWork.GetAs<Role, RoleView>(id);
             if (role != null)
@@ -100,7 +100,7 @@ namespace MvcTemplate.Services
 
             Authorization.Provider.Refresh();
         }
-        public void Delete(String id)
+        public void Delete(Int32 id)
         {
             RemoveRoleFromAccounts(id);
             DeleteRolePermissions(id);
@@ -119,7 +119,7 @@ namespace MvcTemplate.Services
         }
         private void CreateRolePermissions(RoleView view)
         {
-            foreach (String permissionId in view.Permissions.SelectedIds)
+            foreach (Int32 permissionId in view.Permissions.SelectedIds)
                 UnitOfWork.Insert(new RolePermission { RoleId = view.Id, PermissionId = permissionId });
         }
 
@@ -131,21 +131,21 @@ namespace MvcTemplate.Services
         }
         private void EditRolePermissions(Role role, RoleView view)
         {
-            List<String> selectedPermissions = view.Permissions.SelectedIds.ToList();
+            List<Int32> selectedPermissions = view.Permissions.SelectedIds.ToList();
 
             foreach (RolePermission rolePermission in role.Permissions.ToArray())
                 if (!selectedPermissions.Remove(rolePermission.PermissionId))
                     UnitOfWork.Delete(rolePermission);
 
-            foreach (String permissionId in selectedPermissions)
+            foreach (Int32 permissionId in selectedPermissions)
                 UnitOfWork.Insert(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
         }
 
-        private void DeleteRole(String id)
+        private void DeleteRole(Int32 id)
         {
             UnitOfWork.Delete<Role>(id);
         }
-        private void DeleteRolePermissions(String roleId)
+        private void DeleteRolePermissions(Int32 roleId)
         {
             IQueryable<RolePermission> rolePermissions = UnitOfWork
                 .Select<RolePermission>()
@@ -154,7 +154,7 @@ namespace MvcTemplate.Services
             foreach (RolePermission rolePermission in rolePermissions)
                 UnitOfWork.Delete(rolePermission);
         }
-        private void RemoveRoleFromAccounts(String roleId)
+        private void RemoveRoleFromAccounts(Int32 roleId)
         {
             IQueryable<Account> accountsWithRole = UnitOfWork
                 .Select<Account>()

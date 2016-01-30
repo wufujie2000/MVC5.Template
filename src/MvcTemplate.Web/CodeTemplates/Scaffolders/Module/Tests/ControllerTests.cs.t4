@@ -101,7 +101,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Details(String id)
+        #region Method: Details(Int32 id)
 
         [Fact]
         public void Details_ReturnsNotEmptyView()
@@ -116,7 +116,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Edit(String id)
+        #region Method: Edit(Int32 id)
 
         [Fact]
         public void Edit_ReturnsNotEmptyView()
@@ -167,7 +167,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Delete(String id)
+        #region Method: Delete(Int32 id)
 
         [Fact]
         public void Delete_ReturnsNotEmptyView()
@@ -182,7 +182,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: DeleteConfirmed(String id)
+        #region Method: DeleteConfirmed(Int32 id)
 
         [Fact]
         public void DeleteConfirmed_Deletes<#= Model.ShortModel #>()

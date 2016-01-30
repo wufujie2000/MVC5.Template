@@ -164,6 +164,14 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         #region Method: FilterById(IQueryable<TView> models)
 
         [Fact]
+        public void FilterById_NotInteger_ReturnsEmpty()
+        {
+            datalist.CurrentFilter.Id = "A";
+
+            Assert.Empty(datalist.BaseFilterById(null));
+        }
+
+        [Fact]
         public void FilterById_FromCurrentFilter()
         {
             TestingContext context = new TestingContext();
@@ -174,7 +182,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             IUnitOfWork unitOfWork = new UnitOfWork(context);
             datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
 
-            datalist.CurrentFilter.Id = role.Id;
+            datalist.CurrentFilter.Id = role.Id.ToString();
 
             RoleView expected = unitOfWork.Select<Role>().To<RoleView>().Single();
             RoleView actual = datalist.BaseFilterById(null).Single();

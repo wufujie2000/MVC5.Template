@@ -13,11 +13,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void JsTreeFor_Expression()
         {
             JsTreeView tree = new JsTreeView();
-            tree.JsTree.SelectedIds.Add("4567");
-            tree.JsTree.SelectedIds.Add("12345");
+            tree.JsTree.SelectedIds.Add(4567);
+            tree.JsTree.SelectedIds.Add(12345);
             tree.JsTree.Nodes.Add(new JsTreeNode("Test"));
-            tree.JsTree.Nodes[0].Nodes.Add(new JsTreeNode("12345", "Test1"));
-            tree.JsTree.Nodes[0].Nodes.Add(new JsTreeNode("23456", "Test2"));
+            tree.JsTree.Nodes[0].Nodes.Add(new JsTreeNode(12345, "Test1"));
+            tree.JsTree.Nodes[0].Nodes.Add(new JsTreeNode(23456, "Test2"));
             HtmlHelper<JsTreeView> html = HtmlHelperFactory.CreateHtmlHelper(tree);
 
             String actual = html.JsTreeFor(model => model.JsTree).ToString();

@@ -6,19 +6,7 @@ namespace MvcTemplate.Objects
     public abstract class BaseView
     {
         [Key]
-        [Required]
-        public String Id
-        {
-            get
-            {
-                return InternalId ?? (InternalId = Guid.NewGuid().ToString());
-            }
-            set
-            {
-                InternalId = value;
-            }
-        }
-        private String InternalId
+        public Int32 Id
         {
             get;
             set;

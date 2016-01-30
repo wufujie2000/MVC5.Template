@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             DependencyResolver.SetResolver(Substitute.For<IDependencyResolver>());
         }
 
-        #region Method: IsAuthorizedFor(String accountId, String area, String controller, String action)
+        #region Method: IsAuthorizedFor(Int32? accountId, String area, String controller, String action)
 
         [Fact]
         public void IsAuthorizedFor_AuthorizesControllerByIgnoringCase()
@@ -306,7 +306,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.False(provider.IsAuthorizedFor("Test", "Area", "Authorized", "Action"));
+            Assert.False(provider.IsAuthorizedFor(0, "Area", "Authorized", "Action"));
         }
 
         [Fact]

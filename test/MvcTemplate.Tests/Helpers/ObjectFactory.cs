@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests
         {
             return new Account
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Passhash = "Passhash" + id,
@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests
                 RecoveryToken = "Token" + id,
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5),
 
-                RoleId = "Id" + id,
+                RoleId = id,
                 Role = CreateRole(id)
             };
         }
@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests
         {
             return new AccountView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Email = id + "@tests.com",
@@ -47,28 +47,28 @@ namespace MvcTemplate.Tests
         {
             return new AccountEditView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Email = id + "@tests.com",
 
                 IsLocked = true,
 
-                RoleId = "Id" + id
+                RoleId = id
             };
         }
         public static AccountCreateView CreateAccountCreateView(Int32 id = 1)
         {
             return new AccountCreateView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Password = "Password" + id,
 
                 Email = id + "@tests.com",
 
-                RoleId = "Id" + id
+                RoleId = id
             };
         }
 
@@ -76,7 +76,7 @@ namespace MvcTemplate.Tests
         {
             return new AccountLoginView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Password = "Password" + id
@@ -86,7 +86,7 @@ namespace MvcTemplate.Tests
         {
             return new AccountResetView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Token = "Token" + id,
                 NewPassword = "NewPassword" + id
@@ -96,7 +96,7 @@ namespace MvcTemplate.Tests
         {
             return new AccountRegisterView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Username = "Username" + id,
                 Password = "Password" + id,
@@ -108,7 +108,7 @@ namespace MvcTemplate.Tests
         {
             return new AccountRecoveryView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Email = id + "@tests.com"
             };
@@ -118,7 +118,7 @@ namespace MvcTemplate.Tests
         {
             return new ProfileEditView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Email = id + "@tests.com",
                 Username = "Username" + id,
@@ -132,7 +132,7 @@ namespace MvcTemplate.Tests
         {
             return new ProfileDeleteView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Password = "Password" + id
             };
@@ -142,7 +142,7 @@ namespace MvcTemplate.Tests
         {
             return new Role
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Title = "Title" + id,
 
@@ -153,7 +153,7 @@ namespace MvcTemplate.Tests
         {
             return new RoleView
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Title = "Title" + id
             };
@@ -163,7 +163,7 @@ namespace MvcTemplate.Tests
         {
             return new Permission
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Area = "Area" + id,
                 Action = "Action" + id,
@@ -174,12 +174,12 @@ namespace MvcTemplate.Tests
         {
             return new RolePermission
             {
-                Id = "Id" + id,
+                Id = id,
 
-                RoleId = "Id" + id,
+                RoleId = id,
                 Role = CreateRole(id),
 
-                PermissionId = "Id" + id,
+                PermissionId = id,
                 Permission = CreatePermission(id)
             };
         }
@@ -192,7 +192,7 @@ namespace MvcTemplate.Tests
         {
             return new TestModel
             {
-                Id = "Id" + id,
+                Id = id,
 
                 Text = "Text" + id
             };

@@ -22,7 +22,7 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             if (Authorization.Provider == null) return true;
 
-            String accountId = html.ViewContext.HttpContext.User.Identity.Name;
+            Int32? accountId = html.ViewContext.HttpContext.User.Identity.Id();
 
             return Authorization.Provider.IsAuthorizedFor(accountId, area, controller, action);
         }

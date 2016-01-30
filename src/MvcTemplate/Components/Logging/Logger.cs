@@ -14,7 +14,7 @@ namespace MvcTemplate.Components.Logging
         {
             Log(null, message);
         }
-        public void Log(String accountId, String message)
+        public void Log(Int32? accountId, String message)
         {
             try
             {

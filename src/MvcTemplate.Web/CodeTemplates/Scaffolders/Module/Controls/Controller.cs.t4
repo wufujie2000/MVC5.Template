@@ -46,13 +46,13 @@ namespace <#= Model.ControllerNamespace #>
         }
 
         [HttpGet]
-        public ActionResult Details(String id)
+        public ActionResult Details(Int32 id)
         {
             return NotEmptyView(Service.Get<<#= Model.View #>>(id));
         }
 
         [HttpGet]
-        public ActionResult Edit(String id)
+        public ActionResult Edit(Int32 id)
         {
             return NotEmptyView(Service.Get<<#= Model.View #>>(id));
         }
@@ -70,7 +70,7 @@ namespace <#= Model.ControllerNamespace #>
         }
 
         [HttpGet]
-        public ActionResult Delete(String id)
+        public ActionResult Delete(Int32 id)
         {
             return NotEmptyView(Service.Get<<#= Model.View #>>(id));
         }
@@ -78,7 +78,7 @@ namespace <#= Model.ControllerNamespace #>
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(String id)
+        public ActionResult DeleteConfirmed(Int32 id)
         {
             Service.Delete(id);
 

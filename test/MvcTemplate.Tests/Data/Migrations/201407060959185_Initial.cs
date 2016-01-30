@@ -12,17 +12,17 @@ namespace MvcTemplate.Tests.Data.Migrations
                 "dbo.Account",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
                         Username = c.String(nullable: false, maxLength: 128),
                         Passhash = c.String(nullable: false, maxLength: 512),
                         Email = c.String(nullable: false, maxLength: 256),
                         IsLocked = c.Boolean(nullable: false),
                         RecoveryToken = c.String(maxLength: 128),
                         RecoveryTokenExpirationDate = c.DateTime(precision: 7, storeType: "datetime2"),
-                        RoleId = c.String(maxLength: 128),
+                        RoleId = c.Int(),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Role", t => t.RoleId)
                 .Index(t => t.Username, unique: true)
                 .Index(t => t.Email, unique: true)
@@ -32,23 +32,23 @@ namespace MvcTemplate.Tests.Data.Migrations
                 "dbo.Role",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
                         Title = c.String(nullable: false, maxLength: 128),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .Index(t => t.Title, unique: true);
             
             CreateTable(
                 "dbo.RolePermission",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
-                        PermissionId = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        RoleId = c.Int(nullable: false),
+                        PermissionId = c.Int(nullable: false),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Permission", t => t.PermissionId)
                 .ForeignKey("dbo.Role", t => t.RoleId)
                 .Index(t => t.RoleId)
@@ -58,37 +58,37 @@ namespace MvcTemplate.Tests.Data.Migrations
                 "dbo.Permission",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false),
                         Area = c.String(maxLength: 128),
                         Controller = c.String(nullable: false, maxLength: 128),
                         Action = c.String(nullable: false, maxLength: 128),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AuditLog",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        AccountId = c.String(maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        AccountId = c.Int(),
                         Action = c.String(nullable: false, maxLength: 128),
                         EntityName = c.String(nullable: false, maxLength: 128),
-                        EntityId = c.String(nullable: false, maxLength: 128),
+                        EntityId = c.Int(nullable: false),
                         Changes = c.String(nullable: false),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.TestModel",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
                         Text = c.String(maxLength: 512),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
-                .PrimaryKey(t => t.Id, clustered: false);
+                .PrimaryKey(t => t.Id);
             
         }
         

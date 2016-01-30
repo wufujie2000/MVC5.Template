@@ -129,8 +129,8 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void LoggableEntity_SetsEntityId()
         {
-            String actual = new LoggableEntity(entry).Id;
-            String expected = model.Id;
+            Int32 actual = new LoggableEntity(entry).Id();
+            Int32 expected = model.Id;
 
             Assert.Equal(expected, actual);
         }
@@ -167,9 +167,9 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             IEnumerable<String> properties = originalValues.PropertyNames;
 
-            IEnumerator<LoggableProperty> expected = properties.Select(name =>
-                new LoggableProperty(entry.Property(name), originalValues[name])).GetEnumerator();
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
+            IEnumerator<LoggableProperty> expected = properties.Where(property => property != "Id")
+                .Select(name => new LoggableProperty(entry.Property(name), originalValues[name])).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {

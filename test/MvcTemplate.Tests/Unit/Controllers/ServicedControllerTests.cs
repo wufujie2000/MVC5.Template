@@ -34,12 +34,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()
         {
-            ReturnCurrentAccountId(controller, "Test");
+            ReturnCurrentAccountId(controller, 1);
 
             controller.BaseOnActionExecuting(null);
 
-            String expected = controller.CurrentAccountId;
-            String actual = service.CurrentAccountId;
+            Int32 expected = controller.CurrentAccountId;
+            Int32 actual = service.CurrentAccountId;
 
             Assert.Equal(expected, actual);
         }

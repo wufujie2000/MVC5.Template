@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context.Dispose();
         }
 
-        #region Method: Get<TView>(String id)
+        #region Method: Get<TView>(Int32 id)
 
         [Fact]
         public void Get_ReturnsViewById()
@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Services
             IEnumerator<<#= Model.View #>> expected = context
                 .Set<<#= Model.Model #>>()
                 .ProjectTo<<#= Model.View #>>()
-                .OrderByDescending(view => view.CreationDate)
+                .OrderByDescending(view => view.Id)
                 .GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
@@ -114,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Delete(String id)
+        #region Method: Delete(Int32 id)
 
         [Fact]
         public void Delete_<#= Model.ShortModel #>()

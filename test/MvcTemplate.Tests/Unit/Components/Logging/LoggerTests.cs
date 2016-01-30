@@ -69,14 +69,14 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         #endregion
 
-        #region Method: Log(String accountId, String message)
+        #region Method: Log(Int32? accountId, String message)
 
         [Fact]
         public void Log_AccountIdAndMessage()
         {
-            logger.Log("AccountTest", "MessageTest");
+            logger.Log(1, "MessageTest");
 
-            String expected = "Account: AccountTest" + Environment.NewLine + "Message: MessageTest" + Environment.NewLine + Environment.NewLine;
+            String expected = "Account: 1" + Environment.NewLine + "Message: MessageTest" + Environment.NewLine + Environment.NewLine;
             String actual = File.ReadAllText(logPath);
 
             Assert.True(actual.StartsWith("Time   :"));

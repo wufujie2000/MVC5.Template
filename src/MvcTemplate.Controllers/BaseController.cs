@@ -15,12 +15,10 @@ namespace MvcTemplate.Controllers
             get;
             protected set;
         }
-        public virtual String CurrentAccountId
+        public virtual Int32 CurrentAccountId
         {
-            get
-            {
-                return User.Identity.Name;
-            }
+            get;
+            protected set;
         }
         public AlertsContainer Alerts
         {
@@ -93,6 +91,8 @@ namespace MvcTemplate.Controllers
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
         {
+            CurrentAccountId = User.Identity.Id() ?? 0;
+
             String abbreviation = RouteData.Values["language"].ToString();
             GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbreviation];
 

@@ -10,10 +10,10 @@ namespace MvcTemplate.Data.Logging
 {
     public class AuditLogger : IAuditLogger
     {
-        private List<LoggableEntity> Entities { get; set; }
-        private DbContext Context { get; set; }
-        private String AccountId { get; set; }
+        private Int32? AccountId { get; set; }
         private Boolean Disposed { get; set; }
+        private DbContext Context { get; set; }
+        private List<LoggableEntity> Entities { get; set; }
 
         public AuditLogger(DbContext context)
         {
@@ -21,7 +21,7 @@ namespace MvcTemplate.Data.Logging
             Entities = new List<LoggableEntity>();
             Context.Configuration.AutoDetectChangesEnabled = false;
         }
-        public AuditLogger(DbContext context, String accountId) : this(context)
+        public AuditLogger(DbContext context, Int32? accountId) : this(context)
         {
             AccountId = accountId;
         }
@@ -48,17 +48,15 @@ namespace MvcTemplate.Data.Logging
         }
         public void Save()
         {
-            String accountId = AccountId ?? HttpContext.Current.User.Identity.Name;
-            accountId = !String.IsNullOrEmpty(accountId) ? accountId : null;
-
+            Int32? accountId = GetAccountId();
             foreach (LoggableEntity entity in Entities)
             {
                 AuditLog log = new AuditLog();
                 log.Changes = entity.ToString();
                 log.EntityName = entity.Name;
                 log.Action = entity.Action;
+                log.EntityId = entity.Id();
                 log.AccountId = accountId;
-                log.EntityId = entity.Id;
 
                 Context.Set<AuditLog>().Add(log);
             }
@@ -74,6 +72,14 @@ namespace MvcTemplate.Data.Logging
             Context.Dispose();
 
             Disposed = true;
+        }
+
+        private Int32? GetAccountId()
+        {
+            if (AccountId == null && !String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+                return Int32.Parse(HttpContext.Current.User.Identity.Name);
+
+            return AccountId;
         }
     }
 }

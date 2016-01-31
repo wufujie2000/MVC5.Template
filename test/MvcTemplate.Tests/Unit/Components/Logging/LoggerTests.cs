@@ -33,17 +33,6 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Method: Log(String message)
 
         [Fact]
-        public void Log_DoesNotThrow()
-        {
-            Directory.CreateDirectory(logDirectory);
-
-            using (File.Create(logPath))
-                logger.Log("Test");
-
-            Assert.Empty(File.ReadAllText(logPath));
-        }
-
-        [Fact]
         public void Log_Message()
         {
             logger.Log("Test");

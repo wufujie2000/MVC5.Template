@@ -16,35 +16,29 @@ namespace MvcTemplate.Components.Logging
         }
         public void Log(Int32? accountId, String message)
         {
-            try
+            Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
+            String logDirectoryPath = WebConfigurationManager.AppSettings["LogsDir"];
+            String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
+            logDirectoryPath = Path.Combine(basePath, logDirectoryPath);
+            String logPath = Path.Combine(logDirectoryPath, "Log.txt");
+
+            StringBuilder log = new StringBuilder();
+            log.AppendLine("Time   : " + DateTime.Now);
+            log.AppendLine("Account: " + accountId);
+            log.AppendLine("Message: " + message);
+            log.AppendLine();
+
+            lock (LogWriting)
             {
-                Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
-                String logDirectoryPath = WebConfigurationManager.AppSettings["LogsDir"];
-                String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
-                logDirectoryPath = Path.Combine(basePath, logDirectoryPath);
-                String logPath = Path.Combine(logDirectoryPath, "Log.txt");
+                Directory.CreateDirectory(logDirectoryPath);
+                File.AppendAllText(logPath, log.ToString());
 
-                StringBuilder log = new StringBuilder();
-                log.AppendLine("Time   : " + DateTime.Now);
-                log.AppendLine("Account: " + accountId);
-                log.AppendLine("Message: " + message);
-                log.AppendLine();
-
-                lock (LogWriting)
+                if (new FileInfo(logPath).Length >= backupSize)
                 {
-                    Directory.CreateDirectory(logDirectoryPath);
-                    File.AppendAllText(logPath, log.ToString());
-
-                    if (new FileInfo(logPath).Length >= backupSize)
-                    {
-                        String logBackupFile = String.Format("Log {0}.txt", DateTime.Now.ToString("yyyy-MM-dd HHmmss"));
-                        String backupPath = Path.Combine(logDirectoryPath, logBackupFile);
-                        File.Move(logPath, backupPath);
-                    }
+                    String logBackupFile = String.Format("Log {0}.txt", DateTime.Now.ToString("yyyy-MM-dd HHmmss"));
+                    String backupPath = Path.Combine(logDirectoryPath, logBackupFile);
+                    File.Move(logPath, backupPath);
                 }
-            }
-            catch
-            {
             }
         }
     }

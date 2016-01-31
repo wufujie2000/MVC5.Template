@@ -16,14 +16,17 @@
         <div class="input-group">
             <span class="fa fa-user"></span>
             @Html.TextBoxFor(model => model.Username, new { autocomplete = "off", placeholder = Titles.Username })
+            <span class="input-error fa fa-warning"></span>
         </div>
         <div class="input-group">
             <span class="fa fa-lock"></span>
             @Html.PasswordFor(model => model.Password, new { autocomplete = "off", placeholder = Titles.Password })
+            <span class="input-error fa fa-warning"></span>
         </div>
         <div class="input-group">
             <span class="fa fa-envelope"></span>
             @Html.TextBoxFor(model => model.Email, new { autocomplete = "off", placeholder = Titles.Email })
+            <span class="input-error fa fa-warning"></span>
         </div>
     </div>
     <input class="btn btn-primary" type="submit" value="@Actions.Register" />

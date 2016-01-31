@@ -15,6 +15,7 @@
         <div class="input-group">
             <span class="fa fa-lock"></span>
             @Html.PasswordFor(model => model.NewPassword, new { autocomplete = "off", placeholder = Titles.NewPassword })
+            <span class="input-error fa fa-warning"></span>
         </div>
     </div>
     <input class="btn btn-primary" type="submit" value="@Actions.Submit" />

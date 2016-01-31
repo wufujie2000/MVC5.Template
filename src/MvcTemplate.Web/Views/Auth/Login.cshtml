@@ -15,10 +15,12 @@
         <div class="input-group">
             <span class="fa fa-user"></span>
             @Html.TextBoxFor(model => model.Username, new { placeholder = Titles.Username })
+            <span class="input-error fa fa-warning"></span>
         </div>
         <div class="input-group">
             <span class="fa fa-lock"></span>
             @Html.PasswordFor(model => model.Password, new { placeholder = Titles.Password })
+            <span class="input-error fa fa-warning"></span>
         </div>
         @if (GlobalizationManager.Provider.Languages.Length > 1)
         {

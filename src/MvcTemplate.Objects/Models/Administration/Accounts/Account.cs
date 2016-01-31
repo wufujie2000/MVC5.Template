@@ -7,12 +7,12 @@ namespace MvcTemplate.Objects
     public class Account : BaseModel
     {
         [Required]
-        [StringLength(128)]
+        [StringLength(32)]
         [Index(IsUnique = true)]
         public String Username { get; set; }
 
         [Required]
-        [StringLength(512)]
+        [StringLength(64)]
         public String Passhash { get; set; }
 
         [Required]
@@ -23,7 +23,7 @@ namespace MvcTemplate.Objects
 
         public Boolean IsLocked { get; set; }
 
-        [StringLength(128)]
+        [StringLength(36)]
         public String RecoveryToken { get; set; }
         public DateTime? RecoveryTokenExpirationDate { get; set; }
 

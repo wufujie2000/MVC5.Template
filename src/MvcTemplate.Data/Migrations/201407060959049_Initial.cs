@@ -13,11 +13,11 @@ namespace MvcTemplate.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Username = c.String(nullable: false, maxLength: 128),
-                        Passhash = c.String(nullable: false, maxLength: 512),
+                        Username = c.String(nullable: false, maxLength: 32),
+                        Passhash = c.String(nullable: false, maxLength: 64),
                         Email = c.String(nullable: false, maxLength: 256),
                         IsLocked = c.Boolean(nullable: false),
-                        RecoveryToken = c.String(maxLength: 128),
+                        RecoveryToken = c.String(maxLength: 36),
                         RecoveryTokenExpirationDate = c.DateTime(precision: 7, storeType: "datetime2"),
                         RoleId = c.Int(),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
@@ -59,9 +59,9 @@ namespace MvcTemplate.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false),
-                        Area = c.String(maxLength: 128),
-                        Controller = c.String(nullable: false, maxLength: 128),
-                        Action = c.String(nullable: false, maxLength: 128),
+                        Area = c.String(maxLength: 64),
+                        Controller = c.String(nullable: false, maxLength: 64),
+                        Action = c.String(nullable: false, maxLength: 64),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                     })
                 .PrimaryKey(t => t.Id);
@@ -72,8 +72,8 @@ namespace MvcTemplate.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         AccountId = c.Int(),
-                        Action = c.String(nullable: false, maxLength: 128),
-                        EntityName = c.String(nullable: false, maxLength: 128),
+                        Action = c.String(nullable: false, maxLength: 16),
+                        EntityName = c.String(nullable: false, maxLength: 64),
                         EntityId = c.Int(nullable: false),
                         Changes = c.String(nullable: false),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),

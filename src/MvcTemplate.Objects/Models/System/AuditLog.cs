@@ -8,11 +8,11 @@ namespace MvcTemplate.Objects
         public Int32? AccountId { get; set; }
 
         [Required]
-        [StringLength(128)]
+        [StringLength(16)]
         public String Action { get; set; }
 
         [Required]
-        [StringLength(128)]
+        [StringLength(64)]
         public String EntityName { get; set; }
 
         public Int32 EntityId { get; set; }

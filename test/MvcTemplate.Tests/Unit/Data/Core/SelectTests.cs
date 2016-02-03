@@ -82,8 +82,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Where_Filters()
         {
-            IEnumerable<TestModel> expected = context.Set<TestModel>().Where(model => model.Id == null);
-            IEnumerable<TestModel> actual = select.Where(model => model.Id == null);
+            IEnumerable<TestModel> actual = select.Where(model => true);
+            IEnumerable<TestModel> expected = context.Set<TestModel>();
 
             Assert.Equal(expected, actual);
         }
@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Where_ReturnsItself()
         {
-            Object actual = select.Where(model => model.Id == null);
+            Object actual = select.Where(model => true);
             Object expected = select;
 
             Assert.Same(expected, actual);

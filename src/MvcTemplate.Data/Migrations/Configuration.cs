@@ -16,6 +16,7 @@ namespace MvcTemplate.Data.Migrations
         public Configuration()
         {
             ContextKey = "Context";
+            CommandTimeout = 300;
         }
 
         protected override void Seed(Context context)

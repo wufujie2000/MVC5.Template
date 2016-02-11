@@ -8,13 +8,13 @@ namespace MvcTemplate.Objects
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Int32 Id
+        public virtual Int32 Id
         {
             get;
             set;
         }
 
-        public DateTime CreationDate
+        public virtual DateTime CreationDate
         {
             get
             {

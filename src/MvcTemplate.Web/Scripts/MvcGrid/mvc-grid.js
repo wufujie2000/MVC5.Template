@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 2.2.3
+ * Mvc.Grid 2.3.2
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -139,16 +139,13 @@ var MvcGrid = (function () {
                 }
 
                 $.ajax({
+                    cache: false,
                     url: grid.sourceUrl + '?' + query
                 }).success(function (result) {
-                    if (grid.reloadEnded) {
-                        grid.reloadEnded(grid);
-                    }
-
                     grid.element.hide();
                     grid.element.after(result);
 
-                    grid.element.next('.mvc-grid').mvcgrid({
+                    var newGrid = grid.element.next('.mvc-grid').mvcgrid({
                         reloadStarted: grid.reloadStarted,
                         reloadFailed: grid.reloadFailed,
                         reloadEnded: grid.reloadEnded,
@@ -157,8 +154,12 @@ var MvcGrid = (function () {
                         filters: grid.filters,
                         isLoaded: true,
                         query: query
-                    });
+                    }).data('mvc-grid');
                     grid.element.remove();
+
+                    if (grid.reloadEnded) {
+                        grid.reloadEnded(newGrid);
+                    }
                 })
                 .error(function (result) {
                     if (grid.reloadFailed) {
@@ -271,17 +272,14 @@ var MvcGrid = (function () {
             return newParams.join('&');
         },
         formFilterQueryWithout: function (column) {
-            var secondKey = encodeURIComponent(this.name + '-' + column.name + '-' + column.filter.second.type);
-            var firstKey = encodeURIComponent(this.name + '-' + column.name + '-' + column.filter.first.type);
-            var operatorKey = encodeURIComponent(this.name + '-' + column.name + '-Op');
+            var columnKey = encodeURIComponent(this.name + '-' + column.name + '-');
             var pageKey = encodeURIComponent(this.name + '-Page');
             var params = this.gridQuery.split('&');
             var newParams = [];
 
             for (var i = 0; i < params.length; i++) {
                 var key = params[i].split('=')[0];
-                if (params[i] != '' && key != pageKey && key != firstKey &&
-                    (!column.filter.isMulti || (key != operatorKey && key != secondKey))) {
+                if (params[i] != '' && key != pageKey && key.indexOf(columnKey) != 0) {
                     newParams.push(params[i]);
                 }
             }
@@ -327,7 +325,7 @@ var MvcGrid = (function () {
 
         bindGridEvents: function () {
             var grid = this;
-            this.element.find('.mvc-grid-row').on('click.mvcgrid', function () {
+            this.element.find('.mvc-grid-row').on('click.mvcgrid', function (e) {
                 if (grid.rowClicked) {
                     var cells = $(this).find('td');
                     var data = [];
@@ -339,7 +337,7 @@ var MvcGrid = (function () {
                         }
                     }
 
-                    grid.rowClicked(grid, this, data);
+                    grid.rowClicked(grid, this, data, e);
                 }
             });
         },

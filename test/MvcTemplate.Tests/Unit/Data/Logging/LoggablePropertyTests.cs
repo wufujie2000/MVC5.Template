@@ -1,6 +1,6 @@
 ﻿using MvcTemplate.Data.Logging;
+using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
-using MvcTemplate.Tests.Objects;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -17,11 +17,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             using (TestingContext context = new TestingContext())
             {
-                TestModel model = ObjectFactory.CreateTestModel();
+                Role model = ObjectFactory.CreateRole();
 
-                context.Set<TestModel>().Add(model);
+                context.Set<Role>().Add(model);
                 context.Entry(model).State = EntityState.Modified;
-                textProperty = context.Entry(model).Property(prop => prop.Text);
+                textProperty = context.Entry(model).Property(prop => prop.Title);
                 dateProperty = context.Entry(model).Property(prop => prop.CreationDate);
             }
         }

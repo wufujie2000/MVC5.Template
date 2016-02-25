@@ -85,9 +85,11 @@ namespace MvcTemplate.Services
 
         public void Create(RoleView view)
         {
-            CreateRole(view);
-            CreateRolePermissions(view);
+            Role role = UnitOfWork.To<Role>(view);
+            foreach (Int32 permissionId in view.Permissions.SelectedIds)
+                role.Permissions.Add(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
 
+            UnitOfWork.Insert(role);
             UnitOfWork.Commit();
         }
         public void Edit(RoleView view)
@@ -109,18 +111,6 @@ namespace MvcTemplate.Services
             UnitOfWork.Commit();
 
             Authorization.Provider.Refresh();
-        }
-
-        private void CreateRole(RoleView view)
-        {
-            Role role = UnitOfWork.To<Role>(view);
-
-            UnitOfWork.Insert(role);
-        }
-        private void CreateRolePermissions(RoleView view)
-        {
-            foreach (Int32 permissionId in view.Permissions.SelectedIds)
-                UnitOfWork.Insert(new RolePermission { RoleId = view.Id, PermissionId = permissionId });
         }
 
         private void EditRole(Role role, RoleView view)

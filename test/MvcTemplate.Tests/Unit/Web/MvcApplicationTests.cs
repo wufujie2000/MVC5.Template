@@ -7,6 +7,7 @@ using MvcTemplate.Web;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -45,6 +46,14 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         #region Method: Application_Start()
+
+        [Fact]
+        public void Application_Start_RegistersSecureResponseConfiguration()
+        {
+            application.Application_Start();
+
+            application.Received().RegisterSecureResponseConfiguration();
+        }
 
         [Fact]
         public void Application_Start_RegistersCurrentDependencyResolver()
@@ -148,6 +157,30 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Application_Start();
 
             application.Received().RegisterRoute();
+        }
+
+        #endregion
+
+        #region Method: RegisterSecureResponseConfiguration()
+
+        [Fact]
+        public void RegisterSecureResponseConfiguration_SuppressesXFrameOptionsHeader()
+        {
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = false;
+
+            application.RegisterSecureResponseConfiguration();
+
+            Assert.True(AntiForgeryConfig.SuppressXFrameOptionsHeader);
+        }
+
+        [Fact]
+        public void RegisterSecureResponseConfiguration_DisablesMvcResponseHeader()
+        {
+            MvcHandler.DisableMvcResponseHeader = false;
+
+            application.RegisterSecureResponseConfiguration();
+
+            Assert.True(MvcHandler.DisableMvcResponseHeader);
         }
 
         #endregion

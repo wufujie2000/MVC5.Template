@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -19,6 +20,7 @@ namespace MvcTemplate.Web
     {
         public void Application_Start()
         {
+            RegisterSecureResponseConfiguration();
             RegisterCurrentDependencyResolver();
             RegisterGlobalizationProvider();
             RegisterModelMetadataProvider();
@@ -53,6 +55,11 @@ namespace MvcTemplate.Web
             Response.Redirect(urlHelper.RouteUrl(routeValues));
         }
 
+        public virtual void RegisterSecureResponseConfiguration()
+        {
+            AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+            MvcHandler.DisableMvcResponseHeader = true;
+        }
         public virtual void RegisterCurrentDependencyResolver()
         {
             MainContainer container = new MainContainer();

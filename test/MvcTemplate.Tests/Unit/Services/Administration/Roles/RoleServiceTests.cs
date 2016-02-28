@@ -167,8 +167,8 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             service.When(sub => sub.SeedPermissions(Arg.Any<RoleView>())).DoNotCallBase();
 
-            IEnumerable<Int32> expected = role.Permissions.Select(rolePermission => rolePermission.PermissionId);
-            IEnumerable<Int32> actual = service.GetView(role.Id).Permissions.SelectedIds;
+            IEnumerable<Int32> expected = role.Permissions.Select(rolePermission => rolePermission.PermissionId).OrderBy(id => id);
+            IEnumerable<Int32> actual = service.GetView(role.Id).Permissions.SelectedIds.OrderBy(id => id);
 
             Assert.Equal(expected, actual);
         }

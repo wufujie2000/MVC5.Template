@@ -67,7 +67,7 @@ namespace MvcTemplate.Components.Datalists
 
         protected override IQueryable<TView> FilterById(IQueryable<TView> models)
         {
-            Int32 id = 0;
+            Int32 id;
             if (!Int32.TryParse(CurrentFilter.Id, out id))
                 return Enumerable.Empty<TView>().AsQueryable();
 

@@ -16,16 +16,15 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     public class AuditLoggerTests : IDisposable
     {
         private DbEntityEntry<BaseModel> entry;
-        private TestingContext dataContext;
         private TestingContext context;
         private AuditLogger logger;
 
         public AuditLoggerTests()
         {
             context = new TestingContext();
-            dataContext = new TestingContext();
             logger = new AuditLogger(context, 1);
             Role model = ObjectFactory.CreateRole();
+            TestingContext dataContext = new TestingContext();
 
             entry = dataContext.Entry<BaseModel>(dataContext.Set<Role>().Add(model));
             dataContext.Set<AuditLog>().RemoveRange(dataContext.Set<AuditLog>());

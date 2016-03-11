@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Logging;
 using MvcTemplate.Components.Mvc;
-using MvcTemplate.Components.Security;
 using NSubstitute;
 using System;
 using System.Web.Mvc;
@@ -26,39 +25,33 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void OnException_LogsException()
         {
-            ExceptionContext context = new ExceptionContext
-            {
-                HttpContext = HttpContextFactory.CreateHttpContextBase(),
-                Exception = exception
-            };
+            ExceptionContext context = new ExceptionContext(new ControllerContext(), exception);
 
             filter.OnException(context);
+
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
                 exception.GetType(),
                 exception.Message,
                 Environment.NewLine,
                 exception.StackTrace);
 
-            logger.Received().Log(context.HttpContext.User.Identity.Id(), expectedMessage);
+            logger.Received().Log(expectedMessage);
         }
 
         [Fact]
         public void OnException_LogsInnerMostException()
         {
-            ExceptionContext context = new ExceptionContext
-            {
-                HttpContext = HttpContextFactory.CreateHttpContextBase(),
-                Exception = new Exception("O", exception)
-            };
+            ExceptionContext context = new ExceptionContext(new ControllerContext(), new Exception("O", exception));
 
             filter.OnException(context);
+
             String expectedMessage = String.Format("{0}: {1}{2}{3}",
                 context.Exception.InnerException.GetType(),
                 context.Exception.InnerException.Message,
                 Environment.NewLine,
                 context.Exception.InnerException.StackTrace);
 
-            logger.Received().Log(context.HttpContext.User.Identity.Id(), expectedMessage);
+            logger.Received().Log(expectedMessage);
         }
 
         #endregion

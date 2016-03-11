@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Logging;
-using MvcTemplate.Components.Security;
 using System;
 using System.Web.Mvc;
 
@@ -26,7 +25,7 @@ namespace MvcTemplate.Components.Mvc
                     Environment.NewLine,
                     exception.StackTrace);
 
-            Logger.Log(filterContext.HttpContext.User.Identity.Id(), message);
+            Logger.Log(message);
         }
     }
 }

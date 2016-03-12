@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Logging;
-using System;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
@@ -15,17 +14,7 @@ namespace MvcTemplate.Components.Mvc
 
         public void OnException(ExceptionContext filterContext)
         {
-            Exception exception = filterContext.Exception;
-            while (exception.InnerException != null)
-                exception = exception.InnerException;
-
-            String message = String.Format("{0}: {1}{2}{3}",
-                    exception.GetType(),
-                    exception.Message,
-                    Environment.NewLine,
-                    exception.StackTrace);
-
-            Logger.Log(message);
+            Logger.Log(filterContext.Exception);
         }
     }
 }

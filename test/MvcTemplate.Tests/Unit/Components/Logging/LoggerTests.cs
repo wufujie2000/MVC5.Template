@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Logging;
+using NSubstitute;
 using System;
 using System.IO;
 using System.Linq;
@@ -59,6 +60,31 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
             String expected = "Account: 2" + Environment.NewLine + "Message: " + new String('T', backupSize) + Environment.NewLine + Environment.NewLine;
             String actual = File.ReadAllText(Directory.GetFiles(logDirectory, "Log *.txt").Single());
+
+            Assert.True(actual.StartsWith("Time   :"));
+            Assert.True(actual.EndsWith(expected));
+        }
+
+        #endregion
+
+        #region Method: Log(Exception exception)
+
+        [Fact]
+        public void Log_InnerException()
+        {
+            Exception exception = new Exception("", Substitute.For<Exception>());
+            exception.InnerException.StackTrace.Returns("StackTrace");
+            exception.InnerException.Message.Returns("Message");
+            Logger logger = new Logger(2);
+
+            logger.Log(exception);
+
+            String actual = File.ReadAllText(logPath);
+            String expected = String.Format("Account: 2{0}Message: {1}: {2}{0}{3}{0}{0}",
+                Environment.NewLine,
+                exception.InnerException.GetType(),
+                exception.InnerException.Message,
+                exception.InnerException.StackTrace);
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));

@@ -32,7 +32,7 @@ namespace <#= Model.ControllerTestsNamespace #>
             controller.ControllerContext.RouteData = new RouteData();
         }
 
-        #region Method: Index()
+        #region Index()
 
         [Fact]
         public void Index_Returns<#= Model.ShortModel #>Views()
@@ -47,7 +47,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Create()
+        #region Create()
 
         [Fact]
         public void Create_ReturnsEmptyView()
@@ -59,7 +59,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Create(<#= Model.View #> <#= Model.ModelVarName #>)
+        #region Create(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
         public void Create_ProtectsFromOverpostingId()
@@ -101,7 +101,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Details(Int32 id)
+        #region Details(Int32 id)
 
         [Fact]
         public void Details_ReturnsNotEmptyView()
@@ -116,7 +116,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Edit(Int32 id)
+        #region Edit(Int32 id)
 
         [Fact]
         public void Edit_ReturnsNotEmptyView()
@@ -131,7 +131,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Edit(<#= Model.View #> <#= Model.ModelVarName #>)
+        #region Edit(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
         public void Edit_CanNotEdit_ReturnsSameView()
@@ -167,7 +167,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: Delete(Int32 id)
+        #region Delete(Int32 id)
 
         [Fact]
         public void Delete_ReturnsNotEmptyView()
@@ -182,7 +182,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: DeleteConfirmed(Int32 id)
+        #region DeleteConfirmed(Int32 id)
 
         [Fact]
         public void DeleteConfirmed_Deletes<#= Model.ShortModel #>()

@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             validator = new NumberValidator(metadata, new ControllerContext());
         }
 
-        #region Method: Validate(Object container)
+        #region Validate(Object container)
 
         [Fact]
         public void Validate_ReturnsEmpty()
@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: GetClientValidationRules()
+        #region GetClientValidationRules()
 
         [Fact]
         public void GetClientValidationRules_ReturnsNumberValidationRule()

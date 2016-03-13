@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Validators
             validator.Dispose();
         }
 
-        #region Method: CanCreate(<#= Model.View #> view)
+        #region CanCreate(<#= Model.View #> view)
 
         [Fact]
         public void CanCreate_InvalidState_ReturnsFalse()
@@ -47,7 +47,7 @@ namespace MvcTemplate.Tests.Unit.Validators
 
         #endregion
 
-        #region Method: CanEdit(<#= Model.View #> view)
+        #region CanEdit(<#= Model.View #> view)
 
         [Fact]
         public void CanEdit_InvalidState_ReturnsFalse()

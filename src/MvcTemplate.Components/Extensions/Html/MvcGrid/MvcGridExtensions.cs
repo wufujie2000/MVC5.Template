@@ -103,7 +103,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (Authorization.Provider == null)
                 return true;
 
-            Int32? accountId = grid.HttpContext.User.Identity.Id();
+            Int32? accountId = grid.HttpContext.User.Id();
             String area = grid.HttpContext.Request.RequestContext.RouteData.Values["area"] as String;
             String controller = grid.HttpContext.Request.RequestContext.RouteData.Values["controller"] as String;
 

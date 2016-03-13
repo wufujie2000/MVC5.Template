@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             logger.Dispose();
         }
 
-        #region Constructor: AuditLogger(DbContext context)
+        #region AuditLogger(DbContext context)
 
         [Fact]
         public void AuditLogger_DisablesChangesDetection()
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Constructor: AuditLogger(DbContext context, Int32? accountId)
+        #region AuditLogger(DbContext context, Int32? accountId)
 
         [Fact]
         public void AuditLogger_AccountId_DisablesChangesDetection()
@@ -65,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
+        #region Log(IEnumerable<DbEntityEntry<BaseModel>> entries)
 
         [Fact]
         public void Log_Added()
@@ -165,7 +165,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: Log(LoggableEntity entity)
+        #region Log(LoggableEntity entity)
 
         [Fact]
         public void Log_Entity()
@@ -197,7 +197,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: Save()
+        #region Save()
 
         [Theory]
         [InlineData(1, "", 1)]
@@ -229,7 +229,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: Dispose()
+        #region Dispose()
 
         [Fact]
         public void Dispose_Context()

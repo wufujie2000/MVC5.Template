@@ -21,7 +21,7 @@ namespace MvcTemplate.Components.Mvc
 
         public IEnumerable<MvcSiteMapNode> GetSiteMap(ViewContext context)
         {
-            Int32? account = context.HttpContext.User.Identity.Id();
+            Int32? account = context.HttpContext.User.Id();
             String area = context.RouteData.Values["area"] as String;
             String action = context.RouteData.Values["action"] as String;
             String controller = context.RouteData.Values["controller"] as String;

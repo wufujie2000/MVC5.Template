@@ -6,7 +6,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class ViewEngineTests
     {
-        #region Constructor: ViewEngine()
+        #region ViewEngine()
 
         [Fact]
         public void ViewEngine_SetsAreaViewLocationFormats()

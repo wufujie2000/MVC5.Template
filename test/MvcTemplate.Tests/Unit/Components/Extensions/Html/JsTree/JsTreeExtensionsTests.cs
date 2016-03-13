@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class JsTreeViewExtensionsTests
     {
-        #region Extension method: JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
+        #region JsTreeFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, JsTree>> expression)
 
         [Fact]
         public void JsTreeFor_Expression()

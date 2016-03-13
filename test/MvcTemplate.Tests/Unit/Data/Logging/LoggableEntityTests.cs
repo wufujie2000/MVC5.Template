@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context.Dispose();
         }
 
-        #region Constructor: LoggableEntity(DbEntityEntry<BaseModel> entry)
+        #region LoggableEntity(DbEntityEntry<BaseModel> entry)
 
         [Fact]
         public void LoggableEntity_CreatesPropertiesForAddedEntity()
@@ -137,7 +137,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: ToString()
+        #region ToString()
 
         [Fact]
         public void ToString_FormsEntityChanges()

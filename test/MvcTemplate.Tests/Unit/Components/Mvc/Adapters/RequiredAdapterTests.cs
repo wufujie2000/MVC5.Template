@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class RequiredAdapterTests
     {
-        #region Constructor: RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
+        #region RequiredAdapter(ModelMetadata metadata, ControllerContext context, RequiredAttribute attribute)
 
         [Fact]
         public void RequiredAdapter_SetsErrorMessage()

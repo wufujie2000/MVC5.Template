@@ -20,7 +20,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             ReturnCurrentAccountId(controller, 1);
         }
 
-        #region Method: Index()
+        #region Index()
 
         [Fact]
         public void Index_NotActive_RedirectsToLogout()
@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Error()
+        #region Error()
 
         [Fact]
         public void Error_ReturnsEmptyView()
@@ -57,7 +57,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: NotFound()
+        #region NotFound()
 
         [Fact]
         public void NotFound_ReturnsEmptyView()
@@ -69,7 +69,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Unauthorized()
+        #region Unauthorized()
 
         [Fact]
         public void Unauthorized_NotActive_RedirectsToLogout()

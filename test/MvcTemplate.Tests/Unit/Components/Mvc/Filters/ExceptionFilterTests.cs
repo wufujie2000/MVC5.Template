@@ -9,7 +9,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class ExceptionFilterTests
     {
-        #region Method: OnException(ExceptionContext filterContext)
+        #region OnException(ExceptionContext filterContext)
 
         [Fact]
         public void OnException_Logs()

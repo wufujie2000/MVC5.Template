@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = null;
         }
 
-        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action)
+        #region IsAuthorizedFor(this HtmlHelper html, String action)
 
         [Fact]
         public void IsAuthorizedFor_Action_NullProvider_ReturnsTrue()
@@ -37,8 +37,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [InlineData(false)]
         public void IsAuthorizedFor_Action_ReturnsAuthorizationResult(Boolean isAuthorized)
         {
+            Int32? accountId = html.ViewContext.HttpContext.User.Id();
             String area = html.ViewContext.RouteData.Values["area"] as String;
-            Int32? accountId = html.ViewContext.HttpContext.User.Identity.Id();
             String controller = html.ViewContext.RouteData.Values["controller"] as String;
 
             Authorization.Provider.IsAuthorizedFor(accountId, area, controller, "Action").Returns(isAuthorized);
@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action, String controller)
+        #region IsAuthorizedFor(this HtmlHelper html, String action, String controller)
 
         [Fact]
         public void IsAuthorizedFor_Controller_NullProvider_ReturnsTrue()
@@ -66,8 +66,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [InlineData(false)]
         public void IsAuthorizedFor_Controller_ReturnsProviderResult(Boolean isAuthorized)
         {
+            Int32? accountId = html.ViewContext.HttpContext.User.Id();
             String area = html.ViewContext.RouteData.Values["area"] as String;
-            Int32? accountId = html.ViewContext.HttpContext.User.Identity.Id();
 
             Authorization.Provider.IsAuthorizedFor(accountId, area, "Controller", "Action").Returns(isAuthorized);
 
@@ -79,7 +79,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: IsAuthorizedFor(this HtmlHelper html, String action, String controller, String area)
+        #region IsAuthorizedFor(this HtmlHelper html, String action, String controller, String area)
 
         [Fact]
         public void IsAuthorizedFor_Area_NullProvider_ReturnsTrue()
@@ -94,7 +94,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [InlineData(false)]
         public void IsAuthorizedFor_Area_ReturnsProviderResult(Boolean isAuthorized)
         {
-            Int32? accountId = html.ViewContext.HttpContext.User.Identity.Id();
+            Int32? accountId = html.ViewContext.HttpContext.User.Id();
 
             Authorization.Provider.IsAuthorizedFor(accountId, "Area", "Controller", "Action").Returns(isAuthorized);
 

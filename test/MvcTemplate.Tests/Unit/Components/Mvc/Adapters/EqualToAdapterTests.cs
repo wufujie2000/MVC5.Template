@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class EqualToAdapterTests
     {
-        #region Method: GetClientValidationRules()
+        #region GetClientValidationRules()
 
         [Fact]
         public void GetClientValidationRules_SetsOtherPropertyDisplayName()

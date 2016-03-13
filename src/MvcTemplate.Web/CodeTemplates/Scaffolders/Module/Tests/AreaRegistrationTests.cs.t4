@@ -21,7 +21,7 @@ namespace <#= Model.ControllerTestsNamespace #>
             areaRegistration.RegisterArea(registrationContext);
         }
 
-        #region Property: AreaName
+        #region AreaName
 
         [Fact]
         public void AreaName_Is<#= Model.Area #>()
@@ -31,7 +31,7 @@ namespace <#= Model.ControllerTestsNamespace #>
 
         #endregion
 
-        #region Method: RegisterArea(AreaRegistrationContext context)
+        #region RegisterArea(AreaRegistrationContext context)
 
         [Fact]
         public void RegisterArea_MultilingualRoute()

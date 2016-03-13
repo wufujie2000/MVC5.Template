@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = null;
         }
 
-        #region Extension method: AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
+        #region AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
 
         [Fact]
         public void AddActionLink_Unauthorized_Empty()
@@ -111,7 +111,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateProperty_Column()
@@ -130,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateProperty_Nullable_Column()
@@ -149,7 +149,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
+        #region AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
 
         [Fact]
         public void AddBooleanProperty_Column()
@@ -191,7 +191,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
+        #region AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
 
         [Fact]
         public void AddBooleanProperty_Nullable_Column()
@@ -244,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Column()
@@ -263,7 +263,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Nullable_Column()
@@ -282,7 +282,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
+        #region AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
 
         [Fact]
         public void AddProperty_Column()
@@ -474,7 +474,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: ApplyDefaults<T>(this IHtmlGrid<T> grid)
+        #region ApplyDefaults<T>(this IHtmlGrid<T> grid)
 
         [Fact]
         public void ApplyDefaults_Values()

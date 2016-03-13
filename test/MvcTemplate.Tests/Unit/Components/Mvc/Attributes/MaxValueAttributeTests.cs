@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             attribute = new MaxValueAttribute(12.56);
         }
 
-        #region Constructor: MaxValueAttribute(Int32 maximum)
+        #region MaxValueAttribute(Int32 maximum)
 
         [Fact]
         public void MaxValueAttribute_ForInteger()
@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Constructor: MaxValueAttribute(Double maximum)
+        #region MaxValueAttribute(Double maximum)
 
         [Fact]
         public void MaxValueAttribute_ForDouble()
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: FormatErrorMessage(String name)
+        #region FormatErrorMessage(String name)
 
         [Fact]
         public void FormatErrorMessage_ForInteger()
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: IsValid(Object value)
+        #region IsValid(Object value)
 
         [Fact]
         public void IsValid_Null()

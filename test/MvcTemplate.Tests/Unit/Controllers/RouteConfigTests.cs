@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             config = new RouteConfig();
         }
 
-        #region Method: RegisterRoutes(RouteCollection routes)
+        #region RegisterRoutes(RouteCollection routes)
 
         [Fact]
         public void RegisterRoutes_IgnoresAxd()

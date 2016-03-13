@@ -9,7 +9,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class DigitsAdapterTests
     {
-        #region Method: GetClientValidationRules()
+        #region GetClientValidationRules()
 
         [Fact]
         public void GetClientValidationRules_ReturnsDigitsValidationRule()

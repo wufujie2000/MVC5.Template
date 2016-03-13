@@ -36,7 +36,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             Authorization.Provider = null;
         }
 
-        #region Method: GetSiteMap(ViewContext context)
+        #region GetSiteMap(ViewContext context)
 
         [Fact]
         public void GetSiteMap_NullAuthorization_ReturnsAllNodes()
@@ -83,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_ReturnsAuthorizedNodes()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Id(), "Administration", "Accounts", "Index").Returns(true);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Id(), "Administration", "Accounts", "Index").Returns(true);
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
@@ -192,7 +192,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             Authorization.Provider.IsAuthorizedFor(Arg.Any<Int32?>(), Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>()).Returns(true);
-            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Identity.Id(), "Administration", "Roles", "Create").Returns(false);
+            Authorization.Provider.IsAuthorizedFor(viewContext.HttpContext.User.Id(), "Administration", "Roles", "Create").Returns(false);
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(viewContext).ToArray();
 
@@ -217,7 +217,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: GetBreadcrumb(ViewContext context)
+        #region GetBreadcrumb(ViewContext context)
 
         [Fact]
         public void GetBreadcrumb_IsCaseInsensitive()

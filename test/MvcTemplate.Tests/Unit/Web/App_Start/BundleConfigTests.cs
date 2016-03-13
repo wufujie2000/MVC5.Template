@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Web
             config = new BundleConfig();
         }
 
-        #region Method: RegisterBundles(BundleCollection bundles)
+        #region RegisterBundles(BundleCollection bundles)
 
         [Fact]
         public void RegisterBundles_ForScripts()

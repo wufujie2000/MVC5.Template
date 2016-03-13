@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.ControllerContext.RouteData = new RouteData();
         }
 
-        #region Method: Index()
+        #region Index()
 
         [Fact]
         public void Index_ReturnsRoleViews()
@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Create()
+        #region Create()
 
         [Fact]
         public void Create_ReturnsNewRoleView()
@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Create(RoleView role)
+        #region Create(RoleView role)
 
         [Fact]
         public void Create_ProtectsFromOverpostingId()
@@ -118,7 +118,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Details(Int32 id)
+        #region Details(Int32 id)
 
         [Fact]
         public void Details_ReturnsNotEmptyView()
@@ -133,7 +133,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Edit(Int32 id)
+        #region Edit(Int32 id)
 
         [Fact]
         public void Edit_ReturnsNotEmptyView()
@@ -148,7 +148,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Edit(RoleView role)
+        #region Edit(RoleView role)
 
         [Fact]
         public void Edit_CanNotEdit_SeedsPermissions()
@@ -194,7 +194,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: Delete(Int32 id)
+        #region Delete(Int32 id)
 
         [Fact]
         public void Delete_ReturnsNotEmptyView()
@@ -209,7 +209,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: DeleteConfirmed(Int32 id)
+        #region DeleteConfirmed(Int32 id)
 
         [Fact]
         public void DeleteConfirmed_DeletesRole()

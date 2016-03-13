@@ -27,7 +27,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
             container.RegisterServices();
         }
 
-        #region Method: RegisterServices()
+        #region RegisterServices()
 
         [Theory]
         [InlineData(typeof(DbContext), typeof(Context))]

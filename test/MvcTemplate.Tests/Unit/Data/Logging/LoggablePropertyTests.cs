@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             }
         }
 
-        #region Constructor: LoggableProperty(DbPropertyEntry entry, Object originalValue)
+        #region LoggableProperty(DbPropertyEntry entry, Object originalValue)
 
         [Fact]
         public void LoggableProperty_IsNotModified()
@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
 
         #endregion
 
-        #region Method: ToString()
+        #region ToString()
 
         [Fact]
         public void ToString_Modified_CurrentValueNull()

@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             provider = new DataTypeValidatorProvider();
         }
 
-        #region Method: GetValidators(ModelMetadata metadata, ControllerContext context)
+        #region GetValidators(ModelMetadata metadata, ControllerContext context)
 
         [Fact]
         public void GetValidators_ReturnsEmpty()

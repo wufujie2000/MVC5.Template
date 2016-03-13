@@ -22,7 +22,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             urlHelper = new UrlHelper(html.ViewContext.RequestContext);
         }
 
-        #region Extension method: RenderControllerScript(this HtmlHelper html)
+        #region RenderControllerScript(this HtmlHelper html)
 
         [Fact]
         public void RenderControllerScript_WithArea()
@@ -78,7 +78,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region Extension method: RenderControllerStyle(this HtmlHelper html)
+        #region RenderControllerStyle(this HtmlHelper html)
 
         [Fact]
         public void RenderControllerStyle_WithArea()

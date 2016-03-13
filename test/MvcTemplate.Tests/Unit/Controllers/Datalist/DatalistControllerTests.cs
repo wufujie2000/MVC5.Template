@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             HttpContext.Current = null;
         }
 
-        #region Method: GetData(AbstractDatalist datalist, DatalistFilter filter)
+        #region GetData(AbstractDatalist datalist, DatalistFilter filter)
 
         [Fact]
         public void GetData_SetsCurrentFilter()
@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Role(DatalistFilter filter)
+        #region Role(DatalistFilter filter)
 
         [Fact]
         public void Role_ReturnsRolesData()
@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Dispose()
+        #region Dispose()
 
         [Fact]
         public void Dispose_UnitOfWork()

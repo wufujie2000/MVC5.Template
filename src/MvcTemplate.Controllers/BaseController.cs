@@ -79,7 +79,7 @@ namespace MvcTemplate.Controllers
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
         {
-            CurrentAccountId = User.Identity.Id() ?? 0;
+            CurrentAccountId = User.Id() ?? 0;
 
             String abbreviation = RouteData.Values["language"].ToString();
             GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbreviation];

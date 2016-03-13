@@ -19,7 +19,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             registration.RegisterArea(context);
         }
 
-        #region Property: AreaName
+        #region AreaName
 
         [Fact]
         public void AreaName_IsAdministration()
@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
         #endregion
 
-        #region Method: RegisterArea(AreaRegistrationContext context)
+        #region RegisterArea(AreaRegistrationContext context)
 
         [Fact]
         public void RegisterArea_MultilingualRoute()

@@ -10,7 +10,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class StringLengthAdapterTests
     {
-        #region Constructor: StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
+        #region StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
 
         [Fact]
         public void StringLengthAdapter_SetsExceededErrorMessage()

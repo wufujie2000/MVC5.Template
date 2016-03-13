@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             attribute = new MinValueAttribute(12.56);
         }
 
-        #region Constructor: MinValueAttribute(Int32 minimum)
+        #region MinValueAttribute(Int32 minimum)
 
         [Fact]
         public void MinValueAttribute_ForInteger()
@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Constructor: MinValueAttribute(Double minimum)
+        #region MinValueAttribute(Double minimum)
 
         [Fact]
         public void MinValueAttribute_ForDouble()
@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: FormatErrorMessage(String name)
+        #region FormatErrorMessage(String name)
 
         [Fact]
         public void FormatErrorMessage_ForInteger()
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: IsValid(Object value)
+        #region IsValid(Object value)
 
         [Fact]
         public void IsValid_Null()

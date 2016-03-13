@@ -14,7 +14,7 @@ namespace MvcTemplate.Tests.Unit.Objects
             model = Substitute.For<BaseModel>();
         }
 
-        #region Property: CreationDate
+        #region CreationDate
 
         [Fact]
         public void CreationDate_ReturnsSameValue()

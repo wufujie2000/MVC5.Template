@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
                 .GetMetadataForProperty(null, typeof(BindersModel), bindingContext.ModelName);
         }
 
-        #region Method: BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        #region BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
 
         [Fact]
         public void BindModel_NullValue_ReturnsNull()

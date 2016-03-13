@@ -6,7 +6,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class AreaAttributeTests
     {
-        #region Constructor: AreaAttribute(String name)
+        #region AreaAttribute(String name)
 
         [Fact]
         public void AreaAttribute_SetsName()

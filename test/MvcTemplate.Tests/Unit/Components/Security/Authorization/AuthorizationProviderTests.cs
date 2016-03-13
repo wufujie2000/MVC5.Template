@@ -25,7 +25,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             DependencyResolver.SetResolver(Substitute.For<IDependencyResolver>());
         }
 
-        #region Method: IsAuthorizedFor(Int32? accountId, String area, String controller, String action)
+        #region IsAuthorizedFor(Int32? accountId, String area, String controller, String action)
 
         [Fact]
         public void IsAuthorizedFor_AuthorizesControllerByIgnoringCase()
@@ -352,7 +352,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 
         #endregion
 
-        #region Method: Refresh()
+        #region Refresh()
 
         [Fact]
         public void Refresh_Permissions()

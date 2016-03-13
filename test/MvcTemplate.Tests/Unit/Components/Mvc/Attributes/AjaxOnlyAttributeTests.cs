@@ -9,7 +9,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class AjaxOnlyAttributeTests
     {
-        #region Method: IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
+        #region IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
 
         [Theory]
         [InlineData("", false)]

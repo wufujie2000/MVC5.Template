@@ -1,6 +1,6 @@
 <#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
 <#@ Output Extension="cs" #>
-#region Static method: Map<#= Model.Models #>()
+#region Map<#= Model.Models #>()
 
 [Fact]
 public void Map<#= Model.Models #>_Maps<#= Model.Model #>To<#= Model.View #>()

@@ -63,7 +63,7 @@
     <Compile Include="Extensions\Html\MvcGrid\MvcGridExtensions.cs" />
     <Compile Include="Extensions\Html\Page\ContentExtensions.cs" />
     <Compile Include="Extensions\Html\Page\AuthorizationExtensions.cs" />
-    <Compile Include="Security\Extensions\IIdentityExtensions.cs" />
+    <Compile Include="Security\Extensions\IPrincipalExtensions.cs" />
     <Compile Include="Mvc\Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Mail\IMailClient.cs" />

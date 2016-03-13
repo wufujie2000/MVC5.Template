@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Objects;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -48,7 +49,7 @@ namespace MvcTemplate.Data.Logging
         }
         public void Save()
         {
-            Int32? accountId = GetAccountId();
+            Int32? accountId = AccountId ?? HttpContext.Current.User.Id();
             foreach (LoggableEntity entity in Entities)
             {
                 AuditLog log = new AuditLog();
@@ -72,14 +73,6 @@ namespace MvcTemplate.Data.Logging
             Context.Dispose();
 
             Disposed = true;
-        }
-
-        private Int32? GetAccountId()
-        {
-            if (AccountId == null && !String.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
-                return Int32.Parse(HttpContext.Current.User.Identity.Name);
-
-            return AccountId;
         }
     }
 }

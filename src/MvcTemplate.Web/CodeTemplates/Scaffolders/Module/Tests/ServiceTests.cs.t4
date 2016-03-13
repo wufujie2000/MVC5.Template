@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context.Dispose();
         }
 
-        #region Method: Get<TView>(Int32 id)
+        #region Get<TView>(Int32 id)
 
         [Fact]
         public void Get_ReturnsViewById()
@@ -49,7 +49,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: GetViews()
+        #region GetViews()
 
         [Fact]
         public void GetViews_Returns<#= Model.ShortModel #>Views()
@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Create(<#= Model.View #> view)
+        #region Create(<#= Model.View #> view)
 
         [Fact]
         public void Create_<#= Model.ShortModel #>()
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Edit(<#= Model.View #> view)
+        #region Edit(<#= Model.View #> view)
 
         [Fact]
         public void Edit_<#= Model.ShortModel #>()
@@ -114,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Services
 
         #endregion
 
-        #region Method: Delete(Int32 id)
+        #region Delete(Int32 id)
 
         [Fact]
         public void Delete_<#= Model.ShortModel #>()

@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             HttpContext.Current = null;
         }
 
-        #region Constructor: Datalist(UrlHelper url)
+        #region Datalist(UrlHelper url)
 
         [Fact]
         public void Datalist_SetsDialogTitle()
@@ -59,7 +59,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Constructor: Datalist(IUnitOfWork unitOfWork)
+        #region Datalist(IUnitOfWork unitOfWork)
 
         [Fact]
         public void Datalist_SetsUnitOfWork()
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Method: GetColumnHeader(PropertyInfo property)
+        #region GetColumnHeader(PropertyInfo property)
 
         [Fact]
         public void GetColumnHeader_ReturnsPropertyTitle()
@@ -99,7 +99,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Method: GetColumnCssClass(PropertyInfo property)
+        #region GetColumnCssClass(PropertyInfo property)
 
         [Theory]
         [InlineData("EnumField", "text-left")]
@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Method: GetModels()
+        #region GetModels()
 
         [Fact]
         public void GetModels_FromUnitOfWork()
@@ -161,7 +161,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
 
         #endregion
 
-        #region Method: FilterById(IQueryable<TView> models)
+        #region FilterById(IQueryable<TView> models)
 
         [Fact]
         public void FilterById_NotInteger_ReturnsEmpty()

@@ -45,7 +45,7 @@ namespace MvcTemplate.Tests.Unit.Web
             application.Dispose();
         }
 
-        #region Method: Application_Start()
+        #region Application_Start()
 
         [Fact]
         public void Application_Start_RegistersSecureResponseConfiguration()
@@ -161,7 +161,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterSecureResponseConfiguration()
+        #region RegisterSecureResponseConfiguration()
 
         [Fact]
         public void RegisterSecureResponseConfiguration_SuppressesXFrameOptionsHeader()
@@ -185,7 +185,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterCurrentDependencyResolver()
+        #region RegisterCurrentDependencyResolver()
 
         [Fact]
         public void RegisterCurrentDependencyResolver_Implementation()
@@ -199,7 +199,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterGlobalizationProvider()
+        #region RegisterGlobalizationProvider()
 
         [Fact]
         public void RegisterGlobalizationProvider_Implementation()
@@ -218,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterModelMetadataProvider()
+        #region RegisterModelMetadataProvider()
 
         [Fact]
         public void RegisterModelMetadataProvider_Implementation()
@@ -230,7 +230,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterDataTypeValidator()
+        #region RegisterDataTypeValidator()
 
         [Fact]
         public void RegisterDataTypeValidator_RemovesClientDataTypeModelValidatorProvider()
@@ -256,7 +256,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterSiteMapProvider()
+        #region RegisterSiteMapProvider()
 
         [Fact]
         public void RegisterSiteMapProvider_Implementation()
@@ -275,7 +275,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterAuthorization()
+        #region RegisterAuthorization()
 
         [Fact]
         public void RegisterAuthorization_RegistersAuthorization()
@@ -304,7 +304,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterModelBinders()
+        #region RegisterModelBinders()
 
         [Fact]
         public void RegisterModelBinders_TrimmingModelBinder()
@@ -320,7 +320,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterViewEngine()
+        #region RegisterViewEngine()
 
         [Fact]
         public void RegisterViewEngine_RemovesUnnecessaryViewEngines()
@@ -345,7 +345,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterAdapters()
+        #region RegisterAdapters()
 
         [Theory]
         [InlineData("Range", typeof(RangeAdapter))]
@@ -376,7 +376,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterFilters()
+        #region RegisterFilters()
 
         [Fact]
         public void RegisterFilters_ForExceptions()
@@ -394,7 +394,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterBundles()
+        #region RegisterBundles()
 
         [Fact]
         public void RegisterBundles_RegistersBundles()
@@ -409,7 +409,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region Method: RegisterRoute()
+        #region RegisterRoute()
 
         [Fact]
         public void RegisterRoute_ForLowercaseUrls()

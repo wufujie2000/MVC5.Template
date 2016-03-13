@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller = Substitute.ForPartsOf<ServicedControllerProxy>(service);
         }
 
-        #region Constructor: ServicedController(TService service)
+        #region ServicedController(TService service)
 
         [Fact]
         public void ServicedController_SetsService()
@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: OnActionExecuting(ActionExecutingContext filterContext)
+        #region OnActionExecuting(ActionExecutingContext filterContext)
 
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()
@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region Method: Dispose()
+        #region Dispose()
 
         [Fact]
         public void Dispose_Service()

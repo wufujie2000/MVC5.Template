@@ -35,7 +35,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Dispose();
         }
 
-        #region Method: GetAs<TModel, TDestination>(Int32 id)
+        #region GetAs<TModel, TDestination>(Int32 id)
 
         [Fact]
         public void GetAs_ReturnsModelAsDestinationModelById()
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Get<TModel>(Int32 id)
+        #region Get<TModel>(Int32 id)
 
         [Fact]
         public void Get_ModelById()
@@ -77,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: To<TDestination>(Object source)
+        #region To<TDestination>(Object source)
 
         [Fact]
         public void To_ConvertsSourceToDestination()
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Select<TModel>()
+        #region Select<TModel>()
 
         [Fact]
         public void Select_FromSet()
@@ -108,7 +108,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: InsertRange<TModel>(IEnumerable<TModel> models)
+        #region InsertRange<TModel>(IEnumerable<TModel> models)
 
         [Fact]
         public void InsertRange_AddsModelsToDbSet()
@@ -128,7 +128,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Insert<TModel>(TModel model)
+        #region Insert<TModel>(TModel model)
 
         [Fact]
         public void Insert_AddsModelToDbSet()
@@ -144,7 +144,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Update(TModel model)
+        #region Update(TModel model)
 
         [Fact]
         public void Update_UpdatesNotAttachedModel()
@@ -190,7 +190,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: DeleteRange<TModel>(IEnumerable<TModel> models)
+        #region DeleteRange<TModel>(IEnumerable<TModel> models)
 
         [Fact]
         public void DeleteRange_Models()
@@ -209,7 +209,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Delete<TModel>(TModel model)
+        #region Delete<TModel>(TModel model)
 
         [Fact]
         public void Delete_Model()
@@ -225,7 +225,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Delete<TModel>(Int32 id)
+        #region Delete<TModel>(Int32 id)
 
         [Fact]
         public void Delete_ModelById()
@@ -241,7 +241,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Rollback()
+        #region Rollback()
 
         [Fact]
         public void Rollback_Changes()
@@ -256,7 +256,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Commit()
+        #region Commit()
 
         [Fact]
         public void Commit_SavesChanges()
@@ -291,7 +291,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Method: Dispose()
+        #region Dispose()
 
         [Fact]
         public void Dispose_Logger()

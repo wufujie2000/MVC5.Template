@@ -15,7 +15,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             attribute = new DigitsAttribute();
         }
 
-        #region Constructor: DigitsAttribute()
+        #region DigitsAttribute()
 
         [Fact]
         public void DigitsAttribute_SetsErrorMessage()
@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region Method: IsValid(Object value)
+        #region IsValid(Object value)
 
         [Fact]
         public void IsValid_Null()

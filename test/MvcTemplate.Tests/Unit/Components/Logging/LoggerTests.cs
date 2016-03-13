@@ -34,7 +34,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             HttpContext.Current = null;
         }
 
-        #region Method: Log(String message)
+        #region Log(String message)
 
         [Fact]
         public void Log_MessageForCurrentAccount()
@@ -67,7 +67,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
         #endregion
 
-        #region Method: Log(Exception exception)
+        #region Log(Exception exception)
 
         [Fact]
         public void Log_InnerException()

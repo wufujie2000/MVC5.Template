@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.5.1
+ * Datalist 3.6.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -16,6 +16,10 @@
     box-sizing: content-box;
     width: 100%;
 }
+
+    .datalist-dialog .ui-dialog-title {
+        min-height: 21px;
+    }
 
 .datalist {
     -webkit-box-sizing: content-box;

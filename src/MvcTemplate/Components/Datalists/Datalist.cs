@@ -15,7 +15,7 @@ namespace MvcTemplate.Components.Datalists
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        public Datalist(UrlHelper url)
+        public Datalist(UrlHelper url) : base(url)
         {
             String view = typeof(TView).Name.Replace("View", "");
             DialogTitle = ResourceProvider.GetDatalistTitle(view);

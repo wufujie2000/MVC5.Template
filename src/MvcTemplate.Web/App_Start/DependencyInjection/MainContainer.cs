@@ -10,7 +10,6 @@ using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using System.Data.Entity;
 using System.Web.Hosting;
-using System.Web.Mvc;
 
 namespace MvcTemplate.Web.DependencyInjection
 {
@@ -29,7 +28,6 @@ namespace MvcTemplate.Web.DependencyInjection
 
             Register<IRouteConfig, RouteConfig>();
             Register<IBundleConfig, BundleConfig>();
-            Register<IExceptionFilter, ExceptionFilter>();
 
             Register<IMvcSiteMapParser, MvcSiteMapParser>();
             Register<IMvcSiteMapProvider>(factory => new MvcSiteMapProvider(

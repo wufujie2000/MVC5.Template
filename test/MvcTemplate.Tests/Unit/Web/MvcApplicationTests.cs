@@ -128,14 +128,6 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void Application_Start_RegistersFilters()
-        {
-            application.Application_Start();
-
-            application.Received().RegisterFilters();
-        }
-
-        [Fact]
         public void Application_Start_RegistersBundles()
         {
             application.Application_Start();
@@ -372,24 +364,6 @@ namespace MvcTemplate.Tests.Unit.Web
                 .SingleOrDefault(validator => validator.GetType() == adapterType);
 
             Assert.NotNull(adapter);
-        }
-
-        #endregion
-
-        #region RegisterFilters()
-
-        [Fact]
-        public void RegisterFilters_ForExceptions()
-        {
-            IExceptionFilter filter = Substitute.For<IExceptionFilter>();
-            DependencyResolver.Current.GetService<IExceptionFilter>().Returns(filter);
-
-            application.RegisterFilters();
-
-            Object actual = GlobalFilters.Filters.Single().Instance;
-            Object expected = filter;
-
-            Assert.Equal(expected, actual);
         }
 
         #endregion

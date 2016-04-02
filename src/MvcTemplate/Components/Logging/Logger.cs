@@ -23,10 +23,10 @@ namespace MvcTemplate.Components.Logging
 
         public void Log(String message)
         {
+            Int32? accountId = AccountId ?? (HttpContext.Current.User != null ? HttpContext.Current.User.Id() : null);
             Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
             String logDirectoryPath = WebConfigurationManager.AppSettings["LogsDir"];
             String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
-            Int32? accountId = AccountId ?? HttpContext.Current.User.Id();
             logDirectoryPath = Path.Combine(basePath, logDirectoryPath);
             String logPath = Path.Combine(logDirectoryPath, "Log.txt");
 

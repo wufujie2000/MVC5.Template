@@ -88,7 +88,6 @@
     <Compile Include="Mvc\Attributes\MinValueAttribute.cs" />
     <Compile Include="Mvc\Binders\NotTrimmedAttribute.cs" />
     <Compile Include="Mvc\Binders\TrimmingModelBinder.cs" />
-    <Compile Include="Mvc\Filters\ExceptionFilter.cs" />
     <Compile Include="Mvc\Globalization\IGlobalizationProvider.cs" />
     <Compile Include="Mvc\Globalization\Language.cs" />
     <Compile Include="Mvc\Globalization\GlobalizationProvider.cs" />

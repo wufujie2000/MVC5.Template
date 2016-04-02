@@ -37,6 +37,22 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         #region Log(String message)
 
         [Fact]
+        public void Log_MessageWithoutAccount()
+        {
+            HttpContext.Current = HttpContextFactory.CreateHttpContext();
+            HttpContext.Current.User = null;
+            Logger logger = new Logger();
+
+            logger.Log("Test");
+
+            String expected = "Account: " + Environment.NewLine + "Message: Test" + Environment.NewLine + Environment.NewLine;
+            String actual = File.ReadAllText(logPath);
+
+            Assert.True(actual.StartsWith("Time   :"));
+            Assert.True(actual.EndsWith(expected));
+        }
+
+        [Fact]
         public void Log_MessageForCurrentAccount()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();

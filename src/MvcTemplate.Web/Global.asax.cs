@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using LightInject.Mvc;
+using MvcTemplate.Components.Logging;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
@@ -30,29 +31,33 @@ namespace MvcTemplate.Web
             RegisterModelBinders();
             RegisterViewEngine();
             RegisterAdapters();
-            RegisterFilters();
             RegisterBundles();
             RegisterAreas();
             RegisterRoute();
         }
         public void Application_Error()
         {
-            if (!ErrorHandlingEnabled()) return;
+            ILogger logger = DependencyResolver.Current.GetService<ILogger>();
+            Exception exception = Server.GetLastError();
+            logger.Log(exception);
 
-            RouteValueDictionary routeValues = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
-            HttpException httpException = Server.GetLastError() as HttpException;
-            UrlHelper urlHelper = new UrlHelper(Request.RequestContext);
+            if (ErrorHandlingEnabled())
+            {
+                RouteValueDictionary route = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
+                HttpException httpException = exception as HttpException;
+                UrlHelper url = new UrlHelper(Request.RequestContext);
+                Server.ClearError();
 
-            routeValues["controller"] = "Home";
-            routeValues["action"] = "Error";
-            routeValues["area"] = "";
-            Server.ClearError();
+                route["controller"] = "Home";
+                route["action"] = "Error";
+                route["area"] = "";
 
-            if (httpException != null && httpException.GetHttpCode() == 404)
-                routeValues["action"] = "NotFound";
+                if (httpException != null && httpException.GetHttpCode() == 404)
+                    route["action"] = "NotFound";
 
-            Response.TrySkipIisCustomErrors = true;
-            Response.Redirect(urlHelper.RouteUrl(routeValues));
+                Response.TrySkipIisCustomErrors = true;
+                Response.Redirect(url.RouteUrl(route));
+            }
         }
 
         public virtual void RegisterSecureResponseConfiguration()
@@ -113,10 +118,6 @@ namespace MvcTemplate.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(GreaterThanAttribute), typeof(GreaterThanAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(EmailAddressAttribute), typeof(EmailAddressAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(StringLengthAttribute), typeof(StringLengthAdapter));
-        }
-        public virtual void RegisterFilters()
-        {
-            GlobalFilters.Filters.Add(DependencyResolver.Current.GetService<IExceptionFilter>());
         }
         public virtual void RegisterBundles()
         {

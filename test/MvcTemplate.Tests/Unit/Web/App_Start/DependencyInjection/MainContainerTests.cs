@@ -41,7 +41,6 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 
         [InlineData(typeof(IRouteConfig), typeof(RouteConfig))]
         [InlineData(typeof(IBundleConfig), typeof(BundleConfig))]
-        [InlineData(typeof(IExceptionFilter), typeof(ExceptionFilter))]
 
         [InlineData(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
 

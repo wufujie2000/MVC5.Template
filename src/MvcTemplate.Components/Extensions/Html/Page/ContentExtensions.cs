@@ -10,6 +10,7 @@ namespace MvcTemplate.Components.Extensions.Html
     {
         private static Dictionary<String, MvcHtmlString> Scripts = new Dictionary<String, MvcHtmlString>();
         private static Dictionary<String, MvcHtmlString> Styles = new Dictionary<String, MvcHtmlString>();
+        public static readonly Int64 Version = DateTime.Now.Ticks;
 
         public static MvcHtmlString RenderControllerScript(this HtmlHelper html)
         {
@@ -49,7 +50,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder script = new TagBuilder("script");
-            script.MergeAttribute("src", virtualPath);
+            script.MergeAttribute("src", virtualPath + "?v" + Version);
 
             return new MvcHtmlString(script.ToString());
         }
@@ -62,7 +63,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder link = new TagBuilder("link");
-            link.MergeAttribute("href", virtualPath);
+            link.MergeAttribute("href", virtualPath + "?v" + Version);
             link.MergeAttribute("rel", "stylesheet");
 
             return new MvcHtmlString(link.ToString());

@@ -30,7 +30,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
 
-            String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 
-            String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.RenderControllerScript();
             html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns("Test");
 
-            String expected = String.Format("<script src=\"{0}\"></script>", scriptSrc);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -86,7 +86,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
 
-            String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);
@@ -99,7 +99,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 
-            String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);
@@ -114,7 +114,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             html.RenderControllerStyle();
             html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns("Test");
 
-            String expected = String.Format("<link href=\"{0}\" rel=\"stylesheet\"></link>", styleRef);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);

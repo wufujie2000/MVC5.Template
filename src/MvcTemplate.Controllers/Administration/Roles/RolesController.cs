@@ -32,7 +32,7 @@ namespace MvcTemplate.Controllers.Administration
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] RoleView role)
+        public ActionResult Create(RoleView role)
         {
             if (!Validator.CanCreate(role))
             {

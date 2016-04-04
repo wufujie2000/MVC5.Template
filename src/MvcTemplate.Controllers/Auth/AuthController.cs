@@ -32,7 +32,7 @@ namespace MvcTemplate.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Exclude = "Id")] AccountRegisterView account)
+        public ActionResult Register(AccountRegisterView account)
         {
             if (Service.IsLoggedIn(User))
                 return RedirectToDefault();

@@ -62,12 +62,6 @@ namespace <#= Model.ControllerTestsNamespace #>
         #region Create(<#= Model.View #> <#= Model.ModelVarName #>)
 
         [Fact]
-        public void Create_ProtectsFromOverpostingId()
-        {
-            ProtectsFromOverposting(controller, "Create", "Id");
-        }
-
-        [Fact]
         public void Create_CanNotCreate_ReturnsSameView()
         {
             validator.CanCreate(<#= Model.ModelVarName #>).Returns(false);

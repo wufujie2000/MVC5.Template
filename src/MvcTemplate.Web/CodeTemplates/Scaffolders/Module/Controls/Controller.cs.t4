@@ -35,7 +35,7 @@ namespace <#= Model.ControllerNamespace #>
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] <#= Model.View #> <#= Model.ModelVarName #>)
+        public ActionResult Create(<#= Model.View #> <#= Model.ModelVarName #>)
         {
             if (!Validator.CanCreate(<#= Model.ModelVarName #>))
                 return View(<#= Model.ModelVarName #>);

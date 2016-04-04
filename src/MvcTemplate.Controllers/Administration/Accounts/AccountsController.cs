@@ -29,7 +29,7 @@ namespace MvcTemplate.Controllers.Administration
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Exclude = "Id")] AccountCreateView account)
+        public ActionResult Create(AccountCreateView account)
         {
             if (!Validator.CanCreate(account))
                 return View(account);

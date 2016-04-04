@@ -27,7 +27,7 @@ namespace MvcTemplate.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Exclude = "Id")] ProfileEditView profile)
+        public ActionResult Edit(ProfileEditView profile)
         {
             if (!Service.IsActive(CurrentAccountId))
                 return RedirectIfAuthorized("Logout", "Auth");
@@ -56,7 +56,7 @@ namespace MvcTemplate.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed([Bind(Exclude = "Id")] ProfileDeleteView profile)
+        public ActionResult DeleteConfirmed(ProfileDeleteView profile)
         {
             if (!Service.IsActive(CurrentAccountId))
                 return RedirectIfAuthorized("Logout", "Auth");

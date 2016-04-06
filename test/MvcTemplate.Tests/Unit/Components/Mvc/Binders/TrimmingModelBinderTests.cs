@@ -18,12 +18,12 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             controllerContext = new ControllerContext();
             bindingContext = new ModelBindingContext();
+            bindingContext.ModelName = "Model.Trimmed";
             collection = new NameValueCollection();
-            bindingContext.ModelName = "Trimmed";
             binder = new TrimmingModelBinder();
 
             bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(BindersModel), bindingContext.ModelName);
+                .GetMetadataForProperty(null, typeof(BindersModel), "Trimmed");
         }
 
         #region BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
@@ -48,7 +48,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void BindModel_DoesNotTrimValue()
         {
-            bindingContext.ModelName = "NotTrimmed";
+            bindingContext.ModelName = "Model.NotTrimmed";
             collection.Add(bindingContext.ModelName, "  Trimmed text  ");
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
             bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()

@@ -15,7 +15,7 @@ namespace MvcTemplate.Components.Mvc
             Type containerType = bindingContext.ModelMetadata.ContainerType;
             if (containerType != null)
             {
-                PropertyInfo property = containerType.GetProperty(bindingContext.ModelName);
+                PropertyInfo property = containerType.GetProperty(bindingContext.ModelMetadata.PropertyName);
                 if (property.IsDefined(typeof(NotTrimmedAttribute), false))
                     return value.AttemptedValue;
             }

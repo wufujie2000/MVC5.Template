@@ -9,33 +9,18 @@ namespace MvcTemplate.Components.Mail
 {
     public class SmtpMailClient : IMailClient
     {
-        private SmtpClient Client { get; set; }
-        private Boolean Disposed { get; set; }
-        private String Sender { get; set; }
-
-        public SmtpMailClient()
+        public async Task SendAsync(String email, String subject, String body)
         {
-            Sender = ((SmtpSection)WebConfigurationManager.GetSection("system.net/mailSettings/smtp")).From;
-            Client = new SmtpClient();
-        }
+            using (SmtpClient client = new SmtpClient())
+            {
+                String sender = ((SmtpSection)WebConfigurationManager.GetSection("system.net/mailSettings/smtp")).From;
+                MailMessage mail = new MailMessage(sender, email, subject, body);
+                mail.SubjectEncoding = Encoding.UTF8;
+                mail.BodyEncoding = Encoding.UTF8;
+                mail.IsBodyHtml = true;
 
-        public Task SendAsync(String email, String subject, String body)
-        {
-            MailMessage mail = new MailMessage(Sender, email, subject, body);
-            mail.SubjectEncoding = Encoding.UTF8;
-            mail.BodyEncoding = Encoding.UTF8;
-            mail.IsBodyHtml = true;
-
-            return Client.SendMailAsync(mail);
-        }
-
-        public void Dispose()
-        {
-            if (Disposed) return;
-
-            Client.Dispose();
-
-            Disposed = true;
+                await client.SendMailAsync(mail);
+            }
         }
     }
 }

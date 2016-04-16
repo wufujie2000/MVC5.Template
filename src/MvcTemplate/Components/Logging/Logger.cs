@@ -10,8 +10,8 @@ namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {
-        private static Object LogWriting = new Object();
         private Int32? AccountId { get; set; }
+        private static Object LogWriting = new Object();
 
         public Logger()
         {
@@ -25,7 +25,7 @@ namespace MvcTemplate.Components.Logging
         {
             Int32? accountId = AccountId ?? (HttpContext.Current.User != null ? HttpContext.Current.User.Id() : null);
             Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
-            String logDirectoryPath = WebConfigurationManager.AppSettings["LogsDir"];
+            String logDirectoryPath = WebConfigurationManager.AppSettings["LogPath"];
             String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
             logDirectoryPath = Path.Combine(basePath, logDirectoryPath);
             String logPath = Path.Combine(logDirectoryPath, "Log.txt");

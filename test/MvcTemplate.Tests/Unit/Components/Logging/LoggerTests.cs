@@ -18,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
         public LoggerTests()
         {
             backupSize = Int32.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
-            logDirectory = WebConfigurationManager.AppSettings["LogsDir"];
+            logDirectory = WebConfigurationManager.AppSettings["LogPath"];
             logPath = Path.Combine(logDirectory, "Log.txt");
 
             if (Directory.Exists(logDirectory))

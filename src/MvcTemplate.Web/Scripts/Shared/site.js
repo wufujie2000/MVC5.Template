@@ -204,9 +204,9 @@
     }
 }());
 
-// Read only checkbox binding
+// Read only binding
 (function () {
-    $(document).on('click', 'input:checkbox[readonly]', function () {
+    $(document).on('click', 'input:checkbox[readonly],input:radio[readonly]', function () {
         return false;
     });
 }());

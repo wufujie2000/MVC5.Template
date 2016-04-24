@@ -142,6 +142,7 @@
     <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
     <Content Include="Images\Shared\background.jpg" />
     <Content Include="Images\Shared\content-background.jpg" />

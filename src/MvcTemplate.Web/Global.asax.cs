@@ -9,7 +9,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -41,7 +40,7 @@ namespace MvcTemplate.Web
             Exception exception = Server.GetLastError();
             logger.Log(exception);
 
-            if (ErrorHandlingEnabled())
+            if (Context.IsCustomErrorEnabled)
             {
                 RouteValueDictionary route = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
                 HttpException httpException = exception as HttpException;
@@ -131,17 +130,6 @@ namespace MvcTemplate.Web
         {
             RouteTable.Routes.LowercaseUrls = true;
             DependencyResolver.Current.GetService<IRouteConfig>().RegisterRoutes(RouteTable.Routes);
-        }
-
-        private Boolean ErrorHandlingEnabled()
-        {
-            CustomErrorsSection customErrors = (CustomErrorsSection)WebConfigurationManager.GetSection("system.web/customErrors");
-            if (customErrors == null) return false;
-
-            if (customErrors.Mode == CustomErrorsMode.RemoteOnly && !Request.IsLocal) return true;
-            if (customErrors.Mode == CustomErrorsMode.On) return true;
-
-            return false;
         }
     }
 }

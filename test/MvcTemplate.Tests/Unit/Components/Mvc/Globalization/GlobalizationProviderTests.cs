@@ -28,11 +28,11 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             globalization.Add(lithuanian);
             globalization.Add(english);
 
-            globalization.Save("Globalization.xml");
+            globalization.Save("Globalization.config");
         }
         public GlobalizationProviderTests()
         {
-            provider = new GlobalizationProvider("Globalization.xml");
+            provider = new GlobalizationProvider("Globalization.config");
         }
 
         #region CurrentLanguage

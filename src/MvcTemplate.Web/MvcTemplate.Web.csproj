@@ -181,7 +181,7 @@
       <DependentUpon>mvc-grid.js</DependentUpon>
     </Content>
     <Content Include="Views\Shared\_Datalist.cshtml" />
-    <Content Include="Globalization.xml" />
+    <Content Include="Globalization.config" />
     <Content Include="Views\Auth\Reset.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />

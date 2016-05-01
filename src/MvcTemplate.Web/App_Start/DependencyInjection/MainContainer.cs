@@ -34,7 +34,7 @@ namespace MvcTemplate.Web.DependencyInjection
                  HostingEnvironment.MapPath("~/Mvc.sitemap"), factory.GetInstance<IMvcSiteMapParser>()));
 
             Register<IGlobalizationProvider>(factory =>
-                new GlobalizationProvider(HostingEnvironment.MapPath("~/Globalization.xml")));
+                new GlobalizationProvider(HostingEnvironment.MapPath("~/Globalization.config")));
             RegisterInstance<IAuthorizationProvider>(new AuthorizationProvider(typeof(BaseController).Assembly));
 
             Register<IRoleService, RoleService>();

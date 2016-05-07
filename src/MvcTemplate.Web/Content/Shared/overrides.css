@@ -102,6 +102,10 @@
   text-align: center;
   margin: 0 0 5px;
 }
+.ui-datepicker .ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input {
+  text-align: center;
+  border: none;
+}
 .ui-datepicker .ui-timepicker-div .ui_tpicker_time_label,
 .ui-datepicker .ui-timepicker-div .ui_tpicker_hour_label,
 .ui-datepicker .ui-timepicker-div .ui_tpicker_minute_label,

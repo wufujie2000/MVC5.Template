@@ -31,7 +31,7 @@ namespace MvcTemplate.Components.Logging
             String logPath = Path.Combine(logDirectoryPath, "Log.txt");
 
             StringBuilder log = new StringBuilder();
-            log.AppendLine("Time   : " + DateTime.Now);
+            log.AppendLine("Time   : " + DateTime.Now.ToString("yyyy-dd-MM HH:mm:ss"));
             log.AppendLine("Account: " + accountId);
             log.AppendLine("Message: " + message);
             log.AppendLine();

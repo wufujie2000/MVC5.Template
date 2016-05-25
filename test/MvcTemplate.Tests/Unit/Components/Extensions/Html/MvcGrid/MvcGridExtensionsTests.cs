@@ -1,6 +1,5 @@
 ﻿using MvcTemplate.Components.Extensions.Html;
 using MvcTemplate.Components.Security;
-using MvcTemplate.Resources;
 using MvcTemplate.Resources.Table;
 using MvcTemplate.Tests.Objects;
 using NonFactors.Mvc.Grid;
@@ -116,7 +115,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddDateProperty_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
             Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
 
             IGridColumn<AllTypesView> actual = columns.AddDateProperty(expression);
@@ -124,7 +122,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:d}", actual.Format);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
@@ -135,7 +133,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddDateProperty_Nullable_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
             IGridColumn<AllTypesView> actual = columns.AddDateProperty(expression);
@@ -143,7 +140,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:d}", actual.Format);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
@@ -154,36 +151,35 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean>(model => model.BooleanField);
             Expression<Func<AllTypesView, Boolean>> expression = (model) => model.BooleanField;
 
             IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
         [Fact]
-        public void AddBooleanProperty_RendersYes()
+        public void AddBooleanProperty_True()
         {
-            AllTypesView view = new AllTypesView { BooleanField = true };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
+            GridRow row = new GridRow(new AllTypesView { BooleanField = true });
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(row).ToString();
             String expected = TableResources.Yes;
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AddBooleanProperty_RendersNo()
+        public void AddBooleanProperty_False()
         {
-            AllTypesView view = new AllTypesView { BooleanField = false };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
+            GridRow row = new GridRow(new AllTypesView { BooleanField = false });
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(row).ToString();
             String expected = TableResources.No;
 
             Assert.Equal(expected, actual);
@@ -196,50 +192,49 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, Boolean?>(model => model.NullableBooleanField);
             Expression<Func<AllTypesView, Boolean?>> expression = (model) => model.NullableBooleanField;
 
             IGridColumn<AllTypesView> actual = columns.AddBooleanProperty(expression);
 
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
         [Fact]
-        public void AddBooleanProperty_Nullable_RendersYes()
+        public void AddBooleanProperty_Nullable()
         {
-            AllTypesView view = new AllTypesView { NullableBooleanField = true };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
+            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = null });
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(row).ToString();
+
+            Assert.Empty(actual);
+        }
+
+        [Fact]
+        public void AddBooleanProperty_Nullable_True()
+        {
+            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
+            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = true });
+
+            String actual = column.ValueFor(row).ToString();
             String expected = TableResources.Yes;
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void AddBooleanProperty_Nullable_RendersNo()
+        public void AddBooleanProperty_Nullable_False()
         {
-            AllTypesView view = new AllTypesView { NullableBooleanField = false };
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
+            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = false });
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(row).ToString();
             String expected = TableResources.No;
 
             Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void AddBooleanProperty_Nullable_RendersEmpty()
-        {
-            AllTypesView view = new AllTypesView { NullableBooleanField = null };
-            IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
-
-            String actual = column.ValueFor(new GridRow(view)).ToString();
-
-            Assert.Empty(actual);
         }
 
         #endregion
@@ -249,7 +244,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddDateTimeProperty_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime>(model => model.DateTimeField);
             Expression<Func<AllTypesView, DateTime>> expression = (model) => model.DateTimeField;
 
             IGridColumn<AllTypesView> actual = columns.AddDateTimeProperty(expression);
@@ -257,7 +251,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:g}", actual.Format);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
@@ -268,7 +262,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddDateTimeProperty_Nullable_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, DateTime?>(model => model.NullableDateTimeField);
             Expression<Func<AllTypesView, DateTime?>> expression = (model) => model.NullableDateTimeField;
 
             IGridColumn<AllTypesView> actual = columns.AddDateTimeProperty(expression);
@@ -276,7 +269,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:g}", actual.Format);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 
@@ -287,14 +280,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddProperty_Column()
         {
-            String title = ResourceProvider.GetPropertyTitle<AllTypesView, AllTypesView>(model => model);
             Expression<Func<AllTypesView, AllTypesView>> expression = (model) => model;
 
             IGridColumn<AllTypesView> actual = columns.AddProperty(expression);
 
             Assert.Equal("text-left", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Equal(title, actual.Title);
+            Assert.Null(actual.Title);
             Assert.Single(columns);
         }
 

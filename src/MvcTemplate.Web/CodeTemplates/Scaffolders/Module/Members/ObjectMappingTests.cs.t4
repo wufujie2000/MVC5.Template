@@ -3,7 +3,7 @@
 #region Map<#= Model.Models #>()
 
 [Fact]
-public void Map<#= Model.Models #>_Maps<#= Model.Model #>To<#= Model.View #>()
+public void Map<#= Model.Models #>_<#= Model.Model #>_<#= Model.View #>()
 {
     <#= Model.Model #> expected = ObjectFactory.Create<#= Model.Model #>();
     <#= Model.View #> actual = Mapper.Map<<#= Model.View #>>(expected);
@@ -15,7 +15,7 @@ public void Map<#= Model.Models #>_Maps<#= Model.Model #>To<#= Model.View #>()
 }
 
 [Fact]
-public void Map<#= Model.Models #>_Maps<#= Model.View #>To<#= Model.Model #>()
+public void Map<#= Model.Models #>_<#= Model.View #>_<#= Model.Model #>()
 {
     <#= Model.View #> expected = ObjectFactory.Create<#= Model.View #>();
     <#= Model.Model #> actual = Mapper.Map<<#= Model.Model #>>(expected);

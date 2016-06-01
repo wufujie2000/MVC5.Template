@@ -50,7 +50,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder script = new TagBuilder("script");
-            script.MergeAttribute("src", virtualPath + "?v" + Version);
+            script.Attributes["src"] = virtualPath + "?v" + Version;
 
             return new MvcHtmlString(script.ToString());
         }
@@ -63,8 +63,8 @@ namespace MvcTemplate.Components.Extensions.Html
             if (!File.Exists(physicalPath)) return MvcHtmlString.Empty;
 
             TagBuilder link = new TagBuilder("link");
-            link.MergeAttribute("href", virtualPath + "?v" + Version);
-            link.MergeAttribute("rel", "stylesheet");
+            link.Attributes["href"] = virtualPath + "?v" + Version;
+            link.Attributes["rel"] = "stylesheet";
 
             return new MvcHtmlString(link.ToString());
         }

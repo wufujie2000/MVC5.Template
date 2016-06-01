@@ -87,16 +87,16 @@ namespace MvcTemplate.Components.Extensions.Html
         private static String GetLink<T>(IGrid grid, T model, String action, String iconClass)
         {
             UrlHelper url = new UrlHelper(grid.HttpContext.Request.RequestContext);
-            TagBuilder actionTag = new TagBuilder("a");
+            TagBuilder anchor = new TagBuilder("a");
             TagBuilder icon = new TagBuilder("i");
 
-            actionTag.MergeAttribute("href", url.Action(action, GetRouteValuesFor(model)));
-            actionTag.AddCssClass(action.ToLower() + "-action");
+            anchor.Attributes["href"] = url.Action(action, GetRouteValuesFor(model));
+            anchor.AddCssClass(action.ToLower() + "-action");
             icon.AddCssClass(iconClass);
 
-            actionTag.InnerHtml = icon.ToString();
+            anchor.InnerHtml = icon.ToString();
 
-            return actionTag.ToString();
+            return anchor.ToString();
         }
         private static Boolean IsAuthorizedToView(IGrid grid, String action)
         {

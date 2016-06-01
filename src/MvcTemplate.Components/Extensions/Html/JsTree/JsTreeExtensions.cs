@@ -28,7 +28,7 @@ namespace MvcTemplate.Components.Extensions.Html
                 TagBuilder node = new TagBuilder("li");
                 String id = jsNode.Id.ToString();
                 node.InnerHtml = jsNode.Title;
-                node.MergeAttribute("id", id);
+                node.Attributes["id"] = id;
 
                 Add(node, jsNode.Nodes);
                 nodeBuilder.Append(node);
@@ -41,12 +41,12 @@ namespace MvcTemplate.Components.Extensions.Html
         {
             StringBuilder inputs = new StringBuilder();
             TagBuilder input = new TagBuilder("input");
-            input.MergeAttribute("type", "hidden");
-            input.MergeAttribute("name", name);
+            input.Attributes["type"] = "hidden";
+            input.Attributes["name"] = name;
 
             foreach (Int32 id in model.SelectedIds)
             {
-                input.MergeAttribute("value", id.ToString(), true);
+                input.Attributes["value"] = id.ToString();
                 inputs.Append(input.ToString(TagRenderMode.SelfClosing));
             }
 
@@ -59,8 +59,8 @@ namespace MvcTemplate.Components.Extensions.Html
         private static String JsTreeFor(String name, JsTree model)
         {
             TagBuilder tree = new TagBuilder("div");
-            tree.MergeAttribute("for", name);
             tree.AddCssClass("js-tree-view");
+            tree.Attributes["for"] = name;
 
             Add(tree, model.Nodes);
 

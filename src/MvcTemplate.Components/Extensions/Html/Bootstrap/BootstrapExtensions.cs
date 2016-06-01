@@ -23,7 +23,7 @@ namespace MvcTemplate.Components.Extensions.Html
             if (expression.IsRequired() && !required.HasValue)
                 requiredSpan.InnerHtml = "*";
 
-            label.MergeAttribute("for", TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression)));
+            label.Attributes["for"] = TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression));
             label.InnerHtml = ResourceProvider.GetPropertyTitle(expression) + requiredSpan;
 
             return new MvcHtmlString(label.ToString());

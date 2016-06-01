@@ -12,8 +12,6 @@ namespace MvcTemplate.Tests
         {
             return new Account
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Passhash = "Passhash" + id,
 
@@ -32,8 +30,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountView
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Email = id + "@tests.com",
 
@@ -46,8 +42,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountEditView
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Email = id + "@tests.com",
 
@@ -60,8 +54,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountCreateView
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Password = "Password" + id,
 
@@ -75,8 +67,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountLoginView
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Password = "Password" + id
             };
@@ -85,8 +75,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountResetView
             {
-                Id = id,
-
                 Token = "Token" + id,
                 NewPassword = "NewPassword" + id
             };
@@ -95,8 +83,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountRegisterView
             {
-                Id = id,
-
                 Username = "Username" + id,
                 Password = "Password" + id,
 
@@ -107,8 +93,6 @@ namespace MvcTemplate.Tests
         {
             return new AccountRecoveryView
             {
-                Id = id,
-
                 Email = id + "@tests.com"
             };
         }
@@ -117,8 +101,6 @@ namespace MvcTemplate.Tests
         {
             return new ProfileEditView
             {
-                Id = id,
-
                 Email = id + "@tests.com",
                 Username = "Username" + id,
 
@@ -131,8 +113,6 @@ namespace MvcTemplate.Tests
         {
             return new ProfileDeleteView
             {
-                Id = id,
-
                 Password = "Password" + id
             };
         }
@@ -141,8 +121,6 @@ namespace MvcTemplate.Tests
         {
             return new Role
             {
-                Id = id,
-
                 Title = "Title" + id,
 
                 Permissions = new List<RolePermission>()
@@ -152,8 +130,6 @@ namespace MvcTemplate.Tests
         {
             return new RoleView
             {
-                Id = id,
-
                 Title = "Title" + id
             };
         }
@@ -162,8 +138,6 @@ namespace MvcTemplate.Tests
         {
             return new Permission
             {
-                Id = id,
-
                 Area = "Area" + id,
                 Action = "Action" + id,
                 Controller = "Controller" + id
@@ -173,8 +147,6 @@ namespace MvcTemplate.Tests
         {
             return new RolePermission
             {
-                Id = id,
-
                 RoleId = id,
                 Role = CreateRole(id),
 

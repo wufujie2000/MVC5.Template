@@ -22,7 +22,6 @@ namespace MvcTemplate.Tests
                 RecoveryToken = "Token" + id,
                 RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(5),
 
-                RoleId = id,
                 Role = CreateRole(id)
             };
         }
@@ -30,6 +29,8 @@ namespace MvcTemplate.Tests
         {
             return new AccountView
             {
+                Id = id,
+
                 Username = "Username" + id,
                 Email = id + "@tests.com",
 
@@ -42,6 +43,8 @@ namespace MvcTemplate.Tests
         {
             return new AccountEditView
             {
+                Id = id,
+
                 Username = "Username" + id,
                 Email = id + "@tests.com",
 
@@ -101,6 +104,8 @@ namespace MvcTemplate.Tests
         {
             return new ProfileEditView
             {
+                Id = id,
+
                 Email = id + "@tests.com",
                 Username = "Username" + id,
 
@@ -113,6 +118,8 @@ namespace MvcTemplate.Tests
         {
             return new ProfileDeleteView
             {
+                Id = id,
+
                 Password = "Password" + id
             };
         }
@@ -130,6 +137,8 @@ namespace MvcTemplate.Tests
         {
             return new RoleView
             {
+                Id = id,
+
                 Title = "Title" + id
             };
         }
@@ -138,6 +147,8 @@ namespace MvcTemplate.Tests
         {
             return new Permission
             {
+                Id = id,
+
                 Area = "Area" + id,
                 Action = "Action" + id,
                 Controller = "Controller" + id

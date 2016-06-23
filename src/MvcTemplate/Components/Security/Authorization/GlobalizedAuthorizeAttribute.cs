@@ -9,7 +9,8 @@ namespace MvcTemplate.Components.Security
     {
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            RouteValueDictionary routeValues = filterContext.RouteData.Values;
+            RouteValueDictionary routeValues = new RouteValueDictionary();
+            routeValues["language"] = filterContext.RouteData.Values["language"];
             routeValues["returnUrl"] = filterContext.HttpContext.Request.RawUrl;
             routeValues["controller"] = "Auth";
             routeValues["action"] = "Login";

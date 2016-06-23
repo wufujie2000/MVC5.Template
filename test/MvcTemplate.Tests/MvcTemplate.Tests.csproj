@@ -178,7 +178,6 @@
     <Compile Include="Unit\Components\Mvc\Globalization\GlobalizationProviderTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
-    <Compile Include="Unit\Components\Security\Authorization\GlobalizedAuthorizeAttributeTestsProxy.cs" />
     <Compile Include="Unit\Components\Security\Authorization\GlobalizedAuthorizeAttributeTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAllowUnauthorizedController.cs" />

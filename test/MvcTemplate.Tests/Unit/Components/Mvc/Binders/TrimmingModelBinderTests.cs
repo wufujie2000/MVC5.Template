@@ -1,5 +1,6 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Objects;
+using NSubstitute;
 using System;
 using System.Collections.Specialized;
 using System.Web.Mvc;
@@ -22,6 +23,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             collection = new NameValueCollection();
             binder = new TrimmingModelBinder();
 
+            controllerContext.Controller = Substitute.For<ControllerBase>();
             bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(BindersModel), "Trimmed");
         }

@@ -20,11 +20,11 @@ namespace MvcTemplate.Tests
             browser.Capabilities = browserCapabilities;
             request.Browser = browser;
 
-            RouteValueDictionary routeValues = request.RequestContext.RouteData.Values;
-            routeValues["area"] = "administration";
-            routeValues["controller"] = "accounts";
-            routeValues["action"] = "details";
-            routeValues["language"] = "en";
+            RouteValueDictionary route = request.RequestContext.RouteData.Values;
+            route["area"] = "administration";
+            route["controller"] = "accounts";
+            route["action"] = "details";
+            route["language"] = "en";
             MapRoutes();
 
             IIdentity identity = Substitute.For<IIdentity>();

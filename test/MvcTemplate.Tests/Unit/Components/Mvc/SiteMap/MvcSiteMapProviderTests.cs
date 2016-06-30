@@ -12,8 +12,8 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class MvcSiteMapProviderTests : IDisposable
     {
-        private RouteValueDictionary routeValues;
         private MvcSiteMapProvider provider;
+        private RouteValueDictionary route;
         private ViewContext context;
 
         static MvcSiteMapProviderTests()
@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             provider = new MvcSiteMapProvider("Mvc.sitemap", new MvcSiteMapParser());
             context = HtmlHelperFactory.CreateHtmlHelper().ViewContext;
-            routeValues = context.RouteData.Values;
+            route = context.RouteData.Values;
         }
         public void Dispose()
         {
@@ -105,9 +105,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_SetsActiveMenu()
         {
             Authorization.Provider = null;
-            routeValues["action"] = "Create";
-            routeValues["controller"] = "Roles";
-            routeValues["area"] = "Administration";
+            route["action"] = "Create";
+            route["controller"] = "Roles";
+            route["area"] = "Administration";
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(context).ToArray();
 
@@ -132,9 +132,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_NonMenuChildrenNodeIsActive_SetsActiveMenu()
         {
             Authorization.Provider = null;
-            routeValues["action"] = "Edit";
-            routeValues["controller"] = "Accounts";
-            routeValues["area"] = "Administration";
+            route["action"] = "Edit";
+            route["controller"] = "Accounts";
+            route["area"] = "Administration";
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(context).ToArray();
 
@@ -159,9 +159,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void GetSiteMap_ActiveMenuParents_SetsHasActiveChildren()
         {
             Authorization.Provider = null;
-            routeValues["action"] = "Create";
-            routeValues["controller"] = "Roles";
-            routeValues["area"] = "Administration";
+            route["action"] = "Create";
+            route["controller"] = "Roles";
+            route["area"] = "Administration";
 
             MvcSiteMapNode[] actual = provider.GetSiteMap(context).ToArray();
 
@@ -217,9 +217,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetBreadcrumb_IsCaseInsensitive()
         {
-            routeValues["controller"] = "profile";
-            routeValues["action"] = "edit";
-            routeValues["area"] = null;
+            route["controller"] = "profile";
+            route["action"] = "edit";
+            route["area"] = null;
 
             MvcSiteMapNode[] actual = provider.GetBreadcrumb(context).ToArray();
 
@@ -244,9 +244,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetBreadcrumb_NoAction_ReturnsEmpty()
         {
-            routeValues["controller"] = "profile";
-            routeValues["action"] = "edit";
-            routeValues["area"] = "area";
+            route["controller"] = "profile";
+            route["action"] = "edit";
+            route["area"] = "area";
 
             Assert.Empty(provider.GetBreadcrumb(context));
         }

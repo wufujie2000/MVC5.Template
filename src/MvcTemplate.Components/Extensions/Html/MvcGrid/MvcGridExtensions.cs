@@ -119,10 +119,10 @@ namespace MvcTemplate.Components.Extensions.Html
                 throw new Exception(String.Format("{0} type does not have a key property.", typeof(T).Name));
 
             String key = Char.ToLower(keyProperty.Name[0]) + keyProperty.Name.Substring(1);
-            RouteValueDictionary routeValues = new RouteValueDictionary();
-            routeValues.Add(key, keyProperty.GetValue(model));
+            RouteValueDictionary route = new RouteValueDictionary();
+            route.Add(key, keyProperty.GetValue(model));
 
-            return routeValues;
+            return route;
         }
         private static String GetCssClassFor<TProperty>()
         {

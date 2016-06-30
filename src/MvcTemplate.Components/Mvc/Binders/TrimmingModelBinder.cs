@@ -8,7 +8,7 @@ namespace MvcTemplate.Components.Mvc
     {
         public Object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            ValueProviderResult value = GetValue(controllerContext, bindingContext);
+            ValueProviderResult value = GetValue(controllerContext.Controller, bindingContext);
             if (value == null || value.AttemptedValue == null)
                return null;
 
@@ -23,15 +23,15 @@ namespace MvcTemplate.Components.Mvc
             return value.AttemptedValue.Trim();
         }
 
-        private ValueProviderResult GetValue(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        private ValueProviderResult GetValue(ControllerBase controller, ModelBindingContext context)
         {
-            if (!controllerContext.Controller.ValidateRequest || !bindingContext.ModelMetadata.RequestValidationEnabled)
+            if (!controller.ValidateRequest || !context.ModelMetadata.RequestValidationEnabled)
             {
-                IUnvalidatedValueProvider provider = bindingContext.ValueProvider as IUnvalidatedValueProvider;
-                if (provider != null) return provider.GetValue(bindingContext.ModelName, true);
+                IUnvalidatedValueProvider provider = context.ValueProvider as IUnvalidatedValueProvider;
+                if (provider != null) return provider.GetValue(context.ModelName, true);
             }
 
-            return bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+            return context.ValueProvider.GetValue(context.ModelName);
         }
     }
 }

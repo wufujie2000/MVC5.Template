@@ -14,12 +14,12 @@ namespace MvcTemplate.Components.Extensions.Html
 
         public static MvcHtmlString RenderControllerScript(this HtmlHelper html)
         {
-            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
-            String controller = routeValues["controller"].ToString();
+            RouteValueDictionary route = html.ViewContext.RouteData.Values;
+            String controller = route["controller"].ToString();
             String path = controller;
 
-            if (routeValues["Area"] != null)
-                path = routeValues["Area"] + "/" + path;
+            if (route["Area"] != null)
+                path = route["Area"] + "/" + path;
 
             if (Scripts.ContainsKey(path))
                 return Scripts[path];
@@ -28,12 +28,12 @@ namespace MvcTemplate.Components.Extensions.Html
         }
         public static MvcHtmlString RenderControllerStyle(this HtmlHelper html)
         {
-            RouteValueDictionary routeValues = html.ViewContext.RouteData.Values;
-            String controller = routeValues["controller"].ToString();
+            RouteValueDictionary route = html.ViewContext.RouteData.Values;
+            String controller = route["controller"].ToString();
             String path = controller;
 
-            if (routeValues["Area"] != null)
-                path = routeValues["Area"] + "/" + path;
+            if (route["Area"] != null)
+                path = route["Area"] + "/" + path;
 
             if (Styles.ContainsKey(path))
                 return Styles[path];

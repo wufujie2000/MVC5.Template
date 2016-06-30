@@ -9,14 +9,14 @@ namespace MvcTemplate.Components.Security
     {
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            RouteValueDictionary routeValues = new RouteValueDictionary();
-            routeValues["language"] = filterContext.RouteData.Values["language"];
-            routeValues["returnUrl"] = filterContext.HttpContext.Request.RawUrl;
-            routeValues["controller"] = "Auth";
-            routeValues["action"] = "Login";
-            routeValues["area"] = "";
+            RouteValueDictionary route = new RouteValueDictionary();
+            route["language"] = filterContext.RouteData.Values["language"];
+            route["returnUrl"] = filterContext.HttpContext.Request.RawUrl;
+            route["controller"] = "Auth";
+            route["action"] = "Login";
+            route["area"] = "";
 
-            filterContext.Result = new RedirectToRouteResult(routeValues);
+            filterContext.Result = new RedirectToRouteResult(route);
         }
     }
 }

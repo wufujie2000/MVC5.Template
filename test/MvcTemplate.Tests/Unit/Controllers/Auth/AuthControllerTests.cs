@@ -71,6 +71,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Register(AccountRegisterView account)
 
         [Fact]
+        public void Register_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverposting(controller, "Register", "Id");
+        }
+
+        [Fact]
         public void Register_IsLoggenIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);

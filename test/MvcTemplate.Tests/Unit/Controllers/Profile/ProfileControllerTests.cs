@@ -62,6 +62,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Edit(ProfileEditView profile)
 
         [Fact]
+        public void Edit_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverposting(controller, "Edit", "Id");
+        }
+
+        [Fact]
         public void Edit_Post_NotActive_RedirectsToLogout()
         {
             service.IsActive(controller.CurrentAccountId).Returns(false);
@@ -165,6 +171,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #endregion
 
         #region DeleteConfirmed(ProfileDeleteView profile)
+
+        [Fact]
+        public void DeleteConfirmed_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverposting(controller, "DeleteConfirmed", "Id");
+        }
 
         [Fact]
         public void DeleteConfirmed_NotActive_RedirectsToLogout()

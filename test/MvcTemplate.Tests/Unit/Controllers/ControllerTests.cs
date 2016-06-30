@@ -17,6 +17,23 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.CurrentAccountId.Returns(id);
         }
 
+        protected void ProtectsFromOverposting(Controller controller, String postMethod, String properties)
+        {
+            MethodInfo methodInfo = controller
+                .GetType()
+                .GetMethods()
+                .First(method =>
+                    method.Name == postMethod &&
+                    method.IsDefined(typeof(HttpPostAttribute), false));
+
+            BindAttribute actual = methodInfo
+                .GetParameters()
+                .First()
+                .GetCustomAttribute<BindAttribute>(false);
+
+            Assert.Equal(properties, actual.Exclude);
+        }
+
         protected RedirectToRouteResult NotEmptyView(BaseController controller, Object model)
         {
             RedirectToRouteResult result = new RedirectToRouteResult(new RouteValueDictionary());

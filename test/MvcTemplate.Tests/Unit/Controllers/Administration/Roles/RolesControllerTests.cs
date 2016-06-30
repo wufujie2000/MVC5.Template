@@ -69,6 +69,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         #region Create(RoleView role)
 
         [Fact]
+        public void Create_ProtectsFromOverpostingId()
+        {
+            ProtectsFromOverposting(controller, "Create", "Id");
+        }
+
+        [Fact]
         public void Create_CanNotCreate_SeedsPermissions()
         {
             validator.CanCreate(role).Returns(false);

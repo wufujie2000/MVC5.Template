@@ -2,6 +2,6 @@
 {
     public static class GlobalizationManager
     {
-        public static IGlobalizationProvider Provider { get; set; }
+        public static ILanguages Languages { get; set; }
     }
 }

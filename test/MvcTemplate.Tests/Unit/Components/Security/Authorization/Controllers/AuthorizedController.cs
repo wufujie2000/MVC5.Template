@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    [GlobalizedAuthorize]
+    [AuthorizationFilter]
     [ExcludeFromCodeCoverage]
     public class AuthorizedController : Controller
     {

@@ -33,8 +33,7 @@ namespace MvcTemplate.Web.DependencyInjection
             Register<IMvcSiteMapProvider>(factory => new MvcSiteMapProvider(
                  HostingEnvironment.MapPath("~/Mvc.sitemap"), factory.GetInstance<IMvcSiteMapParser>()));
 
-            Register<IGlobalizationProvider>(factory =>
-                new GlobalizationProvider(HostingEnvironment.MapPath("~/Globalization.config")));
+            Register<ILanguages>(factory => new Languages(HostingEnvironment.MapPath("~/Languages.config")));
             RegisterInstance<IAuthorizationProvider>(new AuthorizationProvider(typeof(BaseController).Assembly));
 
             Register<IRoleService, RoleService>();

@@ -63,7 +63,7 @@
     <Compile Include="Components\Datalists\Datalist.cs" />
     <Compile Include="Components\Logging\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\Security\Authorization\GlobalizedAuthorizeAttribute.cs" />
+    <Compile Include="Components\Security\Authorization\AuthorizationFilterAttribute.cs" />
     <Compile Include="Components\Security\Authorization\AuthorizationProvider.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -22,7 +22,7 @@
             @Html.PasswordFor(model => model.Password, new { placeholder = Titles.Password })
             <span class="input-error fa fa-warning"></span>
         </div>
-        @if (GlobalizationManager.Provider.Languages.Length > 1)
+        @if (GlobalizationManager.Languages.Supported.Length > 1)
         {
             String query = Request.QueryString.Count > 0 ? "?" + Request.QueryString : "";
 
@@ -31,12 +31,12 @@
                 <div class="language-container dropdown-toggle" data-toggle="dropdown">
                     <span class="current-language">
                         <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Provider.CurrentLanguage.Abbreviation))" alt="">
-                        @GlobalizationManager.Provider.CurrentLanguage.Name
+                        @GlobalizationManager.Languages.Current.Name
                     </span>
                     <span class="caret"></span>
                 </div>
                 <ul class="dropdown-menu" role="menu">
-                    @foreach (Language language in GlobalizationManager.Provider.Languages)
+                    @foreach (Language language in GlobalizationManager.Languages.Supported)
                     {
                         <li>
                             <a href="@(Url.Action("Login", new { language = language.Abbreviation }) + query)">

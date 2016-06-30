@@ -5,7 +5,7 @@ using System.Web.Routing;
 namespace MvcTemplate.Components.Security
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class GlobalizedAuthorizeAttribute : AuthorizeAttribute
+    public class AuthorizationFilterAttribute : AuthorizeAttribute
     {
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {

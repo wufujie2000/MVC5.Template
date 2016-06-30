@@ -175,10 +175,10 @@
     <Compile Include="Unit\Components\Mvc\Adapters\StringLengthAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\AjaxOnlyAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Binders\TrimmingModelBinderTests.cs" />
-    <Compile Include="Unit\Components\Mvc\Globalization\GlobalizationProviderTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Globalization\LanguagesTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapParserTests.cs" />
     <Compile Include="Unit\Components\Mvc\SiteMap\MvcSiteMapProviderTests.cs" />
-    <Compile Include="Unit\Components\Security\Authorization\GlobalizedAuthorizeAttributeTests.cs" />
+    <Compile Include="Unit\Components\Security\Authorization\AuthorizationFilterAttributeTests.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAllowUnauthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\AllowUnauthorizedController.cs" />

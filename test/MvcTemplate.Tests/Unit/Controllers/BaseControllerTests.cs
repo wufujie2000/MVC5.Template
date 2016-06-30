@@ -37,7 +37,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
         public void Dispose()
         {
-            GlobalizationManager.Provider = null;
+            GlobalizationManager.Languages = null;
             Authorization.Provider = null;
         }
 
@@ -329,7 +329,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         public void BeginExecuteCore_SetsCurrentAccountId(String identityName, Int32 accountId)
         {
             controller.ControllerContext.HttpContext.User.Identity.Name.Returns(identityName);
-            GlobalizationManager.Provider = Substitute.For<IGlobalizationProvider>();
+            GlobalizationManager.Languages = Substitute.For<ILanguages>();
 
             controller.BaseBeginExecuteCore(asyncResult => { }, null);
 
@@ -342,14 +342,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void BeginExecuteCore_SetsCurrentLanguage()
         {
-            GlobalizationManager.Provider = Substitute.For<IGlobalizationProvider>();
-            GlobalizationManager.Provider["lt"].Returns(new Language());
+            GlobalizationManager.Languages = Substitute.For<ILanguages>();
+            GlobalizationManager.Languages["lt"].Returns(new Language());
             controller.RouteData.Values["language"] = "lt";
 
             controller.BaseBeginExecuteCore(asyncResult => { }, null);
 
-            Language actual = GlobalizationManager.Provider.CurrentLanguage;
-            Language expected = GlobalizationManager.Provider["lt"];
+            Language actual = GlobalizationManager.Languages.Current;
+            Language expected = GlobalizationManager.Languages["lt"];
 
             Assert.Equal(expected, actual);
         }

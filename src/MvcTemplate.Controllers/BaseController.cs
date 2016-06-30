@@ -7,7 +7,7 @@ using System.Web.Routing;
 
 namespace MvcTemplate.Controllers
 {
-    [GlobalizedAuthorize]
+    [AuthorizationFilter]
     public abstract class BaseController : Controller
     {
         public IAuthorizationProvider AuthorizationProvider { get; protected set; }
@@ -82,7 +82,7 @@ namespace MvcTemplate.Controllers
             CurrentAccountId = User.Id() ?? 0;
 
             String abbreviation = RouteData.Values["language"].ToString();
-            GlobalizationManager.Provider.CurrentLanguage = GlobalizationManager.Provider[abbreviation];
+            GlobalizationManager.Languages.Current = GlobalizationManager.Languages[abbreviation];
 
             return base.BeginExecuteCore(callback, state);
         }

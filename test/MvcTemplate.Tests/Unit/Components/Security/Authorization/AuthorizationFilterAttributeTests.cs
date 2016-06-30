@@ -17,7 +17,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             AuthorizationContext context = new AuthorizationContext();
             context.ActionDescriptor = Substitute.For<ActionDescriptor>();
             HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
-            GlobalizedAuthorizeAttribute attribute = new GlobalizedAuthorizeAttribute { Users = "None" };
+            AuthorizationFilterAttribute attribute = new AuthorizationFilterAttribute { Users = "None" };
 
             context.RouteData = httpContext.Request.RequestContext.RouteData;
             context.RouteData.Values["test"] = "Test";

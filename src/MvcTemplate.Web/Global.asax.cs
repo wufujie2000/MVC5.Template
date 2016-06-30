@@ -22,7 +22,7 @@ namespace MvcTemplate.Web
         {
             RegisterSecureResponseConfiguration();
             RegisterCurrentDependencyResolver();
-            RegisterGlobalizationProvider();
+            RegisterGlobalizationLanguages();
             RegisterModelMetadataProvider();
             RegisterDataTypeValidator();
             RegisterSiteMapProvider();
@@ -73,9 +73,9 @@ namespace MvcTemplate.Web
 
             DependencyResolver.SetResolver(new LightInjectMvcDependencyResolver(container));
         }
-        public virtual void RegisterGlobalizationProvider()
+        public virtual void RegisterGlobalizationLanguages()
         {
-            GlobalizationManager.Provider = DependencyResolver.Current.GetService<IGlobalizationProvider>();
+            GlobalizationManager.Languages = DependencyResolver.Current.GetService<ILanguages>();
         }
         public virtual void RegisterModelMetadataProvider()
         {

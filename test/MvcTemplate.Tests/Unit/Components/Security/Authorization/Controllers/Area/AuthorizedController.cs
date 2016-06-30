@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace MvcTemplate.Tests.Unit.Components.Security.Area
 {
     [Area("Area")]
-    [GlobalizedAuthorize]
+    [AuthorizationFilter]
     [ExcludeFromCodeCoverage]
     public class AuthorizedController : Controller
     {

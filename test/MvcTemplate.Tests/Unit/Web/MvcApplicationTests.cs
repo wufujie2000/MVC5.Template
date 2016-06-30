@@ -25,13 +25,13 @@ namespace MvcTemplate.Tests.Unit.Web
             application = Substitute.ForPartsOf<MvcApplication>();
             application.When(app => app.RegisterAreas()).DoNotCallBase();
             application.When(app => app.RegisterSiteMapProvider()).DoNotCallBase();
-            application.When(app => app.RegisterGlobalizationProvider()).DoNotCallBase();
+            application.When(app => app.RegisterGlobalizationLanguages()).DoNotCallBase();
 
             DependencyResolver.SetResolver(Substitute.For<IDependencyResolver>());
             ModelValidatorProviders.Providers.Clear();
             RouteTable.Routes.LowercaseUrls = false;
             ModelMetadataProviders.Current = null;
-            GlobalizationManager.Provider = null;
+            GlobalizationManager.Languages = null;
             Authorization.Provider = null;
             GlobalFilters.Filters.Clear();
             ModelBinders.Binders.Clear();
@@ -64,11 +64,11 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Fact]
-        public void Application_Start_RegistersGlobalizationProvider()
+        public void Application_Start_RegistersGlobalizationLanguages()
         {
             application.Application_Start();
 
-            application.Received().RegisterGlobalizationProvider();
+            application.Received().RegisterGlobalizationLanguages();
         }
 
         [Fact]
@@ -191,19 +191,19 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #endregion
 
-        #region RegisterGlobalizationProvider()
+        #region RegisterGlobalizationLanguages()
 
         [Fact]
-        public void RegisterGlobalizationProvider_Implementation()
+        public void RegisterGlobalizationLanguages_Implementation()
         {
-            IGlobalizationProvider globalization = Substitute.For<IGlobalizationProvider>();
-            DependencyResolver.Current.GetService<IGlobalizationProvider>().Returns(globalization);
+            ILanguages languages = Substitute.For<ILanguages>();
+            DependencyResolver.Current.GetService<ILanguages>().Returns(languages);
 
             application = Substitute.ForPartsOf<MvcApplication>();
-            application.RegisterGlobalizationProvider();
+            application.RegisterGlobalizationLanguages();
 
-            IGlobalizationProvider actual = GlobalizationManager.Provider;
-            IGlobalizationProvider expected = globalization;
+            ILanguages actual = GlobalizationManager.Languages;
+            ILanguages expected = languages;
 
             Assert.Equal(expected, actual);
         }

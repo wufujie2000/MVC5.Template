@@ -26,7 +26,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             }
         }
 
-        #region LoggableProperty(DbPropertyEntry entry, Object originalValue)
+        #region LoggableProperty(DbPropertyEntry entry, Object newValue)
 
         [Fact]
         public void LoggableProperty_IsNotModified()

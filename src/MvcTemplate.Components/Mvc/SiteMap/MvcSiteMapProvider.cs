@@ -27,7 +27,7 @@ namespace MvcTemplate.Components.Mvc
             String controller = context.RouteData.Values["controller"] as String;
             IEnumerable<MvcSiteMapNode> nodes = CopyAndSetState(NodeTree, area, controller, action);
 
-            return GetAuthorizedSiteMap(account, nodes);
+            return GetAuthorizedNodes(account, nodes);
         }
         public IEnumerable<MvcSiteMapNode> GetBreadcrumb(ViewContext context)
         {
@@ -35,24 +35,24 @@ namespace MvcTemplate.Components.Mvc
             String action = context.RouteData.Values["action"] as String;
             String controller = context.RouteData.Values["controller"] as String;
 
-            MvcSiteMapNode currentNode = NodeList.SingleOrDefault(node =>
+            MvcSiteMapNode current = NodeList.SingleOrDefault(node =>
                 String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase));
 
             List<MvcSiteMapNode> breadcrumb = new List<MvcSiteMapNode>();
-            while (currentNode != null)
+            while (current != null)
             {
                 breadcrumb.Insert(0, new MvcSiteMapNode
                 {
-                    IconClass = currentNode.IconClass,
+                    IconClass = current.IconClass,
 
-                    Controller = currentNode.Controller,
-                    Action = currentNode.Action,
-                    Area = currentNode.Area
+                    Controller = current.Controller,
+                    Action = current.Action,
+                    Area = current.Area
                 });
 
-                currentNode = currentNode.Parent;
+                current = current.Parent;
             }
 
             return breadcrumb;
@@ -74,7 +74,7 @@ namespace MvcTemplate.Components.Mvc
                 copy.Children = CopyAndSetState(node.Children, area, controller, action);
                 copy.HasActiveChildren = copy.Children.Any(child => child.IsActive || child.HasActiveChildren);
                 copy.IsActive =
-                    copy.Children.Any(childNode => childNode.IsActive && !childNode.IsMenu) ||
+                    copy.Children.Any(child => child.IsActive && !child.IsMenu) ||
                     (
                         String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
                         String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
@@ -86,20 +86,20 @@ namespace MvcTemplate.Components.Mvc
 
             return copies;
         }
-        private IEnumerable<MvcSiteMapNode> GetAuthorizedSiteMap(Int32? accountId, IEnumerable<MvcSiteMapNode> nodes)
+        private IEnumerable<MvcSiteMapNode> GetAuthorizedNodes(Int32? accountId, IEnumerable<MvcSiteMapNode> nodes)
         {
-            List<MvcSiteMapNode> menuNodes = new List<MvcSiteMapNode>();
+            List<MvcSiteMapNode> authorized = new List<MvcSiteMapNode>();
             foreach (MvcSiteMapNode node in nodes)
             {
-                node.Children = GetAuthorizedSiteMap(accountId, node.Children);
+                node.Children = GetAuthorizedNodes(accountId, node.Children);
 
                 if (node.IsMenu && IsAuthorizedToView(accountId, node) && !IsEmpty(node))
-                    menuNodes.Add(node);
+                    authorized.Add(node);
                 else
-                    menuNodes.AddRange(node.Children);
+                    authorized.AddRange(node.Children);
             }
 
-            return menuNodes;
+            return authorized;
         }
 
         private IEnumerable<MvcSiteMapNode> ToList(IEnumerable<MvcSiteMapNode> nodes)

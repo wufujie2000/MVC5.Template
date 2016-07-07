@@ -27,10 +27,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerScript_WithArea()
         {
-            String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
+            String source = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
 
-            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", source, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -39,11 +39,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerScript_WithoutArea()
         {
-            String scriptSrc = urlHelper.Content("~/Scripts/Shared/accounts/accounts.js");
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
+            String source = urlHelper.Content("~/Scripts/Shared/accounts/accounts.js");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 
-            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", source, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -52,13 +52,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerScript_CachesResultPath()
         {
-            String scriptSrc = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns(path);
+            String source = urlHelper.Content("~/Scripts/Shared/administration/accounts/accounts.js");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
 
             html.RenderControllerScript();
-            html.ViewContext.HttpContext.Server.MapPath(scriptSrc).Returns("Test");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns("Test");
 
-            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", scriptSrc, ContentExtensions.Version);
+            String expected = String.Format("<script src=\"{0}?v{1}\"></script>", source, ContentExtensions.Version);
             String actual = html.RenderControllerScript().ToString();
 
             Assert.Equal(expected, actual);
@@ -83,10 +83,10 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerStyle_WithArea()
         {
-            String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
-            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
+            String source = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
 
-            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", source, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);
@@ -95,11 +95,11 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerStyle_WithoutArea()
         {
-            String styleRef = urlHelper.Content("~/Content/Shared/accounts/accounts.css");
-            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
+            String source = urlHelper.Content("~/Content/Shared/accounts/accounts.css");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
             html.ViewContext.RouteData.Values["Area"] = null;
 
-            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", source, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);
@@ -108,13 +108,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void RenderControllerStyle_CachesResultPath()
         {
-            String styleRef = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
-            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns(path);
+            String source = urlHelper.Content("~/Content/Shared/administration/accounts/accounts.css");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns(path);
 
             html.RenderControllerStyle();
-            html.ViewContext.HttpContext.Server.MapPath(styleRef).Returns("Test");
+            html.ViewContext.HttpContext.Server.MapPath(source).Returns("Test");
 
-            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", styleRef, ContentExtensions.Version);
+            String expected = String.Format("<link href=\"{0}?v{1}\" rel=\"stylesheet\"></link>", source, ContentExtensions.Version);
             String actual = html.RenderControllerStyle().ToString();
 
             Assert.Equal(expected, actual);

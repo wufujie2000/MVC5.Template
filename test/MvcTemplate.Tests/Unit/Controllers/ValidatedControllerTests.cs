@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region OnActionExecuting(ActionExecutingContext filterContext)
+        #region OnActionExecuting(ActionExecutingContext context)
 
         [Fact]
         public void OnActionExecuting_SetsServiceCurrentAccountId()

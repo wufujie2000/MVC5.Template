@@ -12,9 +12,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
         }
 
-        public void BaseOnActionExecuting(ActionExecutingContext filterContext)
+        public void BaseOnActionExecuting(ActionExecutingContext context)
         {
-            OnActionExecuting(filterContext);
+            OnActionExecuting(context);
         }
     }
 }

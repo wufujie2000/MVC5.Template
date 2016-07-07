@@ -30,7 +30,7 @@
                 <span class="fa fa-globe"></span>
                 <div class="language-container dropdown-toggle" data-toggle="dropdown">
                     <span class="current-language">
-                        <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Provider.CurrentLanguage.Abbreviation))" alt="">
+                        <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", GlobalizationManager.Languages.Current.Abbreviation))" alt="">
                         @GlobalizationManager.Languages.Current.Name
                     </span>
                     <span class="caret"></span>

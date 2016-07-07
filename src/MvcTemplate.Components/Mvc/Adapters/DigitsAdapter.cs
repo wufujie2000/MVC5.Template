@@ -12,11 +12,11 @@ namespace MvcTemplate.Components.Mvc
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
-            ModelClientValidationRule validationRule = new ModelClientValidationRule();
-            validationRule.ErrorMessage = ErrorMessage;
-            validationRule.ValidationType = "digits";
+            ModelClientValidationRule rule = new ModelClientValidationRule();
+            rule.ErrorMessage = ErrorMessage;
+            rule.ValidationType = "digits";
 
-            return new[] { validationRule };
+            return new[] { rule };
         }
     }
 }

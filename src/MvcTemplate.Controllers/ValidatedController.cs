@@ -18,9 +18,9 @@ namespace MvcTemplate.Controllers
             Validator = validator;
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnActionExecuting(ActionExecutingContext context)
         {
-            base.OnActionExecuting(filterContext);
+            base.OnActionExecuting(context);
 
             Validator.CurrentAccountId = Service.CurrentAccountId;
             Validator.ModelState = ModelState;

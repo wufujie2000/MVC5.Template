@@ -6,34 +6,34 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class BaseControllerProxy : BaseController
     {
-        public RedirectToRouteResult BaseRedirectToAction(String actionName)
+        public RedirectToRouteResult BaseRedirectToAction(String action)
         {
-            return RedirectToAction(actionName);
+            return RedirectToAction(action);
         }
-        public RedirectToRouteResult BaseRedirectToAction(String actionName, Object routeValues)
+        public RedirectToRouteResult BaseRedirectToAction(String action, Object route)
         {
-            return RedirectToAction(actionName, routeValues);
+            return RedirectToAction(action, route);
         }
-        public RedirectToRouteResult BaseRedirectToAction(String actionName, String controllerName)
+        public RedirectToRouteResult BaseRedirectToAction(String action, String controller)
         {
-            return RedirectToAction(actionName, controllerName);
+            return RedirectToAction(action, controller);
         }
-        public RedirectToRouteResult BaseRedirectToAction(String actionName, String controllerName, Object routeValues)
+        public RedirectToRouteResult BaseRedirectToAction(String action, String controller, Object route)
         {
-            return RedirectToAction(actionName, controllerName, routeValues);
+            return RedirectToAction(action, controller, route);
         }
 
         public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
         {
             return BeginExecuteCore(callback, state);
         }
-        public void BaseOnAuthorization(AuthorizationContext filterContext)
+        public void BaseOnAuthorization(AuthorizationContext context)
         {
-            OnAuthorization(filterContext);
+            OnAuthorization(context);
         }
-        public void BaseOnActionExecuted(ActionExecutedContext filterContext)
+        public void BaseOnActionExecuted(ActionExecutedContext context)
         {
-            OnActionExecuted(filterContext);
+            OnActionExecuted(context);
         }
     }
 }

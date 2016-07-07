@@ -6,13 +6,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class ServicedControllerProxy : ServicedController<IService>
     {
-        public ServicedControllerProxy(IService service) : base(service)
+        public ServicedControllerProxy(IService service)
+            : base(service)
         {
         }
 
-        public void BaseOnActionExecuting(ActionExecutingContext filterContext)
+        public void BaseOnActionExecuting(ActionExecutingContext context)
         {
-            OnActionExecuting(filterContext);
+            OnActionExecuting(context);
         }
     }
 }

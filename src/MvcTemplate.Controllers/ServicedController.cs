@@ -15,9 +15,9 @@ namespace MvcTemplate.Controllers
             Service = service;
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnActionExecuting(ActionExecutingContext context)
         {
-            base.OnActionExecuting(filterContext);
+            base.OnActionExecuting(context);
 
             Service.CurrentAccountId = CurrentAccountId;
         }

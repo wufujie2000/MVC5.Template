@@ -7,9 +7,9 @@ namespace MvcTemplate.Components.Mvc
     [AttributeUsage(AttributeTargets.Method)]
     public class AjaxOnlyAttribute : ActionMethodSelectorAttribute
     {
-        public override Boolean IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
+        public override Boolean IsValidForRequest(ControllerContext context, MethodInfo method)
         {
-            return controllerContext.HttpContext.Request.IsAjaxRequest();
+            return context.HttpContext.Request.IsAjaxRequest();
         }
     }
 }

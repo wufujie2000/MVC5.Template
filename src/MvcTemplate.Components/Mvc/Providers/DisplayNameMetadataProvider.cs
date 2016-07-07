@@ -7,10 +7,10 @@ namespace MvcTemplate.Components.Mvc
 {
     public class DisplayNameMetadataProvider : DataAnnotationsModelMetadataProvider
     {
-        protected override ModelMetadata CreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
+        protected override ModelMetadata CreateMetadata(IEnumerable<Attribute> attributes, Type container, Func<Object> model, Type type, String property)
         {
-            ModelMetadata metadata = base.CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
-            if (containerType != null) metadata.DisplayName = ResourceProvider.GetPropertyTitle(containerType, propertyName);
+            ModelMetadata metadata = base.CreateMetadata(attributes, container, model, type, property);
+            if (container != null) metadata.DisplayName = ResourceProvider.GetPropertyTitle(container, property);
 
             return metadata;
         }

@@ -12,12 +12,12 @@ namespace MvcTemplate.Components.Mvc
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
-            ModelClientValidationRule validationRule = new ModelClientValidationRule();
-            validationRule.ValidationParameters.Add("min", Attribute.Minimum);
-            validationRule.ErrorMessage = ErrorMessage;
-            validationRule.ValidationType = "greater";
+            ModelClientValidationRule rule = new ModelClientValidationRule();
+            rule.ValidationParameters.Add("min", Attribute.Minimum);
+            rule.ErrorMessage = ErrorMessage;
+            rule.ValidationType = "greater";
 
-            return new[] { validationRule };
+            return new[] { rule };
         }
     }
 }

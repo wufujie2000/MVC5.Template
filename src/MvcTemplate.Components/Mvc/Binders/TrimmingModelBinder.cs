@@ -12,10 +12,10 @@ namespace MvcTemplate.Components.Mvc
             if (value == null || value.AttemptedValue == null)
                return null;
 
-            Type containerType = bindingContext.ModelMetadata.ContainerType;
-            if (containerType != null)
+            Type container = bindingContext.ModelMetadata.ContainerType;
+            if (container != null)
             {
-                PropertyInfo property = containerType.GetProperty(bindingContext.ModelMetadata.PropertyName);
+                PropertyInfo property = container.GetProperty(bindingContext.ModelMetadata.PropertyName);
                 if (property.IsDefined(typeof(NotTrimmedAttribute), false))
                     return value.AttemptedValue;
             }

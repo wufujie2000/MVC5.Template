@@ -6,25 +6,25 @@ namespace MvcTemplate.Data.Logging
 {
     public class LoggableProperty
     {
-        private String PropertyName { get; set; }
-        private Object CurrentValue { get; set; }
-        private Object OriginalValue { get; set; }
+        private Object OldValue { get; set; }
+        private Object NewValue { get; set; }
+        private String Property { get; set; }
         public Boolean IsModified { get; private set; }
 
-        public LoggableProperty(DbPropertyEntry entry, Object originalValue)
+        public LoggableProperty(DbPropertyEntry entry, Object newValue)
         {
-            PropertyName = entry.Name;
-            OriginalValue = originalValue;
-            CurrentValue = entry.CurrentValue;
-            IsModified = entry.IsModified && !Equals(OriginalValue, CurrentValue);
+            NewValue = newValue;
+            Property = entry.Name;
+            OldValue = entry.CurrentValue;
+            IsModified = entry.IsModified && !Equals(NewValue, OldValue);
         }
 
         public override String ToString()
         {
             if (IsModified)
-                return PropertyName + ": " + Format(OriginalValue) + " => " + Format(CurrentValue);
+                return Property + ": " + Format(NewValue) + " => " + Format(OldValue);
 
-            return PropertyName + ": " + Format(OriginalValue);
+            return Property + ": " + Format(NewValue);
         }
 
         private String Format(Object value)

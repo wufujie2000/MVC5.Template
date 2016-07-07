@@ -18,14 +18,14 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
     public class DatalistTests : IDisposable
     {
         private DatalistProxy<Role, RoleView> datalist;
-        private UrlHelper urlHelper;
+        private UrlHelper url;
 
         public DatalistTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            url = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(url);
             using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
@@ -38,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void Datalist_SetsDialogTitle()
         {
-            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(url);
 
             String expected = ResourceProvider.GetDatalistTitle(typeof(RoleView).Name.Replace("View", ""));
             String actual = datalist.DialogTitle;
@@ -49,9 +49,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void Datalist_SetsDatalistUrl()
         {
-            datalist = new DatalistProxy<Role, RoleView>(urlHelper);
+            datalist = new DatalistProxy<Role, RoleView>(url);
 
-            String expected = urlHelper.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
+            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
             String actual = datalist.DatalistUrl;
 
             Assert.Equal(expected, actual);

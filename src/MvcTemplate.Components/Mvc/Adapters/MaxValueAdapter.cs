@@ -12,12 +12,12 @@ namespace MvcTemplate.Components.Mvc
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
-            ModelClientValidationRule validationRule = new ModelClientValidationRule();
-            validationRule.ValidationParameters.Add("max", Attribute.Maximum);
-            validationRule.ErrorMessage = ErrorMessage;
-            validationRule.ValidationType = "range";
+            ModelClientValidationRule rule = new ModelClientValidationRule();
+            rule.ValidationParameters.Add("max", Attribute.Maximum);
+            rule.ErrorMessage = ErrorMessage;
+            rule.ValidationType = "range";
 
-            return new[] { validationRule };
+            return new[] { rule };
         }
     }
 }

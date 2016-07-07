@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class DisplayNameMetadataProviderTests
     {
-        #region CreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
+        #region CreateMetadata(IEnumerable<Attribute> attributes, Type container, Func<Object> model, Type type, String property)
 
         [Fact]
         public void CreateMetadata_SetsDisplayName()

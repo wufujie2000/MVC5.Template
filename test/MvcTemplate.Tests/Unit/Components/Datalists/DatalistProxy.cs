@@ -20,10 +20,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             }
         }
 
-        public DatalistProxy(UrlHelper url) : base(url)
+        public DatalistProxy(UrlHelper url)
+            : base(url)
         {
         }
-        public DatalistProxy(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public DatalistProxy(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
         }
 

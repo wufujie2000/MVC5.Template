@@ -29,14 +29,14 @@ namespace MvcTemplate.Data.Logging
                     ? entry.GetDatabaseValues()
                     : entry.CurrentValues;
 
-            Type entityType = entry.Entity.GetType();
-            if (entityType.Namespace == "System.Data.Entity.DynamicProxies") entityType = entityType.BaseType;
+            Type entity = entry.Entity.GetType();
+            if (entity.Namespace == "System.Data.Entity.DynamicProxies") entity = entity.BaseType;
             Properties = values.PropertyNames.Where(name => name != IdName).Select(name => new LoggableProperty(entry.Property(name), values[name]));
             Properties = entry.State == EntityState.Modified ? Properties.Where(property => property.IsModified) : Properties;
             Properties = Properties.ToArray();
             Action = entry.State.ToString();
             Id = () => entry.Entity.Id;
-            Name = entityType.Name;
+            Name = entity.Name;
         }
 
         public override String ToString()

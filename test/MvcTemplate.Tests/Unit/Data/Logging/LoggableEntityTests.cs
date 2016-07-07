@@ -163,13 +163,13 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context.SaveChanges();
         }
 
-        private void AsssertProperties(DbPropertyValues originalValues)
+        private void AsssertProperties(DbPropertyValues newValues)
         {
-            IEnumerable<String> properties = originalValues.PropertyNames;
+            IEnumerable<String> properties = newValues.PropertyNames;
 
             IEnumerator<LoggableProperty> actual = new LoggableEntity(entry).Properties.GetEnumerator();
             IEnumerator<LoggableProperty> expected = properties.Where(property => property != "Id")
-                .Select(name => new LoggableProperty(entry.Property(name), originalValues[name])).GetEnumerator();
+                .Select(name => new LoggableProperty(entry.Property(name), newValues[name])).GetEnumerator();
 
             while (expected.MoveNext() | actual.MoveNext())
             {

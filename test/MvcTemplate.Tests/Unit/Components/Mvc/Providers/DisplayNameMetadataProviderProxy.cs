@@ -7,9 +7,9 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class DisplayNameMetadataProviderProxy : DisplayNameMetadataProvider
     {
-        public ModelMetadata BaseCreateMetadata(IEnumerable<Attribute> attributes, Type containerType, Func<Object> modelAccessor, Type modelType, String propertyName)
+        public ModelMetadata BaseCreateMetadata(IEnumerable<Attribute> attributes, Type container, Func<Object> model, Type type, String property)
         {
-            return CreateMetadata(attributes, containerType, modelAccessor, modelType, propertyName);
+            return CreateMetadata(attributes, container, model, type, property);
         }
     }
 }

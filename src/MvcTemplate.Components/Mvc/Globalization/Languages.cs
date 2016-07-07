@@ -39,16 +39,16 @@ namespace MvcTemplate.Components.Mvc
 
         public Languages(String path)
         {
-            XElement languagesXml = XElement.Load(path);
             Dictionary = new Dictionary<String, Language>();
+            IEnumerable<XElement> languages = XElement.Load(path).Elements("language");
 
-            foreach (XElement languageNode in languagesXml.Elements("language"))
+            foreach (XElement lang in languages)
             {
                 Language language = new Language();
-                language.Culture = new CultureInfo((String)languageNode.Attribute("culture"));
-                language.IsDefault = (Boolean?)languageNode.Attribute("default") == true;
-                language.Abbreviation = (String)languageNode.Attribute("abbreviation");
-                language.Name = (String)languageNode.Attribute("name");
+                language.Culture = new CultureInfo((String)lang.Attribute("culture"));
+                language.IsDefault = (Boolean?)lang.Attribute("default") == true;
+                language.Abbreviation = (String)lang.Attribute("abbreviation");
+                language.Name = (String)lang.Attribute("name");
 
                 Dictionary.Add(language.Abbreviation, language);
             }

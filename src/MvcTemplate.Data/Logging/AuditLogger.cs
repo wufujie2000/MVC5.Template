@@ -22,7 +22,8 @@ namespace MvcTemplate.Data.Logging
             Entities = new List<LoggableEntity>();
             Context.Configuration.AutoDetectChangesEnabled = false;
         }
-        public AuditLogger(DbContext context, Int32? accountId) : this(context)
+        public AuditLogger(DbContext context, Int32? accountId)
+            : this(context)
         {
             AccountId = accountId;
         }

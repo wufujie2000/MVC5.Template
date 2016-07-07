@@ -351,7 +351,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData("GreaterThan", typeof(GreaterThanAdapter))]
         [InlineData("EmailAddress", typeof(EmailAddressAdapter))]
         [InlineData("StringLength", typeof(StringLengthAdapter))]
-        public void RegisterAdapters_RegistersAdapter(String property, Type adapterType)
+        public void RegisterAdapters_RegistersAdapter(String property, Type adapter)
         {
             DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
@@ -359,11 +359,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterAdapters();
 
-            ModelValidator adapter = provider
-                .GetValidators(metadata, new ControllerContext())
-                .SingleOrDefault(validator => validator.GetType() == adapterType);
-
-            Assert.NotNull(adapter);
+            Assert.Single(provider.GetValidators(metadata, new ControllerContext()), validator => validator.GetType() == adapter);
         }
 
         #endregion
@@ -373,12 +369,12 @@ namespace MvcTemplate.Tests.Unit.Web
         [Fact]
         public void RegisterBundles_RegistersBundles()
         {
-            IBundleConfig bundleConfig = Substitute.For<IBundleConfig>();
-            DependencyResolver.Current.GetService<IBundleConfig>().Returns(bundleConfig);
+            IBundleConfig config = Substitute.For<IBundleConfig>();
+            DependencyResolver.Current.GetService<IBundleConfig>().Returns(config);
 
             application.RegisterBundles();
 
-            bundleConfig.Received().RegisterBundles(BundleTable.Bundles);
+            config.Received().RegisterBundles(BundleTable.Bundles);
         }
 
         #endregion
@@ -388,8 +384,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Fact]
         public void RegisterRoute_ForLowercaseUrls()
         {
-            IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
-            DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);
+            IRouteConfig config = Substitute.For<IRouteConfig>();
+            DependencyResolver.Current.GetService<IRouteConfig>().Returns(config);
 
             application.RegisterRoute();
 
@@ -399,12 +395,12 @@ namespace MvcTemplate.Tests.Unit.Web
         [Fact]
         public void RegisterRoute()
         {
-            IRouteConfig routeConfig = Substitute.For<IRouteConfig>();
-            DependencyResolver.Current.GetService<IRouteConfig>().Returns(routeConfig);
+            IRouteConfig config = Substitute.For<IRouteConfig>();
+            DependencyResolver.Current.GetService<IRouteConfig>().Returns(config);
 
             application.RegisterRoute();
 
-            routeConfig.Received().RegisterRoutes(RouteTable.Routes);
+            config.Received().RegisterRoutes(RouteTable.Routes);
         }
 
         #endregion

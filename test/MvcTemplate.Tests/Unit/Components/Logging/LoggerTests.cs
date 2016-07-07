@@ -11,22 +11,22 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 {
     public class LoggerTests : IDisposable
     {
-        private String logDirectory;
         private Int32 backupSize;
         private String logPath;
+        private String log;
 
         public LoggerTests()
         {
             backupSize = Int32.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
-            logDirectory = WebConfigurationManager.AppSettings["LogPath"];
-            logPath = Path.Combine(logDirectory, "Log.txt");
+            logPath = WebConfigurationManager.AppSettings["LogPath"];
+            log = Path.Combine(logPath, "Log.txt");
 
-            if (Directory.Exists(logDirectory))
+            if (Directory.Exists(logPath))
             {
-                String[] files = Directory.GetFiles(logDirectory);
+                String[] files = Directory.GetFiles(logPath);
                 foreach (String file in files) File.Delete(file);
 
-                Directory.Delete(logDirectory);
+                Directory.Delete(logPath);
             }
         }
         public void Dispose()
@@ -46,7 +46,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log("Test");
 
             String expected = "Account: " + Environment.NewLine + "Message: Test" + Environment.NewLine + Environment.NewLine;
-            String actual = File.ReadAllText(logPath);
+            String actual = File.ReadAllText(log);
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log("Test");
 
             String expected = "Account: 1" + Environment.NewLine + "Message: Test" + Environment.NewLine + Environment.NewLine;
-            String actual = File.ReadAllText(logPath);
+            String actual = File.ReadAllText(log);
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new String('T', backupSize));
 
             String expected = "Account: 2" + Environment.NewLine + "Message: " + new String('T', backupSize) + Environment.NewLine + Environment.NewLine;
-            String actual = File.ReadAllText(Directory.GetFiles(logDirectory, "Log *.txt").Single());
+            String actual = File.ReadAllText(Directory.GetFiles(logPath, "Log *.txt").Single());
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));
@@ -95,7 +95,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
             logger.Log(exception);
 
-            String actual = File.ReadAllText(logPath);
+            String actual = File.ReadAllText(log);
             String expected = String.Format("Account: 2{0}Message: {1}: {2}{0}{3}{0}{0}",
                 Environment.NewLine,
                 exception.InnerException.GetType(),

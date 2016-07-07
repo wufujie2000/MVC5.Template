@@ -11,9 +11,9 @@ namespace MvcTemplate.Components.Mvc
             modelState.AddModelError(GetExpressionText(expression), exception);
         }
 
-        public static void AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
+        public static void AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String message)
         {
-            modelState.AddModelError(GetExpressionText(expression), errorMessage);
+            modelState.AddModelError(GetExpressionText(expression), message);
         }
         public static void AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String format, params Object[] args)
         {

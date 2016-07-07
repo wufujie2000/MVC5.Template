@@ -7,16 +7,16 @@ namespace MvcTemplate.Components.Security
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizationFilterAttribute : AuthorizeAttribute
     {
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext context)
         {
             RouteValueDictionary route = new RouteValueDictionary();
-            route["language"] = filterContext.RouteData.Values["language"];
-            route["returnUrl"] = filterContext.HttpContext.Request.RawUrl;
+            route["language"] = context.RouteData.Values["language"];
+            route["returnUrl"] = context.HttpContext.Request.RawUrl;
             route["controller"] = "Auth";
             route["action"] = "Login";
             route["area"] = "";
 
-            filterContext.Result = new RedirectToRouteResult(route);
+            context.Result = new RedirectToRouteResult(route);
         }
     }
 }

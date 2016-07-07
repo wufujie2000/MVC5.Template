@@ -21,15 +21,15 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         public BaseControllerTests()
         {
-            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
+            HttpContextBase context = HttpContextFactory.CreateHttpContextBase();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
 
             controller = Substitute.ForPartsOf<BaseControllerProxy>();
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpContext;
             controller.ControllerContext.Controller = controller;
+            controller.ControllerContext.HttpContext = context;
             controller.ControllerContext.RouteData =
-                httpContext.Request.RequestContext.RouteData;
+                context.Request.RequestContext.RouteData;
             controller.Url = Substitute.For<UrlHelper>();
 
             controllerName = controller.RouteData.Values["controller"] as String;
@@ -152,7 +152,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region RedirectIfAuthorized(String actionName)
+        #region RedirectIfAuthorized(String action)
 
         [Fact]
         public void RedirectIfAuthorized_Action_NotAuthorized_RedirectsToDefault()
@@ -181,7 +181,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region RedirectIfAuthorized(String actionName, Object routeValues)
+        #region RedirectIfAuthorized(String action, Object route)
 
         [Fact]
         public void RedirectIfAuthorized_Action_Route_NotAuthorized_RedirectsToDefault()
@@ -211,7 +211,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region RedirectIfAuthorized(String actionName, String controllerName)
+        #region RedirectIfAuthorized(String action, String controller)
 
         [Fact]
         public void RedirectIfAuthorized_Action_Controller_NotAuthorized_RedirectsToDefault()
@@ -240,7 +240,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region RedirectIfAuthorized(String actionName, String controllerName, Object routeValues)
+        #region RedirectIfAuthorized(String action, String controller, Object route)
 
         [Fact]
         public void RedirectIfAuthorized_Action_Controller_Route_NotAuthorized_RedirectsToDefault()
@@ -326,12 +326,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [InlineData("", 0)]
         [InlineData("1", 1)]
         [InlineData(null, 0)]
-        public void BeginExecuteCore_SetsCurrentAccountId(String identityName, Int32 accountId)
+        public void BeginExecuteCore_SetsCurrentAccountId(String identity, Int32 accountId)
         {
-            controller.ControllerContext.HttpContext.User.Identity.Name.Returns(identityName);
+            controller.ControllerContext.HttpContext.User.Identity.Name.Returns(identity);
             GlobalizationManager.Languages = Substitute.For<ILanguages>();
 
-            controller.BaseBeginExecuteCore(asyncResult => { }, null);
+            controller.BaseBeginExecuteCore(callback => { }, null);
 
             Int32? actual = controller.CurrentAccountId;
             Int32? expected = accountId;
@@ -346,7 +346,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             GlobalizationManager.Languages["lt"].Returns(new Language());
             controller.RouteData.Values["language"] = "lt";
 
-            controller.BaseBeginExecuteCore(asyncResult => { }, null);
+            controller.BaseBeginExecuteCore(callback => { }, null);
 
             Language actual = GlobalizationManager.Languages.Current;
             Language expected = GlobalizationManager.Languages["lt"];
@@ -356,18 +356,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region OnAuthorization(AuthorizationContext filterContext)
+        #region OnAuthorization(AuthorizationContext context)
 
         [Fact]
         public void OnAuthorization_NotAuthenticated_SetsNullResult()
         {
             ActionDescriptor descriptor = Substitute.ForPartsOf<ActionDescriptor>();
-            AuthorizationContext filterContext = new AuthorizationContext(controller.ControllerContext, descriptor);
+            AuthorizationContext context = new AuthorizationContext(controller.ControllerContext, descriptor);
             controller.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(false);
 
-            controller.BaseOnAuthorization(filterContext);
+            controller.BaseOnAuthorization(context);
 
-            Assert.Null(filterContext.Result);
+            Assert.Null(context.Result);
         }
 
         [Fact]
@@ -404,7 +404,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region OnActionExecuted(ActionExecutedContext filterContext)
+        #region OnActionExecuted(ActionExecutedContext context)
 
         [Fact]
         public void OnActionExecuted_NullTempDataAlerts_SetsTempDataAlerts()

@@ -8,6 +8,7 @@ using MvcTemplate.Validators;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Xunit;
@@ -37,10 +38,10 @@ namespace MvcTemplate.Tests.Unit.Controllers
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
 
-            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
-            controller.Url = new UrlHelper(httpContext.Request.RequestContext);
+            HttpContextBase context = HttpContextFactory.CreateHttpContextBase();
+            controller.Url = new UrlHelper(context.Request.RequestContext);
             controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.HttpContext = httpContext;
+            controller.ControllerContext.HttpContext = context;
         }
 
         #region Register()
@@ -167,24 +168,24 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region Recover(AccountRecoveryView account)
 
         [Fact]
-        public void Recover_Post_IsLoggedIn_RedirectsToDefault()
+        public async Task Recover_Post_IsLoggedIn_RedirectsToDefault()
         {
             service.IsLoggedIn(controller.User).Returns(true);
             validator.CanRecover(accountRecovery).Returns(true);
 
             Object expected = RedirectToDefault(controller);
-            Object actual = controller.Recover(null).Result;
+            Object actual = await controller.Recover(null);
 
             Assert.Same(expected, actual);
         }
 
         [Fact]
-        public void Recover_CanNotRecover_ReturnsSameView()
+        public async Task Recover_CanNotRecover_ReturnsSameView()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(false);
 
-            Object actual = (controller.Recover(accountRecovery).Result as ViewResult).Model;
+            Object actual = (await controller.Recover(accountRecovery) as ViewResult).Model;
             Object expected = accountRecovery;
 
             Assert.Same(expected, actual);
@@ -247,14 +248,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_RedirectsToLogin()
+        public async Task Recover_RedirectsToLogin()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns("RecoveryToken");
 
             Object expected = RedirectIfAuthorized(controller, "Login");
-            Object actual = controller.Recover(accountRecovery).Result;
+            Object actual = await controller.Recover(accountRecovery);
 
             Assert.Same(expected, actual);
         }

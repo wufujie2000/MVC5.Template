@@ -23,15 +23,15 @@ namespace MvcTemplate.Components.Extensions.Html
             TagBuilder branch = new TagBuilder("ul");
             StringBuilder nodeBuilder = new StringBuilder();
 
-            foreach (JsTreeNode jsNode in nodes)
+            foreach (JsTreeNode node in nodes)
             {
-                TagBuilder node = new TagBuilder("li");
-                String id = jsNode.Id.ToString();
-                node.InnerHtml = jsNode.Title;
-                node.Attributes["id"] = id;
+                TagBuilder item = new TagBuilder("li");
+                String id = node.Id.ToString();
+                item.InnerHtml = node.Title;
+                item.Attributes["id"] = id;
 
-                Add(node, jsNode.Nodes);
-                nodeBuilder.Append(node);
+                Add(item, node.Nodes);
+                nodeBuilder.Append(item);
             }
 
             branch.InnerHtml = nodeBuilder.ToString();

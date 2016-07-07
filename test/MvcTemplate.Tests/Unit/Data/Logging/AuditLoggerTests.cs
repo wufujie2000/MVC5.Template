@@ -206,10 +206,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [InlineData(null, "2", 2)]
         [InlineData(null, "", null)]
         [InlineData(null, null, null)]
-        public void Save_LogsOnce(Int32? accountId, String identityName, Int32? expectedAccountId)
+        public void Save_LogsOnce(Int32? accountId, String identity, Int32? expectedAccountId)
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            HttpContext.Current.User.Identity.Name.Returns(identityName);
+            HttpContext.Current.User.Identity.Name.Returns(identity);
             LoggableEntity entity = new LoggableEntity(entry);
             logger = new AuditLogger(context, accountId);
 

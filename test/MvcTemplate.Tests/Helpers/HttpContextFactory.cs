@@ -13,11 +13,10 @@ namespace MvcTemplate.Tests
         public static HttpContext CreateHttpContext()
         {
             HttpRequest request = new HttpRequest("", "http://localhost:19175/domain/", "p=1&n&=k");
-            Hashtable browserCapabilities = new Hashtable { { "cookies", "true" } };
             HttpBrowserCapabilities browser = new HttpBrowserCapabilities();
+            browser.Capabilities = new Hashtable { { "cookies", "true" } };
             HttpResponse response = new HttpResponse(new StringWriter());
-            HttpContext httpContext = new HttpContext(request, response);
-            browser.Capabilities = browserCapabilities;
+            HttpContext context = new HttpContext(request, response);
             request.Browser = browser;
 
             RouteValueDictionary route = request.RequestContext.RouteData.Values;
@@ -31,31 +30,30 @@ namespace MvcTemplate.Tests
             identity.IsAuthenticated.Returns(true);
             identity.Name.Returns("1");
 
-            httpContext.User = Substitute.For<IPrincipal>();
-            httpContext.User.Identity.Returns(identity);
+            context.User = Substitute.For<IPrincipal>();
+            context.User.Identity.Returns(identity);
 
-            return httpContext;
+            return context;
         }
         public static HttpContextBase CreateHttpContextBase()
         {
-            HttpContext httpContext = CreateHttpContext();
+            HttpContext context = CreateHttpContext();
 
-            HttpRequestBase httpRequestBase = Substitute.ForPartsOf<HttpRequestWrapper>(httpContext.Request);
-            httpRequestBase.ApplicationPath.Returns("/domain");
+            HttpRequestBase request = Substitute.ForPartsOf<HttpRequestWrapper>(context.Request);
+            HttpContextBase contextBase = Substitute.ForPartsOf<HttpContextWrapper>(context);
+            contextBase.Response.Returns(new HttpResponseWrapper(context.Response));
+            contextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
+            request.ApplicationPath.Returns("/domain");
+            contextBase.Request.Returns(request);
 
-            HttpContextBase httpContextBase = Substitute.ForPartsOf<HttpContextWrapper>(httpContext);
-            httpContextBase.Response.Returns(new HttpResponseWrapper(httpContext.Response));
-            httpContextBase.Server.Returns(Substitute.For<HttpServerUtilityBase>());
-            httpContextBase.Request.Returns(httpRequestBase);
-
-            return httpContextBase;
+            return contextBase;
         }
 
         private static void MapRoutes()
         {
             RouteTable.Routes.Clear();
 
-            RouteValueDictionary dataTokens = RouteTable.Routes
+            RouteValueDictionary tokens = RouteTable.Routes
                 .MapRoute(
                     "AdministrationMultilingual",
                     "{language}/Administration/{controller}/{action}/{id}",
@@ -64,10 +62,10 @@ namespace MvcTemplate.Tests
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 
-            dataTokens["UseNamespaceFallback"] = false;
-            dataTokens["area"] = "Administration";
+            tokens["UseNamespaceFallback"] = false;
+            tokens["area"] = "Administration";
 
-            dataTokens = RouteTable.Routes
+            tokens = RouteTable.Routes
                 .MapRoute(
                     "Administration",
                     "Administration/{controller}/{action}/{id}",
@@ -76,8 +74,8 @@ namespace MvcTemplate.Tests
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 
-            dataTokens["UseNamespaceFallback"] = false;
-            dataTokens["area"] = "Administration";
+            tokens["UseNamespaceFallback"] = false;
+            tokens["area"] = "Administration";
 
             RouteTable.Routes
                 .MapRoute(

@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
         #endregion
 
-        #region AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String errorMessage)
+        #region AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String message)
 
         [Fact]
         public void AddModelError_Key()

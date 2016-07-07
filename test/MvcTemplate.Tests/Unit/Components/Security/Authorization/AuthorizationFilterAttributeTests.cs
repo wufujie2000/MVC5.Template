@@ -9,26 +9,26 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class GlobalizedAuthorizeAttributeTests
     {
-        #region HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        #region HandleUnauthorizedRequest(AuthorizationContext context)
 
         [Fact]
         public void HandleUnauthorizedRequest_RedirectsToLogin()
         {
-            AuthorizationContext context = new AuthorizationContext();
-            context.ActionDescriptor = Substitute.For<ActionDescriptor>();
-            HttpContextBase httpContext = HttpContextFactory.CreateHttpContextBase();
+            AuthorizationContext action = new AuthorizationContext();
+            action.ActionDescriptor = Substitute.For<ActionDescriptor>();
+            HttpContextBase context = HttpContextFactory.CreateHttpContextBase();
             AuthorizationFilterAttribute attribute = new AuthorizationFilterAttribute { Users = "None" };
 
-            context.RouteData = httpContext.Request.RequestContext.RouteData;
-            context.RouteData.Values["test"] = "Test";
-            context.HttpContext = httpContext;
+            action.RouteData = context.Request.RequestContext.RouteData;
+            action.RouteData.Values["test"] = "Test";
+            action.HttpContext = context;
 
-            attribute.OnAuthorization(context);
+            attribute.OnAuthorization(action);
 
-            RouteValueDictionary actual = (context.Result as RedirectToRouteResult).RouteValues;
+            RouteValueDictionary actual = (action.Result as RedirectToRouteResult).RouteValues;
 
-            Assert.Equal(context.RouteData.Values["language"], actual["language"]);
-            Assert.Equal(context.HttpContext.Request.RawUrl, actual["returnUrl"]);
+            Assert.Equal(action.RouteData.Values["language"], actual["language"]);
+            Assert.Equal(action.HttpContext.Request.RawUrl, actual["returnUrl"]);
             Assert.Equal("Auth", actual["controller"]);
             Assert.Equal("Login", actual["action"]);
             Assert.Equal("", actual["area"]);

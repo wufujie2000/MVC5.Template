@@ -15,15 +15,16 @@ namespace MvcTemplate.Components.Datalists
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        public Datalist(UrlHelper url) : base(url)
+        public Datalist(IUnitOfWork unitOfWork)
+        {
+            UnitOfWork = unitOfWork;
+        }
+        public Datalist(UrlHelper url)
+            : base(url)
         {
             String view = typeof(TView).Name.Replace("View", "");
             DialogTitle = ResourceProvider.GetDatalistTitle(view);
             DatalistUrl = url.Action(view, Prefix, new { area = "" });
-        }
-        public Datalist(IUnitOfWork unitOfWork)
-        {
-            UnitOfWork = unitOfWork;
         }
 
         protected override String GetColumnHeader(PropertyInfo property)

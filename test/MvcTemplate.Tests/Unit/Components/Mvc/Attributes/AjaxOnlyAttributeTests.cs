@@ -9,18 +9,19 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class AjaxOnlyAttributeTests
     {
-        #region IsValidForRequest(ControllerContext controllerContext, MethodInfo methodInfo)
+        #region IsValidForRequest(ControllerContext context, MethodInfo method)
 
         [Theory]
         [InlineData("", false)]
         [InlineData("XMLHttpRequest", true)]
-        public void IsValidForRequest_Ajax(String headerValue, Boolean expected)
+        public void IsValidForRequest_Ajax(String headerValue, Boolean isValid)
         {
             ControllerContext context = new ControllerContext();
             context.HttpContext = HttpContextFactory.CreateHttpContextBase();
             context.HttpContext.Request["X-Requested-With"].Returns(headerValue);
 
             Boolean actual = new AjaxOnlyAttribute().IsValidForRequest(context, null);
+            Boolean expected = isValid;
 
             Assert.Equal(expected, actual);
         }

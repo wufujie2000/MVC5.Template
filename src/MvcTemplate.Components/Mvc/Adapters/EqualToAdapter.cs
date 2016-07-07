@@ -15,12 +15,12 @@ namespace MvcTemplate.Components.Mvc
         {
             Attribute.OtherPropertyDisplayName = ResourceProvider.GetPropertyTitle(Metadata.ContainerType, Attribute.OtherPropertyName);
 
-            ModelClientValidationRule validationRule = new ModelClientValidationRule();
-            validationRule.ValidationParameters.Add("other", "*." + Attribute.OtherPropertyName);
-            validationRule.ErrorMessage = ErrorMessage;
-            validationRule.ValidationType = "equalto";
+            ModelClientValidationRule rule = new ModelClientValidationRule();
+            rule.ValidationParameters.Add("other", "*." + Attribute.OtherPropertyName);
+            rule.ErrorMessage = ErrorMessage;
+            rule.ValidationType = "equalto";
 
-            return new[] { validationRule };
+            return new[] { rule };
         }
     }
 }

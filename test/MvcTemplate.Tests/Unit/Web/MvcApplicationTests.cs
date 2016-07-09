@@ -382,17 +382,6 @@ namespace MvcTemplate.Tests.Unit.Web
         #region RegisterRoute()
 
         [Fact]
-        public void RegisterRoute_ForLowercaseUrls()
-        {
-            IRouteConfig config = Substitute.For<IRouteConfig>();
-            DependencyResolver.Current.GetService<IRouteConfig>().Returns(config);
-
-            application.RegisterRoute();
-
-            Assert.True(RouteTable.Routes.LowercaseUrls);
-        }
-
-        [Fact]
         public void RegisterRoute()
         {
             IRouteConfig config = Substitute.For<IRouteConfig>();

@@ -7,6 +7,7 @@ namespace MvcTemplate.Controllers
     {
         public void RegisterRoutes(RouteCollection routes)
         {
+            routes.LowercaseUrls = true;
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes

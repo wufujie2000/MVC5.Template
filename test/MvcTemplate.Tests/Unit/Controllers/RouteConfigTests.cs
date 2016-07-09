@@ -19,6 +19,16 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region RegisterRoutes(RouteCollection routes)
 
         [Fact]
+        public void RegisterRoutes_ForLowercaseUrls()
+        {
+            RouteCollection routes = new RouteCollection();
+
+            config.RegisterRoutes(routes);
+
+            Assert.True(routes.LowercaseUrls);
+        }
+
+        [Fact]
         public void RegisterRoutes_IgnoresAxd()
         {
             RouteCollection routes = new RouteCollection();

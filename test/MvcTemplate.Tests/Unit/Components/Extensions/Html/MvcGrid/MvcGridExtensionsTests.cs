@@ -13,7 +13,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 {
     public class MvcGridExtensionsTests : IDisposable
     {
-        private IGridColumns<AllTypesView> columns;
+        private IGridColumnsOf<AllTypesView> columns;
         private IHtmlGrid<AllTypesView> html;
 
         public MvcGridExtensionsTests()
@@ -28,7 +28,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Authorization.Provider = null;
         }
 
-        #region AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass)
+        #region AddActionLink<T>(this IGridColumnOf<T> columns, String action, String iconClass)
 
         [Fact]
         public void AddActionLink_Unauthorized_Empty()
@@ -53,7 +53,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected = String.Format(
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
@@ -73,7 +73,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 
-            String actual = column.ValueFor(new GridRow(view)).ToString();
+            String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected = String.Format(
                 "<a class=\"details-action\" href=\"{0}\">" +
                     "<i class=\"fa fa-info\"></i>" +
@@ -87,12 +87,12 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         public void AddActionLink_NoKey_Throws()
         {
             IGrid<Object> grid = new Grid<Object>(new Object[0]);
-            IGridColumns<Object> columns = new GridColumns<Object>(grid);
+            IGridColumnsOf<Object> columns = new GridColumns<Object>(grid);
             columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
             IGridColumn<Object> column = columns.AddActionLink("Delete", "fa fa-times");
 
-            String actual = Assert.Throws<Exception>(() => column.ValueFor(new GridRow(new Object()))).Message;
+            String actual = Assert.Throws<Exception>(() => column.ValueFor(new GridRow<Object>(new Object()))).Message;
             String expected = "Object type does not have a key property.";
 
             Assert.Equal(expected, actual);
@@ -110,7 +110,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateProperty_Column()
@@ -122,13 +122,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:d}", actual.Format);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         #endregion
 
-        #region AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateProperty_Nullable_Column()
@@ -140,13 +140,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:d}", actual.Format);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         #endregion
 
-        #region AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
+        #region AddBooleanProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, Boolean>> expression)
 
         [Fact]
         public void AddBooleanProperty_Column()
@@ -157,15 +157,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         [Fact]
         public void AddBooleanProperty_True()
         {
+            GridRow<AllTypesView> row = new GridRow<AllTypesView>(new AllTypesView { BooleanField = true });
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
-            GridRow row = new GridRow(new AllTypesView { BooleanField = true });
 
             String actual = column.ValueFor(row).ToString();
             String expected = TableResources.Yes;
@@ -176,8 +176,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_False()
         {
+            GridRow<AllTypesView> row = new GridRow<AllTypesView>(new AllTypesView { BooleanField = false });
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.BooleanField);
-            GridRow row = new GridRow(new AllTypesView { BooleanField = false });
 
             String actual = column.ValueFor(row).ToString();
             String expected = TableResources.No;
@@ -187,7 +187,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
+        #region AddBooleanProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, Boolean?>> expression)
 
         [Fact]
         public void AddBooleanProperty_Nullable_Column()
@@ -198,15 +198,15 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         [Fact]
         public void AddBooleanProperty_Nullable()
         {
+            GridRow<AllTypesView> row = new GridRow<AllTypesView>(new AllTypesView { NullableBooleanField = null });
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
-            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = null });
 
             String actual = column.ValueFor(row).ToString();
 
@@ -216,8 +216,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_True()
         {
+            GridRow<AllTypesView> row = new GridRow<AllTypesView>(new AllTypesView { NullableBooleanField = true });
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
-            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = true });
 
             String actual = column.ValueFor(row).ToString();
             String expected = TableResources.Yes;
@@ -228,8 +228,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
         [Fact]
         public void AddBooleanProperty_Nullable_False()
         {
+            GridRow<AllTypesView> row = new GridRow<AllTypesView>(new AllTypesView { NullableBooleanField = false });
             IGridColumn<AllTypesView> column = columns.AddBooleanProperty(model => model.NullableBooleanField);
-            GridRow row = new GridRow(new AllTypesView { NullableBooleanField = false });
 
             String actual = column.ValueFor(row).ToString();
             String expected = TableResources.No;
@@ -239,7 +239,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
         #endregion
 
-        #region AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Column()
@@ -251,13 +251,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:g}", actual.Format);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         #endregion
 
-        #region AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Nullable_Column()
@@ -269,13 +269,13 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
             Assert.Equal("text-center", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
             Assert.Equal("{0:g}", actual.Format);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 
         #endregion
 
-        #region AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
+        #region AddProperty<T, TProperty>(this IGridColumnOf<T> columns, Expression<Func<T, TProperty>> expression)
 
         [Fact]
         public void AddProperty_Column()
@@ -286,7 +286,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
 
             Assert.Equal("text-left", actual.CssClasses);
             Assert.Equal(expression, actual.Expression);
-            Assert.Null(actual.Title);
+            Assert.Null(actual.Title.ToString());
             Assert.Single(columns);
         }
 

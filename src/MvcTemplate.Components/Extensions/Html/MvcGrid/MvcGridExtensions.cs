@@ -14,7 +14,7 @@ namespace MvcTemplate.Components.Extensions.Html
 {
     public static class MvcGridExtensions
     {
-        public static IGridColumn<T> AddActionLink<T>(this IGridColumns<T> columns, String action, String iconClass) where T : class
+        public static IGridColumn<T> AddActionLink<T>(this IGridColumnsOf<T> columns, String action, String iconClass) where T : class
         {
             if (!IsAuthorizedToView(columns.Grid, action))
                 return new GridColumn<T, String>(columns.Grid, model => "");
@@ -25,15 +25,15 @@ namespace MvcTemplate.Components.Extensions.Html
                 .Encoded(false);
         }
 
-        public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        public static IGridColumn<T> AddDateProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime>> expression)
         {
             return columns.AddProperty(expression).Formatted("{0:d}");
         }
-        public static IGridColumn<T> AddDateProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        public static IGridColumn<T> AddDateProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime?>> expression)
         {
             return columns.AddProperty(expression).Formatted("{0:d}");
         }
-        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean>> expression)
+        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, Boolean>> expression)
         {
             Func<T, Boolean> valueFor = expression.Compile();
 
@@ -44,7 +44,7 @@ namespace MvcTemplate.Components.Extensions.Html
                         ? TableResources.Yes
                         : TableResources.No);
         }
-        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumns<T> columns, Expression<Func<T, Boolean?>> expression)
+        public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, Boolean?>> expression)
         {
             Func<T, Boolean?> valueFor = expression.Compile();
 
@@ -57,15 +57,15 @@ namespace MvcTemplate.Components.Extensions.Html
                             : TableResources.No
                         : "");
         }
-        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime>> expression)
+        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime>> expression)
         {
             return columns.AddProperty(expression).Formatted("{0:g}");
         }
-        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumns<T> columns, Expression<Func<T, DateTime?>> expression)
+        public static IGridColumn<T> AddDateTimeProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime?>> expression)
         {
             return columns.AddProperty(expression).Formatted("{0:g}");
         }
-        public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumns<T> columns, Expression<Func<T, TProperty>> expression)
+        public static IGridColumn<T> AddProperty<T, TProperty>(this IGridColumnsOf<T> columns, Expression<Func<T, TProperty>> expression)
         {
             return columns
                 .Add(expression)

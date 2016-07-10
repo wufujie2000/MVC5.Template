@@ -8,6 +8,7 @@ namespace MvcTemplate.Objects
     public class RoleView : BaseView
     {
         [Required]
+        [DatalistColumn]
         [StringLength(128)]
         public String Title { get; set; }
 

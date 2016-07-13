@@ -42,11 +42,12 @@ namespace MvcTemplate.Web
 
             if (Context.IsCustomErrorEnabled)
             {
-                RouteValueDictionary route = new RouteValueDictionary(Request.RequestContext.RouteData.Values);
                 HttpException httpException = exception as HttpException;
+                RouteValueDictionary route = new RouteValueDictionary();
                 UrlHelper url = new UrlHelper(Request.RequestContext);
                 Server.ClearError();
 
+                route["language"] = Request.RequestContext.RouteData.Values["language"];
                 route["controller"] = "Home";
                 route["action"] = "Error";
                 route["area"] = "";

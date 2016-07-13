@@ -11,12 +11,12 @@ namespace MvcTemplate.Web
         }
         private void RegisterScripts(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").Include("~/Scripts/JQuery/*.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").IncludeDirectory("~/Scripts/JQuery", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/Bootstrap/Bundle").Include("~/Scripts/Bootstrap/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").Include("~/Scripts/JQueryUI/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/MvcGrid/Bundle").Include("~/Scripts/MvcGrid/*.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").IncludeDirectory("~/Scripts/JQueryUI", "*.js", true));
+            bundles.Add(new ScriptBundle("~/Scripts/MvcGrid/Bundle").IncludeDirectory("~/Scripts/MvcGrid", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/JsTree/Bundle").Include("~/Scripts/JsTree/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").Include("~/Scripts/Datalist/*.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").IncludeDirectory("~/Scripts/Datalist", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/Shared/Bundle").Include("~/Scripts/Shared/*.js"));
         }
         private void RegisterStyles(BundleCollection bundles)

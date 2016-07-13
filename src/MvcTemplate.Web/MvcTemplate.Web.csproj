@@ -150,8 +150,8 @@
     <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.min.js">
       <DependentUpon>bootstrap.no-conflict.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Datalist\Cultures\datalist.culture.en-GB.js" />
-    <Content Include="Scripts\Datalist\Cultures\datalist.culture.lt-LT.js" />
+    <Content Include="Scripts\Datalist\Cultures\datalist.en.js" />
+    <Content Include="Scripts\Datalist\Cultures\datalist.lt.js" />
     <Content Include="Scripts\Datalist\datalist.js" />
     <Content Include="Scripts\Datalist\datalist.min.js">
       <DependentUpon>datalist.js</DependentUpon>
@@ -166,16 +166,16 @@
     <Content Include="CodeTemplates\Scaffolders\Module\Members\ObjectMapping.cs.t4" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff2" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.en-GB.js" />
-    <Content Include="Scripts\JQueryUI\Cultures\datepicker.culture.lt-LT.js" />
+    <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.en.js" />
+    <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.lt.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.min.js">
       <DependentUpon>jquery-ui.no-conflict.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\JQuery\Cultures\globalize.culture.en-GB.js" />
-    <Content Include="Scripts\JQuery\Cultures\globalize.culture.lt-LT.js" />
-    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.culture.lt-LT.js" />
-    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.culture.en-GB.js" />
+    <Content Include="Scripts\JQuery\Cultures\globalize.en.js" />
+    <Content Include="Scripts\JQuery\Cultures\globalize.lt.js" />
+    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.lt.js" />
+    <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.en.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.min.js" />
     <Content Include="Views\Shared\_Datalist.cshtml" />

@@ -50,11 +50,6 @@
     @Scripts.Render("~/Scripts/JsTree/Bundle")
     @Scripts.Render("~/Scripts/Datalist/Bundle")
 
-    <script src="~/Scripts/JQuery/Cultures/globalize.culture.@(UICulture).js"></script>
-    <script src="~/Scripts/JQueryUI/Cultures/datepicker.culture.@(UICulture).js"></script>
-    <script src="~/Scripts/Datalist/Cultures/datalist.culture.@(UICulture).js"></script>
-    <script src="~/Scripts/MvcGrid/Cultures/mvc-grid.culture.@(UICulture).js"></script>
-
     @Html.RenderControllerScript()
     @Scripts.Render("~/Scripts/Shared/Bundle")
 </body>

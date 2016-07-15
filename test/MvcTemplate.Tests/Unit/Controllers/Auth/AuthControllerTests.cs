@@ -192,53 +192,53 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void Recover_Account()
+        public async Task Recover_Account()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
 
-            controller.Recover(accountRecovery).Wait();
+            await controller.Recover(accountRecovery);
 
             service.Received().Recover(accountRecovery);
         }
 
         [Fact]
-        public void Recover_SendsRecoveryInformation()
+        public async Task Recover_SendsRecoveryInformation()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns("TestToken");
 
-            controller.Recover(accountRecovery).Wait();
+            await controller.Recover(accountRecovery);
 
             String url = controller.Url.Action("Reset", "Auth", new { token = "TestToken" }, controller.Request.Url.Scheme);
             String body = String.Format(Messages.RecoveryEmailBody, url);
             String subject = Messages.RecoveryEmailSubject;
             String email = accountRecovery.Email;
 
-            mailClient.Received().SendAsync(email, subject, body);
+            await mailClient.Received().SendAsync(email, subject, body);
         }
 
         [Fact]
-        public void Recover_NullToken_DoesNotSendRecoveryInformation()
+        public async Task Recover_NullToken_DoesNotSendRecoveryInformation()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns(null as String);
 
-            controller.Recover(accountRecovery).Wait();
+            await controller.Recover(accountRecovery);
 
-            mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
+            await mailClient.DidNotReceive().SendAsync(Arg.Any<String>(), Arg.Any<String>(), Arg.Any<String>());
         }
 
         [Fact]
-        public void Recover_AddsRecoveryMessage()
+        public async Task Recover_AddsRecoveryMessage()
         {
             service.IsLoggedIn(controller.User).Returns(false);
             validator.CanRecover(accountRecovery).Returns(true);
             service.Recover(accountRecovery).Returns("RecoveryToken");
 
-            controller.Recover(accountRecovery).Wait();
+            await controller.Recover(accountRecovery);
 
             Alert actual = controller.Alerts.Single();
 

@@ -342,7 +342,6 @@
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Profile\Delete.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
-    <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,15 @@
 
         <div class="container-fluid">
             <div class="content row">
-                @Html.Partial("_Alerts")
+                <div class="alerts col-xs-12">
+                    @foreach (Alert alert in TempData["Alerts"] as AlertsContainer)
+                    {
+                        <div class="alert alert-@alert.Type.ToString().ToLowerInvariant()" data-timeout="@alert.Timeout">
+                            <span>@alert.Message</span><span class="close">×</span>
+                        </div>
+                    }
+                </div>
+
                 @RenderBody()
             </div>
         </div>

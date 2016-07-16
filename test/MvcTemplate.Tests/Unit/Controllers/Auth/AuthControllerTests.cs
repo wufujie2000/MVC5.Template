@@ -121,9 +121,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Alert actual = controller.Alerts.Single();
 
-            Assert.Equal(AlertType.Success, actual.Type);
             Assert.Equal(Messages.SuccessfulRegistration, actual.Message);
-            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
+            Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal(4000, actual.Timeout);
         }
 
         [Fact]
@@ -244,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.Equal(Messages.RecoveryInformation, actual.Message);
             Assert.Equal(AlertType.Info, actual.Type);
-            Assert.Equal(0, actual.FadeoutAfter);
+            Assert.Equal(0, actual.Timeout);
         }
 
         [Fact]
@@ -346,9 +346,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Alert actual = controller.Alerts.Single();
 
-            Assert.Equal(AlertType.Success, actual.Type);
             Assert.Equal(Messages.SuccessfulReset, actual.Message);
-            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
+            Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal(4000, actual.Timeout);
         }
 
         [Fact]

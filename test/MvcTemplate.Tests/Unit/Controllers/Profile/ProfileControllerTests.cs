@@ -112,9 +112,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Edit(profileEdit);
             Alert actual = controller.Alerts.Single();
 
-            Assert.Equal(AlertsContainer.DefaultFadeout, actual.FadeoutAfter);
             Assert.Equal(Messages.ProfileUpdated, actual.Message);
             Assert.Equal(AlertType.Success, actual.Type);
+            Assert.Equal(4000, actual.Timeout);
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.Equal(AlertType.Danger, actual.Type);
-            Assert.Equal(0, actual.FadeoutAfter);
+            Assert.Equal(0, actual.Timeout);
         }
 
         [Fact]
@@ -201,7 +201,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.Equal(Messages.ProfileDeleteDisclaimer, actual.Message);
             Assert.Equal(AlertType.Danger, actual.Type);
-            Assert.Equal(0, actual.FadeoutAfter);
+            Assert.Equal(0, actual.Timeout);
         }
 
         [Fact]

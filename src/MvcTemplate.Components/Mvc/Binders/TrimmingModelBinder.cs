@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
@@ -11,14 +10,6 @@ namespace MvcTemplate.Components.Mvc
             ValueProviderResult value = GetValue(controllerContext.Controller, bindingContext);
             if (value == null || value.AttemptedValue == null)
                return null;
-
-            Type container = bindingContext.ModelMetadata.ContainerType;
-            if (container != null)
-            {
-                PropertyInfo property = container.GetProperty(bindingContext.ModelMetadata.PropertyName);
-                if (property.IsDefined(typeof(NotTrimmedAttribute), false))
-                    return value.AttemptedValue;
-            }
 
             return value.AttemptedValue.Trim();
         }

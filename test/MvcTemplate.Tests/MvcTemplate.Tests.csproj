@@ -142,7 +142,6 @@
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Objects\Models\AttributesModel.cs" />
-    <Compile Include="Objects\Models\BindersModel.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\Html\MvcGrid\MvcGridExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Html\Page\AuthorizationExtensionsTests.cs" />
@@ -162,6 +161,7 @@
     <Compile Include="Unit\Components\Mvc\Attributes\MaxValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\IntegerAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\GreaterThanAttributeTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Attributes\NotTrimmedAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\MinValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\DisplayNameMetadataProviderProxy.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\Area\AuthorizedController.cs" />

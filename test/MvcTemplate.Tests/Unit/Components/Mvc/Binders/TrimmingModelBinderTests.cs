@@ -19,13 +19,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             controllerContext = new ControllerContext();
             bindingContext = new ModelBindingContext();
-            bindingContext.ModelName = "Model.Trimmed";
+            bindingContext.ModelName = "StringField";
             collection = new NameValueCollection();
             binder = new TrimmingModelBinder();
 
             controllerContext.Controller = Substitute.For<ControllerBase>();
             bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(BindersModel), "Trimmed");
+                .GetMetadataForProperty(null, typeof(AllTypesView), "StringField");
         }
 
         #region BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
@@ -45,21 +45,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
             Assert.Null(binder.BindModel(controllerContext, bindingContext));
-        }
-
-        [Fact]
-        public void BindModel_DoesNotTrimValue()
-        {
-            bindingContext.ModelName = "Model.NotTrimmed";
-            collection.Add(bindingContext.ModelName, "  Trimmed text  ");
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
-            bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
-                .GetMetadataForProperty(null, typeof(BindersModel), "NotTrimmed");
-
-            Object actual = binder.BindModel(controllerContext, bindingContext);
-            Object expected = "  Trimmed text  ";
-
-            Assert.Equal(expected, actual);
         }
 
         [Fact]

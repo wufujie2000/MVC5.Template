@@ -4,7 +4,7 @@ using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MvcTemplate.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions
 {
     public static class ContentExtensions
     {

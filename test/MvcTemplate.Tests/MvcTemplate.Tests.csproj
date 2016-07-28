@@ -143,9 +143,9 @@
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Objects\Models\AttributesModel.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\MvcGrid\MvcGridExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Page\AuthorizationExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Page\ContentExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\MvcGrid\MvcGridExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Page\AuthorizationExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Page\ContentExtensionsTests.cs" />
     <Compile Include="Objects\Models\AdaptersModel.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EqualToAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\DigitsAdapterTests.cs" />
@@ -194,8 +194,8 @@
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\BaseControllerProxy.cs" />
     <Compile Include="Unit\Components\Datalists\DatalistProxy.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapModel.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeView.cs" />
+    <Compile Include="Unit\Components\Extensions\Bootstrap\BootstrapModel.cs" />
+    <Compile Include="Unit\Components\Extensions\JsTree\JsTreeView.cs" />
     <Compile Include="Unit\Resources\ResourcesTests.cs" />
     <Compile Include="Unit\Services\Administration\Accounts\AccountServiceTests.cs" />
     <Compile Include="Unit\Services\Administration\Roles\RoleServiceTests.cs" />
@@ -219,8 +219,8 @@
     <Compile Include="Unit\Components\Mvc\Providers\ProviderModel.cs" />
     <Compile Include="Unit\Components\Alerts\AlertsContainerTests.cs" />
     <Compile Include="Unit\Components\Datalists\DatalistTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\Bootstrap\BootstrapExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\Bootstrap\BootstrapExtensionsTests.cs" />
+    <Compile Include="Unit\Components\Extensions\JsTree\JsTreeExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\DataTypeValidatorProviderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Providers\DisplayNameMetadataProviderTests.cs" />
@@ -230,8 +230,8 @@
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
     <Compile Include="Unit\Services\BaseServiceTests.cs" />
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeNodeTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Html\JsTree\JsTreeTests.cs" />
+    <Compile Include="Unit\Components\Extensions\JsTree\JsTreeNodeTests.cs" />
+    <Compile Include="Unit\Components\Extensions\JsTree\JsTreeTests.cs" />
     <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Unit\Resources\ResourceProviderTests.cs" />

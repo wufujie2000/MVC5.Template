@@ -7,7 +7,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Components.Security
 {
-    public class GlobalizedAuthorizeAttributeTests
+    public class AuthorizationFilterAttributeTests
     {
         #region HandleUnauthorizedRequest(AuthorizationContext context)
 

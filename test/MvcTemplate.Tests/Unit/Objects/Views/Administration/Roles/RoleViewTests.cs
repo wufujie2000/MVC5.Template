@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions;
 using MvcTemplate.Objects;
 using Xunit;
 

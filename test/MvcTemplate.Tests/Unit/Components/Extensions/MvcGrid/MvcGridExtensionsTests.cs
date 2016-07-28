@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Resources.Table;
 using MvcTemplate.Tests.Objects;
@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Web.Mvc;
 using Xunit;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
     public class MvcGridExtensionsTests : IDisposable
     {

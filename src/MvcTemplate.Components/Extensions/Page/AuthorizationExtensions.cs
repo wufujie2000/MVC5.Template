@@ -2,7 +2,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace MvcTemplate.Components.Extensions.Html
+namespace MvcTemplate.Components.Extensions
 {
     public static class AuthorizationExtensions
     {

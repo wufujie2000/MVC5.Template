@@ -1,6 +1,6 @@
-﻿using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
     public class JsTreeView
     {

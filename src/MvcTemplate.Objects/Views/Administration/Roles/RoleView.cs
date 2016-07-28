@@ -1,5 +1,5 @@
 ﻿using Datalist;
-using MvcTemplate.Components.Extensions.Html;
+using MvcTemplate.Components.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 

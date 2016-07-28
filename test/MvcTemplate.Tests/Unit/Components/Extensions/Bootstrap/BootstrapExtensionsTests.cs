@@ -1,11 +1,11 @@
-﻿using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
 using Xunit;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
     public class BootstrapExtensionsTests
     {

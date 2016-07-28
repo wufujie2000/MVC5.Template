@@ -1,11 +1,11 @@
-﻿using MvcTemplate.Components.Extensions.Html;
+﻿using MvcTemplate.Components.Extensions;
 using NSubstitute;
 using System;
 using System.IO;
 using System.Web.Mvc;
 using Xunit;
 
-namespace MvcTemplate.Tests.Unit.Components.Extensions.Html
+namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
     public class ContentExtensionsTests
     {

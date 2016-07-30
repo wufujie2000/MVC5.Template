@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Mvc;
+using MvcTemplate.Resources.Form;
 using MvcTemplate.Tests.Objects;
 using System;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(AdaptersModel), "EqualTo");
             EqualToAdapter adapter = new EqualToAdapter(metadata, new ControllerContext(), new EqualToAttribute("StringLength"));
 
-            String expectedMessage = new EqualToAttribute("StringLength").FormatErrorMessage(metadata.GetDisplayName());
+            String expectedMessage = String.Format(Validations.EqualTo, "EqualTo", "StringLength");
             ModelClientValidationRule actual = adapter.GetClientValidationRules().Single();
 
             Assert.Equal("*.StringLength", actual.ValidationParameters["other"]);

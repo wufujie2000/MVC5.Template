@@ -14,6 +14,7 @@ namespace MvcTemplate.Components.Mvc
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
             Attribute.OtherPropertyDisplayName = ResourceProvider.GetPropertyTitle(Metadata.ContainerType, Attribute.OtherPropertyName);
+            Attribute.OtherPropertyDisplayName = Attribute.OtherPropertyDisplayName ?? Attribute.OtherPropertyName;
 
             ModelClientValidationRule rule = new ModelClientValidationRule();
             rule.ValidationParameters.Add("other", "*." + Attribute.OtherPropertyName);

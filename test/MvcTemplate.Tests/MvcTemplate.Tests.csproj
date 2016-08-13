@@ -145,7 +145,6 @@
     <Compile Include="Objects\Views\AllTypesView.cs" />
     <Compile Include="Unit\Components\Extensions\MvcGrid\MvcGridExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Page\AuthorizationExtensionsTests.cs" />
-    <Compile Include="Unit\Components\Extensions\Page\ContentExtensionsTests.cs" />
     <Compile Include="Objects\Models\AdaptersModel.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EqualToAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\DigitsAdapterTests.cs" />

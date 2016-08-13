@@ -61,7 +61,6 @@
     <Compile Include="Extensions\JsTree\JsTree.cs" />
     <Compile Include="Extensions\JsTree\JsTreeNode.cs" />
     <Compile Include="Extensions\MvcGrid\MvcGridExtensions.cs" />
-    <Compile Include="Extensions\Page\ContentExtensions.cs" />
     <Compile Include="Extensions\Page\AuthorizationExtensions.cs" />
     <Compile Include="Security\Authorization\AuthorizationFilterAttribute.cs" />
     <Compile Include="Security\Extensions\IPrincipalExtensions.cs" />

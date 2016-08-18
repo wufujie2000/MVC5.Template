@@ -8,7 +8,9 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
+using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Web.Hosting;
 
 namespace MvcTemplate.Web.DependencyInjection
@@ -36,11 +38,13 @@ namespace MvcTemplate.Web.DependencyInjection
             Register<ILanguages>(factory => new Languages(HostingEnvironment.MapPath("~/Languages.config")));
             RegisterInstance<IAuthorizationProvider>(new AuthorizationProvider(typeof(BaseController).Assembly));
 
-            Register<IRoleService, RoleService>();
-            Register<IAccountService, AccountService>();
+            foreach (Type service in typeof(IService).Assembly.GetTypes().Where(type =>
+                 typeof(IService).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract))
+                    Register(service.GetInterface("I" + service.Name), service);
 
-            Register<IRoleValidator, RoleValidator>();
-            Register<IAccountValidator, AccountValidator>();
+            foreach (Type validator in typeof(IValidator).Assembly.GetTypes().Where(type =>
+                typeof(IValidator).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract))
+                    Register(validator.GetInterface("I" + validator.Name), validator);
         }
     }
 }

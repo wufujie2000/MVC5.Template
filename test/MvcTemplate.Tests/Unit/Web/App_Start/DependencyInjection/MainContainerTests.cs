@@ -5,13 +5,10 @@ using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Data.Logging;
-using MvcTemplate.Services;
-using MvcTemplate.Validators;
 using MvcTemplate.Web;
 using MvcTemplate.Web.DependencyInjection;
 using System;
 using System.Data.Entity;
-using System.Web.Mvc;
 using Xunit;
 using Xunit.Extensions;
 
@@ -43,12 +40,6 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [InlineData(typeof(IBundleConfig), typeof(BundleConfig))]
 
         [InlineData(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
-
-        [InlineData(typeof(IRoleService), typeof(RoleService))]
-        [InlineData(typeof(IAccountService), typeof(AccountService))]
-
-        [InlineData(typeof(IRoleValidator), typeof(RoleValidator))]
-        [InlineData(typeof(IAccountValidator), typeof(AccountValidator))]
         public void RegisterServices_Transient(Type abstraction, Type expectedType)
         {
             Object expected = container.GetInstance(abstraction);

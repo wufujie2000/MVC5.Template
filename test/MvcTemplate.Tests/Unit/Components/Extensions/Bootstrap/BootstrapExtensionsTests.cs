@@ -21,17 +21,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         #region FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Boolean? required = null)
 
         [Fact]
-        public void FormLabelFor_NotMemberExpression_Throws()
-        {
-            Exception exception = Assert.Throws<InvalidOperationException>(() => html.FormLabelFor(expression => expression.GetType(), required: true));
-
-            String expected = "Expression must be a member expression.";
-            String actual = exception.Message;
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
         public void FormLabelFor_OverwrittenNotRequiredExpression()
         {
             String actual = html.FormLabelFor(x => x.Relation.NotRequired, required: true).ToString();
@@ -50,6 +39,19 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             String expected =
                 "<label for=\"Relation_Required\">" +
                     "<span class=\"require\"></span>" +
+                "</label>";
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void FormLabelFor_OverridenRequiredExpression()
+        {
+            HtmlHelper<BootstrapAdvancedModel> html = HtmlHelperFactory.CreateHtmlHelper(new BootstrapAdvancedModel());
+            String actual = html.FormLabelFor(x => x.NotRequired).ToString();
+            String expected =
+                "<label for=\"NotRequired\">" +
+                    "<span class=\"require\">*</span>" +
                 "</label>";
 
             Assert.Equal(expected, actual);

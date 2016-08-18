@@ -20,7 +20,7 @@ namespace MvcTemplate.Components.Extensions
             if (required == true)
                 requiredSpan.InnerHtml = "*";
 
-            if (expression.IsRequired() && required == null)
+            if (required == null && ModelMetadata.FromLambdaExpression(expression, html.ViewData).IsRequired)
                 requiredSpan.InnerHtml = "*";
 
             label.Attributes["for"] = TagBuilder.CreateSanitizedId(ExpressionHelper.GetExpressionText(expression));
@@ -102,21 +102,6 @@ namespace MvcTemplate.Components.Extensions
             }
 
             return htmlAttributes;
-        }
-        private static Boolean IsRequired(this LambdaExpression expression)
-        {
-            MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression == null)
-                throw new InvalidOperationException("Expression must be a member expression.");
-
-            if (!AllowsNullValues(expression.ReturnType))
-                return true;
-
-            return memberExpression.Member.IsDefined(typeof(RequiredAttribute), false);
-        }
-        private static Boolean AllowsNullValues(Type type)
-        {
-            return !type.IsValueType || Nullable.GetUnderlyingType(type) != null;
         }
     }
 }

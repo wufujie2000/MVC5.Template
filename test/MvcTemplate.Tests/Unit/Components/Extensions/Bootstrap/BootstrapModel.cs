@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
     {
         [Required]
         public String Required { get; set; }
-        public String NotRequired { get; set; }
+        public virtual String NotRequired { get; set; }
 
         public Decimal Number { get; set; }
         public DateTime? Date { get; set; }

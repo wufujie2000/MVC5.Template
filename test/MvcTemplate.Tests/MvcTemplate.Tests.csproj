@@ -143,6 +143,7 @@
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Objects\Models\AttributesModel.cs" />
     <Compile Include="Objects\Views\AllTypesView.cs" />
+    <Compile Include="Unit\Components\Extensions\Bootstrap\BootstrapAdvancedModel.cs" />
     <Compile Include="Unit\Components\Extensions\MvcGrid\MvcGridExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Page\AuthorizationExtensionsTests.cs" />
     <Compile Include="Objects\Models\AdaptersModel.cs" />

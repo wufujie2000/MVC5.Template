@@ -20,7 +20,7 @@ namespace MvcTemplate.Controllers.Administration
                     "AdministrationMultilingual",
                     "{language}/Administration/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers.Administration" });
 
             context
@@ -28,7 +28,7 @@ namespace MvcTemplate.Controllers.Administration
                     "Administration",
                     "Administration/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers.Administration" });
         }
     }

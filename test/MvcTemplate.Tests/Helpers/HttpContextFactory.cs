@@ -58,7 +58,7 @@ namespace MvcTemplate.Tests
                     "AdministrationMultilingual",
                     "{language}/Administration/{controller}/{action}/{id}",
                     new { area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 
@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests
                     "Administration",
                     "Administration/{controller}/{action}/{id}",
                     new { language = "en", area = "Administration", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers.Administration" })
                 .DataTokens;
 
@@ -82,7 +82,7 @@ namespace MvcTemplate.Tests
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
 
@@ -91,7 +91,7 @@ namespace MvcTemplate.Tests
                     "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
 

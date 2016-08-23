@@ -42,7 +42,11 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Assert.Equal("Administration", actual.DataTokens["area"]);
             Assert.Equal("Administration", actual.Defaults["area"]);
             Assert.Equal("lt", actual.Constraints["language"]);
+            Assert.Equal("[0-9]*", actual.Constraints["id"]);
             Assert.Equal("Index", actual.Defaults["action"]);
+            Assert.Equal(2, actual.Constraints.Count);
+            Assert.Equal(3, actual.DataTokens.Count);
+            Assert.Equal(3, actual.Defaults.Count);
         }
 
         [Fact]
@@ -56,8 +60,12 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             Assert.Equal("Administration", actual.DataTokens["area"]);
             Assert.Equal("Administration", actual.Defaults["area"]);
             Assert.Equal("en", actual.Constraints["language"]);
+            Assert.Equal("[0-9]*", actual.Constraints["id"]);
             Assert.Equal("Index", actual.Defaults["action"]);
             Assert.Equal("en", actual.Defaults["language"]);
+            Assert.Equal(2, actual.Constraints.Count);
+            Assert.Equal(3, actual.DataTokens.Count);
+            Assert.Equal(4, actual.Defaults.Count);
         }
 
         #endregion

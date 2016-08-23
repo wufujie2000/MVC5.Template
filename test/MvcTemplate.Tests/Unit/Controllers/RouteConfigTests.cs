@@ -55,9 +55,11 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.Equal("Home", actual.Defaults["controller"]);
             Assert.Equal("lt", actual.Constraints["language"]);
+            Assert.Equal("[0-9]*", actual.Constraints["id"]);
             Assert.Equal("Index", actual.Defaults["action"]);
-            Assert.Null(actual.Defaults["language"]);
-            Assert.Null(actual.Defaults["area"]);
+            Assert.Equal(2, actual.Constraints.Count);
+            Assert.Equal(2, actual.DataTokens.Count);
+            Assert.Equal(3, actual.Defaults.Count);
         }
 
         [Fact]
@@ -74,9 +76,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Assert.Equal("{controller}/{action}/{id}", actual.Url);
             Assert.Equal("Home", actual.Defaults["controller"]);
             Assert.Equal("en", actual.Constraints["language"]);
+            Assert.Equal("[0-9]*", actual.Constraints["id"]);
             Assert.Equal("Index", actual.Defaults["action"]);
             Assert.Equal("en", actual.Defaults["language"]);
-            Assert.Null(actual.Defaults["area"]);
+            Assert.Equal(2, actual.Constraints.Count);
+            Assert.Equal(2, actual.DataTokens.Count);
+            Assert.Equal(4, actual.Defaults.Count);
         }
 
         #endregion

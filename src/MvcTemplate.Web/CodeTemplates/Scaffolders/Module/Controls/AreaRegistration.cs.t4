@@ -22,7 +22,7 @@ namespace <#= Model.ControllerNamespace #>
                     "<#= Model.Area #>Multilingual",
                     "{language}/<#= Model.Area #>/{controller}/{action}/{id}",
                     new { area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", id = "[0-9]*" },
                     new[] { "<#= Model.ControllerNamespace #>" });
 
             context
@@ -30,7 +30,7 @@ namespace <#= Model.ControllerNamespace #>
                     "<#= Model.Area #>",
                     "<#= Model.Area #>/{controller}/{action}/{id}",
                     new { language = "en", area = "<#= Model.Area #>", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", id = "[0-9]*" },
                     new[] { "<#= Model.ControllerNamespace #>" });
         }
     }

@@ -15,7 +15,7 @@ namespace MvcTemplate.Controllers
                     "DefaultMultilingual",
                     "{language}/{controller}/{action}/{id}",
                     new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "lt" },
+                    new { language = "lt", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
 
@@ -24,7 +24,7 @@ namespace MvcTemplate.Controllers
                     "Default",
                     "{controller}/{action}/{id}",
                     new { language = "en", controller = "Home", action = "Index", id = UrlParameter.Optional },
-                    new { language = "en" },
+                    new { language = "en", id = "[0-9]*" },
                     new[] { "MvcTemplate.Controllers" })
                 .DataTokens["UseNamespaceFallback"] = false;
         }

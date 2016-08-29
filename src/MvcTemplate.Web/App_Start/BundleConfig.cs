@@ -16,7 +16,7 @@ namespace MvcTemplate.Web
             bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").IncludeDirectory("~/Scripts/JQueryUI", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/MvcGrid/Bundle").IncludeDirectory("~/Scripts/MvcGrid", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/JsTree/Bundle").Include("~/Scripts/JsTree/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/Datalist/Bundle").IncludeDirectory("~/Scripts/Datalist", "*.js", true));
+            bundles.Add(new ScriptBundle("~/Scripts/MvcDatalist/Bundle").IncludeDirectory("~/Scripts/MvcDatalist", "*.js", true));
             bundles.Add(new ScriptBundle("~/Scripts/Shared/Bundle").Include("~/Scripts/Shared/*.js"));
         }
         private void RegisterStyles(BundleCollection bundles)
@@ -26,7 +26,7 @@ namespace MvcTemplate.Web
             bundles.Add(new StyleBundle("~/Content/FontAwesome/Bundle").Include("~/Content/FontAwesome/*.css"));
             bundles.Add(new StyleBundle("~/Content/MvcGrid/Bundle").Include("~/Content/MvcGrid/*.css"));
             bundles.Add(new StyleBundle("~/Content/JsTree/Bundle").Include("~/Content/JsTree/*.css"));
-            bundles.Add(new StyleBundle("~/Content/Datalist/Bundle").Include("~/Content/Datalist/*.css"));
+            bundles.Add(new StyleBundle("~/Content/MvcDatalist/Bundle").Include("~/Content/MvcDatalist/*.css"));
             bundles.Add(new StyleBundle("~/Content/Shared/Bundle").IncludeDirectory("~/Content/Shared", "*.css", true));
         }
     }

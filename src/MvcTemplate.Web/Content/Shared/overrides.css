@@ -122,9 +122,6 @@
   margin: 0 15px 10px;
 }
 /* Datalist */
-.datalist-dialog .ui-dialog-title {
-  min-height: 21px;
-}
 .datalist-table-body tr:hover .datalist-select-container i::after {
   color: #9AEA9A;
 }

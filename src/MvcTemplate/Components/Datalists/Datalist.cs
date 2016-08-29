@@ -9,33 +9,28 @@ using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Datalists
 {
-    public class Datalist<TModel, TView> : GenericDatalist<TView>
+    public class MvcDatalist<TModel, TView> : MvcDatalist<TView>
         where TModel : BaseModel
         where TView : BaseView
     {
         protected IUnitOfWork UnitOfWork { get; set; }
 
-        public Datalist(IUnitOfWork unitOfWork)
+        public MvcDatalist(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
-        public Datalist(UrlHelper url)
-            : base(url)
+        public MvcDatalist(UrlHelper url)
         {
             String view = typeof(TView).Name.Replace("View", "");
-            DialogTitle = ResourceProvider.GetDatalistTitle(view);
-            DatalistUrl = url.Action(view, Prefix, new { area = "" });
+            Url = url.Action(view, Prefix, new { area = "" });
+            Title = ResourceProvider.GetDatalistTitle(view);
         }
 
-        protected override String GetColumnHeader(PropertyInfo property)
+        public override String GetColumnHeader(PropertyInfo property)
         {
-            DatalistColumnAttribute column = property.GetCustomAttribute<DatalistColumnAttribute>(false);
-            if (column != null && column.Relation != null)
-                return GetColumnHeader(property.PropertyType.GetProperty(column.Relation));
-
             return ResourceProvider.GetPropertyTitle(typeof(TView), property.Name) ?? "";
         }
-        protected override String GetColumnCssClass(PropertyInfo property)
+        public override String GetColumnCssClass(PropertyInfo property)
         {
             Type type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
             if (type.IsEnum) return "text-left";
@@ -61,15 +56,15 @@ namespace MvcTemplate.Components.Datalists
             }
         }
 
-        protected override IQueryable<TView> GetModels()
+        public override IQueryable<TView> GetModels()
         {
             return UnitOfWork.Select<TModel>().To<TView>();
         }
 
-        protected override IQueryable<TView> FilterById(IQueryable<TView> models)
+        public override IQueryable<TView> FilterById(IQueryable<TView> models)
         {
             Int32 id;
-            if (!Int32.TryParse(CurrentFilter.Id, out id))
+            if (!Int32.TryParse(Filter.Id, out id))
                 return Enumerable.Empty<TView>().AsQueryable();
 
             return UnitOfWork.Select<TModel>().Where(model => model.Id == id).To<TView>();

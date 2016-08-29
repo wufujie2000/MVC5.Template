@@ -23,9 +23,9 @@ namespace MvcTemplate.Controllers
         }
 
         [NonAction]
-        public virtual JsonResult GetData(AbstractDatalist datalist, DatalistFilter filter)
+        public virtual JsonResult GetData(MvcDatalist datalist, DatalistFilter filter)
         {
-            datalist.CurrentFilter = filter;
+            datalist.Filter = filter;
 
             return Json(datalist.GetData(), JsonRequestBehavior.AllowGet);
         }
@@ -33,7 +33,7 @@ namespace MvcTemplate.Controllers
         [AjaxOnly]
         public JsonResult Role(DatalistFilter filter)
         {
-            return GetData(new Datalist<Role, RoleView>(UnitOfWork), filter);
+            return GetData(new MvcDatalist<Role, RoleView>(UnitOfWork), filter);
         }
 
         protected override void Dispose(Boolean disposing)

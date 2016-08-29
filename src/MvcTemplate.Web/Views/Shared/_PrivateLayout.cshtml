@@ -13,12 +13,12 @@
     @Styles.Render("~/Content/FontAwesome/Bundle")
     @Styles.Render("~/Content/MvcGrid/Bundle")
     @Styles.Render("~/Content/JsTree/Bundle")
-    @Styles.Render("~/Content/Datalist/Bundle")
+    @Styles.Render("~/Content/MvcDatalist/Bundle")
     @Styles.Render("~/Content/Shared/Bundle")
 </head>
 <body class="private">
     @Html.Partial("_Header")
-    @Html.Partial("_Datalist")
+    @Html.Partial("MvcDatalist/_Dialog")
     <div class="menu">
         <div class="menu-search">
             @Html.TextBox("SiteMapSearch", null, new { placeholder = Actions.Search + "..." })
@@ -56,7 +56,7 @@
     @Scripts.Render("~/Scripts/Bootstrap/Bundle")
     @Scripts.Render("~/Scripts/MvcGrid/Bundle")
     @Scripts.Render("~/Scripts/JsTree/Bundle")
-    @Scripts.Render("~/Scripts/Datalist/Bundle")
+    @Scripts.Render("~/Scripts/MvcDatalist/Bundle")
     @Scripts.Render("~/Scripts/Shared/Bundle")
 </body>
 </html>

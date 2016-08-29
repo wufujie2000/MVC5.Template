@@ -58,7 +58,7 @@
                         @Html.FormLabelFor(model => model.RoleId)
                     </div>
                     <div class="control-content col-sm-12 col-md-9 col-lg-5">
-                        @Html.DatalistFor(model => model.RoleId, new Datalist<Role, RoleView>(Url))
+                        @Html.DatalistFor(model => model.RoleId, new MvcDatalist<Role, RoleView>(Url))
                     </div>
                     <div class="control-validation col-sm-12 col-lg-5">
                         @Html.ValidationMessageFor(model => model.RoleId)

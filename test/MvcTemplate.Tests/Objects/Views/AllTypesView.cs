@@ -1,5 +1,4 @@
-﻿using Datalist;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
 using System;
 
 namespace MvcTemplate.Tests.Objects
@@ -38,7 +37,6 @@ namespace MvcTemplate.Tests.Objects
 
         public String StringField { get; set; }
 
-        [DatalistColumn(Relation = "StringField")]
         public AllTypesView Child { get; set; }
     }
 

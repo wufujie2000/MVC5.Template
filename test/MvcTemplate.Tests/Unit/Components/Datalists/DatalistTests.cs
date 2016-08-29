@@ -1,4 +1,5 @@
 ﻿using Datalist;
+using MvcTemplate.Components.Datalists;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -15,17 +16,17 @@ using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {
-    public class DatalistTests : IDisposable
+    public class MvcDatalistTests : IDisposable
     {
-        private DatalistProxy<Role, RoleView> datalist;
+        private MvcDatalist<Role, RoleView> datalist;
         private UrlHelper url;
 
-        public DatalistTests()
+        public MvcDatalistTests()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
             url = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
-            datalist = new DatalistProxy<Role, RoleView>(url);
+            datalist = new MvcDatalist<Role, RoleView>(url);
             using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
@@ -38,10 +39,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void Datalist_SetsDialogTitle()
         {
-            datalist = new DatalistProxy<Role, RoleView>(url);
+            datalist = new MvcDatalist<Role, RoleView>(url);
 
             String expected = ResourceProvider.GetDatalistTitle(typeof(RoleView).Name.Replace("View", ""));
-            String actual = datalist.DialogTitle;
+            String actual = datalist.Title;
 
             Assert.Equal(expected, actual);
         }
@@ -49,28 +50,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void Datalist_SetsDatalistUrl()
         {
-            datalist = new DatalistProxy<Role, RoleView>(url);
+            datalist = new MvcDatalist<Role, RoleView>(url);
 
-            String expected = url.Action(typeof(Role).Name, AbstractDatalist.Prefix, new { area = "" });
-            String actual = datalist.DatalistUrl;
+            String expected = url.Action(typeof(Role).Name, MvcDatalist.Prefix, new { area = "" });
+            String actual = datalist.Url;
 
             Assert.Equal(expected, actual);
-        }
-
-        #endregion
-
-        #region Datalist(IUnitOfWork unitOfWork)
-
-        [Fact]
-        public void Datalist_SetsUnitOfWork()
-        {
-            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
-
-            Object actual = datalist.BaseUnitOfWork;
-            Object expected = unitOfWork;
-
-            Assert.Same(expected, actual);
         }
 
         #endregion
@@ -80,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void GetColumnHeader_ReturnsPropertyTitle()
         {
-            String actual = datalist.BaseGetColumnHeader(typeof(RoleView).GetProperty("Title"));
+            String actual = datalist.GetColumnHeader(typeof(RoleView).GetProperty("Title"));
             String expected = ResourceProvider.GetPropertyTitle(typeof(RoleView), "Title");
 
             Assert.Equal(expected, actual);
@@ -91,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             PropertyInfo property = typeof(AllTypesView).GetProperty("Child");
 
-            String actual = datalist.BaseGetColumnHeader(property);
+            String actual = datalist.GetColumnHeader(property);
             String expected = "";
 
             Assert.Equal(expected, actual);
@@ -136,7 +121,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         {
             PropertyInfo property = typeof(AllTypesView).GetProperty(propertyName);
 
-            String actual = datalist.BaseGetColumnCssClass(property);
+            String actual = datalist.GetColumnCssClass(property);
             String expected = cssClass;
 
             Assert.Equal(expected, actual);
@@ -150,11 +135,11 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public void GetModels_FromUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new MvcDatalist<Role, RoleView>(unitOfWork);
             unitOfWork.Select<Role>().To<RoleView>().Returns(new RoleView[0].AsQueryable());
 
             Object expected = unitOfWork.Select<Role>().To<RoleView>();
-            Object actual = datalist.BaseGetModels();
+            Object actual = datalist.GetModels();
 
             Assert.Same(expected, actual);
         }
@@ -166,9 +151,9 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [Fact]
         public void FilterById_NotInteger_ReturnsEmpty()
         {
-            datalist.CurrentFilter.Id = "A";
+            datalist.Filter.Id = "A";
 
-            Assert.Empty(datalist.BaseFilterById(null));
+            Assert.Empty(datalist.FilterById(null));
         }
 
         [Fact]
@@ -180,12 +165,12 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             context.SaveChanges();
 
             IUnitOfWork unitOfWork = new UnitOfWork(context);
-            datalist = new DatalistProxy<Role, RoleView>(unitOfWork);
+            datalist = new MvcDatalist<Role, RoleView>(unitOfWork);
 
-            datalist.CurrentFilter.Id = role.Id.ToString();
+            datalist.Filter.Id = role.Id.ToString();
 
             RoleView expected = unitOfWork.Select<Role>().To<RoleView>().Single();
-            RoleView actual = datalist.BaseFilterById(null).Single();
+            RoleView actual = datalist.FilterById(null).Single();
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Title, actual.Title);

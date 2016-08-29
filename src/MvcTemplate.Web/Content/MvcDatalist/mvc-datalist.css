@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 3.6.1
+ * Datalist 4.1.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -47,24 +47,32 @@
 }
 
     .datalist-search-group .datalist-search-box {
-        margin-right: -55px;
+        margin-right: -65px;
         height: 100%;
         width: 100%;
         float: left;
     }
 
     .datalist-search-group .datalist-search-box-content {
-        margin-right: 55px;
+        margin-right: 65px;
         height: 100%;
     }
 
     .datalist-search-group .datalist-spinner-box {
         height: 100%;
         float: right;
-        width: 55px;
+        width: 65px;
     }
 
         .datalist-search-group .datalist-spinner-box > span {
+            border-bottom-color: #CCCCCC;
+            border-bottom-left-radius: 0;
+            border-top-color: #CCCCCC;
+            border-top-left-radius: 0;
+            border-right: medium none;
+            border-left: 0 none;
+            padding-bottom: 0;
+            padding-top: 0;
             height: 100%;
         }
 
@@ -78,7 +86,7 @@
 
     .datalist-search-group .datalist-items-per-page {
         background-color: #EEEEEE;
-        padding-right: 16px;
+        padding-right: 1.6em;
         text-align: center;
         color: #555555;
         display: block;
@@ -87,28 +95,20 @@
         margin: 0;
     }
 
-    .datalist-search-group span {
-        border-bottom-color: #CCCCCC;
-        border-bottom-left-radius: 0;
-        border-top-color: #CCCCCC;
-        border-top-left-radius: 0;
-        border-right: medium none;
-        border-left: 0 none;
-        padding-bottom: 0;
-        padding-top: 0;
-    }
-
-        .datalist-search-group span a:first-of-type {
+        .datalist-search-group span .ui-spinner-button {
             border-right: 1px solid #CCCCCC;
             border-left: 1px solid #CCCCCC;
             cursor: pointer;
+            width: 1.6em;
         }
 
-        .datalist-search-group span a:last-of-type {
-            border-right: 1px solid #CCCCCC;
-            border-left: 1px solid #CCCCCC;
+        .datalist-search-group span .ui-spinner-down {
             border-top: 1px solid #CCCCCC;
-            cursor: pointer;
+        }
+
+        .datalist-search-group span .ui-icon {
+            margin-left: -8px;
+            left: 50%;
         }
 
 .datalist-processing {
@@ -207,6 +207,6 @@
         cursor: pointer;
     }
 
-        .datalist-pager .pagination > li > a {
+        .datalist-pager .pagination > li > span {
             padding: 2px 8px;
         }

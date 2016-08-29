@@ -49,8 +49,8 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Datalist, Version=3.6.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Datalist.Core.3.6.1\lib\net45\Datalist.dll</HintPath>
+    <Reference Include="Datalist, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Datalist.Core.4.1.0\lib\net45\Datalist.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -61,16 +61,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="LightInject, Version=4.0.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.4.0.11\lib\net46\LightInject.dll</HintPath>
+    <Reference Include="LightInject, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.4.1.0\lib\net46\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LightInject.Mvc, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.Mvc.1.0.0.4\lib\net45\LightInject.Mvc.dll</HintPath>
+    <Reference Include="LightInject.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.Mvc.1.1.0\lib\net46\LightInject.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LightInject.Web, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.Web.1.0.0.7\lib\net45\LightInject.Web.dll</HintPath>
+    <Reference Include="LightInject.Web, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.Web.1.1.0\lib\net46\LightInject.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -83,8 +83,8 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NonFactors.Mvc.Grid, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.0.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
+    <Reference Include="NonFactors.Mvc.Grid, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.1.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -138,10 +138,10 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
-    <Content Include="Content\Datalist\datalist.css" />
     <Content Include="Content\JQueryUI\jquery-ui.timepicker-addon.css" />
     <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\MvcDatalist\mvc-datalist.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Images\JQueryUI\ui-icons_ffffff_256x240.png" />
@@ -151,12 +151,8 @@
     <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.min.js">
       <DependentUpon>bootstrap.no-conflict.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\Datalist\Cultures\datalist.en.js" />
-    <Content Include="Scripts\Datalist\Cultures\datalist.lt.js" />
-    <Content Include="Scripts\Datalist\datalist.js" />
-    <Content Include="Scripts\Datalist\datalist.min.js">
-      <DependentUpon>datalist.js</DependentUpon>
-    </Content>
+    <Content Include="Scripts\MvcDatalist\Cultures\mvc-datalist.en.js" />
+    <Content Include="Scripts\MvcDatalist\Cultures\mvc-datalist.lt.js" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
@@ -175,17 +171,21 @@
     </Content>
     <Content Include="Scripts\JQuery\Cultures\globalize.en.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.lt.js" />
+    <Content Include="Scripts\MvcDatalist\mvc-datalist.js" />
+    <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js">
+      <DependentUpon>mvc-datalist.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.lt.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.en.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.min.js" />
-    <Content Include="Views\Shared\_Datalist.cshtml" />
     <Content Include="Languages.config" />
     <Content Include="Views\Auth\Reset.cshtml" />
     <Content Include="Views\Administration\Accounts\Create.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
+    <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Shared\Auth\auth.css">
@@ -222,8 +222,6 @@
     <Content Include="Global.asax" />
     <Content Include="Images\Flags\en.gif" />
     <Content Include="Images\Flags\lt.gif" />
-    <Content Include="Images\JQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Images\JQueryUI\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\JQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
     <Content Include="Images\JQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
     <Content Include="Images\JQueryUI\ui-bg_glass_75_dadada_1x400.png" />

@@ -14,9 +14,9 @@ namespace MvcTemplate.Tests.Unit.Controllers
     public class DatalistControllerTests : IDisposable
     {
         private DatalistController controller;
-        private AbstractDatalist datalist;
         private IUnitOfWork unitOfWork;
         private DatalistFilter filter;
+        private MvcDatalist datalist;
 
         public DatalistControllerTests()
         {
@@ -24,7 +24,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller = Substitute.ForPartsOf<DatalistController>(unitOfWork);
 
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
-            datalist = Substitute.For<AbstractDatalist>();
+            datalist = Substitute.For<MvcDatalist>();
             filter = new DatalistFilter();
         }
         public void Dispose()
@@ -39,7 +39,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.GetData(datalist, filter);
 
-            DatalistFilter actual = datalist.CurrentFilter;
+            DatalistFilter actual = datalist.Filter;
             DatalistFilter expected = filter;
 
             Assert.Equal(expected, actual);
@@ -64,7 +64,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void Role_ReturnsRolesData()
         {
-            Object expected = GetData<Datalist<Role, RoleView>>(controller);
+            Object expected = GetData<MvcDatalist<Role, RoleView>>(controller);
             Object actual = controller.Role(filter);
 
             Assert.Same(expected, actual);
@@ -93,7 +93,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Test helpers
 
-        private JsonResult GetData<TDatalist>(DatalistController controller) where TDatalist : AbstractDatalist
+        private JsonResult GetData<TDatalist>(DatalistController controller) where TDatalist : MvcDatalist
         {
             controller.When(sub => sub.GetData(Arg.Any<TDatalist>(), filter)).DoNotCallBase();
             controller.GetData(Arg.Any<TDatalist>(), filter).Returns(new JsonResult());

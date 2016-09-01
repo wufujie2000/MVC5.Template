@@ -76,11 +76,6 @@ namespace MvcTemplate.Data.Core
             Delete(Context.Set<TModel>().Find(id));
         }
 
-        public void Rollback()
-        {
-            Context.Dispose();
-            Context = Activator.CreateInstance(Context.GetType()) as DbContext;
-        }
         public void Commit()
         {
             if (Logger != null)

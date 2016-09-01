@@ -241,21 +241,6 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Rollback()
-
-        [Fact]
-        public void Rollback_Changes()
-        {
-            context.Set<Role>().Add(model);
-
-            unitOfWork.Rollback();
-            unitOfWork.Commit();
-
-            Assert.Empty(unitOfWork.Select<Role>());
-        }
-
-        #endregion
-
         #region Commit()
 
         [Fact]

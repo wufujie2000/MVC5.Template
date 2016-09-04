@@ -1,7 +1,0 @@
-<#@ Template Language="C#" HostSpecific="True" Inherits="DynamicTransform" #>
-<#@ Output Extension="cs" #>
-private void Map<#= Model.Models #>()
-{
-    Configuration.CreateMap<<#= Model.Model #>, <#= Model.View #>>();
-    Configuration.CreateMap<<#= Model.View #>, <#= Model.Model #>>();
-}

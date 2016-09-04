@@ -47,9 +47,7 @@ If ($Area)
     Scaffold-AreaRegistration "Tests\AreaRegistrationTests" $TestsProject ("Unit\Controllers\$ElementArea\$Area" + "AreaRegistrationTests")
 }
 
-Scaffold-ObjectMappingTests $TestsProject "ObjectMapperTests"
 Scaffold-ObjectCreation $TestsProject "ObjectFactory"
-Scaffold-ObjectMapping $DataProject "ObjectMapper"
 Scaffold-DbSet $DataProject "Context"
 
 If ($Delete)

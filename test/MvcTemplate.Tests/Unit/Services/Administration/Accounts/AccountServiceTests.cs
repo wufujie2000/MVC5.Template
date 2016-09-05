@@ -113,6 +113,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [InlineData(false)]
         public void IsActive_ReturnsAccountState(Boolean isLocked)
         {
+            context.Set<Account>().Attach(account);
             account.IsLocked = isLocked;
             context.SaveChanges();
 
@@ -144,10 +145,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Recover_Information()
         {
-            account = context.Set<Account>().AsNoTracking().Single();
-            account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
-
             AccountRecoveryView view = ObjectFactory.CreateAccountRecoveryView();
+            account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             view.Email = view.Email.ToUpper();
 
             String expectedToken = service.Recover(view);
@@ -204,7 +203,6 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Reset_Account()
         {
             AccountResetView view = ObjectFactory.CreateAccountResetView();
-            account = context.Set<Account>().AsNoTracking().Single();
             account.Passhash = hasher.HashPassword(view.NewPassword);
             account.RecoveryTokenExpirationDate = null;
             account.RecoveryToken = null;
@@ -270,7 +268,6 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_Account()
         {
             AccountEditView view = ObjectFactory.CreateAccountEditView(account.Id);
-            account = context.Set<Account>().AsNoTracking().Single();
             view.IsLocked = account.IsLocked = !account.IsLocked;
             view.Username = account.Username + "Test";
             view.RoleId = account.RoleId = null;
@@ -311,7 +308,6 @@ namespace MvcTemplate.Tests.Unit.Services
         public void Edit_Profile()
         {
             ProfileEditView view = ObjectFactory.CreateProfileEditView(2);
-            account = context.Set<Account>().AsNoTracking().Single();
             account.Passhash = hasher.HashPassword(view.NewPassword);
             view.Username = account.Username += "Test";
             view.Email = account.Email += "Test";
@@ -338,14 +334,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [InlineData("   ")]
         public void Edit_NullOrEmptyNewPassword_DoesNotEditPassword(String newPassword)
         {
-            String passhash = context.Set<Account>().AsNoTracking().Single().Passhash;
             ProfileEditView view = ObjectFactory.CreateProfileEditView();
             view.NewPassword = newPassword;
 
             service.Edit(view);
 
             String actual = context.Set<Account>().AsNoTracking().Single().Passhash;
-            String expected = passhash;
+            String expected = account.Passhash;
 
             Assert.Equal(expected, actual);
         }
@@ -426,8 +421,11 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             account = ObjectFactory.CreateAccount();
 
-            context.Set<Account>().Add(account);
-            context.SaveChanges();
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<Account>().Add(account);
+                context.SaveChanges();
+            }
         }
 
         #endregion

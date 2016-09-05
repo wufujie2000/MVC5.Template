@@ -228,7 +228,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_Role()
         {
-            role = context.Set<Role>().AsNoTracking().Single();
             RoleView view = Mapper.Map<RoleView>(role);
             view.Title = role.Title += "Test";
 
@@ -333,8 +332,11 @@ namespace MvcTemplate.Tests.Unit.Services
                     role.Permissions.Add(rolePermission);
                 }
 
-            context.Set<Role>().Add(role);
-            context.SaveChanges();
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<Role>().Add(role);
+                context.SaveChanges();
+            }
         }
 
         private JsTree CreatePermissions()

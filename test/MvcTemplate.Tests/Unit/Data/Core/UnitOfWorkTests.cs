@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Data.Core
 {
@@ -43,7 +44,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
             context.Set<Role>().Add(model);
             context.SaveChanges();
 
-            RoleView expected = Mapper.Map<RoleView>(context.Set<Role>().AsNoTracking().Single());
+            RoleView expected = Mapper.Map<RoleView>(model);
             RoleView actual = unitOfWork.GetAs<Role, RoleView>(model.Id);
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
@@ -144,48 +145,25 @@ namespace MvcTemplate.Tests.Unit.Data.Core
 
         #endregion
 
-        #region Update(TModel model)
+        #region Update<TModel>(TModel model)
 
-        [Fact]
-        public void Update_UpdatesNotAttachedModel()
+        [Theory]
+        [InlineData(EntityState.Added, EntityState.Modified)]
+        [InlineData(EntityState.Deleted, EntityState.Modified)]
+        [InlineData(EntityState.Detached, EntityState.Modified)]
+        [InlineData(EntityState.Modified, EntityState.Modified)]
+        [InlineData(EntityState.Unchanged, EntityState.Unchanged)]
+        public void Update_Entry(EntityState initialState, EntityState state)
         {
-            model.Title += "Test";
+            DbEntityEntry<Role> entry = context.Entry(model);
+            entry.State = initialState;
 
             unitOfWork.Update(model);
 
-            DbEntityEntry<Role> actual = context.Entry(model);
-            Role expected = model;
+            DbEntityEntry<Role> actual = entry;
 
-            Assert.Equal(expected.CreationDate, actual.Entity.CreationDate);
-            Assert.Equal(expected.Title, actual.Entity.Title);
-            Assert.Equal(EntityState.Modified, actual.State);
-            Assert.Equal(expected.Id, actual.Entity.Id);
-        }
-
-        [Fact]
-        public void Update_UpdatesAttachedModel()
-        {
-            Role attachedModel = ObjectFactory.CreateRole();
-            context.Set<Role>().Add(attachedModel);
-            model.Title += "Test";
-
-            unitOfWork.Update(model);
-
-            DbEntityEntry<Role> actual = context.Entry(attachedModel);
-            Role expected = model;
-
-            Assert.Equal(expected.CreationDate, actual.Entity.CreationDate);
-            Assert.Equal(expected.Title, actual.Entity.Title);
-            Assert.Equal(EntityState.Modified, actual.State);
-            Assert.Equal(expected.Id, actual.Entity.Id);
-        }
-
-        [Fact]
-        public void Update_DoesNotModifyCreationDate()
-        {
-            unitOfWork.Update(model);
-
-            Assert.False(context.Entry(model).Property(prop => prop.CreationDate).IsModified);
+            Assert.Equal(state, actual.State);
+            Assert.False(actual.Property(prop => prop.CreationDate).IsModified);
         }
 
         #endregion

@@ -51,15 +51,10 @@ namespace MvcTemplate.Data.Core
 
         public void Update<TModel>(TModel model) where TModel : BaseModel
         {
-            IEnumerable<DbEntityEntry<TModel>> entries = Context.ChangeTracker.Entries<TModel>();
-            DbEntityEntry<TModel> entry = entries.FirstOrDefault(local => local.Entity.Id == model.Id);
+            DbEntityEntry<TModel> entry = Context.Entry(model);
+            if (entry.State != EntityState.Modified && entry.State != EntityState.Unchanged)
+                entry.State = EntityState.Modified;
 
-            if (entry != null)
-                entry.CurrentValues.SetValues(model);
-            else
-                entry = Context.Entry(model);
-
-            entry.State = EntityState.Modified;
             entry.Property(property => property.CreationDate).IsModified = false;
         }
 

@@ -96,7 +96,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_<#= Model.ShortModel #>()
         {
-            <#= Model.Model #> <#= Model.ModelVarName #> = context.Set<<#= Model.Model #>>().AsNoTracking().Single();
             <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(<#= Model.ModelVarName #>.Id);
             Assert.True(false, "No update made");
 
@@ -131,8 +130,11 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             <#= Model.ModelVarName #> = ObjectFactory.Create<#= Model.Model #>();
 
-            context.Set<<#= Model.Model #>>().Add(<#= Model.ModelVarName #>);
-            context.SaveChanges();
+            using (TestingContext context = new TestingContext())
+            {
+                context.Set<<#= Model.Model #>>().Add(<#= Model.ModelVarName #>);
+                context.SaveChanges();
+            }
         }
 
         #endregion

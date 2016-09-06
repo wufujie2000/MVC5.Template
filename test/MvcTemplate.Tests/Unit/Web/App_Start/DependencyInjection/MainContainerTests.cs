@@ -29,17 +29,7 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         [Theory]
         [InlineData(typeof(DbContext), typeof(Context))]
         [InlineData(typeof(IUnitOfWork), typeof(UnitOfWork))]
-
-        [InlineData(typeof(ILogger), typeof(Logger))]
         [InlineData(typeof(IAuditLogger), typeof(AuditLogger))]
-
-        [InlineData(typeof(IHasher), typeof(BCrypter))]
-        [InlineData(typeof(IMailClient), typeof(SmtpMailClient))]
-
-        [InlineData(typeof(IRouteConfig), typeof(RouteConfig))]
-        [InlineData(typeof(IBundleConfig), typeof(BundleConfig))]
-
-        [InlineData(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
         public void RegisterServices_Transient(Type abstraction, Type expectedType)
         {
             Object expected = container.GetInstance(abstraction);
@@ -50,6 +40,16 @@ namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
         }
 
         [Theory]
+        [InlineData(typeof(ILogger), typeof(Logger))]
+
+        [InlineData(typeof(IHasher), typeof(BCrypter))]
+        [InlineData(typeof(IMailClient), typeof(SmtpMailClient))]
+
+        [InlineData(typeof(IRouteConfig), typeof(RouteConfig))]
+        [InlineData(typeof(IBundleConfig), typeof(BundleConfig))]
+
+        [InlineData(typeof(IMvcSiteMapParser), typeof(MvcSiteMapParser))]
+
         [InlineData(typeof(IAuthorizationProvider), typeof(AuthorizationProvider))]
         public void RegisterServices_Singleton(Type abstraction, Type expectedType)
         {

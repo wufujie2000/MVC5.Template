@@ -21,30 +21,43 @@ namespace MvcTemplate.Web.DependencyInjection
         {
             Register<DbContext, Context>();
             Register<IUnitOfWork, UnitOfWork>();
-
-            Register<ILogger, Logger>();
             Register<IAuditLogger, AuditLogger>();
 
-            Register<IHasher, BCrypter>();
-            Register<IMailClient, SmtpMailClient>();
+            RegisterInstance<ILogger, Logger>();
 
-            Register<IRouteConfig, RouteConfig>();
-            Register<IBundleConfig, BundleConfig>();
+            RegisterInstance<IHasher, BCrypter>();
+            RegisterInstance<IMailClient, SmtpMailClient>();
 
-            Register<IMvcSiteMapParser, MvcSiteMapParser>();
-            Register<IMvcSiteMapProvider>(factory => new MvcSiteMapProvider(
-                 HostingEnvironment.MapPath("~/Mvc.sitemap"), factory.GetInstance<IMvcSiteMapParser>()));
+            RegisterInstance<IRouteConfig, RouteConfig>();
+            RegisterInstance<IBundleConfig, BundleConfig>();
 
-            Register<ILanguages>(factory => new Languages(HostingEnvironment.MapPath("~/Languages.config")));
-            RegisterInstance<IAuthorizationProvider>(new AuthorizationProvider(typeof(BaseController).Assembly));
+            RegisterInstance<IMvcSiteMapParser, MvcSiteMapParser>();
+            RegisterInstance<IMvcSiteMapProvider>(factory => new MvcSiteMapProvider(
+                HostingEnvironment.MapPath("~/Mvc.sitemap"), GetInstance<IMvcSiteMapParser>()));
 
-            foreach (Type service in typeof(IService).Assembly.GetTypes().Where(type =>
-                 typeof(IService).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract))
-                    Register(service.GetInterface("I" + service.Name), service);
+            RegisterInstance<ILanguages>(factory => new Languages(HostingEnvironment.MapPath("~/Languages.config")));
+            RegisterInstance<IAuthorizationProvider>(factory => new AuthorizationProvider(typeof(BaseController).Assembly));
 
-            foreach (Type validator in typeof(IValidator).Assembly.GetTypes().Where(type =>
-                typeof(IValidator).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract))
-                    Register(validator.GetInterface("I" + validator.Name), validator);
+            RegisterImplementations<IService>();
+            RegisterImplementations<IValidator>();
+        }
+
+        private Boolean Implements<T>(Type type)
+        {
+            return typeof(T).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract;
+        }
+        private void RegisterImplementations<T>()
+        {
+            foreach (Type type in typeof(T).Assembly.GetTypes().Where(Implements<T>))
+                Register(type.GetInterface("I" + type.Name), type);
+        }
+        private void RegisterInstance<TService>(Func<IServiceFactory, TService> factory)
+        {
+            Register<TService>(factory, new PerContainerLifetime());
+        }
+        private void RegisterInstance<TService, TImplementation>() where TImplementation : TService
+        {
+            Register<TService, TImplementation>(new PerContainerLifetime());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Web.Optimization;
+﻿using System.Collections.Generic;
+using System.Web.Optimization;
 
 namespace MvcTemplate.Web
 {
@@ -8,26 +9,58 @@ namespace MvcTemplate.Web
         {
             RegisterScripts(bundles);
             RegisterStyles(bundles);
+            RegisterOrder(bundles);
         }
         private void RegisterScripts(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/Scripts/JQuery/Bundle").IncludeDirectory("~/Scripts/JQuery", "*.js", true));
-            bundles.Add(new ScriptBundle("~/Scripts/Bootstrap/Bundle").Include("~/Scripts/Bootstrap/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/JQueryUI/Bundle").IncludeDirectory("~/Scripts/JQueryUI", "*.js", true));
-            bundles.Add(new ScriptBundle("~/Scripts/MvcGrid/Bundle").IncludeDirectory("~/Scripts/MvcGrid", "*.js", true));
-            bundles.Add(new ScriptBundle("~/Scripts/JsTree/Bundle").Include("~/Scripts/JsTree/*.js"));
-            bundles.Add(new ScriptBundle("~/Scripts/MvcDatalist/Bundle").IncludeDirectory("~/Scripts/MvcDatalist", "*.js", true));
-            bundles.Add(new ScriptBundle("~/Scripts/Shared/Bundle").Include("~/Scripts/Shared/*.js"));
+            Bundle privateBundle = new ScriptBundle("~/Scripts/Private/Bundle")
+                .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
+                .IncludeDirectory("~/Scripts/JQueryUI", "*.js", true)
+                .IncludeDirectory("~/Scripts/MvcDatalist", "*.js", true)
+                .IncludeDirectory("~/Scripts/MvcGrid", "*.js", true)
+                .Include("~/Scripts/Bootstrap/*.js")
+                .Include("~/Scripts/JsTree/*.js")
+                .Include("~/Scripts/Shared/*.js");
+
+            Bundle publicBundle = new ScriptBundle("~/Scripts/Public/Bundle")
+                .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
+                .Include("~/Scripts/Bootstrap/*.js")
+                .Include("~/Scripts/Shared/*.js");
+
+            bundles.Add(privateBundle);
+            bundles.Add(publicBundle);
         }
         private void RegisterStyles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/Content/JQueryUI/Bundle").Include("~/Content/JQueryUI/*.css"));
-            bundles.Add(new StyleBundle("~/Content/Bootstrap/Bundle").Include("~/Content/Bootstrap/*.css"));
-            bundles.Add(new StyleBundle("~/Content/FontAwesome/Bundle").Include("~/Content/FontAwesome/*.css"));
-            bundles.Add(new StyleBundle("~/Content/MvcGrid/Bundle").Include("~/Content/MvcGrid/*.css"));
-            bundles.Add(new StyleBundle("~/Content/JsTree/Bundle").Include("~/Content/JsTree/*.css"));
-            bundles.Add(new StyleBundle("~/Content/MvcDatalist/Bundle").Include("~/Content/MvcDatalist/*.css"));
-            bundles.Add(new StyleBundle("~/Content/Shared/Bundle").IncludeDirectory("~/Content/Shared", "*.css", true));
+            Bundle privateBundle = new StyleBundle("~/Content/Private/Bundle")
+                .Include("~/Content/JQueryUI/*.css")
+                .Include("~/Content/Bootstrap/*.css")
+                .Include("~/Content/FontAwesome/*.css")
+                .Include("~/Content/MvcGrid/*.css")
+                .Include("~/Content/JsTree/*.css")
+                .Include("~/Content/MvcDatalist/*.css")
+                .IncludeDirectory("~/Content/Shared", "*.css", true);
+
+            Bundle publicBundle = new StyleBundle("~/Content/Public/Bundle")
+                .Include("~/Content/Bootstrap/*.css")
+                .Include("~/Content/FontAwesome/*.css")
+                .IncludeDirectory("~/Content/Shared", "*.css", true);
+
+            bundles.Add(privateBundle);
+            bundles.Add(publicBundle);
+        }
+        private void RegisterOrder(BundleCollection bundles)
+        {
+            foreach (Bundle bundle in bundles)
+                bundle.Orderer = new NaturalOrder();
+        }
+
+        private class NaturalOrder : IBundleOrderer
+        {
+            public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
+            {
+                return files;
+            }
         }
     }
 }

@@ -8,17 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@(ViewBag.Title ?? ResourceProvider.GetContentTitle(ViewContext.RouteData.Values))</title>
 
-    @Styles.Render("~/Content/Bootstrap/Bundle")
-    @Styles.Render("~/Content/FontAwesome/Bundle")
-    @Styles.Render("~/Content/Shared/Bundle")
+    @Styles.Render("~/content/public/bundle")
 </head>
 <body class="public">
     <div class="content-container">
         @RenderBody()
     </div>
 
-    @Scripts.Render("~/Scripts/JQuery/Bundle")
-    @Scripts.Render("~/Scripts/Bootstrap/Bundle")
-    @Scripts.Render("~/Scripts/Shared/Bundle")
+    @Scripts.Render("~/scripts/public/bundle")
 </body>
 </html>

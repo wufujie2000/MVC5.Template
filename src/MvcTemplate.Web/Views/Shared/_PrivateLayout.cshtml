@@ -8,13 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@(ViewBag.Title ?? ResourceProvider.GetContentTitle(ViewContext.RouteData.Values))</title>
 
-    @Styles.Render("~/Content/JQueryUI/Bundle")
-    @Styles.Render("~/Content/Bootstrap/Bundle")
-    @Styles.Render("~/Content/FontAwesome/Bundle")
-    @Styles.Render("~/Content/MvcGrid/Bundle")
-    @Styles.Render("~/Content/JsTree/Bundle")
-    @Styles.Render("~/Content/MvcDatalist/Bundle")
-    @Styles.Render("~/Content/Shared/Bundle")
+    @Styles.Render("~/content/private/bundle")
 </head>
 <body class="private">
     @Html.Partial("_Header")
@@ -51,12 +45,6 @@
         @DateTime.Now.Year &copy; All rights reserved.
     </div>
 
-    @Scripts.Render("~/Scripts/JQuery/Bundle")
-    @Scripts.Render("~/Scripts/JQueryUI/Bundle")
-    @Scripts.Render("~/Scripts/Bootstrap/Bundle")
-    @Scripts.Render("~/Scripts/MvcGrid/Bundle")
-    @Scripts.Render("~/Scripts/JsTree/Bundle")
-    @Scripts.Render("~/Scripts/MvcDatalist/Bundle")
-    @Scripts.Render("~/Scripts/Shared/Bundle")
+    @Scripts.Render("~/scripts/private/bundle")
 </body>
 </html>

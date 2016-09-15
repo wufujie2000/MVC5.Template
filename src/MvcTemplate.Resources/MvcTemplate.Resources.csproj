@@ -48,15 +48,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Actions.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\ContentTitles.lt.Designer.cs">
-      <DependentUpon>ContentTitles.lt.resx</DependentUpon>
+    <Compile Include="Shared\Pages.lt.Designer.cs">
+      <DependentUpon>Pages.lt.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Shared\ContentTitles.Designer.cs">
+    <Compile Include="Shared\Pages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ContentTitles.resx</DependentUpon>
+      <DependentUpon>Pages.resx</DependentUpon>
     </Compile>
     <Compile Include="Datalist\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -118,15 +118,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\SharedTexts.Designer.cs">
+    <Compile Include="Shared\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SharedTexts.resx</DependentUpon>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Shared\SharedTexts.lt.Designer.cs">
+    <Compile Include="Shared\Strings.lt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SharedTexts.lt.resx</DependentUpon>
+      <DependentUpon>Strings.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="SiteMap\Titles.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -137,16 +137,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.lt.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Table\TableResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TableResources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Table\TableResources.lt.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TableResources.lt.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\Administration\Accounts\AccountCreateView\Titles.Designer.cs">
       <DependentUpon>Titles.resx</DependentUpon>
@@ -310,13 +300,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Actions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\ContentTitles.lt.resx">
+    <EmbeddedResource Include="Shared\Pages.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ContentTitles.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Pages.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\ContentTitles.resx">
+    <EmbeddedResource Include="Shared\Pages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ContentTitles.Designer.cs</LastGenOutput>
+      <LastGenOutput>Pages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Datalist\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -366,13 +356,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\SharedTexts.lt.resx">
+    <EmbeddedResource Include="Shared\Strings.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SharedTexts.lt.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.lt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Shared\SharedTexts.resx">
+    <EmbeddedResource Include="Shared\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>SharedTexts.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="SiteMap\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -381,14 +371,6 @@
     <EmbeddedResource Include="SiteMap\Titles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Table\TableResources.lt.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>TableResources.lt.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Table\TableResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>TableResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Administration\Accounts\AccountCreateView\Titles.lt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<div class="title text">@ContentTitles.HomeUnauthorized</div>
+<div class="title text">@Pages.HomeUnauthorized</div>
 
 <div class="separator"></div>
 
@@ -10,5 +10,5 @@
 
 <div class="separator"></div>
 
-<div class="describtion text">@SharedTexts.Unauthorized</div>
-@Html.ActionLink(ContentTitles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })
+<div class="describtion text">@Resources.Unauthorized</div>
+@Html.ActionLink(Pages.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })

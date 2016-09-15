@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_PublicLayout.cshtml";
 }
 
-<div class="title text">@ContentTitles.HomeNotFound</div>
+<div class="title text">@Pages.HomeNotFound</div>
 
 <div class="separator"></div>
 
@@ -10,5 +10,5 @@
 
 <div class="separator"></div>
 
-<div class="describtion text">@SharedTexts.PageNotFound</div>
-@Html.ActionLink(ContentTitles.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })
+<div class="describtion text">@Resources.PageNotFound</div>
+@Html.ActionLink(Pages.HomeIndex, "Index", null, new { @class = "btn btn-primary public-action" })

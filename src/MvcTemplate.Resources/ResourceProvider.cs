@@ -38,13 +38,13 @@ namespace MvcTemplate.Resources
         {
             return GetResource("MvcTemplate.Resources.Datalist.Titles", datalist ?? "");
         }
-        public static String GetContentTitle(RouteValueDictionary values)
+        public static String GetPageTitle(RouteValueDictionary values)
         {
             String area = values["area"] as String;
             String action = values["action"] as String;
             String controller = values["controller"] as String;
 
-            return GetResource("MvcTemplate.Resources.Shared.ContentTitles", area + controller + action);
+            return GetResource("MvcTemplate.Resources.Shared.Pages", area + controller + action);
         }
         public static String GetSiteMapTitle(String area, String controller, String action)
         {

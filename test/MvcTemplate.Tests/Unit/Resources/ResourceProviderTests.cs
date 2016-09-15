@@ -35,18 +35,18 @@ namespace MvcTemplate.Tests.Unit.Resources
 
         #endregion
 
-        #region GetContentTitle(RouteValueDictionary values)
+        #region GetPageTitle(RouteValueDictionary values)
 
         [Fact]
-        public void GetContentTitle_IsCaseInsensitive()
+        public void GetPageTitle_IsCaseInsensitive()
         {
             RouteValueDictionary values = new RouteValueDictionary();
             values["area"] = "administration";
             values["controller"] = "roles";
             values["action"] = "details";
 
-            String expected = ContentTitles.AdministrationRolesDetails;
-            String actual = ResourceProvider.GetContentTitle(values);
+            String actual = ResourceProvider.GetPageTitle(values);
+            String expected = Pages.AdministrationRolesDetails;
 
             Assert.Equal(expected, actual);
         }
@@ -54,23 +54,23 @@ namespace MvcTemplate.Tests.Unit.Resources
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void GetContentTitle_WithoutArea(String area)
+        public void GetPageTitle_WithoutArea(String area)
         {
             RouteValueDictionary values = new RouteValueDictionary();
             values["controller"] = "profile";
             values["action"] = "edit";
             values["area"] = area;
 
-            String actual = ResourceProvider.GetContentTitle(values);
-            String expected = ContentTitles.ProfileEdit;
+            String actual = ResourceProvider.GetPageTitle(values);
+            String expected = Pages.ProfileEdit;
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void GetContentTitle_NotFound_ReturnsNull()
+        public void GetPageTitle_NotFound_ReturnsNull()
         {
-            Assert.Null(ResourceProvider.GetContentTitle(new RouteValueDictionary()));
+            Assert.Null(ResourceProvider.GetPageTitle(new RouteValueDictionary()));
         }
 
         #endregion

@@ -14,7 +14,6 @@ namespace MvcTemplate.Data.Core
     {
         private IAuditLogger Logger { get; set; }
         private DbContext Context { get; set; }
-        private Boolean Disposed { get; set; }
 
         public UnitOfWork(DbContext context, IAuditLogger logger = null)
         {
@@ -84,12 +83,8 @@ namespace MvcTemplate.Data.Core
 
         public void Dispose()
         {
-            if (Disposed) return;
-
             if (Logger != null) Logger.Dispose();
             Context.Dispose();
-
-            Disposed = true;
         }
     }
 }

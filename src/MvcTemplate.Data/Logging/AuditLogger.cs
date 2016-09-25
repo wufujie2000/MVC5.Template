@@ -12,7 +12,6 @@ namespace MvcTemplate.Data.Logging
     public class AuditLogger : IAuditLogger
     {
         private Int32? AccountId { get; set; }
-        private Boolean Disposed { get; set; }
         private DbContext Context { get; set; }
         private List<LoggableEntity> Entities { get; set; }
 
@@ -69,11 +68,7 @@ namespace MvcTemplate.Data.Logging
 
         public void Dispose()
         {
-            if (Disposed) return;
-
             Context.Dispose();
-
-            Disposed = true;
         }
     }
 }

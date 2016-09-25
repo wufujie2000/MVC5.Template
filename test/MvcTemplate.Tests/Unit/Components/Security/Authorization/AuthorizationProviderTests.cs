@@ -13,11 +13,11 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class AuthorizationProviderTests : IDisposable
     {
-        private AuthorizationProvider provider;
+        private AuthorizationProvider authorization;
 
         public AuthorizationProviderTests()
         {
-            provider = new AuthorizationProvider(Assembly.GetExecutingAssembly());
+            authorization = new AuthorizationProvider(Assembly.GetExecutingAssembly());
             using (TestingContext context = new TestingContext()) context.DropData();
         }
         public void Dispose()
@@ -32,7 +32,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "AUTHORIZED", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "AUTHORIZED", "Action"));
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "AUTHORIZED", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "AUTHORIZED", "Action"));
         }
 
         [Theory]
@@ -50,7 +50,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, area, "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, area, "Authorized", "Action"));
         }
 
         [Theory]
@@ -60,7 +60,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, area, "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, area, "Authorized", "Action"));
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "AuthorizedGetAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGetAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGetAction"));
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGetAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedGetAction"));
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "AuthorizedNamedGetAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedGetAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedGetAction"));
         }
 
         [Fact]
@@ -108,13 +108,13 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedGetAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedGetAction"));
         }
 
         [Fact]
         public void IsAuthorizedFor_AuthorizesNotExistingAction()
         {
-            Assert.True(provider.IsAuthorizedFor(null, null, "Authorized", "Test"));
+            Assert.True(authorization.IsAuthorizedFor(null, null, "Authorized", "Test"));
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "AuthorizedPostAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedPostAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedPostAction"));
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedPostAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedPostAction"));
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "AuthorizedNamedPostAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedPostAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedPostAction"));
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedPostAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedNamedPostAction"));
         }
 
         [Fact]
@@ -154,7 +154,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsAction"));
         }
 
         [Fact]
@@ -162,7 +162,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Authorized", "Action");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsAction"));
         }
 
         [Fact]
@@ -170,7 +170,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "InheritedAuthorized", "InheritanceAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsOtherAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsOtherAction"));
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "AuthorizedAsOtherAction");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsOtherAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "AuthorizedAsOtherAction"));
         }
 
         [Fact]
@@ -186,7 +186,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "", "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "", "Authorized", "Action"));
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "", "Authorized", "Action"));
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "AllowAnonymous", "AuthorizedAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizedAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizedAction"));
         }
 
         [Fact]
@@ -210,7 +210,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizedAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "AuthorizedAction"));
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AllowAnonymousAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "Authorized", "AllowAnonymousAction"));
         }
 
         [Fact]
@@ -226,7 +226,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "Authorized", "AllowUnauthorizedAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "Authorized", "AllowUnauthorizedAction"));
         }
 
         [Fact]
@@ -234,7 +234,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -242,7 +242,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -250,7 +250,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "AllowAnonymous", "Action"));
         }
 
         [Fact]
@@ -258,7 +258,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "AllowUnauthorized", "Action"));
         }
 
         [Fact]
@@ -266,7 +266,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "InheritedAuthorized", "InheritanceAction");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "InheritanceAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "InheritanceAction"));
         }
 
         [Fact]
@@ -274,7 +274,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "InheritanceAction"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, null, "InheritedAuthorized", "InheritanceAction"));
         }
 
         [Fact]
@@ -282,7 +282,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowAnonymous", "InheritanceAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "InheritedAllowAnonymous", "InheritanceAction"));
         }
 
         [Fact]
@@ -290,7 +290,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "InheritedAllowUnauthorized", "InheritanceAction"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "InheritedAllowUnauthorized", "InheritanceAction"));
         }
 
         [Fact]
@@ -298,7 +298,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Test", "Test");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "NotAttributed", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "NotAttributed", "Action"));
         }
 
         [Fact]
@@ -306,7 +306,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.False(provider.IsAuthorizedFor(0, "Area", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(0, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -314,7 +314,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action", isLocked: true);
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         [Fact]
@@ -322,7 +322,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor(null, "Authorized", "Action");
 
-            Assert.False(provider.IsAuthorizedFor(null, null, "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(null, null, "Authorized", "Action"));
         }
 
         [Fact]
@@ -330,7 +330,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, "area", "authorized", "action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "area", "authorized", "action"));
         }
 
         [Fact]
@@ -338,7 +338,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         {
             Account account = CreateAccountWithPermissionFor("Test", "Test", "Test");
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "area", "authorized", "action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "area", "authorized", "action"));
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             Account account = CreateAccountWithPermissionFor(null, "Authorized", "Action");
             using (TestingContext context = new TestingContext()) context.DropData();
 
-            Assert.True(provider.IsAuthorizedFor(account.Id, null, "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, null, "Authorized", "Action"));
         }
 
         #endregion
@@ -358,14 +358,14 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         public void Refresh_Permissions()
         {
             Account account = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
-            Assert.True(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.True(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
 
             using (TestingContext context = new TestingContext()) context.DropData();
             SetUpDependencyResolver();
 
-            provider.Refresh();
+            authorization.Refresh();
 
-            Assert.False(provider.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
+            Assert.False(authorization.IsAuthorizedFor(account.Id, "Area", "Authorized", "Action"));
         }
 
         #endregion
@@ -391,7 +391,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
                 context.SaveChanges();
 
                 SetUpDependencyResolver();
-                provider.Refresh();
+                authorization.Refresh();
 
                 return account;
             }

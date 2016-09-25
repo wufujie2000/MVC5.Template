@@ -15,7 +15,6 @@ namespace MvcTemplate.Controllers
     public class DatalistController : BaseController
     {
         private IUnitOfWork UnitOfWork { get; set; }
-        private Boolean Disposed { get; set; }
 
         public DatalistController(IUnitOfWork unitOfWork)
         {
@@ -38,10 +37,7 @@ namespace MvcTemplate.Controllers
 
         protected override void Dispose(Boolean disposing)
         {
-            if (Disposed) return;
-
             UnitOfWork.Dispose();
-            Disposed = true;
 
             base.Dispose(disposing);
         }

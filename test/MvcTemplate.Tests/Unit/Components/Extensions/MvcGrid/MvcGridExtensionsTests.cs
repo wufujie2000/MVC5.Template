@@ -34,7 +34,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void AddActionLink_Unauthorized_Empty()
         {
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
 
             IGridColumn<AllTypesView> actual = columns.AddActionLink("Edit", "fa fa-pencil");
 
@@ -47,7 +46,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         {
             AllTypesView view = new AllTypesView();
             Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
             UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
             Authorization.Provider.IsAuthorizedFor(Arg.Any<Int32?>(), Arg.Any<String>(), Arg.Any<String>(), "Details").Returns(true);
 
@@ -68,7 +66,6 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         {
             Authorization.Provider = null;
             AllTypesView view = new AllTypesView();
-            columns.Grid.HttpContext = HttpContextFactory.CreateHttpContextBase();
             UrlHelper urlHelper = new UrlHelper(columns.Grid.HttpContext.Request.RequestContext);
 
             IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");

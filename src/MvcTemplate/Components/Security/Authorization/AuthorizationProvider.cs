@@ -15,11 +15,11 @@ namespace MvcTemplate.Components.Security
         private Dictionary<String, String> Required { get; set; }
         private Dictionary<Int32, HashSet<String>> Permissions { get; set; }
 
-        public AuthorizationProvider(Assembly controllersAssembly)
+        public AuthorizationProvider(Assembly controllers)
         {
-            Controllers = GetValidControllers(controllersAssembly);
             Permissions = new Dictionary<Int32, HashSet<String>>();
             Required = new Dictionary<String, String>();
+            Controllers = GetValid(controllers);
 
             foreach (Type type in Controllers)
             {
@@ -84,9 +84,9 @@ namespace MvcTemplate.Components.Security
                     .OrderByDescending(method =>
                         method.IsDefined(typeof(HttpGetAttribute), false));
         }
-        private IEnumerable<Type> GetValidControllers(Assembly assembly)
+        private IEnumerable<Type> GetValid(Assembly controllers)
         {
-            return assembly
+            return controllers
                 .GetTypes()
                 .Where(type =>
                     type.Name.EndsWith("Controller", StringComparison.OrdinalIgnoreCase) &&
@@ -152,9 +152,8 @@ namespace MvcTemplate.Components.Security
         }
         private Type GetControllerType(String area, String controller)
         {
-            String typeName = controller + "Controller";
             IEnumerable<Type> controllers = Controllers
-                .Where(type => type.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase));
+                .Where(type => type.Name.Equals(controller + "Controller", StringComparison.OrdinalIgnoreCase));
 
             if (String.IsNullOrEmpty(area))
                 controllers = controllers.Where(type =>

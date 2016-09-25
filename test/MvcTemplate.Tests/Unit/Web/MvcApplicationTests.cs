@@ -272,13 +272,13 @@ namespace MvcTemplate.Tests.Unit.Web
         [Fact]
         public void RegisterAuthorization_RegistersAuthorization()
         {
-            IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
-            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(provider);
+            IAuthorizationProvider authorization = Substitute.For<IAuthorizationProvider>();
+            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(authorization);
 
             application.RegisterAuthorization();
 
             IAuthorizationProvider actual = Authorization.Provider;
-            IAuthorizationProvider expected = provider;
+            IAuthorizationProvider expected = authorization;
 
             Assert.Equal(expected, actual);
         }
@@ -286,8 +286,8 @@ namespace MvcTemplate.Tests.Unit.Web
         [Fact]
         public void RegisterAuthorization_RefreshesAuthorization()
         {
-            IAuthorizationProvider provider = Substitute.For<IAuthorizationProvider>();
-            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(provider);
+            IAuthorizationProvider authorization = Substitute.For<IAuthorizationProvider>();
+            DependencyResolver.Current.GetService<IAuthorizationProvider>().Returns(authorization);
 
             application.RegisterAuthorization();
 
@@ -353,13 +353,13 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData("StringLength", typeof(StringLengthAdapter))]
         public void RegisterAdapters_RegistersAdapter(String property, Type adapter)
         {
-            DataAnnotationsModelValidatorProvider provider = new DataAnnotationsModelValidatorProvider();
+            DataAnnotationsModelValidatorProvider annotations = new DataAnnotationsModelValidatorProvider();
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), property);
 
             application.RegisterAdapters();
 
-            Assert.Single(provider.GetValidators(metadata, new ControllerContext()), validator => validator.GetType() == adapter);
+            Assert.Single(annotations.GetValidators(metadata, new ControllerContext()), validator => validator.GetType() == adapter);
         }
 
         #endregion

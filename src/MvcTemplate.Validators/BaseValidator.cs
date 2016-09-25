@@ -11,7 +11,6 @@ namespace MvcTemplate.Validators
         public ModelStateDictionary ModelState { get; set; }
         public Int32 CurrentAccountId { get; set; }
         public AlertsContainer Alerts { get; set; }
-        private Boolean Disposed { get; set; }
 
         protected BaseValidator(IUnitOfWork unitOfWork)
         {
@@ -22,11 +21,7 @@ namespace MvcTemplate.Validators
 
         public void Dispose()
         {
-            if (Disposed) return;
-
             UnitOfWork.Dispose();
-
-            Disposed = true;
         }
     }
 }

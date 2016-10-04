@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace MvcTemplate.Tests.Objects
 {
@@ -11,6 +12,9 @@ namespace MvcTemplate.Tests.Objects
 
         [Digits]
         public String Digits { get; set; }
+
+        [EqualTo("StringLength")]
+        public String EqualTo { get; set; }
 
         [Integer]
         public Int32? Integer { get; set; }
@@ -36,7 +40,7 @@ namespace MvcTemplate.Tests.Objects
         [StringLength(128)]
         public String StringLength { get; set; }
 
-        [EqualTo("StringLength")]
-        public String EqualTo { get; set; }
+        [FileSize(12.25)]
+        public HttpPostedFileBase FileSize { get; set; }
     }
 }

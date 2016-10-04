@@ -15,14 +15,11 @@ namespace MvcTemplate.Components.Mvc
 
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
-            return new[]
-            {
-                new ModelClientValidationRule
-                {
-                    ErrorMessage = ErrorMessage,
-                    ValidationType = "email"
-                }
-            };
+            ModelClientValidationRule rule = new ModelClientValidationRule();
+            rule.ErrorMessage = ErrorMessage;
+            rule.ValidationType = "email";
+
+            return new[] { rule };
         }
     }
 }

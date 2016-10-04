@@ -33,7 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         #region FormatErrorMessage(String name)
 
         [Fact]
-        public void FormatErrorMessage_ForDouble()
+        public void FormatErrorMessage_ForName()
         {
             attribute = new FileSizeAttribute(12.25);
 

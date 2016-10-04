@@ -15,10 +15,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void MinLengthAdapter_SetsErrorMessage()
         {
+            MinLengthAttribute attribute = new MinLengthAttribute(128);
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "MinLength");
 
-            MinLengthAttribute attribute = new MinLengthAttribute(128);
             new MinLengthAdapter(metadata, new ControllerContext(), attribute);
 
             String expected = Validations.MinLength;

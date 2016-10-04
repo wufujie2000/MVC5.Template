@@ -18,6 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
             StringLengthAttribute attribute = new StringLengthAttribute(128);
+
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
             String expected = Validations.StringLength;
@@ -32,6 +33,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             StringLengthAttribute attribute = new StringLengthAttribute(128) { MinimumLength = 4 };
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "StringLength");
+
             new StringLengthAdapter(metadata, new ControllerContext(), attribute);
 
             String expected = Validations.StringLengthRange;

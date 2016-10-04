@@ -18,6 +18,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             RangeAttribute attribute = new RangeAttribute(0, 128);
             ModelMetadata metadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AdaptersModel), "Range");
+
             new RangeAdapter(metadata, new ControllerContext(), attribute);
 
             String actual = attribute.ErrorMessage;

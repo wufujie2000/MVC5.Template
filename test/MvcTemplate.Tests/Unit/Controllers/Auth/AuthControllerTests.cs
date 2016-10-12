@@ -17,7 +17,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class AuthControllerTests : ControllerTests
     {
-        private AccountRegisterView accountRegister;
         private AccountRecoveryView accountRecovery;
         private AccountResetView accountReset;
         private AccountLoginView accountLogin;
@@ -33,7 +32,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             validator = Substitute.For<IAccountValidator>();
             controller = Substitute.ForPartsOf<AuthController>(validator, service, mailClient);
 
-            accountRegister = ObjectFactory.CreateAccountRegisterView();
             accountRecovery = ObjectFactory.CreateAccountRecoveryView();
             accountReset = ObjectFactory.CreateAccountResetView();
             accountLogin = ObjectFactory.CreateAccountLoginView();
@@ -43,102 +41,6 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = context;
         }
-
-        #region Register()
-
-        [Fact]
-        public void Register_IsLoggedIn_RedirectsToDefault()
-        {
-            service.IsLoggedIn(controller.User).Returns(true);
-
-            Object expected = RedirectToDefault(controller);
-            Object actual = controller.Register();
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Register_ReturnsEmptyView()
-        {
-            service.IsLoggedIn(controller.User).Returns(false);
-
-            ViewResult actual = controller.Register() as ViewResult;
-
-            Assert.Null(actual.Model);
-        }
-
-        #endregion
-
-        #region Register(AccountRegisterView account)
-
-        [Fact]
-        public void Register_ProtectsFromOverpostingId()
-        {
-            ProtectsFromOverposting(controller, "Register", "Id");
-        }
-
-        [Fact]
-        public void Register_IsLoggenIn_RedirectsToDefault()
-        {
-            service.IsLoggedIn(controller.User).Returns(true);
-
-            Object expected = RedirectToDefault(controller);
-            Object actual = controller.Register(null);
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Register_CanNotRegister_ReturnsSameView()
-        {
-            service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(accountRegister).Returns(false);
-
-            Object actual = (controller.Register(accountRegister) as ViewResult).Model;
-            Object expected = accountRegister;
-
-            Assert.Same(expected, actual);
-        }
-
-        [Fact]
-        public void Register_Account()
-        {
-            service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(accountRegister).Returns(true);
-
-            controller.Register(accountRegister);
-
-            service.Received().Register(accountRegister);
-        }
-
-        [Fact]
-        public void Register_AddsRegistrationMessage()
-        {
-            service.IsLoggedIn(controller.User).Returns(false);
-            validator.CanRegister(accountRegister).Returns(true);
-
-            controller.Register(accountRegister);
-
-            Alert actual = controller.Alerts.Single();
-
-            Assert.Equal(Messages.SuccessfulRegistration, actual.Message);
-            Assert.Equal(AlertType.Success, actual.Type);
-            Assert.Equal(4000, actual.Timeout);
-        }
-
-        [Fact]
-        public void Register_RedirectsToLogin()
-        {
-            validator.CanRegister(accountRegister).Returns(true);
-            service.IsLoggedIn(controller.User).Returns(false);
-
-            Object expected = RedirectIfAuthorized(controller, "Login");
-            Object actual = controller.Register(accountRegister);
-
-            Assert.Same(expected, actual);
-        }
-
-        #endregion
 
         #region Recover()
 

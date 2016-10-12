@@ -438,9 +438,6 @@
     <Content Include="Views\Shared\_Breadcrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Auth\Register.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Auth\_AuthAlerts.cshtml" />
   </ItemGroup>
   <ItemGroup>

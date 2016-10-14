@@ -77,7 +77,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_<#= Model.ShortModel #>()
         {
-            <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(2);
+            <#= Model.View #> view = ObjectFactory.Create<#= Model.View #>(1);
 
             service.Create(view);
 

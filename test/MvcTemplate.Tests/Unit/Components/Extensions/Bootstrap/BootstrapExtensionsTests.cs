@@ -395,8 +395,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy/MM/dd"));
+                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0:yyyy/MM/dd}\" />",
+                model.Relation.Date.Value);
 
             Assert.Equal(expected, actual);
         }
@@ -412,8 +412,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy/MM/dd"));
+                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0:yyyy/MM/dd}\" />",
+                model.Relation.Date.Value);
 
             Assert.Equal(expected, actual);
         }
@@ -429,8 +429,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy/MM/dd H:mm"));
+                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0:yyyy/MM/dd H:mm}\" />",
+                model.Relation.Date.Value);
 
             Assert.Equal(expected, actual);
         }
@@ -446,8 +446,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
             String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.Relation.Date.Value.ToString("yyyy/MM/dd H:mm"));
+                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0:yyyy/MM/dd H:mm}\" />",
+                model.Relation.Date.Value);
 
             Assert.Equal(expected, actual);
         }

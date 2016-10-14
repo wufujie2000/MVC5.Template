@@ -62,10 +62,7 @@ namespace MvcTemplate.Controllers
             if (Service.IsLoggedIn(User))
                 return RedirectToDefault();
 
-            AccountResetView account = new AccountResetView();
-            account.Token = token;
-
-            if (!Validator.CanReset(account))
+            if (!Validator.CanReset(new AccountResetView { Token = token }))
                 return RedirectIfAuthorized("Recover");
 
             return View();

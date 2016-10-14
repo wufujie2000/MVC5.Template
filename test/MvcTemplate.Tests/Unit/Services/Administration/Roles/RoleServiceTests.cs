@@ -131,8 +131,8 @@ namespace MvcTemplate.Tests.Unit.Services
 
             while (expected.MoveNext() | actual.MoveNext())
             {
-                Assert.Equal(expected.Current.Permissions.SelectedIds, actual.Current.Permissions.SelectedIds);
                 Assert.Equal(expected.Current.CreationDate, actual.Current.CreationDate);
+                Assert.Equal(expected.Current.Permissions, actual.Current.Permissions);
                 Assert.Equal(expected.Current.Title, actual.Current.Title);
                 Assert.Equal(expected.Current.Id, actual.Current.Id);
             }
@@ -190,7 +190,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_Role()
         {
-            RoleView view = ObjectFactory.CreateRoleView(2);
+            RoleView view = ObjectFactory.CreateRoleView(1);
 
             service.Create(view);
 
@@ -204,7 +204,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_RolePermissions()
         {
-            RoleView view = ObjectFactory.CreateRoleView(2);
+            RoleView view = ObjectFactory.CreateRoleView(1);
             view.Permissions = CreatePermissions();
 
             service.Create(view);
@@ -228,13 +228,13 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_Role()
         {
-            RoleView view = Mapper.Map<RoleView>(role);
+            RoleView view = ObjectFactory.CreateRoleView(role.Id);
             view.Title = role.Title += "Test";
 
             service.Edit(view);
 
             Role actual = context.Set<Role>().AsNoTracking().Single();
-            RoleView expected = view;
+            Role expected = role;
 
             Assert.Equal(expected.CreationDate, actual.CreationDate);
             Assert.Equal(expected.Title, actual.Title);
@@ -244,7 +244,7 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_RolePermissions()
         {
-            Permission permission = ObjectFactory.CreatePermission(100);
+            Permission permission = ObjectFactory.CreatePermission();
             context.Set<Permission>().Add(permission);
             context.SaveChanges();
 

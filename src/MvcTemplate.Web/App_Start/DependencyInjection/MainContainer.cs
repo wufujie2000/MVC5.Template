@@ -53,7 +53,7 @@ namespace MvcTemplate.Web.DependencyInjection
         }
         private void RegisterInstance<TService>(Func<IServiceFactory, TService> factory)
         {
-            Register<TService>(factory, new PerContainerLifetime());
+            Register(factory, new PerContainerLifetime());
         }
         private void RegisterInstance<TService, TImplementation>() where TImplementation : TService
         {

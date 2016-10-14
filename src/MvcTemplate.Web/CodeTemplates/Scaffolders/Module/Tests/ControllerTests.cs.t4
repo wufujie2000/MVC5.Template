@@ -193,7 +193,7 @@ namespace <#= Model.ControllerTestsNamespace #>
         }
 
         [Fact]
-        public void Delete_RedirectsToIndex()
+        public void DeleteConfirmed_RedirectsToIndex()
         {
             Object expected = RedirectIfAuthorized(controller, "Index");
             Object actual = controller.DeleteConfirmed(<#= Model.ModelVarName #>.Id);

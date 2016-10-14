@@ -61,8 +61,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="LightInject, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.4.1.0\lib\net46\LightInject.dll</HintPath>
+    <Reference Include="LightInject, Version=4.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.4.1.2\lib\net46\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LightInject.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -83,8 +83,8 @@
       <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NonFactors.Mvc.Grid, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.1.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
+    <Reference Include="NonFactors.Mvc.Grid, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.2.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

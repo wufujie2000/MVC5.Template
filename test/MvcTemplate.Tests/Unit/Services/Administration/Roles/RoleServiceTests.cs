@@ -43,7 +43,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void SeedPermissions_FirstDepth()
         {
-            RoleView view = new RoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
+
             service.SeedPermissions(view);
 
             IEnumerator<JsTreeNode> expected = CreatePermissions().Nodes.GetEnumerator();
@@ -60,7 +61,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void SeedPermissions_SecondDepth()
         {
-            RoleView view = new RoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
+
             service.SeedPermissions(view);
 
             IEnumerator<JsTreeNode> expected = CreatePermissions().Nodes.SelectMany(node => node.Nodes).GetEnumerator();
@@ -77,7 +79,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void SeedPermissions_ThirdDepth()
         {
-            RoleView view = new RoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
+
             service.SeedPermissions(view);
 
             IEnumerator<JsTreeNode> expected = CreatePermissions().Nodes.SelectMany(node => node.Nodes).SelectMany(node => node.Nodes).GetEnumerator();
@@ -94,7 +97,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void SeedPermissions_BranchesWithoutId()
         {
-            RoleView view = new RoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
+
             service.SeedPermissions(view);
 
             IEnumerable<JsTreeNode> nodes = view.Permissions.Nodes;
@@ -106,7 +110,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void SeedPermissions_LeafsWithId()
         {
-            RoleView view = new RoleView();
+            RoleView view = ObjectFactory.CreateRoleView();
+
             service.SeedPermissions(view);
 
             IEnumerable<JsTreeNode> nodes = view.Permissions.Nodes;

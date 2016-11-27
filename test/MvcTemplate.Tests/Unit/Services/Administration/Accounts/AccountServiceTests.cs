@@ -395,10 +395,10 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             account = ObjectFactory.CreateAccount();
 
-            using (TestingContext context = new TestingContext())
+            using (TestingContext testingContext = new TestingContext())
             {
-                context.Set<Account>().Add(account);
-                context.SaveChanges();
+                testingContext.Set<Account>().Add(account);
+                testingContext.SaveChanges();
             }
         }
 

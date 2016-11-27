@@ -93,12 +93,12 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #region Test helpers
 
-        private JsonResult GetData<TDatalist>(DatalistController controller) where TDatalist : MvcDatalist
+        private JsonResult GetData<TDatalist>(DatalistController datalistController) where TDatalist : MvcDatalist
         {
-            controller.When(sub => sub.GetData(Arg.Any<TDatalist>(), filter)).DoNotCallBase();
-            controller.GetData(Arg.Any<TDatalist>(), filter).Returns(new JsonResult());
+            datalistController.When(sub => sub.GetData(Arg.Any<TDatalist>(), filter)).DoNotCallBase();
+            datalistController.GetData(Arg.Any<TDatalist>(), filter).Returns(new JsonResult());
 
-            return controller.GetData(null, filter);
+            return datalistController.GetData(null, filter);
         }
 
         #endregion

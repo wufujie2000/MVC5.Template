@@ -174,9 +174,8 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         public void DeleteRange_Models()
         {
             IEnumerable<Role> models = new[] { ObjectFactory.CreateRole(1), ObjectFactory.CreateRole(2) };
-            foreach (Role model in models)
-                context.Set<Role>().Add(model);
 
+            context.Set<Role>().AddRange(models);
             context.SaveChanges();
 
             unitOfWork.DeleteRange(models);
@@ -224,12 +223,11 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Commit_SavesChanges()
         {
-            TestingContext context = Substitute.For<TestingContext>();
-            UnitOfWork unitOfWork = new UnitOfWork(context);
+            TestingContext testingContext = Substitute.For<TestingContext>();
 
-            unitOfWork.Commit();
+            new UnitOfWork(testingContext).Commit();
 
-            context.Received().SaveChanges();
+            testingContext.Received().SaveChanges();
         }
 
         [Fact]
@@ -267,12 +265,11 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Dispose_Context()
         {
-            TestingContext context = Substitute.For<TestingContext>();
-            UnitOfWork unitOfWork = new UnitOfWork(context);
+            TestingContext testingContext = Substitute.For<TestingContext>();
 
-            unitOfWork.Dispose();
+            new UnitOfWork(testingContext).Dispose();
 
-            context.Received().Dispose();
+            testingContext.Received().Dispose();
         }
 
         [Fact]

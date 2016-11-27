@@ -337,10 +337,10 @@ namespace MvcTemplate.Tests.Unit.Services
                     role.Permissions.Add(rolePermission);
                 }
 
-            using (TestingContext context = new TestingContext())
+            using (TestingContext testingContext = new TestingContext())
             {
-                context.Set<Role>().Add(role);
-                context.SaveChanges();
+                testingContext.Set<Role>().Add(role);
+                testingContext.SaveChanges();
             }
         }
 

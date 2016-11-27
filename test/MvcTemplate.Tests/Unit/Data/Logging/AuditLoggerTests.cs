@@ -42,11 +42,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void AuditLogger_DisablesChangesDetection()
         {
-            TestingContext context = new TestingContext();
-            context.Configuration.AutoDetectChangesEnabled = true;
+            TestingContext testingContext = new TestingContext();
+            testingContext.Configuration.AutoDetectChangesEnabled = true;
 
-            using (new AuditLogger(context))
-                Assert.False(context.Configuration.AutoDetectChangesEnabled);
+            using (new AuditLogger(testingContext))
+                Assert.False(testingContext.Configuration.AutoDetectChangesEnabled);
         }
 
         #endregion
@@ -56,11 +56,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void AuditLogger_AccountId_DisablesChangesDetection()
         {
-            TestingContext context = new TestingContext();
-            context.Configuration.AutoDetectChangesEnabled = true;
+            TestingContext testingContext = new TestingContext();
+            testingContext.Configuration.AutoDetectChangesEnabled = true;
 
-            using (new AuditLogger(context, 1))
-                Assert.False(context.Configuration.AutoDetectChangesEnabled);
+            using (new AuditLogger(testingContext, 1))
+                Assert.False(testingContext.Configuration.AutoDetectChangesEnabled);
         }
 
         #endregion
@@ -234,12 +234,11 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void Dispose_Context()
         {
-            TestingContext context = Substitute.For<TestingContext>();
-            AuditLogger logger = new AuditLogger(context);
+            TestingContext testingContext = Substitute.For<TestingContext>();
 
-            logger.Dispose();
+            new AuditLogger(testingContext).Dispose();
 
-            context.Received().Dispose();
+            testingContext.Received().Dispose();
         }
 
         [Fact]

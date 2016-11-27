@@ -235,6 +235,7 @@
     <Compile Include="Unit\Objects\Models\BaseModelTests.cs" />
     <Compile Include="Unit\Components\Extensions\JsTree\JsTreeNodeTests.cs" />
     <Compile Include="Unit\Components\Extensions\JsTree\JsTreeTests.cs" />
+    <Compile Include="Unit\Objects\Views\Administration\Roles\RoleViewTests.cs" />
     <Compile Include="Unit\Objects\Views\BaseViewTests.cs" />
     <Compile Include="Unit\Resources\ResourceProviderTests.cs" />
     <Compile Include="Unit\Validators\Administration\Accounts\AccountValidatorTests.cs" />

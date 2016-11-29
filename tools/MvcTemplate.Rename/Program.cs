@@ -20,6 +20,8 @@ namespace MvcTemplate.Rename
             Console.Write("Enter company name: ");
             Company = Console.ReadLine().Trim();
 
+            Int32 port = new Random().Next(1000, 19175);
+
             String[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.*", SearchOption.AllDirectories);
             for (Int32 i = 0; i < files.Length; i++)
             {
@@ -39,12 +41,14 @@ namespace MvcTemplate.Rename
                     Regex assemblyVersion = new Regex("assembly: AssemblyVersion.*");
                     Regex fileVersion = new Regex("assembly: AssemblyFileVersion.*");
                     Regex copyright = new Regex("assembly: AssemblyCopyright.*");
+                    Regex iisPort = new Regex("(<IISUrl>.*:)\\d+(.*</IISUrl>)");
                     Regex company = new Regex("assembly: AssemblyCompany.*");
                     Regex newLine = new Regex("(?<!\\r)\\n");
 
                     String content = File.ReadAllText(files[i]);
                     content = newLine.Replace(content, "\r\n");
                     content = content.Replace(TemplateName, Project);
+                    content = iisPort.Replace(content, "${1}" + port + "${2}");
                     content = company.Replace(content, "assembly: AssemblyCompany(\"" + Company + "\")]");
                     content = fileVersion.Replace(content, "assembly: AssemblyFileVersion(\"0.1.0.0\")]");
                     content = assemblyVersion.Replace(content, "assembly: AssemblyVersion(\"0.1.0.0\")]");

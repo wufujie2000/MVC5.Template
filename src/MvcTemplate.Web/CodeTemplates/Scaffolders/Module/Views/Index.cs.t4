@@ -6,7 +6,7 @@
     <div class="widget-box">
         <div class="widget-header">
             <span class="widget-header-icon fa fa-th"></span>
-            <h5>@Headers.<#= Model.HeaderTitle #>Index</h5>
+            <h5>@Headers.<#= Model.Models #></h5>
             <div class="widget-header-buttons">
                 @if (Html.IsAuthorizedFor("Create"))
                 {

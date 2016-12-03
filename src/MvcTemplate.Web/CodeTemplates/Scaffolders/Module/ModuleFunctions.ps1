@@ -66,15 +66,15 @@ Function Scaffold-CshtmlTemplate([String]$Template, [String]$Project, [String]$O
         Return;
     }
 
-    $HeaderTitle = $Controller
-    if ($Area) { $HeaderTitle = $Area + $HeaderTitle }
+	$Models = Get-PluralizedWord $Model
 
     Add-ProjectItemViaTemplate `
         -OutputPath $OutputPath `
         -Template $Template `
         -Model @{ `
             View = $Model + "View"; `
-            HeaderTitle = $HeaderTitle; `
+            Models = $Models; `
+            Model = $Model; `
         } `
         -SuccessMessage "Added $Project\{0}." `
         -TemplateFolders $TemplateFolders `

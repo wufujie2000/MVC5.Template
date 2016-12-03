@@ -13,7 +13,7 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">
-                    <div class="form-actions col-sm-12 col-lg-7">
+                    <div class="form-actions col-xs-12 col-lg-7">
                         <input class="btn btn-primary" type="submit" value="@Actions.Submit" />
                     </div>
                 </div>

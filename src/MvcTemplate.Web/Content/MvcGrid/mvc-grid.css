@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 3.2.0
+ * Mvc.Grid 3.3.0
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -15,6 +15,7 @@
 
 .mvc-grid .filterable {
     padding-right: 30px;
+    position: relative;
 }
 
 .mvc-grid .sortable,

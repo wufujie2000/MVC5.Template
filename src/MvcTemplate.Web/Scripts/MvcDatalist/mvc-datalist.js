@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 4.1.0
+ * Datalist 4.1.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -132,16 +132,14 @@
 
                         setTimeout(function () {
                             var dialog = datalist.dialog('open').parent();
-                            dialog.position({
-                                my: "center",
-                                at: "center",
-                                of: window
-                            });
 
                             if (parseInt(dialog.css('left')) < 0) {
                                 dialog.css('left', 0);
                             }
-                            if (parseInt(dialog.css('top')) < 0) {
+                            if (parseInt(dialog.css('top')) > 100) {
+                                dialog.css('top', '100px');
+                            }
+                            else if (parseInt(dialog.css('top')) < 0) {
                                 dialog.css('top', 0);
                             }
                         }, 100);

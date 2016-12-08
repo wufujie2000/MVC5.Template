@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 3.2.0
+ * Mvc.Grid 3.3.0
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -12,11 +12,13 @@ var MvcGrid = (function () {
         this.columns = [];
         this.element = grid;
         options = options || {};
+        this.data = options.data;
         this.name = grid.attr('id') || '';
         this.rowClicked = options.rowClicked;
         this.reloadEnded = options.reloadEnded;
         this.reloadFailed = options.reloadFailed;
         this.reloadStarted = options.reloadStarted;
+        this.requestType = options.requestType || 'get';
         this.sourceUrl = options.sourceUrl || grid.data('source-url') || '';
         this.filters = $.extend({
             'Text': new MvcGridTextFilter(),
@@ -98,7 +100,11 @@ var MvcGrid = (function () {
             return column;
         },
         set: function (grid, options) {
+            grid.data = options.data || grid.data;
+            grid.query = options.query || grid.query;
             grid.filters = $.extend(grid.filters, options.filters);
+            grid.requestType = options.requestType || grid.requestType;
+
             grid.rowClicked = options.rowClicked || grid.rowClicked;
             grid.reloadEnded = options.reloadEnded || grid.reloadEnded;
             grid.reloadFailed = options.reloadFailed || grid.reloadFailed;
@@ -170,6 +176,8 @@ var MvcGrid = (function () {
             if (grid.sourceUrl) {
                 $.ajax({
                     cache: false,
+                    data: grid.data,
+                    type: grid.requestType,
                     url: grid.sourceUrl + '?' + grid.query
                 }).done(function (result) {
                     grid.element.hide();
@@ -179,10 +187,12 @@ var MvcGrid = (function () {
                         reloadStarted: grid.reloadStarted,
                         reloadFailed: grid.reloadFailed,
                         reloadEnded: grid.reloadEnded,
+                        requestType: grid.requestType,
                         rowClicked: grid.rowClicked,
                         sourceUrl: grid.sourceUrl,
                         filters: grid.filters,
                         query: grid.query,
+                        data: grid.data,
                         isLoaded: true
                     }).data('mvc-grid');
                     grid.element.remove();
@@ -202,11 +212,13 @@ var MvcGrid = (function () {
         },
         renderFilter: function (grid, column) {
             var popup = $('body').children('.mvc-grid-popup');
-            var gridFilter = grid.filters[column.filter.name];
+            var filter = grid.filters[column.filter.name];
+            $(window).off('resize.mvcgrid');
+            $(window).off('click.mvcgrid');
 
-            if (gridFilter) {
-                gridFilter.render(grid, popup, column.filter);
-                gridFilter.init(grid, column, popup);
+            if (filter) {
+                filter.render(grid, popup, column.filter);
+                filter.init(grid, column, popup);
 
                 grid.setFilterPosition(grid, column, popup);
                 popup.addClass('open');
@@ -219,8 +231,13 @@ var MvcGrid = (function () {
                         popup.removeClass('open');
                     }
                 });
+
+                $(window).on('resize.mvcgrid', function () {
+                    if (popup.hasClass('open')) {
+                        grid.setFilterPosition(grid, column, popup);
+                    }
+                });
             } else {
-                $(window).off('click.mvcgrid');
                 popup.removeClass('open');
             }
         },
@@ -784,7 +801,4 @@ $.fn.mvcgrid.lang = {
 };
 $(function () {
     $('body').append('<div class="mvc-grid-popup"></div>');
-    $(window).resize(function () {
-        $('.mvc-grid-popup').removeClass('open');
-    });
 });

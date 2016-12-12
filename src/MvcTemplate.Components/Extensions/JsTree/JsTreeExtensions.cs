@@ -16,7 +16,7 @@ namespace MvcTemplate.Components.Extensions
             return new MvcHtmlString(HiddenIdsFor(name, model) + JsTreeFor(name, model));
         }
 
-        private static void Add(TagBuilder tree, IList<JsTreeNode> nodes)
+        private static void Add(TagBuilder tree, List<JsTreeNode> nodes)
         {
             if (nodes.Count == 0) return;
 

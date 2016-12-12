@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Objects;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,18 +16,20 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
     {
         private DbEntityEntry<BaseModel> entry;
         private TestingContext context;
-        private Role model;
+        private TestModel model;
 
         public LoggableEntityTests()
         {
             using (context = new TestingContext())
             {
+                context.Set<TestModel>().RemoveRange(context.Set<TestModel>());
+                context.Set<TestModel>().Add(ObjectFactory.CreateTestModel());
+                context.Set<Role>().Add(ObjectFactory.CreateRole());
                 context.DropData();
-                SetUpData();
             }
 
             context = new TestingContext();
-            model = context.Set<Role>().Single();
+            model = context.Set<TestModel>().Single();
             entry = context.Entry<BaseModel>(model);
         }
         public void Dispose()
@@ -68,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
             context.Dispose();
             String title = model.Title;
             context = new TestingContext();
-            context.Set<Role>().Attach(model);
+            context.Set<TestModel>().Attach(model);
 
             entry = context.Entry<BaseModel>(model);
             entry.OriginalValues["Title"] = "Role";
@@ -107,20 +110,22 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void LoggableEntity_SetsEntityTypeNameFromProxy()
         {
-            String actual = new LoggableEntity(entry).Name;
+            DbEntityEntry<BaseModel> proxy = context.Entry<BaseModel>(context.Set<Role>().Single());
+
+            String actual = new LoggableEntity(proxy).Name;
             String expected = typeof(Role).Name;
 
-            Assert.Equal("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
+            Assert.Equal("System.Data.Entity.DynamicProxies", proxy.Entity.GetType().Namespace);
             Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void LoggableEntity_SetsEntityTypeName()
         {
-            entry = context.Entry<BaseModel>(context.Set<Role>().Add(new Role()));
+            entry = context.Entry<BaseModel>(context.Set<TestModel>().Add(new TestModel()));
 
             String actual = new LoggableEntity(entry).Name;
-            String expected = typeof(Role).Name;
+            String expected = typeof(TestModel).Name;
 
             Assert.NotEqual("System.Data.Entity.DynamicProxies", entry.Entity.GetType().Namespace);
             Assert.Equal(expected, actual);
@@ -156,12 +161,6 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         #endregion
 
         #region Test helpers
-
-        private void SetUpData()
-        {
-            context.Set<Role>().Add(ObjectFactory.CreateRole());
-            context.SaveChanges();
-        }
 
         private void AsssertProperties(DbPropertyValues newValues)
         {

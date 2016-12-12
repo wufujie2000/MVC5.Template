@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Data.Logging;
 using MvcTemplate.Objects;
 using MvcTemplate.Tests.Data;
+using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,10 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         {
             context = new TestingContext();
             logger = new AuditLogger(context, 1);
-            Role model = ObjectFactory.CreateRole();
+            TestModel model = ObjectFactory.CreateTestModel();
             TestingContext dataContext = new TestingContext();
 
-            entry = dataContext.Entry<BaseModel>(dataContext.Set<Role>().Add(model));
+            entry = dataContext.Entry<BaseModel>(dataContext.Set<TestModel>().Add(model));
             dataContext.Set<AuditLog>().RemoveRange(dataContext.Set<AuditLog>());
             dataContext.DropData();
         }
@@ -88,7 +89,7 @@ namespace MvcTemplate.Tests.Unit.Data.Logging
         [Fact]
         public void Log_Modified()
         {
-            (entry.Entity as Role).Title += "Test";
+            (entry.Entity as TestModel).Title += "Test";
             entry.State = EntityState.Modified;
 
             logger.Log(new[] { entry });

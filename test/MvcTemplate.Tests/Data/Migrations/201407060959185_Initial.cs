@@ -80,6 +80,16 @@ namespace MvcTemplate.Tests.Data.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
+            CreateTable(
+                "dbo.TestModel",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(maxLength: 128),
+                        CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
@@ -93,6 +103,7 @@ namespace MvcTemplate.Tests.Data.Migrations
             DropIndex("dbo.Account", new[] { "RoleId" });
             DropIndex("dbo.Account", new[] { "Email" });
             DropIndex("dbo.Account", new[] { "Username" });
+            DropTable("dbo.TestModel");
             DropTable("dbo.AuditLog");
             DropTable("dbo.Permission");
             DropTable("dbo.RolePermission");

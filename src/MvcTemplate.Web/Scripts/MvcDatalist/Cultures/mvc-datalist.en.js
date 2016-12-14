@@ -2,6 +2,6 @@
 window.cultures.datalist = window.cultures.datalist || {};
 window.cultures.datalist['en'] = {
     Error: "Error while retrieving records",
-    NoDataFound: "No data found",
+    NoData: "No data found",
     Search: "Search..."
 };

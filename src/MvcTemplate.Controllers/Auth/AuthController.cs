@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Components.Alerts;
-using MvcTemplate.Components.Mail;
+﻿using MvcTemplate.Components.Mail;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.Administration.Accounts.AccountView;
 using MvcTemplate.Services;
@@ -51,7 +50,7 @@ namespace MvcTemplate.Controllers
                     String.Format(Messages.RecoveryEmailBody, url));
             }
 
-            Alerts.Add(AlertType.Info, Messages.RecoveryInformation, 0);
+            Alerts.AddInfo(Messages.RecoveryInformation);
 
             return RedirectIfAuthorized("Login");
         }
@@ -80,7 +79,7 @@ namespace MvcTemplate.Controllers
 
             Service.Reset(account);
 
-            Alerts.Add(AlertType.Success, Messages.SuccessfulReset);
+            Alerts.AddSuccess(Messages.SuccessfulReset, 4000);
 
             return RedirectIfAuthorized("Login");
         }

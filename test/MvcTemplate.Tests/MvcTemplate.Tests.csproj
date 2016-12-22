@@ -216,7 +216,7 @@
     <Compile Include="Unit\Controllers\ServicedControllerTests.cs" />
     <Compile Include="Unit\Data\Logging\AuditLoggerTests.cs" />
     <Compile Include="Unit\Data\Logging\LoggableEntityTests.cs" />
-    <Compile Include="Unit\Data\Core\SelectTests.cs" />
+    <Compile Include="Unit\Data\Core\QueryTests.cs" />
     <Compile Include="Unit\Data\Core\UnitOfWorkTests.cs" />
     <Compile Include="Unit\Data\Mapping\ObjectMapperTests.cs" />
     <Compile Include="Helpers\HtmlHelperFactory.cs" />

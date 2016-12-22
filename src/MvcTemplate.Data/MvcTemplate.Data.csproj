@@ -64,9 +64,9 @@
     <Compile Include="Logging\LoggableProperty.cs" />
     <Compile Include="Mapping\ObjectMapper.cs" />
     <Compile Include="Core\Context.cs" />
-    <Compile Include="Core\ISelect.cs" />
+    <Compile Include="Core\IQuery.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
-    <Compile Include="Core\Select.cs" />
+    <Compile Include="Core\Query.cs" />
     <Compile Include="Core\UnitOfWork.cs" />
     <Compile Include="Migrations\201407060959049_Initial.cs" />
     <Compile Include="Migrations\201407060959049_Initial.Designer.cs">

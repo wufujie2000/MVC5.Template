@@ -14,7 +14,9 @@ namespace MvcTemplate.Web
         private void RegisterScripts(BundleCollection bundles)
         {
             Bundle privateBundle = new ScriptBundle("~/Scripts/Private/Bundle")
+                .Include("~/Scripts/JQuery/jquery.js")
                 .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
+                .Include("~/Scripts/JQueryUI/jquery-ui.js")
                 .IncludeDirectory("~/Scripts/JQueryUI", "*.js", true)
                 .IncludeDirectory("~/Scripts/MvcDatalist", "*.js", true)
                 .IncludeDirectory("~/Scripts/MvcGrid", "*.js", true)
@@ -23,6 +25,7 @@ namespace MvcTemplate.Web
                 .Include("~/Scripts/Shared/*.js");
 
             Bundle publicBundle = new ScriptBundle("~/Scripts/Public/Bundle")
+                .Include("~/Scripts/JQuery/jquery.js")
                 .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
                 .Include("~/Scripts/Bootstrap/*.js")
                 .Include("~/Scripts/Shared/*.js");

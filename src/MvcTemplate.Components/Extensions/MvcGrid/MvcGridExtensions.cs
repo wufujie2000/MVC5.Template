@@ -119,7 +119,7 @@ namespace MvcTemplate.Components.Extensions
                 throw new Exception(String.Format("{0} type does not have a key property.", typeof(T).Name));
 
             RouteValueDictionary route = new RouteValueDictionary();
-            route.Add(key.Name, key.GetValue(model));
+            route[key.Name] = key.GetValue(model);
 
             return route;
         }

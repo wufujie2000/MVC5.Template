@@ -15,7 +15,7 @@ namespace MvcTemplate.Components.Mvc
         {
             ModelClientValidationRule rule = new ModelClientValidationRule();
             Decimal bytes = Attribute.MaximumMB * 1024 * 1024;
-            rule.ValidationParameters.Add("max", bytes);
+            rule.ValidationParameters["max"] = bytes;
             rule.ErrorMessage = ErrorMessage;
             rule.ValidationType = "filesize";
 

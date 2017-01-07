@@ -13,7 +13,7 @@ namespace MvcTemplate.Components.Mvc
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
             ModelClientValidationRule rule = new ModelClientValidationRule();
-            rule.ValidationParameters.Add("min", Attribute.Minimum);
+            rule.ValidationParameters["min"] = Attribute.Minimum;
             rule.ErrorMessage = ErrorMessage;
             rule.ValidationType = "range";
 

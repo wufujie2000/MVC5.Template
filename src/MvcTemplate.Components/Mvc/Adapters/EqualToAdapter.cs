@@ -17,7 +17,7 @@ namespace MvcTemplate.Components.Mvc
             Attribute.OtherPropertyDisplayName = Attribute.OtherPropertyDisplayName ?? Attribute.OtherPropertyName;
 
             ModelClientValidationRule rule = new ModelClientValidationRule();
-            rule.ValidationParameters.Add("other", "*." + Attribute.OtherPropertyName);
+            rule.ValidationParameters["other"] = "*." + Attribute.OtherPropertyName;
             rule.ErrorMessage = ErrorMessage;
             rule.ValidationType = "equalto";
 

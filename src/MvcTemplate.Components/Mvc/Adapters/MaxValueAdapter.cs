@@ -13,7 +13,7 @@ namespace MvcTemplate.Components.Mvc
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
             ModelClientValidationRule rule = new ModelClientValidationRule();
-            rule.ValidationParameters.Add("max", Attribute.Maximum);
+            rule.ValidationParameters["max"] = Attribute.Maximum;
             rule.ErrorMessage = ErrorMessage;
             rule.ValidationType = "range";
 

@@ -5,13 +5,7 @@ namespace MvcTemplate.Controllers.Administration
 {
     public class AdministrationAreaRegistration : AreaRegistration
     {
-        public override String AreaName
-        {
-            get
-            {
-                return "Administration";
-            }
-        }
+        public override String AreaName => "Administration";
 
         public override void RegisterArea(AreaRegistrationContext context)
         {

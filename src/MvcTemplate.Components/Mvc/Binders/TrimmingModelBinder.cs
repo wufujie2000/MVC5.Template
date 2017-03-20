@@ -8,10 +8,8 @@ namespace MvcTemplate.Components.Mvc
         public Object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             ValueProviderResult value = GetValue(controllerContext.Controller, bindingContext);
-            if (value == null || value.AttemptedValue == null)
-               return null;
 
-            return value.AttemptedValue.Trim();
+            return value?.AttemptedValue?.Trim();
         }
 
         private ValueProviderResult GetValue(ControllerBase controller, ModelBindingContext context)

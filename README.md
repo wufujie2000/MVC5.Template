@@ -7,8 +7,6 @@
 3. Set Web as default start up project.
 4. Install necessary VS extensions if you don't have them already:
   - Web Essentials.
-  - If you are using VS2013, download [Windows Management Framework 4.0](http://www.microsoft.com/en-us/download/details.aspx?id=40855). Which is needed for VS2013 scaffolding to work.
-  - If you area using VS2015, remove T4Scaffolding.Core package, because VS2015 does not support this kind of scaffolding.
 5. Open "Package Manager Console" and run "update-database" command on "Data" project.
 
 # Features

@@ -9,32 +9,11 @@ namespace MvcTemplate.Data.Core
 {
     public class Query<TModel> : IQuery<TModel>
     {
-        public Type ElementType
-        {
-            get
-            {
-                return Set.ElementType;
-            }
-        }
-        public Expression Expression
-        {
-            get
-            {
-                return Set.Expression;
-            }
-        }
-        public IQueryProvider Provider
-        {
-            get
-            {
-                return Set.Provider;
-            }
-        }
-        private IQueryable<TModel> Set
-        {
-            get;
-            set;
-        }
+        public Type ElementType => Set.ElementType;
+        public Expression Expression => Set.Expression;
+        public IQueryProvider Provider => Set.Provider;
+
+        private IQueryable<TModel> Set { get; set; }
 
         public Query(IQueryable<TModel> set)
         {

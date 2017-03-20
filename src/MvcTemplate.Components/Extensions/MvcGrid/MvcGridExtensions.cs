@@ -116,7 +116,7 @@ namespace MvcTemplate.Components.Extensions
                 .FirstOrDefault(property => property.IsDefined(typeof(KeyAttribute), false));
 
             if (key == null)
-                throw new Exception(String.Format("{0} type does not have a key property.", typeof(T).Name));
+                throw new Exception($"{typeof(T).Name} type does not have a key property.");
 
             RouteValueDictionary route = new RouteValueDictionary();
             route[key.Name] = key.GetValue(model);

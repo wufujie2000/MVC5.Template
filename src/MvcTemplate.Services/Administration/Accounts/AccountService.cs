@@ -10,7 +10,7 @@ namespace MvcTemplate.Services
 {
     public class AccountService : BaseService, IAccountService
     {
-        private IHasher Hasher { get; set; }
+        private IHasher Hasher { get; }
 
         public AccountService(IUnitOfWork unitOfWork, IHasher hasher)
             : base(unitOfWork)

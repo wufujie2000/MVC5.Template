@@ -14,7 +14,7 @@ namespace MvcTemplate.Controllers
     [SessionState(SessionStateBehavior.ReadOnly)]
     public class DatalistController : BaseController
     {
-        private IUnitOfWork UnitOfWork { get; set; }
+        private IUnitOfWork UnitOfWork { get; }
 
         public DatalistController(IUnitOfWork unitOfWork)
         {

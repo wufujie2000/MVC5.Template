@@ -11,9 +11,9 @@ namespace MvcTemplate.Data.Logging
 {
     public class AuditLogger : IAuditLogger
     {
-        private Int32? AccountId { get; set; }
-        private DbContext Context { get; set; }
-        private List<LoggableEntity> Entities { get; set; }
+        private Int32? AccountId { get; }
+        private DbContext Context { get; }
+        private List<LoggableEntity> Entities { get; }
 
         public AuditLogger(DbContext context)
         {

@@ -114,9 +114,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_Expression()
         {
             String actual = html.FormTextBoxFor(x => x.Number).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Number\" name=\"Number\" type=\"text\" value=\"{0}\" />",
-                model.Number);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"Number\" name=\"Number\" type=\"text\" value=\"{model.Number}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -125,9 +123,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_EditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
-                model.EditableTrue);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{model.EditableTrue}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -136,9 +132,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_NotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -151,9 +145,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_FormattedEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}").ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
-                model.EditableTrue);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{model.EditableTrue}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -162,9 +154,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_FormattedNotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}").ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -173,9 +163,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_FormattedExpression()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}").ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
-                String.Format("{0:0.00}", model.Relation.Number));
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{model.Relation.Number:0.00}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -188,9 +176,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_MergesClassAttributes()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{model.Relation.NotRequired}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -199,9 +185,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_OverwrittenAutocompleteAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, new { autocomplete = "on" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
+            String expected = $"<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{model.Relation.NotRequired}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -210,9 +194,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_OverwrittenReadOnlyAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, new { @readonly = "false" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -221,9 +203,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, new { data_tab = "Test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
-                model.EditableTrue);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{model.EditableTrue}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -232,9 +212,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedNotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, new { data_tab = "Test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -247,9 +225,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedFormat_MergesClassAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.Number, "{0:0.00}", new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{0}\" />",
-                String.Format("{0:0.00}", model.Relation.Number));
+            String expected = $"<input autocomplete=\"off\" class=\"form-control test\" id=\"Relation_Number\" name=\"Relation.Number\" type=\"text\" value=\"{model.Relation.Number:0.00}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -258,9 +234,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedFormat_OverwritesAutocompleteAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.Relation.NotRequired, "{0}", new { autocomplete = "on" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{0}\" />",
-                model.Relation.NotRequired);
+            String expected = $"<input autocomplete=\"on\" class=\"form-control\" id=\"Relation_NotRequired\" name=\"Relation.NotRequired\" type=\"text\" value=\"{model.Relation.NotRequired}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -269,9 +243,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedFormat_OverwritesReadOnlyAttribute()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { @readonly = "false" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"false\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -280,9 +252,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedFormat_EditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableTrue, "{0}", new { data_tab = "Test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{0}\" />",
-                model.EditableTrue);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableTrue\" name=\"EditableTrue\" type=\"text\" value=\"{model.EditableTrue}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -291,9 +261,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextBoxFor_AttributedFormat_NotEditableExpression()
         {
             String actual = html.FormTextBoxFor(x => x.EditableFalse, "{0}", new { data_tab = "Test" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{0}\" />",
-                model.EditableFalse);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control\" data-tab=\"Test\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" type=\"text\" value=\"{model.EditableFalse}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -319,9 +287,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_Expression()
         {
             String actual = html.FormTextAreaFor(x => x.Number).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"Number\" name=\"Number\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.Number);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"Number\" name=\"Number\" rows=\"6\">{Environment.NewLine + model.Number}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -330,9 +296,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_EditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableTrue).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.EditableTrue);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{Environment.NewLine + model.EditableTrue}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -341,9 +305,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_NotEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableFalse).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.EditableFalse);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{Environment.NewLine + model.EditableFalse}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -356,9 +318,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_AttributedEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableTrue, new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.EditableTrue);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableTrue\" name=\"EditableTrue\" rows=\"6\">{Environment.NewLine + model.EditableTrue}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -367,9 +327,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_AttributedNotEditableExpression()
         {
             String actual = html.FormTextAreaFor(x => x.EditableFalse, new { @class = "test" }).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{0}</textarea>",
-                Environment.NewLine + model.EditableFalse);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control test\" cols=\"20\" id=\"EditableFalse\" name=\"EditableFalse\" readonly=\"readonly\" rows=\"6\">{Environment.NewLine + model.EditableFalse}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -378,9 +336,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public void FormTextAreaFor_OverwrittenRows()
         {
             String actual = html.FormTextAreaFor(x => x.NotRequired, new { rows = "12" }).ToString();
-            String expected = String.Format(
-                "<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"NotRequired\" name=\"NotRequired\" rows=\"12\">{0}</textarea>",
-                Environment.NewLine + model.NotRequired);
+            String expected = $"<textarea autocomplete=\"off\" class=\"form-control\" cols=\"20\" id=\"NotRequired\" name=\"NotRequired\" rows=\"12\">{Environment.NewLine + model.NotRequired}</textarea>";
 
             Assert.Equal(expected, actual);
         }
@@ -395,9 +351,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0:yyyy/MM/dd}\" />",
-                model.Relation.Date);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{model.Relation.Date:yyyy/MM/dd}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -412,9 +366,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDatePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0:yyyy/MM/dd}\" />",
-                model.Relation.Date);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control datepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{model.Relation.Date:yyyy/MM/dd}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -429,9 +381,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{0:yyyy/MM/dd H:mm}\" />",
-                model.Relation.Date);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" type=\"text\" value=\"{model.Relation.Date:yyyy/MM/dd H:mm}\" />";
 
             Assert.Equal(expected, actual);
         }
@@ -446,9 +396,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ja-JP");
 
             String actual = html.FormDateTimePickerFor(x => x.Relation.Date, new { @readonly = "readonly" }).ToString();
-            String expected = String.Format(
-                "<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{0:yyyy/MM/dd H:mm}\" />",
-                model.Relation.Date);
+            String expected = $"<input autocomplete=\"off\" class=\"form-control datetimepicker\" id=\"Relation_Date\" name=\"Relation.Date\" readonly=\"readonly\" type=\"text\" value=\"{model.Relation.Date:yyyy/MM/dd H:mm}\" />";
 
             Assert.Equal(expected, actual);
         }

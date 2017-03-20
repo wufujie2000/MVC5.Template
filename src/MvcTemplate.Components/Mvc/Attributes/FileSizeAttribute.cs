@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Mvc
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class FileSizeAttribute : ValidationAttribute
     {
-        public Decimal MaximumMB { get; private set; }
+        public Decimal MaximumMB { get; }
 
         public FileSizeAttribute(Double maximumMB)
             : base(() => Validations.FileSize)
@@ -29,7 +29,7 @@ namespace MvcTemplate.Components.Mvc
             if (files == null)
                 return true;
 
-            return files.Sum(file => file == null ? 0 : file.ContentLength) <= MaximumMB * 1024 * 1024;
+            return files.Sum(file => file?.ContentLength ?? 0) <= MaximumMB * 1024 * 1024;
         }
 
         private IEnumerable<HttpPostedFileBase> ToFiles(Object value)

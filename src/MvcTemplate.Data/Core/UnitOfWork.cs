@@ -12,8 +12,8 @@ namespace MvcTemplate.Data.Core
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IAuditLogger Logger { get; set; }
-        private DbContext Context { get; set; }
+        private IAuditLogger Logger { get; }
+        private DbContext Context { get; }
 
         public UnitOfWork(DbContext context, IAuditLogger logger = null)
         {
@@ -72,18 +72,16 @@ namespace MvcTemplate.Data.Core
 
         public void Commit()
         {
-            if (Logger != null)
-                Logger.Log(Context.ChangeTracker.Entries<BaseModel>());
+            Logger?.Log(Context.ChangeTracker.Entries<BaseModel>());
 
             Context.SaveChanges();
 
-            if (Logger != null)
-                Logger.Save();
+            Logger?.Save();
         }
 
         public void Dispose()
         {
-            if (Logger != null) Logger.Dispose();
+            Logger?.Dispose();
             Context.Dispose();
         }
     }

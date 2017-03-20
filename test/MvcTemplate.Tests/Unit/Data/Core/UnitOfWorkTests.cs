@@ -43,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void GetAs_ReturnsModelAsDestinationModelById()
         {
-            context.Set<TestModel>().Add(model);;
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             TestView expected = Mapper.Map<TestView>(model);
@@ -61,7 +61,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Get_ModelById()
         {
-            context.Set<TestModel>().Add(model);;
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             TestModel expected = context.Set<TestModel>().AsNoTracking().Single();
@@ -100,7 +100,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Select_FromSet()
         {
-            context.Set<TestModel>().Add(model);;
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             IEnumerable<TestModel> actual = unitOfWork.Select<TestModel>();
@@ -193,7 +193,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Delete_Model()
         {
-            context.Set<TestModel>().Add(model);;
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             unitOfWork.Delete(model);
@@ -209,7 +209,7 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void Delete_ModelById()
         {
-            context.Set<TestModel>().Add(model);;
+            context.Set<TestModel>().Add(model);
             context.SaveChanges();
 
             unitOfWork.Delete<TestModel>(model.Id);

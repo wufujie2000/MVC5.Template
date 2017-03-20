@@ -7,13 +7,7 @@ namespace <#= Model.ControllerNamespace #>
 {
     public class <#= Model.AreaRegistration #> : AreaRegistration
     {
-        public override String AreaName
-        {
-            get
-            {
-                return "<#= Model.Area #>";
-            }
-        }
+        public override String AreaName => "<#= Model.Area #>";
 
         public override void RegisterArea(AreaRegistrationContext context)
         {

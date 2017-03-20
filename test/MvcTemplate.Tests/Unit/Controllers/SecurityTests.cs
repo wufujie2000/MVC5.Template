@@ -24,9 +24,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             foreach (MethodInfo method in methods)
                 Assert.True(method.IsDefined(typeof(ValidateAntiForgeryTokenAttribute), false),
-                    String.Format("{0}.{1} method does not have ValidateAntiForgeryToken attribute specified.",
-                        method.ReflectedType.Name,
-                        method.Name));
+                    $"{method.ReflectedType.Name}.{method.Name} method does not have ValidateAntiForgeryToken attribute specified.");
         }
 
         #endregion

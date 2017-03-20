@@ -12,7 +12,6 @@ namespace MvcTemplate.Components.Mvc
         public Language Default
         {
             get;
-            private set;
         }
         public Language Current
         {
@@ -29,12 +28,10 @@ namespace MvcTemplate.Components.Mvc
         public Language[] Supported
         {
             get;
-            private set;
         }
         private Dictionary<String, Language> Dictionary
         {
             get;
-            set;
         }
 
         public Languages(String path)
@@ -57,12 +54,6 @@ namespace MvcTemplate.Components.Mvc
             Default = Supported.Single(language => language.IsDefault);
         }
 
-        public Language this[String abbreviation]
-        {
-            get
-            {
-                return Dictionary[abbreviation];
-            }
-        }
+        public Language this[String abbreviation] => Dictionary[abbreviation];
     }
 }

@@ -11,8 +11,8 @@ namespace MvcTemplate.Components.Security
 {
     public class AuthorizationProvider : IAuthorizationProvider
     {
-        private IEnumerable<Type> Controllers { get; set; }
-        private Dictionary<String, String> Required { get; set; }
+        private IEnumerable<Type> Controllers { get; }
+        private Dictionary<String, String> Required { get; }
         private Dictionary<Int32, HashSet<String>> Permissions { get; set; }
 
         public AuthorizationProvider(Assembly controllers)

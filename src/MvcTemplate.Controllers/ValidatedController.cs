@@ -9,7 +9,7 @@ namespace MvcTemplate.Controllers
         where TValidator : IValidator
         where TService : IService
     {
-        public TValidator Validator { get; private set; }
+        public TValidator Validator { get; }
 
         protected ValidatedController(TValidator validator, TService service)
             : base(service)

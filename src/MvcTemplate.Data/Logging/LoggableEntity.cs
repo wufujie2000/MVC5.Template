@@ -11,11 +11,11 @@ namespace MvcTemplate.Data.Logging
 {
     public class LoggableEntity
     {
+        private static String IdName { get; }
         public String Name { get; private set; }
         public String Action { get; private set; }
-        private static String IdName { get; set; }
         public Func<Int32> Id { get; private set; }
-        public IEnumerable<LoggableProperty> Properties { get; private set; }
+        public IEnumerable<LoggableProperty> Properties { get; }
 
         static LoggableEntity()
         {

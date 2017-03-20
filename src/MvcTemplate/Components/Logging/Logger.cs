@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Logging
 {
     public class Logger : ILogger
     {
-        private Int32? AccountId { get; set; }
+        private Int32? AccountId { get; }
         private static Object LogWriting = new Object();
 
         public Logger()
@@ -42,7 +42,7 @@ namespace MvcTemplate.Components.Logging
                 File.AppendAllText(logPath, log.ToString());
 
                 if (new FileInfo(logPath).Length >= backupSize)
-                    File.Move(logPath, Path.Combine(logDirectoryPath, String.Format("Log {0:yyyy-MM-dd HHmmss}.txt", DateTime.Now)));
+                    File.Move(logPath, Path.Combine(logDirectoryPath, $"Log {DateTime.Now:yyyy-MM-dd HHmmss}.txt"));
             }
         }
         public void Log(Exception exception)
@@ -50,11 +50,7 @@ namespace MvcTemplate.Components.Logging
             while (exception.InnerException != null)
                 exception = exception.InnerException;
 
-            String message = String.Format("{0}: {1}{2}{3}",
-                exception.GetType(),
-                exception.Message,
-                Environment.NewLine,
-                exception.StackTrace);
+            String message = $"{exception.GetType()}: {exception.Message}{Environment.NewLine}{exception.StackTrace}";
 
             Log(message);
         }

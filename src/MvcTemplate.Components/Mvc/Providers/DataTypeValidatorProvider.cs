@@ -6,7 +6,7 @@ namespace MvcTemplate.Components.Mvc
 {
     public class DataTypeValidatorProvider : ClientDataTypeModelValidatorProvider
     {
-        private HashSet<Type> NumericTypes { get; set; }
+        private HashSet<Type> NumericTypes { get; }
 
         public DataTypeValidatorProvider()
         {

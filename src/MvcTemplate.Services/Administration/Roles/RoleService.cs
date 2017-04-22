@@ -104,7 +104,7 @@ namespace MvcTemplate.Services
 
             UnitOfWork.Commit();
 
-            Authorization.Provider.Refresh();
+            Authorization.Provider?.Refresh();
         }
         public void Delete(Int32 id)
         {
@@ -115,7 +115,7 @@ namespace MvcTemplate.Services
 
             UnitOfWork.Commit();
 
-            Authorization.Provider.Refresh();
+            Authorization.Provider?.Refresh();
         }
 
         private void Edit(Role role, RoleView view)

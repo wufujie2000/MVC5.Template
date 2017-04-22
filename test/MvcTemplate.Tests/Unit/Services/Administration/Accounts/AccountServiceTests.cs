@@ -33,7 +33,6 @@ namespace MvcTemplate.Tests.Unit.Services
             context.DropData();
             SetUpData();
 
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             service = new AccountService(new UnitOfWork(context), hasher);
             service.CurrentAccountId = account.Id;
         }
@@ -226,6 +225,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_RefreshesAuthorization()
         {
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+
             AccountCreateView view = ObjectFactory.CreateAccountCreateView(1);
             view.RoleId = null;
 
@@ -266,6 +267,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_RefreshesAuthorization()
         {
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+
             AccountEditView view = ObjectFactory.CreateAccountEditView(account.Id);
             view.RoleId = account.RoleId;
 
@@ -334,6 +337,8 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Delete_RefreshesAuthorization()
         {
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
+
             service.Delete(account.Id);
 
             Authorization.Provider.Received().Refresh();

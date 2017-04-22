@@ -72,7 +72,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Insert(account);
             UnitOfWork.Commit();
 
-            Authorization.Provider.Refresh();
+            Authorization.Provider?.Refresh();
         }
         public void Edit(AccountEditView view)
         {
@@ -85,7 +85,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Update(account);
             UnitOfWork.Commit();
 
-            Authorization.Provider.Refresh();
+            Authorization.Provider?.Refresh();
         }
 
         public void Edit(ProfileEditView view)
@@ -105,7 +105,7 @@ namespace MvcTemplate.Services
             UnitOfWork.Delete<Account>(id);
             UnitOfWork.Commit();
 
-            Authorization.Provider.Refresh();
+            Authorization.Provider?.Refresh();
         }
 
         public void Login(String username)

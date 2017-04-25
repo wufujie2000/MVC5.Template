@@ -97,43 +97,39 @@
         $(this).focusout();
     });
 
-    $(document).on('change', '.datalist-hidden-input', function () {
+    $(document).on('change', '.datalist-value', function () {
         var validator = $(this).parents('form').validate();
 
         if (validator) {
-            var datalist = $(this).prevAll('[data-datalist-for="' + this.id + '"]');
+            var control = $(this).closest('.datalist').find('.datalist-control');
             if (validator.element('#' + this.id)) {
-                datalist.removeClass('input-validation-error');
+                control.removeClass('input-validation-error');
             } else {
-                datalist.addClass('input-validation-error');
+                control.addClass('input-validation-error');
             }
         }
     });
     $('form').on('invalid-form', function (form, validator) {
-        var datalists = $(this).find('.datalist-input');
-        for (var i = 0; i < datalists.length; i++) {
-            var datalist = $(datalists[i]);
-            var hiddenInputId = datalist.attr('data-datalist-for');
+        var values = $(this).find('.datalist-value');
+        for (var i = 0; i < values.length; i++) {
+            var control = $(values[i]).closest('.datalist').find('.datalist-control');
 
-            if (validator.invalid[hiddenInputId]) {
-                datalist.addClass('input-validation-error');
+            if (validator.invalid[values[i].id]) {
+                control.addClass('input-validation-error');
             } else {
-                datalist.removeClass('input-validation-error');
+                control.removeClass('input-validation-error');
             }
         }
     });
-    $(document).on('ready', function () {
-        var hiddenInputs = $('.datalist-hidden-input.input-validation-error');
-        for (var i = 0; i < hiddenInputs.length; i++) {
-            var hiddenInput = $(hiddenInputs[i]);
-            hiddenInput.prevAll('[data-datalist-for="' + hiddenInputs[i].id + '"]').addClass('input-validation-error');
-        }
-    });
+    var values = $('.datalist-value.input-validation-error');
+    for (var i = 0; i < values.length; i++) {
+        $(values[i]).closest('.datalist').find('.datalist-control').addClass('input-validation-error');
+    }
 
     var currentIgnore = $.validator.defaults.ignore;
     $.validator.setDefaults({
         ignore: function () {
-            return $(this).is(currentIgnore) && !$(this).hasClass('datalist-hidden-input');
+            return $(this).is(currentIgnore) && !$(this).hasClass('datalist-value');
         }
     });
 
@@ -234,6 +230,7 @@
 (function () {
     if ($.fn.datalist) {
         $.fn.datalist.lang = window.cultures.datalist[$('html').attr('lang')];
+        $('.datalist').datalist();
     }
 }());
 

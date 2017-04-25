@@ -24,6 +24,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,8 +50,8 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Datalist, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Datalist.Core.4.1.1\lib\net45\Datalist.dll</HintPath>
+    <Reference Include="Datalist.Core, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Datalist.Core.5.0.4\lib\net45\Datalist.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -61,16 +62,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="LightInject, Version=4.1.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.4.1.5\lib\net46\LightInject.dll</HintPath>
+    <Reference Include="LightInject, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.5.0.2\lib\net46\LightInject.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LightInject.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.Mvc.1.1.0\lib\net46\LightInject.Mvc.dll</HintPath>
+    <Reference Include="LightInject.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.Mvc.2.0.0\lib\net46\LightInject.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LightInject.Web, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\LightInject.Web.1.1.0\lib\net46\LightInject.Web.dll</HintPath>
+    <Reference Include="LightInject.Web, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\LightInject.Web.2.0.0\lib\net46\LightInject.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -79,12 +80,12 @@
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NonFactors.Mvc.Grid, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.3.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
+    <Reference Include="NonFactors.Mvc.Grid, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NonFactors.Grid.Core.Mvc5.3.4.0\lib\net45\NonFactors.Mvc.Grid.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -170,14 +171,12 @@
     <Content Include="Scripts\JQuery\Cultures\globalize.en.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.lt.js" />
     <Content Include="Scripts\MvcDatalist\mvc-datalist.js" />
-    <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js">
-      <DependentUpon>mvc-datalist.js</DependentUpon>
-    </Content>
+    <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.lt.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.en.js" />
+    <Content Include="Languages.config" />
     <Content Include="Scripts\MvcGrid\mvc-grid.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.min.js" />
-    <Content Include="Languages.config" />
     <Content Include="Views\Auth\Reset.cshtml" />
     <Content Include="Views\Administration\Accounts\Create.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Pager.cshtml" />

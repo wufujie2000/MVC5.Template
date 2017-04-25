@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 3.3.0
+ * Mvc.Grid 3.4.0
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -395,6 +395,7 @@ var MvcGridTextFilter = (function () {
                         '<select class="mvc-grid-type">' +
                             '<option value="Contains"' + (filter.second.type == 'Contains' ? ' selected="selected"' : '') + '>' + lang.Contains + '</option>' +
                             '<option value="Equals"' + (filter.second.type == 'Equals' ? ' selected="selected"' : '') + '>' + lang.Equals + '</option>' +
+                            '<option value="NotEquals"' + (filter.second.type == 'NotEquals' ? ' selected="selected"' : '') + '>' + lang.NotEquals + '</option>' +
                             '<option value="StartsWith"' + (filter.second.type == 'StartsWith' ? ' selected="selected"' : '') + '>' + lang.StartsWith + '</option>' +
                             '<option value="EndsWith"' + (filter.second.type == 'EndsWith' ? ' selected="selected"' : '') + '>' + lang.EndsWith + '</option>' +
                         '</select>' +
@@ -490,6 +491,7 @@ var MvcGridNumberFilter = (function () {
                      '<div class="second-filter popup-group">' +
                         '<select class="mvc-grid-type">' +
                             '<option value="Equals"' + (filter.second.type == 'Equals' ? ' selected="selected"' : '') + '>' + lang.Equals + '</option>' +
+                            '<option value="NotEquals"' + (filter.second.type == 'NotEquals' ? ' selected="selected"' : '') + '>' + lang.NotEquals + '</option>' +
                             '<option value="LessThan"' + (filter.second.type == 'LessThan' ? ' selected="selected"' : '') + '>' + lang.LessThan + '</option>' +
                             '<option value="GreaterThan"' + (filter.second.type == 'GreaterThan' ? ' selected="selected"' : '') + '>' + lang.GreaterThan + '</option>' +
                             '<option value="LessThanOrEqual"' + (filter.second.type == 'LessThanOrEqual' ? ' selected="selected"' : '') + '>' + lang.LessThanOrEqual + '</option>' +
@@ -576,7 +578,6 @@ var MvcGridDateFilter = (function () {
 
     MvcGridDateFilter.prototype = {
         render: function (grid, popup, filter) {
-            var filterInput = '<input class="mvc-grid-input" type="text" value="' + filter.first.val + '">';
             var filterLang = $.fn.mvcgrid.lang.Filter;
             var operator = $.fn.mvcgrid.lang.Operator;
             var lang = $.fn.mvcgrid.lang.Date;
@@ -595,7 +596,7 @@ var MvcGridDateFilter = (function () {
                         '</select>' +
                     '</div>' +
                     '<div class="first-filter popup-group">' +
-                        filterInput +
+                        '<input class="mvc-grid-input" type="text" value="' + filter.first.val + '">' +
                     '</div>' +
                     (filter.isMulti ?
                      '<div class="popup-group popup-group-operator">' +
@@ -608,6 +609,7 @@ var MvcGridDateFilter = (function () {
                      '<div class="second-filter popup-group">' +
                         '<select class="mvc-grid-type">' +
                             '<option value="Equals"' + (filter.second.type == 'Equals' ? ' selected="selected"' : '') + '>' + lang.Equals + '</option>' +
+                            '<option value="NotEquals"' + (filter.second.type == 'NotEquals' ? ' selected="selected"' : '') + '>' + lang.NotEquals + '</option>' +
                             '<option value="LessThan"' + (filter.second.type == 'LessThan' ? ' selected="selected"' : '') + '>' + lang.LessThan + '</option>' +
                             '<option value="GreaterThan"' + (filter.second.type == 'GreaterThan' ? ' selected="selected"' : '') + '>' + lang.GreaterThan + '</option>' +
                             '<option value="LessThanOrEqual"' + (filter.second.type == 'LessThanOrEqual' ? ' selected="selected"' : '') + '>' + lang.LessThanOrEqual + '</option>' +
@@ -615,7 +617,7 @@ var MvcGridDateFilter = (function () {
                         '</select>' +
                     '</div>' +
                     '<div class="second-filter popup-group">' +
-                        filterInput +
+                        '<input class="mvc-grid-input" type="text" value="' + filter.second.val + '">' +
                     '</div>' :
                      '') +
                     '<div class="popup-button-group">' +

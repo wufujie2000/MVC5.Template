@@ -33,7 +33,7 @@ namespace MvcTemplate.Web.DependencyInjection
 
             RegisterInstance<IMvcSiteMapParser, MvcSiteMapParser>();
             RegisterInstance<IMvcSiteMapProvider>(factory => new MvcSiteMapProvider(
-                HostingEnvironment.MapPath("~/Mvc.sitemap"), GetInstance<IMvcSiteMapParser>()));
+                HostingEnvironment.MapPath("~/Mvc.sitemap"), this.GetInstance<IMvcSiteMapParser>()));
 
             RegisterInstance<ILanguages>(factory => new Languages(HostingEnvironment.MapPath("~/Languages.config")));
             RegisterInstance<IAuthorizationProvider>(factory => new AuthorizationProvider(typeof(BaseController).Assembly));

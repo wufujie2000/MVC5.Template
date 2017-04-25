@@ -60,14 +60,5 @@ namespace MvcTemplate.Components.Datalists
         {
             return UnitOfWork.Select<TModel>().To<TView>();
         }
-
-        public override IQueryable<TView> FilterById(IQueryable<TView> models)
-        {
-            Int32 id;
-            if (!Int32.TryParse(Filter.Id, out id))
-                return Enumerable.Empty<TView>().AsQueryable();
-
-            return UnitOfWork.Select<TModel>().To<TView>().Where(model => model.Id == id);
-        }
     }
 }

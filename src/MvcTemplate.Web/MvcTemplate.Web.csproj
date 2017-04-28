@@ -138,7 +138,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Tests\AreaRegistrationTests.cs.t4" />
     <Content Include="Content\JQueryUI\jquery-ui.timepicker-addon.css" />
     <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.svg" />
@@ -159,8 +159,9 @@
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.eot" />
     <Content Include="Content\FontAwesome\Fonts\FontAwesome.otf" />
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="CodeTemplates\Scaffolders\Module\Members\ObjectCreation.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Members\ObjectCreation.cs.t4" />
     <Content Include="Content\FontAwesome\Fonts\fontawesome-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.en.js" />
     <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.lt.js" />
@@ -371,46 +372,46 @@
     <Content Include="Content\Shared\Auth\auth.less" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Module.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Module\Module.ps1" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\Model.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\Model.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\View.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\View.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\Service.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\Service.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\IService.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\IService.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\Controller.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\Controller.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Views\Index.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Views\Index.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Views\Create.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Views\Create.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Views\Details.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Views\Details.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Views\Edit.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Views\Edit.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Views\Delete.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Views\Delete.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ServiceTests.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Tests\ServiceTests.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ControllerTests.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Tests\ControllerTests.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
+    <None Include="CodeTemplates\Scaffolders\Module\ModuleFunctions.ps1" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Fonts\PTSans-Bold.woff" />
@@ -440,13 +441,13 @@
     <Content Include="Views\Auth\_AuthAlerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\IValidator.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\IValidator.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Controls\Validator.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Controls\Validator.cs.t4" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Tests\ValidatorTests.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Tests\ValidatorTests.cs.t4" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
@@ -458,7 +459,7 @@
     <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CodeTemplates\Scaffolders\Module\Members\DbSet.cs.t4" />
+    <None Include="CodeTemplates\Scaffolders\Module\Members\DbSet.cs.t4" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\Recover.cshtml" />

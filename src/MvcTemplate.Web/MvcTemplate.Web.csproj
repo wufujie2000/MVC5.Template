@@ -262,57 +262,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.min.js">
-      <DependentUpon>bootstrap.no-conflict.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.min.js">
-      <DependentUpon>bootstrap.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\jquery.js" />
-    <Content Include="Scripts\JQuery\jquery.min.js">
-      <DependentUpon>jquery.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQueryUI\jquery-ui.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui.min.js">
-      <DependentUpon>jquery-ui.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\MvcDatalist\Cultures\mvc-datalist.en.js" />
     <Content Include="Scripts\MvcDatalist\Cultures\mvc-datalist.lt.js" />
     <Content Include="Scripts\MvcDatalist\mvc-datalist.js" />
-    <Content Include="Scripts\MvcDatalist\mvc-datalist.min.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.en.js" />
     <Content Include="Scripts\MvcGrid\Cultures\mvc-grid.lt.js" />
     <Content Include="Scripts\MvcGrid\mvc-grid.js" />
-    <Content Include="Scripts\MvcGrid\mvc-grid.min.js" />
     <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.en.js" />
     <Content Include="Scripts\JQueryUI\Cultures\jquery-ui.lt.js" />
     <Content Include="Scripts\JQuery\jquery.validate.js" />
-    <Content Include="Scripts\JQuery\jquery.validate.min.js">
-      <DependentUpon>jquery.validate.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\jquery.globalize.js" />
-    <Content Include="Scripts\JQuery\jquery.globalize.min.js">
-      <DependentUpon>jquery.globalize.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\Cultures\globalize.lt.js" />
     <Content Include="Scripts\JQuery\Cultures\globalize.en.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui.no-conflict.min.js">
-      <DependentUpon>jquery-ui.no-conflict.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.min.js">
-      <DependentUpon>jquery.validate.unobtrusive.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.js" />
-    <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.min.js">
-      <DependentUpon>jquery-ui.timepicker-addon.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\JsTree\jstree.js" />
-    <Content Include="Scripts\JsTree\jstree.min.js">
-      <DependentUpon>jstree.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\Shared\site.js" />
     <Content Include="Scripts\Shared\menu.js" />
     <None Include="Scripts\_references.js" />

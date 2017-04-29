@@ -20,25 +20,24 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Datalist.Core, Version=5.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Datalist.Core.5.0.4\lib\net45\Datalist.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -50,17 +49,14 @@
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -68,45 +64,41 @@
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\Administration\Accounts\Account.cs" />
-    <Compile Include="Models\Administration\Roles\Permission.cs" />
-    <Compile Include="Models\Administration\Roles\Role.cs" />
-    <Compile Include="Models\Administration\Roles\RolePermission.cs" />
-    <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\System\AuditLog.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountLoginView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountRecoveryView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountResetView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountCreateView.cs" />
-    <Compile Include="Views\Administration\Accounts\ProfileDeleteView.cs" />
-    <Compile Include="Views\Administration\Accounts\ProfileEditView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountEditView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountView.cs" />
-    <Compile Include="Views\Administration\Roles\RoleView.cs" />
-    <Compile Include="Views\BaseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MvcTemplate.Components\MvcTemplate.Components.csproj">
       <Project>{4d89de56-c68c-4d17-8424-866d96f2e000}</Project>
       <Name>MvcTemplate.Components</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Administration\Accounts\Account.cs" />
+    <Compile Include="Models\Administration\Roles\Permission.cs" />
+    <Compile Include="Models\Administration\Roles\Role.cs" />
+    <Compile Include="Models\Administration\Roles\RolePermission.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\System\AuditLog.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountCreateView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountEditView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountLoginView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountRecoveryView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountResetView.cs" />
+    <Compile Include="Views\Administration\Accounts\AccountView.cs" />
+    <Compile Include="Views\Administration\Accounts\ProfileDeleteView.cs" />
+    <Compile Include="Views\Administration\Accounts\ProfileEditView.cs" />
+    <Compile Include="Views\Administration\Roles\RoleView.cs" />
+    <Compile Include="Views\BaseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -119,11 +111,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

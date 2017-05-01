@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Components.Mvc
@@ -7,20 +8,16 @@ namespace MvcTemplate.Components.Mvc
     {
         public Object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-            ValueProviderResult value = GetValue(controllerContext.Controller, bindingContext);
-
-            return value?.AttemptedValue?.Trim();
-        }
-
-        private ValueProviderResult GetValue(ControllerBase controller, ModelBindingContext context)
-        {
-            if (!controller.ValidateRequest || !context.ModelMetadata.RequestValidationEnabled)
+            String value = ModelBinders.Binders.DefaultBinder.BindModel(controllerContext, bindingContext) as String;
+            Type container = bindingContext.ModelMetadata.ContainerType;
+            if (!String.IsNullOrEmpty(value) && container != null)
             {
-                IUnvalidatedValueProvider provider = context.ValueProvider as IUnvalidatedValueProvider;
-                if (provider != null) return provider.GetValue(context.ModelName, true);
+                PropertyInfo property = container.GetProperty(bindingContext.ModelMetadata.PropertyName);
+                if (property.IsDefined(typeof(NotTrimmedAttribute), false))
+                    return value;
             }
 
-            return context.ValueProvider.GetValue(context.ModelName);
+            return value?.Trim();
         }
     }
 }

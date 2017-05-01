@@ -48,6 +48,21 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         }
 
         [Fact]
+        public void BindModel_DoesNotTrimValue()
+        {
+            bindingContext.ModelName = "NotTrimmedStringField";
+            collection.Add(bindingContext.ModelName, "  Trimmed text  ");
+            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
+                .GetMetadataForProperty(null, typeof(AllTypesView), "NotTrimmedStringField");
+
+            Object actual = binder.BindModel(controllerContext, bindingContext);
+            Object expected = "  Trimmed text  ";
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void BindModel_TrimsValue()
         {
             collection.Add(bindingContext.ModelName, "  Trimmed text  ");

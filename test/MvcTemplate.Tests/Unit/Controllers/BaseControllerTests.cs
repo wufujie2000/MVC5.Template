@@ -4,7 +4,6 @@ using MvcTemplate.Components.Security;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -407,9 +406,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
         #region OnActionExecuted(ActionExecutedContext context)
 
         [Fact]
+        public void OnActionExecuted_JsonResult_NoAlerts()
+        {
+            controller.Alerts.AddError("Test");
+            controller.TempData["Alerts"] = null;
+
+            controller.BaseOnActionExecuted(new ActionExecutedContext() { Result = new JsonResult() });
+
+            Assert.Null(controller.TempData["Alerts"]);
+        }
+
+        [Fact]
         public void OnActionExecuted_NullTempDataAlerts_SetsTempDataAlerts()
         {
             controller.TempData["Alerts"] = null;
+
             controller.BaseOnActionExecuted(new ActionExecutedContext());
 
             Object actual = controller.TempData["Alerts"];
@@ -421,23 +432,21 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuted_MergesTempDataAlerts()
         {
-            HttpContextBase context = controller.HttpContext;
+            AlertsContainer alerts = new AlertsContainer();
+            alerts.AddError("Test1");
 
-            BaseControllerProxy mergedController = new BaseControllerProxy();
-            mergedController.ControllerContext = new ControllerContext();
-            mergedController.ControllerContext.HttpContext = context;
-            mergedController.TempData = controller.TempData;
-            mergedController.Alerts.AddError("Test1");
-
-            IEnumerable<Alert> controllerAlerts = controller.Alerts;
-            IEnumerable<Alert> mergedAlerts = mergedController.Alerts;
+            controller.TempData["Alerts"] = alerts;
 
             controller.Alerts.AddError("Test2");
+
+            alerts = new AlertsContainer();
+            alerts.Merge(controller.TempData["Alerts"] as AlertsContainer);
+            alerts.Merge(controller.Alerts);
+
             controller.BaseOnActionExecuted(new ActionExecutedContext());
-            mergedController.BaseOnActionExecuted(new ActionExecutedContext());
 
             IEnumerable<Alert> actual = controller.TempData["Alerts"] as AlertsContainer;
-            IEnumerable<Alert> expected = controllerAlerts.Union(mergedAlerts);
+            IEnumerable<Alert> expected = alerts;
 
             Assert.Equal(expected, actual);
         }

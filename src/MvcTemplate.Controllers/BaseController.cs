@@ -99,11 +99,14 @@ namespace MvcTemplate.Controllers
         }
         protected override void OnActionExecuted(ActionExecutedContext context)
         {
-            AlertsContainer current = TempData["Alerts"] as AlertsContainer;
-            if (current == null)
-                TempData["Alerts"] = Alerts;
-            else
-                current.Merge(Alerts);
+            if (!(context.Result is JsonResult))
+            {
+                AlertsContainer current = TempData["Alerts"] as AlertsContainer;
+                if (current == null)
+                    TempData["Alerts"] = Alerts;
+                else
+                    current.Merge(Alerts);
+            }
         }
     }
 }

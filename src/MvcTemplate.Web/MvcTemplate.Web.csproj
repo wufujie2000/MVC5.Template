@@ -281,8 +281,9 @@
     <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
-    <Content Include="Scripts\Shared\site.js" />
-    <Content Include="Scripts\Shared\menu.js" />
+    <Content Include="Scripts\Application\Shared\site.js" />
+    <Content Include="Scripts\Application\Shared\Widgets\menu.js" />
+    <Content Include="Scripts\Application\Shared\Widgets\alerts.js" />
     <None Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>

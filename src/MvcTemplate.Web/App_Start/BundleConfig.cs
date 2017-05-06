@@ -22,13 +22,14 @@ namespace MvcTemplate.Web
                 .IncludeDirectory("~/Scripts/MvcGrid", "*.js", true)
                 .Include("~/Scripts/Bootstrap/*.js")
                 .Include("~/Scripts/JsTree/*.js")
-                .Include("~/Scripts/Shared/*.js");
+                .Include("~/Scripts/Application/Shared/Widgets/*.js")
+                .Include("~/Scripts/Application/Shared/*.js");
 
             Bundle publicBundle = new ScriptBundle("~/Scripts/Public/Bundle")
                 .Include("~/Scripts/JQuery/jquery.js")
                 .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
                 .Include("~/Scripts/Bootstrap/*.js")
-                .Include("~/Scripts/Shared/*.js");
+                .Include("~/Scripts/Application/Shared/*.js");
 
             bundles.Add(privateBundle);
             bundles.Add(publicBundle);

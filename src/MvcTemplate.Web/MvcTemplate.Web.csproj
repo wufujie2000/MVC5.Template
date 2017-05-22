@@ -222,9 +222,9 @@
     <Content Include="Content\JsTree\jstree.css" />
     <Content Include="Content\MvcDatalist\mvc-datalist.css" />
     <Content Include="Content\MvcGrid\mvc-grid.css" />
-    <Content Include="Content\Shared\Auth\auth.less" />
-    <Content Include="Content\Shared\Auth\auth.css">
-      <DependentUpon>auth.less</DependentUpon>
+    <Content Include="Content\Application\Auth\shared.less" />
+    <Content Include="Content\Application\Auth\shared.css">
+      <DependentUpon>shared.less</DependentUpon>
     </Content>
     <Content Include="Content\Shared\alerts.less" />
     <Content Include="Content\Shared\alerts.css">
@@ -281,9 +281,9 @@
     <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.timepicker-addon.js" />
     <Content Include="Scripts\JsTree\jstree.js" />
-    <Content Include="Scripts\Application\Shared\site.js" />
-    <Content Include="Scripts\Application\Shared\Widgets\menu.js" />
-    <Content Include="Scripts\Application\Shared\Widgets\alerts.js" />
+    <Content Include="Scripts\Shared\site.js" />
+    <Content Include="Scripts\Shared\Widgets\menu.js" />
+    <Content Include="Scripts\Shared\Widgets\alerts.js" />
     <None Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>

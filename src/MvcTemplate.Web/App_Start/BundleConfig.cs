@@ -13,45 +13,48 @@ namespace MvcTemplate.Web
         }
         private void RegisterScripts(BundleCollection bundles)
         {
-            Bundle privateBundle = new ScriptBundle("~/Scripts/Private/Bundle")
-                .Include("~/Scripts/JQuery/jquery.js")
-                .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
-                .Include("~/Scripts/JQueryUI/jquery-ui.js")
-                .IncludeDirectory("~/Scripts/JQueryUI", "*.js", true)
-                .IncludeDirectory("~/Scripts/MvcDatalist", "*.js", true)
-                .IncludeDirectory("~/Scripts/MvcGrid", "*.js", true)
-                .Include("~/Scripts/Bootstrap/*.js")
-                .Include("~/Scripts/JsTree/*.js")
-                .Include("~/Scripts/Application/Shared/Widgets/*.js")
-                .Include("~/Scripts/Application/Shared/*.js");
+            Bundle privateLib = new ScriptBundle("~/scripts/private/lib.js")
+                .Include("~/scripts/jquery/jquery.js")
+                .IncludeDirectory("~/scripts/jquery", "*.js", true)
+                .Include("~/scripts/jqueryui/jquery-ui.js")
+                .IncludeDirectory("~/scripts/jqueryui", "*.js", true)
+                .IncludeDirectory("~/scripts/mvcdatalist", "*.js", true)
+                .IncludeDirectory("~/scripts/mvcgrid", "*.js", true)
+                .Include("~/scripts/bootstrap/*.js")
+                .Include("~/scripts/jstree/*.js")
+                .Include("~/scripts/shared/widgets/*.js");
 
-            Bundle publicBundle = new ScriptBundle("~/Scripts/Public/Bundle")
-                .Include("~/Scripts/JQuery/jquery.js")
-                .IncludeDirectory("~/Scripts/JQuery", "*.js", true)
-                .Include("~/Scripts/Bootstrap/*.js")
-                .Include("~/Scripts/Application/Shared/*.js");
+            Bundle publicLib = new ScriptBundle("~/scripts/public/lib.js")
+                .Include("~/scripts/jquery/jquery.js")
+                .IncludeDirectory("~/scripts/jquery", "*.js", true)
+                .Include("~/scripts/bootstrap/*.js")
+                .Include("~/scripts/shared/widgets/*.js");
 
-            bundles.Add(privateBundle);
-            bundles.Add(publicBundle);
+            Bundle app = new ScriptBundle("~/scripts/app/shared.js")
+                .Include("~/scripts/shared/*.js");
+
+            bundles.Add(privateLib);
+            bundles.Add(publicLib);
+            bundles.Add(app);
         }
         private void RegisterStyles(BundleCollection bundles)
         {
-            Bundle privateBundle = new StyleBundle("~/Content/Private/Bundle")
-                .Include("~/Content/JQueryUI/*.css")
-                .Include("~/Content/Bootstrap/*.css")
-                .Include("~/Content/FontAwesome/*.css")
-                .Include("~/Content/MvcGrid/*.css")
-                .Include("~/Content/JsTree/*.css")
-                .Include("~/Content/MvcDatalist/*.css")
-                .IncludeDirectory("~/Content/Shared", "*.css", true);
+            Bundle privateLib = new StyleBundle("~/content/private/lib.css")
+                .Include("~/content/jqueryui/*.css")
+                .Include("~/content/bootstrap/*.css")
+                .Include("~/content/fontawesome/*.css")
+                .Include("~/content/mvcgrid/*.css")
+                .Include("~/content/jstree/*.css")
+                .Include("~/content/mvcdatalist/*.css")
+                .Include("~/content/shared/*.css");
 
-            Bundle publicBundle = new StyleBundle("~/Content/Public/Bundle")
-                .Include("~/Content/Bootstrap/*.css")
-                .Include("~/Content/FontAwesome/*.css")
-                .IncludeDirectory("~/Content/Shared", "*.css", true);
+            Bundle publicLib = new StyleBundle("~/content/public/lib.css")
+                .Include("~/content/bootstrap/*.css")
+                .Include("~/content/fontawesome/*.css")
+                .Include("~/content/shared/*.css");
 
-            bundles.Add(privateBundle);
-            bundles.Add(publicBundle);
+            bundles.Add(privateLib);
+            bundles.Add(publicLib);
         }
         private void RegisterOrder(BundleCollection bundles)
         {

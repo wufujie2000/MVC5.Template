@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@(ViewBag.Title ?? ResourceProvider.GetPageTitle(ViewContext.RouteData.Values))</title>
 
-    @Styles.Render("~/content/private/bundle")
+    @Styles.Render("~/content/private/lib.css")
+    @Html.RenderControllerStyle()
+    @Html.RenderActionStyle()
 </head>
 <body class="private">
     @Html.Partial("_Header")
@@ -45,6 +47,9 @@
         @DateTime.Now.Year &copy; All rights reserved.
     </div>
 
-    @Scripts.Render("~/scripts/private/bundle")
+    @Scripts.Render("~/scripts/private/lib.js")
+    @Html.RenderControllerScript()
+    @Html.RenderActionScript()
+    @Scripts.Render("~/scripts/app/shared.js")
 </body>
 </html>

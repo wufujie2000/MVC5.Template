@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.0.4
+ * Datalist 5.1.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -102,33 +102,38 @@ var MvcDatalistDialog = (function () {
         },
 
         open: function () {
-            this.loader.hide();
-            this.search.val(this.filter.search);
-            this.error.hide().html(this.lang('Error'));
-            this.selected = this.datalist.selected.slice();
-            this.rows.val(this.limitRows(this.filter.rows));
-            this.search.attr('placeholder', this.lang('Search'));
-            this.selector.parent().css('display', this.datalist.multi ? '' : 'none');
-            this.selector.text(this.lang('Select').replace('{0}', this.datalist.selected.length));
+            var dialog = this;
+            dialog.loader.hide();
+            dialog.search.val(dialog.filter.search);
+            dialog.error.hide().html(dialog.lang('Error'));
+            dialog.selected = dialog.datalist.selected.slice();
+            dialog.rows.val(dialog.limitRows(dialog.filter.rows));
+            dialog.search.attr('placeholder', dialog.lang('Search'));
+            dialog.selector.parent().css('display', dialog.datalist.multi ? '' : 'none');
+            dialog.selector.text(dialog.lang('Select').replace('{0}', dialog.datalist.selected.length));
 
-            this.bind();
-            this.refresh();
+            dialog.bind();
+            dialog.refresh();
 
-            setTimeout(function (instance) {
-                var dialog = instance.dialog('open').parent();
+            setTimeout(function () {
+                if (dialog.loading) {
+                    dialog.loader.show();
+                }
+
+                var instance = dialog.instance.dialog('open').parent();
                 var visibleLeft = $(document).scrollLeft();
                 var visibleTop = $(document).scrollTop();
 
-                if (parseInt(dialog.css('left')) < visibleLeft) {
-                    dialog.css('left', visibleLeft);
+                if (parseInt(instance.css('left')) < visibleLeft) {
+                    instance.css('left', visibleLeft);
                 }
-                if (parseInt(dialog.css('top')) > visibleTop + 100) {
-                    dialog.css('top', visibleTop + 100);
+                if (parseInt(instance.css('top')) > visibleTop + 100) {
+                    instance.css('top', visibleTop + 100);
                 }
-                else if (parseInt(dialog.css('top')) < visibleTop) {
-                    dialog.css('top', visibleTop);
+                else if (parseInt(instance.css('top')) < visibleTop) {
+                    instance.css('top', visibleTop);
                 }
-            }, 100, this.instance);
+            }, 100);
         },
         close: function () {
             this.instance.dialog('close');
@@ -136,6 +141,7 @@ var MvcDatalistDialog = (function () {
 
         refresh: function () {
             var dialog = this;
+            dialog.loading = true;
             dialog.error.fadeOut(300);
             var loading = setTimeout(function () {
                 dialog.loader.fadeIn(300);
@@ -145,10 +151,12 @@ var MvcDatalistDialog = (function () {
                 cache: false,
                 url: dialog.datalist.url + dialog.filter.getQuery() + dialog.selected.map(function (x) { return '&selected=' + x.DatalistIdKey; }).join(''),
                 success: function (data) {
+                    dialog.loading = false;
                     clearTimeout(loading);
                     dialog.render(data);
                 },
                 error: function () {
+                    dialog.loading = false;
                     clearTimeout(loading);
                     dialog.render();
                 }
@@ -459,7 +467,11 @@ var MvcDatalist = (function () {
                         datalist.stopLoading();
                     },
                     select: function (e, selection) {
-                        datalist.select(datalist.selected.concat(selection.item.data), true);
+                        if (datalist.multi) {
+                            datalist.select(datalist.selected.concat(selection.item.data), true);
+                        } else {
+                            datalist.select([selection.item.data], true);
+                        }
 
                         e.preventDefault();
                     },

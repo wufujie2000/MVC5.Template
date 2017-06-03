@@ -11,22 +11,22 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 {
     public class LoggerTests : IDisposable
     {
+        private String logDirectory;
         private Int32 backupSize;
-        private String logPath;
         private String log;
 
         public LoggerTests()
         {
             backupSize = Int32.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
-            logPath = WebConfigurationManager.AppSettings["LogPath"];
-            log = Path.Combine(logPath, "Log.txt");
+            logDirectory = WebConfigurationManager.AppSettings["LogDirectory"];
+            log = Path.Combine(logDirectory, "Log.txt");
 
-            if (Directory.Exists(logPath))
+            if (Directory.Exists(logDirectory))
             {
-                String[] files = Directory.GetFiles(logPath);
+                String[] files = Directory.GetFiles(logDirectory);
                 foreach (String file in files) File.Delete(file);
 
-                Directory.Delete(logPath);
+                Directory.Delete(logDirectory);
             }
         }
         public void Dispose()
@@ -75,7 +75,7 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             logger.Log(new String('T', backupSize));
 
             String expected = "Account: 2" + Environment.NewLine + "Message: " + new String('T', backupSize) + Environment.NewLine + Environment.NewLine;
-            String actual = File.ReadAllText(Directory.GetFiles(logPath, "Log *.txt").Single());
+            String actual = File.ReadAllText(Directory.GetFiles(logDirectory, "Log *.txt").Single());
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));

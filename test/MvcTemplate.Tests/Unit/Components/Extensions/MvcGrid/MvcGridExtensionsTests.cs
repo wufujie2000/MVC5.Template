@@ -70,7 +70,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             IGridColumn<AllTypesView> column = columns.AddActionLink("Details", "fa fa-info");
 
             String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
-            String expected = 
+            String expected =
                 $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new {view.Id})}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                 "</a>";

@@ -122,17 +122,16 @@ namespace MvcTemplate.Tests.Unit.Data.Core
         [Fact]
         public void InsertRange_AddsModelsToDbSet()
         {
-            IEnumerable<TestModel> models = new[] { ObjectFactory.CreateTestModel(1), ObjectFactory.CreateTestModel(2) };
+            TestModel[] models = { ObjectFactory.CreateTestModel(1), ObjectFactory.CreateTestModel(2) };
+            DbSet<TestModel> set = Substitute.For<DbSet<TestModel>, IQueryable>();
+            TestingContext testingContext = Substitute.For<TestingContext>();
+            testingContext.Set<TestModel>().Returns(set);
+            unitOfWork.Dispose();
+
+            unitOfWork = new UnitOfWork(testingContext);
             unitOfWork.InsertRange(models);
 
-            IEnumerator<TestModel> actual = context.ChangeTracker.Entries<TestModel>().Select(entry => entry.Entity).GetEnumerator();
-            IEnumerator<TestModel> expected = models.GetEnumerator();
-
-            while (expected.MoveNext() | actual.MoveNext())
-            {
-                Assert.Equal(EntityState.Added, context.Entry(actual.Current).State);
-                Assert.Same(expected.Current, actual.Current);
-            }
+            set.Received().AddRange(models);
         }
 
         #endregion

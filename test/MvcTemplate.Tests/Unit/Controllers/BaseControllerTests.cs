@@ -411,7 +411,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Alerts.AddError("Test");
             controller.TempData["Alerts"] = null;
 
-            controller.BaseOnActionExecuted(new ActionExecutedContext() { Result = new JsonResult() });
+            controller.BaseOnActionExecuted(new ActionExecutedContext { Result = new JsonResult() });
 
             Assert.Null(controller.TempData["Alerts"]);
         }
@@ -440,7 +440,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Alerts.AddError("Test2");
 
             alerts = new AlertsContainer();
-            alerts.Merge(controller.TempData["Alerts"] as AlertsContainer);
+            alerts.Merge((AlertsContainer)controller.TempData["Alerts"]);
             alerts.Merge(controller.Alerts);
 
             controller.BaseOnActionExecuted(new ActionExecutedContext());

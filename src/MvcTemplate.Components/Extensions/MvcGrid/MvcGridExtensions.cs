@@ -118,10 +118,7 @@ namespace MvcTemplate.Components.Extensions
             if (key == null)
                 throw new Exception($"{typeof(T).Name} type does not have a key property.");
 
-            RouteValueDictionary route = new RouteValueDictionary();
-            route[key.Name] = key.GetValue(model);
-
-            return route;
+            return new RouteValueDictionary { [key.Name] = key.GetValue(model) };
         }
         private static String GetCssClassFor<TProperty>()
         {

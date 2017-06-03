@@ -9,10 +9,7 @@ namespace MvcTemplate.Components.Mvc
         public StringLengthAdapter(ModelMetadata metadata, ControllerContext context, StringLengthAttribute attribute)
             : base(metadata, context, attribute)
         {
-            if (Attribute.MinimumLength == 0)
-                Attribute.ErrorMessage = Validations.StringLength;
-            else
-                Attribute.ErrorMessage = Validations.StringLengthRange;
+            Attribute.ErrorMessage = Attribute.MinimumLength == 0 ? Validations.StringLength : Validations.StringLengthRange;
         }
     }
 }

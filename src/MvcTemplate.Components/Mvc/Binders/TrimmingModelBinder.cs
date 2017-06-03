@@ -10,6 +10,7 @@ namespace MvcTemplate.Components.Mvc
         {
             String value = ModelBinders.Binders.DefaultBinder.BindModel(controllerContext, bindingContext) as String;
             Type container = bindingContext.ModelMetadata.ContainerType;
+
             if (!String.IsNullOrEmpty(value) && container != null)
             {
                 PropertyInfo property = container.GetProperty(bindingContext.ModelMetadata.PropertyName);

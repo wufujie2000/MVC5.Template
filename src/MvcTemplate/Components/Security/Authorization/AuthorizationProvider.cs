@@ -40,10 +40,7 @@ namespace MvcTemplate.Components.Security
             if (!Required.ContainsKey(permission))
                 return true;
 
-            if (!Permissions.ContainsKey(accountId ?? 0))
-                return false;
-
-            return Permissions[accountId.Value].Contains(Required[permission]);
+            return Permissions.ContainsKey(accountId ?? 0) && Permissions[accountId.Value].Contains(Required[permission]);
         }
 
         public void Refresh()
@@ -97,7 +94,7 @@ namespace MvcTemplate.Components.Security
 
         private String GetRequiredPermission(Type type, MethodInfo method)
         {
-            AuthorizeAsAttribute authorizeAs = GetAuthorizeAs(method);
+            AuthorizeAsAttribute authorizeAs = method.GetCustomAttribute<AuthorizeAsAttribute>(false);
             String controller = GetController(type);
             String action = GetAction(method);
             String area = GetArea(type);
@@ -110,16 +107,11 @@ namespace MvcTemplate.Components.Security
                 return GetRequiredPermission(type, method);
             }
 
-            if (AllowsUnauthorized(type, method)) return null;
-
-            return (area + "/" + controller + "/" + action).ToLower();
+            return AllowsUnauthorized(type, method) ? null : (area + "/" + controller + "/" + action).ToLower();
         }
         private String GetAction(MethodInfo method)
         {
-            if (method.IsDefined(typeof(ActionNameAttribute), false))
-                return method.GetCustomAttribute<ActionNameAttribute>(false).Name;
-
-            return method.Name;
+            return method.GetCustomAttribute<ActionNameAttribute>(false)?.Name ?? method.Name;
         }
         private String GetController(Type type)
         {
@@ -127,10 +119,7 @@ namespace MvcTemplate.Components.Security
         }
         private String GetArea(Type type)
         {
-            if (!type.IsDefined(typeof(AreaAttribute), false))
-                return null;
-
-            return type.GetCustomAttribute<AreaAttribute>(false).Name;
+            return type.GetCustomAttribute<AreaAttribute>(false)?.Name;
         }
 
         private Boolean AllowsUnauthorized(Type controller, MethodInfo method)
@@ -164,13 +153,6 @@ namespace MvcTemplate.Components.Security
                     String.Equals(type.GetCustomAttribute<AreaAttribute>(false).Name, area, StringComparison.OrdinalIgnoreCase));
 
             return controllers.Single();
-        }
-        private AuthorizeAsAttribute GetAuthorizeAs(MemberInfo action)
-        {
-            if (!action.IsDefined(typeof(AuthorizeAsAttribute), false))
-                return null;
-
-            return action.GetCustomAttribute<AuthorizeAsAttribute>(false);
         }
         private MethodInfo GetMethod(Type controller, String action)
         {

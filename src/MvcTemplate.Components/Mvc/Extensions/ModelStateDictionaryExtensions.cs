@@ -22,9 +22,9 @@ namespace MvcTemplate.Components.Mvc
 
         private static String GetExpressionText(LambdaExpression expression)
         {
-            UnaryExpression unaryExpression = expression.Body as UnaryExpression;
-            if (unaryExpression?.Operand is MemberExpression)
-                return ExpressionHelper.GetExpressionText(Expression.Lambda(unaryExpression.Operand, expression.Parameters[0]));
+            UnaryExpression unary = expression.Body as UnaryExpression;
+            if (unary?.Operand is MemberExpression)
+                return ExpressionHelper.GetExpressionText(Expression.Lambda(unary.Operand, expression.Parameters[0]));
 
             return ExpressionHelper.GetExpressionText(expression);
         }

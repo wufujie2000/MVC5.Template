@@ -77,9 +77,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             PropertyInfo property = typeof(AllTypesView).GetProperty("Child");
 
             String actual = datalist.GetColumnHeader(property);
-            String expected = "";
 
-            Assert.Equal(expected, actual);
+            Assert.Empty(actual);
         }
 
         #endregion

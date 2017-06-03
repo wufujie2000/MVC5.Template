@@ -82,10 +82,7 @@ namespace MvcTemplate.Tests.Unit.Resources
                 ResourceManager manager = new ResourceManager(type);
 
                 foreach (ResourceSet set in languages.Select(language => manager.GetResourceSet(language, true, true)))
-                {
                     keys = keys.Union(set.Cast<DictionaryEntry>().Select(resource => resource.Key.ToString()));
-                    keys = keys.Distinct();
-                }
 
                 foreach (CultureInfo language in languages)
                 {

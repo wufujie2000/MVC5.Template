@@ -14,7 +14,24 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         public BootstrapExtensionsTests()
         {
-            html = HtmlHelperFactory.CreateHtmlHelper(new BootstrapModel());
+            html = HtmlHelperFactory.CreateHtmlHelper(new BootstrapModel
+            {
+                Relation = new BootstrapModel
+                {
+                    Date = new DateTime(2011, 3, 5, 8, 6, 4),
+                    NotRequired = "NotRequiredRelation",
+                    Required = "RequiredRelation",
+                    EditableFalse = 14.57M,
+                    EditableTrue = 8.4M,
+                    Number = 1.6666M
+                },
+                NotRequired = "NotRequired",
+                Required = "Required",
+                EditableFalse = 1.4M,
+                EditableTrue = 5.5M,
+                Date = DateTime.Now,
+                Number = 10.7854M
+            });
             model = html.ViewData.Model;
         }
 

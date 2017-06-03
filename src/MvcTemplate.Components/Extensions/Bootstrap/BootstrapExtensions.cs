@@ -94,10 +94,10 @@ namespace MvcTemplate.Components.Extensions
             htmlAttributes["class"] = (cssClass + " " + htmlAttributes["class"]).Trim();
             if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
 
-            MemberExpression memberExpression = expression.Body as MemberExpression;
-            if (memberExpression != null && memberExpression.Member.IsDefined(typeof(EditableAttribute), false))
+            MemberExpression member = expression.Body as MemberExpression;
+            if (member?.Member.IsDefined(typeof(EditableAttribute), false) == true)
             {
-                EditableAttribute editable = memberExpression.Member.GetCustomAttribute<EditableAttribute>(false);
+                EditableAttribute editable = member.Member.GetCustomAttribute<EditableAttribute>(false);
                 if (!editable.AllowEdit) htmlAttributes["readonly"] = "readonly";
             }
 

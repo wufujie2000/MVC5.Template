@@ -11,8 +11,9 @@ namespace MvcTemplate.Tests.Unit.Web
         #region RegisterBundles(BundleCollection bundles)
 
         [Theory]
-        [InlineData("~/Scripts/Public/Bundle")]
-        [InlineData("~/Scripts/Private/Bundle")]
+        [InlineData("~/scripts/app/shared.js")]
+        [InlineData("~/scripts/public/lib.js")]
+        [InlineData("~/scripts/private/lib.js")]
         public void RegisterBundles_ForScripts(String path)
         {
             BundleCollection bundles = new BundleCollection();
@@ -23,8 +24,8 @@ namespace MvcTemplate.Tests.Unit.Web
         }
 
         [Theory]
-        [InlineData("~/Content/Public/Bundle")]
-        [InlineData("~/Content/Private/Bundle")]
+        [InlineData("~/content/public/lib.css")]
+        [InlineData("~/content/private/lib.css")]
         public void RegisterBundles_ForStyles(String path)
         {
             BundleCollection bundles = new BundleCollection();

@@ -13,18 +13,76 @@
     @Html.RenderActionStyle()
 </head>
 <body class="private">
-    @Html.Partial("_Header")
+    <div class="header">
+        <ul class="header-navigation btn-group">
+            <li class="btn">
+                <a href="@Url.Action("Edit", "Profile", new { area = "" })">
+                    <i class="fa fa-user"></i>
+                    <span class="text">@Actions.Profile</span>
+                </a>
+            </li>
+            @if (GlobalizationManager.Languages.Supported.Length > 1)
+            {
+                <li class="btn dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">
+                        <i class="fa fa-globe"></i>
+                        <span class="text">@Actions.Language</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu">
+                        @foreach (Language language in GlobalizationManager.Languages.Supported)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Home", new { area = "", language = language.Abbreviation })">
+                                    <img src="@Url.Content(String.Format("~/Images/Flags/{0}.gif", language.Abbreviation))" width="16" height="11" alt="">
+                                    @language.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+            <li class="btn">
+                <a href="@Url.Action("Logout", "Auth", new { area = "" })">
+                    <i class="fa fa-share"></i>
+                    <span class="text">@Actions.Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     @Html.Partial("MvcDatalist/_Dialog")
     <div class="menu">
         <div class="menu-search">
             <input placeholder="@(Actions.Search)..." />
         </div>
-        @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetSiteMap(ViewContext))
+
+        @SiteMap(MvcSiteMap.Provider.GetSiteMap(ViewContext))
     </div>
     <div class="content-container">
         <div class="separator"></div>
 
-        @Html.Partial("_Breadcrumb")
+        <div class="content-breadcrumb">
+            @{ MvcSiteMapNode[] breadcrumb = MvcSiteMap.Provider.GetBreadcrumb(ViewContext).ToArray(); }
+            @for (Int32 i = 0; i < breadcrumb.Length; i++)
+            {
+                MvcSiteMapNode node = breadcrumb[i];
+                if (i == breadcrumb.Length - 1)
+                {
+                    <a class="current">
+                        <i class="@node.IconClass"></i>
+                        <span class="text">@ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action)</span>
+                    </a>
+                }
+                else if (node.Action != null)
+                {
+                    <a href="@Url.Action(node.Action, node.Controller, new {area = node.Area})">
+                        <i class="@node.IconClass"></i>
+                        <span class="text">@ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action)</span>
+                    </a>
+                    <span class="fa fa-angle-right"></span>
+                }
+            }
+        </div>
 
         <div class="separator"></div>
 
@@ -53,3 +111,30 @@
     @Scripts.Render("~/scripts/app/shared.js")
 </body>
 </html>
+
+@helper SiteMap(IEnumerable<MvcSiteMapNode> nodes)
+{
+    <ul>
+        @foreach (MvcSiteMapNode node in nodes)
+        {
+            String link = node.Action != null ? Url.Action(node.Action, node.Controller, new { area = node.Area }) : "#";
+            String toggle = node.Action == null ? "<i class='arrow fa fa-chevron-right'></i>" : "";
+            String menu = node.HasActiveChildren ? "has-active open" : "";
+            menu += node.Children.Any() ? " submenu" : "";
+            menu += node.IsActive ? " active" : "";
+            menu = menu.Trim();
+
+            <li class="@menu">
+                <a href="@link">
+                    <i class="menu-icon @node.IconClass"></i>
+                    <span>@ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action)</span>
+                    @Html.Raw(toggle)
+                </a>
+                @if (node.Children.Any())
+                {
+                    @SiteMap(node.Children)
+                }
+            </li>
+        }
+    </ul>
+}

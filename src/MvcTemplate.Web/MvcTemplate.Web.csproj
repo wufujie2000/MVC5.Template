@@ -308,11 +308,8 @@
     <Content Include="Views\Home\Unauthorized.cshtml" />
     <Content Include="Views\Profile\Delete.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
-    <Content Include="Views\Shared\_Breadcrumb.cshtml" />
-    <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_PrivateLayout.cshtml" />
     <Content Include="Views\Shared\_PublicLayout.cshtml" />
-    <Content Include="Views\Shared\_SiteMap.cshtml" />
     <Content Include="Views\Shared\MvcDatalist\_Dialog.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_AjaxGrid.cshtml" />
     <Content Include="Views\Shared\MvcGrid\_Grid.cshtml" />

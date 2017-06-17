@@ -144,5 +144,22 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         }
 
         #endregion
+
+        #region FilterByIds(IQueryable<TView> models, IList<String> ids)
+
+        [Fact]
+        public void FilterByIds_FromUnitOfWork()
+        {
+            IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
+            datalist = new MvcDatalist<Role, RoleView>(unitOfWork);
+            unitOfWork.Select<Role>().To<RoleView>().Returns(new[] { new RoleView { Id = 1 }, new RoleView { Id = 2 } }.AsQueryable());
+
+            Object expected = unitOfWork.Select<Role>().To<RoleView>().Where(role => role.Id == 1);
+            Object actual = datalist.FilterByIds(null, new[] { "1" });
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
     }
 }

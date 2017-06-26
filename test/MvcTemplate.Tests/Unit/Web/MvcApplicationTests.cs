@@ -175,6 +175,19 @@ namespace MvcTemplate.Tests.Unit.Web
             Assert.True(MvcHandler.DisableMvcResponseHeader);
         }
 
+        [Fact]
+        public void RegisterSecureResponseConfiguration_ChangesAntiforgeryCookie()
+        {
+            AntiForgeryConfig.CookieName = "DefaultName";
+
+            application.RegisterSecureResponseConfiguration();
+
+            String actual = AntiForgeryConfig.CookieName;
+            String expected = ".WebToken";
+
+            Assert.Equal(expected, actual);
+        }
+
         #endregion
 
         #region RegisterCurrentDependencyResolver()

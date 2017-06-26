@@ -64,6 +64,7 @@ namespace MvcTemplate.Web
         {
             AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
             MvcHandler.DisableMvcResponseHeader = true;
+            AntiForgeryConfig.CookieName = ".WebToken";
         }
         public virtual void RegisterCurrentDependencyResolver()
         {

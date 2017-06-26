@@ -91,13 +91,13 @@
     <Compile Include="Models\System\AuditLog.cs" />
     <Compile Include="Views\Administration\Accounts\AccountCreateView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountEditView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountLoginView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountRecoveryView.cs" />
-    <Compile Include="Views\Administration\Accounts\AccountResetView.cs" />
     <Compile Include="Views\Administration\Accounts\AccountView.cs" />
-    <Compile Include="Views\Administration\Accounts\ProfileDeleteView.cs" />
-    <Compile Include="Views\Administration\Accounts\ProfileEditView.cs" />
     <Compile Include="Views\Administration\Roles\RoleView.cs" />
+    <Compile Include="Views\Auth\AccountLoginView.cs" />
+    <Compile Include="Views\Auth\AccountRecoveryView.cs" />
+    <Compile Include="Views\Auth\AccountResetView.cs" />
+    <Compile Include="Views\Profile\ProfileDeleteView.cs" />
+    <Compile Include="Views\Profile\ProfileEditView.cs" />
     <Compile Include="Views\BaseView.cs" />
   </ItemGroup>
   <ItemGroup>

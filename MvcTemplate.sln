@@ -19,11 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Tests", "test\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Services", "src\MvcTemplate.Services\MvcTemplate.Services.csproj", "{4AD95521-F99C-4054-A2AD-1FAE1DABD72E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE044586-DDE2-46D0-B612-F92C4DD72A3D}"
-	ProjectSection(SolutionItems) = preProject
-		WebEssentials-Settings.json = WebEssentials-Settings.json
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate", "src\MvcTemplate\MvcTemplate.csproj", "{DDC2AAD3-EEBD-456F-A0ED-EA3900478B45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTemplate.Validators", "src\MvcTemplate.Validators\MvcTemplate.Validators.csproj", "{02D12B45-AB59-4AC0-8B43-607E4DC282E6}"

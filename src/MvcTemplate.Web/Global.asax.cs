@@ -9,6 +9,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -62,9 +63,9 @@ namespace MvcTemplate.Web
 
         public virtual void RegisterSecureResponseConfiguration()
         {
+            AntiForgeryConfig.CookieName = WebConfigurationManager.AppSettings["AntiForgeryCookieName"];
             AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
             MvcHandler.DisableMvcResponseHeader = true;
-            AntiForgeryConfig.CookieName = ".WebToken";
         }
         public virtual void RegisterCurrentDependencyResolver()
         {

@@ -7,6 +7,7 @@ using MvcTemplate.Web;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -182,8 +183,8 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterSecureResponseConfiguration();
 
+            String expected = WebConfigurationManager.AppSettings["AntiForgeryCookieName"];
             String actual = AntiForgeryConfig.CookieName;
-            String expected = ".WebToken";
 
             Assert.Equal(expected, actual);
         }

@@ -17,7 +17,7 @@
         <div class="widget-content">
             @using (Html.BeginForm())
             {
-                <input type="password" style="display: none" /> @* Forcing browser to not remember following form inputs *@
+                <input class="hidden" type="password" /> @* Forcing browser to not remember following form inputs *@
                 @Html.AntiForgeryToken()
                 <div class="form-group">
                     <div class="control-label col-xs-12 col-md-3 col-lg-2">

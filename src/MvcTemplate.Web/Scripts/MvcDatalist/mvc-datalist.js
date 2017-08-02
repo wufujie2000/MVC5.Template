@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.1.0
+ * Datalist 5.2.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -422,7 +422,7 @@ var MvcDatalist = (function () {
         this.initOptions();
         this.set(options);
 
-        this.methods = { reload: this.reload };
+        this.methods = { reload: this.reload, browse: this.open };
         this.reload(false);
         this.cleanUp();
         this.bind();
@@ -494,23 +494,29 @@ var MvcDatalist = (function () {
             this.resizeDatalistSearch();
         },
 
+        open: function () {
+            if (!this.readonly) {
+                this.dialog.open();
+            }
+        },
         reload: function (triggerChanges) {
             var datalist = this;
             triggerChanges = triggerChanges == null ? true : triggerChanges;
-            var ids = $.grep(datalist.values.map(function (i, e) { return encodeURIComponent(e.value); }).get(), Boolean);
+            var ids = $.grep(datalist.values, function (e) { return e.value; });
 
             if (ids.length > 0) {
                 datalist.startLoading(300);
+                var encodedIds = ids.map(function (e) { return encodeURIComponent(e.value); });
 
                 $.ajax({
-                    url: datalist.url + datalist.filter.getQuery({ ids: '&ids=' + ids.join('&ids='), rows: ids.length }),
+                    url: datalist.url + datalist.filter.getQuery({ ids: '&ids=' + encodedIds.join('&ids='), rows: ids.length }),
                     cache: false,
                     success: function (data) {
                         datalist.stopLoading();
 
                         var rows = [];
                         for (var i = 0; i < ids.length; i++) {
-                            var index = datalist.indexOf(data.Rows, ids[i])
+                            var index = datalist.indexOf(data.Rows, ids[i].value)
                             if (index >= 0) {
                                 rows.push(data.Rows[index]);
                             }
@@ -672,9 +678,7 @@ var MvcDatalist = (function () {
             });
 
             datalist.browse.on('click.datalist', function () {
-                if (!datalist.readonly) {
-                    datalist.dialog.open();
-                }
+                datalist.open();
             });
 
             var filters = datalist.filter.additionalFilters;
@@ -686,17 +690,18 @@ var MvcDatalist = (function () {
 
                     if (!e.isDefaultPrevented() && datalist.selected.length > 0) {
                         datalist.startLoading(300);
-                        var ids = $.grep(datalist.values.map(function (i, e) { return encodeURIComponent(e.value); }).get(), Boolean);
+                        var ids = $.grep(datalist.values, function (e) { return e.value; });
+                        var encodedIds = ids.map(function (e) { return encodeURIComponent(e.value); });
 
                         $.ajax({
-                            url: datalist.url + datalist.filter.getQuery({ checkIds: '&checkIds=' + ids.join('&checkIds='), rows: ids.length }),
+                            url: datalist.url + datalist.filter.getQuery({ checkIds: '&checkIds=' + encodedIds.join('&checkIds='), rows: ids.length }),
                             cache: false,
                             success: function (data) {
                                 datalist.stopLoading();
 
                                 var rows = [];
                                 for (var i = 0; i < ids.length; i++) {
-                                    var index = datalist.indexOf(data.Rows, ids[i])
+                                    var index = datalist.indexOf(data.Rows, ids[i].value)
                                     if (index >= 0) {
                                         rows.push(data.Rows[index]);
                                     }
@@ -729,7 +734,7 @@ $.fn.datalist = function (options) {
         if (!$.data(group[0], 'mvc-datalist')) {
             if (typeof options == 'string') {
                 var datalist = new MvcDatalist(group);
-                datalist.methods[options].apply(datalist, [].slice.apply(args, 1));
+                datalist.methods[options].apply(datalist, [].slice.call(args, 1));
             } else {
                 var datalist = new MvcDatalist(group, options);
             }

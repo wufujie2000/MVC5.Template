@@ -266,6 +266,7 @@
     <Compile Include="Unit\Services\BaseServiceTests.cs" />
     <Compile Include="Unit\Validators\Administration\Accounts\AccountValidatorTests.cs" />
     <Compile Include="Unit\Validators\Administration\Roles\RoleValidatorTests.cs" />
+    <Compile Include="Unit\Validators\BaseValidatorProxy.cs" />
     <Compile Include="Unit\Validators\BaseValidatorTests.cs" />
     <Compile Include="Unit\Web\App_Start\BundleConfigTests.cs" />
     <Compile Include="Unit\Web\App_Start\DependencyInjection\MainContainerTests.cs" />

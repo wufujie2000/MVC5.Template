@@ -1,6 +1,11 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Data.Core;
+using MvcTemplate.Objects;
+using MvcTemplate.Resources;
+using MvcTemplate.Resources.Form;
 using System;
+using System.Linq.Expressions;
 using System.Web.Mvc;
 
 namespace MvcTemplate.Validators
@@ -17,6 +22,22 @@ namespace MvcTemplate.Validators
             ModelState = new ModelStateDictionary();
             Alerts = new AlertsContainer();
             UnitOfWork = unitOfWork;
+        }
+
+        protected Boolean IsSpecified<TView>(TView view, Expression<Func<TView, Object>> property) where TView : BaseView
+        {
+            Boolean isSpecified = property.Compile().Invoke(view) != null;
+
+            if (!isSpecified)
+            {
+                UnaryExpression unary = property.Body as UnaryExpression;
+                if (unary == null)
+                    ModelState.AddModelError(property, Validations.Required, ResourceProvider.GetPropertyTitle(property));
+                else
+                    ModelState.AddModelError(property, Validations.Required, ResourceProvider.GetPropertyTitle(unary.Operand));
+            }
+
+            return isSpecified;
         }
 
         public void Dispose()

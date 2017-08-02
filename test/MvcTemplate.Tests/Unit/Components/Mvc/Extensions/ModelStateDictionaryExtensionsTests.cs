@@ -16,33 +16,6 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             modelState = new ModelStateDictionary();
         }
 
-        #region AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
-
-        [Fact]
-        public void AddModelError_ExceptionKey()
-        {
-            modelState.AddModelError<AllTypesView>(model => model.Child.StringField, new Exception());
-
-            String actual = modelState.Single().Key;
-            String expected = "Child.StringField";
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void AddModelError_ExceptionValue()
-        {
-            Exception exception = new Exception();
-            modelState.AddModelError<AllTypesView>(model => model.Child.StringField, exception);
-
-            Object actual = modelState.Single().Value.Errors.Single().Exception;
-            Object expected = exception;
-
-            Assert.Same(expected, actual);
-        }
-
-        #endregion
-
         #region AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String message)
 
         [Fact]

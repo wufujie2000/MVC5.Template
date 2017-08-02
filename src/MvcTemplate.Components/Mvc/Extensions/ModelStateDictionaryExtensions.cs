@@ -6,11 +6,6 @@ namespace MvcTemplate.Components.Mvc
 {
     public static class ModelStateDictionaryExtensions
     {
-        public static void AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, Exception exception)
-        {
-            modelState.AddModelError(GetExpressionText(expression), exception);
-        }
-
         public static void AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String message)
         {
             modelState.AddModelError(GetExpressionText(expression), message);

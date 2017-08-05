@@ -1,6 +1,7 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Tests.Objects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Xunit;
@@ -15,6 +16,41 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             modelState = new ModelStateDictionary();
         }
+
+        #region Errors(this ModelStateDictionary modelState)
+
+        [Fact]
+        public void Errors_FromModelState()
+        {
+            modelState.AddModelError("Empty", "");
+            modelState.AddModelError("Error", "Error");
+            modelState.AddModelError("EmptyErrors", "");
+            modelState.AddModelError("EmptyErrors", "E");
+            modelState.Add("NoErrors", new ModelState());
+            modelState.AddModelError("TwoErrors", "Error1");
+            modelState.AddModelError("TwoErrors", "Error2");
+            modelState.AddModelError("NullError", (String)null);
+            modelState.AddModelError("NullErrors", (String)null);
+            modelState.AddModelError("NullErrors", "NotNullError");
+            modelState.AddModelError("WhitespaceErrors", "       ");
+            modelState.AddModelError("WhitespaceErrors", "Whitespace");
+
+            Dictionary<String, String> actual = modelState.Errors();
+            Dictionary<String, String> expected = new Dictionary<String, String>
+            {
+                ["Empty"] = null,
+                ["Error"] = "Error",
+                ["EmptyErrors"] = "E",
+                ["TwoErrors"] = "Error1",
+                ["NullError"] = null,
+                ["NullErrors"] = "NotNullError",
+                ["WhitespaceErrors"] = "       "
+            };
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
 
         #region AddModelError<TModel>(this ModelStateDictionary modelState, Expression<Func<TModel, Object>> expression, String message)
 

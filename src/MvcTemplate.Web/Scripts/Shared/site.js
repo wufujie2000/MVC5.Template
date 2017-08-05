@@ -68,7 +68,7 @@
     $(document).on('change', '.datalist-value', function () {
         var validator = $(this).parents('form').validate();
 
-        if (validator) {
+        if (validator && this.id) {
             var control = $(this).closest('.datalist').find('.datalist-control');
             if (validator.element('#' + this.id)) {
                 control.removeClass('input-validation-error');

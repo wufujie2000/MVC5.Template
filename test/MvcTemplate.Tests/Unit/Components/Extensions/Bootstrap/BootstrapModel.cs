@@ -12,6 +12,8 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
         public Decimal Number { get; set; }
         public DateTime? Date { get; set; }
 
+        public Boolean Boolean { get; set; }
+
         [Editable(true)]
         public Decimal EditableTrue { get; set; }
 

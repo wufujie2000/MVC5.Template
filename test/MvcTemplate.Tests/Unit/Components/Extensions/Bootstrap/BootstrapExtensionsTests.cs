@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
 using Xunit;
+using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
@@ -34,6 +35,36 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             });
             model = html.ViewData.Model;
         }
+
+        #region FormLabelFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, Boolean>> expression, Boolean? required = null)
+
+        [Fact]
+        public void FormLabelFor_BooleanRequired()
+        {
+            String actual = html.FormLabelFor(x => x.Relation.Boolean, required: true).ToString();
+            String expected =
+                "<label for=\"Relation_Boolean\">" +
+                    "<span class=\"require\">*</span>" +
+                "</label>";
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData(false)]
+        public void FormLabelFor_BooleanNotRequired(Boolean? required)
+        {
+            String actual = html.FormLabelFor(x => x.Relation.Boolean, required).ToString();
+            String expected =
+                "<label for=\"Relation_Boolean\">" +
+                    "<span class=\"require\"></span>" +
+                "</label>";
+
+            Assert.Equal(expected, actual);
+        }
+
+        #endregion
 
         #region FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Boolean? required = null)
 

@@ -11,6 +11,10 @@ namespace MvcTemplate.Components.Extensions
 {
     public static class BootstrapExtensions
     {
+        public static MvcHtmlString FormLabelFor<TModel>(this HtmlHelper<TModel> html, Expression<Func<TModel, Boolean>> expression, Boolean? required = null)
+        {
+            return html.FormLabelFor<TModel, Boolean>(expression, required == true);
+        }
         public static MvcHtmlString FormLabelFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Boolean? required = null)
         {
             TagBuilder requiredSpan = new TagBuilder("span");

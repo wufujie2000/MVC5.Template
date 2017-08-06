@@ -43,6 +43,8 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanCreate_Valid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanCreate(ObjectFactory.Create<#= Model.View #>(1)));
+            Assert.Empty(validator.ModelState);
+            Assert.Empty(validator.Alerts);
         }
 
         #endregion
@@ -61,6 +63,8 @@ namespace MvcTemplate.Tests.Unit.Validators
         public void CanEdit_Valid<#= Model.ShortModel #>()
         {
             Assert.True(validator.CanEdit(ObjectFactory.Create<#= Model.View #>(<#= Model.ModelVarName #>.Id)));
+            Assert.Empty(validator.ModelState);
+            Assert.Empty(validator.Alerts);
         }
 
         #endregion

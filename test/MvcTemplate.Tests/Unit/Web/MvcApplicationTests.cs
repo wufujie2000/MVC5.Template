@@ -312,16 +312,15 @@ namespace MvcTemplate.Tests.Unit.Web
 
         #region RegisterModelBinders()
 
-        [Fact]
-        public void RegisterModelBinders_TrimmingModelBinder()
+        [Theory]
+        [InlineData(typeof(String), typeof(TrimmingModelBinder))]
+        [InlineData(typeof(DateTime), typeof(DateTimeModelBinder))]
+        [InlineData(typeof(DateTime?), typeof(DateTimeModelBinder))]
+        public void RegisterModelBinders_For(Type type, Type modelBinder)
         {
-            Assert.Null(ModelBinders.Binders[typeof(String)]);
-
             application.RegisterModelBinders();
 
-            IModelBinder actual = ModelBinders.Binders[typeof(String)];
-
-            Assert.IsType<TrimmingModelBinder>(actual);
+            Assert.IsType(modelBinder, ModelBinders.Binders[type]);
         }
 
         #endregion

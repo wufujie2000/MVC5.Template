@@ -41,6 +41,9 @@ namespace MvcTemplate.Tests.Objects
         [NotTrimmed]
         public String NotTrimmedStringField { get; set; }
 
+        [Truncated]
+        public DateTime TruncatedDateTimeField { get; set; }
+
         public AllTypesView Child { get; set; }
     }
 

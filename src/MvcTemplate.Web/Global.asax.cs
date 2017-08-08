@@ -101,6 +101,8 @@ namespace MvcTemplate.Web
         public virtual void RegisterModelBinders()
         {
             ModelBinders.Binders.Add(typeof(String), new TrimmingModelBinder());
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
+            ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
         }
         public virtual void RegisterViewEngine()
         {

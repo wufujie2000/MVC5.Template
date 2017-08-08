@@ -208,6 +208,7 @@
     <Compile Include="Unit\Components\Mvc\Attributes\MaxValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\MinValueAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\NotTrimmedAttributeTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Binders\DateTimeModelBinderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Binders\TrimmingModelBinderTests.cs" />
     <Compile Include="Unit\Components\Mvc\Extensions\ModelStateDictionaryExtensionsTests.cs" />
     <Compile Include="Unit\Components\Mvc\Globalization\LanguagesTests.cs" />

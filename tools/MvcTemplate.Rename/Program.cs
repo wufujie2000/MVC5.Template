@@ -9,11 +9,15 @@ namespace MvcTemplate.Rename
     public class Program
     {
         private const String TemplateName = "MvcTemplate";
+        private static String Password { get; set; }
         private static String Project { get; set; }
         private static String Company { get; set; }
 
         public static void Main(String[] args)
         {
+            Console.Write("Enter admin password (32 symbols max): ");
+            while ((Password = Console.ReadLine().Trim()) == "") { }
+
             Console.Write("Enter root namespace name: ");
             while ((Project = Console.ReadLine().Trim()) == "") { }
 
@@ -21,6 +25,7 @@ namespace MvcTemplate.Rename
             Company = Console.ReadLine().Trim();
 
             Int32 port = new Random().Next(1000, 19175);
+            String passhash = BCrypt.Net.BCrypt.HashPassword(Password.Length <= 32 ? Password : Password.Substring(0, 32), 13);
 
             String[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.*", SearchOption.AllDirectories);
             for (Int32 i = 0; i < files.Length; i++)
@@ -38,6 +43,7 @@ namespace MvcTemplate.Rename
                     extension == ".ps1" ||
                     extension == ".t4")
                 {
+                    Regex adminPassword = new Regex("Passhash = \"\\$2a\\$.*\", // Will be generated on project rename");
                     Regex assemblyVersion = new Regex("assembly: AssemblyVersion.*");
                     Regex fileVersion = new Regex("assembly: AssemblyFileVersion.*");
                     Regex copyright = new Regex("assembly: AssemblyCopyright.*");
@@ -49,6 +55,7 @@ namespace MvcTemplate.Rename
                     content = newLine.Replace(content, "\r\n");
                     content = content.Replace(TemplateName, Project);
                     content = iisPort.Replace(content, "${1}" + port + "${2}");
+                    content = adminPassword.Replace(content, "Passhash = \"" + passhash + "\",");
                     content = company.Replace(content, "assembly: AssemblyCompany(\"" + Company + "\")]");
                     content = fileVersion.Replace(content, "assembly: AssemblyFileVersion(\"0.1.0.0\")]");
                     content = assemblyVersion.Replace(content, "assembly: AssemblyVersion(\"0.1.0.0\")]");

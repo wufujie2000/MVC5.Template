@@ -224,6 +224,11 @@
     $(document).on('click', 'input:checkbox[readonly],input:radio[readonly]', function () {
         return false;
     });
+
+    var disabledWidgets = $('.widget-box.disabled');
+    disabledWidgets.find('textarea').attr('disabled', '');
+    if ($.fn.datalist) { disabledWidgets.find('.datalist').datalist({ readonly: true }); }
+    disabledWidgets.find('input:not([type="submit"]):not([type="hidden"])').attr('disabled', '');
 })();
 
 // Input focus binding

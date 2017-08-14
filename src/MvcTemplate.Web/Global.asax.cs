@@ -4,7 +4,9 @@ using MvcTemplate.Components.Logging;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
+using MvcTemplate.Resources.Shared;
 using MvcTemplate.Web.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -41,19 +43,30 @@ namespace MvcTemplate.Web
             Exception exception = Server.GetLastError();
             logger.Log(exception);
 
-            if (Context.IsCustomErrorEnabled)
+            if (Request.RequestContext.HttpContext.Request.IsAjaxRequest())
             {
-                HttpException httpException = exception as HttpException;
-                RouteValueDictionary route = new RouteValueDictionary();
-                UrlHelper url = new UrlHelper(Request.RequestContext);
+                Response.Clear();
                 Server.ClearError();
+                Response.StatusCode = 500;
+
+                if (Context.IsCustomErrorEnabled)
+                    Response.Write(JsonConvert.SerializeObject(new { status = "error", message = Strings.SystemError }));
+                else
+                    Response.Write(JsonConvert.SerializeObject(new { status = "error", message = Strings.SystemError, trace = exception.Message + Environment.NewLine + exception.StackTrace }));
+            }
+            else if (Context.IsCustomErrorEnabled)
+            {
+                Server.ClearError();
+                UrlHelper url = new UrlHelper(Request.RequestContext);
+                RouteValueDictionary route = new RouteValueDictionary();
+                HttpException httpException = exception as HttpException;
 
                 route["language"] = Request.RequestContext.RouteData.Values["language"];
                 route["controller"] = "Home";
                 route["action"] = "Error";
                 route["area"] = "";
 
-                if (httpException != null && httpException.GetHttpCode() == 404)
+                if (httpException?.GetHttpCode() == 404)
                     route["action"] = "NotFound";
 
                 Response.TrySkipIisCustomErrors = true;

@@ -10,41 +10,41 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 {
     public class DateTimeModelBinderTests
     {
-        private ControllerContext controllerContext;
-        private ModelBindingContext bindingContext;
         private NameValueCollection collection;
+        private ModelBindingContext binding;
         private DateTimeModelBinder binder;
+        private ControllerContext context;
 
         public DateTimeModelBinderTests()
         {
-            controllerContext = new ControllerContext();
-            bindingContext = new ModelBindingContext();
-            bindingContext.ModelName = "DateTimeField";
-            collection = new NameValueCollection();
+            context = new ControllerContext();
             binder = new DateTimeModelBinder();
+            binding = new ModelBindingContext();
+            binding.ModelName = "DateTimeField";
+            collection = new NameValueCollection();
 
-            controllerContext.Controller = Substitute.For<ControllerBase>();
-            bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
+            context.Controller = Substitute.For<ControllerBase>();
+            binding.ModelMetadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AllTypesView), "DateTimeField");
         }
 
-        #region BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        #region BindModel(ControllerContext context, ModelBindingContext binding)
 
         [Fact]
         public void BindModel_NullValue_ReturnsNull()
         {
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            binding.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
-            Assert.Null(binder.BindModel(controllerContext, bindingContext));
+            Assert.Null(binder.BindModel(context, binding));
         }
 
         [Fact]
         public void BindModel_DoesNotTruncateValue()
         {
-            collection.Add(bindingContext.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            collection.Add(binding.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
+            binding.ValueProvider = new NameValueCollectionValueProvider(collection, null);
 
-            Object actual = binder.BindModel(controllerContext, bindingContext);
+            Object actual = binder.BindModel(context, binding);
             Object expected = new DateTime(2017, 2, 3, 4, 5, 6);
 
             Assert.Equal(expected, actual);
@@ -53,13 +53,13 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void BindModel_TruncatesValue()
         {
-            bindingContext.ModelName = "TruncatedDateTimeField";
-            collection.Add(bindingContext.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
-            bindingContext.ValueProvider = new NameValueCollectionValueProvider(collection, null);
-            bindingContext.ModelMetadata = new DataAnnotationsModelMetadataProvider()
+            binding.ModelName = "TruncatedDateTimeField";
+            collection.Add(binding.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
+            binding.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            binding.ModelMetadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AllTypesView), "TruncatedDateTimeField");
 
-            Object actual = binder.BindModel(controllerContext, bindingContext);
+            Object actual = binder.BindModel(context, binding);
             Object expected = new DateTime(2017, 2, 3);
 
             Assert.Equal(expected, actual);

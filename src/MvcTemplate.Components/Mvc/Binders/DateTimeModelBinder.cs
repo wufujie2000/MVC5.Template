@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Mvc
         {
             DateTime? value = ModelBinders.Binders.DefaultBinder.BindModel(context, binding) as DateTime?;
             PropertyInfo property = binding.ModelMetadata.ContainerType?.GetProperty(binding.ModelMetadata.PropertyName);
-            if (property.IsDefined(typeof(TruncatedAttribute), false))
+            if (property?.IsDefined(typeof(TruncatedAttribute), false) == true)
                 return value?.Date;
 
             return value;

@@ -1,5 +1,5 @@
 ﻿/*!
- * Mvc.Grid 4.0.0
+ * Mvc.Grid 4.1.1
  * https://github.com/NonFactors/MVC5.Grid
  *
  * Copyright © NonFactors
@@ -149,7 +149,7 @@ var MvcGrid = (function () {
             var grid = this;
 
             if (grid.pager) {
-                grid.pager.rowsPerPage.on('change', function () {
+                grid.pager.rowsPerPage.on('change.mvcgrid', function () {
                     grid.applyPage(grid.pager.currentPage);
                     grid.reload();
                 });
@@ -167,7 +167,7 @@ var MvcGrid = (function () {
         bindGrid: function () {
             var grid = this;
 
-            grid.element.find('tbody tr').on('click.mvcgrid', function (e) {
+            grid.element.find('tbody tr:not(.mvc-grid-empty-row)').on('click.mvcgrid', function (e) {
                 if (grid.rowClicked) {
                     var cells = $(this).find('td');
                     var data = [];

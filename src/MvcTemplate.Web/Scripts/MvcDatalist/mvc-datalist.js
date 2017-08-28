@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.2.0
+ * Datalist 5.2.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -207,7 +207,7 @@ var MvcDatalistDialog = (function () {
                     if (!columns[j].Hidden) {
                         var td = document.createElement('td');
                         td.className = columns[j].CssClass || '';
-                        td.innerText = rows[i][columns[j].Key];
+                        td.innerText = rows[i][columns[j].Key] || '';
 
                         tr.appendChild(td);
                     }
@@ -297,7 +297,7 @@ var MvcDatalistDialog = (function () {
         },
         createHeaderColumn: function (column) {
             var header = document.createElement('th');
-            header.innerText = column.Header;
+            header.innerText = column.Header || '';
             var filter = this.filter;
             var dialog = this;
 
@@ -576,7 +576,7 @@ var MvcDatalist = (function () {
                 close.innerHTML = 'x';
 
                 var item = document.createElement('div');
-                item.innerText = data[i].DatalistAcKey;
+                item.innerText = data[i].DatalistAcKey || '';
                 item.className = 'datalist-item';
                 item.appendChild(close);
 

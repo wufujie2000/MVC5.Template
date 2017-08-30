@@ -3,7 +3,6 @@ using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
@@ -60,11 +59,6 @@ namespace MvcTemplate.Components.Datalists
         public override IQueryable<TView> GetModels()
         {
             return UnitOfWork.Select<TModel>().To<TView>();
-        }
-
-        public override IQueryable<TView> FilterByIds(IQueryable<TView> models, IList<String> ids)
-        {
-            return base.FilterByIds(UnitOfWork.Select<TModel>().To<TView>(), ids);
         }
     }
 }

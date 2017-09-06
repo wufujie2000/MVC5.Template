@@ -50,9 +50,9 @@ namespace MvcTemplate.Web
                 Response.StatusCode = 500;
 
                 if (Context.IsCustomErrorEnabled)
-                    Response.Write(JsonConvert.SerializeObject(new { status = "error", message = Strings.SystemError }));
+                    Response.Write(JsonConvert.SerializeObject(new { status = "error", data = new { message = Strings.SystemError } }));
                 else
-                    Response.Write(JsonConvert.SerializeObject(new { status = "error", message = Strings.SystemError, trace = exception.Message + Environment.NewLine + exception.StackTrace }));
+                    Response.Write(JsonConvert.SerializeObject(new { status = "error", data = new { message = Strings.SystemError, trace = exception.Message + Environment.NewLine + exception.StackTrace } }));
             }
             else if (Context.IsCustomErrorEnabled)
             {

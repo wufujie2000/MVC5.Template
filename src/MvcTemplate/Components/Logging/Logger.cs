@@ -26,8 +26,9 @@ namespace MvcTemplate.Components.Logging
             Int64 backupSize = Int64.Parse(WebConfigurationManager.AppSettings["LogBackupSize"]);
             String logDirectory = WebConfigurationManager.AppSettings["LogDirectory"];
             String basePath = HostingEnvironment.ApplicationPhysicalPath ?? "";
-            String logPath = Path.Combine(basePath, logDirectory, "Log.txt");
             Int32? accountId = AccountId ?? HttpContext.Current.User?.Id();
+            logDirectory = Path.Combine(basePath, logDirectory);
+            String path = Path.Combine(logDirectory, "Log.txt");
 
             StringBuilder log = new StringBuilder();
             log.AppendLine("Time   : " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -38,10 +39,10 @@ namespace MvcTemplate.Components.Logging
             lock (LogWriting)
             {
                 Directory.CreateDirectory(logDirectory);
-                File.AppendAllText(logPath, log.ToString());
+                File.AppendAllText(path, log.ToString());
 
-                if (new FileInfo(logPath).Length >= backupSize)
-                    File.Move(logPath, Path.Combine(logDirectory, $"Log {DateTime.Now:yyyy-MM-dd HHmmss}.txt"));
+                if (new FileInfo(path).Length >= backupSize)
+                    File.Move(path, Path.Combine(logDirectory, $"Log {DateTime.Now:yyyy-MM-dd HHmmss}.txt"));
             }
         }
         public void Log(Exception exception)

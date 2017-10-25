@@ -6,8 +6,10 @@ using MvcTemplate.Tests.Objects;
 using MvcTemplate.Web;
 using NSubstitute;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Configuration;
+using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -316,6 +318,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData(typeof(String), typeof(TrimmingModelBinder))]
         [InlineData(typeof(DateTime), typeof(DateTimeModelBinder))]
         [InlineData(typeof(DateTime?), typeof(DateTimeModelBinder))]
+        [InlineData(typeof(IList<HttpPostedFileBase>), typeof(HttpPostedFilesModelBinder))]
         public void RegisterModelBinders_For(Type type, Type modelBinder)
         {
             application.RegisterModelBinders();

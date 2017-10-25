@@ -1,6 +1,8 @@
 ﻿using MvcTemplate.Components.Mvc;
 using MvcTemplate.Objects;
 using System;
+using System.Collections.Generic;
+using System.Web;
 
 namespace MvcTemplate.Tests.Objects
 {
@@ -43,6 +45,8 @@ namespace MvcTemplate.Tests.Objects
 
         [Truncated]
         public DateTime TruncatedDateTimeField { get; set; }
+
+        public List<HttpPostedFileBase> Files { get; set; }
 
         public AllTypesView Child { get; set; }
     }

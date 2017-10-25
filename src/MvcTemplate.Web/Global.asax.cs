@@ -8,6 +8,7 @@ using MvcTemplate.Resources.Shared;
 using MvcTemplate.Web.DependencyInjection;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -116,6 +117,7 @@ namespace MvcTemplate.Web
             ModelBinders.Binders.Add(typeof(String), new TrimmingModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
+            ModelBinders.Binders.Add(typeof(IList<HttpPostedFileBase>), new HttpPostedFilesModelBinder());
         }
         public virtual void RegisterViewEngine()
         {

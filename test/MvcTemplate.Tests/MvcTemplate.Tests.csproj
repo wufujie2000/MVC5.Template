@@ -187,6 +187,7 @@
     <Compile Include="Unit\Components\Extensions\MvcGrid\MvcGridExtensionsTests.cs" />
     <Compile Include="Unit\Components\Extensions\Page\AuthorizationExtensionsTests.cs" />
     <Compile Include="Unit\Components\Logging\LoggerTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Adapters\AcceptFilesAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\DigitsAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EmailAddressAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\EqualToAdapterTests.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Unit\Components\Mvc\Adapters\RequiredAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Adapters\StringLengthAdapterTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\AjaxOnlyAttributeTests.cs" />
+    <Compile Include="Unit\Components\Mvc\Attributes\AcceptFilesAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\AreaAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\DigitsAttributeTests.cs" />
     <Compile Include="Unit\Components\Mvc\Attributes\EqualToAttributeTests.cs" />

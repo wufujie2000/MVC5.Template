@@ -135,6 +135,7 @@ namespace MvcTemplate.Web
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(MaxValueAttribute), typeof(MaxValueAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(FileSizeAttribute), typeof(FileSizeAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(MinLengthAttribute), typeof(MinLengthAdapter));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(AcceptFilesAttribute), typeof(AcceptFilesAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(GreaterThanAttribute), typeof(GreaterThanAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(EmailAddressAttribute), typeof(EmailAddressAdapter));
             DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(StringLengthAttribute), typeof(StringLengthAdapter));

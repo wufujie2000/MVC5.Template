@@ -94,6 +94,8 @@
     <Compile Include="Extensions\MvcGrid\MvcGridExtensions.cs" />
     <Compile Include="Extensions\Page\AuthorizationExtensions.cs" />
     <Compile Include="Extensions\Page\ContentExtensions.cs" />
+    <Compile Include="Mvc\Adapters\AcceptFilesAdapter.cs" />
+    <Compile Include="Mvc\Attributes\AcceptFilesAttribute.cs" />
     <Compile Include="Mvc\Binders\HttpPostedFilesModelBinder.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Mail\IMailClient.cs" />

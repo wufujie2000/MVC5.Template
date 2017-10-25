@@ -365,6 +365,7 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData("MaxValue", typeof(MaxValueAdapter))]
         [InlineData("FileSize", typeof(FileSizeAdapter))]
         [InlineData("MinLength", typeof(MinLengthAdapter))]
+        [InlineData("AcceptFiles", typeof(AcceptFilesAdapter))]
         [InlineData("GreaterThan", typeof(GreaterThanAdapter))]
         [InlineData("EmailAddress", typeof(EmailAddressAdapter))]
         [InlineData("StringLength", typeof(StringLengthAdapter))]

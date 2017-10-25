@@ -42,5 +42,8 @@ namespace MvcTemplate.Tests.Objects
 
         [FileSize(12.25)]
         public HttpPostedFileBase FileSize { get; set; }
+
+        [AcceptFiles(".docx,.rtf")]
+        public HttpPostedFileBase AcceptFiles { get; set; }
     }
 }

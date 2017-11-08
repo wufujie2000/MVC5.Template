@@ -32,6 +32,7 @@ namespace MvcTemplate.Tests.Unit.Services
             context.DropData();
             SetUpData();
 
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             service = new AccountService(new UnitOfWork(context), hasher);
             service.CurrentAccountId = account.Id;
         }
@@ -145,9 +146,10 @@ namespace MvcTemplate.Tests.Unit.Services
         {
             AccountRecoveryView view = ObjectFactory.CreateAccountRecoveryView();
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
+            String oldToken = account.RecoveryToken;
             view.Email = view.Email.ToUpper();
 
-            String expectedToken = service.Recover(view);
+            account.RecoveryToken = service.Recover(view);
 
             Account actual = context.Set<Account>().AsNoTracking().Single();
             Account expected = account;
@@ -155,12 +157,12 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.InRange(actual.RecoveryTokenExpirationDate.Value.Ticks,
                 expected.RecoveryTokenExpirationDate.Value.Ticks - TimeSpan.TicksPerSecond,
                 expected.RecoveryTokenExpirationDate.Value.Ticks + TimeSpan.TicksPerSecond);
-            Assert.NotEqual(expected.RecoveryToken, actual.RecoveryToken);
+            Assert.Equal(account.RecoveryToken, actual.RecoveryToken);
             Assert.Equal(expected.CreationDate, actual.CreationDate);
-            Assert.Equal(expectedToken, actual.RecoveryToken);
             Assert.Equal(expected.IsLocked, actual.IsLocked);
             Assert.Equal(expected.Passhash, actual.Passhash);
             Assert.Equal(expected.Username, actual.Username);
+            Assert.NotEqual(oldToken, actual.RecoveryToken);
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
@@ -224,8 +226,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Create_RefreshesAuthorization()
         {
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-
             AccountCreateView view = ObjectFactory.CreateAccountCreateView(1);
             view.RoleId = null;
 
@@ -266,8 +266,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Edit_RefreshesAuthorization()
         {
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-
             AccountEditView view = ObjectFactory.CreateAccountEditView(account.Id);
             view.RoleId = account.RoleId;
 
@@ -336,8 +334,6 @@ namespace MvcTemplate.Tests.Unit.Services
         [Fact]
         public void Delete_RefreshesAuthorization()
         {
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
-
             service.Delete(account.Id);
 
             Authorization.Provider.Received().Refresh();
@@ -348,24 +344,11 @@ namespace MvcTemplate.Tests.Unit.Services
         #region Login(String username)
 
         [Fact]
-        public void Login_IsCaseInsensitive()
+        public void Login_Account()
         {
             HttpContext.Current = HttpContextFactory.CreateHttpContext();
 
             service.Login(account.Username.ToUpper());
-
-            String actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value).Name;
-            String expected = account.Id.ToString();
-
-            Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public void Login_CreatesCookie()
-        {
-            HttpContext.Current = HttpContextFactory.CreateHttpContext();
-
-            service.Login(account.Username);
 
             FormsAuthenticationTicket actual = FormsAuthentication.Decrypt(HttpContext.Current.Response.Cookies[0].Value);
             FormsAuthenticationTicket expected = new FormsAuthenticationTicket(account.Id.ToString(), true, 0);

@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Extensions;
+using MvcTemplate.Components.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,14 @@ namespace MvcTemplate.Components.Mvc
 {
     public class MvcSiteMapProvider : IMvcSiteMapProvider
     {
+        private IEnumerable<MvcSiteMapNode> AllNodes { get; }
         private IEnumerable<MvcSiteMapNode> NodeTree { get; }
-        private IEnumerable<MvcSiteMapNode> NodeList { get; }
 
         public MvcSiteMapProvider(String path, IMvcSiteMapParser parser)
         {
             XElement siteMap = XElement.Load(path);
             NodeTree = parser.GetNodeTree(siteMap);
-            NodeList = ToList(NodeTree);
+            AllNodes = ToList(NodeTree);
         }
 
         public IEnumerable<MvcSiteMapNode> GetSiteMap(ViewContext context)
@@ -35,7 +36,7 @@ namespace MvcTemplate.Components.Mvc
             String action = context.RouteData.Values["action"] as String;
             String controller = context.RouteData.Values["controller"] as String;
 
-            MvcSiteMapNode current = NodeList.SingleOrDefault(node =>
+            MvcSiteMapNode current = AllNodes.SingleOrDefault(node =>
                 String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
                 String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase));
@@ -78,8 +79,8 @@ namespace MvcTemplate.Components.Mvc
                     (
                         String.Equals(node.Area, area, StringComparison.OrdinalIgnoreCase) &&
                         String.Equals(node.Action, action, StringComparison.OrdinalIgnoreCase) &&
-                        String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase
-                    ));
+                        String.Equals(node.Controller, controller, StringComparison.OrdinalIgnoreCase)
+                    );
 
                 copies.Add(copy);
             }
@@ -93,7 +94,7 @@ namespace MvcTemplate.Components.Mvc
             {
                 node.Children = GetAuthorizedNodes(accountId, node.Children);
 
-                if (node.IsMenu && IsAuthorizedToView(accountId, node) && !IsEmpty(node))
+                if (node.IsMenu && IsAuthorizedToView(accountId, node.Area, node.Controller, node.Action) && !IsEmpty(node))
                     authorized.Add(node);
                 else
                     authorized.AddRange(node.Children);
@@ -102,6 +103,10 @@ namespace MvcTemplate.Components.Mvc
             return authorized;
         }
 
+        private Boolean IsAuthorizedToView(Int32? accountId, String area, String controller, String action)
+        {
+            return action == null || Authorization.Provider?.IsAuthorizedFor(accountId, area, controller, action) != false;
+        }
         private IEnumerable<MvcSiteMapNode> ToList(IEnumerable<MvcSiteMapNode> nodes)
         {
             List<MvcSiteMapNode> list = new List<MvcSiteMapNode>();
@@ -112,13 +117,6 @@ namespace MvcTemplate.Components.Mvc
             }
 
             return list;
-        }
-        private Boolean IsAuthorizedToView(Int32? accountId, MvcSiteMapNode menu)
-        {
-            if (menu.Action == null) return true;
-            if (Authorization.Provider == null) return true;
-
-            return Authorization.Provider.IsAuthorizedFor(accountId, menu.Area, menu.Controller, menu.Action);
         }
         private Boolean IsEmpty(MvcSiteMapNode node)
         {

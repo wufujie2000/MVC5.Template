@@ -124,15 +124,25 @@ namespace MvcTemplate.Components.Security
 
         private Boolean AllowsUnauthorized(Type controller, MethodInfo method)
         {
-            if (method.IsDefined(typeof(AuthorizeAttribute), false)) return false;
-            if (method.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
-            if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+            if (method.IsDefined(typeof(AuthorizeAttribute), false))
+                return false;
+
+            if (method.IsDefined(typeof(AllowAnonymousAttribute), false))
+                return true;
+
+            if (method.IsDefined(typeof(AllowUnauthorizedAttribute), false))
+                return true;
 
             while (controller != typeof(Controller))
             {
-                if (controller.IsDefined(typeof(AuthorizeAttribute), false)) return false;
-                if (controller.IsDefined(typeof(AllowAnonymousAttribute), false)) return true;
-                if (controller.IsDefined(typeof(AllowUnauthorizedAttribute), false)) return true;
+                if (controller.IsDefined(typeof(AuthorizeAttribute), false))
+                    return false;
+
+                if (controller.IsDefined(typeof(AllowAnonymousAttribute), false))
+                    return true;
+
+                if (controller.IsDefined(typeof(AllowUnauthorizedAttribute), false))
+                    return true;
 
                 controller = controller.BaseType;
             }

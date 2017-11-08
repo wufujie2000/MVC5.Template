@@ -36,18 +36,15 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             modelState.AddModelError("WhitespaceErrors", "Whitespace");
 
             Dictionary<String, String> actual = modelState.Errors();
-            Dictionary<String, String> expected = new Dictionary<String, String>
-            {
-                ["Empty"] = null,
-                ["Error"] = "Error",
-                ["EmptyErrors"] = "E",
-                ["TwoErrors"] = "Error1",
-                ["NullError"] = null,
-                ["NullErrors"] = "NotNullError",
-                ["WhitespaceErrors"] = "       "
-            };
 
-            Assert.Equal(expected, actual);
+            Assert.Equal("       ", actual["WhitespaceErrors"]);
+            Assert.Equal("NotNullError", actual["NullErrors"]);
+            Assert.Equal("Error1", actual["TwoErrors"]);
+            Assert.Equal("E", actual["EmptyErrors"]);
+            Assert.Equal("Error", actual["Error"]);
+            Assert.Null(actual["NullError"]);
+            Assert.Equal(7, actual.Count);
+            Assert.Null(actual["Empty"]);
         }
 
         #endregion

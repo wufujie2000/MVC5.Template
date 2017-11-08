@@ -30,22 +30,16 @@ namespace MvcTemplate.Components.Mvc
         {
             Type type = Nullable.GetUnderlyingType(metadata.ModelType) ?? metadata.ModelType;
 
-            if (IsDateTimeType(type, metadata))
+            if (IsDate(type, metadata))
                 yield return new DateValidator(metadata, context);
 
-            if (IsNumericType(type))
+            if (NumericTypes.Contains(type))
                 yield return new NumberValidator(metadata, context);
         }
 
-        private Boolean IsDateTimeType(Type type, ModelMetadata metadata)
+        private Boolean IsDate(Type type, ModelMetadata metadata)
         {
-            if (type != typeof(DateTime)) return false;
-
-            return !String.Equals(metadata.DataTypeName, "Time", StringComparison.OrdinalIgnoreCase);
-        }
-        private Boolean IsNumericType(Type type)
-        {
-            return NumericTypes.Contains(type);
+            return type == typeof(DateTime) && metadata.DataTypeName != "Time";
         }
     }
 }

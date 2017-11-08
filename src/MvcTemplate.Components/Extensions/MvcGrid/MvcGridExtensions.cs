@@ -40,10 +40,7 @@ namespace MvcTemplate.Components.Extensions
 
             return columns
                 .AddProperty(expression)
-                .RenderedAs(model =>
-                    valueFor(model)
-                        ? Strings.Yes
-                        : Strings.No);
+                .RenderedAs(model => valueFor(model) ? Strings.Yes : Strings.No);
         }
         public static IGridColumn<T> AddBooleanProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, Boolean?>> expression)
         {
@@ -115,14 +112,15 @@ namespace MvcTemplate.Components.Extensions
                 .FirstOrDefault(property => property.IsDefined(typeof(KeyAttribute), false));
 
             if (key == null)
-                throw new Exception($"{typeof(T).Name} type does not have a key property.");
+                throw new Exception(typeof(T).Name + " type does not have a key property.");
 
             return new RouteValueDictionary { [key.Name] = key.GetValue(model) };
         }
         private static String GetCssClassFor<TProperty>()
         {
             Type type = Nullable.GetUnderlyingType(typeof(TProperty)) ?? typeof(TProperty);
-            if (type.IsEnum) return "text-left";
+            if (type.IsEnum)
+                return "text-left";
 
             switch (Type.GetTypeCode(type))
             {

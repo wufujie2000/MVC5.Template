@@ -31,15 +31,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
             service = Substitute.For<IAccountService>();
             validator = Substitute.For<IAccountValidator>();
             controller = Substitute.ForPartsOf<AuthController>(validator, service, mailClient);
-
-            accountRecovery = ObjectFactory.CreateAccountRecoveryView();
-            accountReset = ObjectFactory.CreateAccountResetView();
-            accountLogin = ObjectFactory.CreateAccountLoginView();
-
             HttpContextBase context = HttpContextFactory.CreateHttpContextBase();
             controller.Url = new UrlHelper(context.Request.RequestContext);
             controller.ControllerContext = new ControllerContext();
             controller.ControllerContext.HttpContext = context;
+
+            accountRecovery = ObjectFactory.CreateAccountRecoveryView();
+            accountReset = ObjectFactory.CreateAccountResetView();
+            accountLogin = ObjectFactory.CreateAccountLoginView();
         }
 
         #region Recover()

@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             Authorization.Provider = null;
         }
 
-        #region AddActionLink<T>(this IGridColumnOf<T> columns, String action, String iconClass)
+        #region AddActionLink<T>(this IGridColumnsOf<T> columns, String action, String iconClass)
 
         [Fact]
         public void AddActionLink_Unauthorized_Empty()
@@ -54,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected =
-                $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new {view.Id})}\">" +
+                $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new { view.Id })}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                 "</a>";
 
@@ -72,7 +72,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected =
-                $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new {view.Id})}\">" +
+                $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new { view.Id })}\">" +
                     "<i class=\"fa fa-info\"></i>" +
                 "</a>";
 
@@ -106,7 +106,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddDateProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateProperty_Column()
@@ -124,7 +124,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddDateProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateProperty_Nullable_Column()
@@ -142,7 +142,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddBooleanProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, Boolean>> expression)
+        #region AddBooleanProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, Boolean>> expression)
 
         [Fact]
         public void AddBooleanProperty_Column()
@@ -183,7 +183,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddBooleanProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, Boolean?>> expression)
+        #region AddBooleanProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, Boolean?>> expression)
 
         [Fact]
         public void AddBooleanProperty_Nullable_Column()
@@ -235,7 +235,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddDateTimeProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Column()
@@ -253,7 +253,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddDateTimeProperty<T>(this IGridColumnOf<T> columns, Expression<Func<T, DateTime?>> expression)
+        #region AddDateTimeProperty<T>(this IGridColumnsOf<T> columns, Expression<Func<T, DateTime?>> expression)
 
         [Fact]
         public void AddDateTimeProperty_Nullable_Column()
@@ -271,7 +271,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
         #endregion
 
-        #region AddProperty<T, TProperty>(this IGridColumnOf<T> columns, Expression<Func<T, TProperty>> expression)
+        #region AddProperty<T, TProperty>(this IGridColumnsOf<T> columns, Expression<Func<T, TProperty>> expression)
 
         [Fact]
         public void AddProperty_Column()

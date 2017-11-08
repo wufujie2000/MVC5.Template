@@ -18,10 +18,13 @@ namespace MvcTemplate.Components.Mvc
         }
         public override IEnumerable<ModelClientValidationRule> GetClientValidationRules()
         {
-            yield return new ModelClientValidationRule
+            return new[]
             {
-                ValidationType = "date",
-                ErrorMessage = String.Format(Validations.Date, Metadata.GetDisplayName())
+                new ModelClientValidationRule
+                {
+                    ValidationType = "date",
+                    ErrorMessage = String.Format(Validations.Date, Metadata.GetDisplayName())
+                }
             };
         }
     }

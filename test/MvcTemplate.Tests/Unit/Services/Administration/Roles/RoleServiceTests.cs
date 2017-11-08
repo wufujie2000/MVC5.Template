@@ -216,10 +216,9 @@ namespace MvcTemplate.Tests.Unit.Services
 
             IEnumerable<Int32> expected = view.Permissions.SelectedIds.OrderBy(permissionId => permissionId);
             IEnumerable<Int32> actual = context
-                .Set<Role>()
+                .Set<RolePermission>()
                 .AsNoTracking()
-                .Single(model => model.Id != role.Id)
-                .Permissions
+                .Where(rolePermission => rolePermission.RoleId != role.Id)
                 .Select(rolePermission => rolePermission.PermissionId)
                 .OrderBy(permissionId => permissionId);
 
@@ -388,9 +387,7 @@ namespace MvcTemplate.Tests.Unit.Services
         private IEnumerable<JsTreeNode> GetLeafNodes(IEnumerable<JsTreeNode> nodes)
         {
             List<JsTreeNode> leafs = nodes.Where(node => node.Nodes.Count == 0).ToList();
-            IEnumerable<JsTreeNode> branches = nodes.Where(node => node.Nodes.Count > 0);
-
-            foreach (JsTreeNode branch in branches)
+            foreach (JsTreeNode branch in nodes.Where(node => node.Nodes.Count > 0))
                 leafs.AddRange(GetLeafNodes(branch.Nodes));
 
             return leafs;

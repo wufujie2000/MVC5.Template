@@ -85,10 +85,10 @@ namespace MvcTemplate.Tests.Unit.Data.Migrations
                 .Set<Permission>()
                 .Select(permission => permission.Id)
                 .OrderBy(permissionId => permissionId);
+
             IEnumerable<Int32> actual = context
-                .Set<Role>()
-                .Single(role => role.Title == "Sys_Admin")
-                .Permissions
+                .Set<RolePermission>()
+                .Where(permission => permission.Role.Title == "Sys_Admin")
                 .Select(rolePermission => rolePermission.PermissionId)
                 .OrderBy(permissionId => permissionId);
 

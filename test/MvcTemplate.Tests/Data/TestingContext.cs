@@ -7,7 +7,7 @@ namespace MvcTemplate.Tests.Data
 {
     public class TestingContext : Context
     {
-        #region Test
+        #region Tests
 
         protected DbSet<TestModel> TestModels { get; set; }
 

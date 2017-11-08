@@ -4,8 +4,8 @@ namespace MvcTemplate.Components.Mvc
 {
     public interface ILanguages
     {
-        Language[] Supported { get; }
         Language Default { get; }
+        Language[] Supported { get; }
         Language Current { get; set; }
 
         Language this[String abbreviation] { get; }

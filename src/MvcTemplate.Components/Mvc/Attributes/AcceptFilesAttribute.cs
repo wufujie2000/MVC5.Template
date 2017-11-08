@@ -41,9 +41,8 @@ namespace MvcTemplate.Components.Mvc
         private IEnumerable<HttpPostedFileBase> ToFiles(Object value)
         {
             HttpPostedFileBase file = value as HttpPostedFileBase;
-            if (file != null) return new[] { file };
 
-            return value as IEnumerable<HttpPostedFileBase>;
+            return file != null ? new[] { file } : value as IEnumerable<HttpPostedFileBase>;
         }
     }
 }

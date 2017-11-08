@@ -21,9 +21,9 @@ namespace MvcTemplate.Web.DependencyInjection
         {
             Register<DbContext, Context>();
             Register<IUnitOfWork, UnitOfWork>();
-            Register<IAuditLogger, AuditLogger>();
 
             RegisterInstance<ILogger, Logger>();
+            Register<IAuditLogger, AuditLogger>();
 
             RegisterInstance<IHasher, BCrypter>();
             RegisterInstance<IMailClient, SmtpMailClient>();

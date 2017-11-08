@@ -16,7 +16,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
             List<MvcSiteMapNode> actual = ToList(new MvcSiteMapParser().GetNodeTree(CreateSiteMap()));
             List<MvcSiteMapNode> expected = ToList(GetExpectedNodeTree());
 
-            for (Int32 i = 0; i < expected.Count || i <actual.Count; i++)
+            for (Int32 i = 0; i < expected.Count || i < actual.Count; i++)
             {
                 Assert.Equal(expected[i].Controller, actual[i].Controller);
                 Assert.Equal(expected[i].IconClass, actual[i].IconClass);

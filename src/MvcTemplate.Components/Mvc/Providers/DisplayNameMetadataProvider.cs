@@ -10,7 +10,7 @@ namespace MvcTemplate.Components.Mvc
         protected override ModelMetadata CreateMetadata(IEnumerable<Attribute> attributes, Type container, Func<Object> model, Type type, String property)
         {
             ModelMetadata metadata = base.CreateMetadata(attributes, container, model, type, property);
-            if (container != null) metadata.DisplayName = ResourceProvider.GetPropertyTitle(container, property);
+            metadata.DisplayName = container == null ? null : ResourceProvider.GetPropertyTitle(container, property);
 
             return metadata;
         }

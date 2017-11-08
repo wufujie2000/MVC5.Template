@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Extensions;
 using System;
 using System.IO;
 using System.Text;
@@ -50,9 +50,7 @@ namespace MvcTemplate.Components.Logging
             while (exception.InnerException != null)
                 exception = exception.InnerException;
 
-            String message = $"{exception.GetType()}: {exception.Message}{Environment.NewLine}{exception.StackTrace}";
-
-            Log(message);
+            Log($"{exception.GetType()}: {exception.Message}{Environment.NewLine}{exception.StackTrace}");
         }
     }
 }

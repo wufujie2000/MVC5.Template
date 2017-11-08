@@ -27,7 +27,8 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
             url = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
             datalist = new MvcDatalist<Role, RoleView>(url);
-            using (TestingContext context = new TestingContext()) context.DropData();
+            using (TestingContext context = new TestingContext())
+                context.DropData();
         }
         public void Dispose()
         {
@@ -134,11 +135,10 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         public void GetModels_FromUnitOfWork()
         {
             IUnitOfWork unitOfWork = Substitute.For<IUnitOfWork>();
-            datalist = new MvcDatalist<Role, RoleView>(unitOfWork);
             unitOfWork.Select<Role>().To<RoleView>().Returns(new RoleView[0].AsQueryable());
 
+            Object actual = new MvcDatalist<Role, RoleView>(unitOfWork).GetModels();
             Object expected = unitOfWork.Select<Role>().To<RoleView>();
-            Object actual = datalist.GetModels();
 
             Assert.Same(expected, actual);
         }

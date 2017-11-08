@@ -26,18 +26,14 @@ namespace MvcTemplate.Components.Mvc
         {
             IEnumerable<HttpPostedFileBase> files = ToFiles(value);
 
-            if (files == null)
-                return true;
-
-            return files.Sum(file => file?.ContentLength ?? 0) <= MaximumMB * 1024 * 1024;
+            return files == null || files.Sum(file => file?.ContentLength ?? 0) <= MaximumMB * 1024 * 1024;
         }
 
         private IEnumerable<HttpPostedFileBase> ToFiles(Object value)
         {
             HttpPostedFileBase file = value as HttpPostedFileBase;
-            if (file != null) return new[] { file };
 
-            return value as IEnumerable<HttpPostedFileBase>;
+            return file != null ? new[] { file } : value as IEnumerable<HttpPostedFileBase>;
         }
     }
 }

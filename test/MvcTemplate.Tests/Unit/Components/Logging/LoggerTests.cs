@@ -24,7 +24,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             if (Directory.Exists(logDirectory))
             {
                 String[] files = Directory.GetFiles(logDirectory);
-                foreach (String file in files) File.Delete(file);
+                foreach (String file in files)
+                    File.Delete(file);
 
                 Directory.Delete(logDirectory);
             }
@@ -97,10 +98,10 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
 
             String actual = File.ReadAllText(log);
             String expected = String.Format("Account: 2{0}Message: {1}: {2}{0}{3}{0}{0}",
-                Environment.NewLine,
-                exception.InnerException.GetType(),
-                exception.InnerException.Message,
-                exception.InnerException.StackTrace);
+                 Environment.NewLine,
+                 exception.InnerException.GetType(),
+                 exception.InnerException.Message,
+                 exception.InnerException.StackTrace);
 
             Assert.True(actual.StartsWith("Time   :"));
             Assert.True(actual.EndsWith(expected));

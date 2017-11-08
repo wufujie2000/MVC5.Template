@@ -26,8 +26,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             role = ObjectFactory.CreateRoleView();
 
             controller = Substitute.ForPartsOf<RolesController>(validator, service);
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.RouteData = new RouteData();
+            controller.ControllerContext = new ControllerContext { RouteData = new RouteData() };
         }
 
         #region Index()

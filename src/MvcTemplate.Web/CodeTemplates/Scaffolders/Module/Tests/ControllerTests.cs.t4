@@ -28,8 +28,7 @@ namespace <#= Model.ControllerTestsNamespace #>
             <#= Model.ModelVarName #> = ObjectFactory.Create<#= Model.View #>();
 
             controller = Substitute.ForPartsOf<<#= Model.Controller #>>(validator, service);
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.RouteData = new RouteData();
+            controller.ControllerContext = new ControllerContext { RouteData = new RouteData() };
         }
 
         #region Index()

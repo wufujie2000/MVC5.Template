@@ -100,7 +100,7 @@ namespace MvcTemplate.Web
         }
         public virtual void RegisterDataTypeValidator()
         {
-            ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.SingleOrDefault(x => x is ClientDataTypeModelValidatorProvider));
+            ModelValidatorProviders.Providers.Remove(ModelValidatorProviders.Providers.SingleOrDefault(provider => provider is ClientDataTypeModelValidatorProvider));
             ModelValidatorProviders.Providers.Add(new DataTypeValidatorProvider());
         }
         public virtual void RegisterSiteMapProvider()

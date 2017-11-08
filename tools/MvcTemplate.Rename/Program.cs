@@ -13,7 +13,7 @@ namespace MvcTemplate.Rename
         private static String Project { get; set; }
         private static String Company { get; set; }
 
-        public static void Main(String[] args)
+        public static void Main()
         {
             Console.Write("Enter admin password (32 symbols max): ");
             while ((Password = Console.ReadLine().Trim()) == "") { }

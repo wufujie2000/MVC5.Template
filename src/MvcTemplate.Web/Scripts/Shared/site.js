@@ -253,8 +253,8 @@
     });
 
     var widgets = $('.widget-box.readonly');
+    widgets.find('input').attr('readonly', 'readonly');
     widgets.find('textarea').attr('readonly', 'readonly');
-    widgets.find('input:not([type="submit"])').attr('readonly', 'readonly');
     if ($.fn.datalist) { widgets.find('.datalist').datalist({ readonly: true }); }
 })();
 

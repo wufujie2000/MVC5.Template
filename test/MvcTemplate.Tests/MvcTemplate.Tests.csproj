@@ -237,7 +237,7 @@
     <Compile Include="Unit\Components\Security\Authorization\Controllers\InheritedAuthorizedController.cs" />
     <Compile Include="Unit\Components\Security\Authorization\Controllers\NotAttributedController.cs" />
     <Compile Include="Unit\Components\Security\Cryptography\BCrypterTests.cs" />
-    <Compile Include="Unit\Components\Security\Extensions\IPrincipalExtensions.cs" />
+    <Compile Include="Unit\Components\Extensions\Principal\PrincipalExtensionsTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Accounts\AccountsControllerTests.cs" />
     <Compile Include="Unit\Controllers\Administration\AdministrationAreaRegistrationTests.cs" />
     <Compile Include="Unit\Controllers\Administration\Roles\RolesControllerTests.cs" />

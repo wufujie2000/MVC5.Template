@@ -30,8 +30,7 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             account = ObjectFactory.CreateAccountView();
 
             controller = Substitute.ForPartsOf<AccountsController>(validator, service);
-            controller.ControllerContext = new ControllerContext();
-            controller.ControllerContext.RouteData = new RouteData();
+            controller.ControllerContext = new ControllerContext { RouteData = new RouteData() };
         }
 
         #region Index()

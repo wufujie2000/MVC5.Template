@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Extensions;
 using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using System;
@@ -72,9 +73,7 @@ namespace MvcTemplate.Controllers
 
         public virtual Boolean IsAuthorizedFor(String action, String controller, String area)
         {
-            if (AuthorizationProvider == null) return true;
-
-            return AuthorizationProvider.IsAuthorizedFor(CurrentAccountId, area, controller, action);
+            return AuthorizationProvider?.IsAuthorizedFor(CurrentAccountId, area, controller, action) != false;
         }
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, Object state)
@@ -88,13 +87,11 @@ namespace MvcTemplate.Controllers
         }
         protected override void OnAuthorization(AuthorizationContext context)
         {
-            if (!User.Identity.IsAuthenticated) return;
-
             String area = context.RouteData.Values["area"] as String;
             String action = context.RouteData.Values["action"] as String;
             String controller = context.RouteData.Values["controller"] as String;
 
-            if (!IsAuthorizedFor(action, controller, area))
+            if (User.Identity.IsAuthenticated && !IsAuthorizedFor(action, controller, area))
                 context.Result = RedirectToUnauthorized();
         }
         protected override void OnActionExecuted(ActionExecutedContext context)

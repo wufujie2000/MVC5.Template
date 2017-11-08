@@ -33,7 +33,8 @@ namespace MvcTemplate.Components.Datalists
         public override String GetColumnCssClass(PropertyInfo property)
         {
             Type type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
-            if (type.IsEnum) return "text-left";
+            if (type.IsEnum)
+                return "text-left";
 
             switch (Type.GetTypeCode(type))
             {

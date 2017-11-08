@@ -110,6 +110,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             RedirectIfAuthorized(controller, "Edit");
 
             controller.Edit(profileEdit);
+
             Alert actual = controller.Alerts.Single();
 
             Assert.Equal(Messages.ProfileUpdated, actual.Message);

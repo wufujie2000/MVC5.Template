@@ -6,7 +6,7 @@ window.cultures.globalize['en'] = {
     nativeName: 'English (United Kingdom)',
     numberFormat: {
         currency: {
-            pattern: ['-$n','$n'],
+            pattern: ['-$n', '$n'],
             symbol: '£'
         }
     },

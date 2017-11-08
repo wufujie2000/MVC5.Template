@@ -18,8 +18,6 @@ namespace MvcTemplate.Components.Extensions
 
         private static void Add(TagBuilder tree, List<JsTreeNode> nodes)
         {
-            if (nodes.Count == 0) return;
-
             TagBuilder branch = new TagBuilder("ul");
             StringBuilder nodeBuilder = new StringBuilder();
 
@@ -30,7 +28,9 @@ namespace MvcTemplate.Components.Extensions
                 item.InnerHtml = node.Title;
                 item.Attributes["id"] = id;
 
-                Add(item, node.Nodes);
+                if (node.Nodes.Count > 0)
+                    Add(item, node.Nodes);
+
                 nodeBuilder.Append(item);
             }
 
@@ -62,7 +62,8 @@ namespace MvcTemplate.Components.Extensions
             tree.AddCssClass("js-tree-view");
             tree.Attributes["for"] = name;
 
-            Add(tree, model.Nodes);
+            if (model.Nodes.Count > 0)
+                Add(tree, model.Nodes);
 
             return tree.ToString();
         }

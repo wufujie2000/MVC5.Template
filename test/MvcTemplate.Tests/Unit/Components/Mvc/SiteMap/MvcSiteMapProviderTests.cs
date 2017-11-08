@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Components.Mvc;
+﻿using MvcTemplate.Components.Extensions;
+using MvcTemplate.Components.Mvc;
 using MvcTemplate.Components.Security;
 using NSubstitute;
 using System;

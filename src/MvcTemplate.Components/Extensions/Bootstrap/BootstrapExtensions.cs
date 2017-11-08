@@ -64,7 +64,7 @@ namespace MvcTemplate.Components.Extensions
         public static MvcHtmlString FormTextAreaFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, Object htmlAttributes)
         {
             RouteValueDictionary attributes = FormHtmlAttributes(expression, htmlAttributes, "form-control");
-            if (!attributes.ContainsKey("rows")) attributes["rows"] = 6;
+            attributes["rows"] = attributes["rows"] ?? 6;
 
             return html.TextAreaFor(expression, attributes);
         }
@@ -94,16 +94,12 @@ namespace MvcTemplate.Components.Extensions
         private static RouteValueDictionary FormHtmlAttributes(LambdaExpression expression, Object attributes, String cssClass)
         {
             RouteValueDictionary htmlAttributes = HtmlHelper.AnonymousObjectToHtmlAttributes(attributes);
-            if (!htmlAttributes.ContainsKey("autocomplete")) htmlAttributes["autocomplete"] = "off";
             htmlAttributes["class"] = (cssClass + " " + htmlAttributes["class"]).Trim();
-            if (htmlAttributes.ContainsKey("readonly")) return htmlAttributes;
+            htmlAttributes["autocomplete"] = htmlAttributes["autocomplete"] ?? "off";
 
             MemberExpression member = expression.Body as MemberExpression;
-            if (member?.Member.IsDefined(typeof(EditableAttribute), false) == true)
-            {
-                EditableAttribute editable = member.Member.GetCustomAttribute<EditableAttribute>(false);
-                if (!editable.AllowEdit) htmlAttributes["readonly"] = "readonly";
-            }
+            if (!htmlAttributes.ContainsKey("readonly") && member?.Member.GetCustomAttribute<EditableAttribute>(false)?.AllowEdit == false)
+                htmlAttributes["readonly"] = "readonly";
 
             return htmlAttributes;
         }

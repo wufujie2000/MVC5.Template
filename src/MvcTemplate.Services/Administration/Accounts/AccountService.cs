@@ -42,7 +42,8 @@ namespace MvcTemplate.Services
         public String Recover(AccountRecoveryView view)
         {
             Account account = UnitOfWork.Select<Account>().SingleOrDefault(model => model.Email.ToLower() == view.Email.ToLower());
-            if (account == null) return null;
+            if (account == null)
+                return null;
 
             account.RecoveryTokenExpirationDate = DateTime.Now.AddMinutes(30);
             account.RecoveryToken = Guid.NewGuid().ToString();
@@ -110,7 +111,7 @@ namespace MvcTemplate.Services
 
         public void Login(String username)
         {
-            String accountId  = UnitOfWork
+            String accountId = UnitOfWork
                 .Select<Account>()
                 .Where(account => account.Username.ToLower() == username.ToLower())
                 .Select(account => account.Id)

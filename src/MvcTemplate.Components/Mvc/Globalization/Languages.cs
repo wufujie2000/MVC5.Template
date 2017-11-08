@@ -29,6 +29,7 @@ namespace MvcTemplate.Components.Mvc
         {
             get;
         }
+
         private Dictionary<String, Language> Dictionary
         {
             get;

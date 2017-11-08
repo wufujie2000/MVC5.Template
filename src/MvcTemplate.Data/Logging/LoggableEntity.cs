@@ -13,7 +13,7 @@ namespace MvcTemplate.Data.Logging
     {
         public String Name { get; }
         public String Action { get; }
-        public Func<Int32> Id { get;  }
+        public Func<Int32> Id { get; }
         private static String IdName { get; }
         public IEnumerable<LoggableProperty> Properties { get; }
 
@@ -29,14 +29,14 @@ namespace MvcTemplate.Data.Logging
                     ? entry.GetDatabaseValues()
                     : entry.CurrentValues;
 
-            Type entity = entry.Entity.GetType();
-            if (entity.Namespace == "System.Data.Entity.DynamicProxies") entity = entity.BaseType;
+            Type type = entry.Entity.GetType();
+
             Properties = values.PropertyNames.Where(name => name != IdName).Select(name => new LoggableProperty(entry.Property(name), values[name]));
             Properties = entry.State == EntityState.Modified ? Properties.Where(property => property.IsModified) : Properties;
+            Name = type.Namespace == "System.Data.Entity.DynamicProxies" ? type.BaseType.Name : type.Name;
             Properties = Properties.ToArray();
             Action = entry.State.ToString();
             Id = () => entry.Entity.Id;
-            Name = entity.Name;
         }
 
         public override String ToString()

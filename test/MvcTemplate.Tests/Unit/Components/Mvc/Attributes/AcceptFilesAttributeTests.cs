@@ -63,20 +63,20 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void IsValid_FileWithoutNameReturnsFalse()
         {
-            HttpPostedFileBase fileBase = Substitute.For<HttpPostedFileBase>();
-            fileBase.FileName.ReturnsNull();
+            HttpPostedFileBase file = Substitute.For<HttpPostedFileBase>();
+            file.FileName.ReturnsNull();
 
-            Assert.False(attribute.IsValid(fileBase));
+            Assert.False(attribute.IsValid(file));
         }
 
         [Fact]
         public void IsValid_AnyFileWithoutNameReturnsFalse()
         {
-            HttpPostedFileBase[] fileBases = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
-            fileBases[0].FileName.Returns("File.docx");
-            fileBases[1].FileName.ReturnsNull();
+            HttpPostedFileBase[] files = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
+            files[0].FileName.Returns("File.docx");
+            files[1].FileName.ReturnsNull();
 
-            Assert.False(attribute.IsValid(fileBases));
+            Assert.False(attribute.IsValid(files));
         }
 
         [Theory]
@@ -87,10 +87,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [InlineData(".docx.doc")]
         public void IsValid_DifferentExtensionReturnsFalse(String fileName)
         {
-            HttpPostedFileBase fileBase = Substitute.For<HttpPostedFileBase>();
-            fileBase.FileName.Returns(fileName);
+            HttpPostedFileBase file = Substitute.For<HttpPostedFileBase>();
+            file.FileName.Returns(fileName);
 
-            Assert.False(attribute.IsValid(fileBase));
+            Assert.False(attribute.IsValid(file));
         }
 
         [Theory]
@@ -101,11 +101,11 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [InlineData(".docx.doc")]
         public void IsValid_DifferentExtensionsReturnsFalse(String fileName)
         {
-            HttpPostedFileBase[] fileBases = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
-            fileBases[0].FileName.Returns("File.docx");
-            fileBases[1].FileName.Returns(fileName);
+            HttpPostedFileBase[] files = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
+            files[0].FileName.Returns("File.docx");
+            files[1].FileName.Returns(fileName);
 
-            Assert.False(attribute.IsValid(fileBases));
+            Assert.False(attribute.IsValid(files));
         }
 
         [Theory]
@@ -116,10 +116,10 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [InlineData("xlsx.doc.xlsx")]
         public void IsValid_Extension(String fileName)
         {
-            HttpPostedFileBase fileBase = Substitute.For<HttpPostedFileBase>();
-            fileBase.FileName.Returns(fileName);
+            HttpPostedFileBase file = Substitute.For<HttpPostedFileBase>();
+            file.FileName.Returns(fileName);
 
-            Assert.True(attribute.IsValid(fileBase));
+            Assert.True(attribute.IsValid(file));
         }
 
         [Theory]
@@ -130,11 +130,11 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [InlineData("xlsx.doc.xlsx", ".docx.docx")]
         public void IsValid_Exntesions(String firstFileName, String secondFileName)
         {
-            HttpPostedFileBase[] fileBases = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
-            fileBases[1].FileName.Returns(secondFileName);
-            fileBases[0].FileName.Returns(firstFileName);
+            HttpPostedFileBase[] files = { Substitute.For<HttpPostedFileBase>(), Substitute.For<HttpPostedFileBase>() };
+            files[1].FileName.Returns(secondFileName);
+            files[0].FileName.Returns(firstFileName);
 
-            Assert.True(attribute.IsValid(fileBases));
+            Assert.True(attribute.IsValid(files));
         }
 
         #endregion

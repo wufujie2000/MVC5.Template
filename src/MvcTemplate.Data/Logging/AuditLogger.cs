@@ -1,4 +1,4 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Extensions;
 using MvcTemplate.Objects;
 using System;
 using System.Collections.Generic;

@@ -1,13 +1,13 @@
-﻿using MvcTemplate.Components.Security;
+﻿using MvcTemplate.Components.Extensions;
 using NSubstitute;
 using System;
 using System.Security.Principal;
 using Xunit;
 using Xunit.Extensions;
 
-namespace MvcTemplate.Tests.Unit.Components.Security
+namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
-    public class IPrincipalExtensionsTests
+    public class PrincipalExtensionsTests
     {
         #region Id(this IPrincipal principal)
 

@@ -13,16 +13,21 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class AuthorizationProviderTests : IDisposable
     {
+        private TestingContext context;
         private AuthorizationProvider authorization;
 
         public AuthorizationProviderTests()
         {
             authorization = new AuthorizationProvider(Assembly.GetExecutingAssembly());
-            using (TestingContext context = new TestingContext()) context.DropData();
+            context = new TestingContext();
+
+            context.DropData();
         }
         public void Dispose()
         {
             DependencyResolver.SetResolver(Substitute.For<IDependencyResolver>());
+
+            context.Dispose();
         }
 
         #region IsAuthorizedFor(Int32? accountId, String area, String controller, String action)
@@ -345,7 +350,8 @@ namespace MvcTemplate.Tests.Unit.Components.Security
         public void IsAuthorizedFor_CachesAccountPermissions()
         {
             Int32 accountId = CreateAccountWithPermissionFor(null, "Authorized", "Action");
-            using (TestingContext context = new TestingContext()) context.DropData();
+
+            context.DropData();
 
             Assert.True(authorization.IsAuthorizedFor(accountId, null, "Authorized", "Action"));
         }
@@ -360,7 +366,7 @@ namespace MvcTemplate.Tests.Unit.Components.Security
             Int32 accountId = CreateAccountWithPermissionFor("Area", "Authorized", "Action");
             Assert.True(authorization.IsAuthorizedFor(accountId, "Area", "Authorized", "Action"));
 
-            using (TestingContext context = new TestingContext()) context.DropData();
+            context.DropData();
             SetUpDependencyResolver();
 
             authorization.Refresh();

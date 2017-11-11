@@ -1,5 +1,4 @@
 ﻿using MvcTemplate.Components.Extensions;
-using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -93,8 +92,6 @@ namespace MvcTemplate.Services
                 UnitOfWork.Insert(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
 
             UnitOfWork.Commit();
-
-            Authorization.Provider?.Refresh();
         }
         public void Delete(Int32 id)
         {
@@ -104,8 +101,6 @@ namespace MvcTemplate.Services
             UnitOfWork.DeleteRange(role.Permissions);
             UnitOfWork.Delete(role);
             UnitOfWork.Commit();
-
-            Authorization.Provider?.Refresh();
         }
 
         private IEnumerable<Permission> GetAllPermissions()

@@ -1,3 +1,4 @@
+using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers.Administration;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    public class AccountsControllerTests : ControllerTests
+    public class AccountsControllerTests : ControllerTests, IDisposable
     {
         private AccountCreateView accountCreate;
         private AccountsController controller;
@@ -29,8 +30,13 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             accountEdit = ObjectFactory.CreateAccountEditView();
             account = ObjectFactory.CreateAccountView();
 
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             controller = Substitute.ForPartsOf<AccountsController>(validator, service);
             controller.ControllerContext = new ControllerContext { RouteData = new RouteData() };
+        }
+        public void Dispose()
+        {
+            Authorization.Provider = null;
         }
 
         #region Index()
@@ -87,6 +93,16 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.Create(accountCreate);
 
             service.Received().Create(accountCreate);
+        }
+
+        [Fact]
+        public void Create_RefreshesAuthorization()
+        {
+            validator.CanCreate(accountCreate).Returns(true);
+
+            controller.Create(accountCreate);
+
+            controller.AuthorizationProvider.Received().Refresh();
         }
 
         [Fact]
@@ -153,6 +169,16 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.Edit(accountEdit);
 
             service.Received().Edit(accountEdit);
+        }
+
+        [Fact]
+        public void Edit_RefreshesAuthorization()
+        {
+            validator.CanEdit(accountEdit).Returns(true);
+
+            controller.Edit(accountEdit);
+
+            controller.AuthorizationProvider.Received().Refresh();
         }
 
         [Fact]

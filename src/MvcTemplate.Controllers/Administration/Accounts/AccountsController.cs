@@ -36,6 +36,8 @@ namespace MvcTemplate.Controllers.Administration
 
             Service.Create(account);
 
+            AuthorizationProvider?.Refresh();
+
             return RedirectIfAuthorized("Index");
         }
 
@@ -59,6 +61,8 @@ namespace MvcTemplate.Controllers.Administration
                 return View(account);
 
             Service.Edit(account);
+
+            AuthorizationProvider?.Refresh();
 
             return RedirectIfAuthorized("Index");
         }

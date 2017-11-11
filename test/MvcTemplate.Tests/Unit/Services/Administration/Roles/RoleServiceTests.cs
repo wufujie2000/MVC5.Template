@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MvcTemplate.Components.Extensions;
-using MvcTemplate.Components.Security;
 using MvcTemplate.Data.Core;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources;
@@ -25,7 +24,6 @@ namespace MvcTemplate.Tests.Unit.Services
         public RoleServiceTests()
         {
             context = new TestingContext();
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             service = Substitute.ForPartsOf<RoleService>(new UnitOfWork(context));
 
             context.DropData();
@@ -33,7 +31,6 @@ namespace MvcTemplate.Tests.Unit.Services
         }
         public void Dispose()
         {
-            Authorization.Provider = null;
             context.Dispose();
             service.Dispose();
         }
@@ -265,14 +262,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected, actual);
         }
 
-        [Fact]
-        public void Edit_RefreshesAuthorization()
-        {
-            service.Edit(ObjectFactory.CreateRoleView(role.Id));
-
-            Authorization.Provider.Received().Refresh();
-        }
-
         #endregion
 
         #region Delete(Int32 id)
@@ -306,14 +295,6 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Delete(role.Id);
 
             Assert.Empty(context.Set<RolePermission>());
-        }
-
-        [Fact]
-        public void Delete_RefreshesAuthorization()
-        {
-            service.Delete(role.Id);
-
-            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

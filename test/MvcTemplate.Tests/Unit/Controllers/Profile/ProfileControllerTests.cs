@@ -1,4 +1,5 @@
 ﻿using MvcTemplate.Components.Alerts;
+using MvcTemplate.Components.Security;
 using MvcTemplate.Controllers;
 using MvcTemplate.Objects;
 using MvcTemplate.Resources.Views.Administration.Accounts.AccountView;
@@ -12,7 +13,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
-    public class ProfileControllerTests : ControllerTests
+    public class ProfileControllerTests : ControllerTests, IDisposable
     {
         private ProfileDeleteView profileDelete;
         private ProfileController controller;
@@ -28,8 +29,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
             profileDelete = ObjectFactory.CreateProfileDeleteView();
             profileEdit = ObjectFactory.CreateProfileEditView();
 
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             controller = Substitute.ForPartsOf<ProfileController>(validator, service);
             ReturnCurrentAccountId(controller, 1);
+        }
+        public void Dispose()
+        {
+            Authorization.Provider = null;
         }
 
         #region Edit()
@@ -226,6 +232,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.DeleteConfirmed(profileDelete);
 
             service.Received().Delete(controller.CurrentAccountId);
+        }
+
+        [Fact]
+        public void DeleteConfirmed_RefreshesAuthorization()
+        {
+            service.IsActive(controller.CurrentAccountId).Returns(true);
+            RedirectIfAuthorized(controller, "Logout", "Auth");
+            validator.CanDelete(profileDelete).Returns(true);
+
+            controller.DeleteConfirmed(profileDelete);
+
+            controller.AuthorizationProvider.Received().Refresh();
         }
 
         [Fact]

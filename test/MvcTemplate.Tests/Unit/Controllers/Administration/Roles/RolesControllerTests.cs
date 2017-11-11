@@ -1,4 +1,5 @@
-﻿using MvcTemplate.Controllers.Administration;
+﻿using MvcTemplate.Components.Security;
+using MvcTemplate.Controllers.Administration;
 using MvcTemplate.Objects;
 using MvcTemplate.Services;
 using MvcTemplate.Validators;
@@ -11,7 +12,7 @@ using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers.Administration
 {
-    public class RolesControllerTests : ControllerTests
+    public class RolesControllerTests : ControllerTests, IDisposable
     {
         private RolesController controller;
         private IRoleValidator validator;
@@ -25,8 +26,13 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
 
             role = ObjectFactory.CreateRoleView();
 
+            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             controller = Substitute.ForPartsOf<RolesController>(validator, service);
             controller.ControllerContext = new ControllerContext { RouteData = new RouteData() };
+        }
+        public void Dispose()
+        {
+            Authorization.Provider = null;
         }
 
         #region Index()
@@ -181,6 +187,16 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
         }
 
         [Fact]
+        public void Edit_RefreshesAuthorization()
+        {
+            validator.CanEdit(role).Returns(true);
+
+            controller.Edit(role);
+
+            controller.AuthorizationProvider.Received().Refresh();
+        }
+
+        [Fact]
         public void Edit_RedirectsToIndex()
         {
             validator.CanEdit(role).Returns(true);
@@ -216,6 +232,14 @@ namespace MvcTemplate.Tests.Unit.Controllers.Administration
             controller.DeleteConfirmed(role.Id);
 
             service.Received().Delete(role.Id);
+        }
+
+        [Fact]
+        public void DeleteConfirmed_RefreshesAuthorization()
+        {
+            controller.DeleteConfirmed(role.Id);
+
+            controller.AuthorizationProvider.Received().Refresh();
         }
 
         [Fact]

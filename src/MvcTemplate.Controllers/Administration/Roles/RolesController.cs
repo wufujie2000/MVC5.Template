@@ -71,6 +71,8 @@ namespace MvcTemplate.Controllers.Administration
 
             Service.Edit(role);
 
+            AuthorizationProvider?.Refresh();
+
             return RedirectIfAuthorized("Index");
         }
 
@@ -86,6 +88,8 @@ namespace MvcTemplate.Controllers.Administration
         public RedirectToRouteResult DeleteConfirmed(Int32 id)
         {
             Service.Delete(id);
+
+            AuthorizationProvider?.Refresh();
 
             return RedirectIfAuthorized("Index");
         }

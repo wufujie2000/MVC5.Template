@@ -32,13 +32,11 @@ namespace MvcTemplate.Tests.Unit.Services
             context.DropData();
             SetUpData();
 
-            Authorization.Provider = Substitute.For<IAuthorizationProvider>();
             service = new AccountService(new UnitOfWork(context), hasher);
             service.CurrentAccountId = account.Id;
         }
         public void Dispose()
         {
-            Authorization.Provider = null;
             HttpContext.Current = null;
             service.Dispose();
             context.Dispose();
@@ -223,17 +221,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.False(actual.IsLocked);
         }
 
-        [Fact]
-        public void Create_RefreshesAuthorization()
-        {
-            AccountCreateView view = ObjectFactory.CreateAccountCreateView(1);
-            view.RoleId = null;
-
-            service.Create(view);
-
-            Authorization.Provider.Received().Refresh();
-        }
-
         #endregion
 
         #region Edit(AccountEditView view)
@@ -261,17 +248,6 @@ namespace MvcTemplate.Tests.Unit.Services
             Assert.Equal(expected.RoleId, actual.RoleId);
             Assert.Equal(expected.Email, actual.Email);
             Assert.Equal(expected.Id, actual.Id);
-        }
-
-        [Fact]
-        public void Edit_RefreshesAuthorization()
-        {
-            AccountEditView view = ObjectFactory.CreateAccountEditView(account.Id);
-            view.RoleId = account.RoleId;
-
-            service.Edit(view);
-
-            Authorization.Provider.Received().Refresh();
         }
 
         #endregion
@@ -329,14 +305,6 @@ namespace MvcTemplate.Tests.Unit.Services
             service.Delete(account.Id);
 
             Assert.Empty(context.Set<Account>());
-        }
-
-        [Fact]
-        public void Delete_RefreshesAuthorization()
-        {
-            service.Delete(account.Id);
-
-            Authorization.Provider.Received().Refresh();
         }
 
         #endregion

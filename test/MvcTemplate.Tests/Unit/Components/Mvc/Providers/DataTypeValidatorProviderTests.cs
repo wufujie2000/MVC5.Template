@@ -21,7 +21,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetValidators_ReturnsEmpty()
         {
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Id");
+            ModelMetadata metadata = new ModelMetadata(new DataAnnotationsModelMetadataProvider(), null, null, typeof(String), "Id");
 
             Assert.Empty(provider.GetValidators(metadata, new ControllerContext()));
         }
@@ -29,7 +29,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetValidators_ReturnsDateValidator()
         {
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Date");
+            ModelMetadata metadata = new ModelMetadata(new DataAnnotationsModelMetadataProvider(), null, null, typeof(DateTime), "Date");
 
             IEnumerable<Type> actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
             IEnumerable<Type> expected = new[] { typeof(DateValidator) };
@@ -40,7 +40,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         [Fact]
         public void GetValidators_ReturnsNumericValidator()
         {
-            ModelMetadata metadata = new DataAnnotationsModelMetadataProvider().GetMetadataForProperty(null, typeof(ProviderModel), "Numeric");
+            ModelMetadata metadata = new ModelMetadata(new DataAnnotationsModelMetadataProvider(), null, null, typeof(Decimal), "Test");
 
             IEnumerable<Type> actual = provider.GetValidators(metadata, new ControllerContext()).Select(validator => validator.GetType());
             IEnumerable<Type> expected = new[] { typeof(NumberValidator) };

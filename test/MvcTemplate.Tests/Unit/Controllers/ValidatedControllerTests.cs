@@ -1,14 +1,16 @@
-﻿using MvcTemplate.Services;
+﻿using MvcTemplate.Controllers;
+using MvcTemplate.Services;
 using MvcTemplate.Validators;
 using NSubstitute;
 using System;
+using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class ValidatedControllerTests : ControllerTests
     {
-        private ValidatedControllerProxy controller;
+        private ValidatedController<IValidator, IService> controller;
         private IValidator validator;
         private IService service;
 
@@ -16,7 +18,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             service = Substitute.For<IService>();
             validator = Substitute.For<IValidator>();
-            controller = Substitute.ForPartsOf<ValidatedControllerProxy>(validator, service);
+            controller = Substitute.ForPartsOf<ValidatedController<IValidator, IService>>(validator, service);
         }
 
         #region ValidatedController(TService service, TValidator validator)
@@ -39,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             ReturnCurrentAccountId(controller, 1);
 
-            controller.BaseOnActionExecuting(null);
+            ((IActionFilter)controller).OnActionExecuting(null);
 
             Int32 expected = controller.CurrentAccountId;
             Int32 actual = service.CurrentAccountId;
@@ -52,7 +54,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             ReturnCurrentAccountId(controller, 1);
 
-            controller.BaseOnActionExecuting(null);
+            ((IActionFilter)controller).OnActionExecuting(null);
 
             Int32 expected = controller.CurrentAccountId;
             Int32 actual = validator.CurrentAccountId;
@@ -63,7 +65,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsValidatorAlerts()
         {
-            controller.BaseOnActionExecuting(null);
+            ((IActionFilter)controller).OnActionExecuting(null);
 
             Object expected = controller.Alerts;
             Object actual = validator.Alerts;
@@ -74,7 +76,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         [Fact]
         public void OnActionExecuting_SetsModelState()
         {
-            controller.BaseOnActionExecuting(null);
+            ((IActionFilter)controller).OnActionExecuting(null);
 
             Object expected = controller.ModelState;
             Object actual = validator.ModelState;

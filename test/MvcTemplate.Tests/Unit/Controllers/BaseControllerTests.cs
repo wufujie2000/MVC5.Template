@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Mvc.Async;
 using System.Web.Routing;
 using Xunit;
 using Xunit.Extensions;
@@ -319,18 +320,18 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region BeginExecuteCore(AsyncCallback callback, Object state)
+        #region BeginExecute(RequestContext requestContext, AsyncCallback callback, Object state)
 
         [Theory]
         [InlineData("", 0)]
         [InlineData("1", 1)]
         [InlineData(null, 0)]
-        public void BeginExecuteCore_SetsCurrentAccountId(String identity, Int32 accountId)
+        public void BeginExecute_SetsCurrentAccountId(String identity, Int32 accountId)
         {
             controller.ControllerContext.HttpContext.User.Identity.Name.Returns(identity);
             GlobalizationManager.Languages = Substitute.For<ILanguages>();
 
-            controller.BaseBeginExecuteCore(callback => { }, null);
+            ((IAsyncController)controller).BeginExecute(controller.Request.RequestContext, null, null);
 
             Int32? actual = controller.CurrentAccountId;
             Int32? expected = accountId;
@@ -339,13 +340,13 @@ namespace MvcTemplate.Tests.Unit.Controllers
         }
 
         [Fact]
-        public void BeginExecuteCore_SetsCurrentLanguage()
+        public void BeginExecute_SetsCurrentLanguage()
         {
             GlobalizationManager.Languages = Substitute.For<ILanguages>();
             GlobalizationManager.Languages["lt"].Returns(new Language());
             controller.RouteData.Values["language"] = "lt";
 
-            controller.BaseBeginExecuteCore(callback => { }, null);
+            ((IAsyncController)controller).BeginExecute(controller.Request.RequestContext, null, null);
 
             Language actual = GlobalizationManager.Languages.Current;
             Language expected = GlobalizationManager.Languages["lt"];
@@ -355,7 +356,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
         #endregion
 
-        #region OnAuthorization(AuthorizationContext context)
+        #region OnAuthorization(AuthorizationContext filterContext)
 
         [Fact]
         public void OnAuthorization_NotAuthenticated_SetsNullResult()
@@ -364,7 +365,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             AuthorizationContext context = new AuthorizationContext(controller.ControllerContext, descriptor);
             controller.ControllerContext.HttpContext.User.Identity.IsAuthenticated.Returns(false);
 
-            controller.BaseOnAuthorization(context);
+            ((IAuthorizationFilter)controller).OnAuthorization(context);
 
             Assert.Null(context.Result);
         }
@@ -378,7 +379,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             AuthorizationContext context = new AuthorizationContext(controller.ControllerContext, Substitute.ForPartsOf<ActionDescriptor>());
 
-            controller.BaseOnAuthorization(context);
+            ((IAuthorizationFilter)controller).OnAuthorization(context);
 
             ActionResult expected = controller.RedirectToUnauthorized();
             ActionResult actual = context.Result;
@@ -396,14 +397,14 @@ namespace MvcTemplate.Tests.Unit.Controllers
             context.RouteData.Values["action"] = "Action";
             context.RouteData.Values["area"] = "Area";
 
-            controller.BaseOnAuthorization(context);
+            ((IAuthorizationFilter)controller).OnAuthorization(context);
 
             Assert.Null(context.Result);
         }
 
         #endregion
 
-        #region OnActionExecuted(ActionExecutedContext context)
+        #region OnActionExecuted(ActionExecutedContext filterContext)
 
         [Fact]
         public void OnActionExecuted_JsonResult_NoAlerts()
@@ -411,7 +412,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             controller.Alerts.AddError("Test");
             controller.TempData["Alerts"] = null;
 
-            controller.BaseOnActionExecuted(new ActionExecutedContext { Result = new JsonResult() });
+            ((IActionFilter)controller).OnActionExecuted(new ActionExecutedContext { Result = new JsonResult() });
 
             Assert.Null(controller.TempData["Alerts"]);
         }
@@ -421,7 +422,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             controller.TempData["Alerts"] = null;
 
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            ((IActionFilter)controller).OnActionExecuted(new ActionExecutedContext());
 
             Object actual = controller.TempData["Alerts"];
             Object expected = controller.Alerts;
@@ -443,7 +444,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             alerts.Merge((AlertsContainer)controller.TempData["Alerts"]);
             alerts.Merge(controller.Alerts);
 
-            controller.BaseOnActionExecuted(new ActionExecutedContext());
+            ((IActionFilter)controller).OnActionExecuted(new ActionExecutedContext());
 
             IEnumerable<Alert> actual = controller.TempData["Alerts"] as AlertsContainer;
             IEnumerable<Alert> expected = alerts;

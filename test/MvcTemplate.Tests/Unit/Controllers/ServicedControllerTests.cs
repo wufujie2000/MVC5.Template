@@ -1,19 +1,21 @@
-﻿using MvcTemplate.Services;
+﻿using MvcTemplate.Controllers;
+using MvcTemplate.Services;
 using NSubstitute;
 using System;
+using System.Web.Mvc;
 using Xunit;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {
     public class ServicedControllerTests : ControllerTests
     {
-        private ServicedControllerProxy controller;
+        private ServicedController<IService> controller;
         private IService service;
 
         public ServicedControllerTests()
         {
             service = Substitute.For<IService>();
-            controller = Substitute.ForPartsOf<ServicedControllerProxy>(service);
+            controller = Substitute.ForPartsOf<ServicedController<IService>>(service);
         }
 
         #region ServicedController(TService service)
@@ -36,7 +38,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             ReturnCurrentAccountId(controller, 1);
 
-            controller.BaseOnActionExecuting(null);
+            ((IActionFilter)controller).OnActionExecuting(null);
 
             Int32 expected = controller.CurrentAccountId;
             Int32 actual = service.CurrentAccountId;

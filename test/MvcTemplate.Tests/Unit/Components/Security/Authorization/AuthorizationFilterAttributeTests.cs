@@ -9,10 +9,10 @@ namespace MvcTemplate.Tests.Unit.Components.Security
 {
     public class AuthorizationFilterAttributeTests
     {
-        #region HandleUnauthorizedRequest(AuthorizationContext context)
+        #region OnAuthorization(AuthorizationContext filterContext)
 
         [Fact]
-        public void HandleUnauthorizedRequest_RedirectsToLogin()
+        public void OnAuthorization_NotAuthenticated_RedirectsToLogin()
         {
             AuthorizationContext action = new AuthorizationContext();
             action.ActionDescriptor = Substitute.For<ActionDescriptor>();

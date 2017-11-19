@@ -22,18 +22,5 @@ namespace MvcTemplate.Tests.Unit.Controllers
         {
             return RedirectToAction(action, controller, route);
         }
-
-        public IAsyncResult BaseBeginExecuteCore(AsyncCallback callback, Object state)
-        {
-            return BeginExecuteCore(callback, state);
-        }
-        public void BaseOnAuthorization(AuthorizationContext context)
-        {
-            OnAuthorization(context);
-        }
-        public void BaseOnActionExecuted(ActionExecutedContext context)
-        {
-            OnActionExecuted(context);
-        }
     }
 }

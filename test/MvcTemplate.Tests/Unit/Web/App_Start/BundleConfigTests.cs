@@ -2,7 +2,6 @@
 using System;
 using System.Web.Optimization;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Web
 {

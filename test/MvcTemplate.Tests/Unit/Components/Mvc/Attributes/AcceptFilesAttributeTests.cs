@@ -5,7 +5,6 @@ using NSubstitute.ReturnsExtensions;
 using System;
 using System.Web;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {

@@ -6,7 +6,6 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Routing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Resources
 {

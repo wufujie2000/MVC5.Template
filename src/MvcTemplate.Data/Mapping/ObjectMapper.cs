@@ -8,6 +8,7 @@ namespace MvcTemplate.Data.Mapping
     {
         public static void MapObjects()
         {
+            Mapper.Reset();
             Mapper.Initialize(configuration => new ObjectMapper(configuration).Map());
         }
 
@@ -16,6 +17,7 @@ namespace MvcTemplate.Data.Mapping
         private ObjectMapper(IMapperConfigurationExpression configuration)
         {
             Configuration = configuration;
+            Configuration.ValidateInlineMaps = false;
             Configuration.AddConditionalObjectMapper()
                 .Conventions.Add(pair => pair.SourceType.Namespace != "System.Data.Entity.DynamicProxies");
         }

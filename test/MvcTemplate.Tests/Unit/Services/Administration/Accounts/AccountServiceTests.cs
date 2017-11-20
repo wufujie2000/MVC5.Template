@@ -12,7 +12,6 @@ using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Services
 {

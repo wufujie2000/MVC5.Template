@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
+using Xunit;
 
 [assembly: ComVisible(false)]
 [assembly: AssemblyCompany("NonFactors")]
@@ -10,3 +11,4 @@ using System.Runtime.InteropServices;
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: AssemblyFileVersion("1.7.0.0")]
 [assembly: AssemblyVersion("1.7.0.0")]
+[assembly: CollectionBehavior(DisableTestParallelization = true)]

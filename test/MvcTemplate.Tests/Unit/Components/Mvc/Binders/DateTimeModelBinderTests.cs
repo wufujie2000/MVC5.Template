@@ -3,6 +3,7 @@ using MvcTemplate.Tests.Objects;
 using NSubstitute;
 using System;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Web.Mvc;
 using Xunit;
 
@@ -42,7 +43,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         public void BindModel_DoesNotTruncateValue()
         {
             collection.Add(binding.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
-            binding.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            binding.ValueProvider = new NameValueCollectionValueProvider(collection, CultureInfo.CurrentCulture);
 
             Object actual = binder.BindModel(context, binding);
             Object expected = new DateTime(2017, 2, 3, 4, 5, 6);
@@ -55,7 +56,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
         {
             binding.ModelName = "TruncatedDateTimeField";
             collection.Add(binding.ModelName, new DateTime(2017, 2, 3, 4, 5, 6).ToString());
-            binding.ValueProvider = new NameValueCollectionValueProvider(collection, null);
+            binding.ValueProvider = new NameValueCollectionValueProvider(collection, CultureInfo.CurrentCulture);
             binding.ModelMetadata = new DataAnnotationsModelMetadataProvider()
                 .GetMetadataForProperty(null, typeof(AllTypesView), "TruncatedDateTimeField");
 

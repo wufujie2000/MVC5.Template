@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.2.1
+ * Datalist 5.3.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -68,6 +68,10 @@
     display: none;
 }
 
+.datalist-readonly .datalist-browse {
+    cursor: not-allowed;
+}
+
 .datalist-browseless .datalist-control {
     border-radius: 4px;
 }
@@ -109,23 +113,27 @@
         left: 45%;
     }
 
-.datalist-widget .ui-dialog-title {
-    line-height: 1.4em;
-    min-height: 1.4em;
+.datalist-widget {
+    max-width: 98%;
 }
 
-.datalist-dialog,
-.datalist-widget,
-.datalist-widget:after,
-.datalist-widget:before {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
-
-    .datalist-widget .datalist-dialog {
-        padding: 1em;
+    .datalist-widget .ui-dialog-title {
+        line-height: 1.4em;
+        min-height: 1.4em;
     }
+
+    .datalist-dialog,
+    .datalist-widget,
+    .datalist-widget:after,
+    .datalist-widget:before {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+
+        .datalist-widget .datalist-dialog {
+            padding: 1em;
+        }
 
 .datalist-dialog {
     font-size: 0.9em;
@@ -225,6 +233,7 @@
     top: calc(3px + 0.4em);
     border-radius: 50%;
     position: absolute;
+    display: none;
     right: 0.8em;
     height: 1em;
     opacity: 0;
@@ -233,6 +242,7 @@
 
 .datalist-loading + .datalist-control-loader {
     transition: opacity 1.5s linear;
+    display: block;
     opacity: 1;
 }
 
@@ -271,6 +281,10 @@
     background-color: #FFF6F6;
     border-color: #EBCCD1;
     color: #A94442;
+}
+
+.datalist-table {
+    overflow-x: auto;
 }
 
 @keyframes datalist-spin {
@@ -320,35 +334,39 @@
 
 .datalist-split td {
     background-color: #FFFFFF;
+    color: transparent;
     cursor: default;
     border: none;
 }
 
-.datalist-dialog td:not(:first-child):last-child {
+.datalist-dialog td:last-child {
     box-sizing: border-box;
     text-align: center;
     font-weight: bold;
     width: 2.5em;
 }
 
-    .datalist-dialog td:not(:first-child):last-child::after {
+    .datalist-dialog td:last-child::after {
         content: '\25CF';
     }
 
-.datalist-dialog tr:hover td:not(:first-child):last-child::after,
-.datalist-dialog .selected td:not(:first-child):last-child::after {
+.datalist-dialog .selected td:last-child::after {
     content: '\2714';
     color: #5CB85C;
 }
 
-.datalist-dialog .selected:hover td:not(:first-child):last-child::after {
-    content: '\2718';
-    color: #D65A5A;
+.datalist-dialog .datalist-empty {
+    text-align: center;
+    cursor: default;
 }
 
-.datalist-empty {
-    text-align: center;
-}
+    .datalist-dialog .datalist-empty:hover {
+        background-color: inherit;
+    }
+
+    .datalist-dialog .datalist-empty td::after {
+        content: '';
+    }
 
 .datalist-dialog ul {
     padding-top: 0.8em;

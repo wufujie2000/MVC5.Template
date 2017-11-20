@@ -49,8 +49,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             String expected = "Account: " + Environment.NewLine + "Message: Test" + Environment.NewLine + Environment.NewLine;
             String actual = File.ReadAllText(log);
 
-            Assert.True(actual.StartsWith("Time   :"));
-            Assert.True(actual.EndsWith(expected));
+            Assert.StartsWith("Time   :", actual);
+            Assert.EndsWith(expected, actual);
         }
 
         [Fact]
@@ -64,8 +64,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             String expected = "Account: 1" + Environment.NewLine + "Message: Test" + Environment.NewLine + Environment.NewLine;
             String actual = File.ReadAllText(log);
 
-            Assert.True(actual.StartsWith("Time   :"));
-            Assert.True(actual.EndsWith(expected));
+            Assert.StartsWith("Time   :", actual);
+            Assert.EndsWith(expected, actual);
         }
 
         [Fact]
@@ -78,8 +78,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
             String expected = "Account: 2" + Environment.NewLine + "Message: " + new String('T', backupSize) + Environment.NewLine + Environment.NewLine;
             String actual = File.ReadAllText(Directory.GetFiles(logDirectory, "Log *.txt").Single());
 
-            Assert.True(actual.StartsWith("Time   :"));
-            Assert.True(actual.EndsWith(expected));
+            Assert.StartsWith("Time   :", actual);
+            Assert.EndsWith(expected, actual);
         }
 
         #endregion
@@ -103,8 +103,8 @@ namespace MvcTemplate.Tests.Unit.Components.Logging
                  exception.InnerException.Message,
                  exception.InnerException.StackTrace);
 
-            Assert.True(actual.StartsWith("Time   :"));
-            Assert.True(actual.EndsWith(expected));
+            Assert.StartsWith("Time   :", actual);
+            Assert.EndsWith(expected, actual);
         }
 
         #endregion

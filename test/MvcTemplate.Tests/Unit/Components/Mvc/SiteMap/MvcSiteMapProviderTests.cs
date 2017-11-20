@@ -41,7 +41,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
 
             Assert.Null(actual[0].Action);
             Assert.Null(actual[0].Controller);
@@ -66,7 +66,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             actual = actual[1].Children.ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.Empty(actual[0].Children);
 
             Assert.Equal("Create", actual[0].Action);
@@ -83,7 +83,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
 
             Assert.Null(actual[0].Action);
             Assert.Null(actual[0].Controller);
@@ -92,7 +92,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             actual = actual[0].Children.ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
 
             Assert.Empty(actual[0].Children);
 
@@ -112,7 +112,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.False(actual[0].IsActive);
 
             actual = actual[0].Children.ToArray();
@@ -126,7 +126,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             Assert.Empty(actual[0].Children);
             Assert.True(actual[0].IsActive);
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.False(actual[0].IsActive);
 
             actual = actual[0].Children.ToArray();
@@ -151,7 +151,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             actual = actual[1].Children.ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.False(actual[0].IsActive);
             Assert.Empty(actual[0].Children);
         }
@@ -166,7 +166,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.True(actual[0].HasActiveChildren);
 
             actual = actual[0].Children.ToArray();
@@ -178,7 +178,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             actual = actual[1].Children.ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
             Assert.Empty(actual[0].Children);
             Assert.False(actual[0].HasActiveChildren);
         }
@@ -192,7 +192,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             MvcSiteMapNode[] actual = siteMap.GetSiteMap(context).ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
 
             Assert.Null(actual[0].Action);
             Assert.Null(actual[0].Controller);
@@ -201,7 +201,7 @@ namespace MvcTemplate.Tests.Unit.Components.Mvc
 
             actual = actual[0].Children.ToArray();
 
-            Assert.Equal(1, actual.Length);
+            Assert.Single(actual);
 
             Assert.Empty(actual[0].Children);
 

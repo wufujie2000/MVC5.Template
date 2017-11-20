@@ -10,7 +10,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Data.Logging
 {

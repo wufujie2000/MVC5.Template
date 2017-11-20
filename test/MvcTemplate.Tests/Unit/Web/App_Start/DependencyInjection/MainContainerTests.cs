@@ -10,7 +10,6 @@ using MvcTemplate.Web.DependencyInjection;
 using System;
 using System.Data.Entity;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Web.DependencyInjection
 {

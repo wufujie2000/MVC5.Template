@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.2.1
+ * Datalist 5.3.1
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -71,11 +71,13 @@ var MvcDatalistDialog = (function () {
         initOptions: function () {
             var dialog = this;
 
-            this.options = {
+            dialog.options = {
                 dialog: {
+                    position: { my: 'center top', at: 'center top+50px', of: window, within: window },
                     classes: { 'ui-dialog': 'datalist-widget' },
                     dialogClass: 'datalist-widget',
                     title: dialog.title,
+                    draggable: false,
                     autoOpen: false,
                     minWidth: 455,
                     width: 'auto',
@@ -120,19 +122,7 @@ var MvcDatalistDialog = (function () {
                     dialog.loader.show();
                 }
 
-                var instance = dialog.instance.dialog('open').parent();
-                var visibleLeft = $(document).scrollLeft();
-                var visibleTop = $(document).scrollTop();
-
-                if (parseInt(instance.css('left')) < visibleLeft) {
-                    instance.css('left', visibleLeft);
-                }
-                if (parseInt(instance.css('top')) > visibleTop + 100) {
-                    instance.css('top', visibleTop + 100);
-                }
-                else if (parseInt(instance.css('top')) < visibleTop) {
-                    instance.css('top', visibleTop);
-                }
+                dialog.instance.dialog('open');
             }, 100);
         },
         close: function () {
@@ -173,6 +163,11 @@ var MvcDatalistDialog = (function () {
                 this.renderHeader(data.Columns);
                 this.renderBody(data.Columns, data.Rows);
                 this.renderFooter(data.FilteredRows);
+
+                this.instance.parent().position({ my: 'left top', at: 'left top+50px', of: window, within: window });
+                this.instance.dialog({
+                    position: this.options.dialog.position || { my: 'center top', at: 'center top+50px', of: window, within: window }
+                });
             } else {
                 this.error.fadeIn(300);
             }
@@ -199,6 +194,9 @@ var MvcDatalistDialog = (function () {
                 this.tableBody.append(empty);
             }
 
+            var hasSplit = false;
+            var hasSelection = rows.length && this.datalist.indexOf(this.selected, rows[0].DatalistIdKey) >= 0;
+
             for (var i = 0; i < rows.length; i++) {
                 var tr = this.createDataRow(rows[i]);
                 var selection = document.createElement('td');
@@ -214,14 +212,16 @@ var MvcDatalistDialog = (function () {
                 }
 
                 tr.appendChild(selection);
-                this.tableBody.append(tr);
 
-                if (i == this.selected.length - 1) {
+                if (!hasSplit && hasSelection && this.datalist.indexOf(this.selected, rows[i].DatalistIdKey) < 0) {
                     var separator = this.createEmptyRow(columns);
                     separator.className = 'datalist-split';
+                    hasSplit = true;
 
                     this.tableBody.append(separator);
                 }
+
+                this.tableBody.append(tr);
             }
         },
         renderFooter: function (filteredRows) {
@@ -484,10 +484,10 @@ var MvcDatalist = (function () {
             this.readonly = readonly;
 
             if (readonly) {
-                this.search.autocomplete('disable').attr('readonly', 'readonly');
+                this.search.autocomplete('disable').attr({ readonly: 'readonly', tabindex: -1 });
                 this.group.addClass('datalist-readonly');
             } else {
-                this.search.autocomplete('enable').removeAttr('readonly');
+                this.search.autocomplete('enable').removeAttr('readonly').removeAttr('tabindex');
                 this.group.removeClass('datalist-readonly');
             }
 
@@ -539,6 +539,13 @@ var MvcDatalist = (function () {
 
                 if (e.isDefaultPrevented()) {
                     return;
+                }
+            }
+
+            if (triggerChanges && data.length == this.selected.length) {
+                triggerChanges = false;
+                for (var i = 0; i < data.length && !triggerChanges; i++) {
+                    triggerChanges = data[i].DatalistIdKey != this.selected[i].DatalistIdKey;
                 }
             }
 

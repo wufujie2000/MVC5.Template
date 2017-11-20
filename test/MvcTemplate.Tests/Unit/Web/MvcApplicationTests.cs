@@ -8,14 +8,13 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Configuration;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Web
 {
@@ -248,7 +247,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterDataTypeValidator();
 
-            Assert.False(ModelValidatorProviders.Providers.Contains(provider));
+            Assert.DoesNotContain(provider, ModelValidatorProviders.Providers);
         }
 
         [Fact]
@@ -318,12 +317,19 @@ namespace MvcTemplate.Tests.Unit.Web
         [InlineData(typeof(String), typeof(TrimmingModelBinder))]
         [InlineData(typeof(DateTime), typeof(DateTimeModelBinder))]
         [InlineData(typeof(DateTime?), typeof(DateTimeModelBinder))]
-        [InlineData(typeof(IList<HttpPostedFileBase>), typeof(HttpPostedFilesModelBinder))]
         public void RegisterModelBinders_For(Type type, Type modelBinder)
         {
             application.RegisterModelBinders();
 
             Assert.IsType(modelBinder, ModelBinders.Binders[type]);
+        }
+
+        [Fact]
+        public void RegisterModelBinders_ForFiles()
+        {
+            application.RegisterModelBinders();
+
+            Assert.IsType<HttpPostedFilesModelBinder>(ModelBinders.Binders[typeof(IList<HttpPostedFileBase>)]);
         }
 
         #endregion
@@ -338,7 +344,7 @@ namespace MvcTemplate.Tests.Unit.Web
 
             application.RegisterViewEngine();
 
-            Assert.False(ViewEngines.Engines.Contains(engine));
+            Assert.DoesNotContain(engine, ViewEngines.Engines);
         }
 
         [Fact]

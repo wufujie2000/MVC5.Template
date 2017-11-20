@@ -2,7 +2,6 @@
 using MvcTemplate.Resources.Form;
 using System;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Mvc
 {

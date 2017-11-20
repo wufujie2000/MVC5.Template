@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Threading;
 using System.Web.Mvc;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions
 {

@@ -51,7 +51,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             Assert.Equal(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
             Assert.Equal("{language}/{controller}/{action}/{id}", actual.Url);
-            Assert.Equal(false, actual.DataTokens["UseNamespaceFallback"]);
+            Assert.False((Boolean?)actual.DataTokens["UseNamespaceFallback"]);
             Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.Equal("Home", actual.Defaults["controller"]);
             Assert.Equal("lt", actual.Constraints["language"]);
@@ -71,7 +71,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
             Route actual = routes["Default"] as Route;
 
             Assert.Equal(new[] { "MvcTemplate.Controllers" }, actual.DataTokens["Namespaces"] as String[]);
-            Assert.Equal(false, actual.DataTokens["UseNamespaceFallback"]);
+            Assert.False((Boolean?)actual.DataTokens["UseNamespaceFallback"]);
             Assert.Equal(UrlParameter.Optional, actual.Defaults["id"]);
             Assert.Equal("{controller}/{action}/{id}", actual.Url);
             Assert.Equal("Home", actual.Defaults["controller"]);

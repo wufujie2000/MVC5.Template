@@ -8,7 +8,6 @@ using System;
 using System.Linq.Expressions;
 using System.Web.Mvc;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Extensions
 {
@@ -483,9 +482,9 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
 
             Assert.Equal(Strings.NoDataFound, actual.EmptyText);
             Assert.Equal(expectedClasses, actual.CssClasses);
-            Assert.Equal(true, column.IsFilterable);
-            Assert.Equal(true, column.IsSortable);
+            Assert.True(column.IsFilterable);
             Assert.NotEmpty(actual.Columns);
+            Assert.True(column.IsSortable);
         }
 
         #endregion

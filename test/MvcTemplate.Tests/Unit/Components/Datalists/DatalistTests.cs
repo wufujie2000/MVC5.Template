@@ -12,7 +12,6 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Components.Datalists
 {

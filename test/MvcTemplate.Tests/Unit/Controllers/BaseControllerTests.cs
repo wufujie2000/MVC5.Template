@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using System.Web.Mvc.Async;
 using System.Web.Routing;
 using Xunit;
-using Xunit.Extensions;
 
 namespace MvcTemplate.Tests.Unit.Controllers
 {

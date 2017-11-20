@@ -12,7 +12,7 @@
     };
 
     $.validator.methods.number = function (value, element) {
-        return this.optional(element) || pattern.test(value) || !isNaN(Globalize.parseFloat(value));
+        return this.optional(element) || !isNaN(Globalize.parseFloat(value));
     };
 
     $.validator.methods.min = function (value, element, param) {
@@ -232,7 +232,7 @@
 
         if (MvcGridNumberFilter) {
             MvcGridNumberFilter.prototype.isValid = function (value) {
-                return value == '' || !isNan(Globalize.parseFloat(value));
+                return value == '' || !isNaN(Globalize.parseFloat(value));
             }
         }
     }

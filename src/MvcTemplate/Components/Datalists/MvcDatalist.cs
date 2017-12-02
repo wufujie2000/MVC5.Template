@@ -50,6 +50,7 @@ namespace MvcTemplate.Components.Datalists
                 case TypeCode.Double:
                 case TypeCode.Decimal:
                     return "text-right";
+                case TypeCode.Boolean:
                 case TypeCode.DateTime:
                     return "text-center";
                 default:

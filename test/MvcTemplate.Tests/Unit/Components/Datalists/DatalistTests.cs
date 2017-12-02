@@ -98,6 +98,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [InlineData("SingleField", "text-right")]
         [InlineData("DoubleField", "text-right")]
         [InlineData("DecimalField", "text-right")]
+        [InlineData("BooleanField", "text-center")]
         [InlineData("DateTimeField", "text-center")]
 
         [InlineData("NullableEnumField", "text-left")]
@@ -112,6 +113,7 @@ namespace MvcTemplate.Tests.Unit.Components.Datalists
         [InlineData("NullableSingleField", "text-right")]
         [InlineData("NullableDoubleField", "text-right")]
         [InlineData("NullableDecimalField", "text-right")]
+        [InlineData("NullableBooleanField", "text-center")]
         [InlineData("NullableDateTimeField", "text-center")]
 
         [InlineData("StringField", "text-left")]

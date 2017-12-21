@@ -1,5 +1,4 @@
-﻿using MvcTemplate.Components.Extensions;
-using MvcTemplate.Objects;
+﻿using MvcTemplate.Objects;
 using MvcTemplate.Tests.Objects;
 using System;
 using System.Collections.Generic;

@@ -445,7 +445,7 @@ namespace MvcTemplate.Tests.Unit.Controllers
 
             ((IActionFilter)controller).OnActionExecuted(new ActionExecutedContext());
 
-            IEnumerable<Alert> actual = controller.TempData["Alerts"] as AlertsContainer;
+            IEnumerable<Alert> actual = (AlertsContainer)controller.TempData["Alerts"];
             IEnumerable<Alert> expected = alerts;
 
             Assert.Equal(expected, actual);

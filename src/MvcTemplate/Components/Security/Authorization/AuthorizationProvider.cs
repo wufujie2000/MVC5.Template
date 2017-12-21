@@ -70,16 +70,9 @@ namespace MvcTemplate.Components.Security
         private IEnumerable<MethodInfo> GetValidMethods(Type controller)
         {
             return controller
-                    .GetMethods(
-                        BindingFlags.DeclaredOnly |
-                        BindingFlags.InvokeMethod |
-                        BindingFlags.Instance |
-                        BindingFlags.Public)
-                    .Where(method =>
-                        !method.IsDefined(typeof(NonActionAttribute)) &&
-                        !method.IsSpecialName)
-                    .OrderByDescending(method =>
-                        method.IsDefined(typeof(HttpGetAttribute), false));
+                .GetMethods(BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public)
+                .Where(method => !method.IsSpecialName && !method.IsDefined(typeof(NonActionAttribute)))
+                .OrderByDescending(method => method.IsDefined(typeof(HttpGetAttribute), false));
         }
         private IEnumerable<Type> GetValid(Assembly controllers)
         {
@@ -170,17 +163,10 @@ namespace MvcTemplate.Components.Security
             return controller
                 .GetMethods()
                 .Where(method =>
-                    (
-                        !method.IsDefined(typeof(ActionNameAttribute), false) &&
-                        method.Name.ToLowerInvariant() == action.ToLowerInvariant()
-                    )
-                    ||
-                    (
-                        method.IsDefined(typeof(ActionNameAttribute), false) &&
-                        method.GetCustomAttribute<ActionNameAttribute>(false).Name.ToLowerInvariant() == action.ToLowerInvariant()
-                    ))
-                .OrderByDescending(method =>
-                    method.IsDefined(typeof(HttpGetAttribute), false))
+                    method.IsDefined(typeof(ActionNameAttribute), false)
+                        ? method.GetCustomAttribute<ActionNameAttribute>(false).Name.ToLowerInvariant() == action.ToLowerInvariant()
+                        : method.Name.ToLowerInvariant() == action.ToLowerInvariant())
+                .OrderByDescending(method => method.IsDefined(typeof(HttpGetAttribute), false))
                 .First();
         }
     }

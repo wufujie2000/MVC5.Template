@@ -10,8 +10,8 @@ namespace MvcTemplate.Components.Extensions
 {
     public static class ContentExtensions
     {
-        private static Dictionary<String, IHtmlString> Scripts;
-        private static Dictionary<String, IHtmlString> Styles;
+        private static Dictionary<String, IHtmlString> Scripts { get; }
+        private static Dictionary<String, IHtmlString> Styles { get; }
 
         static ContentExtensions()
         {

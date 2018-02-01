@@ -11,7 +11,7 @@
                 @if (Html.IsAuthorizedFor("Create"))
                 {
                     <a class="btn" href="@Url.Action("Create")">
-                        <i class="fa fa-file-o"></i><span class="text">@Actions.Create</span>
+                        <i class="far fa-file"></i><span class="text">@Actions.Create</span>
                     </a>
                 }
             </div>
@@ -22,7 +22,7 @@
                 .Build(columns =>
                 {
                     columns.AddActionLink("Details", "fa fa-info");
-                    columns.AddActionLink("Edit", "fa fa-pencil");
+                    columns.AddActionLink("Edit", "fa fa-pencil-alt");
                     columns.AddActionLink("Delete", "fa fa-times");
                 })
                 .ApplyDefaults()

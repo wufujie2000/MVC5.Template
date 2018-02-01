@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.3.1
+ * Datalist 5.4.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -25,8 +25,8 @@ var MvcDatalistFilter = (function () {
                 '&order=' + encodeURIComponent(filter.order) +
                 '&rows=' + encodeURIComponent(filter.rows) +
                 '&page=' + encodeURIComponent(filter.page) +
-                (filter.checkIds ? filter.checkIds : '') +
-                (filter.ids ? filter.ids : '');
+                (filter.checkIds || '') +
+                (filter.ids || '');
 
             for (var i = 0; i < this.additionalFilters.length; i++) {
                 var filters = $('[name="' + this.additionalFilters[i] + '"]');
@@ -106,16 +106,17 @@ var MvcDatalistDialog = (function () {
         open: function () {
             var dialog = this;
             dialog.loader.hide();
-            dialog.search.val(dialog.filter.search);
             dialog.error.hide().html(dialog.lang('Error'));
             dialog.selected = dialog.datalist.selected.slice();
             dialog.rows.val(dialog.limitRows(dialog.filter.rows));
             dialog.search.attr('placeholder', dialog.lang('Search'));
             dialog.selector.parent().css('display', dialog.datalist.multi ? '' : 'none');
+            dialog.filter.search = dialog.datalist.options.preserveSearch ? dialog.filter.search : '';
             dialog.selector.text(dialog.lang('Select').replace('{0}', dialog.datalist.selected.length));
 
             dialog.bind();
             dialog.refresh();
+            dialog.search.val(dialog.filter.search);
 
             setTimeout(function () {
                 if (dialog.loading) {
@@ -260,9 +261,11 @@ var MvcDatalistDialog = (function () {
             $(row).on('click.datalist', function () {
                 var index = datalist.indexOf(dialog.selected, data.DatalistIdKey);
                 if (index >= 0) {
-                    dialog.selected.splice(index, 1);
+                    if (datalist.multi) {
+                        dialog.selected.splice(index, 1);
 
-                    $(this).removeClass('selected');
+                        $(this).removeClass('selected');
+                    }
                 } else {
                     if (datalist.multi) {
                         dialog.selected.push(data);
@@ -431,22 +434,25 @@ var MvcDatalist = (function () {
     MvcDatalist.prototype = {
         set: function (options) {
             options = options || {};
-            this.dialog.set(options);
-            this.events = $.extend(this.events, options.events);
+
+            this.options.preserveSearch = options.preserveSearch == null ? this.options.preserveSearch : options.preserveSearch;
             this.search.autocomplete($.extend(this.options.autocomplete, options.autocomplete));
             this.setReadonly(options.readonly == null ? this.readonly : options.readonly);
+            this.events = $.extend(this.events, options.events);
+            this.dialog.set(options);
         },
         initOptions: function () {
             var datalist = this;
 
             this.options = {
+                preserveSearch: true,
                 autocomplete: {
                     source: function (request, response) {
                         $.ajax({
                             url: datalist.url + datalist.filter.getQuery({ search: request.term, rows: 20 }),
                             success: function (data) {
                                 response($.grep(data.Rows, function (row) {
-                                    return datalist.indexOf(datalist.selected, row.DatalistIdKey) < 0;
+                                    return !datalist.multi || datalist.indexOf(datalist.selected, row.DatalistIdKey) < 0;
                                 }).map(function (row) {
                                     return {
                                         label: row.DatalistAcKey,
@@ -501,7 +507,7 @@ var MvcDatalist = (function () {
         },
         reload: function (triggerChanges) {
             var datalist = this;
-            triggerChanges = triggerChanges == null ? true : triggerChanges;
+            triggerChanges = triggerChanges == null || triggerChanges;
             var ids = $.grep(datalist.values, function (e) { return e.value; });
 
             if (ids.length > 0) {
@@ -516,7 +522,7 @@ var MvcDatalist = (function () {
 
                         var rows = [];
                         for (var i = 0; i < ids.length; i++) {
-                            var index = datalist.indexOf(data.Rows, ids[i].value)
+                            var index = datalist.indexOf(data.Rows, ids[i].value);
                             if (index >= 0) {
                                 rows.push(data.Rows[index]);
                             }
@@ -683,6 +689,13 @@ var MvcDatalist = (function () {
                     datalist.select([], true);
                 }
             });
+            datalist.search.on('blur.datalist', function () {
+                if (!datalist.multi && datalist.selected.length) {
+                    this.value = datalist.selected[0].DatalistAcKey;
+                } else {
+                    this.value = '';
+                }
+            });
 
             datalist.browse.on('click.datalist', function () {
                 datalist.open();
@@ -708,7 +721,7 @@ var MvcDatalist = (function () {
 
                                 var rows = [];
                                 for (var i = 0; i < ids.length; i++) {
-                                    var index = datalist.indexOf(data.Rows, ids[i].value)
+                                    var index = datalist.indexOf(data.Rows, ids[i].value);
                                     if (index >= 0) {
                                         rows.push(data.Rows[index]);
                                     }
@@ -733,27 +746,47 @@ var MvcDatalist = (function () {
 $.fn.datalist = function (options) {
     var args = arguments;
 
-    return this.each(function () {
-        var group = $(this).closest('.datalist');
-        if (!group.length)
-            return;
+    if (options === 'instance') {
+        var instances = [];
 
-        if (!$.data(group[0], 'mvc-datalist')) {
-            if (typeof options == 'string') {
-                var datalist = new MvcDatalist(group);
-                datalist.methods[options].apply(datalist, [].slice.call(args, 1));
-            } else {
-                var datalist = new MvcDatalist(group, options);
+        for (var i = 0; i < this.length; i++) {
+            var datalist = $(this[i]).closest('.datalist');
+            if (!datalist.length)
+                continue;
+
+            var instance = datalist.data('mvc-datalist');
+
+            if (!instance) {
+                datalist.data('mvc-datalist', instance = new MvcDatalist(datalist, options));
             }
 
-            $.data(group[0], 'mvc-datalist', datalist);
-        } else {
-            var datalist = $.data(group[0], 'mvc-datalist');
+            instances.push(instance);
+        }
 
+        return this.length <= 1 ? instances[0] : instances;
+    }
+
+    return this.each(function () {
+        var datalist = $(this).closest('.datalist');
+        if (!datalist.length)
+            return;
+
+        var instance = datalist.data('mvc-datalist');
+
+        if (!instance) {
             if (typeof options == 'string') {
-                datalist.methods[options].apply(datalist, [].slice.call(args, 1));
+                instance = new MvcDatalist(datalist);
+                instance.methods[options].apply(instance, [].slice.call(args, 1));
+            } else {
+                instance = new MvcDatalist(datalist, options);
+            }
+
+            datalist.data('mvc-datalist', instance);
+        } else {
+            if (typeof options == 'string') {
+                instance.methods[options].apply(instance, [].slice.call(args, 1));
             } else if (options) {
-                datalist.set(options);
+                instance.set(options);
             }
         }
     });

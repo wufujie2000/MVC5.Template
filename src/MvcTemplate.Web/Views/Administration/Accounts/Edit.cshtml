@@ -1,6 +1,6 @@
 @model AccountEditView
 
-<div class="col-xs-12">
+<div class="col">
     <div class="widget-box">
         <div class="widget-header">
             <span class="widget-header-icon fa fa-th-list"></span>
@@ -25,7 +25,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormTextBoxFor(model => model.Username)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Username)
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormTextBoxFor(model => model.Email)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.CheckBoxFor(model => model.IsLocked)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.IsLocked)
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.DatalistFor(model => model.RoleId, new MvcDatalist<Role, RoleView>(Url))
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.RoleId)
                     </div>
                 </div>

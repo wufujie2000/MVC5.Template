@@ -1,6 +1,6 @@
 @model AccountCreateView
 
-<div class="col-xs-12">
+<div class="col">
     <div class="widget-box">
         <div class="widget-header">
             <span class="widget-header-icon fa fa-th-list"></span>
@@ -9,7 +9,7 @@
         <div class="widget-content">
             @using (Html.BeginForm())
             {
-                <input class="hidden" type="password" /> @* Forcing browser to not remember following form inputs *@
+                <input class="collapse" type="password" /> @* Forcing browser to not remember following form inputs *@
                 @Html.AntiForgeryToken()
                 <div class="form-group">
                     <div class="control-label col-xs-12 col-md-3 col-lg-2">
@@ -18,7 +18,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormTextBoxFor(model => model.Username)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Username)
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormPasswordFor(model => model.Password)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Password)
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormTextBoxFor(model => model.Email)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Email)
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.DatalistFor(model => model.RoleId, new MvcDatalist<Role, RoleView>(Url))
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.RoleId)
                     </div>
                 </div>

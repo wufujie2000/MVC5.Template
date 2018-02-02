@@ -207,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bootstrap\bootstrap.css" />
-    <Content Include="Content\Bootstrap\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\FontAwesome\fa-regular.css" />
     <Content Include="Content\FontAwesome\fa-solid.css" />
     <Content Include="Content\FontAwesome\fontawesome.css" />
@@ -260,8 +259,8 @@
     <Content Include="Content\theme.less" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\Bootstrap\bootstrap.bundle.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.no-conflict.js" />
-    <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\JQuery\jquery.js" />
     <Content Include="Scripts\JQueryUI\jquery-ui.js" />
     <Content Include="Scripts\MvcDatalist\Cultures\mvc-datalist.en.js" />

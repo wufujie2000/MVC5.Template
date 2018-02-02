@@ -10,9 +10,8 @@
   font-style: normal;
   font-weight: 700;
 }
-* {
-  text-decoration: none !important;
-  outline: none !important;
+html {
+  font-size: 14px;
 }
 body {
   font-family: "PT Sans", consolas;
@@ -20,11 +19,11 @@ body {
 }
 body.private {
   background-image: url("../../Images/Shared/background.jpg");
-  background-color: #31353c;
+  background-color: #31353C;
 }
 body.public {
   background-image: url("../../Images/Shared/content-background.jpg");
-  background-color: #f2f2f2;
+  background-color: #F2F2F2;
 }
 .separator {
   border-bottom: 2px solid #F5F5F5;
@@ -33,5 +32,5 @@ body.public {
 .footer {
   text-align: center;
   padding-top: 20px;
-  color: #cccccc;
+  color: #CCCCCC;
 }

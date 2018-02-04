@@ -98,8 +98,11 @@ namespace MvcTemplate.Components.Extensions
             htmlAttributes["autocomplete"] = htmlAttributes["autocomplete"] ?? "off";
 
             MemberExpression member = expression.Body as MemberExpression;
-            if (!htmlAttributes.ContainsKey("readonly") && member?.Member.GetCustomAttribute<EditableAttribute>(false)?.AllowEdit == false)
+            if (htmlAttributes.ContainsKey("readonly") || member?.Member.GetCustomAttribute<EditableAttribute>(false)?.AllowEdit == false)
+            {
                 htmlAttributes["readonly"] = "readonly";
+                htmlAttributes["tabindex"] = -1;
+            }
 
             return htmlAttributes;
         }

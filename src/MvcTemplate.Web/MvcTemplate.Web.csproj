@@ -212,8 +212,6 @@
     <Content Include="Content\FontAwesome\fontawesome.css" />
     <Content Include="Content\FontAwesome\Fonts\fa-regular-400.woff" />
     <Content Include="Content\FontAwesome\Fonts\fa-solid-900.woff" />
-    <Content Include="Content\Fonts\PTSans-Bold.woff" />
-    <Content Include="Content\Fonts\PTSans.woff" />
     <Content Include="Content\JQueryUI\jquery-ui.css" />
     <Content Include="Content\JQueryUI\jquery-ui.timepicker-addon.css" />
     <Content Include="Content\JsTree\jstree.css" />

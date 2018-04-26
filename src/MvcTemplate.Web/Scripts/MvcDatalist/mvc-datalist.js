@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.4.0
+ * Datalist 5.5.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -79,7 +79,6 @@ var MvcDatalistDialog = (function () {
                     title: dialog.title,
                     draggable: false,
                     autoOpen: false,
-                    minWidth: 455,
                     width: 'auto',
                     modal: true
                 },
@@ -95,6 +94,7 @@ var MvcDatalistDialog = (function () {
                     }
                 },
                 resizable: {
+                    minWidth: 455,
                     handles: 'w,e',
                     stop: function () {
                         $(this).css('height', 'auto');
@@ -326,8 +326,9 @@ var MvcDatalistDialog = (function () {
             return header;
         },
         renderPage: function (text, value) {
-            var content = document.createElement('span');
+            var content = document.createElement('a');
             var page = document.createElement('li');
+            content.setAttribute('href', '#');
             page.appendChild(content);
             content.innerHTML = text;
             var dialog = this;
@@ -335,7 +336,9 @@ var MvcDatalistDialog = (function () {
             if (dialog.filter.page == value) {
                 page.className = 'active';
             } else {
-                $(content).on('click.datalist', function () {
+                $(content).on('click.datalist', function (e) {
+                    e.preventDefault();
+
                     var expectedPages = Math.ceil((dialog.totalRows - dialog.selected.length) / dialog.filter.rows);
                     if (value < expectedPages) {
                         dialog.filter.page = value;
@@ -414,18 +417,23 @@ var MvcDatalist = (function () {
         this.url = group.attr('data-url');
         this.selected = [];
 
-        this.browse = $('.datalist-browse[data-for="' + this.for + '"]');
-        this.valueContainer = $('.datalist-values[data-for="' + this.for + '"]');
-        this.values = this.valueContainer.find('.datalist-value');
-        this.control = group.find('.datalist-control');
-        this.search = group.find('.datalist-input');
         this.group = group;
+        this.search = group.find('.datalist-input');
+        this.browse = group.find('.datalist-browse');
+        this.control = group.find('.datalist-control');
+        this.valueContainer = group.find('.datalist-values');
+        this.values = this.valueContainer.find('.datalist-value');
 
         this.dialog = new MvcDatalistDialog(this);
         this.initOptions();
         this.set(options);
 
-        this.methods = { reload: this.reload, browse: this.open };
+        this.methods = {
+            selectSingle: this.selectSingle,
+            selectFirst: this.selectFirst,
+            reload: this.reload,
+            browse: this.open
+        };
         this.reload(false);
         this.cleanUp();
         this.bind();
@@ -504,6 +512,42 @@ var MvcDatalist = (function () {
             if (!this.readonly) {
                 this.dialog.open();
             }
+        },
+        selectFirst: function () {
+            var datalist = this;
+
+            $.ajax({
+                url: datalist.url + datalist.filter.getQuery({ rows: 1 }),
+                cache: false,
+                success: function (data) {
+                    datalist.stopLoading();
+
+                    datalist.select(data.Rows, true);
+                },
+                error: function () {
+                    datalist.stopLoading();
+                }
+            });
+        },
+        selectSingle: function () {
+            var datalist = this;
+
+            $.ajax({
+                url: datalist.url + datalist.filter.getQuery({ rows: 2 }),
+                cache: false,
+                success: function (data) {
+                    datalist.stopLoading();
+
+                    if (data.Rows.length == 1) {
+                        datalist.select(data.Rows, true);
+                    } else {
+                        datalist.select([], true);
+                    }
+                },
+                error: function () {
+                    datalist.stopLoading();
+                }
+            });
         },
         reload: function (triggerChanges) {
             var datalist = this;
@@ -617,6 +661,8 @@ var MvcDatalist = (function () {
         },
 
         startLoading: function (delay) {
+            this.stopLoading();
+
             this.loading = setTimeout(function (datalist) {
                 datalist.search.addClass('datalist-loading');
             }, delay, this);
@@ -677,6 +723,14 @@ var MvcDatalist = (function () {
 
             $(window).on('resize.datalist', function () {
                 datalist.resizeDatalistSearch();
+            });
+
+            datalist.group.on('focusin.datalist', function () {
+                $(this).addClass('datalist-focus');
+            });
+
+            datalist.group.on('focusout.datalist', function () {
+                $(this).removeClass('datalist-focus');
             });
 
             datalist.search.on('keydown.datalist', function (e) {

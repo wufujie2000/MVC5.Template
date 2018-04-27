@@ -55,7 +55,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected =
                 $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new { view.Id })}\">" +
-                    "<i class=\"fa fa-info\"></i>" +
+                    "<span class=\"fa fa-info\"></span>" +
                 "</a>";
 
             Assert.Equal(expected, actual);
@@ -73,7 +73,7 @@ namespace MvcTemplate.Tests.Unit.Components.Extensions
             String actual = column.ValueFor(new GridRow<AllTypesView>(view)).ToString();
             String expected =
                 $"<a class=\"details-action\" href=\"{urlHelper.Action("Details", new { view.Id })}\">" +
-                    "<i class=\"fa fa-info\"></i>" +
+                    "<span class=\"fa fa-info\"></span>" +
                 "</a>";
 
             Assert.Equal(expected, actual);

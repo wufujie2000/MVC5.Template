@@ -1,5 +1,5 @@
 ﻿/*!
- * Datalist 5.3.1
+ * Datalist 5.5.0
  * https://github.com/NonFactors/MVC5.Datalist
  *
  * Copyright © NonFactors
@@ -26,23 +26,23 @@
 }
 
     .datalist-control input {
+        outline: none;
         font: inherit;
         padding: 2px;
         border: none;
         margin: 2px;
-        float: left;
         width: 100%;
     }
 
 .datalist-item {
     transition: background linear 0.3s;
     border: 1px solid #DDDDDD;
+    display: inline-block;
     background: #F8F8F8;
     border-radius: 3px;
     padding: 1px 6px;
     color: #999999;
     margin: 2px;
-    float: left;
 }
 
     .datalist-item:hover {
@@ -172,18 +172,19 @@
         border-radius: 0 5px 5px 0;
         border-right: medium none;
         box-sizing: content-box;
+        border-color: #CCCCCC;
         border-left: 0 none;
         height: 100%;
     }
 
     .datalist-rows input {
         background-color: #EEEEEE;
-        padding: 6px 1.6em 6px 0;
         line-height: 1.42857143;
         box-sizing: border-box;
+        margin: 0 1.6em 0 0;
         text-align: center;
-        width: 5em;
-        margin: 0;
+        padding: 6px 0;
+        width: 3.4em;
     }
 
     .datalist-rows a.ui-spinner-button {
@@ -335,6 +336,7 @@
 .datalist-split td {
     background-color: #FFFFFF;
     color: transparent;
+    font-size: 0.4em;
     cursor: default;
     border: none;
 }
@@ -379,28 +381,30 @@
         cursor: pointer;
     }
 
-        .datalist-dialog ul li + li span {
-            border-left: 0;
+        .datalist-dialog ul li + li a {
+            margin-left: 3px;
         }
 
-    .datalist-dialog ul span {
+    .datalist-dialog ul a {
         border: 1px solid #DDDDDD;
         box-sizing: content-box;
+        text-decoration: none;
         display: inline-block;
         padding: 0.4em 0.6em;
         text-align: center;
-        min-width: 0.9em;
+        min-width: 1em;
         color: #777777;
     }
 
-        .datalist-dialog ul span:focus,
-        .datalist-dialog ul span:hover {
+        .datalist-dialog ul a:focus,
+        .datalist-dialog ul a:hover {
             background-color: #EEEEEE;
             color: #777777;
         }
 
-.datalist-dialog .active span,
-.datalist-dialog .active span:hover {
+.datalist-dialog .active a,
+.datalist-dialog .active a:focus,
+.datalist-dialog .active a:hover {
     background-color: rgba(77, 78, 80, 0.76);
     border-color: rgba(77, 78, 80, 0.76);
     color: #FFFFFF;

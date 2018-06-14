@@ -1,21 +1,21 @@
 ﻿@model RoleView
 
-<div class="col-xs-12">
+<div class="col">
     <div class="widget-box">
         <div class="widget-header">
-            <span class="widget-header-icon fa fa-th-list"></span>
+            <span class="icon fa fa-th-list"></span>
             <h5>@Headers.Role</h5>
             <div class="widget-header-buttons">
                 @if (Html.IsAuthorizedFor("Details"))
                 {
                     <a class="btn" href="@Url.Action("Details", new { Model.Id })">
-                        <i class="fa fa-info"></i><span class="text">@Actions.Details</span>
+                        <span class="fa fa-info"></span><span class="text">@Actions.Details</span>
                     </a>
                 }
                 @if (Html.IsAuthorizedFor("Delete"))
                 {
                     <a class="btn" href="@Url.Action("Delete", new { Model.Id })">
-                        <i class="fa fa-times"></i><span class="text">@Actions.Delete</span>
+                        <span class="fa fa-times"></span><span class="text">@Actions.Delete</span>
                     </a>
                 }
             </div>
@@ -31,7 +31,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.FormTextBoxFor(model => model.Title)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Title)
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <div class="control-content col-xs-12 col-md-9 col-lg-5">
                         @Html.JsTreeFor(model => model.Permissions)
                     </div>
-                    <div class="control-validation col-xs-12 col-lg-5">
+                    <div class="control-validation col">
                         @Html.ValidationMessageFor(model => model.Permissions)
                     </div>
                 </div>
